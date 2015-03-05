@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+ <!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+       "http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+       
+<tiles-definitions>
+
+	<definition name=".base.billet" extends=".base.layout">
+    	<put name="titre" value="billet"/>
+    	<put name="header" value=".entete.billet"/>
+    	<put name="content" value=""/>
+  	    <put name="form" value="billet"/>
+  	    <put name="action" value=""/>
+  	    <put name="actionMethod" value=""/>	  	    
+	</definition>
+
+	<definition name=".recherche.billet" extends=".base.layout">
+    	<put name="titre" value="recherche.billets"/>
+    	<put name="header" value=".entete.recherche.billet"/>
+    	<put name="content" value=".content.recherche"/>
+  	    <put name="form" value="rechercheBillets"/>
+  	    <put name="action" value="/billet/soumettreRecherche"/>	  	 
+  	    <put name="actionMethod" value="soumettreRecherche"/>   
+	</definition>
+
+	<definition name=".entete.billet" path="/templates/tpl_onglet_entete.jsp">
+  	    <put name="keyTitre" value="billet"/>	  	    
+	</definition>
+
+	<definition name=".entete.recherche.billet" path="/templates/tpl_onglet_entete.jsp">
+  	    <put name="keyTitre" value="recherche.billets"/>	  	    
+	</definition>
+
+	<definition name=".liaison.dossier.nouveau.billet" extends=".base.billet">
+    	<put name="content" value=".content.ajouter.billet"/>
+  	    <put name="action" value="/dossier/billet/ajouter"/>
+  	    <put name="actionMethod" value="ajouter"/>	
+	</definition>
+
+	<definition name=".liaison.dossier.modifier.billet" extends=".base.billet">
+    	<put name="content" value=".content.modifier.billet"/>
+  	    <put name="action" value="/dossier/billet/modifier"/>
+  	    <put name="actionMethod" value="modifier"/>	
+	</definition>
+
+	<definition name=".content.ajouter.billet" path="/templates/billet/tpl_billet_formulaire.jsp">
+    	<put name="soumettreURL" value="/dossier/billet/ajouter"/>
+	</definition>
+	
+	<definition name=".content.modifier.billet" path="/templates/billet/tpl_billet_formulaire.jsp">
+    	<put name="soumettreURL" value="/dossier/billet/modifier"/>
+	</definition>
+	
+	<definition name=".content.recherche" extends=".base.recherche.layout">
+    	<put name="critere" value="/templates/billet/tpl_recherche_billet_formulaire.jsp"/>
+    	<put name="resultat" value="/templates/billet/tpl_recherche_billets_resultats.jsp"/>
+	</definition>
+	
+</tiles-definitions>

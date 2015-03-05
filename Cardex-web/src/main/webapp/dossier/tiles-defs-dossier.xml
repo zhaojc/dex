@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+ <!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+       "http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+       
+<tiles-definitions>
+
+	<definition name=".base.dossier" extends=".base.layout">
+    	<put name="titre" value="tabpage_dossier"/>
+    	<put name="header" value="/templates/dossier/tpl_onglet_recherche_dossier_entete.jsp"/>
+    	<put name="content" value=""/>
+  	    <put name="form" value="dossier"/>
+  	    <put name="action" value=""/>	  	    
+	</definition>
+
+	<!-- Liaison Nouveau Sujet à un dossier-->	
+	
+	<definition name=".liaison.dossier" extends=".base.dossier">
+    	<put name="titre" value="vide"/>
+    	<put name="content" value=""/>
+  	    <put name="form" value="rechercheDossier"/>
+  	    <put name="action" value=""/>	  	    
+	</definition>	
+	
+	<definition name=".liaison.dossier.nouveau.sujet.role" extends=".liaison.dossier">
+    	<put name="content" value=".dossier.liaison.role.nouveau.sujet.layout"/>
+  	    <put name="action" value="/role/sujet/dossier/search"/>	
+	</definition>	
+	
+	<definition name=".dossier.liaison.role.nouveau.sujet.layout" path="/dossier/layout/w_liaison_dossier.jsp">
+    	<put name="preContexteApplicatif" value="" direct="true"/>
+    	<put name="contexteApplicatif" value="/role" direct="true"/>
+    	<put name="closeAction" value="/sujet/show.do" direct="true"/>
+	</definition>	
+	
+	<!-- Choisir le rôle -->
+		
+	<definition name=".dossier.liaison.nouveau.sujet.role" extends=".liaison.sujet">
+    	<put name="titre" value="tabpage_role"/>
+  	    <put name="form" value="lien"/>
+    	<put name="content" value=".content.dossier.liaison.nouveau.sujet.role"/>
+  	    <put name="action" value="/role/dossier/nouveau/sujet/link"/>	
+	</definition>	
+
+	<definition name=".content.dossier.liaison.nouveau.sujet.role" path="/commun/layout/w_liaison_role_retour.jsp">
+    	<put name="preContexteApplicatif" value="" direct="true"/>
+    	<put name="contexteApplicatif" value="/role" direct="true"/>
+    	<put name="closeAction" value="/sujet/show.do" direct="true"/>
+	</definition>	
+	
+	<!-- Choisir partage -->
+	
+	<definition name=".recherche.dossier.partage" extends=".base.layout">
+    	<put name="titre" value="tabpage_partage"/>
+    	<put name="header" value=".entete.dossier.partage"/>
+    	<put name="form" value="rechercheDossier"/>
+    	<put name="content" value=".content.dossier.partage"/>
+  	    <put name="action" value="/dossier/recherche/partage"/>	
+	</definition>
+	
+	<definition name=".entete.dossier.partage" extends=".base.entete">
+	    <put name="keyTitre" value="tabpage_partage"/>
+	</definition>
+	
+	<definition name=".content.dossier.partage" extends=".base.recherche.layout">
+    	<put name="critere" value="/templates/partage/tpl_recherche_dossier_partage_formulaire.jsp"/>
+    	<put name="resultat" value="/templates/partage/tpl_recherche_dossier_partage_resultats.jsp"/>
+	</definition>	
+	
+</tiles-definitions>

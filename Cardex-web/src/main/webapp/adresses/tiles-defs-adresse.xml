@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+ <!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+       "http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+       
+<tiles-definitions>
+
+	<definition name=".base.adresse" extends=".base.layout">
+    	<put name="titre" value="adresse_t" />
+    	<put name="header" value=".base.adresse.entete" />
+    	<put name="content" value=""/>
+  	    <put name="form" value="adresse"/>
+  	    <put name="action" value="" />	  	    
+	</definition>
+
+	<definition name=".base.adresse.entete" extends=".base.entete">
+	    <put name="keyTitre" value="adresse_t"/>
+	</definition>
+	
+	<definition name=".valider.adresse" extends=".base.adresse">
+    	<put name="header" value=".valider.adresse.entete" />
+	</definition>	
+	
+	<definition name=".valider.adresse.entete" extends=".base.entete">
+	    <put name="keyTitre" value="validation.adresse"/>
+	</definition>
+	
+	<definition name=".rechercher.valider.adresse" extends=".base.layout">
+    	<put name="titre" value="titre.rechercher.valider.adresse" />
+    	<put name="header" value=".rechercher.valider.adresse.entete" />
+    	<put name="content" value=""/>
+  	    <put name="form" value="rechercheValidationAdresse"/>
+  	    <put name="action" value="" />	  	    
+	</definition>
+	
+	<definition name=".rechercher.valider.adresse.entete" extends=".base.entete">
+	    <put name="keyTitre" value="titre.rechercher.valider.adresse"/>
+	</definition>
+
+
+</tiles-definitions>

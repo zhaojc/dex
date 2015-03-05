@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+ <!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+       "http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+       
+<tiles-definitions>
+	<definition name=".base.layout" path="/commun/layout/base.jsp">
+    	<put name="titre" value=""/>
+    	<put name="header" value=""/>
+ 		<put name="content" value="" />
+  	    <put name="form" value=""/>
+  	    <put name="action" value=""/>
+  	    <put name="actionMethod" value=""/>
+	</definition>
+	
+	<definition name=".base.urgence" extends=".base.layout">
+    	<put name="titre" value="urgence"/>
+    	<put name="header" value=".entete.urgence"/>
+    	<put name="content" value=""/>
+  	    <put name="form" value="urgence"/>
+  	    <put name="action" value=""/>
+  	    <put name="actionMethod" value=""/>	  	    
+	</definition>
+
+	<definition name=".entete.urgence" path="/templates/tpl_onglet_entete.jsp">
+  	    <put name="keyTitre" value="urgence"/>	  	    
+	</definition>
+
+	<definition name=".dossier.urgence.police.ajouter" extends=".base.urgence">
+    	<put name="content" value=".content.urgence.police.ajouter"/>
+  	    <put name="action" value="/dossier/urgence/ajouter"/>
+  	    <put name="actionMethod" value="ajouter"/>	
+	</definition>
+
+	<definition name=".dossier.urgence.pompier.ajouter" extends=".base.urgence">
+    	<put name="content" value=".content.urgence.pompier.ajouter"/>
+  	    <put name="action" value="/dossier/urgence/ajouter"/>
+  	    <put name="actionMethod" value="ajouter"/>	
+	</definition>
+
+	<definition name=".dossier.urgence.ambulance.ajouter" extends=".base.urgence">
+    	<put name="content" value=".content.urgence.ambulance.ajouter"/>
+  	    <put name="action" value="/dossier/urgence/ajouter"/>
+  	    <put name="actionMethod" value="ajouter"/>	
+	</definition>
+
+	<definition name=".dossier.urgence.police.modifier" extends=".base.urgence">
+    	<put name="content" value=".content.urgence.police.modifier"/>
+  	    <put name="action" value="/dossier/urgence/modifier"/>
+  	    <put name="actionMethod" value="modifier"/>	
+	</definition>
+
+	<definition name=".dossier.urgence.pompier.modifier" extends=".base.urgence">
+    	<put name="content" value=".content.urgence.pompier.modifier"/>
+  	    <put name="action" value="/dossier/urgence/modifier"/>
+  	    <put name="actionMethod" value="modifier"/>	
+	</definition>
+
+	<definition name=".dossier.urgence.ambulance.modifier" extends=".base.urgence">
+    	<put name="content" value=".content.urgence.ambulance.modifier"/>
+  	    <put name="action" value="/dossier/urgence/modifier"/>
+  	    <put name="actionMethod" value="modifier"/>	
+	</definition>
+
+	<definition name=".content.urgence.police.ajouter" path="/urgence/layout/tpl_urgence_police_formulaire.jsp">
+    	<put name="soumettreURL" value="/dossier/urgence/addPolice.do"/>
+	</definition>
+	
+	<definition name=".content.urgence.pompier.ajouter" path="/urgence/layout/tpl_urgence_pompier_formulaire.jsp">
+    	<put name="soumettreURL" value="/dossier/urgence/addPompier.do"/>
+	</definition>
+
+	<definition name=".content.urgence.ambulance.ajouter" path="/urgence/layout/tpl_urgence_ambulance_formulaire.jsp">
+    	<put name="soumettreURL" value="/dossier/urgence/addAmbulance.do"/>
+	</definition>
+
+	<definition name=".content.urgence.police.modifier" path="/urgence/layout/tpl_urgence_police_formulaire.jsp">
+    	<put name="soumettreURL" value="/dossier/urgence/updatePolice.do"/>
+	</definition>
+	
+	<definition name=".content.urgence.pompier.modifier" path="/urgence/layout/tpl_urgence_pompier_formulaire.jsp">
+    	<put name="soumettreURL" value="/dossier/urgence/updatePompier.do"/>
+	</definition>
+
+	<definition name=".content.urgence.ambulance.modifier" path="/urgence/layout/tpl_urgence_ambulance_formulaire.jsp">
+    	<put name="soumettreURL" value="/dossier/urgence/updateAmbulance.do"/>
+	</definition>
+		
+</tiles-definitions>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+ <!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+       "http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+       
+<tiles-definitions>
+
+	<definition name=".base.narration" extends=".base.layout">
+    	<put name="titre" value="v_commentaire_t"/>
+    	<put name="header" value="/templates/narrations/tpl_onglet_narration_entete.jsp"/>
+    	<put name="content" value=""/>
+  	    <put name="form" value="narration"/>
+  	    <put name="action" value=""/>	  	    
+	</definition>
+
+	<definition name=".sujet.supprimer.fichier.temporaire.narration.role" path="/narrations/layout/w_supprimer_fichier_narration.jsp">
+  	    <put name="form" value="sujet"/>
+ 		<put name="preContexteApplicatif" value="/sujet"/> 		
+ 		<put name="contexteApplicatif" value="/role"/>
+	</definition>
+
+	<!-- Nouvelle narration context: nouveau sujet et role -->
+
+	<definition name=".nouveau.sujet.nouvelle.narration.role" extends=".base.narration">
+    	<put name="content" value=".content.nouveau.sujet.nouvelle.narration.role"/>
+  	    <put name="action" value="/role/sujet/narration/add"/>	
+	</definition>
+	
+	<definition name=".content.nouveau.sujet.nouvelle.narration.role" path="/narrations/layout/w_nouvelle_narration.jsp">
+ 		<put name="preContexteApplicatif" value="/sujet"/> 		
+ 		<put name="contexteApplicatif" value="/role"/>
+	</definition>
+	
+	<!-- Consulter narration context: nouveau sujet et role-->
+	
+	<definition name=".nouveau.sujet.consulter.narration.role" extends=".base.narration">
+    	<put name="content" value=".content.nouveau.sujet.consulter.narration.role"/>
+  	    <put name="action" value="/role/sujet/narration/update"/>	
+	</definition>
+	
+	<definition name=".content.nouveau.sujet.consulter.narration.role" path="/narrations/layout/w_consultation_narration.jsp">
+ 		<put name="preContexteApplicatif" value="/sujet"/> 		
+ 		<put name="contexteApplicatif" value="/role"/>
+	</definition>	
+	
+</tiles-definitions>

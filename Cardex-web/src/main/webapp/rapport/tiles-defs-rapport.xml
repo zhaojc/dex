@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+ <!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+       "http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+       
+<tiles-definitions>
+
+	<!-- Choix rapport -->
+	<definition name=".choix.rapport" extends=".base.layout">
+    	<put name="titre" value="rapports"/>
+    	<put name="header" value=".entete.rapports"/>
+    	<put name="content" value="/rapport/w_choix_rapport.jsp"/>
+  	    <put name="form" value="rapport"/>
+  	    <put name="action" value="/rapport/defaut"/>	  	    
+	</definition>
+	
+	<definition name=".entete.rapports" extends=".base.entete">
+	    <put name="keyTitre" value="rapports"/>
+	</definition>
+
+	
+	<!-- Commun rapport -->
+	<definition name=".base.rapport.controle" path="/templates/rapport/tpl_rapport_controle.jsp">
+	    <put name="critere" value=""/>
+	    <put name="form" value=""/>
+	</definition>
+
+	<definition name=".criteres.rapport.dateDebut.dateFin" path="/templates/rapport/tpl_criteres_dateDebut_dateFin.jsp">
+	    <put name="form" value=""/>
+	</definition>
+	
+	<definition name=".criteres.rapport.dateDebut.dateFin.activite" path="/templates/rapport/tpl_criteres_dateDebut_dateFin_activite.jsp">
+	    <put name="form" value=""/>
+	</definition>
+
+	<definition name=".criteres.rapport.dateDebut" path="/templates/rapport/tpl_criteres_dateDebut.jsp">
+	    <put name="form" value=""/>
+	</definition>
+	
+	<definition name=".criteres.rapport.site.date" path="/templates/rapport/tpl_site_date.jsp">
+	    <put name="form" value=""/>
+	</definition>
+
+	<definition name=".criteres.rapport.site.date.heure" path="/templates/rapport/tpl_site_date_heure.jsp">
+	    <put name="form" value=""/>
+	</definition>
+
+	<definition name=".criteres.rapport.site.date.heure.intervenant" path="/templates/rapport/tpl_site_date_heure_intervenant.jsp">
+	    <put name="form" value=""/>
+	</definition>
+
+	<definition name=".criteres.rapport.site.date.heure.intervenant.groupe" path="/templates/rapport/tpl_site_date_heure_intervenant_groupe.jsp">
+	    <put name="form" value=""/>
+	</definition>
+
+	<definition name=".criteres.rapport.site.intervenant.date" path="/templates/rapport/tpl_site_intervenant_date.jsp">
+	    <put name="form" value=""/>
+	</definition>	
+
+	<definition name=".criteres.rapport.site.date.heure.nombre" path="/templates/rapport/tpl_site_date_heure_nombre.jsp">
+	    <put name="form" value=""/>
+	</definition>	
+
+	<definition name=".criteres.rapport.site.date.heure.nombre.intervenant" path="/templates/rapport/tpl_site_date_heure_nombre_intervenant.jsp">
+	    <put name="form" value=""/>
+	</definition>	
+	
+	<definition name=".criteres.rapport.site.intervenant.date.activite" path="/templates/rapport/tpl_site_intervenant_date_activite.jsp">
+	    <put name="form" value=""/>
+	</definition>	
+
+	<definition name=".criteres.rapport.site.date.heure.nombre.intervenant.genre.nature" path="/templates/rapport/tpl_site_date_heure_nombre_intervenant_genre_nature.jsp">
+	    <put name="form" value=""/>
+	</definition>	
+
+	<definition name=".criteres.rapport.site.nature.date.activite" path="/templates/rapport/tpl_site_nature_date_activite.jsp">
+	    <put name="form" value=""/>
+	</definition>	
+	
+</tiles-definitions>

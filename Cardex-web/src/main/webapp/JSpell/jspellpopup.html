@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<HTML>
+  <HEAD>
+    <TITLE>Spell Checker</TITLE>
+<SCRIPT Language="JavaScript1.1">
+function getCookie(name) {
+  var dc = document.cookie;
+  var prefix = name + "=";
+  var begin = dc.indexOf("; " + prefix);
+  if (begin == -1) {
+    begin = dc.indexOf(prefix);
+    if (begin != 0) return null;
+  } else
+    begin += 2;
+  var end = document.cookie.indexOf(";", begin);
+  if (end == -1)
+    end = dc.length;
+  return unescape(dc.substring(begin + prefix.length, end));
+}
+</SCRIPT>
+	<META HTTP-EQUIV="Content-type" CONTENT="text/html; charset=iso-8859-15">
+  </HEAD>
+<BODY onLoad="document.forms[0].submit();" topmargin="0" leftmargin="0">
+<P align=center>
+<SCRIPT language="JavaScript1.1">
+	var myOpener=opener;
+	if(typeof(window.dialogArguments)!="undefined")
+		myOpener=window.dialogArguments;
+	var spellCheckArray=myOpener.getSpellCheckArray();
+	document.open();
+	document.write('<FORM ACTION="'+myOpener.spellCheckURL+'" METHOD="POST" NAME="jspell">');
+		document.write('<INPUT TYPE=hidden NAME="fieldCount" VALUE="'+spellCheckArray.length+'">');
+		document.write('<INPUT TYPE=hidden NAME="learned" VALUE="'+getCookie("learned")+'">');
+		document.write('<INPUT TYPE=hidden NAME="proxyURL" VALUE="'+myOpener.spellCheckURL+'">');
+		document.write('<INPUT TYPE=hidden NAME="styleSheetURL" VALUE="'+myOpener.styleSheetURL+'">');
+		document.write('<INPUT TYPE=hidden NAME="guiLanguage" VALUE="'+myOpener.guiLanguage+'">');
+		document.write('<INPUT TYPE=hidden NAME="guiCountry" VALUE="'+myOpener.guiCountry+'">');
+		
+		for(var i=0;i<spellCheckArray.length;i++) {
+			document.write('<INPUT TYPE=hidden NAME="field_'+i+'" VALUE="fieldvalue_'+i+'">');
+			document.write('<INPUT TYPE=hidden NAME="fieldvalue_'+i+'" VALUE="">');
+		}
+
+		if (myOpener.hidePreviewPanel)
+			document.write('<INPUT type=hidden NAME="hidePreviewPanel" VALUE="True">');
+		else
+			document.write('<INPUT type=hidden NAME="hidePreviewPanel" VALUE="False">');
+
+		if (myOpener.confirmAfterLearn)
+			document.write('<INPUT type=hidden NAME="confirmAfterLearn" VALUE="True">');
+		else
+			document.write('<INPUT type=hidden NAME="confirmAfterLearn" VALUE="False">');
+
+		if(myOpener.confirmAfterReplace)
+			document.write('<INPUT type=hidden NAME="confirmAfterReplace" VALUE="True">');
+		else
+			document.write('<INPUT type=hidden NAME="confirmAfterReplace" VALUE="False">');
+
+		if (myOpener.directmode)
+			document.write('<INPUT type=hidden NAME="directEdit" VALUE="YES">');
+		else 
+			document.write('<INPUT type=hidden NAME="directEdit" VALUE="NO">');
+
+		if (myOpener.ieMode)
+			document.write('<INPUT type=hidden NAME="ieMode" VALUE="YES">');
+		else
+			document.write('<INPUT type=hidden NAME="ieMode" VALUE="NO">');
+			
+		if (myOpener.disableLearn) // defaults to enabled, must explicitly disable learning words.
+			document.write('<INPUT type=hidden NAME="enableLearn" VALUE="NO">');
+		else 
+			document.write('<INPUT type=hidden NAME="enableLearn" VALUE="YES">');
+
+		if (myOpener.forceUpperCase) // defaults to false
+			document.write('<INPUT type=hidden NAME="forceUpperCase" VALUE="True">');
+		else
+			document.write('<INPUT type=hidden NAME="forceUpperCase" VALUE="False">');
+
+		if (myOpener.ignoreIrregularCaps)
+			document.write('<INPUT type=hidden NAME="ignoreIrregularCaps" VALUE="True">');
+		else
+			document.write('<INPUT type=hidden NAME="ignoreIrregularCaps" VALUE="False">');
+
+		if(myOpener.ignoreFirstCaps)
+			document.write('<INPUT type=hidden NAME="ignoreFirstCaps" VALUE="True">');
+		else
+			document.write('<INPUT type=hidden NAME="ignoreFirstCaps" VALUE="False">');
+
+		if(myOpener.ignoreUpper)
+			document.write('<INPUT type=hidden NAME="ignoreUpper" VALUE="True">');
+		else
+			document.write('<INPUT type=hidden NAME="ignoreUpper" VALUE="False">');
+
+		if(myOpener.ignoreNumbers)
+			document.write('<INPUT type=hidden NAME="ignoreNumbers" VALUE="True">');
+		else
+			document.write('<INPUT type=hidden NAME="ignoreNumbers" VALUE="False">');
+
+		if(myOpener.ignoreDouble)
+			document.write('<INPUT type=hidden NAME="ignoreDouble" VALUE="True">');
+		else
+			document.write('<INPUT type=hidden NAME="ignoreDouble" VALUE="False">');
+
+		document.write('<INPUT type=hidden NAME="supplementalDictionary" VALUE="'+myOpener.supplementalDictionary+'">');
+		document.write('<INPUT type=hidden NAME="blankURL" VALUE="'+myOpener.blankURL+'">');
+		document.write('<INPUT type=hidden NAME="language" VALUE="'+myOpener.language+'">');
+		document.write('</FORM>');
+		document.write("<SCR"+"IPT>");
+		for(var i=0;i<spellCheckArray.length;i++)
+			document.write('document.forms["jspell"].fieldvalue_'+i+'.value=myOpener.getSpellCheckItemValueValue('+i+');');
+		document.write("</SCR"+"IPT>");
+		document.close();
+		</SCRIPT>
+  </BODY>
+</HTML>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+             version="2.0">
+    <persistence-unit name="${app.name}">
+        <jta-data-source>${app.datasource}</jta-data-source>
+       <properties>
+            <property name="hibernate.dialect" value="${app.hibernate.dialect}"/>
+            <property name="hibernate.hbm2ddl.auto" value="${app.hibernate.hbm2ddl.auto}"/>
+            <property name="hibernate.show_sql" value="${app.hibernate.show_sql}"/>
+            <property name="hibernate.format_sql" value="${app.hibernate.format_sql}"/>
+            <property name="hibernate.cache.use_second_level_cache" value="${app.hibernate.cache.use_second_level_cache}"/>
+            <property name="hibernate.cache.use_minimal_puts" value="${app.hibernate.cache.use_minimal_puts}"/>
+        </properties>
+    </persistence-unit>
+</persistence>

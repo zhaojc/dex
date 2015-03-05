@@ -1,0 +1,361 @@
+body  {
+    background-color: #ffffff;
+    font-family: Verdana, Arial, Helvetica, sans serif;
+    font-size: 8pt;
+    color:black;
+    background-color:white;
+  }
+
+  td {
+    font-family: Verdana, Arial, Helvetica, sans serif;
+    font-size: 10px;
+    color: black;
+  }
+
+	.enteteColonneTriable:link { 
+	    color: black;
+	}
+	.enteteColonneTriable:visited { 
+	    color: black;
+	}
+	.enteteColonneTriable:hover { 
+	    color: black;
+	}
+	.enteteColonneTriable:active { 
+	    color: black;
+	}
+
+  .tableOutline {
+    border-style: solid;
+    border-width: 1px;
+    border-color: #0061CF;
+
+  }
+
+  .greenOutline {
+    border-style: solid;
+    border-width: 1px;
+    border-color: #559955;
+  }
+
+  .darkOrangeOutline {
+    border-style: solid;
+    border-width: 1px;
+    border-color: #993300;
+  }
+
+  .mainCellDetail {
+    font-family: Verdana, Arial, Helvetica, sans serif;
+    font-size: 9pt;
+    font-weight: bold;
+    color: #095b97;
+  }
+
+  .listTableHeader {
+    font-family: Verdana, Arial, Helvetica, sans serif;
+    font-size: 7pt;
+	  font-weight: bold;
+    color: black;
+	 background-color: #cbd8e9;
+    border-bottom: thin outset lightgray;
+    white-space:nowrap;
+  }
+
+  .listTableHeaderLink {
+    font-family: Verdana, Arial, Helvetica, sans serif;
+    font-size: 7pt;
+	  font-weight: bold;
+    color: white;
+	  background-color: #008800;
+  }
+
+  .listDetailOdd {
+    font-family: Verdana, Arial, Helvetica, sans serif;
+    font-size: 7pt;
+    color: black;
+  }
+
+  .listDetailEven {
+    font-family: Verdana, Arial, Helvetica, sans serif;
+    font-size: 7pt;
+    color: black;
+	  background-color: #EEEEEE;
+  }
+
+  a:link {
+	  text-decoration: none;
+  }
+
+  a:hover {
+	  text-decoration: none;
+	  color: #33cc99;
+  }
+
+  a:visited {
+	  text-decoration: none;
+  }
+
+
+  input {
+    font-family: none;
+	  font-size: 8pt;
+    color: black;
+  }
+
+  select {
+    font-family: none;
+	  font-size: 8pt;
+    color: black;
+  }
+
+  .tabTitle {
+    font-family: Verdana, Arial, Helvetica, sans serif;
+    font-size: 10pt;
+    color: #FFFFFF;
+    background-color: #0061CF;
+    font-weight: bold;
+  }
+
+  .tabTitleGrayed {
+    font-family: Verdana, Arial, Helvetica, sans serif;
+    font-size: 10pt;
+    color: #000000;
+    background-color: #7FA3CD;
+    font-weight: bold;
+  }
+
+  .tabTitleSmall {
+    font-family: Verdana, Arial, Helvetica, sans serif;
+    font-size: 9pt;
+    color: #FFFFFF;
+    background-color: #447db8;
+    font-weight: bold;
+  }
+
+  .tabTitleSmallGrayed {
+    background-color: #cbd8e9;
+  }
+
+  .tabSubject {
+    font-family: Verdana, Arial, Helvetica, sans serif;
+    font-size: 11pt;
+    font-weight: bold;
+    color: #000000;
+  }
+
+  .tabSubjectLink {
+    font-family: Verdana, Arial, Helvetica, sans serif;
+    font-size: 11pt;
+    color: #006600;
+	  font-weight: bold;
+  }
+
+  .folderTitle {
+    font-family: Verdana, Arial, Helvetica, sans serif;
+    font-size: 9pt;
+    color: #FFFFFF;
+    background-color: #0061CF;
+    font-weight: bold;
+  }
+
+  .folderTitleGallery {
+    font-family: Verdana, Arial, Helvetica, sans serif;
+    font-size: 9pt;
+    font-weight: bold;
+    color: #FFFFFF;
+    background-color: #559955;
+
+  }
+
+  .folderFrame {
+    background-color: #0061CF;
+  }
+
+  .folderFrameGallery {
+    background-color: #559955;
+  }
+
+  .tabBackground {
+    background-color: #e6ebf4;
+  }
+
+  .tabBackgroundEdit {
+    background-color: #eeece0; //#efefdd;
+  }
+
+  .pictureBackground {
+    background-color: #ECECEC;
+  }
+
+  .timeFormat {
+    font-family: Verdana, Arial, Helvetica, sans serif;
+    font-size: 6pt;
+    color: #777777;
+  }
+
+  .footnotes {
+    font-family: Verdana, Arial, Helvetica, sans serif;
+    font-size: 6pt;
+  }
+
+
+  .errorHeader {
+    font-family: Verdana, Arial, Helvetica, sans serif;
+    font-size: 8pt;
+    font-weight: bold;
+  }
+
+  .errorFont {
+    font-family: Verdana, Arial, Helvetica, sans serif;
+    font-size: 8pt;
+    font-weight: bold;
+    color: #993300;
+  }
+
+  .severity {
+    background-color: #eeeeee;
+  }
+
+  .severity1 {
+    background-color: #ee7777;
+  }
+
+  .severity2{
+    background-color: #ffee88;
+  }
+
+  .severity3 {
+    background-color: #88dd88;
+  }
+
+  .severity4 {
+    background-color: #000033;
+    color: #ffffff
+  }
+
+ #TAB_INDIVIDUALS  {
+   font-size: 9pt;
+   font-weight: bold;
+}
+
+ #TAB_ADDRESS {
+   font-size: 9pt;
+   font-weight: bold;
+ }
+
+ #TAB_CARACTERISTICS {
+   font-size: 9pt;
+   font-weight: bold;
+ }
+
+ #TAB_PHOTOS {
+   font-size: 9pt;
+   font-weight: bold;
+ }
+
+ #TAB_NARRATION {
+   font-size: 9pt;
+   font-weight: bold;
+ }
+
+ #TAB_FOLDERS {
+   font-size: 9pt;
+   font-weight: bold;
+ }
+
+ #TAB_VEHICLES {
+   font-size: 9pt;
+   font-weight: bold;
+ }
+
+ #TAB_SOCIETIES {
+   font-size: 9pt;
+   font-weight: bold;
+ }
+
+ #DIVISIONS_GROUP {
+    position: relative;
+	  left: 0px;
+	  top: -1px;
+	  z-index: 1;
+	  visibility: visible;
+ }
+
+ #DATA_INDIVIDUALS {
+    position: absolute;
+	  left: 5px;
+	  top: -1px;
+	  z-index: 1;
+	  visibility: hidden;
+ }
+
+ #DATA_ADDRESS {
+    position: absolute;
+	  left: 5px;
+	  top: -1px;
+	  z-index: 1;
+	  visibility: hidden;
+ }
+
+ #DATA_CARACTERISTICS {
+    position: absolute;
+	  left: 5px;
+	  top: -1px;
+	  z-index: 1;
+	  visibility: hidden;
+ }
+
+ #DATA_PHOTOS {
+    position: absolute;
+	  left: 5px;
+	  top: -1px;
+	  z-index: 1;
+	  visibility: hidden;
+ }
+
+
+ #DATA_NARRATION {
+    position: absolute;
+	  left: 5px;
+	  top: -1px;
+	  z-index: 1;
+	  visibility: hidden;
+ }
+
+ #DATA_FOLDERS {
+    position: absolute;
+	  left: 5px;
+	  top: -1px;
+	  z-index: 1;
+	  visibility: hidden;
+ }
+
+
+ #DATA_VEHICLES {
+    position: absolute;
+	  left: 5px;
+	  top: -1px;
+	  z-index: 1;
+	  visibility: hidden;
+ }
+
+ #DATA_SOCIETIES {
+    position: absolute;
+	  left: 5px;
+	  top: -1px;
+	  z-index: 1;
+	  visibility: hidden;
+ }
+
+ #VERY_TWISTED_BUTTON {
+    position: relative;
+    top: -1px;
+    font-size: 8pt;
+    color: #000000;
+    border-style: outset;
+    border-width: 2px;
+    padding-right: 6pt;
+    padding-left: 6pt;
+    padding-top: 1pt;
+    padding-bottom: 2pt;
+  }

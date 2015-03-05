@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.lq.cardex</groupId>
+		<relativePath>../pom.xml</relativePath>
+		<artifactId>Cardex</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<artifactId>Cardex-commun</artifactId>
+	<packaging>jar</packaging>
+	<name>Cardex commun</name>
+	<description>Modele de reference Module Web</description>
+
+	<properties>
+		<scm.url>${base.scm.url}/${project.group}/${project.parent.artifactId}</scm.url>
+		<project.site>${base.pt.url}/${project.parent.artifactId}</project.site>
+	</properties>
+
+	<dependencies>
+		
+
+		<dependency>
+			<groupId>com.lq.std</groupId>
+			<artifactId>stdconf-impl</artifactId>
+			<version>${stdconf.version}</version>
+
+			
+		</dependency>
+		<!-- forcer la version pour eviter l'inclusion de celle amenee par hibernate validator -->
+		<dependency>
+			<artifactId>slf4j-api</artifactId>
+			<groupId>org.slf4j</groupId>
+			<version>${slf4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.struts</groupId>
+			<artifactId>struts-core</artifactId>
+			<version>1.3.8</version>
+		</dependency>
+		<dependency>
+			<groupId>com.oracle</groupId>
+			<artifactId>ojdbc6</artifactId>
+			<version>11.2.0.4.0</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+			<version>3.2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.struts</groupId>
+			<artifactId>struts-taglib</artifactId>
+			<version>1.3.8</version>
+		</dependency>
+		<dependency>
+			<groupId>com.lowagie</groupId>
+			<artifactId>itext-rtf</artifactId>
+			<version>2.1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports</artifactId>
+			<version>3.5.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.spec</groupId>
+			<artifactId>jboss-javaee-6.0</artifactId>
+			<type>pom</type>
+		</dependency>		
+	</dependencies>
+
+	<build>
+		<defaultGoal>package</defaultGoal>
+		<resources>
+			<resource>
+				<directory>${basedir}/src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+		<filters>
+			<filter>${filter.file}</filter>
+		</filters>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifestEntries>
+							<Dependencies>org.apache.commons.configuration</Dependencies>
+							<!--  >Dependencies>org.apache.commons.configuration,org.jboss.security.negotiation</Dependencies-->
+						</manifestEntries>
+					</archive>
+					<webResources>
+						<resource>
+							<directory>${basedir}/src/main/webapp/WEB-INF</directory>
+							<filtering>true</filtering>
+							<targetPath>WEB-INF</targetPath>
+						</resource>
+					</webResources>
+					<filteringDeploymentDescriptors>true</filteringDeploymentDescriptors>
+					<filters>
+						<filter>${filter.file}</filter>
+					</filters>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<configuration>
+					<skip>${war.deploy.skip}</skip>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

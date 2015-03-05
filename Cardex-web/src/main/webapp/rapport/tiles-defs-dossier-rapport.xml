@@ -1,0 +1,1589 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+ <!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+       "http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+       
+<tiles-definitions>
+
+	<!-- Repérages des autoexclusions (par numéro) (CDX 0010) -->
+	<definition name=".numero.reperages.autoexclusion.rapport.dossiers" extends=".base.header.layout">
+    	<put name="titre" value="rapport.reperages.des.autoexclusions.par.numero"/>
+    	<put name="header" value=".reperage.autoexclusion.numero.entete"/>
+    	<put name="content" value=".reperage.autoexclusion.numero.controle"/>
+  	    <put name="form" value="rapportDossierReperageAutoexclusionNumero_CDX_0010"/>
+  	    <put name="action" value="/rapport/dossiersReperagesAutoexclusionNumero"/>	  	    
+	</definition>
+	
+	<definition name=".reperage.autoexclusion.numero.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.reperages.des.autoexclusions.par.numero"/>
+	</definition>	
+	
+	<definition name=".reperage.autoexclusion.numero.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".reperage.autoexclusion.numero.controle.criteres"/>
+	    <put name="form" value="rapportDossierReperageAutoexclusionNumero_CDX_0010"/>
+	</definition>
+
+	<definition name=".reperage.autoexclusion.numero.controle.criteres" extends=".criteres.rapport.site.date">
+	    <put name="form" value="rapportDossierReperageAutoexclusionNumero_CDX_0010"/>
+	</definition>
+
+
+	<!-- Repérages (5 et plus) des autoexclusions (par numéro) (CDX 0010) -->
+	<definition name=".numero.plus.5.reperages.autoexclusion.rapport.dossiers" extends=".base.header.layout">
+    	<put name="titre" value="rapport.reperages.5.plus.autoexclusions.par.numero"/>
+    	<put name="header" value=".reperages.5.plus.autoexclusion.numero.entete"/>
+    	<put name="content" value=".reperages.5.plus.autoexclusion.numero.controle"/>
+  	    <put name="form" value="rapportDossierPlus5ReperageAutoexclusionNumero_CDX_0010"/>
+  	    <put name="action" value="/rapport/dossiersReperages5PlusAutoexclusionNumero"/>	  	    
+	</definition>
+	
+	<definition name=".reperages.5.plus.autoexclusion.numero.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.reperages.5.plus.autoexclusions.par.numero"/>
+	</definition>	
+	
+	<definition name=".reperages.5.plus.autoexclusion.numero.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".reperages.5.plus.autoexclusion.numero.controle.criteres"/>
+	    <put name="form" value="rapportDossierPlus5ReperageAutoexclusionNumero_CDX_0010"/>
+	</definition>
+
+	<definition name=".reperages.5.plus.autoexclusion.numero.controle.criteres" extends=".criteres.rapport.site.date">
+	    <put name="form" value="rapportDossierPlus5ReperageAutoexclusionNumero_CDX_0010"/>
+	</definition>
+	
+	
+	<!-- Repérages des autoexclusions (par nombre) (CDX 0011) -->
+	<definition name=".nombre.reperages.autoexclusion.rapport.dossiers" extends=".base.header.layout">
+    	<put name="titre" value="rapport.reperages.des.autoexclusions.par.nombre"/>
+    	<put name="header" value=".reperage.autoexclusion.nombre.entete"/>
+    	<put name="content" value=".reperage.autoexclusion.nombre.controle"/>
+  	    <put name="form" value="rapportDossierReperageAutoexclusionNombre_CDX_0011"/>
+  	    <put name="action" value="/rapport/dossiersReperagesAutoexclusionNombre"/>	  	    
+	</definition>
+	
+	<definition name=".reperage.autoexclusion.nombre.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.reperages.des.autoexclusions.par.nombre"/>
+	</definition>	
+	
+	<definition name=".reperage.autoexclusion.nombre.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".reperage.autoexclusion.nombre.controle.criteres"/>
+	    <put name="form" value="rapportDossierReperageAutoexclusionNombre_CDX_0011"/>
+	</definition>
+
+	<definition name=".reperage.autoexclusion.nombre.controle.criteres" extends=".criteres.rapport.site.date">
+	    <put name="form" value="rapportDossierReperageAutoexclusionNombre_CDX_0011"/>
+	</definition>
+
+
+	<!-- Repérages (5 et plus) des autoexclusions (par nombre) (CDX 0011) -->
+	<definition name=".nombre.plus.5.reperages.autoexclusion.rapport.dossiers" extends=".base.header.layout">
+    	<put name="titre" value="rapport.reperages.5.plus.autoexclusions.par.nombre"/>
+    	<put name="header" value=".reperages.5.plus.autoexclusion.nombre.entete"/>
+    	<put name="content" value=".reperages.5.plus.autoexclusion.nombre.controle"/>
+  	    <put name="form" value="rapportDossierPlus5ReperageAutoexclusionNombre_CDX_0011"/>
+  	    <put name="action" value="/rapport/dossiersReperages5PlusAutoexclusionNombre"/>	  	    
+	</definition>
+	
+	<definition name=".reperages.5.plus.autoexclusion.nombre.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.reperages.5.plus.autoexclusions.par.nombre"/>
+	</definition>	
+	
+	<definition name=".reperages.5.plus.autoexclusion.nombre.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".reperages.5.plus.autoexclusion.nombre.controle.criteres"/>
+	    <put name="form" value="rapportDossierPlus5ReperageAutoexclusionNombre_CDX_0011"/>
+	</definition>
+
+	<definition name=".reperages.5.plus.autoexclusion.nombre.controle.criteres" extends=".criteres.rapport.site.date">
+	    <put name="form" value="rapportDossierPlus5ReperageAutoexclusionNombre_CDX_0011"/>
+	</definition>	
+
+
+	<!-- Repérages des accès interdits triés par numéro (CDX 0012) -->
+	<definition name=".numero.reperages.acces.interdits.rapport.dossiers" extends=".base.header.layout">
+    	<put name="titre" value="rapport.reperages.des.acces.interdits.tries.par.numero"/>
+    	<put name="header" value=".numero.reperages.acces.interdits.entete"/>
+    	<put name="content" value=".numero.reperages.acces.interdits.controle"/>
+  	    <put name="form" value="rapportDossierNumeroReperageAccesInterdits_CDX_0012"/>
+  	    <put name="action" value="/rapport/dossiersReperagesAccesInterditsNumero"/>	  	    
+	</definition>
+	
+	<definition name=".numero.reperages.acces.interdits.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.reperages.des.acces.interdits.tries.par.numero"/>
+	</definition>	
+	
+	<definition name=".numero.reperages.acces.interdits.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".numero.reperages.acces.interdits.controle.criteres"/>
+	    <put name="form" value="rapportDossierNumeroReperageAccesInterdits_CDX_0012"/>
+	</definition>
+
+	<definition name=".numero.reperages.acces.interdits.controle.criteres" extends=".criteres.rapport.site.date">
+	    <put name="form" value="rapportDossierNumeroReperageAccesInterdits_CDX_0012"/>
+	</definition>	
+
+
+	<!-- Repérages des accès interdits triés par nombre (CDX 0014) -->
+	<definition name=".nombre.reperages.acces.interdits.rapport.dossiers" extends=".base.header.layout">
+    	<put name="titre" value="rapport.reperages.des.acces.interdits.tries.par.nombre"/>
+    	<put name="header" value=".nombre.reperages.acces.interdits.entete"/>
+    	<put name="content" value=".nombre.reperages.acces.interdits.controle"/>
+  	    <put name="form" value="rapportDossierNombreReperageAccesInterdits_CDX_0014"/>
+  	    <put name="action" value="/rapport/dossiersReperagesAccesInterditsNombre"/>	  	    
+	</definition>
+	
+	<definition name=".nombre.reperages.acces.interdits.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.reperages.des.acces.interdits.tries.par.nombre"/>
+	</definition>	
+	
+	<definition name=".nombre.reperages.acces.interdits.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".nombre.reperages.acces.interdits.controle.criteres"/>
+	    <put name="form" value="rapportDossierNombreReperageAccesInterdits_CDX_0014"/>
+	</definition>
+
+	<definition name=".nombre.reperages.acces.interdits.controle.criteres" extends=".criteres.rapport.site.date">
+	    <put name="form" value="rapportDossierNombreReperageAccesInterdits_CDX_0014"/>
+	</definition>	
+	
+
+	<!-- Enquête sur les réclamations (CDX 0030) -->
+	<definition name=".enquete.reclamation.rapport.dossiers" extends=".base.header.layout">
+    	<put name="titre" value="rapport.enquete.reclamations"/>
+    	<put name="header" value=".enquete.reclamation.entete"/>
+    	<put name="content" value=".enquete.reclamation.controle"/>
+  	    <put name="form" value="rapportDossierEnqueteReclamation_CDX_0030"/>
+  	    <put name="action" value="/rapport/dossiersEnqueteReclamation"/>	  	    
+	</definition>
+	
+	<definition name=".enquete.reclamation.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.enquete.reclamations"/>
+	</definition>	
+	
+	<definition name=".enquete.reclamation.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".enquete.reclamation.criteres"/>
+	    <put name="form" value="rapportDossierEnqueteReclamation_CDX_0030"/>
+	</definition>
+	
+	<definition name=".enquete.reclamation.criteres" extends=".criteres.rapport.dateDebut">
+		<put name="form" value="rapportDossierEnqueteReclamation_CDX_0030"/>
+	</definition>
+
+	<!-- Comparatif annuel enquêtes dossier (CDX 0040) -->
+	<definition name=".comparatif.annuel.enquetes.rapport.dossiers" extends=".base.header.layout">
+    	<put name="titre" value="rapport.comparatif.annuel.des.enquetes"/>
+    	<put name="header" value=".comparatif.annuel.enquetes.entete"/>
+    	<put name="content" value=".comparatif.annuel.enquetes.controle"/>
+  	    <put name="form" value="rapportDossierComparatifAnnuelEnquetes_CDX_0040"/>
+  	    <put name="action" value="/rapport/dossiersComparatifAnnuelEnquetes"/>	  	    
+	</definition>
+	
+	<definition name=".comparatif.annuel.enquetes.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.comparatif.annuel.des.enquetes"/>
+	</definition>	
+	
+	<definition name=".comparatif.annuel.enquetes.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".comparatif.annuel.enquetes.criteres"/>
+	    <put name="form" value="rapportDossierComparatifAnnuelEnquetes_CDX_0040"/>
+	</definition>
+	
+	<definition name=".comparatif.annuel.enquetes.criteres" extends=".criteres.rapport.dateDebut.dateFin">
+		<put name="form" value="rapportDossierComparatifAnnuelEnquetes_CDX_0040"/>
+	</definition>
+
+
+	<!-- Cumulatif hebdomadaire enquêtes dossier (CDX 0041) -->
+	<definition name=".cumulatif.hebdomadaire.enquetes.rapport.dossiers" extends=".base.header.layout">
+    	<put name="titre" value="rapport.cumulatif.hebdomadaire.des.enquetes"/>
+    	<put name="header" value=".cumulatif.hebdomadaire.enquetes.entete"/>
+    	<put name="content" value=".cumulatif.hebdomadaire.controle"/>
+  	    <put name="form" value="rapportDossierCumulatifHebdomadaireEnquetes_CDX_0041"/>
+  	    <put name="action" value="/rapport/dossiersCumulatifHebdomadaireEnquetes"/>	  	    
+	</definition>
+	
+	<definition name=".cumulatif.hebdomadaire.enquetes.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.cumulatif.hebdomadaire.des.enquetes"/>
+	</definition>	
+	
+	<definition name=".cumulatif.hebdomadaire.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".cumulatif.hebdomadaire.controle.critere"/>
+	    <put name="form" value="rapportDossierCumulatifHebdomadaireEnquetes_CDX_0041"/>
+	</definition>
+
+	<definition name=".cumulatif.hebdomadaire.controle.critere" extends=".criteres.rapport.site.date">
+	    <put name="form" value="rapportDossierCumulatifHebdomadaireEnquetes_CDX_0041"/>
+	</definition>
+	
+	<!-- Rapport sur les employés liés à des dossiers (CDX_0042) -->
+	<definition name=".employe.dossier" extends=".base.header.layout">
+    	<put name="titre" value="rapport.employe.dossier"/>
+    	<put name="header" value=".employe.dossier.entete"/>
+    	<put name="content" value=".employe.dossier.controle"/>
+  	    <put name="form" value="rapportEmployeDossierRapportForm_CDX_0042"/>
+  	    <put name="action" value="/rapport/employeDossier"/>	  	    
+	</definition>
+	
+	<definition name=".employe.dossier.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.employe.dossier"/>
+	</definition>	
+	
+	<definition name=".employe.dossier.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".employe.dossier.criteres"/>
+	    <put name="form" value="rapportEmployeDossierRapportForm_CDX_0042"/>
+	</definition>
+	
+	<definition name=".employe.dossier.criteres" extends=".criteres.rapport.employe.dossier">
+		<put name="form" value="rapportEmployeDossierRapportForm_CDX_0042"/>
+	</definition>
+
+	<!-- Registre des RFC Maître (CDX 0054) -->
+	<definition name=".registre.RFC.maitre.rapport.dossiers" extends=".base.header.layout">
+    	<put name="titre" value="rapport.registre.des.rfc.maitre"/>
+    	<put name="header" value=".registre.RFC.maitre.entete"/>
+    	<put name="content" value=".registre.RFC.maitre.controle"/>
+  	    <put name="form" value="rapportDossierRegistreRFCMaitre_CDX_0054"/>
+  	    <put name="action" value="/rapport/dossiersRegistreRFCMaitre"/>	  	    
+	</definition>
+	
+	<definition name=".registre.RFC.maitre.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.registre.des.rfc.maitre"/>
+	</definition>	
+	
+	<definition name=".registre.RFC.maitre.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".registre.RFC.maitre.criteres"/>
+	    <put name="form" value="rapportDossierRegistreRFCMaitre_CDX_0054"/>
+	</definition>
+	
+	<definition name=".registre.RFC.maitre.criteres" extends=".criteres.rapport.dateDebut.dateFin">
+		<put name="form" value="rapportDossierRegistreRFCMaitre_CDX_0054"/>
+	</definition>	
+	
+	
+	<!-- Registre des RFC Maître (CDX 0055) -->
+	<definition name=".statut.dossier.rapport.dossiers" extends=".base.header.layout">
+    	<put name="titre" value="rapport.statut.des.dossiers"/>
+    	<put name="header" value=".statut.dossier.entete"/>
+    	<put name="content" value=".statut.dossier.controle"/>
+  	    <put name="form" value="rapportDossierStatutDossier_CDX_0055"/>
+  	    <put name="action" value="/rapport/dossiersStatutDossier"/>	  	    
+	</definition>
+	
+	<definition name=".statut.dossier.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.statut.des.dossiers"/>
+	</definition>	
+	
+	<definition name=".statut.dossier.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".statut.dossier.criteres"/>
+	    <put name="form" value="rapportDossierStatutDossier_CDX_0055"/>
+	</definition>
+	
+	<definition name=".statut.dossier.criteres" extends=".criteres.rapport.dossier.nature.date">
+		<put name="form" value="rapportDossierStatutDossier_CDX_0055"/>
+	</definition>	
+
+	<!-- Contrats autoexclusion (CDX 0060) -->
+	<definition name=".contrats.autoexclusion.rapport.dossiers" extends=".base.header.layout">
+    	<put name="titre" value="rapport.des.contrats.autoexclusion"/>
+    	<put name="header" value=".contrats.autoexclusion.entete"/>
+    	<put name="content" value=".contrats.autoexclusion.controle"/>
+  	    <put name="form" value="rapportDossierContratsAutoexclusion_CDX_0060"/>
+  	    <put name="action" value="/rapport/dossiersContratsAutoexclusion"/>
+	</definition>
+	
+	<definition name=".contrats.autoexclusion.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.des.contrats.autoexclusion"/>
+	</definition>	
+	
+	<definition name=".contrats.autoexclusion.controle" extends=".base.rapport.controle">
+	    <put name="critere" value="/templates/rapport/tpl_dossiers_contrat_autoexclusion.jsp"/>
+	    <put name="form" value="rapportDossierContratsAutoexclusion_CDX_0060"/>
+	</definition>
+	
+
+	<!-- Rapport dossiers Autoexclusion sommaire avec Rencontres initiales (CDX 0061) -->
+	<definition name=".autoexclusion.sommaire.rencontres.initiales.rapport.dossiers" extends=".base.header.layout">
+    	<put name="titre" value="rapport.autoexclusion.sommaire.rencontres.initiales"/>
+    	<put name="header" value=".autoexclusion.sommaire.rencontres.inititales.entete"/>
+    	<put name="content" value=".autoexclusion.sommaire.rencontres.initiales.controle"/>
+  	    <put name="form" value="rapportDossierAutoexclusionSommaireRencontresInitiales_CDX_0061"/>
+  	    <put name="action" value="/rapport/dossiersAutoexclusionSommaireRencontresInitiales"/>	  	    
+	</definition>
+	
+	<definition name=".autoexclusion.sommaire.rencontres.inititales.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.autoexclusion.sommaire.rencontres.initiales"/>
+	</definition>	
+	
+	<definition name=".autoexclusion.sommaire.rencontres.initiales.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".autoexclusion.sommaire.rencontres.initiales.criteres"/>
+	    <put name="form" value="rapportDossierAutoexclusionSommaireRencontresInitiales_CDX_0061"/>
+	</definition>
+	
+	<definition name=".autoexclusion.sommaire.rencontres.initiales.criteres" extends=".criteres.rapport.dateDebut.dateFin">
+		<put name="form" value="rapportDossierAutoexclusionSommaireRencontresInitiales_CDX_0061"/>
+	</definition>
+
+	
+	<!-- Rapport dossiers Autoexclusion détaillé avec Rencontres initiales (CDX 0062) -->
+	<definition name=".autoexclusion.detaille.rencontres.initiales.rapport.dossiers" extends=".base.header.layout">
+    	<put name="titre" value="rapport.autoexclusion.detaille.rencontres.initiales"/>
+    	<put name="header" value=".autoexclusion.detaille.rencontres.inititales.entete"/>
+    	<put name="content" value=".autoexclusion.detaille.rencontres.initiales.controle"/>
+  	    <put name="form" value="rapportDossierAutoexclusionDetailleRencontresInitiales_CDX_0062"/>
+  	    <put name="action" value="/rapport/dossiersAutoexclusionDetailleRencontresInitiales"/>	  	    
+	</definition>
+	
+	<definition name=".autoexclusion.detaille.rencontres.inititales.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.autoexclusion.detaille.rencontres.initiales"/>
+	</definition>	
+	
+	<definition name=".autoexclusion.detaille.rencontres.initiales.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".autoexclusion.detaille.rencontres.initiales.criteres"/>
+	    <put name="form" value="rapportDossierAutoexclusionDetailleRencontresInitiales_CDX_0062"/>
+	</definition>
+	
+	<definition name=".autoexclusion.detaille.rencontres.initiales.criteres" extends=".criteres.rapport.dateDebut.dateFin">
+		<put name="form" value="rapportDossierAutoexclusionDetailleRencontresInitiales_CDX_0062"/>
+	</definition>
+	
+	
+	<!-- Rapport dossiers Autoexclusion sommaire avec Rencontres finales (CDX 0063) -->
+	<definition name=".autoexclusion.sommaire.rencontres.finales.rapport.dossiers" extends=".base.header.layout">
+    	<put name="titre" value="rapport.autoexclusion.sommaire.rencontres.finales"/>
+    	<put name="header" value=".autoexclusion.sommaire.rencontres.finales.entete"/>
+    	<put name="content" value=".autoexclusion.sommaire.rencontres.finales.controle"/>
+  	    <put name="form" value="rapportDossierAutoexclusionSommaireRencontresFinales_CDX_0063"/>
+  	    <put name="action" value="/rapport/dossiersAutoexclusionSommaireRencontresFinales"/>	  	    
+	</definition>
+	
+	<definition name=".autoexclusion.sommaire.rencontres.finales.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.autoexclusion.sommaire.rencontres.finales"/>
+	</definition>	
+	
+	<definition name=".autoexclusion.sommaire.rencontres.finales.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".autoexclusion.sommaire.rencontres.finales.criteres"/>
+	    <put name="form" value="rapportDossierAutoexclusionSommaireRencontresFinales_CDX_0063"/>
+	</definition>
+	
+	<definition name=".autoexclusion.sommaire.rencontres.finales.criteres" extends=".criteres.rapport.dateDebut.dateFin">
+		<put name="form" value="rapportDossierAutoexclusionSommaireRencontresFinales_CDX_0063"/>
+	</definition>
+
+	
+	<!-- Rapport dossiers Autoexclusion détaillé avec Rencontres finales (CDX 0064) -->
+	<definition name=".autoexclusion.detaille.rencontres.finales.rapport.dossiers" extends=".base.header.layout">
+    	<put name="titre" value="rapport.autoexclusion.detaille.rencontres.finales"/>
+    	<put name="header" value=".autoexclusion.detaille.rencontres.finales.entete"/>
+    	<put name="content" value=".autoexclusion.detaille.rencontres.finales.controle"/>
+  	    <put name="form" value="rapportDossierAutoexclusionDetailleRencontresFinales_CDX_0064"/>
+  	    <put name="action" value="/rapport/dossiersAutoexclusionDetailleRencontresFinales"/>	  	    
+	</definition>
+	
+	<definition name=".autoexclusion.detaille.rencontres.finales.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.autoexclusion.detaille.rencontres.finales"/>
+	</definition>	
+	
+	<definition name=".autoexclusion.detaille.rencontres.finales.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".autoexclusion.detaille.rencontres.finales.criteres"/>
+	    <put name="form" value="rapportDossierAutoexclusionDetailleRencontresFinales_CDX_0064"/>
+	</definition>
+	
+	<definition name=".autoexclusion.detaille.rencontres.finales.criteres" extends=".criteres.rapport.dateDebut.dateFin">
+		<put name="form" value="rapportDossierAutoexclusionDetailleRencontresFinales_CDX_0064"/>
+	</definition>
+
+	<!-- Rapport sur les accès aux sujets (CDX 0072) -->
+	<definition name=".audit.acces.sujets" extends=".base.header.layout">
+    	<put name="titre" value="acces_consultation_sujets"/>
+    	<put name="header" value=".audit.acces.sujets.entete"/>
+    	<put name="content" value=".audit.acces.sujets.controle"/>
+  	    <put name="form" value="auditAccesSujetRapportForm_CDX_0072"/>
+  	    <put name="action" value="/rapport/auditAccesSujets"/>	  	    
+	</definition>
+	
+	<definition name=".audit.acces.sujets.entete" extends=".base.entete">
+	    <put name="keyTitre" value="acces_consultation_sujets"/>
+	</definition>	
+	
+	<definition name=".audit.acces.sujets.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".audit.acces.sujets.criteres"/>
+	    <put name="form" value="auditAccesSujetRapportForm_CDX_0072"/>
+	</definition>
+	
+	<definition name=".audit.acces.sujets.criteres" extends=".criteres.rapport.site.date.heure.nombre">
+		<put name="form" value="auditAccesSujetRapportForm_CDX_0072"/>
+	</definition>
+	
+	<!-- Rapport sur les accès aux sujets par intervenant (CDX 0072) -->
+	<definition name=".audit.acces.sujets.intervenant" extends=".base.header.layout">
+    	<put name="titre" value="acces_consultation_sujets_intervenant"/>
+    	<put name="header" value=".audit.acces.sujets.intervenant.entete"/>
+    	<put name="content" value=".audit.acces.sujets.intervenant.controle"/>
+  	    <put name="form" value="auditAccesSujetIntervenantRapportForm_CDX_0072"/>
+  	    <put name="action" value="/rapport/auditAccesSujetsIntervenant"/>	  	    
+	</definition>
+	
+	<definition name=".audit.acces.sujets.intervenant.entete" extends=".base.entete">
+	    <put name="keyTitre" value="acces_consultation_sujets_intervenant"/>
+	</definition>	
+	
+	<definition name=".audit.acces.sujets.intervenant.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".audit.acces.sujets.intervenant.criteres"/>
+	    <put name="form" value="auditAccesSujetIntervenantRapportForm_CDX_0072"/>
+	</definition>
+	
+	<definition name=".audit.acces.sujets.intervenant.criteres" extends=".criteres.rapport.site.date.heure.nombre.intervenant">
+		<put name="form" value="auditAccesSujetIntervenantRapportForm_CDX_0072"/>
+	</definition>
+
+	<!-- Rapport sur l'analyse des accès aux dossiers (CDX 0072) -->
+	<definition name=".audit.analyse.acces.dossiers" extends=".base.header.layout">
+    	<put name="titre" value="access_dossiers"/>
+    	<put name="header" value=".audit.analyse.acces.dossiers.entete"/>
+    	<put name="content" value=".audit.analyse.acces.dossiers.controle"/>
+  	    <put name="form" value="auditAnalyseAccesDossiersRapportForm_CDX_0072"/>
+  	    <put name="action" value="/rapport/auditAnalyseAccesDossiers"/>	  	    
+	</definition>
+	
+	<definition name=".audit.analyse.acces.dossiers.entete" extends=".base.entete">
+	    <put name="keyTitre" value="access_dossiers"/>
+	</definition>	
+	
+	<definition name=".audit.analyse.acces.dossiers.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".audit.analyse.acces.dossiers.criteres"/>
+	    <put name="form" value="auditAnalyseAccesDossiersRapportForm_CDX_0072"/>
+	</definition>
+	
+	<definition name=".audit.analyse.acces.dossiers.criteres" extends=".criteres.rapport.site.date.heure.nombre.intervenant.genre.nature">
+		<put name="form" value="auditAnalyseAccesDossiersRapportForm_CDX_0072"/>
+	</definition>
+	
+	<!-- Rapport sur les données de reconnaissance de plaques (CDX 0075) -->
+	<definition name=".reconnaissance.plaque" extends=".base.header.layout">
+    	<put name="titre" value="rapport.reconnaissance.plaque"/>
+    	<put name="header" value=".reconnaissance.plaque.entete"/>
+    	<put name="content" value=".reconnaissance.plaque.controle"/>
+  	    <put name="form" value="reconnaissancePlaqueRapportForm_CDX_0075"/>
+  	    <put name="action" value="/rapport/reconnaissancePlaque"/>	  	    
+	</definition>
+	
+	<definition name=".reconnaissance.plaque.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.reconnaissance.plaque"/>
+	</definition>	
+	
+	<definition name=".reconnaissance.plaque.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".reconnaissance.plaque.criteres"/>
+	    <put name="form" value="reconnaissancePlaqueRapportForm_CDX_0075"/>
+	</definition>
+	
+	<definition name=".reconnaissance.plaque.criteres" extends=".criteres.rapport.site.nature">
+		<put name="form" value="reconnaissancePlaqueRapportForm_CDX_0075"/>
+	</definition>
+
+	<!-- Rapport dossiers partages par intervenant (CDX 0100) -->
+	<definition name=".partages.par.intervenant.rapport.dossiers" extends=".base.header.layout">
+    	<put name="titre" value="rapport.dossiers.partages.par.intervenant"/>
+    	<put name="header" value=".partages.par.intervenant.entete"/>
+    	<put name="content" value=".partages.par.intervenant.controle"/>
+  	    <put name="form" value="rapportDossierPartageIntervenant_CDX_0100"/>
+  	    <put name="action" value="/rapport/dossiersPartagesParIntervenant"/>	  	    
+	</definition>
+	
+	<definition name=".partages.par.intervenant.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.dossiers.partages.par.intervenant"/>
+	</definition>	
+	
+	<definition name=".partages.par.intervenant.controle" extends=".base.rapport.controle">
+	    <put name="critere" value="/templates/rapport/tpl_vide.jsp"/>
+	    <put name="form" value="rapportDossierPartageIntervenant_CDX_0100"/>
+	</definition>
+
+
+	<!-- Rapport dossiers partages par responsable (CDX 0101) -->
+	<definition name=".partages.par.responsable.rapport.dossiers" extends=".base.header.layout">
+    	<put name="titre" value="rapport.dossiers.partages.par.responsable"/>
+    	<put name="header" value=".partages.par.responsable.entete"/>
+    	<put name="content" value=".partages.par.responsable.controle"/>
+  	    <put name="form" value="rapportDossierPartageResponsable_CDX_0101"/>
+  	    <put name="action" value="/rapport/dossiersPartagesParResponsable"/>	  	    
+	</definition>
+	
+	<definition name=".partages.par.responsable.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.dossiers.partages.par.responsable"/>
+	</definition>	
+	
+	<definition name=".partages.par.responsable.controle" extends=".base.rapport.controle">
+	    <put name="critere" value="/templates/rapport/tpl_vide.jsp"/>
+	    <put name="form" value="rapportDossierPartageResponsable_CDX_0101"/>
+	</definition>	
+	
+
+	<!-- Rapport dossiers actifs par intervenant (CDX 0102) -->
+	<definition name=".actifs.par.intervenant.rapport.dossiers" extends=".base.header.layout">
+    	<put name="titre" value="rapport.dossiers.actifs.par.intervenant"/>
+    	<put name="header" value=".actifs.par.intervenant.entete"/>
+    	<put name="content" value=".actifs.par.intervenant.controle"/>
+  	    <put name="form" value="rapportDossierActifIntervenant_CDX_0102"/>
+  	    <put name="action" value="/rapport/dossiersActifsParIntervenant"/>	  	    
+	</definition>
+	
+	<definition name=".actifs.par.intervenant.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.dossiers.actifs.par.intervenant"/>
+	</definition>	
+	
+	<definition name=".actifs.par.intervenant.controle" extends=".base.rapport.controle">
+	    <put name="critere" value="/templates/rapport/tpl_dossiers_actifs_par_intervenant.jsp"/>
+	    <put name="form" value="rapportDossierActifIntervenant_CDX_0102"/>
+	</definition>
+	
+	
+	<!-- Rapport dossiers actifs par enquêteur LQ (CDX 0103) -->
+	<definition name=".rapport.dossiers.actifs.par.enqueteur.lq" extends=".base.header.layout">
+    	<put name="titre" value="rapport.dossiers.actifs.par.enqueteur.lq"/>
+    	<put name="header" value=".actifs.par.enqueteur.entete"/>
+    	<put name="content" value=".actifs.par.enqueteur.controle"/>
+  	    <put name="form" value="rapportDossierActifEnqueteurLQ_CDX_0103"/>
+  	    <put name="action" value="/rapport/dossiersActifsParEnqueteurLQ"/>	  	    
+	</definition>
+	
+	<definition name=".actifs.par.enqueteur.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.dossiers.actifs.par.enqueteur.lq"/>
+	</definition>	
+	
+	<definition name=".actifs.par.enqueteur.controle" extends=".base.rapport.controle">
+	    <put name="critere" value="/templates/rapport/tpl_vide.jsp"/>
+	    <put name="form" value="rapportDossierActifEnqueteurLQ_CDX_0103"/>
+	</definition>
+	
+	<!-- Rapport sommaire sur l'audit des accès(CDX 0120) -->
+	<definition name=".audit.sommaire.acces" extends=".base.header.layout">
+    	<put name="titre" value="acces_sommaire"/>
+    	<put name="header" value=".audit.sommaire.acces.entete"/>
+    	<put name="content" value=".audit.sommaire.acces.controle"/>
+  	    <put name="form" value="auditSommaireAccesRapportForm_CDX_0120"/>
+  	    <put name="action" value="/rapport/auditSommaireAcces"/>	  	    
+	</definition>
+	
+	<definition name=".audit.sommaire.acces.entete" extends=".base.entete">
+	    <put name="keyTitre" value="acces_sommaire"/>
+	</definition>	
+	
+	<definition name=".audit.sommaire.acces.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".audit.sommaire.acces.critere"/>
+	    <put name="form" value="auditSommaireAccesRapportForm_CDX_0120"/>
+	</definition>
+
+	<definition name=".audit.sommaire.acces.critere" extends=".criteres.rapport.site.date.heure">
+	    <put name="form" value="auditSommaireAccesRapportForm_CDX_0120"/>
+	</definition>
+	
+	<!-- Rapport détaillé sur l'audit des accès(CDX 0121) -->
+	<definition name=".audit.detail.acces" extends=".base.header.layout">
+    	<put name="titre" value="acces_detail"/>
+    	<put name="header" value=".audit.detail.acces.entete"/>
+    	<put name="content" value=".audit.detail.acces.controle"/>
+  	    <put name="form" value="auditDetailAccesRapportForm_CDX_0121"/>
+  	    <put name="action" value="/rapport/auditDetailAcces"/>	  	    
+	</definition>
+	
+	<definition name=".audit.detail.acces.entete" extends=".base.entete">
+	    <put name="keyTitre" value="acces_detail"/>
+	</definition>	
+	
+	<definition name=".audit.detail.acces.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".audit.detail.acces.critere"/>
+	    <put name="form" value="auditDetailAccesRapportForm_CDX_0121"/>
+	</definition>
+
+	<definition name=".audit.detail.acces.critere" extends=".criteres.rapport.site.date.heure">
+	    <put name="form" value="auditDetailAccesRapportForm_CDX_0121"/>
+	</definition>
+	
+	<!-- Rapport sur l'audit des accès des intervenants (CDX 0122) -->
+	<definition name=".audit.intervenant.acces" extends=".base.header.layout">
+    	<put name="titre" value="acces_intervenant"/>
+    	<put name="header" value=".audit.intervenant.acces.entete"/>
+    	<put name="content" value=".audit.intervenant.acces.controle"/>
+  	    <put name="form" value="auditIntervenantAccesRapportForm_CDX_0122"/>
+  	    <put name="action" value="/rapport/auditIntervenantAcces"/>	  	    
+	</definition>
+	
+	<definition name=".audit.intervenant.acces.entete" extends=".base.entete">
+	    <put name="keyTitre" value="acces_intervenant"/>
+	</definition>	
+	
+	<definition name=".audit.intervenant.acces.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".audit.intervenant.acces.critere"/>
+	    <put name="form" value="auditIntervenantAccesRapportForm_CDX_0122"/>
+	</definition>
+
+	<definition name=".audit.intervenant.acces.critere" extends=".criteres.rapport.site.date.heure.intervenant">
+	    <put name="form" value="auditIntervenantAccesRapportForm_CDX_0122"/>
+	</definition>
+
+	<!-- Rapport sur l'audit des accès des nouveaux intervenants (CDX 0122) -->
+	<definition name=".audit.nouveaux.intervenants.acces" extends=".base.header.layout">
+    	<put name="titre" value="acces_nouveaux_intervenants"/>
+    	<put name="header" value=".audit.nouveaux.intervenants.acces.entete"/>
+    	<put name="content" value=".audit.nouveaux.intervenants.acces.controle"/>
+  	    <put name="form" value="auditNouveauxIntervenantsAccesRapportForm_CDX_0122"/>
+  	    <put name="action" value="/rapport/auditNouveauxIntervenantsAcces"/>	  	    
+	</definition>
+	
+	<definition name=".audit.nouveaux.intervenants.acces.entete" extends=".base.entete">
+	    <put name="keyTitre" value="acces_nouveaux_intervenants"/>
+	</definition>	
+	
+	<definition name=".audit.nouveaux.intervenants.acces.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".audit.nouveaux.intervenants.acces.critere"/>
+	    <put name="form" value="auditNouveauxIntervenantsAccesRapportForm_CDX_0122"/>
+	</definition>
+
+	<definition name=".audit.nouveaux.intervenants.acces.critere" extends=".criteres.rapport.site.date.heure.intervenant">
+	    <put name="form" value="auditNouveauxIntervenantsAccesRapportForm_CDX_0122"/>
+	</definition>
+
+	<!-- Rapport sur l'audit des accès des superutilisateurs (CDX 0122) -->
+	<definition name=".audit.superutilisateurs.acces" extends=".base.header.layout">
+    	<put name="titre" value="acces_superutilisateurs"/>
+    	<put name="header" value=".audit.superutilisateurs.acces.entete"/>
+    	<put name="content" value=".audit.superutilisateurs.acces.controle"/>
+  	    <put name="form" value="auditSuperutilisateursAccesRapportForm_CDX_0122"/>
+  	    <put name="action" value="/rapport/auditSuperutilisateursAcces"/>	  	    
+	</definition>
+	
+	<definition name=".audit.superutilisateurs.acces.entete" extends=".base.entete">
+	    <put name="keyTitre" value="acces_superutilisateurs"/>
+	</definition>	
+	
+	<definition name=".audit.superutilisateurs.acces.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".audit.superutilisateurs.acces.critere"/>
+	    <put name="form" value="auditSuperutilisateursAccesRapportForm_CDX_0122"/>
+	</definition>
+
+	<definition name=".audit.superutilisateurs.acces.critere" extends=".criteres.rapport.site.date.heure.intervenant">
+	    <put name="form" value="auditSuperutilisateursAccesRapportForm_CDX_0122"/>
+	</definition>
+
+	<!-- Rapport détaillé sur l'audit des accès des intervenants (CDX 0123) -->
+	<definition name=".audit.detail.intervenant.acces" extends=".base.header.layout">
+    	<put name="titre" value="acces_detail_intervenant"/>
+    	<put name="header" value=".audit.detail.intervenant.acces.entete"/>
+    	<put name="content" value=".audit.detail.intervenant.acces.controle"/>
+  	    <put name="form" value="auditDetailAccesIntervenantRapportForm_CDX_0123"/>
+  	    <put name="action" value="/rapport/auditDetailAccesIntervenant"/>	  	    
+	</definition>
+	
+	<definition name=".audit.detail.intervenant.acces.entete" extends=".base.entete">
+	    <put name="keyTitre" value="acces_detail_intervenant"/>
+	</definition>	
+	
+	<definition name=".audit.detail.intervenant.acces.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".audit.detail.intervenant.acces.critere"/>
+	    <put name="form" value="auditDetailAccesIntervenantRapportForm_CDX_0123"/>
+	</definition>
+
+	<definition name=".audit.detail.intervenant.acces.critere" extends=".criteres.rapport.site.date.heure.intervenant">
+	    <put name="form" value="auditDetailAccesIntervenantRapportForm_CDX_0123"/>
+	</definition>
+
+	<!-- Rapport sur l'audit des accès des sujets employé (CDX 0124) -->
+	<definition name=".audit.acces.employe" extends=".base.header.layout">
+    	<put name="titre" value="acces_sujet_employe"/>
+    	<put name="header" value=".audit.acces.employe.entete"/>
+    	<put name="content" value=".audit.acces.employe.controle"/>
+  	    <put name="form" value="auditAccesEmployeRapportForm_CDX_0124"/>
+  	    <put name="action" value="/rapport/auditAccesEmploye"/>	  	    
+	</definition>
+	
+	<definition name=".audit.acces.employe.entete" extends=".base.entete">
+	    <put name="keyTitre" value="acces_sujet_employe"/>
+	</definition>	
+	
+	<definition name=".audit.acces.employe.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".audit.acces.employe.controle.critere"/>
+	    <put name="form" value="auditAccesEmployeRapportForm_CDX_0124"/>
+	</definition>
+
+	<definition name=".audit.acces.employe.controle.critere" extends=".criteres.rapport.site.date.heure.intervenant.groupe">
+	    <put name="form" value="auditAccesEmployeRapportForm_CDX_0124"/>
+	</definition>
+	
+	<!-- MODIFIER Rapport sur l'audit des accès des sujets fournisseurs (CDX 0125) -->
+	<definition name=".audit.acces.fournisseur" extends=".base.header.layout">
+    	<put name="titre" value="acces_sujet_fournisseur"/>
+    	<put name="header" value=".audit.acces.fournisseur.entete"/>
+    	<put name="content" value=".audit.acces.fournisseur.controle"/>
+  	    <put name="form" value="auditAccesFournisseurRapportForm_CDX_0125"/>
+  	    <put name="action" value="/rapport/auditAccesFournisseur"/>	  	    
+	</definition>
+	
+	<definition name=".audit.acces.fournisseur.entete" extends=".base.entete">
+	    <put name="keyTitre" value="acces_sujet_fournisseur"/>
+	</definition>	
+	
+	<definition name=".audit.acces.fournisseur.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".audit.acces.fournisseur.controle.critere"/>
+	    <put name="form" value="auditAccesFournisseurRapportForm_CDX_0125"/>
+	</definition>
+
+	<definition name=".audit.acces.fournisseur.controle.critere" extends=".criteres.rapport.site.date.heure.intervenant.groupe">
+	    <put name="form" value="auditAccesFournisseurRapportForm_CDX_0125"/>
+	</definition>
+
+	<!-- Rapport sur l'audit des accès aux narrations (CDX 0126) -->
+	<definition name=".audit.acces.narration" extends=".base.header.layout">
+    	<put name="titre" value="acces_narration"/>
+    	<put name="header" value=".audit.acces.narration.entete"/>
+    	<put name="content" value=".audit.acces.narration.controle"/>
+  	    <put name="form" value="auditAccesNarrationRapportForm_CDX_0126"/>
+  	    <put name="action" value="/rapport/auditAccesNarration"/>	  	    
+	</definition>
+	
+	<definition name=".audit.acces.narration.entete" extends=".base.entete">
+	    <put name="keyTitre" value="acces_narration"/>
+	</definition>	
+	
+	<definition name=".audit.acces.narration.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".audit.acces.narration.controle.critere"/>
+	    <put name="form" value="auditAccesNarrationRapportForm_CDX_0126"/>
+	</definition>
+
+	<definition name=".audit.acces.narration.controle.critere" extends=".criteres.rapport.site.date.heure.intervenant.groupe">
+	    <put name="form" value="auditAccesNarrationRapportForm_CDX_0126"/>
+	</definition>
+	
+	<!-- Rapport statistique par catégories avec graphique (CDX 0140) -->
+	<definition name=".statistique.dossier.categories.rapport.dossiers" extends=".base.header.layout">
+    	<put name="titre" value="rapport.statistique.des.dossiers.par.categories"/>
+    	<put name="header" value=".statistique.des.dossiers.par.categories.entete"/>
+    	<put name="content" value=".statistique.des.dossiers.par.categories.controle"/>
+  	    <put name="form" value="rapportDossierStatistiqueDossierCategories_CDX_0140"/>
+  	    <put name="action" value="/rapport/dossiersStatistiqueDossierCategories"/>	  	    
+	</definition>
+	
+	<definition name=".statistique.des.dossiers.par.categories.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.statistique.des.dossiers.par.categories"/>
+	</definition>	
+	
+	<definition name=".statistique.des.dossiers.par.categories.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".statistique.des.dossiers.par.categories.controle.critere"/>
+	    <put name="form" value="rapportDossierStatistiqueDossierCategories_CDX_0140"/>
+	</definition>
+
+	<definition name=".statistique.des.dossiers.par.categories.controle.critere" extends=".criteres.rapport.dossier.site.type.fonde.date">
+	    <put name="form" value="rapportDossierStatistiqueDossierCategories_CDX_0140"/>
+	</definition>
+
+	
+	<!-- Rapport statistique par mois avec graphique (CDX 0141) -->
+	<definition name=".statistique.dossier.mois.graphique.rapport.dossiers" extends=".base.header.layout">
+    	<put name="titre" value="rapport.statistique.des.dossiers.par.mois"/>
+    	<put name="header" value=".statistique.dossier.mois.graphique.entete"/>
+    	<put name="content" value=".statistique.dossier.mois.graphique.controle"/>
+  	    <put name="form" value="rapportDossierStatistiqueMoisGraphique_CDX_0141"/>
+  	    <put name="action" value="/rapport/dossiersStatistiqueMoisGraphique"/>	  	    
+	</definition>
+	
+	<definition name=".statistique.dossier.mois.graphique.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.statistique.des.dossiers.par.mois"/>
+	</definition>	
+	
+	<definition name=".statistique.dossier.mois.graphique.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".statistique.dossier.mois.graphique.controle.critere"/>
+	    <put name="form" value="rapportDossierStatistiqueMoisGraphique_CDX_0141"/>
+	</definition>
+
+	<definition name=".statistique.dossier.mois.graphique.controle.critere" extends=".criteres.rapport.dossier.site.nature.fonde.date">
+	    <put name="form" value="rapportDossierStatistiqueMoisGraphique_CDX_0141"/>
+	</definition>	
+	
+	
+	<!-- Rapport statistique par types avec graphique (CDX 0142) -->
+	<definition name=".statistique.dossier.type.graphique.rapport.dossiers" extends=".base.header.layout">
+    	<put name="titre" value="rapport.statistique.des.dossiers.par.types"/>
+    	<put name="header" value=".statistique.dossier.type.graphique.entete"/>
+    	<put name="content" value=".statistique.dossier.type.graphique.controle"/>
+  	    <put name="form" value="rapportDossierStatistiqueTypeGraphique_CDX_0142"/>
+  	    <put name="action" value="/rapport/dossiersStatistiqueTypeGraphique"/>	  	    
+	</definition>
+	
+	<definition name=".statistique.dossier.type.graphique.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.statistique.des.dossiers.par.types"/>
+	</definition>	
+	
+	<definition name=".statistique.dossier.type.graphique.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".statistique.dossier.type.graphique.controle.critere"/>
+	    <put name="form" value="rapportDossierStatistiqueTypeGraphique_CDX_0142"/>
+	</definition>
+
+	<definition name=".statistique.dossier.type.graphique.controle.critere" extends=".criteres.rapport.dossier.site.nature.fonde.date">
+	    <put name="form" value="rapportDossierStatistiqueTypeGraphique_CDX_0142"/>
+	</definition>
+		
+	
+	<!-- Rapport cumulatif des dossiers Espacejeux (CDX 0143) -->
+	<definition name=".cumulatif.espacejeux.rapport.dossiers" extends=".base.header.layout">
+    	<put name="titre" value="rapport.cumulatif.dossiers.espacejeux"/>
+    	<put name="header" value=".cumulatif.espacejeux.entete"/>
+    	<put name="content" value=".cumulatif.espacejeux.controle"/>
+  	    <put name="form" value="rapportDossierCumulatifEspacejeux_CDX_0143"/>
+  	    <put name="action" value="/rapport/dossiersCumulatifEspaceJeux"/>	  	    
+	</definition>
+	
+	<definition name=".cumulatif.espacejeux.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.cumulatif.dossiers.espacejeux"/>
+	</definition>	
+	
+	<definition name=".cumulatif.espacejeux.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".cumulatif.espacejeux.controle.critere"/>
+	    <put name="form" value="rapportDossierCumulatifEspacejeux_CDX_0143"/>
+	</definition>
+
+	<definition name=".cumulatif.espacejeux.controle.critere" extends=".criteres.rapport.site.date">
+	    <put name="form" value="rapportDossierCumulatifEspacejeux_CDX_0143"/>
+	</definition>
+	
+	
+	<!-- Rapport hebdomadaire des dossiers Espacejeux (CDX 0144) -->
+	<definition name=".hebdomadaire.espacejeux.rapport.dossiers" extends=".base.header.layout">
+    	<put name="titre" value="rapport.hebdomadaire.dossiers.espacejeux"/>
+    	<put name="header" value=".hebdomadaire.espacejeux.dossier.entete"/>
+    	<put name="content" value=".hebdomadaire.espacejeux.dossier.controle"/>
+  	    <put name="form" value="rapportDossierHebdomadaireEspacejeux_CDX_0144"/>
+  	    <put name="action" value="/rapport/dossiersHebdomadaireEspaceJeux"/>	  	    
+	</definition>
+	
+	<definition name=".hebdomadaire.espacejeux.dossier.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.hebdomadaire.dossiers.espacejeux"/>
+	</definition>	
+	
+	<definition name=".hebdomadaire.espacejeux.dossier.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".hebdomadaire.espacejeux.dossier.controle.critere"/>
+	    <put name="form" value="rapportDossierHebdomadaireEspacejeux_CDX_0144"/>
+	</definition>
+
+	<definition name=".hebdomadaire.espacejeux.dossier.controle.critere" extends=".criteres.rapport.site.date">
+	    <put name="form" value="rapportDossierHebdomadaireEspacejeux_CDX_0144"/>
+	</definition>
+
+
+	<!-- Rapport statistique sur le temps consacré (CDX 0145) -->
+	<definition name=".statistique.dossier.temps.consacre.rapport.dossiers" extends=".base.header.layout">
+    	<put name="titre" value="rapport.statistique.des.dossiers.temps.consacre"/>
+    	<put name="header" value=".statistique.dossier.temps.consacre.entete"/>
+    	<put name="content" value=".statistique.dossier.temps.consacre.controle"/>
+  	    <put name="form" value="rapportDossierStatistiqueTempsConsacre_CDX_0145"/>
+  	    <put name="action" value="/rapport/dossiersStatistiqueTempsConsacre"/>	  	    
+	</definition>
+	
+	<definition name=".statistique.dossier.temps.consacre.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.statistique.des.dossiers.temps.consacre"/>
+	</definition>	
+	
+	<definition name=".statistique.dossier.temps.consacre.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".statistique.dossier.temps.consacre.controle.critere"/>
+	    <put name="form" value="rapportDossierStatistiqueTempsConsacre_CDX_0145"/>
+	</definition>
+
+	<definition name=".statistique.dossier.temps.consacre.controle.critere" extends=".criteres.rapport.dossier.site.genre.date">
+	    <put name="form" value="rapportDossierStatistiqueTempsConsacre_CDX_0145"/>
+	</definition>
+
+
+	<!-- Rapport hebdomadaire des dossiers (CDX 0146) -->
+	<definition name=".hebdomadaire.rapport.dossiers" extends=".base.header.layout">
+    	<put name="titre" value="rapport.hebdomadaire.dossiers"/>
+    	<put name="header" value=".hebdomadaire.dossier.entete"/>
+    	<put name="content" value=".hebdomadaire.dossier.controle"/>
+  	    <put name="form" value="rapportDossierHebdomadaire_CDX_0146"/>
+  	    <put name="action" value="/rapport/dossiersHebdomadaireImprimer"/>	  	    
+	</definition>
+	
+	<definition name=".hebdomadaire.dossier.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.hebdomadaire.dossiers"/>
+	</definition>	
+	
+	<definition name=".hebdomadaire.dossier.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".hebdomadaire.dossier.controle.critere"/>
+	    <put name="form" value="rapportDossierHebdomadaire_CDX_0146"/>
+	</definition>
+
+	<definition name=".hebdomadaire.dossier.controle.critere" extends=".criteres.rapport.dossier.site.genre.date">
+	    <put name="form" value="rapportDossierHebdomadaire_CDX_0146"/>
+	</definition>
+
+	
+	<!-- Rapport cumulatif des dossiers (CDX 0147) -->
+	<definition name=".cumulatif.rapport.dossiers" extends=".base.header.layout">
+    	<put name="titre" value="rapport.cumulatif.dossiers"/>
+    	<put name="header" value=".cumulatif.dossier.entete"/>
+    	<put name="content" value=".cumulatif.dossier.controle"/>
+  	    <put name="form" value="rapportDossierCumulatif_CDX_0147"/>
+  	    <put name="action" value="/rapport/dossiersCumulatifImprimer"/>	  	    
+	</definition>
+	
+	<definition name=".cumulatif.dossier.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.cumulatif.dossiers"/>
+	</definition>	
+	
+	<definition name=".cumulatif.dossier.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".cumulatif.dossier.controle.critere"/>
+	    <put name="form" value="rapportDossierCumulatif_CDX_0147"/>
+	</definition>
+
+	<definition name=".cumulatif.dossier.controle.critere" extends=".criteres.rapport.dossier.site.genre.date">
+	    <put name="form" value="rapportDossierCumulatif_CDX_0147"/>
+	</definition>	
+	
+	<!-- Rapport sur les incidents de la DCSI (CDX 0148) -->
+	<definition name=".rapport.incidents.DCSI" extends=".base.header.layout">
+    	<put name="titre" value="rapport.incidents.dcsi"/>
+    	<put name="header" value=".rapport.incidents.dcsi.entete"/>
+    	<put name="content" value=".rapport.incidents.dcsi.controle"/>
+  	    <put name="form" value="rapportIncidentsDCSI_CDX_0148"/>
+  	    <put name="action" value="/rapport/rapportIncidentsDCSI"/>	  	    
+	</definition>
+	
+	<definition name=".rapport.incidents.dcsi.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.incidents.dcsi"/>
+	</definition>	
+	
+	<definition name=".rapport.incidents.dcsi.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".rapport.incidents.dcsi.criteres"/>
+	    <put name="form" value="rapportIncidentsDCSI_CDX_0148"/>
+	</definition>
+
+	<definition name=".rapport.incidents.dcsi.criteres" extends=".criteres.rapport.dateDebut">
+		<put name="form" value="rapportIncidentsDCSI_CDX_0148"/>
+	</definition>
+	
+	<!-- Rapport statistique par endroits regroupés (CDX 0149) -->
+	<definition name=".statistique.endroits.regroupes" extends=".base.header.layout">
+    	<put name="titre" value="statistique.endroits.regroupes"/>
+    	<put name="header" value=".statistique.endroits.regroupes.entete"/>
+    	<put name="content" value=".statistique.endroits.regroupes.controle"/>
+  	    <put name="form" value="statistiqueEndroitsRegroupes_CDX_0149"/>
+  	    <put name="action" value="/rapport/statistiqueEndroitsRegroupes"/>	  	    
+	</definition>
+	
+	<definition name=".statistique.endroits.regroupes.entete" extends=".base.entete">
+	    <put name="keyTitre" value="statistique.endroits.regroupes"/>
+	</definition>	
+	
+	<definition name=".statistique.endroits.regroupes.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".statistique.endroits.regroupes.critere"/>
+	    <put name="form" value="statistiqueEndroitsRegroupes_CDX_0149"/>
+	</definition>
+
+	<definition name=".statistique.endroits.regroupes.critere" extends=".criteres.rapport.dossier.site.categorie.date.regroupement">
+	    <put name="form" value="statistiqueEndroitsRegroupes_CDX_0149"/>
+	</definition>
+	
+	<!-- Rapport sommaire - Nombre dossiers (CDX 0229) -->
+	<definition name="nombre.recherche.dossiers.rapport" extends=".base.header.layout">
+    	<put name="titre" value="rapport.sommaire.nombre.dossiers"/>
+    	<put name="header" value=".rapport.sommaire.nombre.dossiers.entete"/>
+    	<put name="content" value=".rapport.sommaire.nombre.dossiers.controle"/>
+  	    <put name="form" value="nombreRechercheDossiersRapportForm_CDX_0229"/>
+  	    <put name="action" value="/rapport/rapportNombreRechercheDossiers"/>	  	    
+	</definition>
+	
+	<definition name=".rapport.sommaire.nombre.dossiers.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.sommaire.nombre.dossiers"/>
+	</definition>	
+	
+	<definition name=".rapport.sommaire.nombre.dossiers.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".rapport.sommaire.nombre.dossiers.criteres"/>
+	    <put name="form" value="nombreRechercheDossiersRapportForm_CDX_0229"/>
+	</definition>
+
+	<definition name=".rapport.sommaire.nombre.dossiers.criteres" path="/templates/rapport/tpl_recherche_dossier_formulaire.jsp">
+	</definition>
+	
+	<!-- Rapport statistique sommaire de vigilance (CDX 0235) -->
+	<definition name=".rapport.statistique.vigilance.sommaire" extends=".base.header.layout">
+    	<put name="titre" value="rapport.statistique.vigilance.sommaire"/>
+    	<put name="header" value=".rapport.statistique.vigilance.sommaire.entete"/>
+    	<put name="content" value=".rapport.statistique.vigilance.sommaire.controle"/>
+  	    <put name="form" value="statistiqueVigilanceSommaire_CDX_0235"/>
+  	    <put name="action" value="/rapport/statistiqueVigilanceSommaire"/>	  	    
+	</definition>
+	
+	<definition name=".rapport.statistique.vigilance.sommaire.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.statistique.vigilance.sommaire"/>
+	</definition>	
+	
+	<definition name=".rapport.statistique.vigilance.sommaire.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".rapport.statistique.vigilance.sommaire.criteres"/>
+	    <put name="form" value="statistiqueVigilanceSommaire_CDX_0235"/>
+	</definition>
+
+	<definition name=".rapport.statistique.vigilance.sommaire.criteres" extends=".criteres.rapport.site.date">
+		<put name="form" value="statistiqueVigilanceSommaire_CDX_0235"/>
+	</definition>
+
+	<!-- Rapport statistique détaillé de vigilance (CDX 0236) -->
+	<definition name=".rapport.statistique.vigilance.detaille" extends=".base.header.layout">
+    	<put name="titre" value="rapport.statistique.vigilance.detaille"/>
+    	<put name="header" value=".rapport.statistique.vigilance.detaille.entete"/>
+    	<put name="content" value=".rapport.statistique.vigilance.detaille.controle"/>
+  	    <put name="form" value="statistiqueVigilanceDetaille_CDX_0236"/>
+  	    <put name="action" value="/rapport/statistiqueVigilanceDetaille"/>	  	    
+	</definition>
+	
+	<definition name=".rapport.statistique.vigilance.detaille.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.statistique.vigilance.detaille"/>
+	</definition>	
+	
+	<definition name=".rapport.statistique.vigilance.detaille.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".rapport.statistique.vigilance.detaille.criteres"/>
+	    <put name="form" value="statistiqueVigilanceDetaille_CDX_0236"/>
+	</definition>
+
+	<definition name=".rapport.statistique.vigilance.detaille.criteres" extends=".criteres.rapport.site.date">
+		<put name="form" value="statistiqueVigilanceDetaille_CDX_0236"/>
+	</definition>
+
+	<!-- Rapport sur le nombre de dossiers de Habilitation sécuritaire (CDX 0240) -->
+	<definition name=".rapport.nombre.dossiers.enquete" extends=".base.header.layout">
+    	<put name="titre" value="rapport.nombre.enquetes.investigation"/>
+    	<put name="header" value=".rapport.nombre.dossiers.enquete.entete"/>
+    	<put name="content" value=".rapport.nombre.dossiers.enquete.controle"/>
+  	    <put name="form" value="nombreDossiersEnquete_CDX_0240"/>
+  	    <put name="action" value="/rapport/nombreDossiersEnquetes"/>	  	    
+	</definition>
+	
+	<definition name=".rapport.nombre.dossiers.enquete.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.nombre.enquetes.investigation"/>
+	</definition>	
+	
+	<definition name=".rapport.nombre.dossiers.enquete.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".rapport.nombre.dossiers.enquete.criteres"/>
+	    <put name="form" value="nombreDossiersEnquete_CDX_0240"/>
+	</definition>
+
+	<definition name=".rapport.nombre.dossiers.enquete.criteres" extends=".criteres.rapport.dateDebut.dateFin">
+		<put name="form" value="nombreDossiersEnquete_CDX_0240"/>
+	</definition>
+
+
+	<!-- Rapport sur la facturation SQ (CDX 0241) -->
+	<definition name=".rapport.facturation.sq" extends=".base.header.layout">
+    	<put name="titre" value="rapport.facturation.sq"/>
+    	<put name="header" value=".rapport.facturation.sq.entete"/>
+    	<put name="content" value=".rapport.facturation.sq.controle"/>
+  	    <put name="form" value="facturationSQ_CDX_0241"/>
+  	    <put name="action" value="/rapport/facturationSQ"/>	  	    
+	</definition>
+	
+	<definition name=".rapport.facturation.sq.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.facturation.sq"/>
+	</definition>	
+	
+	<definition name=".rapport.facturation.sq.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".rapport.facturation.sq.criteres"/>
+	    <put name="form" value="facturationSQ_CDX_0241"/>
+	</definition>
+
+	<definition name=".rapport.facturation.sq.criteres" extends=".criteres.rapport.dateDebut.dateFin">
+		<put name="form" value="facturationSQ_CDX_0241"/>
+	</definition>
+
+	<!-- Rapport sur la facturation ECHO (CDX 0242) -->
+	<definition name=".rapport.facturation.echo" extends=".base.header.layout">
+    	<put name="titre" value="rapport.facturation.echo"/>
+    	<put name="header" value=".rapport.facturation.echo.entete"/>
+    	<put name="content" value=".rapport.facturation.echo.controle"/>
+  	    <put name="form" value="facturationECHO_CDX_0242"/>
+  	    <put name="action" value="/rapport/facturationECHO"/>	  	    
+	</definition>
+	
+	<definition name=".rapport.facturation.echo.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.facturation.echo"/>
+	</definition>	
+	
+	<definition name=".rapport.facturation.echo.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".rapport.facturation.echo.criteres"/>
+	    <put name="form" value="facturationECHO_CDX_0242"/>
+	</definition>
+
+	<definition name=".rapport.facturation.echo.criteres" extends=".criteres.rapport.dateDebut.dateFin">
+		<put name="form" value="facturationECHO_CDX_0242"/>
+	</definition>
+
+	<!-- Rapport sur la facturation SOQUIJ (CDX 0243) -->
+	<definition name=".rapport.facturation.soquij" extends=".base.header.layout">
+    	<put name="titre" value="rapport.facturation.soquij"/>
+    	<put name="header" value=".rapport.facturation.soquij.entete"/>
+    	<put name="content" value=".rapport.facturation.soquij.controle"/>
+  	    <put name="form" value="facturationSOQUIJ_CDX_0243"/>
+  	    <put name="action" value="/rapport/facturationSOQUIJ"/>	  	    
+	</definition>
+	
+	<definition name=".rapport.facturation.soquij.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.facturation.soquij"/>
+	</definition>	
+	
+	<definition name=".rapport.facturation.soquij.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".rapport.facturation.soquij.criteres"/>
+	    <put name="form" value="facturationSOQUIJ_CDX_0243"/>
+	</definition>
+
+	<definition name=".rapport.facturation.soquij.criteres" extends=".criteres.rapport.dateDebut.dateFin">
+		<put name="form" value="facturationSOQUIJ_CDX_0243"/>
+	</definition>
+
+	<!-- Rapport sujets de sévérité 4 (CDX 0244) -->
+	<definition name=".rapport.sujets.severite.4" extends=".base.header.layout">
+    	<put name="titre" value="rapport.severite.sujets.4"/>
+    	<put name="header" value=".rapport.severite.sujets.entete"/>
+    	<put name="content" value=".rapport.severite.sujets.controle"/>
+  	    <put name="form" value="sujetsSeverite4Form_CDX_0244"/>
+  	    <put name="action" value="/rapport/sujetsSeverite4"/>	  	    
+	</definition>
+	
+	<definition name=".rapport.severite.sujets.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.severite.sujets.4"/>
+	</definition>	
+	
+	<definition name=".rapport.severite.sujets.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".rapport.severite.sujets.controle.critere"/>
+	    <put name="form" value="sujetsSeverite4Form_CDX_0244"/>
+	</definition>
+
+	<definition name=".rapport.severite.sujets.controle.critere" extends=".criteres.rapport.site.date.severite">
+	    <put name="form" value="sujetsSeverite4Form_CDX_0244"/>
+	</definition>
+
+	<!-- Rapport sociétés de sévérité 4 (CDX 0245) -->
+	<definition name=".rapport.societes.severite.4" extends=".base.header.layout">
+    	<put name="titre" value="rapport.severite.societes.4"/>
+    	<put name="header" value=".rapport.severite.societes.entete"/>
+    	<put name="content" value=".rapport.severite.societes.controle"/>
+  	    <put name="form" value="societesSeverite4Form_CDX_0245"/>
+  	    <put name="action" value="/rapport/societesSeverite4"/>	  	    
+	</definition>
+	
+	<definition name=".rapport.severite.societes.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.severite.societes.4"/>
+	</definition>	
+	
+	<definition name=".rapport.severite.societes.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".rapport.severite.societes.controle.critere"/>
+	    <put name="form" value="societesSeverite4Form_CDX_0245"/>
+	</definition>
+
+	<definition name=".rapport.severite.societes.controle.critere" extends=".criteres.rapport.site.date.severite">
+	    <put name="form" value="societesSeverite4Form_CDX_0245"/>
+	</definition>
+
+	<!-- Rapport sur le délai de traitement des enquêtes de Habilitation sécuritaire (CDX 0246) -->
+	<definition name=".rapport.delai.traitement.enquetes" extends=".base.header.layout">
+    	<put name="titre" value="rapport.delai.traitement.enquetes"/>
+    	<put name="header" value=".rapport.delai.traitement.enquetes.entete"/>
+    	<put name="content" value=".rapport.delai.traitement.enquetes.controle"/>
+  	    <put name="form" value="delaiTraitementEnquetes_CDX_0246"/>
+  	    <put name="action" value="/rapport/delaiTraitementEnquetes"/>	  	    
+	</definition>
+	
+	<definition name=".rapport.delai.traitement.enquetes.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.delai.traitement.enquetes"/>
+	</definition>	
+	
+	<definition name=".rapport.delai.traitement.enquetes.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".rapport.delai.traitement.enquetes.criteres"/>
+	    <put name="form" value="delaiTraitementEnquetes_CDX_0246"/>
+	</definition>
+
+	<definition name=".rapport.delai.traitement.enquetes.criteres" extends=".criteres.rapport.dateDebut.dateFin.activite">
+		<put name="form" value="delaiTraitementEnquetes_CDX_0246"/>
+	</definition>
+
+	<!-- Rapport les enquêtes de Habilitation sécuritaire traitées en retard (CDX 0248) -->
+	<definition name=".rapport.enquete.traitement.en.retard" extends=".base.header.layout">
+    	<put name="titre" value="rapport.enquete.traitement.en.retard"/>
+    	<put name="header" value=".rapport.enquete.traitement.en.retard.entete"/>
+    	<put name="content" value=".rapport.enquete.traitement.en.retard.controle"/>
+  	    <put name="form" value="enqueteTraitementEnRetardForm_CDX_0248"/>
+  	    <put name="action" value="/rapport/enqueteTraitementEnRetard"/>	  	    
+	</definition>
+	
+	<definition name=".rapport.enquete.traitement.en.retard.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.enquete.traitement.en.retard"/>
+	</definition>	
+	
+	<definition name=".rapport.enquete.traitement.en.retard.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".rapport.enquete.traitement.en.retard.criteres"/>
+	    <put name="form" value="enqueteTraitementEnRetardForm_CDX_0248"/>
+	</definition>
+
+	<definition name=".rapport.enquete.traitement.en.retard.criteres" extends=".criteres.rapport.dateDebut.dateFin">
+		<put name="form" value="enqueteTraitementEnRetardForm_CDX_0248"/>
+	</definition>
+
+	<!-- Rapport sur les retards de traitement des enquêtes de Habilitation sécuritaire (CDX 0247) -->
+	<definition name=".rapport.enquete.en.retard" extends=".base.header.layout">
+    	<put name="titre" value="rapport.enquete.en.retard"/>
+    	<put name="header" value=".rapport.enquete.en.retard.entete"/>
+    	<put name="content" value=".rapport.enquete.en.retard.controle"/>
+  	    <put name="form" value="enqueteEnRetardForm_CDX_0247"/>
+  	    <put name="action" value="/rapport/enqueteEnRetard"/>	  	    
+	</definition>
+	
+	<definition name=".rapport.enquete.en.retard.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.enquete.en.retard"/>
+	</definition>	
+	
+	<definition name=".rapport.enquete.en.retard.controle" extends=".base.rapport.controle">
+	    <put name="critere" value="/templates/rapport/tpl_vide.jsp"/>
+	    <put name="form" value="enqueteEnRetardForm_CDX_0247"/>
+	</definition>
+
+	<!-- Rapport détail des visites de clients mystères (CDX 0250) -->
+	<definition name=".detail.visites.clients.mysteres" extends=".base.header.layout">
+    	<put name="titre" value="rapport.detail.visites"/>
+    	<put name="header" value=".rapport.detail.visites.entete"/>
+    	<put name="content" value=".rapport.detail.visites.controle"/>
+  	    <put name="form" value="rapportDetailVisitesClientsMysteres_CDX_0250"/>
+  	    <put name="action" value="/rapport/detailVisitesClientsMysteres"/>	  	    
+	</definition>
+	
+	<definition name=".rapport.detail.visites.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.detail.visites"/>
+	</definition>	
+	
+	<definition name=".rapport.detail.visites.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".rapport.detail.visites.controle.critere"/>
+	    <put name="form" value="rapportDetailVisitesClientsMysteres_CDX_0250"/>
+	</definition>
+
+	<definition name=".rapport.detail.visites.controle.critere" extends=".criteres.rapport.dossier.site.categorie.date.vague">
+	    <put name="form" value="rapportDetailVisitesClientsMysteres_CDX_0250"/>
+	</definition>
+
+	<!-- Rapport détail des visites à venir de clients mystères (CDX 0251) -->
+	<definition name=".detail.visites.a.venir.clients.mysteres" extends=".base.header.layout">
+    	<put name="titre" value="rapport.detail.visites.a.venir"/>
+    	<put name="header" value=".rapport.detail.visites.a.venir.entete"/>
+    	<put name="content" value=".rapport.detail.visites.a.venir.controle"/>
+  	    <put name="form" value="rapportDetailVisitesAVenirClientsMysteres_CDX_0251"/>
+  	    <put name="action" value="/rapport/detailVisitesAVenirClientsMysteres"/>	  	    
+	</definition>
+	
+	<definition name=".rapport.detail.visites.a.venir.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.detail.visites.a.venir"/>
+	</definition>	
+	
+	<definition name=".rapport.detail.visites.a.venir.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".rapport.detail.visites.a.venir.controle.critere"/>
+	    <put name="form" value="rapportDetailVisitesAVenirClientsMysteres_CDX_0251"/>
+	</definition>
+
+	<definition name=".rapport.detail.visites.a.venir.controle.critere" extends=".criteres.rapport.dossier.site.categorie.vague">
+	    <put name="form" value="rapportDetailVisitesAVenirClientsMysteres_CDX_0251"/>
+	</definition>
+
+	<!-- Rapport sur les détaillants fautifs de clients mystères (CDX 0252) -->
+	<definition name=".detaillants.fautifs.clients.mysteres" extends=".base.header.layout">
+    	<put name="titre" value="rapport.detaillants.fautifs"/>
+    	<put name="header" value=".rapport.detaillants.fautifs.entete"/>
+    	<put name="content" value=".rapport.detaillants.fautifs.controle"/>
+  	    <put name="form" value="rapportDetaillantsFautifsClientsMysteres_CDX_0252"/>
+  	    <put name="action" value="/rapport/detaillantsFautifsClientsMysteres"/>	  	    
+	</definition>
+	
+	<definition name=".rapport.detaillants.fautifs.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.detaillants.fautifs"/>
+	</definition>	
+	
+	<definition name=".rapport.detaillants.fautifs.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".rapport.detaillants.fautifs.controle.critere"/>
+	    <put name="form" value="rapportDetaillantsFautifsClientsMysteres_CDX_0252"/>
+	</definition>
+
+	<definition name=".rapport.detaillants.fautifs.controle.critere" extends=".criteres.rapport.dossier.site.categorie.date.vague">
+	    <put name="form" value="rapportDetaillantsFautifsClientsMysteres_CDX_0252"/>
+	</definition>
+
+	<!-- Rapport sur les visites par région administrative des clients mystères (CDX 0253) -->
+	<definition name=".visites.region.administrative" extends=".base.header.layout">
+    	<put name="titre" value="rapport.visites.region"/>
+    	<put name="header" value=".rapport.visites.region.entete"/>
+    	<put name="content" value=".rapport.visites.region.controle"/>
+  	    <put name="form" value="rapportVisitesRegionAdministrative_CDX_0253"/>
+  	    <put name="action" value="/rapport/visitesRegionAdministrative"/>	  	    
+	</definition>
+	
+	<definition name=".rapport.visites.region.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.visites.region"/>
+	</definition>	
+	
+	<definition name=".rapport.visites.region.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".rapport.visites.region.controle.critere"/>
+	    <put name="form" value="rapportVisitesRegionAdministrative_CDX_0253"/>
+	</definition>
+
+	<definition name=".rapport.visites.region.controle.critere" extends=".criteres.rapport.visites.clients.mysteres">
+	    <put name="form" value="rapportVisitesRegionAdministrative_CDX_0253"/>
+	</definition>
+
+	<!-- Rapport sur les visites par centre régional des clients mystères (CDX 0254) -->
+	<definition name=".visites.centre.regional" extends=".base.header.layout">
+    	<put name="titre" value="rapport.visites.centre"/>
+    	<put name="header" value=".rapport.visites.centre.entete"/>
+    	<put name="content" value=".rapport.visites.centre.controle"/>
+  	    <put name="form" value="rapportVisitesCentreRegional_CDX_0254"/>
+  	    <put name="action" value="/rapport/visitesCentreRegional"/>	  	    
+	</definition>
+	
+	<definition name=".rapport.visites.centre.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.visites.centre"/>
+	</definition>	
+	
+	<definition name=".rapport.visites.centre.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".rapport.visites.centre.controle.critere"/>
+	    <put name="form" value="rapportVisitesCentreRegional_CDX_0254"/>
+	</definition>
+
+	<definition name=".rapport.visites.centre.controle.critere" extends=".criteres.rapport.visites.clients.mysteres">
+	    <put name="form" value="rapportVisitesCentreRegional_CDX_0254"/>
+	</definition>
+
+	<!-- Rapport sur le fichier maître des clients mystères (CDX 0255) -->
+	<definition name=".clients.mysteres.fichier.maitre" extends=".base.header.layout">
+    	<put name="titre" value="fichier.maitre"/>
+    	<put name="header" value=".clients.mysteres.fichier.maitre.entete"/>
+    	<put name="content" value=".clients.mysteres.fichier.maitre.controle"/>
+  	    <put name="form" value="rapportClientsMysteresFichierMaitre_CDX_0255"/>
+  	    <put name="action" value="/rapport/clientsMysteresFichierMaitre"/>	  	    
+	</definition>
+	
+	<definition name=".clients.mysteres.fichier.maitre.entete" extends=".base.entete">
+	    <put name="keyTitre" value="fichier.maitre"/>
+	</definition>	
+	
+	<definition name=".clients.mysteres.fichier.maitre.controle" extends=".base.rapport.controle">
+	    <put name="critere" value="/templates/rapport/tpl_vide.jsp"/>
+	    <put name="form" value="rapportClientsMysteresFichierMaitre_CDX_0255"/>
+	</definition>
+
+	<!-- Rapport sur les détaillants devenus inactifs (CDX 0256) -->
+	<definition name=".societes.inactives" extends=".base.header.layout">
+    	<put name="titre" value="societes.inactives"/>
+    	<put name="header" value=".societes.inactives.entete"/>
+    	<put name="content" value=".societes.inactives.controle"/>
+  	    <put name="form" value="rapportSocietesInactives_CDX_0256"/>
+  	    <put name="action" value="/rapport/societesInactives"/>	  	    
+	</definition>
+	
+	<definition name=".societes.inactives.entete" extends=".base.entete">
+	    <put name="keyTitre" value="societes.inactives"/>
+	</definition>	
+	
+	<definition name=".societes.inactives.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".societes.inactives.controle.critere"/>
+	    <put name="form" value="rapportSocietesInactives_CDX_0256"/>
+	</definition>
+
+	<definition name=".societes.inactives.controle.critere" extends=".criteres.rapport.visites.clients.mysteres">
+	    <put name="form" value="rapportSocietesInactives_CDX_0256"/>
+	</definition>
+
+	<!-- Rapport sur les autoexclusions actives d'Espacejeux (CDX 0260) -->
+	<definition name=".espacejeux.autoexclusion.actif.rapport.dossiers" extends=".base.header.layout">
+    	<put name="titre" value="rapport.espacejeux.autoexclusion.actif"/>
+    	<put name="header" value=".espacejeux.autoexclusion.actif.entete"/>
+    	<put name="content" value=".espacejeux.autoexclusion.actif.controle"/>
+  	    <put name="form" value="rapportEspaceJeuxAutoexclusionActif_CDX_0260"/>
+  	    <put name="action" value="/rapport/dossiersEspaceJeuxAutoexclusionActif"/>	  	    
+	</definition>
+	
+	<definition name=".espacejeux.autoexclusion.actif.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.espacejeux.autoexclusion.actif"/>
+	</definition>	
+	
+	<definition name=".espacejeux.autoexclusion.actif.controle" extends=".base.rapport.controle">
+	    <put name="critere" value="/templates/rapport/tpl_vide.jsp"/>
+	    <put name="form" value="rapportEspaceJeuxAutoexclusionActif_CDX_0260"/>
+	</definition>
+
+	<!-- Rapport sur les fraudes fondées d'Espacejeux (CDX 0261) -->
+	<definition name=".espacejeux.fraude.fonde.rapport.dossiers" extends=".base.header.layout">
+    	<put name="titre" value="rapport.espacejeux.fraude.fonde"/>
+    	<put name="header" value=".espacejeux.fraude.fonde.entete"/>
+    	<put name="content" value=".espacejeux.fraude.fonde.controle"/>
+  	    <put name="form" value="rapportEspaceJeuxFraudeFonde_CDX_0261"/>
+  	    <put name="action" value="/rapport/dossiersEspaceJeuxFraudeFonde"/>	  	    
+	</definition>
+	
+	<definition name=".espacejeux.fraude.fonde.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.espacejeux.fraude.fonde"/>
+	</definition>	
+	
+	<definition name=".espacejeux.fraude.fonde.controle" extends=".base.rapport.controle">
+	    <put name="critere" value="/templates/rapport/tpl_vide.jsp"/>
+	    <put name="form" value="rapportEspaceJeuxFraudeFonde_CDX_0261"/>
+	</definition>
+
+	<!-- Rapport sur les tricheries fondées d'Espacejeux (CDX 0262) -->
+	<definition name=".espacejeux.tricherie.fonde.rapport.dossiers" extends=".base.header.layout">
+    	<put name="titre" value="rapport.espacejeux.tricherie.fonde"/>
+    	<put name="header" value=".espacejeux.tricherie.fonde.entete"/>
+    	<put name="content" value=".espacejeux.tricherie.fonde.controle"/>
+  	    <put name="form" value="rapportEspaceJeuxTricherieFonde_CDX_0262"/>
+  	    <put name="action" value="/rapport/dossiersEspaceJeuxTricherieFonde"/>	  	    
+	</definition>
+	
+	<definition name=".espacejeux.tricherie.fonde.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.espacejeux.tricherie.fonde"/>
+	</definition>	
+	
+	<definition name=".espacejeux.tricherie.fonde.controle" extends=".base.rapport.controle">
+	    <put name="critere" value="/templates/rapport/tpl_vide.jsp"/>
+	    <put name="form" value="rapportEspaceJeuxTricherieFonde_CDX_0262"/>
+	</definition>
+
+	<!-- Rapport sur les ambulances sommaire (CDX 0270) -->
+	<definition name=".ambulance.sommaire.rapport.dossiers" extends=".base.header.layout">
+    	<put name="titre" value="ambulance.sommaire"/>
+    	<put name="header" value=".ambulance.sommaire.entete"/>
+    	<put name="content" value=".ambulance.sommaire.controle"/>
+  	    <put name="form" value="rapportAmbulanceSommaire_CDX_0270"/>
+  	    <put name="action" value="/rapport/dossiersAmbulanceSommaire"/>	  	    
+	</definition>
+	
+	<definition name=".ambulance.sommaire.entete" extends=".base.entete">
+	    <put name="keyTitre" value="ambulance.sommaire"/>
+	</definition>	
+	
+	<definition name=".ambulance.sommaire.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".ambulance.sommaire.controle.criteres"/>
+	    <put name="form" value="rapportAmbulanceSommaire_CDX_0270"/>
+	</definition>
+
+	<definition name=".ambulance.sommaire.controle.criteres" extends=".criteres.rapport.dateDebut.dateFin">
+	    <put name="form" value="rapportAmbulanceSommaire_CDX_0270"/>
+	</definition>
+
+	<!-- Rapport sur les ambulances détaillé (CDX 0271) -->
+	<definition name=".ambulance.detail.rapport.dossiers" extends=".base.header.layout">
+    	<put name="titre" value="ambulance.detail"/>
+    	<put name="header" value=".ambulance.detail.entete"/>
+    	<put name="content" value=".ambulance.detail.controle"/>
+  	    <put name="form" value="rapportAmbulanceDetail_CDX_0271"/>
+  	    <put name="action" value="/rapport/dossiersAmbulanceDetail"/>	  	    
+	</definition>
+	
+	<definition name=".ambulance.detail.entete" extends=".base.entete">
+	    <put name="keyTitre" value="ambulance.detail"/>
+	</definition>	
+	
+	<definition name=".ambulance.detail.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".ambulance.detail.controle.criteres"/>
+	    <put name="form" value="rapportAmbulanceDetail_CDX_0271"/>
+	</definition>
+
+	<definition name=".ambulance.detail.controle.criteres" extends=".criteres.rapport.dateDebut.dateFin">
+	    <put name="form" value="rapportAmbulanceDetail_CDX_0271"/>
+	</definition>
+
+	<!-- Tableau statistique par endroits regroupés (CDX 0280) -->
+	<definition name=".tableau.endroits.regroupes" extends=".base.header.layout">
+    	<put name="titre" value="tableau.endroits.regroupes"/>
+    	<put name="header" value=".tableau.endroits.regroupes.entete"/>
+    	<put name="content" value=".tableau.endroits.regroupes.controle"/>
+  	    <put name="form" value="tableauEndroitsRegroupesRapportForm_CDX_0280"/>
+  	    <put name="action" value="/rapport/tableauEndroitsRegroupes"/>	  	    
+	</definition>
+	
+	<definition name=".tableau.endroits.regroupes.entete" extends=".base.entete">
+	    <put name="keyTitre" value="tableau.endroits.regroupes"/>
+	</definition>	
+	
+	<definition name=".tableau.endroits.regroupes.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".tableau.endroits.regroupes.critere"/>
+	    <put name="form" value="tableauEndroitsRegroupesRapportForm_CDX_0280"/>
+	</definition>
+
+	<definition name=".tableau.endroits.regroupes.critere" extends=".criteres.rapport.dossier.site.categorie.date.regroupement">
+	    <put name="form" value="tableauEndroitsRegroupesRapportForm_CDX_0280"/>
+	</definition>
+
+	<!-- Rapport ambulance -->
+	<definition name=".ambulance.rapport.dossiers" extends=".base.header.layout">
+    	<put name="titre" value="rapport.ambulances"/>
+    	<put name="header" value=".ambulance.dossier.entete"/>
+    	<put name="content" value=".ambulance.dossier.controle"/>
+  	    <put name="form" value="rapportDossierAmbulance"/>
+  	    <put name="action" value="/rapport/dossiersAmbulanceImprimer"/>	  	    
+	</definition>
+	
+	<definition name=".ambulance.dossier.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.ambulances"/>
+	</definition>	
+	
+	<definition name=".ambulance.dossier.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".ambulance.dossier.controle.critere"/>
+	    <put name="form" value="rapportDossierAmbulance"/>
+	</definition>
+
+	<definition name=".ambulance.dossier.controle.critere" extends=".criteres.rapport.site.date">
+	    <put name="form" value="rapportDossierAmbulance"/>
+	</definition>
+
+
+	<!-- Commun dossier rapport -->
+	<definition name=".criteres.rapport.dossier.site.genre.date" path="/templates/rapport/tpl_dossiers_site_genre_date.jsp">
+	    <put name="form" value=""/>
+	</definition>
+
+	<definition name=".criteres.rapport.dossier.nature.date" path="/templates/rapport/tpl_dossiers_nature_date.jsp">
+	    <put name="form" value=""/>
+	</definition>
+	
+	<definition name=".criteres.rapport.dossier.site.type.date" path="/templates/rapport/tpl_dossiers_site_type_date.jsp">
+	    <put name="form" value=""/>
+	</definition>
+
+	<definition name=".criteres.rapport.dossier.site.nature.fonde.date" path="/templates/rapport/tpl_dossiers_site_nature_fonde_date.jsp">
+	    <put name="form" value=""/>
+	</definition>
+
+	<definition name=".criteres.rapport.dossier.site.type.fonde.date" path="/templates/rapport/tpl_dossiers_site_type_fonde_date.jsp">
+	    <put name="form" value=""/>
+	</definition>
+
+	<definition name=".criteres.rapport.dossier.site.categorie.date" path="/templates/rapport/tpl_dossiers_site_categorie_date.jsp">
+	    <put name="form" value=""/>
+	</definition>
+
+	<definition name=".criteres.rapport.site.date.severite" path="/templates/rapport/tpl_dossiers_site_date_severite.jsp">
+	    <put name="form" value=""/>
+	</definition>
+		
+	<definition name=".criteres.rapport.site.nature" path="/templates/rapport/tpl_dossiers_site_nature.jsp">
+	    <put name="form" value=""/>
+	</definition>
+
+	<definition name=".criteres.rapport.visites.clients.mysteres" path="/templates/rapport/tpl_client_mystere_vague.jsp">
+	    <put name="form" value=""/>
+	</definition>
+
+	<definition name=".criteres.rapport.employe.dossier" path="/templates/rapport/tpl_employe_dossier.jsp">
+	    <put name="form" value=""/>
+	</definition>
+
+	<definition name=".criteres.rapport.dossier.site.categorie.date.vague" path="/templates/rapport/tpl_dossiers_site_categorie_date_vague.jsp">
+	    <put name="form" value=""/>
+	</definition>
+
+	<definition name=".criteres.rapport.dossier.site.categorie.vague" path="/templates/rapport/tpl_dossiers_site_categorie_vague.jsp">
+	    <put name="form" value=""/>
+	</definition>
+
+	<definition name=".criteres.rapport.dossier.categorie.district" path="/templates/rapport/tpl_client_mystere_categorie_district.jsp">
+	    <put name="form" value=""/>
+	</definition>
+
+	<definition name=".criteres.rapport.dossier.site.categorie.date.regroupement" path="/templates/rapport/tpl_dossiers_site_categorie_date_regroupement.jsp">
+	    <put name="form" value=""/>
+	</definition>
+	
+</tiles-definitions>

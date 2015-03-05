@@ -1,0 +1,33 @@
+<assembly>
+  <id>CopyApplicationHomeDir</id>
+  <formats>
+   <format>dir</format>
+  </formats>
+  <includeBaseDirectory>false</includeBaseDirectory>
+  <fileSets>
+  <!-- 
+   <fileSet>
+      <directory>${project.artifactId}-ear/target/</directory>
+      <outputDirectory>/${project.artifactId}-ear</outputDirectory>
+      <includes>
+        <include>*.ear</include>
+      </includes>
+   </fileSet>
+   <fileSet>
+      <directory>${project.artifactId}-web/target/</directory>
+      <outputDirectory>/${project.artifactId}-war</outputDirectory>
+      <includes>
+        <include>*.war</include>
+      </includes>
+   </fileSet>
+    -->
+   <fileSet>
+      <directory>${project.build.directory}/${project.artifactId}-${project.version}</directory>
+      <outputDirectory>${app.home.target}</outputDirectory>
+      <filtered>false</filtered>
+      <includes>
+		<include>**/**</include>
+      </includes>
+    </fileSet>
+  </fileSets>
+</assembly>

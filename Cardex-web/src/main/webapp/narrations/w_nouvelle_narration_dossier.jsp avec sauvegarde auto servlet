@@ -1,0 +1,351 @@
+<%-- --------------------------------------------------------------------------
+Use case    : Ajout d'une narration.
+Description : Écran de saisie de nouvelles narrations.
+Author(s)   : $Author: mlibersan $, abruno-boucher
+Revision    : $Revision: 1.17 $, $Date: 2002/04/18 21:17:54 $
+
+History     : Voir ci-dessous.
+
+Revision: 1.0, Date: 2002/02/14 17:12:06, Author: abruno-boucher
+Première étape de la conversion initiale: sauvegarder le gabarit HTML en un
+format JSP.
+
+Revision: 1.1 , Date: 2002/02/14 17:18:14 , Author: pcaron
+Ajustement des commentaires de la page JSP.
+
+Revision: 1.4 , Date: 2002/02/21 23:02:15 , Author: abruno-boucher
+Localisation Assistant date.
+
+$Revision: 1.17 $, $Date: 2002/04/18 21:17:54 $, $Author: mlibersan $
+Mise à jour nouvel Assistant date-heure (incorporé dans la page).
+
+$Revision: 1.17 $, $Date: 2002/04/18 21:17:54 $, $Author: mlibersan $
+Derniers commentaires à jour.
+
+--------------------------------------------------------------------------- --%>
+
+<%@ taglib uri='/WEB-INF/struts-bean.tld'  prefix='bean' %>
+<%@ taglib uri='/WEB-INF/struts-template.tld'  prefix='template' %>
+<%@ taglib uri='/WEB-INF/struts-html.tld'  prefix='html' %>
+<%@ taglib uri='/WEB-INF/cardex-html.tld'  prefix='cardex' %>
+<%@ taglib uri='/WEB-INF/myriap-html.tld'  prefix='myriap' %>
+<%@ page import="com.lotoquebec.cardex.GlobalConstants" %>
+<%@ page import="org.apache.struts.util.RequestUtils" %>
+
+<%@ page import="java.util.Locale" %>
+<%@ page import="org.apache.struts.action.Action" %>
+<%
+   //-- L'appel suivant génère une des chaînes suivante de caractères:  fr, en, sp, de, it, ...
+   //-- et utilisé pour l'appel de fichiers localisés.  Gestion d'erreur en cas de timeout
+   //-- de session.
+   String var_lang = "fr";
+   try{
+     var_lang = ((Locale)request.getSession().getAttribute(Globals.LOCALE_KEY)).getLanguage();
+   }
+   catch (Throwable e) {}
+
+%>
+
+<html>
+<head>
+<META HTTP-EQUIV="expires" CONTENT="0">
+<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-15">
+<meta http-equiv="Page-Exit" content="progid:DXImageTransform.Microsoft.gradientWipe(duration=1)">
+
+<link rel='stylesheet' type='text/css' href='<%= request.getContextPath() + "/styles/lq_styles.css"%>'>
+
+<SCRIPT language="JavaScript" type="text/javascript" src="<%= request.getContextPath() %>/scripts/lq_scripts.js"></SCRIPT>
+<SCRIPT language="JavaScript" type="text/javascript" src="<%= request.getContextPath() %>/scripts/date_picker_<%= var_lang %>.js"></SCRIPT>
+
+<SCRIPT language="JavaScript" type="text\javascript">
+
+function setForm() {
+	//document.forms(0).narrationAvecFormat.value = document.forms(0).HTMLEditor.getText();
+	//document.forms(0).narrationSansFormat.value = document.forms(0).HTMLEditor.getPlainText();
+	document.forms(0).narrationAvecFormat.value = fenetreNarration.innerHTML;
+	document.forms(0).narrationSansFormat.value = remplaceApostrophes(fenetreNarration.innerText);
+}
+
+function remplace() {
+//On remplace l'espace blanc codifié par &nbsp; car le symbole & est interprété
+//comme un délimiteur de paramètre dans le servlet SauvegardeAuto.
+	out = "&nbsp;"; // replace this
+	add = " "; // with this
+	temp = "" + document.forms(0).narrationAvecFormat.value
+	while (temp.indexOf(out)>-1) {
+	    pos= temp.indexOf(out);
+	    temp = "" + (temp.substring(0, pos) + add + 
+	    temp.substring((pos + out.length), temp.length));
+	}
+	document.forms(0).narrationAvecFormat.value = temp;
+	
+	out = '<?xml:namespace prefix = o ns = "urn:schemas-microsoft-com:office:office" /><o:p>'; // replace this
+	add = ""; // with this
+	temp = "" + document.forms(0).narrationAvecFormat.value
+
+	while (temp.indexOf(out)>-1) {
+	    pos= temp.indexOf(out);
+	    temp = "" + (temp.substring(0, pos) + add + 
+	    temp.substring((pos + out.length), temp.length));
+	}
+	document.forms(0).narrationAvecFormat.value = temp;
+	
+	out = "</o:p>"; // replace this
+	add = ""; // with this
+	temp = "" + document.forms(0).narrationAvecFormat.value
+
+	while (temp.indexOf(out)>-1) {
+	    pos= temp.indexOf(out);
+	    temp = "" + (temp.substring(0, pos) + add + 
+	    temp.substring((pos + out.length), temp.length));
+	}
+	document.forms(0).narrationAvecFormat.value = temp;
+	
+	out = "’"; // replace this
+	add = "'"; // with this
+	temp = "" + document.forms(0).narrationAvecFormat.value
+
+	while (temp.indexOf(out)>-1) {
+	    pos= temp.indexOf(out);
+	    temp = "" + (temp.substring(0, pos) + add + 
+	    temp.substring((pos + out.length), temp.length));
+	}
+	document.forms(0).narrationAvecFormat.value = temp;
+	
+	out = "mso-spacerun: yes"; // replace this
+	add = ""; // with this
+	temp = "" + document.forms(0).narrationAvecFormat.value
+
+	while (temp.indexOf(out)>-1) {
+	    pos= temp.indexOf(out);
+	    temp = "" + (temp.substring(0, pos) + add + 
+	    temp.substring((pos + out.length), temp.length));
+	}
+	document.forms(0).narrationAvecFormat.value = temp;
+}
+
+function doOk() {
+  unlockFields();
+  setForm();
+  //Il faut s'assurer que la page n'a pas déjà été sauvegardée automatiquement. Si c'est le
+  //cas, la clé contient une valeur. On procède alors à une mise à jour, plutôt qu'à une
+  //insertion.
+  if (document.forms(0).narrationSansFormat.value != "") {
+     if(document.forms(0).cle.value == ""){
+  	document.forms(0).action='<%= request.getContextPath() + "/dossier/narration/add.do"%>';
+  	document.forms(0).submit();
+     }else{
+  	//document.forms(0).action='<%= request.getContextPath() + "/dossier/narration/update.do"%>';
+  	//document.forms(0).submit();
+  	sauvegardeAuto();
+  	window.location = '<%=request.getContextPath()%>/dossier/show.do?site=<bean:write name="narration" property="dossier.site"/>&cle=<bean:write name="narration" property="dossier.cle"/>';
+     }
+  }else{
+      window.location = '<%=request.getContextPath()%>/dossier/show.do?site=<bean:write name="narration" property="dossier.site"/>&cle=<bean:write name="narration" property="dossier.cle"/>';
+  }   
+}
+
+function sauvegardeFichier(){
+//sauvegarde des narrations dans un fichier pour pouvoir les récupérer dans le servlet.
+  var objFSO = new ActiveXObject("Scripting.FileSystemObject");
+  var fichier = "c:\\temp\\capture\\avec_format.txt"; 
+  //2 = pour écriture
+  var objTextFileO = objFSO.OpenTextFile (fichier, 2, true);
+  objTextFileO.write(document.forms(0).narrationAvecFormat.value);
+  objTextFileO.close();
+
+}
+
+//-- Sauvegarde automatique de la nouvelle narration pour éviter les pertes dues à des
+//-- déconnexions. La sauvegarde a lieu à toutes les 5 minutes.
+//-- La fonction a été modifiée en février 2006. Un servlet s'occupe maintenant de la
+//-- sauvegarde ce qui évite une interruption dans le travail de l'utilisateur.
+//-- Avec l'ancienne fonction, la narration disparaissait avant d'être réaffichée dans une 
+//-- nouvelle page, ce qui
+//-- obligeait l'utilisateur à se replacer dans son texte. Avec la nouvelle fonction, tout
+//-- se passe en arrière plan sans interruption.
+//-- Un signal prévenait l'utilisateur, mais a été enlevé car cela déplaçait le curseur.
+
+//-- Note du 12 février 2006 : cette approche ne semble pas fonctionner, car dès que le texte 
+//-- dépasse une certaine longueur, une erreur de "permission refusée" se produit. Cela a
+//-- sans doute à voir avec la longueur de la chaîne URL envoyée au serveur.
+function sauvegardeAuto() {
+  //var wsh = new ActiveXObject('WScript.Shell');
+  //var beep = 'c:\\winnt\\media\\chord.wav';
+  //wsh.run ('sndrec32 /play /close ' + beep ,0, true);
+  //unlockFields();
+  setForm();
+  //On s'assure qu'une narration existe.
+  if (document.forms(0).narrationAvecFormat.value != "") {
+      //remplace(); //Préparation de la chaîne formattée.
+      //sauvegardeFichier();
+      //On construit la chaîne de paramètres avec les valeurs du formulaire
+      chaine = "CLE=" + document.forms(0).cle.value;
+      chaine = chaine + "&SITE=" + document.forms(0).site.value;
+      chaine = chaine + "&LIEN=" + document.forms(0).elements(0).value; //(dossier.cle)
+      chaine = chaine + "&LIEN_SITE=" + document.forms(0).elements(1).value; //(dossier.site)
+      chaine = chaine + "&AUTORITE_NARRATION=" + document.forms(0).autoriteNarration.value;
+      chaine = chaine + "&AUTORITE_CREATEUR=" + document.forms(0).autoriteCreateur.value;
+      chaine = chaine + "&AUTORITE_APPROBATEUR=" + document.forms(0).autoriteApprobateur.value;
+      chaine = chaine + "&CONFIDENTIALITE_NARRATION=" + document.forms(0).confidentialiteNarration.value;
+      chaine = chaine + "&CONFIDENTIALITE_CREATEUR=" + document.forms(0).confidentialiteCreateur.value;
+      chaine = chaine + "&CONFIDENTIALITE_APPROBATEUR=" + document.forms(0).confidentialiteApprobateur.value;
+      chaine = chaine + "&AVEC_FORMAT=" + document.forms(0).narrationAvecFormat.value;
+      chaine = chaine + "&SANS_FORMAT=" + document.forms(0).narrationSansFormat.value;
+      chaine = chaine + "&MONTANT=" + document.forms(0).montant.value;
+      chaine = chaine + "&RAPPORTE_PAR=" + document.forms(0).rapporteur.value;
+//      chaine = chaine + "&CREATEUR=" + document.forms(0).createur.value;
+//      chaine = chaine + "&MODIFICATEUR=" + document.forms(0).modificateur.value;
+//      chaine = chaine + "&APPROBATEUR=" + document.forms(0).approbateur.value;
+//      chaine = chaine + "&REFERENCE=" + document.forms(0).reference.value;
+//      chaine = chaine + "&REFERENCE1=" + document.forms(0).reference1.value;
+//      chaine = chaine + "&REFERENCE2=" + document.forms(0).reference2.value;
+//      chaine = chaine + "&DATE_CREATION=" + document.forms(0).dateCreation.value;
+//      chaine = chaine + "&DATE_MODIFICATION=" + document.forms(0).dateModification.value;
+//      chaine = chaine + "&DATE_APPROBATION=" + document.forms(0).dateApprobation.value;
+      chaine = chaine + "&TEMPS=" + document.forms(0).tempsConsacre.value;
+      if(document.forms(0).cle.value == ""){
+	 chaine = chaine + "&ACTION=I";
+      }else{
+	 chaine = chaine + "&ACTION=U";
+      }
+//alert(chaine); 
+      //On appelle ensuite le servlet pour la sauvegarde.
+//      alert(document.forms(0).narrationAvecFormat.value);
+//      alert(document.forms(0).narrationSansFormat.value);
+      var url = "<%= request.getContextPath() %>/SauvegardeAuto?" + chaine;
+  //document.forms(0).narrationSansFormat.value = url;
+      var req = initRequest(url);
+      req.onreadystatechange = function() {
+      //On traite la réponse retournée pour les prochaines mises à jour.
+      //La clé et le site de la nouvelle narration sont récupérés.
+            if (req.readyState == 4) {
+                //alert(req.status);
+                if (req.status == 200) {
+                        var narration = req.responseXML.getElementsByTagName("narration")[0];
+		        if (narration.childNodes.length > 0) {
+		    	    var entree = narration.childNodes[0];
+		            var cle = entree.getElementsByTagName("cle")[0];
+		            var site = entree.getElementsByTagName("site")[0];
+		            document.forms(0).cle.value = cle.childNodes[0].nodeValue;
+		            document.forms(0).site.value = site.childNodes[0].nodeValue;
+		        }
+                }
+            }
+      };
+      req.open("GET", url, true);
+      req.send(null);
+  }
+}
+
+function doCancel() {
+//  if (document.forms(0).HTMLEditor.isChanged() == false ){
+  if (fenetreNarration.innerHTML == document.forms(0).narrationAvecFormat.value ){
+      window.location = '<%=request.getContextPath()%>/dossier/show.do?site=<bean:write name="narration" property="dossier.site"/>&cle=<bean:write name="narration" property="dossier.cle"/>';
+  }else{
+    var isYes = confirm("<bean:message key='pfc_closequery_savechanges'/>");
+    if (isYes){
+      doOk();
+    }else{
+      window.location = '<%=request.getContextPath()%>/dossier/show.do?site=<bean:write name="narration" property="dossier.site"/>&cle=<bean:write name="narration" property="dossier.cle"/>';
+    }
+  }
+}
+
+function doApprobation() {
+  alert("Fonction non disponible pour le moment ...");
+}
+
+function doModification() {
+  alert("Fonction non disponible pour le moment ...");
+}
+
+function doClose() {
+  windowClose();
+}
+
+function doPrint() {
+  alert("Fonction non disponible pour le moment ...");
+}
+
+function lireGabarit(gabarit) {
+//-- Chargement d'un gabarit de saisie de données
+//-- dans la fenêtre de narration
+	if(gabarit != ""){
+	  var xmlhttp = new ActiveXObject("MSXML2.ServerXMLHTTP"); 
+	  serveur = "<%= request.getServerName() %>";
+	  port = "<%= request.getServerPort() %>";
+	  chemin = getChemin(serveur,port);
+	  xmlhttp.open("GET", chemin + gabarit, 0); 
+	  xmlhttp.send(""); 
+	  //alert(xmlhttp.responseText);
+	  fenetreNarration.insertAdjacentHTML("beforeEnd", xmlhttp.responseText); 
+	  xmlhttp = null; 
+	  atteindreFin();
+	}
+}
+
+function tabulation() {
+	fenetreNarration.focus();
+	fenetreNarration.click();
+	var oShell= new ActiveXObject("WScript.Shell");
+	oShell.SendKeys("{TAB}{TAB}");
+	fenetreNarration.insertAdjacentHTML("beforeEnd", "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+	fenetreNarration.focus();
+	fenetreNarration.click();
+}
+
+function atteindreFin() {
+	fenetreNarration.focus();
+	fenetreNarration.click();
+	var oShell= new ActiveXObject("WScript.Shell");
+	oShell.SendKeys("{PGDN}{PGDN}{PGDN}");
+	fenetreNarration.focus();
+	fenetreNarration.click();
+}
+
+function toucheCTRL() {
+//-- On désactive toutes les commandes qui utilisent la touche CTRL
+//-- pour des raisons de sécurité, sauf le copier coller pour les narrations.
+  if (window.event.ctrlKey){
+    if(window.event.keyCode != 67 && window.event.keyCode != 86 && window.event.keyCode != 88){
+       //window.event.keyCode = 0;
+         event.returnValue = false;
+
+    }
+  }
+}
+
+function initRequest(url) {
+    if (window.XMLHttpRequest) {
+        return new XMLHttpRequest();
+    } else if (window.ActiveXObject) {
+        xml = new ActiveXObject("Microsoft.XMLHTTP");
+        return xml;
+    }
+}
+
+</SCRIPT>
+<STYLE>
+	.time    {behavior: url(#default#time2);}
+</STYLE>
+
+<title><bean:message key='v_commentaire_t'/></title>
+
+</head>
+<body
+  leftmargin="5" rightmargin="0" topmargin="5" marginheight="5" marginwidth="5"
+    onKeyDown="return toucheCTRL();" >
+   <P CLASS="time" BEGIN="1" DUR="30" TIMEACTION="none" repeatCount="indefinite" RESTART="whenNotActive" onrepeat="sauvegardeAuto();"></P>
+
+  <html:form action="/dossier/narration/add"  >
+    <html:hidden  name="narration" property="dossier.cle" />
+    <html:hidden  name="narration" property="dossier.site" />
+    <jsp:include page="/templates/narrations/tpl_onglet_narration_entete.jsp" flush="true" />
+    <jsp:include page="/templates/narrations/tpl_narrations_formulaire.jsp" flush="true" />
+    <jsp:include page="/templates/tpl_calendrier_div.jsp" flush="true" />
+  </html:form>
+
+</body>
+</html>

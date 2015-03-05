@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jboss:ejb-jar xmlns:jboss="http://www.jboss.com/xml/ns/javaee"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:c="urn:clustering:1.0" 
+	xmlns:s="urn:security:1.1:run-as-principal"
+	xmlns:r="urn:resource-adapter-binding" xmlns:p="urn:ejb-pool:1.0"
+	xmlns:ca="urn:ejb-cache:1.0"
+	xsi:schemaLocation="http://www.jboss.com/xml/ns/javaee http://www.jboss.org/j2ee/schema/jboss-ejb3-2_0.xsd http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/ejb-jar_3_1.xsd"
+	version="3.1" impl-version="2.0">
+<!-- 
+	<enterprise-beans>
+		<message-driven>
+			<ejb-name>ReplyingMDB</ejb-name>
+			<ejb-class>org.jboss.as.test.integration.ejb.mdb.messagedestination.ReplyingMDB</ejb-class>
+			<activation-config>
+				<activation-config-property>
+					<activation-config-property-name>destination</activation-config-property-name>
+					<activation-config-property-value>java:jboss/mdbtest/messageDestinationQueue
+					</activation-config-property-value>
+				</activation-config-property>
+			</activation-config>
+		</message-driven>
+	</enterprise-beans>
+
+	<assembly-descriptor>
+		<s:security>
+			<ejb-name>BuildDatabaseEJB</ejb-name>
+			<s:security-domain>other</s:security-domain>
+			<s:missing-method-permissions-deny-access>true</s:missing-method-permissions-deny-access>
+		</s:security>
+		<c:clustering>
+			<ejb-name>BuildDatabaseEJB</ejb-name>
+			<c:clustered>true</c:clustered>
+		</c:clustering>
+		<p:pool>
+			<ejb-name>*</ejb-name>
+			<p:bean-instance-pool-ref>my-pool</p:bean-instance-pool-ref>
+		</p:pool>
+		<ca:cache>
+			<ejb-name>*</ejb-name>
+			<ca:cache-ref>my-cache</ca:cache-ref>
+		</ca:cache>
+		<r:resource-adapter-binding>
+			<ejb-name>*</ejb-name>
+			<r:resource-adapter-name>myResourceAdaptor</r:resource-adapter-name>
+		</r:resource-adapter-binding>
+	</assembly-descriptor>
+	 -->
+</jboss:ejb-jar>

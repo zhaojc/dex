@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+ <!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+       "http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+       
+<tiles-definitions>
+	
+	<!-- Rapport global de regroupement (heures travaillées) (CDX 0080) -->
+	<definition name=".global.rapport.regroupement" extends=".base.header.layout">
+    	<put name="titre" value="rapport.global.regroupement.heures.travaillees"/>
+    	<put name="header" value=".global.rapport.regroupement.entete"/>
+    	<put name="content" value=".global.rapport.regroupement.controle"/>
+  	    <put name="form" value="rapportRegroupementGlobal_CDX_0080"/>
+  	    <put name="action" value="/rapport/regroupementGlobal"/>	  	    
+	</definition>
+	
+	<definition name=".global.rapport.regroupement.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.global.regroupement.heures.travaillees"/>
+	</definition>	
+	
+	<definition name=".global.rapport.regroupement.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".global.rapport.regroupement.criteres"/>
+	    <put name="form" value="rapportRegroupementGlobal_CDX_0080"/>
+	</definition>
+	
+	<definition name=".global.rapport.regroupement.criteres" extends=".criteres.rapport.regroupement">
+		<put name="form" value="rapportRegroupementGlobal_CDX_0080"/>
+	</definition>	
+	
+
+	<!-- Rapport regroupement par endroit (CDX 0081) -->
+	<definition name=".endroit.rapport.regroupement" extends=".base.header.layout">
+    	<put name="titre" value="rapport.regroupement.endroit"/>
+    	<put name="header" value=".endroit.rapport.regroupement.entete"/>
+    	<put name="content" value=".endroit.rapport.regroupement.controle"/>
+  	    <put name="form" value="rapportRegroupementEndroit_CDX_0081"/>
+  	    <put name="action" value="/rapport/regroupementEndroit"/>	  	    
+	</definition>
+	
+	<definition name=".endroit.rapport.regroupement.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.regroupement.endroit"/>
+	</definition>	
+	
+	<definition name=".endroit.rapport.regroupement.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".endroit.rapport.regroupement.criteres"/>
+	    <put name="form" value="rapportRegroupementEndroit_CDX_0081"/>
+	</definition>
+	
+	<definition name=".endroit.rapport.regroupement.criteres" extends=".criteres.rapport.regroupement">
+		<put name="form" value="rapportRegroupementEndroit_CDX_0081"/>
+	</definition>	
+	
+	<!-- Rapport de regroupements par intervenant trié par catégorie (CDX 0084) -->
+	<definition name=".intervenant.categorie.rapport.regroupement" extends=".base.header.layout">
+    	<put name="titre" value="rapport.regroupement.intervenant.categorie"/>
+    	<put name="header" value=".intervenant.categorie.rapport.regroupement.entete"/>
+    	<put name="content" value=".intervenant.categorie.rapport.regroupement.controle"/>
+  	    <put name="form" value="rapportRegroupementIntervenantCategorie_CDX_0084"/>
+  	    <put name="action" value="/rapport/regroupementIntervenantCategorie"/>	  	    
+	</definition>
+	
+	<definition name=".intervenant.categorie.rapport.regroupement.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.regroupement.intervenant.categorie"/>
+	</definition>	
+	
+	<definition name=".intervenant.categorie.rapport.regroupement.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".intervenant.categorie.rapport.regroupement.criteres"/>
+	    <put name="form" value="rapportRegroupementIntervenantCategorie_CDX_0084"/>
+	</definition>
+	
+	<definition name=".intervenant.categorie.rapport.regroupement.criteres" extends=".criteres.rapport.regroupement">
+		<put name="form" value="rapportRegroupementIntervenantCategorie_CDX_0084"/>
+	</definition>
+	
+	<!-- Rapport de regroupements par intervenant trié par endroit (CDX 0085) -->
+	<definition name=".intervenant.endroit.rapport.regroupement" extends=".base.header.layout">
+    	<put name="titre" value="rapport.regroupement.intervenant.endroit"/>
+    	<put name="header" value=".intervenant.endroit.rapport.regroupement.entete"/>
+    	<put name="content" value=".intervenant.endroit.rapport.regroupement.controle"/>
+  	    <put name="form" value="rapportRegroupementIntervenantEndroit_CDX_0085"/>
+  	    <put name="action" value="/rapport/regroupementIntervenantEndroit"/>	  	    
+	</definition>
+	
+	<definition name=".intervenant.endroit.rapport.regroupement.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.regroupement.intervenant.endroit"/>
+	</definition>	
+	
+	<definition name=".intervenant.endroit.rapport.regroupement.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".intervenant.endroit.rapport.regroupement.criteres"/>
+	    <put name="form" value="rapportRegroupementIntervenantEndroit_CDX_0085"/>
+	</definition>
+	
+	<definition name=".intervenant.endroit.rapport.regroupement.criteres" extends=".criteres.rapport.regroupement">
+		<put name="form" value="rapportRegroupementIntervenantEndroit_CDX_0085"/>
+	</definition>
+	
+	<!-- Rapport regroupement par intervenant (CDX 0086) -->
+	<definition name=".intervenant.rapport.regroupement" extends=".base.header.layout">
+    	<put name="titre" value="rapport.regroupement.intervenant"/>
+    	<put name="header" value=".intervenant.rapport.regroupement.entete"/>
+    	<put name="content" value=".intervenant.rapport.regroupement.controle"/>
+  	    <put name="form" value="rapportRegroupementIntervenant_CDX_0086"/>
+  	    <put name="action" value="/rapport/regroupementIntervenant"/>	  	    
+	</definition>
+	
+	<definition name=".intervenant.rapport.regroupement.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.regroupement.intervenant"/>
+	</definition>	
+	
+	<definition name=".intervenant.rapport.regroupement.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".intervenant.rapport.regroupement.criteres"/>
+	    <put name="form" value="rapportRegroupementIntervenant_CDX_0086"/>
+	</definition>
+	
+	<definition name=".intervenant.rapport.regroupement.criteres" extends=".criteres.rapport.regroupement">
+		<put name="form" value="rapportRegroupementIntervenant_CDX_0086"/>
+	</definition>
+	
+	
+	<!-- Rapport global de regroupement (total des heures) (CDX 0087) -->
+	<definition name=".global.total.heures.rapport.regroupement" extends=".base.header.layout">
+    	<put name="titre" value="rapport.global.regroupement.total.heures"/>
+    	<put name="header" value=".global.total.heures.rapport.regroupement.entete"/>
+    	<put name="content" value=".global.total.heures.rapport.regroupement.controle"/>
+  	    <put name="form" value="rapportRegroupementGlobalTotalHeures_CDX_0087"/>
+  	    <put name="action" value="/rapport/regroupementGlobalTotalHeures"/>	  	    
+	</definition>
+	
+	<definition name=".global.total.heures.rapport.regroupement.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.global.regroupement.total.heures"/>
+	</definition>	
+	
+	<definition name=".global.total.heures.rapport.regroupement.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".global.total.heures.rapport.regroupement.criteres"/>
+	    <put name="form" value="rapportRegroupementGlobalTotalHeures_CDX_0087"/>
+	</definition>
+	
+	<definition name=".global.total.heures.rapport.regroupement.criteres" extends=".criteres.rapport.regroupement">
+		<put name="form" value="rapportRegroupementGlobalTotalHeures_CDX_0087"/>
+	</definition>
+	
+	
+	<!-- Rapport par mois de tendance des regroupements (CDX 0088) -->
+	<definition name=".tendance.mois.rapport.regroupement" extends=".base.header.layout">
+    	<put name="titre" value="rapport.mois.tendance.regroupements"/>
+    	<put name="header" value=".tendance.mois.rapport.regroupement.entete"/>
+    	<put name="content" value=".tendance.mois.rapport.regroupement.controle"/>
+  	    <put name="form" value="rapportRegroupementTendanceMois_CDX_0088"/>
+  	    <put name="action" value="/rapport/regroupementTendanceMois"/>	  	    
+	</definition>
+	
+	<definition name=".tendance.mois.rapport.regroupement.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.mois.tendance.regroupements"/>
+	</definition>	
+	
+	<definition name=".tendance.mois.rapport.regroupement.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".tendance.mois.rapport.regroupement.criteres"/>
+	    <put name="form" value="rapportRegroupementTendanceMois_CDX_0088"/>
+	</definition>
+	
+	<definition name=".tendance.mois.rapport.regroupement.criteres" extends=".criteres.rapport.regroupement">
+		<put name="form" value="rapportRegroupementTendanceMois_CDX_0088"/>
+	</definition>	
+	
+	
+	<!-- Rapport global de regroupement pour les Casinos (CDX 0089) -->
+	<definition name=".global.casino.rapport.regroupement" extends=".base.header.layout">
+    	<put name="titre" value="rapport.global.regroupement.Casinos"/>
+    	<put name="header" value=".global.casino.rapport.regroupement.entete"/>
+    	<put name="content" value=".global.casino.rapport.regroupement.controle"/>
+  	    <put name="form" value="rapportRegroupementGlobalCasino_CDX_0089"/>
+  	    <put name="action" value="/rapport/regroupementGlobalCasino"/>	  	    
+	</definition>
+	
+	<definition name=".global.casino.rapport.regroupement.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.global.regroupement.Casinos"/>
+	</definition>	
+	
+	<definition name=".global.casino.rapport.regroupement.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".global.casino.rapport.regroupement.criteres"/>
+	    <put name="form" value="rapportRegroupementGlobalCasino_CDX_0089"/>
+	</definition>
+	
+	<definition name=".global.casino.rapport.regroupement.criteres" extends=".criteres.rapport.regroupement.global">
+		<put name="form" value="rapportRegroupementGlobalCasino_CDX_0089"/>
+	</definition>
+	
+	<!-- Matrice de regroupements (CDX 0160) -->
+	<definition name=".matrice.rapport.regroupement" extends=".base.header.layout">
+    	<put name="titre" value="rapport.matrice.regroupements"/>
+    	<put name="header" value=".matrice.rapport.regroupement.entete"/>
+    	<put name="content" value=".matrice.rapport.regroupement.controle"/>
+  	    <put name="form" value="rapportRegroupementMatrice_CDX_0160"/>
+  	    <put name="action" value="/rapport/regroupementMatrice"/>	  	    
+	</definition>
+	
+	<definition name=".matrice.rapport.regroupement.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.matrice.regroupements"/>
+	</definition>	
+	
+	<definition name=".matrice.rapport.regroupement.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".matrice.rapport.regroupement.criteres"/>
+	    <put name="form" value="rapportRegroupementMatrice_CDX_0160"/>
+	</definition>
+	
+	<definition name=".matrice.rapport.regroupement.criteres" extends=".criteres.rapport.regroupement">
+		<put name="form" value="rapportRegroupementMatrice_CDX_0160"/>
+	</definition>	
+		
+	
+	<!-- Commun regroupement rapport -->
+	<definition name=".criteres.rapport.regroupement" path="/templates/rapport/tpl_regroupement.jsp">
+	    <put name="form" value=""/>
+	</definition>
+
+	<!-- Regroupement rapport global -->
+	<definition name=".criteres.rapport.regroupement.global" path="/templates/rapport/tpl_regroupement_global.jsp">
+	    <put name="form" value=""/>
+	</definition>
+		
+</tiles-definitions>

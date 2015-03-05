@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+ <!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+       "http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+       
+<tiles-definitions>
+
+	
+	<!-- Rapport sur les suivis 30 jours (CDX 0090) -->
+	<definition name=".30.jours.rapport.suivi" extends=".base.header.layout">
+    	<put name="titre" value="rapport.suivis.30.jours"/>
+    	<put name="header" value=".30.jours.rapport.suivi.entete"/>
+    	<put name="content" value=".30.jours.rapport.suivi.controle"/>
+  	    <put name="form" value="rapportSuivi30Jours_CDX_0090"/>
+  	    <put name="action" value="/rapport/suivi30Jours"/>	  	    
+	</definition>
+	
+	<definition name=".30.jours.rapport.suivi.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.suivis.30.jours"/>
+	</definition>	
+	
+	<definition name=".30.jours.rapport.suivi.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".30.jours.rapport.suivi.criteres"/>
+	    <put name="form" value="rapportSuivi30Jours_CDX_0090"/>
+	</definition>
+	
+	<definition name=".30.jours.rapport.suivi.criteres" extends=".criteres.rapport.site.date">
+		<put name="form" value="rapportSuivi30Jours_CDX_0090"/>
+	</definition>
+	
+
+	<!-- Rapport sur les suivis 24 heures par intervenant (CDX 0091) -->
+	<definition name=".24.heures.intervenant.rapport.suivi" extends=".base.header.layout">
+    	<put name="titre" value="rapport.suivis.24.heures.intervenant"/>
+    	<put name="header" value=".24.heures.intervenant.rapport.suivi.entete"/>
+    	<put name="content" value=".24.heures.intervenant.rapport.suivi.controle"/>
+  	    <put name="form" value="rapportSuivi24HeuresIntervenant_CDX_0091"/>
+  	    <put name="action" value="/rapport/suivi24HeuresIntervenant"/>	  	    
+	</definition>
+	
+	<definition name=".24.heures.intervenant.rapport.suivi.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.suivis.24.heures.intervenant"/>
+	</definition>	
+	
+	<definition name=".24.heures.intervenant.rapport.suivi.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".24.heures.intervenant.rapport.suivi.criteres"/>
+	    <put name="form" value="rapportSuivi24HeuresIntervenant_CDX_0091"/>
+	</definition>
+	
+	<definition name=".24.heures.intervenant.rapport.suivi.criteres" extends=".criteres.rapport.site.intervenant.date">
+		<put name="form" value="rapportSuivi24HeuresIntervenant_CDX_0091"/>
+	</definition>
+	
+	
+	<!-- Rapport sur les suivis 21 jours par intervenant (CDX 0092) -->
+	<definition name=".21.jours.intervenant.rapport.suivi" extends=".base.header.layout">
+    	<put name="titre" value="rapport.suivis.21.jours.intervenant"/>
+    	<put name="header" value=".21.jours.intervenant.rapport.suivi.entete"/>
+    	<put name="content" value=".21.jours.intervenant.rapport.suivi.controle"/>
+  	    <put name="form" value="rapportSuivi21JoursIntervenant_CDX_0092"/>
+  	    <put name="action" value="/rapport/suivi21JoursIntervenant"/>	  	    
+	</definition>
+	
+	<definition name=".21.jours.intervenant.rapport.suivi.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.suivis.21.jours.intervenant"/>
+	</definition>	
+	
+	<definition name=".21.jours.intervenant.rapport.suivi.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".21.jours.intervenant.rapport.suivi.criteres"/>
+	    <put name="form" value="rapportSuivi21JoursIntervenant_CDX_0092"/>
+	</definition>
+	
+	<definition name=".21.jours.intervenant.rapport.suivi.criteres" extends=".criteres.rapport.site.intervenant.date">
+		<put name="form" value="rapportSuivi21JoursIntervenant_CDX_0092"/>
+	</definition>	
+	
+	
+	<!-- Rapport sur les suivis 30 jours par intervenant (CDX 0093) -->
+	<definition name=".30.jours.intervenant.rapport.suivi" extends=".base.header.layout">
+    	<put name="titre" value="rapport.suivis.30.jours.intervenant"/>
+    	<put name="header" value=".30.jours.intervenant.rapport.suivi.entete"/>
+    	<put name="content" value=".30.jours.intervenant.rapport.suivi.controle"/>
+  	    <put name="form" value="rapportSuivi30JoursIntervenant_CDX_0093"/>
+  	    <put name="action" value="/rapport/suivi30JoursIntervenant"/>	  	    
+	</definition>
+	
+	<definition name=".30.jours.intervenant.rapport.suivi.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.suivis.30.jours.intervenant"/>
+	</definition>	
+	
+	<definition name=".30.jours.intervenant.rapport.suivi.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".30.jours.intervenant.rapport.suivi.criteres"/>
+	    <put name="form" value="rapportSuivi30JoursIntervenant_CDX_0093"/>
+	</definition>
+	
+	<definition name=".30.jours.intervenant.rapport.suivi.criteres" extends=".criteres.rapport.site.intervenant.date">
+		<put name="form" value="rapportSuivi30JoursIntervenant_CDX_0093"/>
+	</definition>
+	
+	
+	<!-- Rapport des suivis par intervenant (CDX 0094) -->
+	<definition name=".site.intervenant.rapport.suivi" extends=".base.header.layout">
+    	<put name="titre" value="rapport.suivis.intervenant"/>
+    	<put name="header" value=".site.intervenant.rapport.suivi.entete"/>
+    	<put name="content" value=".site.intervenant.rapport.suivi.controle"/>
+  	    <put name="form" value="rapportSuiviSiteIntervenant_CDX_0094"/>
+  	    <put name="action" value="/rapport/suiviSiteIntervenant"/>	  	    
+	</definition>
+	
+	<definition name=".site.intervenant.rapport.suivi.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.suivis.intervenant"/>
+	</definition>	
+	
+	<definition name=".site.intervenant.rapport.suivi.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".site.intervenant.rapport.suivi.criteres"/>
+	    <put name="form" value="rapportSuiviSiteIntervenant_CDX_0094"/>
+	</definition>
+	
+	<definition name=".site.intervenant.rapport.suivi.criteres" extends=".criteres.rapport.site.intervenant.date.activite">
+		<put name="form" value="rapportSuiviSiteIntervenant_CDX_0094"/>
+	</definition>
+
+
+	<!-- Rapport des suivis par intervenant (CDX 0095) -->
+	<definition name=".retard.intervenant.rapport.suivi" extends=".base.header.layout">
+    	<put name="titre" value="rapport.suivis.retard.intervenant"/>
+    	<put name="header" value=".retard.intervenant.rapport.suivi.entete"/>
+    	<put name="content" value=".retard.intervenant.rapport.suivi.controle"/>
+  	    <put name="form" value="rapportSuiviRetardIntervenant_CDX_0095"/>
+  	    <put name="action" value="/rapport/suiviRetardIntervenant"/>	  	    
+	</definition>
+	
+	<definition name=".retard.intervenant.rapport.suivi.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.suivis.retard.intervenant"/>
+	</definition>	
+	
+	<definition name=".retard.intervenant.rapport.suivi.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".retard.intervenant.rapport.suivi.criteres"/>
+	    <put name="form" value="rapportSuiviRetardIntervenant_CDX_0095"/>
+	</definition>
+	
+	<definition name=".retard.intervenant.rapport.suivi.criteres" extends=".criteres.rapport.site.intervenant.date.activite">
+		<put name="form" value="rapportSuiviRetardIntervenant_CDX_0095"/>
+	</definition>
+
+	<!-- Rapport des suivis d'enquête (CDX 0098) -->
+	<definition name=".rapport.suivi.enquetes" extends=".base.header.layout">
+    	<put name="titre" value="rapport.suivis"/>
+    	<put name="header" value=".rapport.suivi.enquetes.entete"/>
+    	<put name="content" value=".rapport.suivi.enquetes.controle"/>
+  	    <put name="form" value="rapportSuivisForm_CDX_0098"/>
+  	    <put name="action" value="/rapport/rapportSuivis"/>	  	    
+	</definition>
+	
+	<definition name=".rapport.suivi.enquetes.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.suivis"/>
+	</definition>	
+	
+	<definition name=".rapport.suivi.enquetes.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".rapport.suivi.enquetes.criteres"/>
+	    <put name="form" value="rapportSuivisForm_CDX_0098"/>
+	</definition>
+	
+	<definition name=".rapport.suivi.enquetes.criteres" extends=".criteres.rapport.site.nature.date.activite">
+		<put name="form" value="rapportSuivisForm_CDX_0098"/>
+	</definition>
+
+	
+	
+</tiles-definitions>

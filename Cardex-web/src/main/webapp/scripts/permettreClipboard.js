@@ -1,0 +1,1 @@
+isActiverViderClipBoard = false;

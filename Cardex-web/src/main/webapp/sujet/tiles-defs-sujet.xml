@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+ <!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+       "http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+       
+<tiles-definitions>
+
+	<definition name=".base.sujet" extends=".base.layout">
+    	<put name="titre" value="gb_sujet"/>
+    	<put name="header" value="/templates/sujet/tpl_onglet_sujet_entete.jsp"/>
+    	<put name="content" value=""/>
+  	    <put name="form" value="sujet"/>
+  	    <put name="action" value=""/>	  	    
+	</definition>
+
+	<!-- Adresse -->
+	<definition name=".content.saisir.sujet.adresse" path="/adresses/layout/w_saisir.jsp">
+ 		<put name="actionSuffixe" value=""/>
+ 		<put name="contexteApplicatif" value="/sujet"/>
+ 		<put name="closeAction" value="/show.do"/> 	
+		<put name="formName" value="sujet"/> 	
+	</definition>
+
+	<definition name=".content.valider.sujet.adresse" path="/adresses/layout/w_valider.jsp">
+ 		<put name="actionSuffixe" value="" />
+ 		<put name="contexteApplicatif" value="/sujet"/>
+ 		<put name="closeAction" value="/show.do"/> 	
+		<put name="formName" value="sujet"/>
+	</definition>
+																	   
+	<definition name=".content.rechercher.valider.sujet.adresse" path="/adresses/layout/w_rechercherValider.jsp">
+ 		<put name="actionSuffixe" value=""/>
+ 		<put name="contexteApplicatif" value="/sujet"/>
+	</definition>
+
+	<!-- Nouveau Sujet -->
+
+	<definition name=".nouveau.sujet.role" extends=".base.sujet">
+    	<put name="content" value=".content.nouveau.sujet.role"/>
+  	    <put name="action" value="/role/nouveau/sujet/save"/>	
+	</definition>
+	
+	<definition name=".content.nouveau.sujet.role" path="/sujet/layout/w_nouveau_sujet.jsp">
+ 		<put name="preContexteApplicatif" value=""/>
+ 		<put name="contexteApplicatif" value="/role"/>
+	</definition>
+	
+	<!-- Consultation Sujet -->
+	
+	<definition name=".consultation.sujet.role" extends=".base.sujet">
+    	<put name="content" value=".content.consultation.sujet.role"/>
+  	    <put name="action" value="/role/nouveau/sujet/update"/>	
+	</definition>
+	
+	<definition name=".content.consultation.sujet.role" path="/sujet/layout/w_consultation_sujet.jsp">
+    	<put name="preContexteApplicatif" value="" direct="true"/>
+ 		<put name="contexteApplicatif" value="/role"/>
+	</definition>	
+	
+	<!-- Liaison Nouveau Sujet -->	
+	
+	<definition name=".liaison.sujet" extends=".base.layout">
+    	<put name="titre" value="tabpage_role"/>
+    	<put name="header" value=""/>
+    	<put name="content" value=""/>
+  	    <put name="form" value="lien"/>
+  	    <put name="action" value=""/>
+	</definition>	
+	
+	<!-- Choisir le rôle pour liaison d'un sujet/dossier/societe/vehicule -->
+		
+	<definition name=".dossier.choix.nouveau.sujet.role" extends=".liaison.sujet">
+    	<put name="content" value="/sujet/layout/w_liaison_nouveau_sujet_role.jsp"/>
+  	    <put name="action" value="/dossier/nouveau/sujet/link"/>	
+	</definition>
+
+	<definition name=".sujet.choix.nouveau.sujet.role" extends=".liaison.sujet">
+    	<put name="content" value="/sujet/layout/w_liaison_nouveau_sujet_role.jsp"/>
+  	    <put name="action" value="/sujet/nouveau/sujet/link"/>	
+	</definition>
+		
+	<definition name=".societe.choix.nouveau.sujet.role" extends=".liaison.sujet">
+    	<put name="content" value="/sujet/layout/w_liaison_nouveau_sujet_role.jsp"/>
+  	    <put name="action" value="/societe/nouveau/sujet/link"/>	
+	</definition>		
+
+	<definition name=".vehicule.choix.nouveau.sujet.role" extends=".liaison.sujet">
+    	<put name="content" value="/sujet/layout/w_liaison_nouveau_sujet_role.jsp"/>
+  	    <put name="action" value="/vehicule/nouveau/sujet/link"/>	
+	</definition>		
+		
+	<!-- Liaison Nouveau Sujet à un Sujet -->	
+	
+	<definition name=".sujet.liaison.sujet" extends=".base.sujet">
+    	<put name="titre" value="vide"/>
+    	<put name="content" value=""/>
+  	    <put name="form" value="rechercheSujet"/>
+  	    <put name="action" value=""/>	  	    
+	</definition>	
+	
+	<definition name=".liaison.sujet.nouveau.sujet.role" extends=".sujet.liaison.sujet">
+    	<put name="content" value=".sujet.liaison.role.nouveau.sujet.layout"/>
+  	    <put name="action" value="/role/sujet/sujet/search"/>	
+	</definition>	
+	
+	<definition name=".sujet.liaison.role.nouveau.sujet.layout" path="/sujet/layout/w_liaison_sujet.jsp">
+    	<put name="preContexteApplicatif" value="" direct="true"/>
+    	<put name="contexteApplicatif" value="/role" direct="true"/>
+    	<put name="closeAction" value="/sujet/show.do" direct="true"/>
+	</definition>	
+	
+	<!-- Choisir le rôle -->
+		
+	<definition name=".sujet.liaison.nouveau.sujet.role" extends=".sujet.liaison.sujet">
+    	<put name="titre" value="tabpage_role"/>
+  	    <put name="form" value="lien"/>
+    	<put name="content" value=".content.sujet.liaison.nouveau.sujet.role"/>
+  	    <put name="action" value="/role/sujet/nouveau/sujet/link"/>	
+	</definition>	
+
+	<definition name=".content.sujet.liaison.nouveau.sujet.role" path="/commun/layout/w_liaison_role_retour.jsp">
+    	<put name="preContexteApplicatif" value="" direct="true"/>
+    	<put name="contexteApplicatif" value="/role" direct="true"/>
+    	<put name="closeAction" value="/sujet/show.do" direct="true"/>
+	</definition>	
+	
+	<!-- Caractéristique d'un nouveau sujet -->
+	
+	<definition name=".consultation.caracteristiques.nouveau.sujet.role" extends=".base.layout">
+    	<put name="titre" value="l_cr_cle_t"/>
+  	    <put name="form" value="caracteristiques"/>
+    	<put name="content" value=".content.consultation.caracteristiques.nouveau.sujet.role"/>
+  	    <put name="action" value="/role/sujet/caracteristiques/update"/>	
+	</definition>	
+	
+	<definition name=".content.consultation.caracteristiques.nouveau.sujet.role" path="/sujet/layout/w_consultation_caracteristiques.jsp">
+    	<put name="preContexteApplicatif" value="/role" direct="true"/>
+    	<put name="contexteApplicatif" value="/sujet" direct="true"/>
+    	<put name="closeAction" value="/show.do" direct="true"/>
+    	<put name="formName" value="sujet" direct="true"/>
+	</definition>	
+
+	<!-- Ajout adresse -->
+	<definition name=".ajouter.sujet.adresse" extends=".base.adresse">
+    	<put name="content" value=".content.ajouter.sujet.adresse.sujet"/>
+  	    <put name="action" value="/sujet/adresse/initialiserValiderAjouter"/>	
+	</definition>	
+	
+	<definition name=".content.ajouter.sujet.adresse.sujet" extends=".content.saisir.sujet.adresse">
+ 		<put name="actionSuffixe" value="Ajouter"/>
+	</definition>
+
+	<!-- Ajouter Validation adresse -->
+	<definition name=".valider.ajouter.sujet.adresse" extends=".valider.adresse">
+    	<put name="content" value=".content.valider.ajouter.sujet.adresse"/>
+  	    <put name="action" value="/sujet/adresse/validerAjouter" />	
+	</definition>
+	
+	<definition name=".content.valider.ajouter.sujet.adresse" extends=".content.valider.sujet.adresse">
+ 		<put name="actionSuffixe" value="Ajouter" />
+	</definition>	
+
+		<!-- Ajouter Recherche Validation adresse -->
+	<definition name=".rechercher.valider.ajouter.sujet.adresse" extends=".rechercher.valider.adresse">
+		<put name="content" value=".content.ajouter.rechercher.valider.sujet.adresse"/>
+  	    <put name="action" value="sujet/rechercherValiderAdresse/rechercherAjouter" />
+	</definition>
+	
+	<definition name=".content.ajouter.rechercher.valider.sujet.adresse" extends=".content.rechercher.valider.sujet.adresse">
+ 		<put name="actionSuffixe" value="Ajouter" />
+	</definition>
+
+	<!-- Consultation adresse -->
+	<definition name=".consulter.sujet.adresse" extends=".base.adresse">
+    	<put name="content" value=".content.consulter.sujet.adresse"/>
+  	    <put name="action" value="/sujet/adresse/initialiserValiderConsulter" />	
+	</definition>
+	
+	<definition name=".content.consulter.sujet.adresse" extends=".content.saisir.sujet.adresse">
+ 		<put name="actionSuffixe" value="Consulter" />
+	</definition>
+	
+	<!-- Consulter Validation adresse -->
+	<definition name="valider.consulter.sujet.adresse" extends=".valider.adresse">
+    	<put name="content" value=".content.valider.consulter.sujet.adresse"/>
+  	    <put name="action" value="/sujet/adresse/validerConsulter"/>	
+	</definition>
+	
+	<definition name=".content.valider.consulter.sujet.adresse" extends=".content.valider.sujet.adresse">
+		<put name="actionSuffixe" value="Consulter"/>
+	</definition>	
+	
+		<!-- Consulter Recherche Validation adresse -->
+	<definition name=".rechercher.valider.consulter.sujet.adresse" extends=".rechercher.valider.adresse">
+		<put name="content" value=".content.consulter.rechercher.valider.sujet.adresse"/>
+  	    <put name="action" value="/sujet/rechercherValiderAdresse/rechercherConsulter" />
+	</definition>
+	
+	<definition name=".content.consulter.rechercher.valider.sujet.adresse" extends=".content.rechercher.valider.sujet.adresse">
+ 		<put name="actionSuffixe" value="Consulter" />
+	</definition>	
+	
+</tiles-definitions>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+ <!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+       "http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+       
+<tiles-definitions>
+	<!-- Image -->
+	<definition name=".liaison.image.nouveau.sujet.role" extends=".base.layout">
+    	<put name="titre" value="telechargement" />
+ 		<put name="content" value=".content.liaison.image.nouveau.sujet.role" />
+  	    <put name="form" value="photo" />
+  	    <put name="action" value="/role/sujet/image/upload" />	
+	</definition>
+
+	<definition name=".content.liaison.image.nouveau.sujet.role" path="/photo/w_liaison_image.jsp">
+    	<put name="preContexteApplicatif" value="/role" />
+ 		<put name="contexteApplicatif" value="/sujet" />
+  	    <put name="closeAction" value="/show.do" />
+  	    <put name="formNameRetour" value="sujet" />	
+	</definition>	
+	
+	<!-- Photo -->
+	<definition name=".liaison.photo.nouveau.sujet.role" extends=".base.layout">
+    	<put name="titre" value="telechargement" />
+ 		<put name="content" value=".content.liaison.photo.nouveau.sujet.role" />
+  	    <put name="form" value="photo" />
+  	    <put name="action" value="/role/sujet/photo/upload" />	
+	</definition>
+	
+	<definition name=".content.liaison.photo.nouveau.sujet.role" path="/photo/w_liaison_photo.jsp">
+    	<put name="preContexteApplicatif" value="/role" />
+ 		<put name="contexteApplicatif" value="/sujet" />
+  	    <put name="closeAction" value="/show.do" />
+  	    <put name="formNameRetour" value="sujet" />	
+	</definition>	
+	
+	<!-- Supprimer fichier photo -->
+	<definition name=".supprimer.photo.rafraichir.nouveau.sujet.role" path="/photo/w_supprimer_photo_rafraichir_entite.jsp">
+    	<put name="preContexteApplicatif" value="/role" />
+ 		<put name="contexteApplicatif" value="/sujet" />
+  	    <put name="closeAction" value="/show.do" />
+  	    <put name="formNameRetour" value="sujet" />	
+	</definition>	
+	
+</tiles-definitions>

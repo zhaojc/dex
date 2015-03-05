@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.lq.cardex</groupId>
+		<relativePath>../pom.xml</relativePath>
+		<artifactId>Cardex</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<artifactId>Cardex-dist</artifactId>
+	<packaging>pom</packaging>
+	<name>Cardex Distribution</name>
+	<description>Modele de reference - module  distribution</description>
+	<properties>
+		<scm.url>${base.scm.url}/${project.group}/${project.parent.artifactId}</scm.url>
+		<project.site>${base.pt.url}/${project.parent.artifactId}</project.site>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.lq.cardex</groupId>
+			<artifactId>Cardex-web</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<type>war</type>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<inherited>false</inherited>
+				<configuration>
+					<finalName>${app.home.source}</finalName>
+					<appendAssemblyId>false</appendAssemblyId>
+					<descriptors>
+						<descriptor>${basedir}/src/main/assemble/bundle.xml</descriptor>
+					</descriptors>
+					<filters>
+						<filter>${filter.file}</filter>
+					</filters>
+				</configuration>
+				<executions>
+					<execution>
+						<id>GenerateApplicationHomeDir</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+		</build>
+</project>

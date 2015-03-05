@@ -1,0 +1,601 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!DOCTYPE form-validation PUBLIC
+          "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.3.0//EN"
+          "http://jakarta.apache.org/commons/dtds/validator_1_3_0.dtd">
+
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one or more
+    contributor license agreements.  See the NOTICE file distributed with
+    this work for additional information regarding copyright ownership.
+    The ASF licenses this file to You under the Apache License, Version 2.0
+    (the "License"); you may not use this file except in compliance with
+    the License.  You may obtain a copy of the License at
+   
+         http://www.apache.org/licenses/LICENSE-2.0
+   
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<form-validation>
+
+<formset>
+      <form    name="rechercheDossier">
+         <field    property="dateDebutDu"
+         	   depends="date">
+                   <msg name="date" key="cardex_required_date_deb"/>
+                     <var>
+                       <var-name>datePatternStrict</var-name>
+                       <var-value>yyyy-MM-dd</var-value>
+                     </var>
+         </field>
+         <field    property="dateFinDu"
+         	   depends="date">
+                   <msg name="date" key="cardex_required_date_fin"/>
+                     <var>
+                       <var-name>datePatternStrict</var-name>
+                       <var-value>yyyy-MM-dd</var-value>
+                     </var>
+         </field>
+         <field    property="dateDebutAu"
+         	   depends="date">
+                   <msg name="date" key="cardex_required_date_deb"/>
+                     <var>
+                       <var-name>datePatternStrict</var-name>
+                       <var-value>yyyy-MM-dd</var-value>
+                     </var>
+         </field>
+         <field    property="dateFinAu"
+         	   depends="date">
+                   <msg name="date" key="cardex_required_date_fin"/>
+                     <var>
+                       <var-name>datePatternStrict</var-name>
+                       <var-value>yyyy-MM-dd</var-value>
+                     </var>
+         </field>
+         <field    property="dateCreationDu"
+         	   depends="date">
+         	     <msg name="date" key="cardex_required_created_date"/>
+                     <var>
+                       <var-name>datePatternStrict</var-name>
+                       <var-value>yyyy-MM-dd</var-value>
+                     </var>
+         </field>
+         <field    property="dateCreationAu"
+         	   depends="date">
+                   <msg name="date" key="cardex_required_created_date"/>
+                     <var>
+                       <var-name>datePatternStrict</var-name>
+                       <var-value>yyyy-MM-dd</var-value>
+                     </var>
+         </field>
+      </form>
+      <form    name="dossier">
+         <field    property="confidentialite"
+         	   depends="required">
+                   <msg name="required" key="cardex_required_confidential"/>
+         </field>
+         <field    property="statut"
+         	   depends="required">
+                   <msg name="required" key="cardex_required_statut"/>
+         </field>
+         <field    property="categorie"
+         	   depends="required">
+                   <msg name="required" key="cardex_required_category"/>
+         </field>
+         <field    property="origine"
+         	   depends="required">
+                   <arg key="origine"/>
+         </field>
+         <field    property="intervenant"
+         	   depends="required">
+                   <msg name="required" key="cardex_required_intervenant"/>
+         </field>
+         <field    property="dateDebut"
+         	   depends="required,date">
+                   <msg name="required" key="cardex_required_date_deb"/>
+                   <msg name="date" key="cardex_required_date_deb"/>
+                     <var>
+                       <var-name>datePatternStrict</var-name>
+                       <var-value>yyyy-MM-dd HH:mm:ss</var-value>
+                     </var>
+         </field>
+         <field    property="dateFin"
+         	   depends="date">
+                   <msg name="required" key="cardex_required_date_fin"/>
+                   <msg name="date" key="cardex_required_date_fin"/>
+                     <var>
+                       <var-name>datePatternStrict</var-name>
+                       <var-value>yyyy-MM-dd HH:mm:ss</var-value>
+                     </var>
+         </field>
+      </form>
+      
+      <form    name="journal">
+         <field    property="categorie"
+         	   depends="required">
+                   <msg name="required" key="cardex_required_category"/>
+         </field>
+         <field    property="description"
+         	   depends="required">
+                   <msg name="required" key="cardex_required_commentaire"/>
+         </field>
+         <field    property="intervenant"
+         	   depends="required">
+                   <msg name="required" key="cardex_required_intervenant"/>
+         </field>
+         <field    property="duree"
+         	   depends="required,integer">
+                   <msg name="required" key="cardex_required_duree"/>
+                   <msg name="integer" key="cardex_required_duree"/>
+         </field>
+         <field    property="dateDebut"
+         	   depends="required,date">
+                   <msg name="required" key="cardex_required_date_deb"/>
+                   <msg name="date" key="cardex_required_date_deb"/>
+                     <var>
+                       <var-name>datePatternStrict</var-name>
+                       <var-value>yyyy-MM-dd HH:mm:ss</var-value>
+                     </var>
+         </field>
+         <field    property="dateFin"
+         	   depends="date">
+                   <msg name="date" key="cardex_required_date_fin"/>
+                     <var>
+                       <var-name>datePatternStrict</var-name>
+                       <var-value>yyyy-MM-dd HH:mm:ss</var-value>
+                     </var>
+         </field>
+      </form>
+      <form    name="sujet">
+         <field    property="confidentialite"
+         	   depends="required">
+                   <msg name="required" key="cardex_required_confidential"/>
+         </field>
+      </form>
+      <form    name="narration">
+         <field    property="confidentialiteNarration"
+         	   depends="required">
+                   <msg name="required" key="cardex_required_confidential"/>
+         </field>
+         <field    property="narrationAvecFormat"
+         	   depends="required">
+                   <msg name="required" key="cardex_required_commentaire"/>
+         </field>
+         <field  property="montant" depends="decimal">
+                 <var>
+                   <var-name>pattern</var-name>
+                   <var-value>##,###,##0.##</var-value>
+                 </var>
+         </field>
+         
+         <field    property="tempsConsacre"
+         	   depends="required,integer">
+                   <msg name="required" key="cardex_required_duree"/>
+                   <msg name="integer" key="cardex_required_duree"/>
+         </field>
+      </form>
+      <form    name="consignation">
+         <field    property="typeConsignation"
+         	   depends="required">
+                   <msg name="required" key="cardex_required_type"/>
+         </field>
+         <field    property="montant"
+         	   depends="decimal">
+                     <var>
+                       <var-name>pattern</var-name>
+                       <var-value>##,###,##0.##</var-value>
+                     </var>
+         </field>
+         <field    property="prix"
+         	   depends="decimal">
+                     <var>
+                       <var-name>pattern</var-name>
+                       <var-value>##,###,##0.##</var-value>
+                     </var>
+         </field>
+         <field    property="quantite"
+         	   depends="long">
+                   <msg name="long" key="cardex_itemerror_numeric"/>
+         </field>
+      </form>
+      <form    name="societe">
+         <field property="confidentialite" depends="required">
+			<msg name="required" key="cardex_required_confidential"/>
+         </field>
+         <field    property="nom"
+         	   depends="required">
+                   <msg name="required" key="cardex_itemerror_string"/>
+         </field>
+         <field    property="classe"
+         	   depends="required">
+                   <msg name="required" key="cardex_required_classe"/>
+         </field>
+         <field    property="dateDeFondation"
+         	   depends="date">
+                   <msg name="date" key="cardex_required_date_fondation"/>
+                     <var>
+                       <var-name>datePatternStrict</var-name>
+                       <var-value>yyyy-MM-dd</var-value>
+                     </var>
+         </field>
+      </form>
+      <form    name="inscription">
+         <field    property="dateDebut"
+         	   depends="required,date">
+                   <msg name="required" key="cardex_required_date_deb"/>
+                   <msg name="date" key="cardex_required_date_deb"/>
+                     <var>
+                       <var-name>datePatternStrict</var-name>
+                       <var-value>yyyy-MM-dd</var-value>
+                     </var>
+         </field>
+         <field    property="dateFin"
+         	   depends="date">
+                   <msg name="date" key="cardex_required_date_fin"/>
+                     <var>
+                       <var-name>datePatternStrict</var-name>
+                       <var-value>yyyy-MM-dd</var-value>
+                     </var>
+         </field>
+         <field    property="dateInscription"
+         	   depends="date">
+                   <msg name="date" key="cardex_required_date_deb"/>
+                     <var>
+                       <var-name>datePatternStrict</var-name>
+                       <var-value>yyyy-MM-dd</var-value>
+                     </var>
+         </field>
+      </form>
+      <form    name="vehicule">
+         <field property="confidentialite" depends="required">
+         	<msg name="required" key="cardex_required_confidential"/>
+         </field>
+         <field    property="modele"
+         	   depends="required">
+                   <msg name="required" key="cardex_required_modele"/>
+         </field>
+         <field    property="dateExpirationVignette"
+         	   depends="date">
+                   <msg name="date" key="cardex_required_date_expiration"/>
+                     <var>
+                       <var-name>datePatternStrict</var-name>
+                       <var-value>yyyy-MM-dd</var-value>
+                     </var>
+         </field>
+         <field    property="dateExpirationAssurance"
+         	   depends="date">
+                   <msg name="date" key="cardex_required_date_expiration"/>
+                     <var>
+                       <var-name>datePatternStrict</var-name>
+                       <var-value>yyyy-MM-dd</var-value>
+                     </var>
+         </field>
+      </form>
+      <form    name="rechercheNarration">
+         <field    property="dateCreationDebut"
+         	   depends="date">
+                   <msg name="date" key="cardex_required_date_deb"/>
+                     <var>
+                       <var-name>datePatternStrict</var-name>
+                       <var-value>yyyy-MM-dd</var-value>
+                     </var>
+         </field>
+         <field    property="dateCreationFin"
+         	   depends="date">
+                   <msg name="date" key="cardex_required_date_fin"/>
+                     <var>
+                       <var-name>datePatternStrict</var-name>
+                       <var-value>yyyy-MM-dd</var-value>
+                     </var>
+         </field>
+         <field    property="dateApprobationDebut"
+         	   depends="date">
+                   <msg name="date" key="cardex_required_date_deb"/>
+                     <var>
+                       <var-name>datePatternStrict</var-name>
+                       <var-value>yyyy-MM-dd</var-value>
+                     </var>
+         </field>
+         <field    property="dateApprobationFin"
+         	   depends="date">
+                   <msg name="date" key="cardex_required_date_fin"/>
+                     <var>
+                       <var-name>datePatternStrict</var-name>
+                       <var-value>yyyy-MM-dd</var-value>
+                     </var>
+         </field>
+      </form>
+      <form    name="rechercheSuivi">
+         <field    property="dateEmisDebut"
+         	   depends="date">
+                   <msg name="date" key="cardex_required_date_deb"/>
+                     <var>
+                       <var-name>datePatternStrict</var-name>
+                       <var-value>yyyy-MM-dd</var-value>
+                     </var>
+         </field>
+         <field    property="datePrevueDebut"
+         	   depends="date">
+                   <msg name="date" key="cardex_required_date_deb"/>
+                     <var>
+                       <var-name>datePatternStrict</var-name>
+                       <var-value>yyyy-MM-dd</var-value>
+                     </var>
+         </field>
+         <field    property="dateCompleteeDebut"
+         	   depends="date">
+                   <msg name="date" key="cardex_required_date_deb"/>
+                     <var>
+                       <var-name>datePatternStrict</var-name>
+                       <var-value>yyyy-MM-dd</var-value>
+                     </var>
+         </field>
+         <field    property="dateEmisFin"
+         	   depends="date">
+                   <msg name="date" key="cardex_required_date_fin"/>
+                     <var>
+                       <var-name>datePatternStrict</var-name>
+                       <var-value>yyyy-MM-dd</var-value>
+                     </var>
+         </field>
+         <field    property="datePrevueFin"
+         	   depends="date">
+                   <msg name="date" key="cardex_required_date_fin"/>
+                     <var>
+                       <var-name>datePatternStrict</var-name>
+                       <var-value>yyyy-MM-dd</var-value>
+                     </var>
+         </field>
+         <field    property="dateCompleteeFin"
+         	   depends="date">
+                   <msg name="date" key="cardex_required_date_fin"/>
+                     <var>
+                       <var-name>datePatternStrict</var-name>
+                       <var-value>yyyy-MM-dd</var-value>
+                     </var>
+         </field>
+      </form>
+      <form    name="rechercheGalerie">
+         <field    property="dateAjoutDebut"
+         	   depends="date">
+                   <msg name="date" key="cardex_required_date_deb"/>
+                     <var>
+                       <var-name>datePatternStrict</var-name>
+                       <var-value>yyyy-MM-dd</var-value>
+                     </var>
+         </field>
+         <field    property="dateValideDebut"
+         	   depends="date">
+                   <msg name="date" key="cardex_required_date_deb"/>
+                     <var>
+                       <var-name>datePatternStrict</var-name>
+                       <var-value>yyyy-MM-dd</var-value>
+                     </var>
+         </field>
+         <field    property="dateTermineDebut"
+         	   depends="date">
+                   <msg name="date" key="cardex_required_date_deb"/>
+                     <var>
+                       <var-name>datePatternStrict</var-name>
+                       <var-value>yyyy-MM-dd</var-value>
+                     </var>
+         </field>
+         <field    property="dateAjoutFin"
+         	   depends="date">
+                   <msg name="date" key="cardex_required_date_fin"/>
+                     <var>
+                       <var-name>datePatternStrict</var-name>
+                       <var-value>yyyy-MM-dd</var-value>
+                     </var>
+         </field>
+         <field    property="dateValideFin"
+         	   depends="date">
+                   <msg name="date" key="cardex_required_date_fin"/>
+                     <var>
+                       <var-name>datePatternStrict</var-name>
+                       <var-value>yyyy-MM-dd</var-value>
+                     </var>
+         </field>
+         <field    property="dateTermineFin"
+         	   depends="date">
+                   <msg name="date" key="cardex_required_date_fin"/>
+                     <var>
+                       <var-name>datePatternStrict</var-name>
+                       <var-value>yyyy-MM-dd</var-value>
+                     </var>
+         </field>
+      </form>
+      <form    name="suivi">
+         <field    property="suivi"
+         	   depends="required">
+                   <msg name="required" key="cardex_required_commentaire"/>
+         </field>
+         <field    property="secteurAssigne"
+         	   depends="required">
+                   <msg name="required" key="cardex_required_secteur"/>
+         </field>
+         <field    property="dateCreation"
+         	   depends="date">
+                   <msg name="date" key="cardex_required_date_deb"/>
+                     <var>
+                       <var-name>datePatternStrict</var-name>
+                       <var-value>yyyy-MM-dd HH:mm:ss</var-value>
+                     </var>
+         </field>
+         <field    property="datePrevue"
+         	   depends="date">
+                   <msg name="date" key="cardex_required_date_prevue"/>
+                     <var>
+                       <var-name>datePatternStrict</var-name>
+                       <var-value>yyyy-MM-dd HH:mm:ss</var-value>
+                     </var>
+         </field>
+         <field    property="dateCompletee"
+         	   depends="date">
+                   <msg name="date" key="cardex_required_date_completee"/>
+                     <var>
+                       <var-name>datePatternStrict</var-name>
+                       <var-value>yyyy-MM-dd HH:mm:ss</var-value>
+                     </var>
+         </field>
+      </form>
+      <form    name="lien">
+         <field    property="role"
+         	   depends="required">
+                   <msg name="required" key="cardex_required_role"/>
+         </field>
+      </form>
+      <form    name="PSUMandat">
+         <field    property="typeAction"
+         	   depends="required">
+                   <msg name="required" key="cardex_action_required"/>
+         </field>
+         <field    property="dateDebut"
+         	   depends="required,date">
+                   <msg name="required" key="cardex_required_date_deb"/>
+                   <msg name="date" key="cardex_required_date_deb"/>
+                     <var>
+                       <var-name>datePatternStrict</var-name>
+                       <var-value>yyyy-MM-dd HH:mm:ss</var-value>
+                     </var>
+         </field>
+         <field    property="dateFin"
+         	   depends="required,date">
+         	       <msg name="required" key="cardex_required_date_fin"/>
+                   <msg name="date" key="cardex_required_date_fin"/>
+                     <var>
+                       <var-name>datePatternStrict</var-name>
+                       <var-value>yyyy-MM-dd HH:mm:ss</var-value>
+                     </var>
+         </field>
+      </form>
+
+      <form name="rechercheRegroupement">
+         <field property="dateCreationDu" depends="required,date">
+             <msg name="required" key="errors.required" />
+             <arg key="remphor.entre.le"/>
+             <msg name="date" key="errors.required"/>
+         </field>
+         <field property="dateCreationAu" depends="required,date">
+             <msg name="required" key="errors.required" />
+             <arg key="d_date_fin_ajout"/>
+             <msg name="date" key="errors.required"/>
+         </field>         
+      </form>
+
+      <form name="rechercheConsignation">
+
+         <field property="dateDebut"
+         	   depends="date">
+                   <msg name="date" key="cardex_required_date_deb"/>
+                     <var>
+                       <var-name>datePatternStrict</var-name>
+                       <var-value>yyyy-MM-dd</var-value>
+                     </var>
+         </field>
+         <field property="dateFin"
+         	   depends="date">
+                   <msg name="date" key="cardex_required_date_fin"/>
+                     <var>
+                       <var-name>datePatternStrict</var-name>
+                       <var-value>yyyy-MM-dd</var-value>
+                     </var>
+         </field>
+      </form>
+
+      <form name="billet">
+         <field property="numeroControl" depends="required">
+             <msg name="required" key="errors.required" />
+             <arg key="numero.control"/>
+             <msg name="invalide" key="cardex_numero_controle_invalid" />
+         </field>
+		  <field  property="valeur" depends="decimal">
+		  		<var>
+		  			<var-name>pattern</var-name>
+		  			<var-value>##,###,##0.##</var-value>
+		  		</var>
+		  </field>
+          <field  property="montantLot" depends="decimal">
+		  		<var>
+		  			<var-name>pattern</var-name>
+		  			<var-value>##,###,##0.##</var-value>
+		  		</var>
+		  </field>
+      </form>
+
+      <form name="evaluation">
+         <field property="dateDebutEval" depends="required">
+             <msg name="required" key="errors.required" />
+             <arg key="periode.evaluation"/>
+         </field>
+		  <field  property="dateFinEval" depends="required">
+             <msg name="required" key="errors.required" />
+             <arg key="periode.evaluation"/>
+		  </field>
+		  <field  property="dateEvaluation" depends="required">
+             <msg name="required" key="errors.required" />
+             <arg key="evaluation.effectuee.le"/>
+		  </field>
+      </form>
+      
+      <form    name="urgence">
+         <field    property="classe"
+         	   depends="required">
+                   <msg name="required" key="cardex_required_classe"/>
+         </field>
+      </form>
+
+      <form name="auditSommaireAccesRapportForm_CDX_0120">
+         <field property="site" depends="required">
+             <msg name="required" key="errors.required" />
+             <arg key="l_si_cle_t"/>
+         </field>
+	  </form>
+
+      <form name="auditDetailAccesRapportForm_CDX_0121">
+         <field property="site" depends="required">
+             <msg name="required" key="errors.required" />
+             <arg key="l_si_cle_t"/>
+         </field>
+	  </form>
+
+      <form name="rapportDossierHebdomadaire_CDX_0146">
+         <field property="genre" depends="required">
+             <msg name="required" key="errors.required" />
+             <arg key="i_genre_t"/>
+         </field>
+	  </form>
+	  
+      <form name="rapportDossierCumulatif_CDX_0147">
+         <field property="genre" depends="required">
+             <msg name="required" key="errors.required" />
+             <arg key="i_genre_t"/>
+         </field>
+	  </form>
+            
+    <form name="adresse"/>
+	<form name="caracteristiques"/>
+	<form name="partage"/>
+	<form name="jeux"/>
+	<form name="particularites"/>
+	<form name="photo"/>
+	<form name="profils"/>
+	<form name="rechercheAdresses"/>
+	<form name="rechercheSociete"/>
+	<form name="rechercheSujet"/>
+	<form name="rechercheVehicule"/>
+	<form name="rechercheBillets"/>
+	<form name="recherchePSUMandat"/>
+	<form name="rechercheJournal"/>
+	<form name="changementMotPasse"/>
+	<form name="sousCategories"/>
+	<form name="validationAdresse"/>
+	<form name="rechercheValidationAdresse"/>
+      
+   </formset>
+
+</form-validation>

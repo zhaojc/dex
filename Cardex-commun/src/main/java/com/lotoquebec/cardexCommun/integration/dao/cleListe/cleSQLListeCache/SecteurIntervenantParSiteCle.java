@@ -1,0 +1,62 @@
+/*
+ * Created on 12-May-2008
+ */
+package com.lotoquebec.cardexCommun.integration.dao.cleListe.cleSQLListeCache;
+
+import com.lotoquebec.cardexCommun.GlobalConstants;
+import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
+import com.lotoquebec.cardexCommun.integration.dao.ListeCacheSQL;
+import com.lotoquebec.cardexCommun.integration.dao.OracleDAOUtils;
+import com.lotoquebec.cardexCommun.integration.dao.jdbc.PreparerSQL;
+
+
+
+/**
+ * @author levassc
+ */
+public class SecteurIntervenantParSiteCle extends CleSQLListeCache{
+
+	public SecteurIntervenantParSiteCle(String langue, String colonneDiscriminantValeur) {
+		super(langue, colonneDiscriminantValeur);
+		this.discriminantValeurRequis = true;
+	}
+
+	public SecteurIntervenantParSiteCle(CardexAuthenticationSubject subject, String colonneDiscriminantValeur) {
+		super(subject.getLocale().getLanguage(), colonneDiscriminantValeur);
+		this.discriminantValeurRequis = true;
+	}
+	 
+	/* (non-Javadoc)
+	 * @see com.lotoquebec.cardexCommun.integration.dao.cleListe.CleSQLListeCache#getSQL()
+	 */
+	public PreparerSQL getPreparerSQL() {
+		PreparerSQL preparerSQL = new PreparerSQL();
+		StringBuilder SQL = new StringBuilder();
+		SQL.append("select i.name as "+ListeCacheSQL.CLE+", tr.v_tr_description as secteur, i.i_st_cle as statut, tr.v_tr_description||' - '||i.v_in_nom||', '||i.v_in_prenom||' ('||i.name||') ' as "+ListeCacheSQL.DESCRIPTION+", ");
+		SQL.append("replace(convert(i.v_in_nom || ', ' || i.v_in_prenom || ' (' || tr.v_tr_description || ') ', 'US7ASCII'), '-', 'a') as descriptionConvert ");
+		SQL.append("from in_intervenant i, tr_traduction tr ");
+		SQL.append("where i.i_st_cle = "+GlobalConstants.Statut.INTERVENANT_ACTIF+" ");
+		SQL.append("and i.l_in_secteur = tr.l_tr_cle ");
+		SQL.append("and i.l_si_cle = ? ");
+		preparerSQL.addParametre(Integer.valueOf(discriminantValeur));
+		SQL.append("and tr.i_la_cle = ? ");
+		preparerSQL.addParametre(OracleDAOUtils.getLongLangue(langue));
+		SQL.append("union ");
+		
+		SQL.append("select i.name as "+ListeCacheSQL.CLE+", tr.v_tr_description as secteur, i.i_st_cle as statut, tr.v_tr_description||' - '||i.v_in_nom||', '||i.v_in_prenom||' (Inactif) ('||i.name||') ' as "+ListeCacheSQL.DESCRIPTION+", ");
+		SQL.append("replace(convert(i.v_in_nom || ', ' || i.v_in_prenom || ' (' || tr.v_tr_description || ') ', 'US7ASCII'), '-', 'a') as v ");
+		SQL.append("from in_intervenant i, tr_traduction tr ");
+		SQL.append("where i.i_st_cle = "+GlobalConstants.Statut.INTERVENANT_INACTIF+" ");
+		SQL.append("and i.l_in_secteur = tr.l_tr_cle ");
+		SQL.append("and i.l_si_cle = ? ");
+		preparerSQL.addParametre(Integer.valueOf(discriminantValeur));
+		SQL.append("and tr.i_la_cle = ? ");
+		preparerSQL.addParametre(OracleDAOUtils.getLongLangue(langue));
+		
+		SQL.append("order by secteur, statut, descriptionConvert");
+		preparerSQL.setSQL(SQL.toString());
+		
+		return preparerSQL;
+	}
+	
+}

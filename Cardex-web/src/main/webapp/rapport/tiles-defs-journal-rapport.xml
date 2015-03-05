@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+ <!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+       "http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+       
+<tiles-definitions>
+
+	
+	<!-- Rapport journal sommaire (CDX 0020) -->
+	<definition name=".sommaire.rapport.journal" extends=".base.header.layout">
+    	<put name="titre" value="rapport.journal.sommaire"/>
+    	<put name="header" value=".sommaire.rapport.journal.entete"/>
+    	<put name="content" value=".sommaire.rapport.journal.controle"/>
+  	    <put name="form" value="rapportJournalSommaire_CDX_0020"/>
+  	    <put name="action" value="/rapport/journalSommaire"/>	  	    
+	</definition>
+	
+	<definition name=".sommaire.rapport.journal.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.journal.sommaire"/>
+	</definition>	
+	
+	<definition name=".sommaire.rapport.journal.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".sommaire.rapport.journal.criteres"/>
+	    <put name="form" value="rapportJournalSommaire_CDX_0020"/>
+	</definition>
+	
+	<definition name=".sommaire.rapport.journal.criteres" extends=".criteres.rapport.journal">
+		<put name="form" value="rapportJournalSommaire_CDX_0020"/>
+	</definition>
+	
+	
+	<!-- Rapport journal détaillé (CDX 0021) -->
+	<definition name=".detaille.rapport.journal" extends=".base.header.layout">
+    	<put name="titre" value="rapport.journal.detaille"/>
+    	<put name="header" value=".detaille.rapport.journal.entete"/>
+    	<put name="content" value=".detaille.rapport.journal.controle"/>
+  	    <put name="form" value="rapportJournalDetaille_CDX_0021"/>
+  	    <put name="action" value="/rapport/journalDetaille"/>	  	    
+	</definition>
+	
+	<definition name=".detaille.rapport.journal.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.journal.detaille"/>
+	</definition>	
+	
+	<definition name=".detaille.rapport.journal.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".detaille.rapport.journal.criteres"/>
+	    <put name="form" value="rapportJournalDetaille_CDX_0021"/>
+	</definition>
+	
+	<definition name=".detaille.rapport.journal.criteres" extends=".criteres.rapport.journal">
+		<put name="form" value="rapportJournalDetaille_CDX_0021"/>
+	</definition>
+	
+	
+	<!-- Rapport journal par origines (CDX 0022) -->
+	<definition name=".origine.rapport.journal" extends=".base.header.layout">
+    	<put name="titre" value="rapport.journal.origines"/>
+    	<put name="header" value=".origine.rapport.journal.entete"/>
+    	<put name="content" value=".origine.rapport.journal.controle"/>
+  	    <put name="form" value="rapportJournalOrigine_CDX_0022"/>
+  	    <put name="action" value="/rapport/journalOrigine"/>	  	    
+	</definition>
+	
+	<definition name=".origine.rapport.journal.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.journal.origines"/>
+	</definition>	
+	
+	<definition name=".origine.rapport.journal.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".origine.rapport.journal.criteres"/>
+	    <put name="form" value="rapportJournalOrigine_CDX_0022"/>
+	</definition>
+	
+	<definition name=".origine.rapport.journal.criteres" extends=".criteres.rapport.journal">
+		<put name="form" value="rapportJournalOrigine_CDX_0022"/>
+	</definition>
+
+
+	<!-- Rapport journal par descriptifs (CDX 0023) -->
+	<definition name=".descriptif.rapport.journal" extends=".base.header.layout">
+    	<put name="titre" value="rapport.journal.descriptifs"/>
+    	<put name="header" value=".descriptif.rapport.journal.entete"/>
+    	<put name="content" value=".descriptif.rapport.journal.controle"/>
+  	    <put name="form" value="rapportJournalDescriptif_CDX_0023"/>
+  	    <put name="action" value="/rapport/journalDescriptif"/>	  	    
+	</definition>
+	
+	<definition name=".descriptif.rapport.journal.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.journal.descriptifs"/>
+	</definition>	
+	
+	<definition name=".descriptif.rapport.journal.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".descriptif.rapport.journal.criteres"/>
+	    <put name="form" value="rapportJournalDescriptif_CDX_0023"/>
+	</definition>
+	
+	<definition name=".descriptif.rapport.journal.criteres" extends=".criteres.rapport.journal">
+		<put name="form" value="rapportJournalDescriptif_CDX_0023"/>
+	</definition>
+	
+	
+	<!-- Journal des enquêteurs (CDX 0053) -->
+	<definition name=".enqueteur.rapport.journal" extends=".base.header.layout">
+    	<put name="titre" value="journal.enqueteurs"/>
+    	<put name="header" value=".enqueteur.rapport.journal.entete"/>
+    	<put name="content" value=".enqueteur.rapport.journal.controle"/>
+  	    <put name="form" value="rapportJournalEnqueteur_CDX_0053"/>
+  	    <put name="action" value="/rapport/journalEnqueteur"/>	  	    
+	</definition>
+	
+	<definition name=".enqueteur.rapport.journal.entete" extends=".base.entete">
+	    <put name="keyTitre" value="journal.enqueteurs"/>
+	</definition>	
+	
+	<definition name=".enqueteur.rapport.journal.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".enqueteur.rapport.journal.criteres"/>
+	    <put name="form" value="rapportJournalEnqueteur_CDX_0053"/>
+	</definition>
+	
+	<definition name=".enqueteur.rapport.journal.criteres" extends=".criteres.rapport.dossier.nature.date">
+		<put name="form" value="rapportJournalEnqueteur_CDX_0053"/>
+	</definition>		
+	
+	<!-- Commun dossier rapport -->
+	<definition name=".criteres.rapport.journal" path="/templates/rapport/tpl_journal.jsp">
+	    <put name="form" value=""/>
+	</definition>
+	
+</tiles-definitions>

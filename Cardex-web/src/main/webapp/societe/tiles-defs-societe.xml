@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+ <!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+       "http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+       
+<tiles-definitions>
+
+	<definition name=".base.societe" extends=".base.layout">
+    	<put name="titre" value="tabpage_societe"/>
+    	<put name="header" value="/templates/societe/tpl_onglet_recherche_societe_entete.jsp"/>
+    	<put name="content" value=""/>
+  	    <put name="form" value="societe"/>
+  	    <put name="action" value=""/>	  	    
+	</definition>
+
+	<!-- Adresse -->
+	<definition name=".content.saisir.societe.adresse" path="/adresses/layout/w_saisir.jsp">
+		<put name="actionSuffixe" value=""/>
+		<put name="contexteApplicatif" value="/societe"/>
+		<put name="closeAction" value="/show.do"/> 	
+		<put name="formName" value="societe"/> 	
+	</definition>
+	
+	<definition name=".content.valider.societe.adresse" path="/adresses/layout/w_valider.jsp">
+		<put name="actionSuffixe" value="" />
+		<put name="contexteApplicatif" value="/societe"/>
+		<put name="closeAction" value="/show.do"/> 	
+		<put name="formName" value="societe"/>
+	</definition>
+	
+	<definition name=".content.rechercher.valider.societe.adresse" path="/adresses/layout/w_rechercherValider.jsp">
+		<put name="actionSuffixe" value=""/>
+		<put name="contexteApplicatif" value="/societe"/>
+	</definition>
+		
+	<!-- Liaison Nouveau Sujet à un societe -->	
+	
+	<definition name=".liaison.societe" extends=".base.layout">
+    	<put name="titre" value="tabpage_role"/>
+    	<put name="content" value=""/>
+  	    <put name="form" value="lien"/>
+  	    <put name="action" value=""/>	  	    
+	</definition>	
+	
+	<!-- Choisir le rôle -->
+		
+	<definition name=".societe.liaison.nouveau.sujet.role" extends=".liaison.sujet">
+    	<put name="titre" value="tabpage_role"/>
+  	    <put name="form" value="lien"/>
+    	<put name="content" value=".content.societe.liaison.nouveau.sujet.role"/>
+  	    <put name="action" value="/role/societe/nouveau/sujet/link"/>	
+	</definition>	
+
+	<definition name=".content.societe.liaison.nouveau.sujet.role" path="/commun/layout/w_liaison_role_retour.jsp">
+    	<put name="preContexteApplicatif" value="" direct="true"/>
+    	<put name="contexteApplicatif" value="/role" direct="true"/>
+    	<put name="closeAction" value="/sujet/show.do" direct="true"/>
+	</definition>	
+
+	<!-- Ajout adresse -->
+	<definition name=".ajouter.societe.adresse" extends=".base.adresse">
+    	<put name="content" value=".content.ajouter.societe.adresse.societe"/>
+  	    <put name="action" value="/societe/adresse/initialiserValiderAjouter"/>	
+	</definition>	
+	
+	<definition name=".content.ajouter.societe.adresse.societe" extends=".content.saisir.societe.adresse">
+ 		<put name="actionSuffixe" value="Ajouter"/>
+	</definition>
+
+	<!-- Ajouter Validation adresse -->
+	<definition name=".valider.ajouter.societe.adresse" extends=".valider.adresse">
+    	<put name="content" value=".content.valider.ajouter.societe.adresse"/>
+  	    <put name="action" value="/societe/adresse/validerAjouter" />	
+	</definition>
+	
+	<definition name=".content.valider.ajouter.societe.adresse" extends=".content.valider.societe.adresse">
+ 		<put name="actionSuffixe" value="Ajouter" />
+	</definition>	
+
+		<!-- Ajouter Recherche Validation adresse -->
+	<definition name=".rechercher.valider.ajouter.societe.adresse" extends=".rechercher.valider.adresse">
+		<put name="content" value=".content.ajouter.rechercher.valider.societe.adresse"/>
+  	    <put name="action" value="societe/rechercherValiderAdresse/rechercherAjouter" />
+	</definition>
+	
+	<definition name=".content.ajouter.rechercher.valider.societe.adresse" extends=".content.rechercher.valider.societe.adresse">
+ 		<put name="actionSuffixe" value="Ajouter" />
+	</definition>
+
+	<!-- Consultation adresse -->
+	<definition name=".consulter.societe.adresse" extends=".base.adresse">
+    	<put name="content" value=".content.consulter.societe.adresse"/>
+  	    <put name="action" value="/societe/adresse/initialiserValiderConsulter" />	
+	</definition>
+	
+	<definition name=".content.consulter.societe.adresse" extends=".content.saisir.societe.adresse">
+ 		<put name="actionSuffixe" value="Consulter" />
+	</definition>
+	
+	<!-- Consulter Validation adresse -->
+	<definition name="valider.consulter.societe.adresse" extends=".valider.adresse">
+    	<put name="content" value=".content.valider.consulter.societe.adresse"/>
+  	    <put name="action" value="/societe/adresse/validerConsulter"/>	
+	</definition>
+	
+	<definition name=".content.valider.consulter.societe.adresse" extends=".content.valider.societe.adresse">
+		<put name="actionSuffixe" value="Consulter"/>
+	</definition>	
+	
+		<!-- Consulter Recherche Validation adresse -->
+	<definition name=".rechercher.valider.consulter.societe.adresse" extends=".rechercher.valider.adresse">
+		<put name="content" value=".content.consulter.rechercher.valider.societe.adresse"/>
+  	    <put name="action" value="/societe/rechercherValiderAdresse/rechercherConsulter" />
+	</definition>
+	
+	<definition name=".content.consulter.rechercher.valider.societe.adresse" extends=".content.rechercher.valider.societe.adresse">
+ 		<put name="actionSuffixe" value="Consulter" />
+	</definition>
+	
+</tiles-definitions>

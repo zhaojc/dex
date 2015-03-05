@@ -1,0 +1,315 @@
+<%-- --------------------------------------------------------------------------
+Use case    : Ajout/Modification d'une narration.
+Description : Module d'affichage du formulaire de'une narration.
+Author(s)   : $Author: mdemers $, abruno-boucher, mdemers
+Revision    : $Revision: 1.27 $, $Date: 2002/05/01 17:42:34 $
+
+History     : Voir ci-dessous.
+
+Revision: 1.7 , Date: 2002/02/25 15:36:13 , Author: abruno-boucher
+Ajustement mise-en-page.
+
+$Revision: 1.27 $, $Date: 2002/05/01 17:42:34 $, $Author: mdemers $
+Derniers commentaires à jour.
+--------------------------------------------------------------------------- --%>
+
+<link rel="stylesheet" type="text/css" href='<%= request.getContextPath() + "/styles/jspell.css"%>' />
+<script language="JavaScript" src="/cardex/scripts/jspellpopup.js"></script>
+<script language="JavaScript">
+var ww;	// holds reference to popup
+var spellCheckURL="/cardex/JSpell"; // change to point to the JSpell Spell Check Servlet
+var imagePath="/cardex/images"; // relative URL to JSpell button images directory
+var disableLearn=false; // set to true, to remove the Learn words capability
+var forceUpperCase=false; // force suggestions and spell checker to use upper case
+var ignoreIrregularCaps=false;	// ignore lower case sentence beginnings, etc.
+var ignoreFirstCaps=false;	// ignore if first character in a field is lowercase
+var ignoreNumbers=false; // ignore words with embedded numbers
+var ignoreUpper=false; // ignore words in upper case
+var ignoreDouble=false;
+
+function getSpellCheckItem(jspell_n) {
+   var fieldsToCheck=getSpellCheckArray();
+   return fieldsToCheck[jspell_n];
+}
+
+function finVerification() {
+   document.forms(0).HTMLEditor.setText(document.forms(0).texteSaisi.value);
+}
+  
+function getSpellCheckArray() {
+
+   var fieldsToCheck=new Array();
+   // make sure to enclose form/field object reference in quotes!
+   document.forms(0).texteSaisi.value=document.forms(0).HTMLEditor.getText();
+   fieldsToCheck[fieldsToCheck.length]='document.forms(0).texteSaisi';
+   return fieldsToCheck;
+}
+
+</SCRIPT>
+
+<%@ taglib uri='/WEB-INF/struts-template.tld'  prefix='template' %>
+<%@ taglib uri='/WEB-INF/struts-logic.tld'  prefix='logic' %>
+<%@ taglib uri='/WEB-INF/struts-bean.tld'  prefix='bean' %>
+<%@ taglib uri='/WEB-INF/struts-html.tld'  prefix='html' %>
+<%@ taglib uri='/WEB-INF/cardex-html.tld'  prefix='cardex' %>
+<%@ taglib uri='/WEB-INF/myriap-html.tld'  prefix='myriap' %>
+<%@ page import="com.lotoquebec.cardex.GlobalConstants" %>
+<%@ page import="com.lotoquebec.cardex.presentation.model.form.NarrationForm" %>
+<%@ page import="java.util.Locale" %>
+<%@ page import="org.apache.struts.Globals" %>
+<%@ page import="java.util.Map" %>
+<%@ page import="org.apache.struts.util.RequestUtils" %>
+<%@ page import="java.net.URLEncoder" %>
+
+
+   <html:hidden  name="narration" property="narrationAvecFormat" />
+   <html:hidden  name="narration" property="narrationSansFormat" />
+   <html:hidden  name="narration" property="confidentialiteApprobateur" />
+   <html:hidden  name="narration" property="confidentialiteCreateur" />
+   <html:hidden  name="narration" property="autoriteApprobateur" />
+   <html:hidden  name="narration" property="autoriteCreateur" />
+   <html:hidden  name="narration" property="autoriteNarration" />
+   <html:hidden  name="narration" property="modifiable" />
+   <html:hidden  name="narration" property="approuvable" />
+   <html:hidden  name="narration" property="permettreModification" />
+   <html:hidden  name="narration" property="lien" />
+   <html:hidden  name="narration" property="lienSite" />
+   <html:hidden  name="narration" property="cle" />
+   <html:hidden  name="narration" property="site" />
+
+   <%-- Le clipboard doit être actif dans les narrations. --%>
+   <input type="hidden" name="clipboard" value="required">
+   <input type="hidden" name="texteSaisi">
+
+<TABLE width="770" cellpadding="0" cellspacing="0" border="0" bgcolor="#eeeeee" class="tableOutline">
+  <TR>
+    <TD class="pictureBackground">
+    <table width="770" cellpadding="5" cellspacing="0" border="0">
+        <tr>
+            <td align="right"><bean:message key='r_co_montant_t'/></td>
+            <td>
+              <logic:equal name='narration' property='modifiable' value='true' >
+                 <myriap:text securityConstraint='' name='narration' property="montant" maxlength="12"  size="12" />
+              </logic:equal>
+              <logic:equal name='narration' property='modifiable' value='false' >
+                 <myriap:text securityConstraint='' name='narration' property="montant" maxlength="12"  size="12" disabled='true' />
+              </logic:equal>
+            </td>
+            <td align="right"><bean:message key='i_cc_cle_t'/></td>
+            <td>
+              <logic:equal name='narration' property='modifiable' value='true' >
+                <myriap:select securityConstraint='narration.field.confidentialite.narration' name='narration' property="confidentialiteNarration" size="1" style="HEIGHT: 20px; WIDTH: 120px">
+                 <html:options collection='<%= GlobalConstants.ItemList.CONFIDENTIALITE %>' labelProperty='label' property='value' />
+                </myriap:select>&nbsp;
+              </logic:equal>
+              <logic:equal name='narration' property='modifiable' value='false' >
+                <myriap:select securityConstraint='narration.field.confidentialite.narration' name='narration' property="confidentialiteNarration" size="1" style="HEIGHT: 20px; WIDTH: 120px" disabled='true' >
+                <html:options collection='<%= GlobalConstants.ItemList.CONFIDENTIALITE %>' labelProperty='label' property='value' />
+                </myriap:select>&nbsp;
+              </logic:equal>
+            </td>
+            <td align="right"><bean:message key='v_co_rapporte_par_t'/></td>
+            <td>
+              <logic:equal name='narration' property='modifiable' value='true' >
+                <myriap:select securityConstraint='' name='narration' property="rapporteur" size="1" style="HEIGHT: 20px; WIDTH: 120px">
+                <html:options collection='<%= GlobalConstants.ItemList.INTERVENANT %>' labelProperty='label' property='value' />
+                </myriap:select>&nbsp;
+              </logic:equal>
+              <logic:equal name='narration' property='modifiable' value='false' >
+                <myriap:select securityConstraint='' name='narration' property="rapporteur" size="1" style="HEIGHT: 20px; WIDTH: 120px" disabled='true' >
+                <html:options collection='<%= GlobalConstants.ItemList.INTERVENANT %>' labelProperty='label' property='value' />
+                </myriap:select>&nbsp;
+              </logic:equal>
+            </td>
+        </tr>
+
+        <tr>
+            <td align="right"><bean:message key='v_co_temps_t'/></td>
+            <td nowrap>
+
+              <SCRIPT language="JavaScript" type="text\javascript">
+                function computeHoursMinutes() {
+                    document.forms(0).tempsConsacreHeure.value=Math.floor((document.forms(0).tempsConsacre.value/60));
+                    document.forms(0).tempsConsacreMinute.value=document.forms(0).tempsConsacre.value-(document.forms(0).tempsConsacreHeure.value*60);
+                }
+              </SCRIPT>
+
+              <logic:equal name='narration' property='modifiable' value='true' >
+                <myriap:text securityConstraint='' name='narration' property="tempsConsacre" maxlength="4"  size="4" onchange='computeHoursMinutes();' />
+              </logic:equal>
+              <logic:equal name='narration' property='modifiable' value='false' >
+                <myriap:text securityConstraint='' name='narration' property="tempsConsacre" maxlength="4"  size="4" disabled='true'/>
+              </logic:equal>
+            <bean:message key='total_minutes_t'/>
+            </td>
+            <td align="right">
+                <myriap:text securityConstraint='' name='narration' property="tempsConsacreHeure" maxlength="3"  size="3" disabled='true' />
+            <bean:message key='heures_t'/>
+            </td>
+            <td>
+                <myriap:text securityConstraint='' name='narration' property="tempsConsacreMinute" maxlength="2"  size="2" disabled='true' />
+            <bean:message key='minutes_t'/>
+            </td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
+
+        <tr>
+            <td align="center" colspan="6">
+            <table width="760" cellpadding="5" cellspacing="0" border="0" class="tableCarved">
+                <tr>
+                    <td align="center">
+                    <OBJECT ID="HTMLEditor" WIDTH = "750" HEIGHT = "300"
+                            classid="clsid:8AD9C840-044E-11D1-B3E9-00805F499D93"
+                            ALIGN = "middle" VSPACE = "0" HSPACE = "0"
+                            codebase="http://java.sun.com/products/plugin/1.3/jinstall-13-win32.cab#Version=1,3,0,0">
+                    <PARAM NAME="CODE" VALUE = "com.myriap.presentation.applet.HTMLEditor.HTMLEditorApplet.class" >
+                    <PARAM NAME="ARCHIVE" VALUE ='<%= request.getContextPath() + "/applets/HTMLEditor.jar" %>' >
+                    <PARAM NAME="ID" VALUE = "HTMLEditor2" >
+                    <PARAM NAME="NAME" VALUE = "HTMLEditor2" >
+                    <PARAM NAME="type" VALUE="application/x-java-applet;version=1.3">
+                    <PARAM NAME="scriptable" VALUE="true">
+                    <PARAM NAME="Clipboard" VALUE  = "yes">
+                    <PARAM NAME="BasicFormatting" VALUE  = "yes">
+                    <PARAM NAME="Styles" VALUE  = "yes">
+                    <PARAM NAME="Alignment" VALUE  = "yes">
+                    <logic:equal name='narration' property='modifiable' value='true' >
+                      <PARAM NAME="Enabled" VALUE  = "yes">
+                    </logic:equal>
+                    <logic:equal name='narration' property='modifiable' value='false' >
+                      <PARAM NAME="Enabled" VALUE  = "no">
+                    </logic:equal>
+                    <PARAM NAME="Language" VALUE  = "<%= ((Locale)request.getSession().getAttribute(Globals.LOCALE_KEY)).getLanguage() %>">
+                    <PARAM NAME="Text" VALUE  = '<%= URLEncoder.encode(((NarrationForm)request.getSession().getAttribute("narration")).getNarrationAvecFormat()) %>' >
+                    <PARAM NAME="Templates" VALUE  = '<%= RequestUtils.serverURL(request) + "/templates/Templates_"+((Locale)request.getSession().getAttribute(Globals.LOCALE_KEY)).getLanguage()+".properties" %>'>
+                    <PARAM NAME="DisableTemplatesAfterEdit" VALUE  = "yes">
+                    <COMMENT>
+                    <EMBED type="application/x-java-applet;version=1.3"
+                            CODE="com.myriap.presentation.applet.HTMLEditor.HTMLEditorApplet.class"
+                            ARCHIVE="HTMLEditor.jar"
+                            NAME="HTMLEditor"
+                            WIDTH="750" HEIGHT="300" ALIGN = "middle" VSPACE = "0" HSPACE = "0"
+                            Clipboard = "yes"
+                            BasicFormatting = "yes"
+                            Styles =  "yes"
+                            TextURL = '<%= request.getContextPath() + "/applets/template.html" %>'
+                            scriptable = yes
+                            pluginspage="http://java.sun.com/products/plugin/1.3/plugin-install.html">
+                    </EMBED>
+                    <NOEMBED>
+                    </NOEMBED>
+                    </COMMENT>
+                    </OBJECT>
+                </td>
+            </tr>
+        </table>
+        </td>
+
+        </tr>
+            <tr>
+                <td align="right"><bean:message key='v_cree_par_t'/></td>
+                <td>
+                    <myriap:select securityConstraint='' name='narration' property="createur" size="1" style="HEIGHT: 20px; WIDTH: 120px" disabled='true' >
+                      <html:options collection='<%= GlobalConstants.ItemList.INTERVENANT %>' labelProperty='label' property='value' />
+                    </myriap:select>&nbsp;
+                </td>
+                <td align="right"><bean:message key='v_tr_modifie_par_t2'/></td>
+                <td>
+                    <myriap:select securityConstraint='' name='narration' property="modificateur" size="1" style="HEIGHT: 20px; WIDTH: 120px" disabled='true' >
+                      <html:options collection='<%= GlobalConstants.ItemList.INTERVENANT %>' labelProperty='label' property='value' />
+                    </myriap:select>&nbsp;
+                </td>
+                <td align="right"><bean:message key='v_modifie_par_t'/></td>
+                <td>
+                    <myriap:select securityConstraint='' name='narration' property="approbateur" size="1" style="HEIGHT: 20px; WIDTH: 120px" disabled='true' >
+                       <html:options collection='<%= GlobalConstants.ItemList.INTERVENANT %>' labelProperty='label' property='value' />
+                    </myriap:select>&nbsp;
+                </td>
+            </tr>
+
+            <tr>
+                <td align="right"><bean:message key='date_creation_t'/></td>
+                <td>
+                    <myriap:text securityConstraint='' name='narration' property="dateCreation" maxlength="19"  size="19" disabled='true' />
+                </td>
+                <td align="right"><bean:message key='date_modification_t'/></td>
+                <td>
+                    <myriap:text securityConstraint='' name='narration' property="dateModification" maxlength="19"  size="19" disabled='true' />
+                </td>
+                <td align="right"><bean:message key='d_date_modification_t'/></td>
+                <td>
+                    <myriap:text securityConstraint='' name='narration' property="dateApprobation" maxlength="19"  size="19" disabled='true' />
+                </td>
+            </tr>
+
+            <TR>
+                <TD WIDTH="770" ALIGN="center" HEIGHT="15" colspan="6"><html:img page="/images/0061CFpixel.gif" width="766" height="1" border="0" /></TD>
+            </TR>
+
+        <tr>
+            <td align="center" colspan="6">
+              <!-- BOTTOM BUTTONS -->
+              <TABLE width="550" cellpadding="0" cellspacing="1" border="0">
+                <TR>
+                  <TD>
+                    <logic:equal name='narration' property='modifiable' value='true' >
+                      <cardex:button securityConstraint='fenetres.narrations.ok' labelKey='cb_ok' style="width: 60px; text-align: center;"
+                        onclick='doOk();' />
+                    </logic:equal>
+                    <logic:equal name='narration' property='modifiable' value='false' >
+                      <INPUT type='button' value="<bean:message key='cb_ok' />" style="width: 60px; text-align: center;" disabled />
+                    </logic:equal>
+                </TD>
+                <TD>
+                    <cardex:button securityConstraint='' labelKey='cb_annuler' style="width: 60px; text-align: center;" onclick='doCancel();' />
+                </TD>
+
+                <TD>
+                    <logic:equal name='narration' property='approuvable' value='true' >
+                        <cardex:button securityConstraint='fenetres.narrations.approbation' labelKey='cb_approbation'  onclick='doApprobation();' />
+                    </logic:equal>
+                    <logic:equal name='narration' property='approuvable' value='false' >
+                      <INPUT type='button' value="<bean:message key='cb_approbation' />"  disabled >
+                    </logic:equal>
+                </TD>
+
+                <TD>
+                    <logic:equal name='narration' property='permettreModification' value='true' >
+                      <cardex:button securityConstraint='fenetres.narrations.modification' labelKey='cb_modification'  onclick='doModification();' />
+                    </logic:equal>
+                    <logic:equal name='narration' property='permettreModification' value='false' >
+                      <INPUT type='button' value="<bean:message key='cb_modification' />"  disabled />
+                    </logic:equal>
+                </TD>
+                <TD>
+                    <logic:equal name='narration' property='modifiable' value='true' >
+                      <cardex:button securityConstraint='fenetres.narrations.imprimer' labelKey='cb_imprimer'  onclick='doPrint();' />
+                    </logic:equal>
+                    <logic:equal name='narration' property='modifiable' value='false' >
+                      <cardex:button securityConstraint='' labelKey='cb_imprimer'  onclick='doPrint();' disabled='true' />
+                    </logic:equal>
+                </TD>
+                <TD>
+                    <logic:equal name='narration' property='modifiable' value='true' >
+                      <cardex:button securityConstraint='' labelKey='cb_spellcheck'  onclick='spellcheck();' />
+                    </logic:equal>
+                    <logic:equal name='narration' property='modifiable' value='false' >
+                      <cardex:button securityConstraint='' labelKey='cb_spellcheck'  onclick='spellcheck();' disabled='true' />
+                    </logic:equal>
+                </TD>
+              </TR>
+            </TABLE>
+            <!-- END BOTTOM BUTTONS -->
+            </td>
+        </tr>
+        <jsp:include page="/templates/tpl_erreur.jsp" flush="true" />
+
+        <TR>
+        <TD><html:img page="/images/blank.gif" width="1" height="1" border="0" /></TD>
+        </TR>
+
+    </table>
+
+    </TD>
+  </TR>
+</TABLE>

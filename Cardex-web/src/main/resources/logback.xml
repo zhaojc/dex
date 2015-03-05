@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="${app.log.scan}" scanPeriod="${app.log.refresh}" debug="${app.log.debug}">
+  <include file="${app.log.conf}" />
+</configuration>

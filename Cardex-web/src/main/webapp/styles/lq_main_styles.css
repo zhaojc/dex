@@ -1,0 +1,167 @@
+body  {
+    background-color: #ffffff;
+    font-family: Verdana, Arial, Helvetica, sans serif;
+    font-size: 8pt;
+    color:black;
+  }
+  
+  td {
+    font-family: Verdana, Arial, Helvetica, sans serif;
+    font-size: 10px;
+    color: black;
+  }
+  
+  .tableOutline {
+    border-style: solid;
+    border-width: 1px;
+    border-color: #0061CF;
+  
+  }
+  
+  .mainCellDetail {
+    font-family: Verdana, Arial, Helvetica, sans serif;
+    font-size: 9pt;
+    font-weight: bold;
+    color: #095b97;
+  }
+  
+  a:link {
+	  text-decoration: none;
+  }
+  
+  a:hover {
+	  text-decoration: none;
+	  color: #33cc99;
+  }
+	
+  a:visited {
+	  text-decoration: none;
+  }
+  
+  
+  .menuButton01Background {
+    background-color: #ffffff;
+  }
+  
+  .menuButton02Background {
+    background-color: #ffffff;
+  }
+  
+  .menuButton03Background {
+    background-color: #ffffff;
+  }
+  
+  .menuButton04Background {
+    background-color: #ffffff;
+  }
+  
+  .menuButton05Background {
+    background-color: #ffffff;
+  }
+  
+  .menuButton06Background {
+    background-color: #ffffff;
+  }
+  
+  .menuButton07Background {
+    background-color: #ffffff;
+  }
+  
+  .menuButton08Background {
+    background-color: #ffffff;
+  }
+  
+  .menuButton09Background {
+    background-color: #ffffff;
+  }
+  
+  .menuButton10Background {
+    background-color: #ffffff;
+  }
+  
+  .menuButton11Background {
+    background-color: #ffffff;
+  }
+  
+  .menuButton12Background {
+    background-color: #ffffff;
+  }
+
+  .menuButton13Background {
+    background-color: #ffffff;
+  }
+
+  .menuButton14Background {
+    background-color: #ffffff;
+  }
+
+  .menuButton15Background {
+    background-color: #ffffff;
+  }
+  .menuButton16Background {
+    background-color: #ffffff;
+  }
+
+  .menuButton17Background {
+    background-color: #ffffff;
+  }
+
+  .menuButton18Background {
+    background-color: #ffffff;
+  }
+
+  .tabTitle {
+    font-family: Verdana, Arial, Helvetica, sans serif;
+    font-size: 10pt;
+    color: #FFFFFF;
+    background-color: #0061CF;
+    font-weight: bold;
+  }
+  
+
+  .folderTitle {
+    font-family: Verdana, Arial, Helvetica, sans serif;
+    font-size: 9pt;
+    color: #FFFFFF;
+    background-color: #0061CF;
+    font-weight: bold;
+  }
+  
+  .folderTitleGallery {
+    font-family: Verdana, Arial, Helvetica, sans serif;
+    font-size: 9pt;
+    font-weight: bold;
+    color: #FFFFFF;
+    background-color: #559955;
+    
+  }
+  
+  .folderFrame {
+    background-color: #0061CF;
+  }
+  
+  .folderFrameGallery {
+    background-color: #559955;
+  }
+  
+  .tabBackground {
+    background-color: #e6ebf4;
+  }
+   
+
+ #MENU_NAV  {
+   position: relative;
+   top: 0px;
+   left: 0px;
+   width: 140px;
+   z-index: 1;
+   visibility: visible;
+ }
+
+ #MENU_BUTTON_TEXT {
+    position: relative;
+    font-size: 10pt;
+    font-weight: bold;
+    color: #095b97;
+  }
+  

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+ <!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+       "http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+       
+<tiles-definitions>
+
+	
+	<!-- Rapport sommaire sur les consignations (CDX 0150) -->
+	<definition name=".sommaire.consignation.rapport" extends=".base.header.layout">
+    	<put name="titre" value="rapport.sommaire.consignations"/>
+    	<put name="header" value=".sommaire.consignation.rapport.entete"/>
+    	<put name="content" value=".sommaire.consignation.rapport.controle"/>
+  	    <put name="form" value="sommaireConsignationCriteresRapportForm_CDX_0150"/>
+  	    <put name="action" value="/rapport/sommaireConsignationRapport"/>	  	    
+	</definition>
+	
+	<definition name=".sommaire.consignation.rapport.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.sommaire.consignations"/>
+	</definition>	
+	
+	<definition name=".sommaire.consignation.rapport.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".sommaire.consignation.rapport.criteres"/>
+	    <put name="form" value="sommaireConsignationCriteresRapportForm_CDX_0150"/>
+	</definition>
+	
+	<definition name=".sommaire.consignation.rapport.criteres" extends=".consignation.criteres.rapport">
+		<put name="form" value="sommaireConsignationCriteresRapportForm_CDX_0150"/>
+	</definition>
+	
+
+	<!-- Rapport détaillé sur les consignations (CDX 0151) -->
+	<definition name=".detaille.consignation.rapport" extends=".base.header.layout">
+    	<put name="titre" value="rapport.detaille.consignations"/>
+    	<put name="header" value=".detaille.consignation.rapport.entete"/>
+    	<put name="content" value=".detaille.consignation.rapport.controle"/>
+  	    <put name="form" value="detailleConsignationCriteresRapportForm_CDX_0151"/>
+  	    <put name="action" value="/rapport/detailleConsignationRapport"/>	  	    
+	</definition>
+	
+	<definition name=".detaille.consignation.rapport.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.detaille.consignations"/>
+	</definition>	
+	
+	<definition name=".detaille.consignation.rapport.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".detaille.consignation.rapport.criteres"/>
+	    <put name="form" value="detailleConsignationCriteresRapportForm_CDX_0151"/>
+	</definition>
+	
+	<definition name=".detaille.consignation.rapport.criteres" extends=".consignation.criteres.rapport">
+		<put name="form" value="detailleConsignationCriteresRapportForm_CDX_0151"/>
+	</definition>
+	
+
+	<!-- Rapport par dénomination (CDX 0152) -->
+	<definition name=".denomination.consignation.rapport" extends=".base.header.layout">
+    	<put name="titre" value="rapport.denomination"/>
+    	<put name="header" value=".denomination.consignation.rapport.entete"/>
+    	<put name="content" value=".denomination.consignation.rapport.controle"/>
+  	    <put name="form" value="denominationConsignationCriteresRapportForm_CDX_0152"/>
+  	    <put name="action" value="/rapport/denominationConsignationRapport"/>	  	    
+	</definition>
+	
+	<definition name=".denomination.consignation.rapport.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.denomination"/>
+	</definition>	
+	
+	<definition name=".denomination.consignation.rapport.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".denomination.consignation.rapport.criteres"/>
+	    <put name="form" value="denominationConsignationCriteresRapportForm_CDX_0152"/>
+	</definition>
+	
+	<definition name=".denomination.consignation.rapport.criteres" extends=".consignation.criteres.rapport">
+		<put name="form" value="denominationConsignationCriteresRapportForm_CDX_0152"/>
+	</definition>
+	
+	
+	<!-- Rapport par numéro de série et dénomination (CDX 0153) -->
+	<definition name=".numero.serie.denomination.consignation.rapport" extends=".base.header.layout">
+    	<put name="titre" value="rapport.numero.serie.denomination"/>
+    	<put name="header" value=".numero.serie.denomination.consignation.rapport.entete"/>
+    	<put name="content" value=".numero.serie.denomination.consignation.rapport.controle"/>
+  	    <put name="form" value="numeroSerieDenominationConsignationCriteresRapportForm_CDX_0153"/>
+  	    <put name="action" value="/rapport/numeroSerieDenominationConsignationRapport"/>	  	    
+	</definition>
+	
+	<definition name=".numero.serie.denomination.consignation.rapport.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.numero.serie.denomination"/>
+	</definition>	
+	
+	<definition name=".numero.serie.denomination.consignation.rapport.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".numero.serie.denomination.consignation.rapport.criteres"/>
+	    <put name="form" value="numeroSerieDenominationConsignationCriteresRapportForm_CDX_0153"/>
+	</definition>
+	
+	<definition name=".numero.serie.denomination.consignation.rapport.criteres" extends=".consignation.criteres.rapport">
+		<put name="form" value="numeroSerieDenominationConsignationCriteresRapportForm_CDX_0153"/>
+	</definition>
+	
+	
+	<!-- Rapport par dénomination et numéro de série (CDX 0154) -->
+	<definition name=".denomination.numero.serie.consignation.rapport" extends=".base.header.layout">
+    	<put name="titre" value="rapport.denomination.numero.serie"/>
+    	<put name="header" value=".denomination.numero.serie.consignation.rapport.entete"/>
+    	<put name="content" value=".denomination.numero.serie.consignation.rapport.controle"/>
+  	    <put name="form" value="denominationNumeroSerieConsignationCriteresRapportForm_CDX_0154"/>
+  	    <put name="action" value="/rapport/denominationNumeroSerieConsignationRapport"/>	  	    
+	</definition>
+	
+	<definition name=".denomination.numero.serie.consignation.rapport.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.denomination.numero.serie"/>
+	</definition>	
+	
+	<definition name=".denomination.numero.serie.consignation.rapport.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".denomination.numero.serie.consignation.rapport.criteres"/>
+	    <put name="form" value="denominationNumeroSerieConsignationCriteresRapportForm_CDX_0154"/>
+	</definition>
+	
+	<definition name=".denomination.numero.serie.consignation.rapport.criteres" extends=".consignation.criteres.rapport">
+		<put name="form" value="denominationNumeroSerieConsignationCriteresRapportForm_CDX_0154"/>
+	</definition>
+	
+	<!-- Rapport ce consignation sur les échanges entre les casinos et les clients (CDX_0156) -->
+	<definition name=".echanges.casino.client.consignation.rapport" extends=".base.header.layout">
+    	<put name="titre" value="rapport.echanges.casino.client"/>
+    	<put name="header" value=".echanges.casino.client.consignation.rapport.entete"/>
+    	<put name="content" value=".echanges.casino.client.consignation.rapport.controle"/>
+  	    <put name="form" value="echangesCasinoClientConsignationCriteresRapportForm_CDX_0156"/>
+  	    <put name="action" value="/rapport/echangesCasinoClientConsignationRapport"/>	  	    
+	</definition>
+	
+	<definition name=".echanges.casino.client.consignation.rapport.entete" extends=".base.entete">
+	    <put name="keyTitre" value="rapport.echanges.casino.client"/>
+	</definition>	
+	
+	<definition name=".echanges.casino.client.consignation.rapport.controle" extends=".base.rapport.controle">
+	    <put name="critere" value=".echanges.casino.client.consignation.rapport.criteres"/>
+	    <put name="form" value="echangesCasinoClientConsignationCriteresRapportForm_CDX_0156"/>
+	</definition>
+	
+	<definition name=".echanges.casino.client.consignation.rapport.criteres" extends=".consignation.date.type.criteres.rapport">
+		<put name="form" value="echangesCasinoClientConsignationCriteresRapportForm_CDX_0156"/>
+	</definition>
+	
+	<!-- Commun consignation -->
+	<definition name=".consignation.criteres.rapport" path="/templates/rapport/tpl_consignation_formulaire.jsp">
+	    <put name="form" value=""/>
+	</definition>
+	
+	<definition name=".consignation.date.type.criteres.rapport" path="/templates/rapport/tpl_consignation_date_type_formulaire.jsp">
+	    <put name="form" value=""/>
+	</definition>
+
+</tiles-definitions>

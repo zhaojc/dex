@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+ <!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+       "http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+       
+<tiles-definitions>
+
+	<definition name=".base.vehicule" extends=".base.layout">
+    	<put name="titre" value="tabpage_vehicule"/>
+    	<put name="header" value="/templates/vehicule/tpl_onglet_recherche_vehicule_entete.jsp"/>
+    	<put name="content" value=""/>
+  	    <put name="form" value="vehicule"/>
+  	    <put name="action" value=""/>	  	    
+	</definition>
+
+	<!-- Liaison Nouveau Sujet à un vehicule -->	
+	
+	<definition name=".liaison.vehicule" extends=".base.vehicule">
+    	<put name="titre" value="vide"/>
+    	<put name="content" value=""/>
+  	    <put name="form" value="rechercheVehicule"/>
+  	    <put name="action" value=""/>	  	    
+	</definition>	
+	
+	<definition name=".liaison.vehicule.nouveau.sujet.role" extends=".liaison.vehicule">
+    	<put name="content" value=".vehicule.liaison.role.nouveau.sujet.layout"/>
+  	    <put name="action" value="/role/sujet/vehicule/search"/>	
+	</definition>	
+	
+	<definition name=".vehicule.liaison.role.nouveau.sujet.layout" path="/vehicule/layout/w_liaison_vehicule.jsp">
+    	<put name="preContexteApplicatif" value="" direct="true"/>
+    	<put name="contexteApplicatif" value="/role" direct="true"/>
+    	<put name="closeAction" value="/sujet/show.do" direct="true"/>
+	</definition>	
+	
+	<!-- Choisir le rôle -->
+	<definition name=".dossier.choix.nouveau.vehicule.role" extends=".liaison.sujet">
+    	<put name="content" value="/vehicule/layout/w_liaison_nouveau_vehicule_role.jsp"/>
+  	    <put name="action" value="/dossier/nouveau/vehicule/link"/>	
+	</definition>
+
+	<definition name=".sujet.choix.nouveau.vehicule.role" extends=".liaison.sujet">
+    	<put name="content" value="/vehicule/layout/w_liaison_nouveau_vehicule_role.jsp"/>
+  	    <put name="action" value="/sujet/nouveau/vehicule/link"/>	
+	</definition>
+		
+	<definition name=".societe.choix.nouveau.vehicule.role" extends=".liaison.sujet">
+    	<put name="content" value="/vehicule/layout/w_liaison_nouveau_vehicule_role.jsp"/>
+  	    <put name="action" value="/societe/nouveau/vehicule/link"/>	
+	</definition>
+		
+	<definition name=".vehicule.liaison.nouveau.sujet.role" extends=".liaison.sujet">
+    	<put name="titre" value="tabpage_role"/>
+  	    <put name="form" value="lien"/>
+    	<put name="content" value=".content.vehicule.liaison.nouveau.sujet.role"/>
+  	    <put name="action" value="/role/vehicule/nouveau/sujet/link"/>	
+	</definition>	
+
+	<definition name=".content.vehicule.liaison.nouveau.sujet.role" path="/commun/layout/w_liaison_role_retour.jsp">
+    	<put name="preContexteApplicatif" value="" direct="true"/>
+    	<put name="contexteApplicatif" value="/role" direct="true"/>
+    	<put name="closeAction" value="/sujet/show.do" direct="true"/>
+	</definition>	
+	
+</tiles-definitions>

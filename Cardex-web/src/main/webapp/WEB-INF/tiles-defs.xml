@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+ <!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+       "http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+       
+<tiles-definitions>
+	<definition name=".base.layout" path="/commun/layout/base.jsp">
+    	<put name="titre" value=""/>
+    	<put name="header" value=""/>
+ 		<put name="content" value="" />
+  	    <put name="form" value=""/>
+  	    <put name="action" value=""/>
+  	    <put name="actionMethod" value=""/>
+	</definition>
+	
+	<definition name=".base.header.layout" extends=".base.layout">
+    	<put name="header" value=".base.entete"/>
+    	<put name="keyTitre" value="titre" direct="true"/>
+	</definition>	
+
+	<definition name=".base.recherche.layout" path="/commun/layout/baseRecherche.jsp">
+    	<put name="critere" value=""/>
+    	<put name="resultat" value=""/>
+	</definition>
+		
+	<definition name=".choisir.profil" extends=".base.layout">
+    	<put name="titre" value="choisir.profil"/>
+    	<put name="header" value=".entete.choisir.profil"/>
+    	<put name="content" value="/w_choisirProfil.jsp"/>
+  	    <put name="form" value="profils"/>
+  	    <put name="action" value="/choisirProfil"/>	  	 
+  	    <put name="actionMethod" value="choisir"/>   
+	</definition>		
+	
+	<definition name=".entete.choisir.profil" extends=".base.entete">
+	    <put name="keyTitre" value="choisir.profil"/>
+	</definition>
+	
+	<definition name=".base.entete" path="/templates/tpl_onglet_entete.jsp">
+  	    <put name="keyTitre" value="vide"/>
+  	    <put name="tableWith" value="770"/>	  	    
+	</definition>	
+		
+</tiles-definitions>
