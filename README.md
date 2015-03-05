@@ -1,4 +1,4 @@
-Archtype de l'application modele
+CARDEX
 ==
 
 Sert de modele pour creer une nouvelle application ou convertir une application existante.
