@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sous_rapport_registre_RFC" pageWidth="555" pageHeight="802" whenNoDataType="BlankPage" columnWidth="535" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<parameter name="RFC_MAITRE" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select substr(d.v_do_numero_dossier, 1, 3) || '-' ||
+             substr(d.v_do_numero_dossier, 4, 8) || '-' ||
+             substr(d.v_do_numero_dossier, 12, 16) as "RFC_MAITRE", substr(d2.v_do_numero_dossier, 1, 3) || '-' ||
+             substr(d2.v_do_numero_dossier, 4, 8) || '-' ||
+             substr(d2.v_do_numero_dossier, 12, 16) as "RFC_RECLAMATION", c.r_co_montant as "MONTANT_RECLAMATION"
+from do_dossier d, ldd_lien_dossier ld, do_dossier d2, co_commentaire2 c
+where substr(d.v_do_numero_dossier, 1, 3) || '-' ||
+             substr(d.v_do_numero_dossier, 4, 8) || '-' ||
+             substr(d.v_do_numero_dossier, 12, 16) = $P{RFC_MAITRE} and ((d.l_do_cle = ld.l_do_cle and ld.l_ldd_dossier_associe = d2.l_do_cle) or
+(d2.l_do_cle = ld.l_do_cle and ld.l_ldd_dossier_associe = d.l_do_cle)) and d2.i_ca_cle = 26058
+and d2.l_do_cle = c.l_co_reference and d2.l_si_cle = c.l_co_ref_site and c.c_co_ref_genre = 'DO']]>
+	</queryString>
+	<field name="RFC_MAITRE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="RFC_RECLAMATION" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="MONTANT_RECLAMATION" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<sortField name="RFC_RECLAMATION"/>
+	<variable name="MONTANT_RECLAMATION_1" class="java.math.BigDecimal" resetType="Group" resetGroup="RFC_MAITRE" calculation="Sum">
+		<variableExpression><![CDATA[$F{MONTANT_RECLAMATION}]]></variableExpression>
+	</variable>
+	<group name="RFC_MAITRE">
+		<groupExpression><![CDATA[$F{RFC_MAITRE}]]></groupExpression>
+		<groupFooter>
+			<band height="34">
+				<staticText>
+					<reportElement x="1" y="8" width="109" height="20"/>
+					<box rightPadding="5">
+						<pen lineWidth="0.0"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="12" isBold="true" isUnderline="false" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<text><![CDATA[Total  :]]></text>
+				</staticText>
+				<textField pattern="#,##0.00 ¤ " isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="111" y="8" width="82" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+					<box rightPadding="4"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
+						<font fontName="SansSerif" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica-Bold" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					</textElement>
+					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{MONTANT_RECLAMATION_1}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="0" y="33" width="194" height="1"/>
+				</line>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField isStretchWithOverflow="true" pattern="#,##0.00 ¤ " isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="110" y="0" width="83" height="15"/>
+				<box rightPadding="4">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{MONTANT_RECLAMATION}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToTallestObject" x="0" y="0" width="110" height="15"/>
+				<box leftPadding="4" rightPadding="4">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{RFC_RECLAMATION}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

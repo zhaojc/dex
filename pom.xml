@@ -64,7 +64,7 @@
 		<jcl-over-slf4j.version>1.7.2-redhat-1</jcl-over-slf4j.version>
 		<seam.version>3.1.0.Final</seam.version>
 		<jpamodelgen.version>1.1.1.Final</jpamodelgen.version>
-		<stdconf.version>1.0.3-SNAPSHOT</stdconf.version>
+		<stdconf.version>1.0.5</stdconf.version>
 		<picketlink-idm-core.version>1.5.0.Alpha02</picketlink-idm-core.version>
 		<ocpsoft-pretty-time.version>1.0.6</ocpsoft-pretty-time.version>
 		<prettyfaces-jsf2.version>3.2.0</prettyfaces-jsf2.version>

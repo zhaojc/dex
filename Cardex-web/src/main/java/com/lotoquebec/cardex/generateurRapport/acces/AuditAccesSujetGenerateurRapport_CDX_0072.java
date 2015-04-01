@@ -23,7 +23,6 @@ import com.lotoquebec.cardexCommun.integration.dao.cleListe.cleSQLListeCache.Tab
 import com.lotoquebec.cardexCommun.securite.GestionnaireSecurite;
 import com.lotoquebec.cardexCommun.text.DateFormat;
 import com.lotoquebec.cardexCommun.util.ListeCache;
-import com.lotoquebec.cardexCommun.util.ValueObjectMapper;
 
 public class AuditAccesSujetGenerateurRapport_CDX_0072 extends GenererRapport {
 
@@ -41,7 +40,7 @@ public class AuditAccesSujetGenerateurRapport_CDX_0072 extends GenererRapport {
 	public JRDataSource construireDataSource(CardexAuthenticationSubject subject, RapportVO rapportVO, Connection connection) throws BusinessResourceException, BusinessException {
 		AccesRapportVO rapportDossierVO =(AccesRapportVO) rapportVO;
 		RapportBusinessDelegate delegate = new RapportBusinessDelegate();
-		ResultSet resultSet = delegate.auditAccesSujets(rapportDossierVO);
+		ResultSet resultSet = delegate.auditAccesSujets(rapportDossierVO,connection);
 
        	return new JRResultSetDataSource(resultSet);
 	}

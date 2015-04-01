@@ -36,11 +36,11 @@ public class RapportIncidentsDCSIGenerateurRapport_CDX_0148 extends GenererRappo
 	public JRDataSource construireDataSource(CardexAuthenticationSubject subject, RapportVO rapportVO, Connection connection) throws BusinessResourceException, BusinessException {
     	RapportBusinessDelegate delegate = new RapportBusinessDelegate();
     	ResultSet resultSet = null;
-	 	//Pour ce rapport, il faut utiliser l'année de la date saisie
+	 	//Pour ce rapport, il faut utiliser l'annï¿½e de la date saisie
 	 	Calendar dateDebutCal = Calendar.getInstance();
 	 	dateDebutCal.setTime(rapportVO.getDateDebutDu());
 	 	String annee = String.valueOf(dateDebutCal.get(Calendar.YEAR));
-		resultSet = delegate.rapportIncidentsDCSI(annee);
+		resultSet = delegate.rapportIncidentsDCSI(annee,connection);
 		return new JRResultSetDataSource(resultSet);
 	}
 

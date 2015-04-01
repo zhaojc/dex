@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CDX_0234_formulaire_readmission" pageWidth="612" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<parameter name="UTILISATEUR" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select 'AE-M3232' as "numeroDossier",
+'MTL-20120601-0023' as "numeroCardex",
+'2012-01-01' as "dateDebut", 
+'24' as "duree",
+'Jean' as "prenom",
+'Machin' as "nom"
+ from dual]]>
+	</queryString>
+	<field name="numeroDossier" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="numeroCardex" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="dateDebut" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="duree" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="prenom" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nom" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="27" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="25"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Comité de vigilance - Réadmission]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="678" splitType="Stretch">
+			<staticText>
+				<reportElement x="29" y="18" width="75" height="17"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Accès interdit :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="136" y="18" width="100" height="17"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{numeroDossier}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="29" y="45" width="104" height="17"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Numéro de dossier :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="136" y="45" width="100" height="17"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{numeroCardex}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="29" y="72" width="75" height="17"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Nom :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="136" y="72" width="357" height="17"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nom}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="29" y="99" width="75" height="17"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Prénom :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="136" y="99" width="357" height="17"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{prenom}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="29" y="126" width="75" height="17"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Durée :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="136" y="126" width="100" height="17"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{duree}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="29" y="153" width="104" height="17"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Entrée en vigueur le :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="136" y="153" width="100" height="17"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{dateDebut}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="29" y="188" width="104" height="17"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Période d'expulsion :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="147" y="188" width="60" height="17"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Maintenue]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="223" y="188" width="17" height="17"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="147" y="215" width="60" height="17"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Réduite]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="147" y="242" width="60" height="17"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Augmentée]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="147" y="269" width="60" height="17"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Terminée]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="223" y="215" width="17" height="17"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="223" y="242" width="17" height="17"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="223" y="269" width="17" height="17"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="255" y="215" width="15" height="17"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[à]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="255" y="242" width="15" height="17"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[à]]></text>
+			</staticText>
+			<line>
+				<reportElement x="283" y="228" width="100" height="1"/>
+			</line>
+			<line>
+				<reportElement x="283" y="255" width="100" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="29" y="310" width="75" height="17"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Comité réuni le ]]></text>
+			</staticText>
+			<line>
+				<reportElement x="112" y="325" width="100" height="1"/>
+			</line>
+			<staticText>
+				<reportElement positionType="Float" x="56" y="628" width="110" height="20"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Signature]]></text>
+			</staticText>
+			<line>
+				<reportElement positionType="Float" x="430" y="556" width="100" height="1"/>
+			</line>
+			<line>
+				<reportElement positionType="Float" x="223" y="603" width="171" height="1"/>
+			</line>
+			<line>
+				<reportElement x="430" y="461" width="100" height="1"/>
+			</line>
+			<line>
+				<reportElement positionType="Float" x="7" y="509" width="195" height="1"/>
+			</line>
+			<line>
+				<reportElement positionType="Float" x="430" y="507" width="100" height="1"/>
+			</line>
+			<line>
+				<reportElement x="430" y="602" width="100" height="1"/>
+			</line>
+			<line>
+				<reportElement positionType="Float" x="223" y="410" width="171" height="1"/>
+			</line>
+			<staticText>
+				<reportElement positionType="Float" x="255" y="628" width="96" height="20"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Lettres moulées]]></text>
+			</staticText>
+			<line>
+				<reportElement positionType="Float" x="7" y="556" width="195" height="1"/>
+			</line>
+			<staticText>
+				<reportElement positionType="Float" x="467" y="628" width="36" height="20"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Date]]></text>
+			</staticText>
+			<line>
+				<reportElement positionType="Float" x="7" y="410" width="195" height="1"/>
+			</line>
+			<line>
+				<reportElement x="430" y="409" width="100" height="1"/>
+			</line>
+			<line>
+				<reportElement positionType="Float" x="223" y="461" width="171" height="1"/>
+			</line>
+			<line>
+				<reportElement positionType="Float" x="227" y="508" width="171" height="1"/>
+			</line>
+			<line>
+				<reportElement positionType="Float" x="224" y="556" width="171" height="1"/>
+			</line>
+			<line>
+				<reportElement positionType="Float" x="7" y="460" width="195" height="1"/>
+			</line>
+			<line>
+				<reportElement positionType="Float" x="7" y="603" width="195" height="1"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="36" splitType="Stretch">
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="false">
+				<reportElement stretchType="RelativeToTallestObject" x="54" y="11" width="400" height="14"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA["Imprimé le " + new SimpleDateFormat("EEEEE dd MMMMM yyyy à HH:mm", java.util.Locale.FRENCH).format(new java.util.Date()) + " par " + $P{UTILISATEUR}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="454" y="11" width="100" height="14"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{numeroDossier}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="5" y="11" width="49" height="14"/>
+				<textElement/>
+				<text><![CDATA[CDX_0234]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

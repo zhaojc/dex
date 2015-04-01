@@ -31,7 +31,7 @@ public class ComparatifAnnuelEnquetesDossierGenerateurRapport_CDX_0040 extends G
 	@Override
 	public JRDataSource construireDataSource(CardexAuthenticationSubject subject, RapportVO rapportVO, Connection connection) throws BusinessResourceException, BusinessException {
 		RapportBusinessDelegate delegate = new RapportBusinessDelegate();
-		ResultSet resultSet = delegate.rapportProcedure(rapportVO, "CARDEX_RAPPORT.SP_RAP_CUMUL_ANNUEL");
+		ResultSet resultSet = delegate.rapportProcedure(rapportVO, "CARDEX_RAPPORT.SP_RAP_CUMUL_ANNUEL",connection);
 		List liste = remplirCumul(resultSet);
 		return new JRMapCollectionDataSource(liste);
 	}
@@ -40,9 +40,9 @@ public class ComparatifAnnuelEnquetesDossierGenerateurRapport_CDX_0040 extends G
 		List list = new ArrayList();
 
 		try {
-			// Le nombre d'entrée retourné est fixe. On traite chacune des
-			// entrées en fonction de la nature des enquêtes.
-			// Nature Événements
+			// Le nombre d'entrï¿½e retournï¿½ est fixe. On traite chacune des
+			// entrï¿½es en fonction de la nature des enquï¿½tes.
+			// Nature ï¿½vï¿½nements
 			Map evenements = new HashMap();
 			resultSet.next();
 			evenements.put("NATURE", resultSet.getString(1));
@@ -77,7 +77,7 @@ public class ComparatifAnnuelEnquetesDossierGenerateurRapport_CDX_0040 extends G
 			plaintes.put("NATURE", resultSet.getString(1));
 			plaintes.put("ENQUETES_FERMES_PASSES", resultSet.getBigDecimal(2));
 			list.add(plaintes);
-			// Nature Réclamations
+			// Nature Rï¿½clamations
 			Map reclamations = new HashMap();
 			resultSet.next();
 			reclamations.put("NATURE", resultSet.getString(1));

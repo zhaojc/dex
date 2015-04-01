@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sujet-galerie-jeu" columnCount="4" printOrder="Horizontal" pageWidth="525" pageHeight="125" columnWidth="131" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<subDataset name="dataset1"/>
+	<parameter name="SUJET_CLE" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUJET_SITE" class="java.math.BigDecimal"/>
+	<queryString>
+		<![CDATA[SELECT distinct trim(tr_jeu.v_tr_description)||', ' as "jeu"
+	FROM su_sujet             sujet,
+			 ldd_lien_dossier     ldd,
+			 do_dossier           dossier,
+			 ljd_lien_jeu_dossier ljd,
+			 tv_table_valeur      tv,
+			 tr_traduction        tr_jeu
+ WHERE sujet.l_su_cle = $P{SUJET_CLE}
+	 AND sujet.l_si_cle = $P{SUJET_SITE}
+	 AND (ldd.l_ldd_dossier_associe = sujet.l_su_cle AND
+			 ldd.l_ldd_site = sujet.l_si_cle AND ldd.c_ldd_genre = 'SU' AND
+			 ldd.l_do_cle = dossier.l_do_cle AND
+			 ldd.l_do_site = dossier.l_si_cle AND ldd.c_do_genre = 'DO')
+	 AND (dossier.l_do_cle = ljd.l_do_cle AND
+			 dossier.l_si_cle = ljd.l_ljd_ref_site)
+	 AND (tv.l_tv_valeur = ljd.i_je_cle)
+	 AND (tr_jeu.l_tr_cle = tv.l_tv_valeur AND tr_jeu.i_la_cle = 1)]]>
+	</queryString>
+	<field name="JEU" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<sortField name="JEU"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="29" splitType="Stretch">
+			<staticText>
+				<reportElement x="10" y="7" width="261" height="18"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true" isUnderline="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Jeux]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="3" width="520" height="1"/>
+			</line>
+		</band>
+	</title>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement isPrintRepeatedValues="false" x="30" y="0" width="127" height="14" isRemoveLineWhenBlank="true"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{JEU}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<lastPageFooter>
+		<band height="9">
+			<line>
+				<reportElement x="2" y="5" width="520" height="1"/>
+			</line>
+		</band>
+	</lastPageFooter>
+</jasperReport>

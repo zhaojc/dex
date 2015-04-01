@@ -1,0 +1,592 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sous-rapport_audit_dossiers" pageWidth="612" pageHeight="792" columnWidth="575" leftMargin="0" rightMargin="20" topMargin="7" bottomMargin="0">
+	<parameter name="CLE" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT L_DO_CLE,
+             substr(d.v_do_numero_dossier,1,3)||'-'||substr(d.v_do_numero_dossier,4,8)||'-'||substr(d.v_do_numero_dossier,12,16) as "V_DO_NUMERO_DOSSIER",
+             TRCA.V_TR_DESCRIPTION AS "CATEGORIE",
+             TRSE.V_TR_DESCRIPTION AS "SEVERITE",
+             TRCC.V_TR_DESCRIPTION AS "CONFIDENTIALITE",
+             TRNH.V_TR_DESCRIPTION AS "AUTORITE",
+             TRST.V_TR_DESCRIPTION AS "STATUT",
+             to_char(D_DO_DATE_DEBUT,'YYYY-MM-DD HH24:MI:SS') as "dateDebut",
+             to_char(D_DO_DATE_FIN,'YYYY-MM-DD HH24:MI:SS') as "dateFin",
+             V_DO_ANCIENNE_REFERENCE,
+             V_DO_REFERENCE_VIDEO,
+             V_DO_LIEU,
+	     decode(V_DO_MOT_PASSE,'','','********') AS "MOT_PASSE",
+             TROR.V_TR_DESCRIPTION AS "ENDROIT",
+             TRCR.V_TR_DESCRIPTION AS "LOCALISATION",
+             V_DO_REFERENCE1,
+             V_DO_REFERENCE2,
+	     TRORI.V_TR_DESCRIPTION AS "ORIGINE",
+             I.V_IN_NOM || ', ' || I.V_IN_PRENOM || decode(TRSTI.V_TR_DESCRIPTION,'Inactif',' ('||TRSTI.V_TR_DESCRIPTION||')') || ' (' || I.NAME || ', ' ||             TRSCI.V_TR_DESCRIPTION || ')' AS "intervenantDescription",
+             D_DO_DATE_ASSIGNATION,
+             V_DO_CREE_PAR,
+             D_DO_DATE_CREATION,
+             TRTY.V_TR_DESCRIPTION AS "TYPE",
+             TRNA.V_TR_DESCRIPTION AS "NATURE",
+             TRGE.V_TR_DESCRIPTION AS "GENRE",
+             V_DO_REFERENCE3,
+             V_DO_REFERENCE4,
+             V_DO_REFERENCE5,
+             V_DO_REFERENCE6,
+             V_DO_REFERENCE7,
+             TRFO.V_TR_DESCRIPTION AS "FONDE",
+             DECODE(D.B_DO_ENREGISTREMENT_CONSERVE,
+                    'yes',
+                    'Oui',
+                    'no ',
+                    'Non',
+                    'NULL') enregistrementConserve,
+             DECODE(D.B_DO_ENREGISTREMENT_NUMERIQUE,
+                    'yes',
+                    'Oui',
+                    'no ',
+                    'Non',
+                    'NULL') enregistrementNumerique,
+             S.V_SI_SITE
+        FROM DO_DOSSIER D,
+             GE_GENRE       G,
+             TR_TRADUCTION  TRGE,
+             NA_NATURE      N,
+             TR_TRADUCTION  TRNA,
+             TY_TYPE        T,
+             TR_TRADUCTION  TRTY,
+             CA_CATEGORIE   C,
+             TR_TRADUCTION  TRCA,
+             SI_SITE        S,
+             TR_TRADUCTION  TRCC,
+             TR_TRADUCTION  TRNH,
+             TR_TRADUCTION  TRFO,
+             TR_TRADUCTION  TRSE,
+             TR_TRADUCTION  TROR,
+             TR_TRADUCTION  TRORI,
+             TR_TRADUCTION  TRCR,
+             TR_TRADUCTION  TRST,
+             TR_TRADUCTION  TRSTI,
+             TR_TRADUCTION  TRSCI,
+	     IN_INTERVENANT I
+       WHERE D.I_CA_CLE = C.I_CA_CLE
+         AND C.I_TY_CLE = T.I_TY_CLE
+         AND T.I_NA_CLE = N.I_NA_CLE
+         AND N.I_GE_CLE = G.I_GE_CLE
+         AND D.L_SI_CLE = S.L_SI_CLE
+	 AND D.V_DO_NUMERO_DOSSIER = $P{CLE}
+	 AND S.L_SI_CLE = S.L_SI_CLE
+         AND D.I_CA_CLE = TRCA.L_TR_CLE(+) AND TRCA.I_LA_CLE(+) = 1
+         AND T.I_TY_CLE = TRTY.L_TR_CLE(+) AND TRTY.I_LA_CLE(+) = 1
+         AND N.I_NA_CLE = TRNA.L_TR_CLE(+) AND TRNA.I_LA_CLE(+) = 1
+         AND G.I_GE_CLE = TRGE.L_TR_CLE(+) AND TRGE.I_LA_CLE(+) = 1
+         AND D.I_CC_CLE = TRCC.L_TR_CLE(+) AND TRCC.I_LA_CLE(+) = 1
+         AND D.I_NH_CLE = TRNH.L_TR_CLE(+) AND TRNH.I_LA_CLE(+) = 1
+         AND D.I_ST_CLE = TRST.L_TR_CLE(+) AND TRST.I_LA_CLE(+) = 1
+         AND I.I_ST_CLE = TRSTI.L_TR_CLE(+) AND TRSTI.I_LA_CLE(+) = 1
+         AND D.I_DO_FONDE = TRFO.L_TR_CLE(+) AND TRFO.I_LA_CLE(+) = 1
+         AND D.I_SE_CLE = TRSE.L_TR_CLE(+) AND TRSE.I_LA_CLE(+) = 1
+         AND D.I_OR_CLE = TROR.L_TR_CLE(+) AND TROR.I_LA_CLE(+) = 1
+         AND D.L_DO_ORIGINE = TRORI.L_TR_CLE(+) AND TRORI.I_LA_CLE(+) = 1
+         AND D.I_CR_CLE = TRCR.L_TR_CLE(+) AND TRCR.I_LA_CLE(+) = 1
+	 AND D.V_DO_ASSIGNE_A = I.NAME
+         AND I.L_IN_SECTEUR = TRSCI.L_TR_CLE(+) AND TRSCI.I_LA_CLE(+) = 1]]>
+	</queryString>
+	<field name="L_DO_CLE" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="V_DO_NUMERO_DOSSIER" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CATEGORIE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="SEVERITE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CONFIDENTIALITE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="AUTORITE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="STATUT" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="dateDebut" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="dateFin" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="V_DO_ANCIENNE_REFERENCE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="V_DO_REFERENCE_VIDEO" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="V_DO_LIEU" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ENDROIT" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="LOCALISATION" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="V_DO_REFERENCE1" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="V_DO_REFERENCE2" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="intervenantDescription" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="D_DO_DATE_ASSIGNATION" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="V_DO_CREE_PAR" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="D_DO_DATE_CREATION" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="TYPE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NATURE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="GENRE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="V_DO_REFERENCE3" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="V_DO_REFERENCE4" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="V_DO_REFERENCE5" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="V_DO_REFERENCE6" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="V_DO_REFERENCE7" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FONDE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="enregistrementConserve" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="enregistrementNumerique" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="V_SI_SITE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="MOT_PASSE" class="java.lang.String"/>
+	<field name="ORIGINE" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="29">
+			<staticText>
+				<reportElement x="4" y="3" width="212" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true" isItalic="true" pdfFontName="Helvetica-BoldOblique"/>
+				</textElement>
+				<text><![CDATA[Enregistrement courant en date du :]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Transparent" x="216" y="3" width="361" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
+					<font fontName="SansSerif" size="12" isBold="true" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica-BoldOblique" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[new SimpleDateFormat("EEEEE dd MMMMM yyyy à HH:mm", java.util.Locale.FRENCH).format(new java.util.Date())]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="25" width="572" height="1"/>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="377" splitType="Stretch">
+			<staticText>
+				<reportElement positionType="Float" x="9" y="52" width="94" height="14"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Nature :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="9" y="249" width="125" height="14"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Référence 3 :]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="173" y="25" width="290" height="14"/>
+				<textElement markup="html">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{V_SI_SITE}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="173" y="81" width="290" height="14"/>
+				<textElement markup="html">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{CATEGORIE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="9" y="80" width="94" height="14"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Catégorie :]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="173" y="109" width="290" height="14"/>
+				<textElement markup="html">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{STATUT}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="9" y="94" width="94" height="14"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[No de dossier :]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<reportElement positionType="Float" x="173" y="263" width="290" height="14" isRemoveLineWhenBlank="true"/>
+				<box leftPadding="0"/>
+				<textElement markup="html">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{enregistrementNumerique}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="9" y="38" width="94" height="14"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Genre :]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="173" y="95" width="290" height="14"/>
+				<textElement markup="html">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{V_DO_ANCIENNE_REFERENCE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="9" y="235" width="125" height="14"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Référence 2 :]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="173" y="236" width="290" height="14"/>
+				<box leftPadding="0"/>
+				<textElement markup="html">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{V_DO_REFERENCE3}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="9" y="24" width="94" height="14"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Site d'origine :]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="173" y="250" width="290" height="14"/>
+				<box leftPadding="0"/>
+				<textElement markup="html">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{V_DO_REFERENCE5}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="173" y="277" width="290" height="14"/>
+				<box leftPadding="0"/>
+				<textElement markup="html">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{V_DO_REFERENCE_VIDEO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="173" y="39" width="290" height="14"/>
+				<textElement markup="html">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{GENRE}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="173" y="67" width="290" height="14"/>
+				<textElement markup="html">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{TYPE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="9" y="192" width="125" height="14"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Date de fin :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="9" y="66" width="94" height="14"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Type :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="9" y="263" width="153" height="14"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Enregistrement numérique :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="9" y="221" width="125" height="14"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Référence 1 :]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="173" y="222" width="290" height="14"/>
+				<box leftPadding="0"/>
+				<textElement markup="html">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{V_DO_REFERENCE1}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="173" y="53" width="290" height="14"/>
+				<textElement markup="html">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{NATURE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="9" y="108" width="94" height="14"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Statut :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="9" y="178" width="125" height="14"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Survenu le :]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="173" y="193" width="290" height="14"/>
+				<box leftPadding="0"/>
+				<textElement markup="html">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{dateFin}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="173" y="178" width="290" height="15"/>
+				<box leftPadding="0"/>
+				<textElement markup="html"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{dateDebut}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="9" y="122" width="94" height="14"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Fondé :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="9" y="10" width="94" height="14"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[No Cardex :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="9" y="277" width="125" height="14"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Numéro séquentiel :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="9" y="291" width="153" height="14"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Enregistrement conservé :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="9" y="347" width="125" height="14"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Intervenant principal :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="9" y="305" width="94" height="14"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Origine :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="9" y="319" width="94" height="14"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Endroit :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="9" y="333" width="94" height="14"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Localisation :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="9" y="136" width="94" height="14"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Sévérité :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="9" y="150" width="94" height="14"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Confidentialité :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="9" y="164" width="94" height="14"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Descriptif :]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="173" y="123" width="290" height="14"/>
+				<textElement markup="html">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{FONDE}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="173" y="11" width="290" height="14"/>
+				<textElement markup="html">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{V_DO_NUMERO_DOSSIER}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="173" y="137" width="290" height="14"/>
+				<textElement markup="html">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{SEVERITE}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="173" y="151" width="290" height="14"/>
+				<textElement markup="html">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{CONFIDENTIALITE}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="173" y="165" width="290" height="14"/>
+				<textElement markup="html">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{V_DO_LIEU}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="173" y="291" width="290" height="14" isRemoveLineWhenBlank="true"/>
+				<box leftPadding="0"/>
+				<textElement markup="html">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{enregistrementConserve}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="173" y="304" width="290" height="14"/>
+				<box leftPadding="0"/>
+				<textElement markup="html">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ORIGINE}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="173" y="318" width="290" height="14"/>
+				<box leftPadding="0"/>
+				<textElement markup="html">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ENDROIT}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="173" y="332" width="290" height="14"/>
+				<box leftPadding="0"/>
+				<textElement markup="html">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{LOCALISATION}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="173" y="346" width="419" height="15"/>
+				<box leftPadding="0"/>
+				<textElement markup="html">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{intervenantDescription}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="9" y="207" width="125" height="14"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Mot de passe :]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="173" y="207" width="290" height="14"/>
+				<box leftPadding="0"/>
+				<textElement markup="html">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{MOT_PASSE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

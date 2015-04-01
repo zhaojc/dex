@@ -33,6 +33,7 @@ import com.lotoquebec.cardex.business.vo.rapport.RapportVO;
 import com.lotoquebec.cardex.generateurRapport.GenererRapport;
 import com.lotoquebec.cardex.generateurRapport.rapports.RapportsConfiguration;
 import com.lotoquebec.cardex.securite.GestionnaireSecuriteCardex;
+import com.lotoquebec.cardex.util.RapportUtils;
 import com.lotoquebec.cardexCommun.GlobalConstants;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
 import com.lotoquebec.cardexCommun.exception.BusinessException;
@@ -51,7 +52,7 @@ public class AutoexclusionDossierGenerateurRapport_CDX_0220 extends GenererRappo
 		return RapportsConfiguration.class.getResourceAsStream(RapportsConfiguration.AUTOEXCLUSION);
 	}
 
-	//Construction de la liste qui sera soumise au rapport. Les champs du map correspondent à ceux du rapport.
+	//Construction de la liste qui sera soumise au rapport. Les champs du map correspondent ï¿½ ceux du rapport.
 	private List construireListeDataSource(CardexAuthenticationSubject subject, Dossier dossier, Map mapRapportDossier)
 	 			throws BusinessException{
 		List list = new ArrayList();
@@ -64,7 +65,7 @@ public class AutoexclusionDossierGenerateurRapport_CDX_0220 extends GenererRappo
         mapRapportDossier.put("intervenantDescription", dossier.getIntervenantDescription());
 
 		DossierBusinessDelegate delegate = new DossierBusinessDelegate();
-		//On va d'abord chercher le sujet relié
+		//On va d'abord chercher le sujet reliï¿½
         Collection liensSujets;
         Iterator it;
         
@@ -73,10 +74,10 @@ public class AutoexclusionDossierGenerateurRapport_CDX_0220 extends GenererRappo
         
         if(it.hasNext()) {
             Sujet linkSujet = (Sujet) it.next();
-            //On passe la clé et le site du sujet pour le sous-rapport
+            //On passe la clï¿½ et le site du sujet pour le sous-rapport
 			mapRapportDossier.put("sujetCle", BigDecimal.valueOf(linkSujet.getCle()));
 			mapRapportDossier.put("sujetSite", BigDecimal.valueOf(linkSujet.getSite()));
-			//On va ensuite chercher le commentaire dans l'adresse pour les contrats bonifiés (champ contactePar)
+			//On va ensuite chercher le commentaire dans l'adresse pour les contrats bonifiï¿½s (champ contactePar)
 			SujetBusinessDelegate delegateSujet = new SujetBusinessDelegate();
 		    Collection liensAdresse = delegateSujet.findLiensAdresse(subject, linkSujet);
 		    it = liensAdresse.iterator();
@@ -89,7 +90,7 @@ public class AutoexclusionDossierGenerateurRapport_CDX_0220 extends GenererRappo
 	        		mapRapportDossier.put("commentaire", linkAdresse.getCommentaire());
 	        	}
 	        }
-	        // Recherche de la photo à afficher
+	        // Recherche de la photo ï¿½ afficher
 	        Collection liensPhoto = delegateSujet.findLiensPhoto(subject, linkSujet);
 	        it = liensPhoto.iterator();
 	        PhotoBusinessDelegate photoBusinessDelegate = new PhotoBusinessDelegate();
@@ -142,7 +143,7 @@ public class AutoexclusionDossierGenerateurRapport_CDX_0220 extends GenererRappo
 		ListeCache listeCache = ListeCache.getInstance();
 		Collection listeSiteApplicable = listeCache.obtenirListe(subject, new SiteApplicableTableValeurCle(subject, GlobalConstants.Entite.MAISON_JEUX, GlobalConstants.ActionSecurite.MODIFICATION));
 		int nbSiteApplicableMax = listeSiteApplicable.size();
-		//On soustrait l'entrée vide qui est ajoutée par défaut dans la liste
+		//On soustrait l'entrï¿½e vide qui est ajoutï¿½e par dï¿½faut dans la liste
 		if (inscription.getSitesChoisis().size() >= nbSiteApplicableMax-1)
 			tousCasinoEtLudoplex = true;
 		else{
@@ -180,7 +181,7 @@ public class AutoexclusionDossierGenerateurRapport_CDX_0220 extends GenererRappo
 	private Map construireListeLibelles(Dossier dossier)
 		throws BusinessException{
 		List list = new ArrayList();
-		//On remplit d'abord les libellés
+		//On remplit d'abord les libellï¿½s
 		Map mapLibelles = new HashMap(); 
 		
 		mapLibelles.put("titre", bundle.getString("titreAE"));
@@ -224,9 +225,9 @@ public class AutoexclusionDossierGenerateurRapport_CDX_0220 extends GenererRappo
 	@Override
 	protected Map construireParametres(CardexAuthenticationSubject subject, RapportVO rapportVO, Connection connection) throws JRException {
 		Map parameters = super.construireParametres(subject, rapportVO, connection);
-		parameters.put("sujet_photo", JRLoader.loadObject(RapportsConfiguration.class.getResourceAsStream(RapportsConfiguration.SOUS_RAPPORT_AUTOEXCLUSION_SUJET_PHOTO)));
-		parameters.put("sous_rapport_sujet_autoexclusion", JRLoader.loadObject(RapportsConfiguration.class.getResourceAsStream(RapportsConfiguration.SOUS_RAPPORT_AUTOEXCLUSION_SUJET_FRANCAIS)));
-		parameters.put("sous_rapport_sujet_autoexclusion_anglais", JRLoader.loadObject(RapportsConfiguration.class.getResourceAsStream(RapportsConfiguration.SOUS_RAPPORT_AUTOEXCLUSION_SUJET_ANGALAIS)));
+		parameters.put("sujet_photo", RapportUtils.compiler(RapportsConfiguration.SOUS_RAPPORT_AUTOEXCLUSION_SUJET_PHOTO));
+		parameters.put("sous_rapport_sujet_autoexclusion", RapportUtils.compiler(RapportsConfiguration.SOUS_RAPPORT_AUTOEXCLUSION_SUJET_FRANCAIS));
+		parameters.put("sous_rapport_sujet_autoexclusion_anglais", RapportUtils.compiler(RapportsConfiguration.SOUS_RAPPORT_AUTOEXCLUSION_SUJET_ANGALAIS));
 		parameters.put("REPORT_CONNECTION", connection);
 		parameters.put("langue", locale.toString());
 		
@@ -243,9 +244,9 @@ public class AutoexclusionDossierGenerateurRapport_CDX_0220 extends GenererRappo
        	dossierVO.setSite(entiteRapportVO.getSite());
 		Dossier dossier = delegate.find(subject, dossierVO);
 		
-		//On commence par construire le contenu des libellés, selon la langue demandée pour le contrat.
+		//On commence par construire le contenu des libellï¿½s, selon la langue demandï¿½e pour le contrat.
 		Map mapRapportDossier = construireListeLibelles(dossier);
-		//On ajout ensuite les champs qui seront imprimés sur le contrat
+		//On ajout ensuite les champs qui seront imprimï¿½s sur le contrat
 		list.addAll(construireListeDataSource(subject, dossier, mapRapportDossier));
 	
 		return new JRMapCollectionDataSource(list);

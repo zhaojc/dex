@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sous_rapport_evaluation_mise" pageWidth="612" pageHeight="792" columnWidth="535" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<parameter name="EVALUATION_CLE" class="java.math.BigDecimal"/>
+	<parameter name="EVALUATION_SITE" class="java.math.BigDecimal"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Program Files\\JasperSoft\\iReport-nb-3.5.2\\RapportsCompilation\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select l.l_lme_cle             as "miseCle",
+       l.l_si_cle              as "miseSite",
+       l.v_lme_commentaire_jeu as "commentaireJeu",
+       l.l_lme_mise_minimum    as "miseMinimum",
+       l.l_lme_mise_maximum    as "miseMaximum",
+       l.l_lme_mise_moyenne    as "miseMoyenne",
+       l.l_lme_gain_perte      as "gainPerte",
+       l.l_lme_temps_jeu_min   as "tempsJeuMinimum",
+       l.l_lme_temps_jeu_max   as "tempsJeuMaximum",
+       l.l_lme_temps_jeu_total as "tempsJeuTotal",
+       l.l_lme_mise_total      as "miseTotal",
+       trtj.v_tr_description   as "typeJeu"
+  from lme_lien_mise_eval l, tr_traduction trtj
+ where l.l_lme_type_jeu = trtj.l_tr_cle
+   and trtj.i_la_cle = 1
+and l.l_ev_cle = $P{EVALUATION_CLE}
+AND L.L_EV_SI_CLE = $P{EVALUATION_SITE}]]>
+	</queryString>
+	<field name="miseCle" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="miseSite" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="commentaireJeu" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="miseMinimum" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="miseMaximum" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="miseMoyenne" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="gainPerte" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tempsJeuMinimum" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tempsJeuMaximum" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tempsJeuTotal" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="miseTotal" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="typeJeu" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<group name="typeJeu">
+		<groupExpression><![CDATA[$F{typeJeu}]]></groupExpression>
+		<groupHeader>
+			<band splitType="Stretch"/>
+		</groupHeader>
+		<groupFooter>
+			<band height="10" splitType="Stretch">
+				<line>
+					<reportElement x="5" y="4" width="571" height="2"/>
+					<graphicElement>
+						<pen lineStyle="Solid"/>
+					</graphicElement>
+				</line>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="225" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="127" y="63" width="436" height="37"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{commentaireJeu}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="268" y="153" width="121" height="14"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Temps de jeu total :]]></text>
+			</staticText>
+			<textField pattern="#,##0.00 ¤" isBlankWhenNull="true">
+				<reportElement x="126" y="105" width="96" height="14"/>
+				<textElement/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{miseMinimum}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00 ¤" isBlankWhenNull="true">
+				<reportElement x="394" y="121" width="101" height="14"/>
+				<textElement/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{gainPerte}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="5" y="119" width="117" height="14"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Mise maximum :]]></text>
+			</staticText>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="394" y="153" width="57" height="14"/>
+				<textElement/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{tempsJeuTotal}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="394" y="137" width="57" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{tempsJeuMaximum}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="126" y="137" width="44" height="16"/>
+				<textElement/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{tempsJeuMinimum}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="305" y="105" width="84" height="14"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Mise moyenne :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="453" y="137" width="34" height="16"/>
+				<textElement verticalAlignment="Top"/>
+				<text><![CDATA[(min.)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="4" y="63" width="115" height="14"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Commentaire :]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="127" y="10" width="181" height="14"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{typeJeu}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="5" y="153" width="104" height="14"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Total des mises :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="307" y="121" width="82" height="14"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Gain/Perte :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="5" y="105" width="115" height="14"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Mise minimum :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="268" y="137" width="121" height="14"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Temps de jeu maximum :]]></text>
+			</staticText>
+			<textField pattern="#,##0.00 ¤" isBlankWhenNull="true">
+				<reportElement x="126" y="119" width="95" height="14"/>
+				<textElement/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{miseMaximum}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00 ¤" isBlankWhenNull="true">
+				<reportElement x="126" y="153" width="72" height="14"/>
+				<textElement/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{miseTotal}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00 ¤" isBlankWhenNull="true">
+				<reportElement x="394" y="105" width="101" height="14"/>
+				<textElement/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{miseMoyenne}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="172" y="137" width="34" height="16"/>
+				<textElement verticalAlignment="Top"/>
+				<text><![CDATA[(min.)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="4" y="10" width="119" height="14"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Type de jeu :]]></text>
+			</staticText>
+			<subreport runToBottom="false">
+				<reportElement positionType="Float" x="5" y="28" width="561" height="30" isRemoveLineWhenBlank="true"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="MISE_EVALUATION_SITE">
+					<subreportParameterExpression><![CDATA[$F{miseSite}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="MISE_EVALUATION_CLE">
+					<subreportParameterExpression><![CDATA[$F{miseCle}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "sous_rapport_evaluation_jeu.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement x="4" y="137" width="118" height="14"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Temps de jeu minimum :]]></text>
+			</staticText>
+			<subreport runToBottom="false">
+				<reportElement stretchType="RelativeToBandHeight" x="5" y="175" width="561" height="38" isRemoveLineWhenBlank="true"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="MISE_EVALUATION_SITE">
+					<subreportParameterExpression><![CDATA[$F{miseSite}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="MISE_EVALUATION_CLE">
+					<subreportParameterExpression><![CDATA[$F{miseCle}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "sous_rapport_evaluation_visite.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

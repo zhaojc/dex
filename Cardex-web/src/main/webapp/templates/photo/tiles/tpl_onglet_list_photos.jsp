@@ -40,55 +40,25 @@
   	newZoom= parseInt(image.style.zoom)+10+'%'
 	image.style.zoom =newZoom;
       }
+      alert("asasdfdf!");
    }
    function zoomOut(image) {
       newZoom= parseInt(image.style.zoom)-10+'%'
      image.style.zoom =newZoom;
    }
-
+alert("asdf!");
 </SCRIPT>
 
-<DIV id="DATA_PHOTOS">
+<DIV id="DATA_PHOTOS">dfsgdsgfs
     <TABLE width="772" cellPadding="2" cellSpacing="0" border="0" BGCOLOR="#ffffff" CLASS="tableOutline">
       <TR>
           <TD class="listDetailOdd">
               <TABLE width="766" cellPadding="0" cellSpacing="0" border="0">
-              <logic:equal name='sujet' property='photos.empty' value="true" >
-                    <TR>
-                        <TD class="listDetailOdd" rowspan="3" nowrap>
-                            <cardex:linkPhotoUpload source='sujet' 
-                            page='<%=preContexteApplicatif.toString()+contexteApplicatif.toString()+"/photo/create.do"%>'>
-                                <html:img page="/images/add_photo.gif" altKey="cb_lier" border="0" height="16" width="16" />
-                            </cardex:linkPhotoUpload>
-                            <cardex:linkFileUpload source='sujet' 
-                            page='<%=preContexteApplicatif.toString()+contexteApplicatif.toString()+"/image/create.do"%>'>
-                                <html:img page="/images/add_scan.gif" altKey="cb_lier" border="0" height="14" width="14" />
-                            </cardex:linkFileUpload>
-                        </TD>
-                        <TD>
-                            &nbsp;
-                        </TD>
-                        <TD>
-                            &nbsp;
-                        </TD>
-                        <TD>
-                            &nbsp;
-                        </TD>
-                    </TR>
-              </logic:equal>
+
               <logic:iterate id="element" name="sujet" property='photos'>
 
                     <TR>
-                        <TD class="listDetailOdd" rowspan="3" nowrap>
-                            <cardex:linkPhotoUpload source='sujet' 
-                            page='<%=preContexteApplicatif.toString()+contexteApplicatif.toString()+"/photo/create.do"%>'>
-                                <html:img page="/images/add_photo.gif" altKey="cb_lier" border="0" height="16" width="16" />
-                            </cardex:linkPhotoUpload>
-                            <cardex:linkFileUpload source='sujet' 
-                            page='<%=preContexteApplicatif.toString()+contexteApplicatif.toString()+"/image/create.do"%>'>
-                                <html:img page="/images/add_scan.gif" altKey="cb_lier" border="0" height="14" width="14" />
-                            </cardex:linkFileUpload>
-                        </TD>
+
                   <logic:iterate id="subelement" name="element" >
                         <TD>
 			    <DIV align="center" STYLE="overflow:auto; width:225; height:175;" >

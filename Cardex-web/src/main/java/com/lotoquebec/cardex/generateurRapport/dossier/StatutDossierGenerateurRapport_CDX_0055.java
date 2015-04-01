@@ -36,7 +36,7 @@ public class StatutDossierGenerateurRapport_CDX_0055 extends GenererRapport {
 	public JRDataSource construireDataSource(CardexAuthenticationSubject subject, RapportVO rapportVO, Connection connection) throws BusinessResourceException, BusinessException {
 		StatutDossierRapportVO_CDX_0055 statutDossierRapportVO_CDX_0055 = (StatutDossierRapportVO_CDX_0055) rapportVO;
 		RapportBusinessDelegate delegate = new RapportBusinessDelegate();
-       	ResultSet resultSet = delegate.statutDossiers(statutDossierRapportVO_CDX_0055);
+       	ResultSet resultSet = delegate.statutDossiers(statutDossierRapportVO_CDX_0055,connection);
 		return new JRResultSetDataSource(resultSet);
 	}
 

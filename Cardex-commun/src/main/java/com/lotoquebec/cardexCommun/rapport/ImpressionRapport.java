@@ -50,11 +50,12 @@ public abstract class ImpressionRapport {
 			else
 				if (nbTentativeAttente==NB_MAX_TENTATIVE_ATTENTE){
 					System.out.println("Stoper imprimerPDFThread");
-					imprimerThread.stop();
+					//imprimerThread.stop();
+					imprimerThread.interrupt();
 				}
 		}
 		if (nbTentativeException==NB_MAX_TENTATIVE_EXCEPTION)
-			throw new FileNotFoundException("Problème lors de l'impression du rapport '"+nomRapport+"'");
+			throw new FileNotFoundException("Problï¿½me lors de l'impression du rapport '"+nomRapport+"'");
 
 	}
 	

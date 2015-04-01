@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="societe_sujets" pageWidth="612" pageHeight="792" columnWidth="535" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<parameter name="SOCIETE_CLE" class="java.math.BigDecimal"/>
+	<parameter name="SOCIETE_SITE" class="java.math.BigDecimal"/>
+	<parameter name="CONFIDENTIALITE" class="java.lang.String"/>
+	<parameter name="UTILISATEUR" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select s.v_su_nom,
+       s.v_su_prenom,
+       s.v_su_reference_3,
+       s.v_su_permis_conduire,
+       s.v_su_no_passeport,
+       s.v_su_assurance_maladie,
+       s.c_su_assurance_sociale,
+       s.d_su_date_naissance,
+       trsx.v_tr_description    as "SEXE",
+       trra.v_tr_description    as "RACE",
+       trnt.v_tr_description    as "ETHNIE",
+       trls.v_tr_description    as "LANGUE"
+  from su_sujet         s,
+       ldd_lien_dossier l,
+       so_societe       so,
+       tr_traduction    trsx,
+       tr_traduction    trra,
+       tr_traduction    trnt,
+       tr_traduction    trls
+ where ((s.l_su_cle = l.L_LDD_DOSSIER_ASSOCIE and l.c_ldd_genre = 'SU' and
+       l.l_ldd_site = s.l_si_cle and l.l_do_cle = so.l_so_cle and
+       l.l_do_site = so.l_si_cle and l.c_do_genre = 'SO') OR
+       s.l_su_cle = l.l_do_cle and s.l_si_cle = l.l_do_site and
+       l.c_do_genre = 'SU' and so.l_so_cle = l.l_ldd_dossier_associe and
+       so.l_si_cle = l.l_ldd_site and l.c_ldd_genre = 'SO')
+   and so.l_so_cle = $P{SOCIETE_CLE}
+   and so.l_si_cle = $P{SOCIETE_SITE}
+   and s.i_sx_cle = trsx.l_tr_cle(+)
+   and trsx.i_la_cle(+) = 1
+   and s.i_ra_cle = trra.l_tr_cle(+)
+   and trra.i_la_cle(+) = 1
+   and s.i_nt_cle = trnt.l_tr_cle(+)
+   and trnt.i_la_cle(+) = 1
+   and s.i_ls_cle = trls.l_tr_cle(+)
+   and trls.i_la_cle(+) = 1
+   and ((NVL(s.I_CC_CLE, $P{CONFIDENTIALITE}) <= $P{CONFIDENTIALITE}) 
+    OR (s.V_SU_CREE_PAR = $P{UTILISATEUR}))]]>
+	</queryString>
+	<field name="V_SU_NOM" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="V_SU_PRENOM" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="V_SU_REFERENCE_3" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="V_SU_PERMIS_CONDUIRE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="V_SU_NO_PASSEPORT" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="V_SU_ASSURANCE_MALADIE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="C_SU_ASSURANCE_SOCIALE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="D_SU_DATE_NAISSANCE" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="SEXE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="RACE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ETHNIE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="LANGUE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<sortField name="V_SU_NOM"/>
+	<sortField name="V_SU_PRENOM"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="28" splitType="Stretch">
+			<staticText>
+				<reportElement x="7" y="4" width="62" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="true" isUnderline="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Sujets]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="151" splitType="Stretch">
+			<staticText>
+				<reportElement x="4" y="33" width="139" height="16"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Nom : ]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="145" y="33" width="197" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{V_SU_NOM}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="342" y="33" width="63" height="16"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Prénom : ]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="407" y="33" width="139" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{V_SU_PRENOM}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="33" y="16" width="110" height="16"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Numéro de sujet : ]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="145" y="16" width="199" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{V_SU_REFERENCE_3}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="7" y="5" width="22" height="16"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$V{REPORT_COUNT} + "."]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="15" y="125" width="127" height="16"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Permis de conduire : ]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="145" y="125" width="161" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{V_SU_PERMIS_CONDUIRE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="323" y="88" width="82" height="16"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Passeport : ]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="407" y="88" width="100" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{V_SU_NO_PASSEPORT}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="26" y="106" width="117" height="16"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Assurance maladie : ]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="145" y="106" width="136" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{V_SU_ASSURANCE_MALADIE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="291" y="106" width="114" height="16"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Assurance sociale : ]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="407" y="106" width="139" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{C_SU_ASSURANCE_SOCIALE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="15" y="51" width="128" height="16"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Date de naissance : ]]></text>
+			</staticText>
+			<textField pattern="yyyy-MM-dd" isBlankWhenNull="true">
+				<reportElement x="145" y="51" width="148" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{D_SU_DATE_NAISSANCE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="351" y="51" width="54" height="16"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Sexe : ]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="407" y="51" width="71" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{SEXE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="89" y="87" width="54" height="16"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Teint : ]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="145" y="87" width="126" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{RACE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="317" y="70" width="88" height="16"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isBold="true" isItalic="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Ethnie : ]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="407" y="69" width="139" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ETHNIE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="15" y="69" width="128" height="16"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Langue : ]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="145" y="69" width="116" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{LANGUE}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="147" width="612" height="1"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

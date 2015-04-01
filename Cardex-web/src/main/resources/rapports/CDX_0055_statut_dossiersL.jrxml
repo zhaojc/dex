@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="evenements_POL" pageWidth="792" pageHeight="612" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="36" bottomMargin="54">
+	<parameter name="DATE_DEBUT" class="java.lang.String"/>
+	<parameter name="DATE_FIN" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Program Files\\JasperSoft\\iReport-nb-3.5.2\\RapportsCompilation\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="NATURE" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="UTILISATEUR" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT CA.I_CA_CLE CLE_CATEGORIE,
+             TY.I_NA_CLE NATURE,
+             TRNA.V_TR_DESCRIPTION AS "NATURE_DESCRIPTION",
+             TRTY.V_TR_DESCRIPTION || ' - ' || TRCA.V_TR_DESCRIPTION AS "CATEGORIE"
+        FROM TR_TRADUCTION TRTY,
+             TY_TYPE       TY,
+             CA_CATEGORIE  CA,
+             TR_TRADUCTION TRCA,
+             TR_TRADUCTION TRNA
+       WHERE TY.I_NA_CLE = to_number($P{NATURE})
+         AND CA.I_TY_CLE = TY.I_TY_CLE
+         AND TY.I_TY_CLE = TRTY.L_TR_CLE
+         AND TRTY.I_LA_CLE = 1
+         AND CA.I_CA_CLE = TRCA.L_TR_CLE
+         AND TRCA.I_LA_CLE = 1
+         AND TY.I_NA_CLE = TRNA.L_TR_CLE
+         AND TRNA.I_LA_CLE = 1]]>
+	</queryString>
+	<field name="CLE_CATEGORIE" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="categorie" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NATURE_DESCRIPTION" class="java.lang.String"/>
+	<sortField name="categorie"/>
+	<group name="CATEGORIE">
+		<groupExpression><![CDATA[$F{categorie}]]></groupExpression>
+		<groupFooter>
+			<band height="16">
+				<textField>
+					<reportElement x="0" y="0" width="420" height="15"/>
+					<box leftPadding="5">
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{categorie}]]></textFieldExpression>
+				</textField>
+				<subreport>
+					<reportElement x="503" y="0" width="83" height="15"/>
+					<subreportParameter name="DATE_FIN">
+						<subreportParameterExpression><![CDATA[$P{DATE_FIN}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="DATE_DEBUT">
+						<subreportParameterExpression><![CDATA[$P{DATE_DEBUT}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="CLE_CATEGORIE">
+						<subreportParameterExpression><![CDATA[$F{CLE_CATEGORIE}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "sous_rapport_enquetes_nouvelles.jasper"]]></subreportExpression>
+				</subreport>
+				<subreport>
+					<reportElement x="586" y="0" width="83" height="15"/>
+					<subreportParameter name="DATE_FIN">
+						<subreportParameterExpression><![CDATA[$P{DATE_FIN}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="DATE_DEBUT">
+						<subreportParameterExpression><![CDATA[$P{DATE_DEBUT}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="CLE_CATEGORIE">
+						<subreportParameterExpression><![CDATA[$F{CLE_CATEGORIE}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "sous_rapport_enquetes_terminees.jasper"]]></subreportExpression>
+				</subreport>
+				<subreport>
+					<reportElement x="669" y="0" width="83" height="15"/>
+					<subreportParameter name="DATE_FIN">
+						<subreportParameterExpression><![CDATA[$P{DATE_FIN}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="CLE_CATEGORIE">
+						<subreportParameterExpression><![CDATA[$F{CLE_CATEGORIE}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "sous_rapport_enquetes_actives.jasper"]]></subreportExpression>
+				</subreport>
+				<subreport>
+					<reportElement x="420" y="0" width="84" height="15"/>
+					<subreportParameter name="DATE_FIN">
+						<subreportParameterExpression><![CDATA[$P{DATE_FIN}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="DATE_DEBUT">
+						<subreportParameterExpression><![CDATA[$P{DATE_DEBUT}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="CLE_CATEGORIE">
+						<subreportParameterExpression><![CDATA[$F{CLE_CATEGORIE}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "sous_rapport_enquetes_en_cours.jasper"]]></subreportExpression>
+				</subreport>
+				<line>
+					<reportElement x="503" y="0" width="1" height="15"/>
+				</line>
+				<line>
+					<reportElement x="586" y="0" width="1" height="15"/>
+				</line>
+				<line>
+					<reportElement x="669" y="0" width="1" height="15"/>
+				</line>
+				<line>
+					<reportElement x="751" y="0" width="1" height="15"/>
+				</line>
+				<line>
+					<reportElement x="0" y="15" width="752" height="1"/>
+				</line>
+				<line>
+					<reportElement x="0" y="0" width="752" height="1"/>
+				</line>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="1" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="101" splitType="Stretch">
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="64" width="420" height="36" forecolor="#FFFFFF" backcolor="#999999"/>
+				<box leftPadding="5">
+					<pen lineWidth="1.0" lineColor="#000000"/>
+					<topPen lineWidth="1.0" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Catégories]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="420" y="64" width="83" height="36" forecolor="#FFFFFF" backcolor="#999999"/>
+				<box leftPadding="3" rightPadding="3">
+					<pen lineWidth="1.0" lineColor="#000000"/>
+					<topPen lineWidth="1.0" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="html">
+					<font fontName="SansSerif" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica-Bold" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Dossiers actifs au <BR>" + $P{DATE_DEBUT}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="503" y="64" width="83" height="36" forecolor="#FFFFFF" backcolor="#999999"/>
+				<box leftPadding="3" rightPadding="3">
+					<pen lineWidth="1.0" lineColor="#000000"/>
+					<topPen lineWidth="1.0" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="html">
+					<font fontName="SansSerif" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica-Bold" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Dossiers créés <BR> du " + $P{DATE_DEBUT} + " au " + $P{DATE_FIN}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="669" y="64" width="83" height="36" forecolor="#FFFFFF" backcolor="#999999"/>
+				<box leftPadding="3" rightPadding="3">
+					<pen lineWidth="1.0" lineColor="#000000"/>
+					<topPen lineWidth="1.0" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="html">
+					<font fontName="SansSerif" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica-Bold" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Dossiers actifs au <BR>" + $P{DATE_FIN}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="586" y="64" width="83" height="36" forecolor="#FFFFFF" backcolor="#999999"/>
+				<box leftPadding="3" rightPadding="3">
+					<pen lineWidth="1.0" lineColor="#000000"/>
+					<topPen lineWidth="1.0" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="html">
+					<font fontName="SansSerif" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica-Bold" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Dossiers clos <BR> du " + $P{DATE_DEBUT} + " au " + $P{DATE_FIN}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="0" y="24" width="752" height="20" backcolor="#E4F7E4"/>
+				<box leftPadding="5">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA["Pour la période du " + $P{DATE_DEBUT} + " au " + $P{DATE_FIN}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="44" width="752" height="20"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true" isItalic="true" pdfFontName="Helvetica-BoldOblique"/>
+				</textElement>
+				<text><![CDATA[Confidentiel]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Opaque" x="0" y="0" width="751" height="24" forecolor="#000000" backcolor="#0099CC"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="none">
+					<font fontName="SansSerif" size="18" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica-Bold" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Statut des dossiers : " + $F{NATURE_DESCRIPTION}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="26" splitType="Stretch">
+			<textField evaluationTime="Report" pattern="" isBlankWhenNull="false">
+				<reportElement key="textField" x="715" y="4" width="36" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["" + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement key="textField" x="541" y="4" width="170" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Page " + $V{PAGE_NUMBER} + " de "]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="17" y="4" width="100" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[CDX_0050]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="false">
+				<reportElement stretchType="RelativeToTallestObject" x="117" y="4" width="413" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA["Imprimé le " + new SimpleDateFormat("EEEEE dd MMMMM yyyy à HH:mm", java.util.Locale.FRENCH).format(new java.util.Date()) + " par " + $P{UTILISATEUR}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="22">
+			<staticText>
+				<reportElement x="0" y="2" width="420" height="20"/>
+				<box rightPadding="5">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="12" isBold="true" isUnderline="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Total :]]></text>
+			</staticText>
+			<subreport>
+				<reportElement x="503" y="2" width="83" height="20"/>
+				<subreportParameter name="NATURE">
+					<subreportParameterExpression><![CDATA[new BigDecimal($P{NATURE})]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DATE_FIN">
+					<subreportParameterExpression><![CDATA[$P{DATE_FIN}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DATE_DEBUT">
+					<subreportParameterExpression><![CDATA[$P{DATE_DEBUT}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "sous_rapport_total_enquetes_nouvelles.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="586" y="2" width="83" height="20"/>
+				<subreportParameter name="NATURE">
+					<subreportParameterExpression><![CDATA[new BigDecimal($P{NATURE})]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DATE_FIN">
+					<subreportParameterExpression><![CDATA[$P{DATE_FIN}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DATE_DEBUT">
+					<subreportParameterExpression><![CDATA[$P{DATE_DEBUT}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "sous_rapport_total_enquetes_terminees.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="669" y="2" width="83" height="20"/>
+				<subreportParameter name="NATURE">
+					<subreportParameterExpression><![CDATA[new BigDecimal($P{NATURE})]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DATE_FIN">
+					<subreportParameterExpression><![CDATA[$P{DATE_FIN}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "sous_rapport_total_enquetes_actives.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="420" y="2" width="84" height="20"/>
+				<subreportParameter name="NATURE">
+					<subreportParameterExpression><![CDATA[new BigDecimal($P{NATURE})]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DATE_FIN">
+					<subreportParameterExpression><![CDATA[$P{DATE_FIN}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DATE_DEBUT">
+					<subreportParameterExpression><![CDATA[$P{DATE_DEBUT}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "sous_rapport_total_enquetes_en_cours.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</summary>
+</jasperReport>

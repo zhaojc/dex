@@ -100,15 +100,15 @@ public class RapportDAO {
 	}
 	
 	/**
-	 * Rapports de repérage.
-     * @author François Guérin
-     * @param cle  long : clé unique du dossier
+	 * Rapports de repï¿½rage.
+     * @author Franï¿½ois Guï¿½rin
+     * @param cle  long : clï¿½ unique du dossier
      * @param site long : site
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
-     * @return ValueListIterator : Une liste de dossiers retournés par la
+     * @return ValueListIterator : Une liste de dossiers retournï¿½s par la
      * recherche.
 	 * @see AccesDAO#select(long, long)
 	 */
@@ -138,14 +138,14 @@ public class RapportDAO {
     				dossier.put("V_SU_REFERENCE_3",OracleDAOUtils.getString(resultSet, "V_SU_REFERENCE_3"));
     				dossier.put("COUNT(D.L_DO_CLE)", resultSet.getBigDecimal("COUNT(D.L_DO_CLE)"));
     				DossierBusinessDelegate delegate = new DossierBusinessDelegate();
-    				//On va d'abord chercher le sujet relié
+    				//On va d'abord chercher le sujet reliï¿½
     		        Collection liensSujets;
     		        Iterator it;
     		        Sujet sujet = new SujetVO();
     		        sujet.setCle(resultSet.getLong("L_SU_CLE"));
     		        sujet.setSite(resultSet.getLong("L_SI_CLE"));
     				SujetBusinessDelegate delegateSujet = new SujetBusinessDelegate();
-    		        // Recherche de la photo à afficher
+    		        // Recherche de la photo ï¿½ afficher
     		        Collection liensPhoto = delegateSujet.findLiensPhoto(subject, sujet);
     		        it = liensPhoto.iterator();
     		        PhotoBusinessDelegate photoBusinessDelegate = new PhotoBusinessDelegate();
@@ -200,22 +200,21 @@ public class RapportDAO {
 
 	/**
 	 * Rapports cumulatifs.
-     * @author François Guérin
-     * @param cle  long : clé unique du dossier
+     * @author Franï¿½ois Guï¿½rin
+     * @param cle  long : clï¿½ unique du dossier
      * @param site long : site
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
-     * @return ValueListIterator : Une liste de dossiers retournés par la
+     * @return ValueListIterator : Une liste de dossiers retournï¿½s par la
      * recherche.
 	 * @see AccesDAO#select(long, long)
 	 */
-	public ResultSet procedureSite(String procedure, RapportVO rapportVO, long site) throws DAOException {
-        Connection connection =
-        	DAOConnection.getInstance().getConnection();
+	public ResultSet procedureSite(String procedure, RapportVO rapportVO, long site, Connection connection) throws DAOException {
 		CallableStatement callableStatement = null;
 		ResultSet resultSet = null;
+		
         try {
             callableStatement = connection.prepareCall(
                     "begin "+procedure+" (?,?,?,?); end;");
@@ -230,51 +229,23 @@ public class RapportDAO {
         catch (SQLException se) {
             throw new DAOException(se);
         }
-        finally {
-/*			if(resultSet != null) {
-				try {
-						resultSet.close();
-			    } catch (java.sql.SQLException e) {
-                    throw new DAOException(e);
-		        }
-	        }
-*/			if(callableStatement != null) {
-				try {
-						callableStatement.close();
-			    } catch (java.sql.SQLException e) {
-                    throw new DAOException(e);
-		        }
-			}
- 		    if (connection != null) {
-                try{
-			         if(!connection.getAutoCommit())
-			         {
-			            connection.rollback();
-			         }
- 		           	   connection.close();
-                } catch (SQLException e) {
-                    throw new DAOException(e);
-                }
- 		    }
-        } //finally
 	}
 
 	/**
 	 * Rapports sur les contrats.
-     * @author François Guérin
-     * @param cle  long : clé unique du dossier
+     * @author Franï¿½ois Guï¿½rin
+     * @param cle  long : clï¿½ unique du dossier
      * @param site long : site
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
-     * @return ValueListIterator : Une liste de dossiers retournés par la
+     * @return ValueListIterator : Une liste de dossiers retournï¿½s par la
      * recherche.
 	 * @see AccesDAO#select(long, long)
 	 */
-	public ResultSet rapportContrats(ContratsAutoexclusionDossierRapportVO_CDX_0060 contratsAutoexclusionDossierRapportVO_CDX_0060) throws DAOException {
-        Connection connection =
-        	DAOConnection.getInstance().getConnection();
+	public ResultSet rapportContrats(ContratsAutoexclusionDossierRapportVO_CDX_0060 contratsAutoexclusionDossierRapportVO_CDX_0060, Connection connection) throws DAOException {
+
 		CallableStatement callableStatement = null;
 		ResultSet resultSet = null;
         try {
@@ -287,56 +258,28 @@ public class RapportDAO {
             callableStatement.registerOutParameter(5, OracleTypes.CURSOR);
             callableStatement.execute();
             resultSet = (ResultSet)callableStatement.getObject(5);
+            
             return resultSet;
         }
         catch (SQLException se) {
             throw new DAOException(se);
         }
-        finally {
-/*			if(resultSet != null) {
-				try {
-						resultSet.close();
-			    } catch (java.sql.SQLException e) {
-                    throw new DAOException(e);
-		        }
-	        }
-*/			if(callableStatement != null) {
-				try {
-						callableStatement.close();
-			    } catch (java.sql.SQLException e) {
-                    throw new DAOException(e);
-		        }
-			}
- 		    if (connection != null) {
-                try{
-			         if(!connection.getAutoCommit())
-			         {
-			            connection.rollback();
-			         }
- 		           	   connection.close();
-                } catch (SQLException e) {
-                    throw new DAOException(e);
-                }
- 		    }
-        } //finally
 	}
 
 	/**
-	 * Rapport sur les employés liés à des dossiers
-     * @author François Guérin
-     * @param cle  long : clé unique du dossier
+	 * Rapport sur les employï¿½s liï¿½s ï¿½ des dossiers
+     * @author Franï¿½ois Guï¿½rin
+     * @param cle  long : clï¿½ unique du dossier
      * @param site long : site
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
-     * @return ValueListIterator : Une liste de dossiers retournés par la
+     * @return ValueListIterator : Une liste de dossiers retournï¿½s par la
      * recherche.
 	 * @see AccesDAO#select(long, long)
 	 */
-	public ResultSet rapportEmployeDossier(EmployeDossierRapportVO_CDX_0042 employeDossierRapportVO_CDX_0042) throws DAOException {
-        Connection connection =
-        	DAOConnection.getInstance().getConnection();
+	public ResultSet rapportEmployeDossier(EmployeDossierRapportVO_CDX_0042 employeDossierRapportVO_CDX_0042,Connection connection) throws DAOException {
 		CallableStatement callableStatement = null;
 		ResultSet resultSet = null;
         try {
@@ -361,45 +304,18 @@ public class RapportDAO {
         catch (SQLException se) {
             throw new DAOException(se);
         }
-        finally {
-/*			if(resultSet != null) {
-				try {
-						resultSet.close();
-			    } catch (java.sql.SQLException e) {
-                    throw new DAOException(e);
-		        }
-	        }
-*/			if(callableStatement != null) {
-				try {
-						callableStatement.close();
-			    } catch (java.sql.SQLException e) {
-                    throw new DAOException(e);
-		        }
-			}
- 		    if (connection != null) {
-                try{
-			         if(!connection.getAutoCommit())
-			         {
-			            connection.rollback();
-			         }
- 		           	   connection.close();
-                } catch (SQLException e) {
-                    throw new DAOException(e);
-                }
- 		    }
-        } //finally
 	}
 
 	/**
-	 * Rapport sur les repérages avec critère du nombre de repérages.
-     * @author François Guérin
-     * @param cle  long : clé unique du dossier
+	 * Rapport sur les repï¿½rages avec critï¿½re du nombre de repï¿½rages.
+     * @author Franï¿½ois Guï¿½rin
+     * @param cle  long : clï¿½ unique du dossier
      * @param site long : site
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
-     * @return ValueListIterator : Une liste de dossiers retournés par la
+     * @return ValueListIterator : Une liste de dossiers retournï¿½s par la
      * recherche.
 	 * @see AccesDAO#select(long, long)
 	 */
@@ -430,14 +346,14 @@ public class RapportDAO {
 				dossier.put("V_SU_REFERENCE_3",OracleDAOUtils.getString(resultSet, "V_SU_REFERENCE_3"));
 				dossier.put("COUNT(D.L_DO_CLE)", resultSet.getBigDecimal("COUNT(D.L_DO_CLE)"));
 				DossierBusinessDelegate delegate = new DossierBusinessDelegate();
-				//On va d'abord chercher le sujet relié
+				//On va d'abord chercher le sujet reliï¿½
 		        Collection liensSujets;
 		        Iterator it;
 		        Sujet sujet = new SujetVO();
 		        sujet.setCle(resultSet.getLong("L_SU_CLE"));
 		        sujet.setSite(resultSet.getLong("L_SI_CLE"));
 				SujetBusinessDelegate delegateSujet = new SujetBusinessDelegate();
-		        // Recherche de la photo à afficher
+		        // Recherche de la photo ï¿½ afficher
 		        Collection liensPhoto = delegateSujet.findLiensPhoto(subject, sujet);
 		        it = liensPhoto.iterator();
 		        PhotoBusinessDelegate photoBusinessDelegate = new PhotoBusinessDelegate();
@@ -492,21 +408,19 @@ public class RapportDAO {
 
 	/**
 	 * Rapports sur les statuts des dossiers.
-	 * Rapport CDX_0055. Remplace les anciens rapports POL pour qu'ils soient plus génériques (requête RSI R12-0078)
-     * @author François Guérin
-     * @param cle  long : clé unique du dossier
+	 * Rapport CDX_0055. Remplace les anciens rapports POL pour qu'ils soient plus gï¿½nï¿½riques (requï¿½te RSI R12-0078)
+     * @author Franï¿½ois Guï¿½rin
+     * @param cle  long : clï¿½ unique du dossier
      * @param site long : site
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
-     * @return ValueListIterator : Une liste de dossiers retournés par la
+     * @return ValueListIterator : Une liste de dossiers retournï¿½s par la
      * recherche.
 	 * @see AccesDAO#select(long, long)
 	 */
-	public ResultSet statutDossiers(StatutDossierRapportVO_CDX_0055 statutDossierRapportVO_CDX_0055) throws DAOException {
-        Connection connection =
-        	DAOConnection.getInstance().getConnection();
+	public ResultSet statutDossiers(StatutDossierRapportVO_CDX_0055 statutDossierRapportVO_CDX_0055,Connection connection) throws DAOException {
 		CallableStatement callableStatement = null;
 		ResultSet resultSet = null;
         try {
@@ -521,51 +435,22 @@ public class RapportDAO {
         catch (SQLException se) {
             throw new DAOException(se);
         }
-        finally {
-/*			if(resultSet != null) {
-				try {
-						resultSet.close();
-			    } catch (java.sql.SQLException e) {
-                    throw new DAOException(e);
-		        }
-	        }
-*/			if(callableStatement != null) {
-				try {
-						callableStatement.close();
-			    } catch (java.sql.SQLException e) {
-                    throw new DAOException(e);
-		        }
-			}
- 		    if (connection != null) {
-                try{
-			         if(!connection.getAutoCommit())
-			         {
-			            connection.rollback();
-			         }
- 		           	   connection.close();
-                } catch (SQLException e) {
-                    throw new DAOException(e);
-                }
- 		    }
-        } //finally
 	}
 
 	/**
-	 * Rapport statistique sur le temps consacré
-     * @author François Guérin
-     * @param cle  long : clé unique du dossier
+	 * Rapport statistique sur le temps consacrï¿½
+     * @author Franï¿½ois Guï¿½rin
+     * @param cle  long : clï¿½ unique du dossier
      * @param site long : site
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
-     * @return ValueListIterator : Une liste de dossiers retournés par la
+     * @return ValueListIterator : Une liste de dossiers retournï¿½s par la
      * recherche.
 	 * @see AccesDAO#select(long, long)
 	 */
-	public ResultSet tempsConsacre(StatistiqueDossierRapportVO statistiqueDossierRapportVO) throws DAOException {
-        Connection connection =
-        	DAOConnection.getInstance().getConnection();
+	public ResultSet tempsConsacre(StatistiqueDossierRapportVO statistiqueDossierRapportVO,Connection connection) throws DAOException {
 		CallableStatement callableStatement = null;
 		ResultSet resultSet = null;
         try {
@@ -588,51 +473,22 @@ public class RapportDAO {
         catch (SQLException se) {
             throw new DAOException(se);
         }
-        finally {
-/*			if(resultSet != null) {
-				try {
-						resultSet.close();
-			    } catch (java.sql.SQLException e) {
-                    throw new DAOException(e);
-		        }
-	        }
-*/			if(callableStatement != null) {
-				try {
-						callableStatement.close();
-			    } catch (java.sql.SQLException e) {
-                    throw new DAOException(e);
-		        }
-			}
- 		    if (connection != null) {
-                try{
-			         if(!connection.getAutoCommit())
-			         {
-			            connection.rollback();
-			         }
- 		           	   connection.close();
-                } catch (SQLException e) {
-                    throw new DAOException(e);
-                }
- 		    }
-        } //finally
 	}
 
 	/**
-     * Rapport sur les enquêtes de Loto-Québec sur les personnes au registre (PAR).
-     * @author François Guérin
-     * @param cle  long : clé unique du dossier
+     * Rapport sur les enquï¿½tes de Loto-Quï¿½bec sur les personnes au registre (PAR).
+     * @author Franï¿½ois Guï¿½rin
+     * @param cle  long : clï¿½ unique du dossier
      * @param site long : site
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
-     * @return ValueListIterator : Une liste de dossiers retournés par la
+     * @return ValueListIterator : Une liste de dossiers retournï¿½s par la
      * recherche.
 	 * @see AccesDAO#select(long, long)
 	 */
-	public ResultSet rapportEnqueteReclamation(String anneeMois) throws DAOException {
-        Connection connection =
-        	DAOConnection.getInstance().getConnection();
+	public ResultSet rapportEnqueteReclamation(String anneeMois,Connection connection) throws DAOException {
 		CallableStatement callableStatement = null;
 		ResultSet resultSet = null;
         try {
@@ -647,50 +503,22 @@ public class RapportDAO {
         catch (SQLException se) {
             throw new DAOException(se);
         }
-        finally {
-/*			if(resultSet != null) {
-				try {
-						resultSet.close();
-			    } catch (java.sql.SQLException e) {
-                    throw new DAOException(e);
-		        }
-	        }
-*/			if(callableStatement != null) {
-				try {
-						callableStatement.close();
-			    } catch (java.sql.SQLException e) {
-                    throw new DAOException(e);
-		        }
-			}
- 		    if (connection != null) {
-                try{
-			         if(!connection.getAutoCommit())
-			         {
-			            connection.rollback();
-			         }
- 		           	   connection.close();
-                } catch (SQLException e) {
-                    throw new DAOException(e);
-                }
- 		    }
-        } //finally
+    
 	}
 	/**
      * Rapport sur les incidents de la DCSI.
-     * @author François Guérin
-     * @param cle  long : clé unique du dossier
+     * @author Franï¿½ois Guï¿½rin
+     * @param cle  long : clï¿½ unique du dossier
      * @param site long : site
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
-     * @return ValueListIterator : Une liste de dossiers retournés par la
+     * @return ValueListIterator : Une liste de dossiers retournï¿½s par la
      * recherche.
 	 * @see AccesDAO#select(long, long)
 	 */
-	public ResultSet rapportIncidentsDCSI(String annee) throws DAOException {
-        Connection connection =
-        	DAOConnection.getInstance().getConnection();
+	public ResultSet rapportIncidentsDCSI(String annee,Connection connection) throws DAOException {
 		CallableStatement callableStatement = null;
 		ResultSet resultSet = null;
         try {
@@ -705,49 +533,21 @@ public class RapportDAO {
         catch (SQLException se) {
             throw new DAOException(se);
         }
-        finally {
-/*			if(resultSet != null) {
-				try {
-						resultSet.close();
-			    } catch (java.sql.SQLException e) {
-                    throw new DAOException(e);
-		        }
-	        }
-*/			if(callableStatement != null) {
-				try {
-						callableStatement.close();
-			    } catch (java.sql.SQLException e) {
-                    throw new DAOException(e);
-		        }
-			}
- 		    if (connection != null) {
-                try{
-			         if(!connection.getAutoCommit())
-			         {
-			            connection.rollback();
-			         }
- 		           	   connection.close();
-                } catch (SQLException e) {
-                    throw new DAOException(e);
-                }
- 		    }
-        } //finally
+
 	}
 
 	/**
-     * Rapport pour produire les listes de dossiers partagés, par intervenant ou par responsable.
-     * @author François Guérin
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * Rapport pour produire les listes de dossiers partagï¿½s, par intervenant ou par responsable.
+     * @author Franï¿½ois Guï¿½rin
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
-     * @return ValueListIterator : Une liste de dossiers retournés par la
+     * @return ValueListIterator : Une liste de dossiers retournï¿½s par la
      * recherche.
 	 * @see AccesDAO#select(long, long)
 	 */
-	public ResultSet listesPartage(String procedure) throws DAOException {
-        Connection connection =
-        	DAOConnection.getInstance().getConnection();
+	public ResultSet listesPartage(String procedure,Connection connection) throws DAOException {
 		CallableStatement callableStatement = null;
 		ResultSet resultSet = null;
         try {
@@ -761,41 +561,20 @@ public class RapportDAO {
         catch (SQLException se) {
             throw new DAOException(se);
         }
-        finally {
-			if(callableStatement != null) {
-				try {
-						callableStatement.close();
-			    } catch (java.sql.SQLException e) {
-                    throw new DAOException(e);
-		        }
-			}
- 		    if (connection != null) {
-                try{
-			         if(!connection.getAutoCommit())
-			         {
-			            connection.rollback();
-			         }
- 		           	   connection.close();
-                } catch (SQLException e) {
-                    throw new DAOException(e);
-                }
- 		    }
-        } //finally
+    
 	}
 	/**
      * Rapport pour produire les listes de dossiers actifs par intervenant.
-     * @author François Guérin
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * @author Franï¿½ois Guï¿½rin
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
-     * @return ValueListIterator : Une liste de dossiers retournés par la
+     * @return ValueListIterator : Une liste de dossiers retournï¿½s par la
      * recherche.
 	 * @see AccesDAO#select(long, long)
 	 */
-	public ResultSet listesDossiersActifs(ActifIntervenantDossierRapportVO_CDX_0102 rapportDossierVO) throws DAOException {
-        Connection connection =
-        	DAOConnection.getInstance().getConnection();
+	public ResultSet listesDossiersActifs(ActifIntervenantDossierRapportVO_CDX_0102 rapportDossierVO,Connection connection) throws DAOException {
 		CallableStatement callableStatement = null;
 		ResultSet resultSet = null;
         try {
@@ -805,7 +584,7 @@ public class RapportDAO {
             callableStatement.setLong(1,rapportDossierVO.getGenre());
             
             if(StringUtils.isEmpty(rapportDossierVO.getIntervenant())){
-            	callableStatement.setString(2,"%"); //Critère générique pour obtenir tous les intervenants.
+            	callableStatement.setString(2,"%"); //Critï¿½re gï¿½nï¿½rique pour obtenir tous les intervenants.
             }else{
             	callableStatement.setString(2,rapportDossierVO.getIntervenant());
             }
@@ -818,41 +597,20 @@ public class RapportDAO {
         catch (SQLException se) {
             throw new DAOException(se);
         }
-        finally {
-			if(callableStatement != null) {
-				try {
-						callableStatement.close();
-			    } catch (java.sql.SQLException e) {
-                    throw new DAOException(e);
-		        }
-			}
- 		    if (connection != null) {
-                try{
-			         if(!connection.getAutoCommit())
-			         {
-			            connection.rollback();
-			         }
- 		           	   connection.close();
-                } catch (SQLException e) {
-                    throw new DAOException(e);
-                }
- 		    }
-        } //finally
+     
 	}
 	/**
-     * Rapport pour produire les listes de dossiers actifs par enquêteur de Loto-Québec.
-     * @author François Guérin
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * Rapport pour produire les listes de dossiers actifs par enquï¿½teur de Loto-Quï¿½bec.
+     * @author Franï¿½ois Guï¿½rin
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
-     * @return ValueListIterator : Une liste de dossiers retournés par la
+     * @return ValueListIterator : Une liste de dossiers retournï¿½s par la
      * recherche.
 	 * @see AccesDAO#select(long, long)
 	 */
-	public ResultSet listesDossiersActifsEnqueteurLQ() throws DAOException {
-        Connection connection =
-        	DAOConnection.getInstance().getConnection();
+	public ResultSet listesDossiersActifsEnqueteurLQ(Connection connection) throws DAOException {
 		CallableStatement callableStatement = null;
 		ResultSet resultSet = null;
         try {
@@ -867,44 +625,23 @@ public class RapportDAO {
         catch (SQLException se) {
             throw new DAOException(se);
         }
-        finally {
-			if(callableStatement != null) {
-				try {
-						callableStatement.close();
-			    } catch (java.sql.SQLException e) {
-                    throw new DAOException(e);
-		        }
-			}
- 		    if (connection != null) {
-                try{
-			         if(!connection.getAutoCommit())
-			         {
-			            connection.rollback();
-			         }
- 		           	   connection.close();
-                } catch (SQLException e) {
-                    throw new DAOException(e);
-                }
- 		    }
-        } //finally
+
 	}
 
 	/**
-	 * Impression des fiches (sujet, société et dossier)
-     * @author François Guérin
-     * @param cle  long : clé unique du dossier
+	 * Impression des fiches (sujet, sociï¿½tï¿½ et dossier)
+     * @author Franï¿½ois Guï¿½rin
+     * @param cle  long : clï¿½ unique du dossier
      * @param site long : site
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
-     * @return ValueListIterator : Une liste de dossiers retournés par la
+     * @return ValueListIterator : Une liste de dossiers retournï¿½s par la
      * recherche.
 	 * @see AccesDAO#select(long, long)
 	 */
-	public ResultSet rapportImpressionFiche(long cle, long site, String procedure) throws DAOException {
-        Connection connection =
-        	DAOConnection.getInstance().getConnection();
+	public ResultSet rapportImpressionFiche(long cle, long site, String procedure,Connection connection) throws DAOException {
 		CallableStatement callableStatement = null;
 		ResultSet resultSet = null;
         try {
@@ -920,51 +657,23 @@ public class RapportDAO {
         catch (SQLException se) {
             throw new DAOException(se);
         }
-        finally {
-/*			if(resultSet != null) {
-				try {
-						resultSet.close();
-			    } catch (java.sql.SQLException e) {
-                    throw new DAOException(e);
-		        }
-	        }
-*/			if(callableStatement != null) {
-				try {
-						callableStatement.close();
-			    } catch (java.sql.SQLException e) {
-                    throw new DAOException(e);
-		        }
-			}
- 		    if (connection != null) {
-                try{
-			         if(!connection.getAutoCommit())
-			         {
-			            connection.rollback();
-			         }
- 		           	   connection.close();
-                } catch (SQLException e) {
-                    throw new DAOException(e);
-                }
- 		    }
-        } //finally
+      
 	}
 	
 	/**
 	 * Impression du rapport sur les suivis 30 jours
-     * @author François Guérin
-     * @param dateDebut String : date de début
+     * @author Franï¿½ois Guï¿½rin
+     * @param dateDebut String : date de dï¿½but
      * @param dateFin String : date de fin
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
-     * @return ValueListIterator : Une liste de dossiers retournés par la
+     * @return ValueListIterator : Une liste de dossiers retournï¿½s par la
      * recherche.
 	 * @see AccesDAO#select(long, long)
 	 */
-	public ResultSet rapportSuivis(SiteIntervenantRapportVO rapportVO, String procedure) throws DAOException {
-        Connection connection =
-        	DAOConnection.getInstance().getConnection();
+	public ResultSet rapportSuivis(SiteIntervenantRapportVO rapportVO, String procedure,Connection connection) throws DAOException {
 		CallableStatement callableStatement = null;
 		ResultSet resultSet = null;
         try {
@@ -988,45 +697,22 @@ public class RapportDAO {
         catch (SQLException se) {
             throw new DAOException(se);
         }
-        
-        finally {
-			if(callableStatement != null) {
-				try {
-						callableStatement.close();
-			    } catch (java.sql.SQLException e) {
-                    throw new DAOException(e);
-		        }
-			}
- 		    if (connection != null) {
-                try{
-			         if(!connection.getAutoCommit())
-			         {
-			            connection.rollback();
-			         }
- 		           	   connection.close();
-                } catch (SQLException e) {
-                    throw new DAOException(e);
-                }
- 		    }
-        } //finally
 	}
 
 	/**
-	 * Impression du rapport sur les suivis d'enquêtes CDX_0098
-     * @author François Guérin
-     * @param dateDebut String : date de début
+	 * Impression du rapport sur les suivis d'enquï¿½tes CDX_0098
+     * @author Franï¿½ois Guï¿½rin
+     * @param dateDebut String : date de dï¿½but
      * @param dateFin String : date de fin
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
-     * @return ValueListIterator : Une liste de dossiers retournés par la
+     * @return ValueListIterator : Une liste de dossiers retournï¿½s par la
      * recherche.
 	 * @see AccesDAO#select(long, long)
 	 */
-	public Collection rapportSuivisEnquetes(SiteIntervenantRapportVO rapportVO) throws DAOException {
-        Connection connection =
-        	DAOConnection.getInstance().getConnection();
+	public Collection rapportSuivisEnquetes(SiteIntervenantRapportVO rapportVO,Connection connection) throws DAOException {
 		CallableStatement callableStatement = null;
 		ResultSet resultSet = null;
         try {
@@ -1053,7 +739,7 @@ public class RapportDAO {
         				dateSuiviComplete = new Date(resultSet.getTimestamp("Date_suivi_completee").getTime());
         			}
     				int nombreJours = 0;
-    				//Pour les délais de création des suivis, on tient compte des jours ouvrables.
+    				//Pour les dï¿½lais de crï¿½ation des suivis, on tient compte des jours ouvrables.
     				if(dateCreationSuivi != null){
 		    			nombreJours = JourneeOuvrable.calculerDifference(dateCreationDossier, dateCreationSuivi);
 	    				if (nombreJours >= 50){
@@ -1068,7 +754,7 @@ public class RapportDAO {
 						Calendar dateCompleteCal = new GregorianCalendar();
 						dateSuiviCal.setTime(dateCreationSuivi);
 						dateCompleteCal.setTime(dateSuiviComplete);
-    					//Pour les délais de suivis complétés, on calcule le nombre de jours calendrier écoulés.
+    					//Pour les dï¿½lais de suivis complï¿½tï¿½s, on calcule le nombre de jours calendrier ï¿½coulï¿½s.
     					while (dateSuiviCal.before(dateCompleteCal)){
     						dateSuiviCal.add(Calendar.DATE, 1);
     						++nombreJours;
@@ -1099,44 +785,22 @@ public class RapportDAO {
             throw new DAOException(se);
         }
         
-        finally {
-			if(callableStatement != null) {
-				try {
-						callableStatement.close();
-			    } catch (java.sql.SQLException e) {
-                    throw new DAOException(e);
-		        }
-			}
- 		    if (connection != null) {
-                try{
-			         if(!connection.getAutoCommit())
-			         {
-			            connection.rollback();
-			         }
- 		           	   connection.close();
-                } catch (SQLException e) {
-                    throw new DAOException(e);
-                }
- 		    }
-        } //finally
 	}
 
 	/**
 	 * Impression du rapport sur les suivis par site et par intervenant
-     * @author François Guérin
-     * @param dateDebut String : date de début
+     * @author Franï¿½ois Guï¿½rin
+     * @param dateDebut String : date de dï¿½but
      * @param dateFin String : date de fin
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
-     * @return ValueListIterator : Une liste de dossiers retournés par la
+     * @return ValueListIterator : Une liste de dossiers retournï¿½s par la
      * recherche.
 	 * @see AccesDAO#select(long, long)
 	 */
-	public ResultSet rapportSuivisIntervenant(SiteIntervenantRapportVO rapportVO, String procedure) throws DAOException {
-        Connection connection =
-        	DAOConnection.getInstance().getConnection();
+	public ResultSet rapportSuivisIntervenant(SiteIntervenantRapportVO rapportVO, String procedure,Connection connection) throws DAOException {
 		CallableStatement callableStatement = null;
 		ResultSet resultSet = null;
         try {
@@ -1160,27 +824,6 @@ public class RapportDAO {
         catch (SQLException se) {
             throw new DAOException(se);
         }
-        
-        finally {
-			if(callableStatement != null) {
-				try {
-						callableStatement.close();
-			    } catch (java.sql.SQLException e) {
-                    throw new DAOException(e);
-		        }
-			}
- 		    if (connection != null) {
-                try{
-			         if(!connection.getAutoCommit())
-			         {
-			            connection.rollback();
-			         }
- 		           	   connection.close();
-                } catch (SQLException e) {
-                    throw new DAOException(e);
-                }
- 		    }
-        } //finally
 	}
 
 	public List<RapportVOCDX_00070> globalRAQCDX_00070(CardexAuthenticationSubject subject, final java.util.Date dateDebut, final java.util.Date dateFin, final long site) throws DAOException {
@@ -1244,15 +887,13 @@ public class RapportDAO {
 	
 	
 	/**
-	 * Lancer une store proc avec les paramètres de base du rapportVO
+	 * Lancer une store proc avec les paramï¿½tres de base du rapportVO
 	 * @param rapportVO
 	 * @param procedure
 	 * @return
 	 * @throws DAOException
 	 */
-	public ResultSet rapportProcedure(RapportVO rapportVO, String procedure) throws DAOException {
-        Connection connection =
-        	DAOConnection.getInstance().getConnection();
+	public ResultSet rapportProcedure(RapportVO rapportVO, String procedure,Connection connection) throws DAOException {
 		CallableStatement callableStatement = null;
 		ResultSet resultSet = null;
         try {
@@ -1269,26 +910,6 @@ public class RapportDAO {
             throw new DAOException(se);
         }
         
-        finally {
-			if(callableStatement != null) {
-				try {
-						callableStatement.close();
-			    } catch (java.sql.SQLException e) {
-                    throw new DAOException(e);
-		        }
-			}
- 		    if (connection != null) {
-                try{
-			         if(!connection.getAutoCommit())
-			         {
-			            connection.rollback();
-			         }
- 		           	   connection.close();
-                } catch (SQLException e) {
-                    throw new DAOException(e);
-                }
- 		    }
-        } //finally
 	}
 	
 	/**
@@ -1298,9 +919,7 @@ public class RapportDAO {
 	 * @return
 	 * @throws DAOException
 	 */
-	public ResultSet rapportProcedureVigilance(EntiteRapportVO entiteRapportVO, String procedure) throws DAOException {
-        Connection connection =
-        	DAOConnection.getInstance().getConnection();
+	public ResultSet rapportProcedureVigilance(EntiteRapportVO entiteRapportVO, String procedure,Connection connection) throws DAOException {
 		CallableStatement callableStatement = null;
 		ResultSet resultSet = null;
         try {
@@ -1318,44 +937,22 @@ public class RapportDAO {
             throw new DAOException(se);
         }
         
-        finally {
-			if(callableStatement != null) {
-				try {
-						callableStatement.close();
-			    } catch (java.sql.SQLException e) {
-                    throw new DAOException(e);
-		        }
-			}
- 		    if (connection != null) {
-                try{
-			         if(!connection.getAutoCommit())
-			         {
-			            connection.rollback();
-			         }
- 		           	   connection.close();
-                } catch (SQLException e) {
-                    throw new DAOException(e);
-                }
- 		    }
-        } //finally
 	}
 
 	/**
-	 * Rapport Journal des enquêteurs.
-     * @author François Guérin
-     * @param cle  long : clé unique du dossier
+	 * Rapport Journal des enquï¿½teurs.
+     * @author Franï¿½ois Guï¿½rin
+     * @param cle  long : clï¿½ unique du dossier
      * @param site long : site
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
-     * @return ValueListIterator : Une liste de dossiers retournés par la
+     * @return ValueListIterator : Une liste de dossiers retournï¿½s par la
      * recherche.
 	 * @see AccesDAO#select(long, long)
 	 */
-	public ResultSet rapportJournalEnquetes(EnqueteurJournalRapportVO_CDX_0053 enqueteurJournalRapportVO_CDX_0053) throws DAOException {
-        Connection connection =
-        	DAOConnection.getInstance().getConnection();
+	public ResultSet rapportJournalEnquetes(EnqueteurJournalRapportVO_CDX_0053 enqueteurJournalRapportVO_CDX_0053,Connection connection) throws DAOException {
 		CallableStatement callableStatement = null;
 		ResultSet resultSet = null;
         try {
@@ -1372,47 +969,22 @@ public class RapportDAO {
         catch (SQLException se) {
             throw new DAOException(se);
         }
-        finally {
-/*			if(resultSet != null) {
-				try {
-						resultSet.close();
-			    } catch (java.sql.SQLException e) {
-                    throw new DAOException(e);
-		        }
-	        }
-*/			if(callableStatement != null) {
-				try {
-						callableStatement.close();
-			    } catch (java.sql.SQLException e) {
-                    throw new DAOException(e);
-		        }
-			}
- 		    if (connection != null) {
-                try{
-			         if(!connection.getAutoCommit())
-			         {
-			            connection.rollback();
-			         }
- 		           	   connection.close();
-                } catch (SQLException e) {
-                    throw new DAOException(e);
-                }
- 		    }
-        } //finally
+       
 	}
 
 	/**
-	 * Rapport Cohérence des données.
-	 * Ce rapport est appelé par un différé. Il indique les données qui ne sont pas cohérentes. Les cas suivants sont vétifés :
+	 * Rapport Cohï¿½rence des donnï¿½es.
+	 * Ce rapport est appelï¿½ par un diffï¿½rï¿½. Il indique les donnï¿½es qui ne sont pas cohï¿½rentes. Les cas suivants sont vï¿½tifï¿½s :
 	 * Dossiers d'auto-exclusion sans Sujet
 	 * Dossiers d'auto-exclusion sans Inscription
 	 * Dossiers d'auto-exclusion sans Date de fin
-	 * Sujets orphelins (liés à rien)
-	 * Sociétés orphelines
-	 * Véhicules orphelins 
+	 * Sujets orphelins (liï¿½s ï¿½ rien)
+	 * Sociï¿½tï¿½s orphelines
+	 * Vï¿½hicules orphelins 
+	 * @throws DAOException 
 	 */
 
-	public ResultSet rapportCoherence(Connection connection) {
+	public ResultSet rapportCoherence(Connection connection) throws DAOException {
 		CallableStatement callableStatement = null;
 		ResultSet resultSet = null;
 
@@ -1423,46 +995,22 @@ public class RapportDAO {
             callableStatement.execute();
             resultSet = (ResultSet) callableStatement.getObject(1);
             
-			/*while(resultSet.next()){
-				System.out.println( resultSet.getString(1) );
-			}*/
-            
             return resultSet;
         }
         catch (SQLException se) {
-        	se.printStackTrace();
+        	throw new DAOException(se);
         }
-
-        finally {
-        	if(callableStatement != null) {
-				try {
-						callableStatement.close();
-			    } catch (java.sql.SQLException e) {
-			    	e.printStackTrace();
-		        }
-			}
- 		    if (connection != null) {
-                try{
-			         if(!connection.getAutoCommit())
-			         {
-			            connection.rollback();
-			         }
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
- 		    }
-        } //finally
-        return null;
 	}
 	
 	/**
-	 * Rapport Vérification des éléments multimédias.
-	 * Ce rapport est appelé par un différé. Il indique les éléments multimédias qui ont été associés, mais 
-	 * qui ne sont pas présents sur le serveur de fichiers.
+	 * Rapport Vï¿½rification des ï¿½lï¿½ments multimï¿½dias.
+	 * Ce rapport est appelï¿½ par un diffï¿½rï¿½. Il indique les ï¿½lï¿½ments multimï¿½dias qui ont ï¿½tï¿½ associï¿½s, mais 
+	 * qui ne sont pas prï¿½sents sur le serveur de fichiers.
+	 * @throws DAOException 
 	 * 
 	 */
 
-	public ResultSet rapportVerificationMultimedia(Connection connection) {
+	public ResultSet rapportVerificationMultimedia(Connection connection) throws DAOException {
 		CallableStatement callableStatement = null;
 		ResultSet resultSet = null;
 
@@ -1473,46 +1021,22 @@ public class RapportDAO {
             callableStatement.execute();
             resultSet = (ResultSet) callableStatement.getObject(1);
             
-			/*while(resultSet.next()){
-				System.out.println( resultSet.getString(1) );
-			}*/
-            
             return resultSet;
         }
         catch (SQLException se) {
-        	se.printStackTrace();
+        	throw new DAOException(se);
         }
-
-        finally {
-        	if(callableStatement != null) {
-				try {
-						callableStatement.close();
-			    } catch (java.sql.SQLException e) {
-			    	e.printStackTrace();
-		        }
-			}
- 		    if (connection != null) {
-                try{
-			         if(!connection.getAutoCommit())
-			         {
-			            connection.rollback();
-			         }
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
- 		    }
-        } //finally
-        return null;
 	}
 	
 	/**
-	 * Rapport pour rechercher des sujets en accès interdit.
-	 * À chaque date anniversaire de l'accès, un avis est envoyé
-	 * pour évaluer la réadmission du client, exclu par le Comité
+	 * Rapport pour rechercher des sujets en accï¿½s interdit.
+	 * ï¿½ chaque date anniversaire de l'accï¿½s, un avis est envoyï¿½
+	 * pour ï¿½valuer la rï¿½admission du client, exclu par le Comitï¿½
 	 * de vigilance. 
+	 * @throws DAOException 
 	 */
 
-	public String rapportReadmission(Connection connection) {
+	public String rapportReadmission(Connection connection) throws DAOException {
 		CallableStatement callableStatement = null;
 		ResultSet resultSet = null;
 		String listeSujet = "";
@@ -1531,42 +1055,22 @@ public class RapportDAO {
             return listeSujet;
         }
         catch (SQLException se) {
-        	se.printStackTrace();
+        	throw new DAOException(se);
         }
 
-        finally {
-        	if(callableStatement != null) {
-				try {
-						callableStatement.close();
-			    } catch (java.sql.SQLException e) {
-			    	e.printStackTrace();
-		        }
-			}
- 		    if (connection != null) {
-                try{
-			         if(!connection.getAutoCommit())
-			         {
-			            connection.rollback();
-			         }
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
- 		    }
-        } //finally
-        return null;
 	}
 
 	/**
-	 * Rapport sur les données à épurer.
-	 * Ce rapport est appelé par le bouton Épuration dans l'écran de recherche. Le résultat est
-	 * sauvegardé dans un rapport et dans un répertoire à des fins de contrôle pour les vérificateurs.
-	 * La procédure à exécuter est passée en paramètre.
+	 * Rapport sur les donnï¿½es ï¿½ ï¿½purer.
+	 * Ce rapport est appelï¿½ par le bouton ï¿½puration dans l'ï¿½cran de recherche. Le rï¿½sultat est
+	 * sauvegardï¿½ dans un rapport et dans un rï¿½pertoire ï¿½ des fins de contrï¿½le pour les vï¿½rificateurs.
+	 * La procï¿½dure ï¿½ exï¿½cuter est passï¿½e en paramï¿½tre.
 	 * Dossiers d'auto-exclusion sans Sujet
 	 * Dossiers d'auto-exclusion sans Inscription
 	 * Dossiers d'auto-exclusion sans Date de fin
-	 * Sujets orphelins (liés à rien)
-	 * Sociétés orphelines
-	 * Véhicules orphelins 
+	 * Sujets orphelins (liï¿½s ï¿½ rien)
+	 * Sociï¿½tï¿½s orphelines
+	 * Vï¿½hicules orphelins 
 	 */
 
 	public ResultSet rapportEpuration(long site, Connection connection, String procedure)throws DAOException {
@@ -1580,27 +1084,12 @@ public class RapportDAO {
             callableStatement.registerOutParameter(2, OracleTypes.CURSOR);
             callableStatement.execute();
             resultSet = (ResultSet) callableStatement.getObject(2);
-            
-			/*while(resultSet.next()){
-				System.out.println( resultSet.getString(1) );
-			}*/
-            
+      
             return resultSet;
         }
         catch (SQLException se) {
-        	se.printStackTrace();
+        	throw new DAOException(se);
         }
-
-        finally {
-        	if(callableStatement != null) {
-				try {
-						callableStatement.close();
-			    } catch (java.sql.SQLException e) {
-			    	e.printStackTrace();
-		        }
-			}
-        } //finally
-        return null;
 	}
 	
     //Rapport cumulatif et hebdomadaire (CDX_0146 et CDX_0147)	
@@ -1669,7 +1158,7 @@ public class RapportDAO {
 		return rapportDossierRetour;
     }
     
-    //Recherche des dossiers fondés, non fondés ou indéterminés selon les critères et le type et la catégorie
+    //Recherche des dossiers fondï¿½s, non fondï¿½s ou indï¿½terminï¿½s selon les critï¿½res et le type et la catï¿½gorie
     public long produireFonde(final RapportDossier rapportDossier, final CumulatifDossierRapportVO cumulatifDossierRapportVO, final String critereFonde) throws DAOException{
     	StoreProcTemplate storeProcTemplate = new StoreProcTemplate();
 		
@@ -1700,7 +1189,7 @@ public class RapportDAO {
     }
     
     
-	//Recherche des dossiers avec l'inscription "ENQ' dans le champ Référence 3 (V_DO_REFERENCE_5) selon les critères et le type et la catégorie
+	//Recherche des dossiers avec l'inscription "ENQ' dans le champ Rï¿½fï¿½rence 3 (V_DO_REFERENCE_5) selon les critï¿½res et le type et la catï¿½gorie
     public long produireAuxEnquetes(final RapportDossier rapportDossier, final CumulatifDossierRapportVO cumulatifDossierRapportVO) throws DAOException{
     	StoreProcTemplate storeProcTemplate = new StoreProcTemplate();
 		
@@ -1759,14 +1248,15 @@ public class RapportDAO {
     }
 
 	/**
-	 * Rapport sur la vérification des livrets
-	 * Ce rapport est appelé par un différé. Il permet de vérifer que les livrets saisis par les
-	 * acheteurs mystères (conformité à la loi 84 de la part des détaillants) ont bien été vendus par
-	 * le détaillant indiqué. La vérification se fait par la comparaison avec les données du système
-	 * ALEX, via une une vue Oracle. Les discordances sont signalées sur le rapport produit. 
+	 * Rapport sur la vï¿½rification des livrets
+	 * Ce rapport est appelï¿½ par un diffï¿½rï¿½. Il permet de vï¿½rifer que les livrets saisis par les
+	 * acheteurs mystï¿½res (conformitï¿½ ï¿½ la loi 84 de la part des dï¿½taillants) ont bien ï¿½tï¿½ vendus par
+	 * le dï¿½taillant indiquï¿½. La vï¿½rification se fait par la comparaison avec les donnï¿½es du systï¿½me
+	 * ALEX, via une une vue Oracle. Les discordances sont signalï¿½es sur le rapport produit. 
+	 * @throws DAOException 
 	 */
 
-	public ResultSet rapportVerificationLivrets(Connection connection) {
+	public ResultSet rapportVerificationLivrets(Connection connection) throws DAOException {
 		CallableStatement callableStatement = null;
 		ResultSet resultSet = null;
 
@@ -1777,36 +1267,11 @@ public class RapportDAO {
             callableStatement.execute();
             resultSet = (ResultSet) callableStatement.getObject(1);
             
-			/*while(resultSet.next()){
-				System.out.println( resultSet.getString(1) );
-			}*/
-            
             return resultSet;
         }
         catch (SQLException se) {
-        	se.printStackTrace();
+        	throw new DAOException(se);
         }
-
-        finally {
-        	if(callableStatement != null) {
-				try {
-						callableStatement.close();
-			    } catch (java.sql.SQLException e) {
-			    	e.printStackTrace();
-		        }
-			}
- 		    if (connection != null) {
-                try{
-			         if(!connection.getAutoCommit())
-			         {
-			            connection.rollback();
-			         }
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
- 		    }
-        } //finally
-        return null;
 	}
 
 	public Map<ClientMystereVO_CDX_0255, ClientMystereVO_CDX_0255> societeAvecEtSansDossierClientMystereCDX_0255(CardexAuthenticationSubject subject, Set<Dossier> echantillonDossierClientMystereActif) throws DAOException {
@@ -1839,7 +1304,7 @@ public class RapportDAO {
     }    
     
     /**
-     * RA0009	Responsable RDD : peut-être une société RDD ou un sujet RDD qui est lié avec le rôle "Responsable"
+     * RA0009	Responsable RDD : peut-ï¿½tre une sociï¿½tï¿½ RDD ou un sujet RDD qui est liï¿½ avec le rï¿½le "Responsable"
      * @param subject
      * @param societeClientMystereMap
      * @throws DAOException
@@ -1873,7 +1338,7 @@ public class RapportDAO {
 	}
 	
 	/**
-	 * RA0009	Responsable RDD : peut-être une société RDD ou un sujet RDD qui est lié avec le rôle "Responsable"
+	 * RA0009	Responsable RDD : peut-ï¿½tre une sociï¿½tï¿½ RDD ou un sujet RDD qui est liï¿½ avec le rï¿½le "Responsable"
 	 * @param subject
 	 * @param societeClientMystereMap
 	 * @throws DAOException
@@ -1908,17 +1373,18 @@ public class RapportDAO {
 	}
 	
     /**
-	 * Rapport sur les changements apportés aux détaillants qui font partie d'une
-	 * vague de clients mystères (conformité à la loi 84 de la part des détaillants).
-	 * Ce rapport est appelé par un différé. Les points suivants sont vérifiés :
+	 * Rapport sur les changements apportï¿½s aux dï¿½taillants qui font partie d'une
+	 * vague de clients mystï¿½res (conformitï¿½ ï¿½ la loi 84 de la part des dï¿½taillants).
+	 * Ce rapport est appelï¿½ par un diffï¿½rï¿½. Les points suivants sont vï¿½rifiï¿½s :
 	 * - Le nom
 	 * - L'adresse
 	 * - Le code du compte
 	 * - Le responsable 
 	 * - Inactif 
+     * @throws DAOException 
 	 */
 
-	public ResultSet rapportChangementsDetaillants(Connection connection) {
+	public ResultSet rapportChangementsDetaillants(Connection connection) throws DAOException {
 		CallableStatement callableStatement = null;
 		ResultSet resultSet = null;
 
@@ -1928,49 +1394,23 @@ public class RapportDAO {
             callableStatement.registerOutParameter(1, OracleTypes.CURSOR);
             callableStatement.execute();
             resultSet = (ResultSet) callableStatement.getObject(1);
-            
-			/*while(resultSet.next()){
-				System.out.println( resultSet.getString(1) );
-			}*/
-            
+
             return resultSet;
         }
         catch (SQLException se) {
-        	se.printStackTrace();
+        	throw new DAOException(se);
         }
 
-        finally {
-        	if(callableStatement != null) {
-				try {
-						callableStatement.close();
-			    } catch (java.sql.SQLException e) {
-			    	e.printStackTrace();
-		        }
-			}
- 		    if (connection != null) {
-                try{
-			         if(!connection.getAutoCommit())
-			         {
-			            connection.rollback();
-			         }
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
- 		    }
-        } //finally
-        return null;
 	}
 
 	/**
-	 * Procédure pour l'exécution des rapports CDX_0244 et CDX_0245 sur les sévérité des sujets et des sociétés. 
+	 * Procï¿½dure pour l'exï¿½cution des rapports CDX_0244 et CDX_0245 sur les sï¿½vï¿½ritï¿½ des sujets et des sociï¿½tï¿½s. 
 	 * @param rapportVO
 	 * @param procedure
 	 * @return
 	 * @throws DAOException
 	 */
-	public ResultSet rapportSeverite(SeveriteRapportVO rapportVO, String procedure) throws DAOException {
-        Connection connection =
-        	DAOConnection.getInstance().getConnection();
+	public ResultSet rapportSeverite(SeveriteRapportVO rapportVO, String procedure,Connection connection) throws DAOException {
 		CallableStatement callableStatement = null;
 		ResultSet resultSet = null;
         try {
@@ -1989,32 +1429,12 @@ public class RapportDAO {
             throw new DAOException(se);
         }
         
-        finally {
-			if(callableStatement != null) {
-				try {
-						callableStatement.close();
-			    } catch (java.sql.SQLException e) {
-                    throw new DAOException(e);
-		        }
-			}
- 		    if (connection != null) {
-                try{
-			         if(!connection.getAutoCommit())
-			         {
-			            connection.rollback();
-			         }
- 		           	   connection.close();
-                } catch (SQLException e) {
-                    throw new DAOException(e);
-                }
- 		    }
-        } //finally
 	}
 	
 	/**
-	 * Procédure pour l'exécution du différé CDX00_00015 pour produire les
-	 * fichiers pour le système de reconnaissance de plaques 
-	 * (identification automatique des véhicules reliés à des sujets d'intérêt)
+	 * Procï¿½dure pour l'exï¿½cution du diffï¿½rï¿½ CDX00_00015 pour produire les
+	 * fichiers pour le systï¿½me de reconnaissance de plaques 
+	 * (identification automatique des vï¿½hicules reliï¿½s ï¿½ des sujets d'intï¿½rï¿½t)
 	 * @param rapportVO
 	 * @param procedure
 	 * @return
@@ -2034,32 +1454,20 @@ public class RapportDAO {
             return resultSet;
         }
         catch (SQLException se) {
-        	se.printStackTrace();
+        	throw new DAOException(se);
         }
-
-        finally {
-        	if(callableStatement != null) {
-				try {
-						callableStatement.close();
-			    } catch (java.sql.SQLException e) {
-			    	e.printStackTrace();
-		        }
-			}
-        } //finally
-        return null;
 	}
 
 	/**
-	 * Procédure pour l'exécution du rapport CDX_0075 pour produire 
-	 * manuellement	les données pour le système de reconnaissance de plaques 
-	 * (identification automatique des véhicules reliés à des sujets d'intérêt)
+	 * Procï¿½dure pour l'exï¿½cution du rapport CDX_0075 pour produire 
+	 * manuellement	les donnï¿½es pour le systï¿½me de reconnaissance de plaques 
+	 * (identification automatique des vï¿½hicules reliï¿½s ï¿½ des sujets d'intï¿½rï¿½t)
 	 * @param rapportVO
 	 * @param procedure
 	 * @return
 	 * @throws DAOException
 	 */
-	public ResultSet produireRapportReconnaissance(String titre, StatistiqueDossierRapportVO reconnaissancePlaqueVO ) throws DAOException {
-		Connection connection = DAOConnection.getInstance().getConnection();
+	public ResultSet produireRapportReconnaissance(String titre, StatistiqueDossierRapportVO reconnaissancePlaqueVO, Connection connection) throws DAOException {
 		CallableStatement callableStatement = null;
 		ResultSet resultSet = null;
         try {
@@ -2074,32 +1482,20 @@ public class RapportDAO {
             return resultSet;
         }
         catch (SQLException se) {
-        	se.printStackTrace();
+        	throw new DAOException(se);
         }
-
-        finally {
-        	if(callableStatement != null) {
-				try {
-						callableStatement.close();
-			    } catch (java.sql.SQLException e) {
-			    	e.printStackTrace();
-		        }
-			}
-        } //finally
-        return null;
 	}
 	
 	/**
-	 * Procédure pour l'exécution du différé sur les demandes incomplètes pour les dossiers
-	 * d'habilitation sécuritaire. Le différé a pour but d'envoyer des rappels afin que les
-	 * demandes d'enquêtes soient complétées.
+	 * Procï¿½dure pour l'exï¿½cution du diffï¿½rï¿½ sur les demandes incomplï¿½tes pour les dossiers
+	 * d'habilitation sï¿½curitaire. Le diffï¿½rï¿½ a pour but d'envoyer des rappels afin que les
+	 * demandes d'enquï¿½tes soient complï¿½tï¿½es.
 	 * @param rapportVO
 	 * @param procedure
 	 * @return
 	 * @throws DAOException
 	 */
-	public ResultSet listeDemandesIncompletes() throws DAOException {
-		Connection connection = DAOConnection.getInstance().getConnection();
+	public ResultSet listeDemandesIncompletes(Connection connection) throws DAOException {
 		CallableStatement callableStatement = null;
 		ResultSet resultSet = null;
         try {
@@ -2111,24 +1507,13 @@ public class RapportDAO {
             return resultSet;
         }
         catch (SQLException se) {
-        	se.printStackTrace();
+        	throw new DAOException(se);
         }
-
-        finally {
-        	if(callableStatement != null) {
-				try {
-						callableStatement.close();
-			    } catch (java.sql.SQLException e) {
-			    	e.printStackTrace();
-		        }
-			}
-        } //finally
-        return null;
 	}
 
 	/**
-	 * Procédure pour l'exécution du rapport CDX_0246 pour connaître le délai
-	 * moyen de traitement des enquêtes d'habilitation sécuritaire.
+	 * Procï¿½dure pour l'exï¿½cution du rapport CDX_0246 pour connaï¿½tre le dï¿½lai
+	 * moyen de traitement des enquï¿½tes d'habilitation sï¿½curitaire.
 	 * @param rapportVO
 	 * @param procedure
 	 * @return
@@ -2183,8 +1568,8 @@ public class RapportDAO {
 	}
 	
 	/**
-	 * Procédure pour l'exécution du rapport CDX_0247 pour connaître 
-	 * les enquêtes d'habilitation sécuritaire en retard.
+	 * Procï¿½dure pour l'exï¿½cution du rapport CDX_0247 pour connaï¿½tre 
+	 * les enquï¿½tes d'habilitation sï¿½curitaire en retard.
 	 * @param rapportVO
 	 * @param procedure
 	 * @return
@@ -2204,9 +1589,9 @@ public class RapportDAO {
     	    try{
     		   while (resultSet.next()){
     				Map dossier = new HashMap();
-    				//Pour connaître les enquêtes en retard, on calcule le nombre de jours ouvrables entre
-    				//la date de création du suivi et sa date complétée.
-    				//On vérifie d'abord la SQ (5 jours de délai) si la date complétée de la RACJ est nulle.
+    				//Pour connaï¿½tre les enquï¿½tes en retard, on calcule le nombre de jours ouvrables entre
+    				//la date de crï¿½ation du suivi et sa date complï¿½tï¿½e.
+    				//On vï¿½rifie d'abord la SQ (5 jours de dï¿½lai) si la date complï¿½tï¿½e de la RACJ est nulle.
     				Date dateCompletee = new Date(resultSet.getTimestamp("Date_completee_sq").getTime());
     				Date dateCreation = new Date(resultSet.getTimestamp("Date_creation_sq").getTime());
     				int nombreJours = 0;
@@ -2225,8 +1610,8 @@ public class RapportDAO {
 	    					liste.add(dossier);
 	    				}
     				}else{
-	    				//On vérifie ensuite la RACJ (délai d'une journée après la date complétée de la SQ)
-	    				//si la date complétée de la RACJ n'est pas nulle
+	    				//On vï¿½rifie ensuite la RACJ (dï¿½lai d'une journï¿½e aprï¿½s la date complï¿½tï¿½e de la SQ)
+	    				//si la date complï¿½tï¿½e de la RACJ n'est pas nulle
 	    				dateCompletee = new Date(resultSet.getTimestamp("Date_completee_racj").getTime());
 	    				dateCreation = new Date(resultSet.getTimestamp("Date_completee_sq").getTime());
 	    				nombreJours = JourneeOuvrable.calculerDifference(dateCreation, dateCompletee);
@@ -2268,8 +1653,8 @@ public class RapportDAO {
 	}
 
 	/**
-	 * Procédure pour l'exécution du rapport CDX_0248 pour connaître 
-	 * les enquêtes d'habilitation sécuritaire qui ont été traitées en retard.
+	 * Procï¿½dure pour l'exï¿½cution du rapport CDX_0248 pour connaï¿½tre 
+	 * les enquï¿½tes d'habilitation sï¿½curitaire qui ont ï¿½tï¿½ traitï¿½es en retard.
 	 * @param rapportVO
 	 * @param procedure
 	 * @return
@@ -2291,8 +1676,8 @@ public class RapportDAO {
     	    try{
     		   while (resultSet.next()){
     				Map dossier = new HashMap();
-    				//Pour connaître les enquêtes en retard, on calcule le nombre de jours ouvrables entre
-    				//la date de création du suivi et sa date complétée.
+    				//Pour connaï¿½tre les enquï¿½tes en retard, on calcule le nombre de jours ouvrables entre
+    				//la date de crï¿½ation du suivi et sa date complï¿½tï¿½e.
     				Date dateCompletee = new Date(resultSet.getTimestamp("Date_completee_sq").getTime());
     				Date dateCreation = new Date(resultSet.getTimestamp("Date_creation_sq").getTime());
 	    			int nombreJours = JourneeOuvrable.calculerDifference(dateCreation, dateCompletee);
@@ -2309,8 +1694,8 @@ public class RapportDAO {
     					dossier.put("DOSSIER",OracleDAOUtils.getString(resultSet, "Dossier"));
     					liste.add(dossier);
     				}
-    				//On vérifie ensuite la RACJ (délai d'une journée après la date complétée de la SQ)
-    				//si la date complétée de la RACJ n'est pas nulle
+    				//On vï¿½rifie ensuite la RACJ (dï¿½lai d'une journï¿½e aprï¿½s la date complï¿½tï¿½e de la SQ)
+    				//si la date complï¿½tï¿½e de la RACJ n'est pas nulle
     				dateCompletee = new Date(resultSet.getTimestamp("Date_completee_racj").getTime());
     				dateCreation = new Date(resultSet.getTimestamp("Date_completee_sq").getTime());
     				nombreJours = JourneeOuvrable.calculerDifference(dateCreation, dateCompletee);
@@ -2336,7 +1721,7 @@ public class RapportDAO {
             return liste;
         }
         catch (SQLException se) {
-        	se.printStackTrace();
+        	throw new DAOException(se);
         }
 
         finally {
@@ -2344,15 +1729,14 @@ public class RapportDAO {
 				try {
 						callableStatement.close();
 			    } catch (java.sql.SQLException e) {
-			    	e.printStackTrace();
+			    	throw new DAOException(e);
 		        }
 			}
         } //finally
-        return null;
 	}
 
 	/**
-	 * Rapport sur les sujets devant faire partie du système de laissez-passer dans les casinos.
+	 * Rapport sur les sujets devant faire partie du systï¿½me de laissez-passer dans les casinos.
 	 */
 
 	public ResultSet produireRapportLaissezPasserSujet(Connection connection) throws DAOException {
@@ -2366,40 +1750,15 @@ public class RapportDAO {
             callableStatement.execute();
             resultSet = (ResultSet) callableStatement.getObject(1);
             
-			/*while(resultSet.next()){
-				System.out.println( resultSet.getString(1) );
-			}*/
-            
             return resultSet;
         }
         catch (SQLException se) {
-        	se.printStackTrace();
+        	throw new DAOException(se);
         }
-
-        finally {
-        	if(callableStatement != null) {
-				try {
-						callableStatement.close();
-			    } catch (java.sql.SQLException e) {
-			    	e.printStackTrace();
-		        }
-			}
- 		    if (connection != null) {
-                try{
-			         if(!connection.getAutoCommit())
-			         {
-			            connection.rollback();
-			         }
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
- 		    }
-        } //finally
-        return null;
 	}
        
 	/**
-	 * Rapport sur les sociétés devant faire partie du système de laissez-passer dans les casinos.
+	 * Rapport sur les sociï¿½tï¿½s devant faire partie du systï¿½me de laissez-passer dans les casinos.
 	 */
 
 	public ResultSet produireRapportLaissezPasserSociete(Connection connection) throws DAOException {
@@ -2415,46 +1774,24 @@ public class RapportDAO {
             return resultSet;
         }
         catch (SQLException se) {
-        	se.printStackTrace();
+        	throw new DAOException(se);
         }
-
-        finally {
-        	if(callableStatement != null) {
-				try {
-						callableStatement.close();
-			    } catch (java.sql.SQLException e) {
-			    	e.printStackTrace();
-		        }
-			}
- 		    if (connection != null) {
-                try{
-			         if(!connection.getAutoCommit())
-			         {
-			            connection.rollback();
-			         }
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
- 		    }
-        } //finally
-        return null;
 	}
 
     /**
-     * Rapport sur les accès (sommaire et détaillé)
-     * @author François Guérin
-     * @param cle  long : clé unique du dossier
+     * Rapport sur les accï¿½s (sommaire et dï¿½taillï¿½)
+     * @author Franï¿½ois Guï¿½rin
+     * @param cle  long : clï¿½ unique du dossier
      * @param site long : site
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
-     * @return ValueListIterator : Une liste de dossiers retournés par la
+     * @return ValueListIterator : Une liste de dossiers retournï¿½s par la
      * recherche.
      * @see AccesDAO#select(long, long)
      */
-    public ResultSet auditAcces(AccesRapportVO rapportDossierVO) throws DAOException {
-        Connection connection = DAOConnection.getInstance().getConnection();
+    public ResultSet auditAcces(AccesRapportVO rapportDossierVO,Connection connection) throws DAOException {
         CallableStatement callableStatement = null;
         ResultSet resultSet = null;
         try {
@@ -2465,48 +1802,26 @@ public class RapportDAO {
             callableStatement.setLong(3,rapportDossierVO.getSite());
             callableStatement.registerOutParameter(4, OracleTypes.CURSOR);
             callableStatement.execute();
-            resultSet = (ResultSet)callableStatement.getObject(4);
+            return (ResultSet)callableStatement.getObject(4);
         }catch (SQLException se) {
             throw new DAOException(se);
         }
-        finally {
-            if(callableStatement != null) {
-                try {
-                        callableStatement.close();
-                } catch (java.sql.SQLException e) {
-                    throw new DAOException(e);
-                }
-            }
-            if (connection != null) {
-                try{
-                     if(!connection.getAutoCommit())
-                     {
-                        connection.rollback();
-                     }
-                       connection.close();
-                } catch (SQLException e) {
-                    throw new DAOException(e);
-                }
-            }
-        } //finally
-        return resultSet;
     }
 
     /**
-     * Rapport sur les accès aux sujets (CDX_0072)
-     * @author François Guérin
-     * @param cle  long : clé unique du dossier
+     * Rapport sur les accï¿½s aux sujets (CDX_0072)
+     * @author Franï¿½ois Guï¿½rin
+     * @param cle  long : clï¿½ unique du dossier
      * @param site long : site
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
-     * @return ValueListIterator : Une liste de dossiers retournés par la
+     * @return ValueListIterator : Une liste de dossiers retournï¿½s par la
      * recherche.
      * @see AccesDAO#select(long, long)
      */
-    public ResultSet auditAccesSujets(AccesRapportVO rapportDossierVO) throws DAOException {
-        Connection connection = DAOConnection.getInstance().getConnection();
+    public ResultSet auditAccesSujets(AccesRapportVO rapportDossierVO,Connection connection) throws DAOException {
         CallableStatement callableStatement = null;
         ResultSet resultSet = null;
         try {
@@ -2523,48 +1838,27 @@ public class RapportDAO {
             callableStatement.setLong(5,rapportDossierVO.getNombreAcces());
             callableStatement.registerOutParameter(6, OracleTypes.CURSOR);
             callableStatement.execute();
-            resultSet = (ResultSet)callableStatement.getObject(6);
+            return (ResultSet)callableStatement.getObject(6);
         }catch (SQLException se) {
             throw new DAOException(se);
         }
-        finally {
-            if(callableStatement != null) {
-                try {
-                        callableStatement.close();
-                } catch (java.sql.SQLException e) {
-                    throw new DAOException(e);
-                }
-            }
-            if (connection != null) {
-                try{
-                     if(!connection.getAutoCommit())
-                     {
-                        connection.rollback();
-                     }
-                       connection.close();
-                } catch (SQLException e) {
-                    throw new DAOException(e);
-                }
-            }
-        } //finally
-        return resultSet;
+
     }
 
     /**
-     * Rapport pour produire les rapports sur l'analyse des accès aux dossiers (CDX_0072).
-     * @author François Guérin
-     * @param cle  long : clé unique du dossier
+     * Rapport pour produire les rapports sur l'analyse des accï¿½s aux dossiers (CDX_0072).
+     * @author Franï¿½ois Guï¿½rin
+     * @param cle  long : clï¿½ unique du dossier
      * @param site long : site
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
-     * @return ValueListIterator : Une liste de dossiers retournés par la
+     * @return ValueListIterator : Une liste de dossiers retournï¿½s par la
      * recherche.
      * @see AccesDAO#select(long, long)
      */
-    public ResultSet auditAnalyseAccesDossiers(AccesRapportVO rapportDossierVO) throws DAOException {
-        Connection connection = DAOConnection.getInstance().getConnection();
+    public ResultSet auditAnalyseAccesDossiers(AccesRapportVO rapportDossierVO,Connection connection) throws DAOException {
         CallableStatement callableStatement = null;
         ResultSet resultSet = null;
         try {
@@ -2595,48 +1889,26 @@ public class RapportDAO {
             }
             callableStatement.registerOutParameter(8, OracleTypes.CURSOR);
             callableStatement.execute();
-            resultSet = (ResultSet)callableStatement.getObject(8);
+            return (ResultSet)callableStatement.getObject(8);
         }catch (SQLException se) {
             throw new DAOException(se);
         }
-        finally {
-            if(callableStatement != null) {
-                try {
-                        callableStatement.close();
-                } catch (java.sql.SQLException e) {
-                    throw new DAOException(e);
-                }
-            }
-            if (connection != null) {
-                try{
-                     if(!connection.getAutoCommit())
-                     {
-                        connection.rollback();
-                     }
-                       connection.close();
-                } catch (SQLException e) {
-                    throw new DAOException(e);
-                }
-            }
-        } //finally
-        return resultSet;
     }
 
     /**
-     * Rapport sur les accès aux sujets par intervenant (CDX_0072)
-     * @author François Guérin
-     * @param cle  long : clé unique du dossier
+     * Rapport sur les accï¿½s aux sujets par intervenant (CDX_0072)
+     * @author Franï¿½ois Guï¿½rin
+     * @param cle  long : clï¿½ unique du dossier
      * @param site long : site
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
-     * @return ValueListIterator : Une liste de dossiers retournés par la
+     * @return ValueListIterator : Une liste de dossiers retournï¿½s par la
      * recherche.
      * @see AccesDAO#select(long, long)
      */
-    public ResultSet auditAccesSujetsIntervenant(AccesRapportVO rapportDossierVO) throws DAOException {
-        Connection connection = DAOConnection.getInstance().getConnection();
+    public ResultSet auditAccesSujetsIntervenant(AccesRapportVO rapportDossierVO,Connection connection) throws DAOException {
         CallableStatement callableStatement = null;
         ResultSet resultSet = null;
         try {
@@ -2653,48 +1925,26 @@ public class RapportDAO {
             callableStatement.setLong(5,rapportDossierVO.getNombreAcces());
             callableStatement.registerOutParameter(6, OracleTypes.CURSOR);
             callableStatement.execute();
-            resultSet = (ResultSet)callableStatement.getObject(6);
+            return (ResultSet)callableStatement.getObject(6);
         }catch (SQLException se) {
             throw new DAOException(se);
         }
-        finally {
-            if(callableStatement != null) {
-                try {
-                        callableStatement.close();
-                } catch (java.sql.SQLException e) {
-                    throw new DAOException(e);
-                }
-            }
-            if (connection != null) {
-                try{
-                     if(!connection.getAutoCommit())
-                     {
-                        connection.rollback();
-                     }
-                       connection.close();
-                } catch (SQLException e) {
-                    throw new DAOException(e);
-                }
-            }
-        } //finally
-        return resultSet;
     }
 
     /**
-     * Rapport sur les accès par intervenant (CDX_0122).
-     * @author François Guérin
-     * @param cle  long : clé unique du dossier
+     * Rapport sur les accï¿½s par intervenant (CDX_0122).
+     * @author Franï¿½ois Guï¿½rin
+     * @param cle  long : clï¿½ unique du dossier
      * @param site long : site
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
-     * @return ValueListIterator : Une liste de dossiers retournés par la
+     * @return ValueListIterator : Une liste de dossiers retournï¿½s par la
      * recherche.
      * @see AccesDAO#select(long, long)
      */
-    public ResultSet auditAccesIntervenant(AccesRapportVO rapportDossierVO) throws DAOException {
-        Connection connection = DAOConnection.getInstance().getConnection();
+    public ResultSet auditAccesIntervenant(AccesRapportVO rapportDossierVO, Connection connection) throws DAOException {
         CallableStatement callableStatement = null;
         ResultSet resultSet = null;
         try {
@@ -2706,55 +1956,26 @@ public class RapportDAO {
             callableStatement.setString(4,rapportDossierVO.getIntervenant());
             callableStatement.registerOutParameter(5, OracleTypes.CURSOR);
             callableStatement.execute();
-            resultSet = (ResultSet)callableStatement.getObject(5);
+            return (ResultSet)callableStatement.getObject(5);
         }catch (SQLException se) {
             throw new DAOException(se);
         }
-        finally {
-/*          if(resultSet != null) {
-                try {
-                        resultSet.close();
-                } catch (java.sql.SQLException e) {
-                    throw new DAOException(e);
-                }
-            }
-*/          if(callableStatement != null) {
-                try {
-                        callableStatement.close();
-                } catch (java.sql.SQLException e) {
-                    throw new DAOException(e);
-                }
-            }
-            if (connection != null) {
-                try{
-                     if(!connection.getAutoCommit())
-                     {
-                        connection.rollback();
-                     }
-                       connection.close();
-                } catch (SQLException e) {
-                    throw new DAOException(e);
-                }
-            }
-        } //finally
-        return resultSet;
     }
 
     /**
-     * Rapport détaillé sur les accès par intervenant (CDX_0123).
-     * @author François Guérin
-     * @param cle  long : clé unique du dossier
+     * Rapport dï¿½taillï¿½ sur les accï¿½s par intervenant (CDX_0123).
+     * @author Franï¿½ois Guï¿½rin
+     * @param cle  long : clï¿½ unique du dossier
      * @param site long : site
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
-     * @return ValueListIterator : Une liste de dossiers retournés par la
+     * @return ValueListIterator : Une liste de dossiers retournï¿½s par la
      * recherche.
      * @see AccesDAO#select(long, long)
      */
-    public ResultSet auditAccesDetailIntervenant(AccesRapportVO rapportDossierVO) throws DAOException {
-        Connection connection = DAOConnection.getInstance().getConnection();
+    public ResultSet auditAccesDetailIntervenant(AccesRapportVO rapportDossierVO,Connection connection) throws DAOException {
         CallableStatement callableStatement = null;
         ResultSet resultSet = null;
         try {
@@ -2766,55 +1987,26 @@ public class RapportDAO {
             callableStatement.setString(4,rapportDossierVO.getIntervenant());
             callableStatement.registerOutParameter(5, OracleTypes.CURSOR);
             callableStatement.execute();
-            resultSet = (ResultSet)callableStatement.getObject(5);
+            return (ResultSet)callableStatement.getObject(5);
         }catch (SQLException se) {
             throw new DAOException(se);
         }
-        finally {
-/*          if(resultSet != null) {
-                try {
-                        resultSet.close();
-                } catch (java.sql.SQLException e) {
-                    throw new DAOException(e);
-                }
-            }
-*/          if(callableStatement != null) {
-                try {
-                        callableStatement.close();
-                } catch (java.sql.SQLException e) {
-                    throw new DAOException(e);
-                }
-            }
-            if (connection != null) {
-                try{
-                     if(!connection.getAutoCommit())
-                     {
-                        connection.rollback();
-                     }
-                       connection.close();
-                } catch (SQLException e) {
-                    throw new DAOException(e);
-                }
-            }
-        } //finally
-        return resultSet;
     }
 
     /**
-     * Rapport sur les accès par nouvel intervenant (CDX_0122).
-     * @author François Guérin
-     * @param cle  long : clé unique du dossier
+     * Rapport sur les accï¿½s par nouvel intervenant (CDX_0122).
+     * @author Franï¿½ois Guï¿½rin
+     * @param cle  long : clï¿½ unique du dossier
      * @param site long : site
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
-     * @return ValueListIterator : Une liste de dossiers retournés par la
+     * @return ValueListIterator : Une liste de dossiers retournï¿½s par la
      * recherche.
      * @see AccesDAO#select(long, long)
      */
-    public ResultSet auditAccesNouveauxIntervenants(AccesRapportVO rapportDossierVO) throws DAOException {
-        Connection connection = DAOConnection.getInstance().getConnection();
+    public ResultSet auditAccesNouveauxIntervenants(AccesRapportVO rapportDossierVO,Connection connection) throws DAOException {
         CallableStatement callableStatement = null;
         ResultSet resultSet = null;
         try {
@@ -2826,55 +2018,26 @@ public class RapportDAO {
             callableStatement.setString(4,rapportDossierVO.getIntervenant());
             callableStatement.registerOutParameter(5, OracleTypes.CURSOR);
             callableStatement.execute();
-            resultSet = (ResultSet)callableStatement.getObject(5);
+            return (ResultSet)callableStatement.getObject(5);
         }catch (SQLException se) {
             throw new DAOException(se);
         }
-        finally {
-/*          if(resultSet != null) {
-                try {
-                        resultSet.close();
-                } catch (java.sql.SQLException e) {
-                    throw new DAOException(e);
-                }
-            }
-*/          if(callableStatement != null) {
-                try {
-                        callableStatement.close();
-                } catch (java.sql.SQLException e) {
-                    throw new DAOException(e);
-                }
-            }
-            if (connection != null) {
-                try{
-                     if(!connection.getAutoCommit())
-                     {
-                        connection.rollback();
-                     }
-                       connection.close();
-                } catch (SQLException e) {
-                    throw new DAOException(e);
-                }
-            }
-        } //finally
-        return resultSet;
     }
 
     /**
-     * Rapport sur les accès des superutilisateurs (CDX_0122).
-     * @author François Guérin
-     * @param cle  long : clé unique du dossier
+     * Rapport sur les accï¿½s des superutilisateurs (CDX_0122).
+     * @author Franï¿½ois Guï¿½rin
+     * @param cle  long : clï¿½ unique du dossier
      * @param site long : site
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
-     * @return ValueListIterator : Une liste de dossiers retournés par la
+     * @return ValueListIterator : Une liste de dossiers retournï¿½s par la
      * recherche.
      * @see AccesDAO#select(long, long)
      */
-    public ResultSet auditAccesSuperutilisateurs(AccesRapportVO rapportDossierVO) throws DAOException {
-        Connection connection = DAOConnection.getInstance().getConnection();
+    public ResultSet auditAccesSuperutilisateurs(AccesRapportVO rapportDossierVO,Connection connection) throws DAOException {
         CallableStatement callableStatement = null;
         ResultSet resultSet = null;
         try {
@@ -2886,54 +2049,25 @@ public class RapportDAO {
             callableStatement.setString(4,rapportDossierVO.getIntervenant());
             callableStatement.registerOutParameter(5, OracleTypes.CURSOR);
             callableStatement.execute();
-            resultSet = (ResultSet)callableStatement.getObject(5);
+            return (ResultSet)callableStatement.getObject(5);
         }catch (SQLException se) {
             throw new DAOException(se);
         }
-        finally {
-/*          if(resultSet != null) {
-                try {
-                        resultSet.close();
-                } catch (java.sql.SQLException e) {
-                    throw new DAOException(e);
-                }
-            }
-*/          if(callableStatement != null) {
-                try {
-                        callableStatement.close();
-                } catch (java.sql.SQLException e) {
-                    throw new DAOException(e);
-                }
-            }
-            if (connection != null) {
-                try{
-                     if(!connection.getAutoCommit())
-                     {
-                        connection.rollback();
-                     }
-                       connection.close();
-                } catch (SQLException e) {
-                    throw new DAOException(e);
-                }
-            }
-        } //finally
-        return resultSet;
     }
     /**
-     * Rapport sur les accès aux sujets (CDX_0124).
-     * @author François Guérin
-     * @param cle  long : clé unique du dossier
+     * Rapport sur les accï¿½s aux sujets (CDX_0124).
+     * @author Franï¿½ois Guï¿½rin
+     * @param cle  long : clï¿½ unique du dossier
      * @param site long : site
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
-     * @return ValueListIterator : Une liste de dossiers retournés par la
+     * @return ValueListIterator : Une liste de dossiers retournï¿½s par la
      * recherche.
      * @see AccesDAO#select(long, long)
      */
-    public ResultSet auditAccesEmploye(AccesRapportVO rapportDossierVO) throws DAOException {
-        Connection connection = DAOConnection.getInstance().getConnection();
+    public ResultSet auditAccesEmploye(AccesRapportVO rapportDossierVO,Connection connection) throws DAOException {
         CallableStatement callableStatement = null;
         ResultSet resultSet = null;
         try {
@@ -2946,48 +2080,26 @@ public class RapportDAO {
             callableStatement.setLong(5,rapportDossierVO.getGroupe());
             callableStatement.registerOutParameter(6, OracleTypes.CURSOR);
             callableStatement.execute();
-            resultSet = (ResultSet)callableStatement.getObject(6);
+            return (ResultSet)callableStatement.getObject(6);
         }catch (SQLException se) {
             throw new DAOException(se);
         }
-        finally {
-          if(callableStatement != null) {
-                try {
-                        callableStatement.close();
-                } catch (java.sql.SQLException e) {
-                    throw new DAOException(e);
-                }
-            }
-            if (connection != null) {
-                try{
-                     if(!connection.getAutoCommit())
-                     {
-                        connection.rollback();
-                     }
-                       connection.close();
-                } catch (SQLException e) {
-                    throw new DAOException(e);
-                }
-            }
-        } //finally
-        return resultSet;
     }
     
     /**
-     * Rapport sur les accès aux fournisseurs (CDX_0125).
-     * @author François Guérin
-     * @param cle  long : clé unique du dossier
+     * Rapport sur les accï¿½s aux fournisseurs (CDX_0125).
+     * @author Franï¿½ois Guï¿½rin
+     * @param cle  long : clï¿½ unique du dossier
      * @param site long : site
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
-     * @return ValueListIterator : Une liste de dossiers retournés par la
+     * @return ValueListIterator : Une liste de dossiers retournï¿½s par la
      * recherche.
      * @see AccesDAO#select(long, long)
      */
-    public ResultSet auditAccesFournisseur(AccesRapportVO rapportDossierVO) throws DAOException {
-        Connection connection = DAOConnection.getInstance().getConnection();
+    public ResultSet auditAccesFournisseur(AccesRapportVO rapportDossierVO,Connection connection) throws DAOException {
         CallableStatement callableStatement = null;
         ResultSet resultSet = null;
         try {
@@ -3000,48 +2112,26 @@ public class RapportDAO {
             callableStatement.setLong(5,rapportDossierVO.getGroupe());
             callableStatement.registerOutParameter(6, OracleTypes.CURSOR);
             callableStatement.execute();
-            resultSet = (ResultSet)callableStatement.getObject(6);
+            return (ResultSet)callableStatement.getObject(6);
         }catch (SQLException se) {
             throw new DAOException(se);
         }
-        finally {
-          if(callableStatement != null) {
-                try {
-                        callableStatement.close();
-                } catch (java.sql.SQLException e) {
-                    throw new DAOException(e);
-                }
-            }
-            if (connection != null) {
-                try{
-                     if(!connection.getAutoCommit())
-                     {
-                        connection.rollback();
-                     }
-                       connection.close();
-                } catch (SQLException e) {
-                    throw new DAOException(e);
-                }
-            }
-        } //finally
-        return resultSet;
     }
 
     /**
-     * Rapport sur les accès aux narrations (CDX_0126).
-     * @author François Guérin
-     * @param cle  long : clé unique du dossier
+     * Rapport sur les accï¿½s aux narrations (CDX_0126).
+     * @author Franï¿½ois Guï¿½rin
+     * @param cle  long : clï¿½ unique du dossier
      * @param site long : site
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
-     * @return ValueListIterator : Une liste de dossiers retournés par la
+     * @return ValueListIterator : Une liste de dossiers retournï¿½s par la
      * recherche.
      * @see AccesDAO#select(long, long)
      */
-    public ResultSet auditAccesNarration(AccesRapportVO rapportDossierVO) throws DAOException {
-        Connection connection = DAOConnection.getInstance().getConnection();
+    public ResultSet auditAccesNarration(AccesRapportVO rapportDossierVO,Connection connection) throws DAOException {
         CallableStatement callableStatement = null;
         ResultSet resultSet = null;
         try {
@@ -3054,42 +2144,19 @@ public class RapportDAO {
             callableStatement.setLong(5,rapportDossierVO.getGroupe());
             callableStatement.registerOutParameter(6, OracleTypes.CURSOR);
             callableStatement.execute();
-            resultSet = (ResultSet)callableStatement.getObject(6);
+            return (ResultSet)callableStatement.getObject(6);
         }catch (SQLException se) {
             throw new DAOException(se);
         }
-        finally {
-          if(callableStatement != null) {
-                try {
-                        callableStatement.close();
-                } catch (java.sql.SQLException e) {
-                    throw new DAOException(e);
-                }
-            }
-            if (connection != null) {
-                try{
-                     if(!connection.getAutoCommit())
-                     {
-                        connection.rollback();
-                     }
-                       connection.close();
-                } catch (SQLException e) {
-                    throw new DAOException(e);
-                }
-            }
-        } //finally
-        return resultSet;
     }
     /**
-     * Procédure pour l'exécution du rapport CDX_0256 sur les détaillants devenus inactifs. 
+     * Procï¿½dure pour l'exï¿½cution du rapport CDX_0256 sur les dï¿½taillants devenus inactifs. 
      * @param rapportVO
      * @param procedure
      * @return
      * @throws DAOException
      */
-    public ResultSet rapportSocietesInactives(SocietesInactivesRapportVO societesInactivesRapportVO) throws DAOException {
-        Connection connection =
-            DAOConnection.getInstance().getConnection();
+    public ResultSet rapportSocietesInactives(SocietesInactivesRapportVO societesInactivesRapportVO,Connection connection) throws DAOException {
         CallableStatement callableStatement = null;
         ResultSet resultSet = null;
         try {
@@ -3109,44 +2176,22 @@ public class RapportDAO {
             throw new DAOException(se);
         }
         
-        finally {
-            if(callableStatement != null) {
-                try {
-                        callableStatement.close();
-                } catch (java.sql.SQLException e) {
-                    throw new DAOException(e);
-                }
-            }
-            if (connection != null) {
-                try{
-                     if(!connection.getAutoCommit())
-                     {
-                        connection.rollback();
-                     }
-                       connection.close();
-                } catch (SQLException e) {
-                    throw new DAOException(e);
-                }
-            }
-        } //finally
     }
 
 	/**
 	 * Rapport sur les contrats d'autoexclusion actifs d'Espacejeux (CDX_0260)
-     * @author François Guérin
-     * @param cle  long : clé unique du dossier
+     * @author Franï¿½ois Guï¿½rin
+     * @param cle  long : clï¿½ unique du dossier
      * @param site long : site
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
-     * @return ValueListIterator : Une liste de dossiers retournés par la
+     * @return ValueListIterator : Une liste de dossiers retournï¿½s par la
      * recherche.
 	 * @see AccesDAO#select(long, long)
 	 */
-	public ResultSet rapportEspaceJeuxAutoexclusionActif(EspaceJeuxAutoexclusionActifRapportVO_CDX_0260 espaceJeuxAutoexclusionActifRapportVO_CDX_0260) throws DAOException {
-        Connection connection =
-        	DAOConnection.getInstance().getConnection();
+	public ResultSet rapportEspaceJeuxAutoexclusionActif(EspaceJeuxAutoexclusionActifRapportVO_CDX_0260 espaceJeuxAutoexclusionActifRapportVO_CDX_0260,Connection connection) throws DAOException {
 		CallableStatement callableStatement = null;
 		ResultSet resultSet = null;
         try {
@@ -3160,51 +2205,22 @@ public class RapportDAO {
         catch (SQLException se) {
             throw new DAOException(se);
         }
-        finally {
-/*			if(resultSet != null) {
-				try {
-						resultSet.close();
-			    } catch (java.sql.SQLException e) {
-                    throw new DAOException(e);
-		        }
-	        }
-*/			if(callableStatement != null) {
-				try {
-						callableStatement.close();
-			    } catch (java.sql.SQLException e) {
-                    throw new DAOException(e);
-		        }
-			}
- 		    if (connection != null) {
-                try{
-			         if(!connection.getAutoCommit())
-			         {
-			            connection.rollback();
-			         }
- 		           	   connection.close();
-                } catch (SQLException e) {
-                    throw new DAOException(e);
-                }
- 		    }
-        } //finally
 	}
 
 	/**
-	 * Rapport sur les dossiers de fraude fondés d'Espacejeux (CDX_0261)
-     * @author François Guérin
-     * @param cle  long : clé unique du dossier
+	 * Rapport sur les dossiers de fraude fondï¿½s d'Espacejeux (CDX_0261)
+     * @author Franï¿½ois Guï¿½rin
+     * @param cle  long : clï¿½ unique du dossier
      * @param site long : site
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
-     * @return ValueListIterator : Une liste de dossiers retournés par la
+     * @return ValueListIterator : Une liste de dossiers retournï¿½s par la
      * recherche.
 	 * @see AccesDAO#select(long, long)
 	 */
-	public ResultSet rapportEspaceJeuxFraudeFonde(EspaceJeuxFraudeFondeRapportVO_CDX_0261 espaceJeuxFraudeFondeRapportVO_CDX_0261) throws DAOException {
-        Connection connection =
-        	DAOConnection.getInstance().getConnection();
+	public ResultSet rapportEspaceJeuxFraudeFonde(EspaceJeuxFraudeFondeRapportVO_CDX_0261 espaceJeuxFraudeFondeRapportVO_CDX_0261,Connection connection) throws DAOException {
 		CallableStatement callableStatement = null;
 		ResultSet resultSet = null;
         try {
@@ -3218,51 +2234,23 @@ public class RapportDAO {
         catch (SQLException se) {
             throw new DAOException(se);
         }
-        finally {
-/*			if(resultSet != null) {
-				try {
-						resultSet.close();
-			    } catch (java.sql.SQLException e) {
-                    throw new DAOException(e);
-		        }
-	        }
-*/			if(callableStatement != null) {
-				try {
-						callableStatement.close();
-			    } catch (java.sql.SQLException e) {
-                    throw new DAOException(e);
-		        }
-			}
- 		    if (connection != null) {
-                try{
-			         if(!connection.getAutoCommit())
-			         {
-			            connection.rollback();
-			         }
- 		           	   connection.close();
-                } catch (SQLException e) {
-                    throw new DAOException(e);
-                }
- 		    }
-        } //finally
+        
 	}
 
 	/**
-	 * Rapport sur les dossiers de tricherie fondés d'Espacejeux (CDX_0262)
-     * @author François Guérin
-     * @param cle  long : clé unique du dossier
+	 * Rapport sur les dossiers de tricherie fondï¿½s d'Espacejeux (CDX_0262)
+     * @author Franï¿½ois Guï¿½rin
+     * @param cle  long : clï¿½ unique du dossier
      * @param site long : site
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
-     * @return ValueListIterator : Une liste de dossiers retournés par la
+     * @return ValueListIterator : Une liste de dossiers retournï¿½s par la
      * recherche.
 	 * @see AccesDAO#select(long, long)
 	 */
-	public ResultSet rapportEspaceJeuxTricherieFonde(EspaceJeuxTricherieFondeRapportVO_CDX_0262 espaceJeuxTricherieFondeRapportVO_CDX_0262) throws DAOException {
-        Connection connection =
-        	DAOConnection.getInstance().getConnection();
+	public ResultSet rapportEspaceJeuxTricherieFonde(EspaceJeuxTricherieFondeRapportVO_CDX_0262 espaceJeuxTricherieFondeRapportVO_CDX_0262,Connection connection) throws DAOException {
 		CallableStatement callableStatement = null;
 		ResultSet resultSet = null;
         try {
@@ -3276,51 +2264,23 @@ public class RapportDAO {
         catch (SQLException se) {
             throw new DAOException(se);
         }
-        finally {
-/*			if(resultSet != null) {
-				try {
-						resultSet.close();
-			    } catch (java.sql.SQLException e) {
-                    throw new DAOException(e);
-		        }
-	        }
-*/			if(callableStatement != null) {
-				try {
-						callableStatement.close();
-			    } catch (java.sql.SQLException e) {
-                    throw new DAOException(e);
-		        }
-			}
- 		    if (connection != null) {
-                try{
-			         if(!connection.getAutoCommit())
-			         {
-			            connection.rollback();
-			         }
- 		           	   connection.close();
-                } catch (SQLException e) {
-                    throw new DAOException(e);
-                }
- 		    }
-        } //finally
+        
 	}
 
 	/**
-	 * Rapport sur les statistiques par endroits regroupés (CDX_0149)
-     * @author François Guérin
-     * @param cle  long : clé unique du dossier
+	 * Rapport sur les statistiques par endroits regroupï¿½s (CDX_0149)
+     * @author Franï¿½ois Guï¿½rin
+     * @param cle  long : clï¿½ unique du dossier
      * @param site long : site
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
-     * @return ValueListIterator : Une liste de dossiers retournés par la
+     * @return ValueListIterator : Une liste de dossiers retournï¿½s par la
      * recherche.
 	 * @see AccesDAO#select(long, long)
 	 */
-	public ResultSet rapportEndroitsRegroupes(StatistiqueDossierRapportVO statistiqueDossierRapportVO) throws DAOException {
-        Connection connection =
-        	DAOConnection.getInstance().getConnection();
+	public ResultSet rapportEndroitsRegroupes(StatistiqueDossierRapportVO statistiqueDossierRapportVO,Connection connection) throws DAOException {
 		CallableStatement callableStatement = null;
 		ResultSet resultSet = null;
         try {
@@ -3337,50 +2297,28 @@ public class RapportDAO {
             callableStatement.registerOutParameter(9, OracleTypes.CURSOR);
             callableStatement.execute();
             resultSet = (ResultSet)callableStatement.getObject(9);
-            //RA0020-Statistiques par endroits regroupées. Afficher les sous-catégories seulement si la catégorie est renseignée dans l'écran des critères de recherche.
+            //RA0020-Statistiques par endroits regroupï¿½es. Afficher les sous-catï¿½gories seulement si la catï¿½gorie est renseignï¿½e dans l'ï¿½cran des critï¿½res de recherche.
             return resultSet;
         }
         catch (SQLException se) {
             throw new DAOException(se);
         }
-        finally {
-			if(callableStatement != null) {
-				try {
-						callableStatement.close();
-			    } catch (java.sql.SQLException e) {
-                    throw new DAOException(e);
-		        }
-			}
- 		    if (connection != null) {
-                try{
-			         if(!connection.getAutoCommit())
-			         {
-			            connection.rollback();
-			         }
- 		           	   connection.close();
-                } catch (SQLException e) {
-                    throw new DAOException(e);
-                }
- 		    }
-        } //finally
 	}
 
 	/**
-	 * Tableau sur les statistiques par endroits regroupés (CDX_0280)
-     * @author François Guérin
-     * @param cle  long : clé unique du dossier
+	 * Tableau sur les statistiques par endroits regroupï¿½s (CDX_0280)
+     * @author Franï¿½ois Guï¿½rin
+     * @param cle  long : clï¿½ unique du dossier
      * @param site long : site
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
-     * @return ValueListIterator : Une liste de dossiers retournés par la
+     * @return ValueListIterator : Une liste de dossiers retournï¿½s par la
      * recherche.
 	 * @see AccesDAO#select(long, long)
 	 */
-	public ResultSet rapportTableauEndroitsRegroupes(StatistiqueDossierRapportVO statistiqueDossierRapportVO) throws DAOException {
-        Connection connection =
-        	DAOConnection.getInstance().getConnection();
+	public ResultSet rapportTableauEndroitsRegroupes(StatistiqueDossierRapportVO statistiqueDossierRapportVO,Connection connection) throws DAOException {
 		CallableStatement callableStatement = null;
 		ResultSet resultSet = null;
         try {
@@ -3402,26 +2340,6 @@ public class RapportDAO {
         catch (SQLException se) {
             throw new DAOException(se);
         }
-        finally {
-			if(callableStatement != null) {
-				try {
-						callableStatement.close();
-			    } catch (java.sql.SQLException e) {
-                    throw new DAOException(e);
-		        }
-			}
- 		    if (connection != null) {
-                try{
-			         if(!connection.getAutoCommit())
-			         {
-			            connection.rollback();
-			         }
- 		           	   connection.close();
-                } catch (SQLException e) {
-                    throw new DAOException(e);
-                }
- 		    }
-        } //finally
 	}
 
 }

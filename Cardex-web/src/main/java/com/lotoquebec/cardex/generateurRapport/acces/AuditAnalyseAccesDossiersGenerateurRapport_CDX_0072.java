@@ -25,7 +25,6 @@ import com.lotoquebec.cardexCommun.securite.GestionnaireSecurite;
 import com.lotoquebec.cardexCommun.text.DateFormat;
 import com.lotoquebec.cardexCommun.util.ListeCache;
 import com.lotoquebec.cardexCommun.util.StringUtils;
-import com.lotoquebec.cardexCommun.util.ValueObjectMapper;
 
 public class AuditAnalyseAccesDossiersGenerateurRapport_CDX_0072 extends GenererRapport {
 
@@ -43,7 +42,7 @@ public class AuditAnalyseAccesDossiersGenerateurRapport_CDX_0072 extends Generer
 	public JRDataSource construireDataSource(CardexAuthenticationSubject subject, RapportVO rapportVO, Connection connection) throws BusinessResourceException, BusinessException {
 		AccesRapportVO rapportDossierVO =(AccesRapportVO) rapportVO;
 		RapportBusinessDelegate delegate = new RapportBusinessDelegate();
-		ResultSet resultSet = delegate.auditAnalyseAccesDossiers(rapportDossierVO);
+		ResultSet resultSet = delegate.auditAnalyseAccesDossiers(rapportDossierVO,connection);
 
        	return new JRResultSetDataSource(resultSet);
 	}
@@ -66,7 +65,7 @@ public class AuditAnalyseAccesDossiersGenerateurRapport_CDX_0072 extends Generer
 			site = listeCache.obtenirLabel(subject, String.valueOf(rapportDossierVO.getSite()), new TableValeurCleSQLListeCache(subject, GlobalConstants.TableValeur.SITE, GlobalConstants.ActionSecurite.SELECTION));
 			parameters.put("SITE_DESCRIPTION", site);
 			if(StringUtils.isNotEmpty(rapportDossierVO.getIntervenant())){
-				//Ce paramètre ne sert que pour ce rapport.
+				//Ce paramï¿½tre ne sert que pour ce rapport.
 				String intervenant = listeCache.obtenirLabel(subject, rapportDossierVO.getIntervenant(), new IntervenantCle(subject));
 				parameters.put("INTERVENANT_DESCRIPTION", intervenant);
 			}

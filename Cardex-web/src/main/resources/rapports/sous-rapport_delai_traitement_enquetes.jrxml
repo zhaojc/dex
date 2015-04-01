@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CDX_0241_facturation_sq" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<style name="Crosstab Data Text" isDefault="false" hAlign="Center"/>
+	<parameter name="DATE_DEBUT" class="java.lang.String"/>
+	<parameter name="DATE_FIN" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[      select s.v_si_site as "Site",
+             'Employés' as "Nature",
+             s2.v_si_abreviation as "Dossier",
+             avg(sv.d_sv_date_completee-sv.d_sv_date_creation) as "Total"
+        from v_do_dossier_ca_ty   d,
+             is_inscription       i,
+             sis_site_inscription sis,
+             si_site              s,
+             si_site              s2,
+             sv_suivi             sv
+       where d.i_ge_cle = 21876
+         and d.l_do_cle = i.l_is_reference
+         and d.l_si_cle = i.l_is_ref_site
+         and i.l_is_cle = sis.l_is_cle
+         and i.l_si_cle = sis.l_si_cle
+         and sis.l_is_site = s.l_si_cle
+         and d.d_do_date_debut between $P{DATE_DEBUT} and $P{DATE_FIN}
+         and d.i_na_cle in (21877, 21878, 21881, 21879)
+         and d.l_si_cle = s2.l_si_cle
+         and d.l_do_cle = sv.l_sv_reference
+         and d.l_si_cle = sv.l_sv_ref_site
+         and sv.d_sv_date_completee is not null
+         group by s.v_si_site, s2.v_si_abreviation   
+      union
+      select s.v_si_site as "Site",
+             'Salariés' as "Nature",
+             s2.v_si_abreviation as "Dossier",
+             avg(sv.d_sv_date_completee-sv.d_sv_date_creation) as "Total"
+        from v_do_dossier_ca_ty   d,
+             is_inscription       i,
+             sis_site_inscription sis,
+             si_site              s,
+             si_site              s2,
+             sv_suivi             sv
+       where d.i_ge_cle = 21876
+         and d.l_do_cle = i.l_is_reference
+         and d.l_si_cle = i.l_is_ref_site
+         and i.l_is_cle = sis.l_is_cle
+         and i.l_si_cle = sis.l_si_cle
+         and sis.l_is_site = s.l_si_cle
+         and d.d_do_date_debut between $P{DATE_DEBUT} and $P{DATE_FIN}
+         and d.i_na_cle in (21884, 21880, 21883)
+         and d.l_si_cle = s2.l_si_cle
+         and d.l_do_cle = sv.l_sv_reference
+         and d.l_si_cle = sv.l_sv_ref_site
+         and sv.d_sv_date_completee is not null
+         group by s.v_si_site, s2.v_si_abreviation                    
+      union
+      select s.v_si_site as "Site",
+             'Fournisseurs' as "Nature",
+             s2.v_si_abreviation as "Dossier",
+             avg(sv.d_sv_date_completee-sv.d_sv_date_creation) as "Total"
+        from v_do_dossier_ca_ty   d,
+             is_inscription       i,
+             sis_site_inscription sis,
+             si_site              s,
+             si_site              s2,
+             sv_suivi             sv
+       where d.i_ge_cle = 21876
+         and d.l_do_cle = i.l_is_reference
+         and d.l_si_cle = i.l_is_ref_site
+         and i.l_is_cle = sis.l_is_cle
+         and i.l_si_cle = sis.l_si_cle
+         and sis.l_is_site = s.l_si_cle
+         and d.d_do_date_debut between $P{DATE_DEBUT} and $P{DATE_FIN}
+         and d.i_na_cle in (21882)
+         and d.l_si_cle = s2.l_si_cle
+         and d.l_do_cle = sv.l_sv_reference
+         and d.l_si_cle = sv.l_sv_ref_site
+         and sv.d_sv_date_completee is not null
+         group by s.v_si_site, s2.v_si_abreviation  
+]]>
+	</queryString>
+	<field name="Site" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Nature" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Total" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Dossier" class="java.lang.String"/>
+	<sortField name="Site"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<summary>
+		<band height="248" splitType="Stretch">
+			<crosstab>
+				<reportElement x="0" y="55" width="555" height="193"/>
+				<rowGroup name="Site" width="130" totalPosition="End">
+					<bucket>
+						<bucketExpression class="java.lang.String"><![CDATA[$F{Site}]]></bucketExpression>
+					</bucket>
+					<crosstabRowHeader>
+						<cellContents backcolor="#F0F8FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="130" height="25"/>
+								<textElement verticalAlignment="Middle"/>
+								<textFieldExpression class="java.lang.String"><![CDATA[$V{Site}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabRowHeader>
+					<crosstabTotalRowHeader>
+						<cellContents backcolor="#BFE1FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+						</cellContents>
+					</crosstabTotalRowHeader>
+				</rowGroup>
+				<columnGroup name="Nature" height="30" totalPosition="End">
+					<bucket>
+						<bucketExpression class="java.lang.String"><![CDATA[$F{Nature}]]></bucketExpression>
+					</bucket>
+					<crosstabColumnHeader>
+						<cellContents backcolor="#F0F8FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="68" height="30"/>
+								<textElement verticalAlignment="Middle"/>
+								<textFieldExpression class="java.lang.String"><![CDATA[$V{Nature}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabColumnHeader>
+					<crosstabTotalColumnHeader>
+						<cellContents backcolor="#005FB3" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+						</cellContents>
+					</crosstabTotalColumnHeader>
+				</columnGroup>
+				<columnGroup name="Dossier" height="30" totalPosition="End">
+					<bucket>
+						<bucketExpression class="java.lang.String"><![CDATA[$F{Dossier}]]></bucketExpression>
+					</bucket>
+					<crosstabColumnHeader>
+						<cellContents backcolor="#F0F8FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="68" height="30"/>
+								<textElement verticalAlignment="Middle"/>
+								<textFieldExpression class="java.lang.String"><![CDATA[$V{Dossier}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabColumnHeader>
+					<crosstabTotalColumnHeader>
+						<cellContents backcolor="#BFE1FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+						</cellContents>
+					</crosstabTotalColumnHeader>
+				</columnGroup>
+				<measure name="TotalMeasure" class="java.math.BigDecimal">
+					<measureExpression><![CDATA[$F{Total}]]></measureExpression>
+				</measure>
+				<crosstabCell width="68" height="25">
+					<cellContents>
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="68" height="25"/>
+							<textElement verticalAlignment="Middle"/>
+							<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{TotalMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="68" height="0" rowTotalGroup="Site">
+					<cellContents backcolor="#BFE1FF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="2" columnTotalGroup="Nature">
+					<cellContents backcolor="#005FB3" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="2" height="0" rowTotalGroup="Site" columnTotalGroup="Nature">
+					<cellContents backcolor="#005FB3" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="0" columnTotalGroup="Dossier">
+					<cellContents backcolor="#BFE1FF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="0" height="0" rowTotalGroup="Site" columnTotalGroup="Dossier">
+					<cellContents backcolor="#BFE1FF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+					</cellContents>
+				</crosstabCell>
+			</crosstab>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="555" height="24" backcolor="#0099CC"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="18" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Délai de traitement des enquêtes]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Opaque" x="0" y="25" width="555" height="20" backcolor="#E4F7E4"/>
+				<box leftPadding="5">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA["Pour la période du " + $P{DATE_DEBUT} + " au " + $P{DATE_FIN}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

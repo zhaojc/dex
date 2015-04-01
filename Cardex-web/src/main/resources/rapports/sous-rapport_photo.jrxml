@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sous-rapport_photo" pageWidth="185" pageHeight="185" columnWidth="185" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<parameter name="CLE" class="java.lang.String"/>
+	<parameter name="SITE" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT cardex_lien.F_LIRE_FICHIER(mm.l_em_cle||'p.JPG') AS "PHOTO"
+FROM  mm_multimedia mm
+ WHERE mm.l_em_cle = $P{CLE}
+and mm.l_si_cle = $P{SITE}]]>
+	</queryString>
+	<field name="PHOTO" class="java.io.InputStream">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="156" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="185" height="156"/>
+				<imageExpression class="java.io.InputStream"><![CDATA[$F{PHOTO}]]></imageExpression>
+			</image>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

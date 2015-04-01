@@ -1,5 +1,6 @@
 package com.lotoquebec.cardex.servlet;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -11,12 +12,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.jasperreports.engine.JRAbstractExporter;
 import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JRExporter;
-import net.sf.jasperreports.engine.JRExporterParameter;
+import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.export.JExcelApiExporter;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
-import net.sf.jasperreports.j2ee.servlets.ImageServlet;
+import net.sf.jasperreports.engine.export.JRXlsExporterParameter;
+import net.sf.jasperreports.export.SimpleExporterInput;
+import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 
 import com.lotoquebec.cardex.business.vo.rapport.RapportVO;
 import com.lotoquebec.cardex.generateurRapport.GenererRapport;
@@ -30,12 +34,16 @@ import com.lotoquebec.cardexCommun.exception.ValueObjectMapperException;
 import com.lotoquebec.cardexCommun.util.ValueObjectMapper;
 
 /**
- * Cette classe est utilisé pour lancer une classe en réflexion.
- * La classe lancé est la classe qui prépare le rapport jasper.
+ * Cette classe est utilisï¿½ pour lancer une classe en rï¿½flexion.
+ * La classe lancï¿½ est la classe qui prï¿½pare le rapport jasper.
  */
 public abstract class RapportAffichage extends HttpServlet {
 
+	private static final long serialVersionUID = -8083681278153808743L;
+
 	protected abstract RapportForm obtenirRapportForm(HttpServletRequest request);
+	//private static final Object MUTEX = new Object();
+	
 	
 	public void init(ServletConfig config) throws ServletException{
 		super.init(config);
@@ -44,6 +52,9 @@ public abstract class RapportAffichage extends HttpServlet {
     public  void doGet(HttpServletRequest request, HttpServletResponse  response, Locale locale)
         throws IOException, ServletException {
         CardexAuthenticationSubject subject = (CardexAuthenticationSubject) request.getSession().getAttribute(AuthenticationSubject.class.getName());
+        
+        ServletOutputStream servletOutputStream = response.getOutputStream();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
     	RapportForm rapportForm = obtenirRapportForm(request);
     	
         try {
@@ -52,9 +63,35 @@ public abstract class RapportAffichage extends HttpServlet {
             ValueObjectMapper.convert(rapportForm, rapportVO);
             ResourceBundle bundle = ResourceBundle.getBundle("resources.application", locale);
             
-	        JasperPrint print = genererRapport.executer(subject, rapportVO, bundle, locale);
-	        
-	        assignerServletOutput(request, response, print);
+			JasperPrint print = genererRapport.executer(subject, rapportVO, bundle, locale);
+			
+			/*
+	        // RÃ©cupÃ¨re le nom de l'attribut de session
+
+	        // On veut Ã©viter toute concurrence lors de l'Ã©criture de la rÃ©ponse
+	        synchronized (RapportAffichage.MUTEX) {
+	        	String userAgent = request.getHeader("User-Agent");
+				if(userAgent.indexOf("Trident/7")>-1) {
+					response.reset();
+			        response.setHeader("Content-disposition","inline; filename=test.pdf");
+			        response.setHeader("Cache-Control", "no-cache");
+			        response.setDateHeader("Expires", 0);
+			        response.setHeader("Pragma", "No-cache");
+				} else {
+					response.setHeader("Pragma", "public"); 
+				}
+
+	        }			
+			*/
+			setContentType(response);
+	        response.setHeader("Cache-Control", "max-age=0");
+			JasperExportManager.exportReportToPdfStream(print, baos);
+			JRAbstractExporter exporter = obtenirJRExporter();
+			exporter.setExporterInput(new SimpleExporterInput(print));
+			exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(baos));
+			exporter.exportReport();
+	        servletOutputStream.write(baos.toByteArray());
+	        //FacesContext.getCurrentInstance().responseComplete();
 	        
   	  	} catch (JRException se) {
 			se.printStackTrace();
@@ -64,21 +101,21 @@ public abstract class RapportAffichage extends HttpServlet {
 			e.printStackTrace();
 		} catch (ValueObjectMapperException e) {
 			e.printStackTrace();
+		} finally {
+			baos.flush();
+			baos.close();
+	        servletOutputStream.flush();
+	        servletOutputStream.close();
 		}
 	}
 
-    protected void assignerServletOutput(HttpServletRequest request, HttpServletResponse  response, JasperPrint print) throws IOException, JRException{
-    	ServletOutputStream servletOutputStream = response.getOutputStream();
-    	
-        response.setContentType( GlobalConstants.TypeSortieServlet.PDF );
-        
-        request.getSession().setAttribute(ImageServlet.DEFAULT_JASPER_PRINT_SESSION_ATTRIBUTE, print);	         
-        JRExporter exporter = new JRPdfExporter();
-        exporter.setParameter(JRExporterParameter.JASPER_PRINT, print);
-        exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, servletOutputStream);
-        exporter.exportReport();
-        
-        servletOutputStream.flush();
-        servletOutputStream.close();
-    }
+
+	protected void setContentType(HttpServletResponse response) {
+		response.setContentType(GlobalConstants.TypeSortieServlet.PDF);
+	}
+	protected JRAbstractExporter obtenirJRExporter() {
+		return new JRPdfExporter();
+	}
+
+
 }

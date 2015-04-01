@@ -26,7 +26,7 @@ public class AutoexclusionDetailleRencontresInitialesDossierGenerateurRapport_CD
 	@Override
 	public JRDataSource construireDataSource(CardexAuthenticationSubject subject, RapportVO rapportVO, Connection connection) throws BusinessResourceException, BusinessException {
 		RapportBusinessDelegate delegate = new RapportBusinessDelegate();
-       	ResultSet resultSet = delegate.rapportProcedure(rapportVO, "CARDEX_RAPPORT.SP_RAPPORT_RENCONTRES_DETAIL");
+       	ResultSet resultSet = delegate.rapportProcedure(rapportVO, "CARDEX_RAPPORT.SP_RAPPORT_RENCONTRES_DETAIL",connection);
        	return new JRResultSetDataSource(resultSet);
 	}
 

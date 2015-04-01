@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CDX_0241_facturation_sq" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<style name="Crosstab Data Text" isDefault="false" hAlign="Center"/>
+	<parameter name="DATE_DEBUT" class="java.lang.String"/>
+	<parameter name="DATE_FIN" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[      select substr(d.v_do_numero_dossier,1,3) as "Dossier",
+	s.v_si_site as "Site",
+             'Employés' as "Nature",
+             'Jeux SQ' as "Jeux",
+             s2.v_si_abreviation as "Dossier",
+             d.l_do_cle as "Total"
+        from v_do_dossier_ca_ty   d,
+             is_inscription       i,
+             sis_site_inscription sis,
+             si_site              s,
+             si_site              s2
+       where d.i_ge_cle = 21876
+         and d.l_do_cle = i.l_is_reference
+         and d.l_si_cle = i.l_is_ref_site
+         and i.l_is_cle = sis.l_is_cle
+         and i.l_si_cle = sis.l_si_cle
+         and sis.l_is_site = s.l_si_cle
+         and d.d_do_date_debut >= $P{DATE_DEBUT}
+         and d.d_do_date_debut < $P{DATE_FIN} 
+         and d.i_na_cle in (21877, 21878, 21881, 21879)
+         and d.l_si_cle = s2.l_si_cle
+         and d.i_cc_cle <> 14920
+         and exists (select sv.l_sv_reference
+                from sv_suivi sv
+               where d.l_do_cle = sv.l_sv_reference
+                 and d.l_si_cle = sv.l_sv_ref_site)
+      union
+	select substr(d.v_do_numero_dossier,1,3) as "Dossier",
+	s.v_si_site as "Site",
+             'Employés' as "Nature",
+             'Non jeux' as "Jeux",
+             s2.v_si_abreviation as "Dossier",
+             d.l_do_cle as "Total"
+        from v_do_dossier_ca_ty   d,
+             is_inscription       i,
+             sis_site_inscription sis,
+             si_site              s,
+             si_site              s2
+       where d.i_ge_cle = 21876
+         and d.l_do_cle = i.l_is_reference
+         and d.l_si_cle = i.l_is_ref_site
+         and i.l_is_cle = sis.l_is_cle
+         and i.l_si_cle = sis.l_si_cle
+         and sis.l_is_site = s.l_si_cle
+         and d.d_do_date_debut >= $P{DATE_DEBUT}
+         and d.d_do_date_debut < $P{DATE_FIN} 
+         and d.i_na_cle in (21877, 21878, 21881, 21879)
+         and d.l_si_cle = s2.l_si_cle
+         and d.i_cc_cle <> 14920
+         and not exists (select sv.l_sv_reference
+                from sv_suivi sv
+               where d.l_do_cle = sv.l_sv_reference
+                 and d.l_si_cle = sv.l_sv_ref_site)
+      union
+      select substr(d.v_do_numero_dossier,1,3) as "Dossier",
+	s.v_si_site as "Site",
+             'Salariés' as "Nature",
+             'Jeux SQ' as "Jeux",
+             s2.v_si_abreviation as "Dossier",
+             d.l_do_cle as "Total"
+        from v_do_dossier_ca_ty   d,
+             is_inscription       i,
+             sis_site_inscription sis,
+             si_site              s,
+             si_site              s2
+       where d.i_ge_cle = 21876
+         and d.l_do_cle = i.l_is_reference
+         and d.l_si_cle = i.l_is_ref_site
+         and i.l_is_cle = sis.l_is_cle
+         and i.l_si_cle = sis.l_si_cle
+         and sis.l_is_site = s.l_si_cle
+         and d.d_do_date_debut >= $P{DATE_DEBUT}
+         and d.d_do_date_debut < $P{DATE_FIN} 
+         and d.i_na_cle in (21884, 21880, 21883)
+         and d.l_si_cle = s2.l_si_cle
+         and d.i_cc_cle <> 14920
+         and exists (select sv.l_sv_reference
+                from sv_suivi sv
+               where d.l_do_cle = sv.l_sv_reference
+                 and d.l_si_cle = sv.l_sv_ref_site)
+      union
+      select substr(d.v_do_numero_dossier,1,3) as "Dossier",
+	s.v_si_site as "Site",
+             'Salariés' as "Nature",
+             'Non jeux' as "Jeux",
+             s2.v_si_abreviation as "Dossier",
+             d.l_do_cle as "Total"
+        from v_do_dossier_ca_ty   d,
+             is_inscription       i,
+             sis_site_inscription sis,
+             si_site              s,
+             si_site              s2
+       where d.i_ge_cle = 21876
+         and d.l_do_cle = i.l_is_reference
+         and d.l_si_cle = i.l_is_ref_site
+         and i.l_is_cle = sis.l_is_cle
+         and i.l_si_cle = sis.l_si_cle
+         and sis.l_is_site = s.l_si_cle
+         and d.d_do_date_debut >= $P{DATE_DEBUT}
+         and d.d_do_date_debut < $P{DATE_FIN} 
+         and d.i_na_cle in (21884, 21880, 21883)
+         and d.l_si_cle = s2.l_si_cle
+         and d.i_cc_cle <> 14920
+         and not exists (select sv.l_sv_reference
+                from sv_suivi sv
+               where d.l_do_cle = sv.l_sv_reference
+                 and d.l_si_cle = sv.l_sv_ref_site)
+      union
+      select substr(d.v_do_numero_dossier,1,3) as "Dossier",
+	s.v_si_site as "Site",
+             'Fournisseurs' as "Nature",
+             'Jeux SQ' as "Jeux",
+             s2.v_si_abreviation as "Dossier",
+             d.l_do_cle as "Total"
+        from v_do_dossier_ca_ty   d,
+             is_inscription       i,
+             sis_site_inscription sis,
+             si_site              s,
+             si_site              s2
+       where d.i_ge_cle = 21876
+         and d.l_do_cle = i.l_is_reference
+         and d.l_si_cle = i.l_is_ref_site
+         and i.l_is_cle = sis.l_is_cle
+         and i.l_si_cle = sis.l_si_cle
+         and sis.l_is_site = s.l_si_cle
+         and d.d_do_date_debut >= $P{DATE_DEBUT}
+         and d.d_do_date_debut < $P{DATE_FIN} 
+         and d.i_na_cle in (21882)
+         and d.l_si_cle = s2.l_si_cle
+         and d.i_cc_cle <> 14920
+         and exists (select sv.l_sv_reference
+                from sv_suivi sv
+               where d.l_do_cle = sv.l_sv_reference
+                 and d.l_si_cle = sv.l_sv_ref_site)
+      union
+      select substr(d.v_do_numero_dossier,1,3) as "Dossier",
+	s.v_si_site as "Site",
+             'Fournisseurs' as "Nature",
+             'Non jeux' as "Jeux",
+             s2.v_si_abreviation as "Dossier",
+             d.l_do_cle as "Total"
+        from v_do_dossier_ca_ty   d,
+             is_inscription       i,
+             sis_site_inscription sis,
+             si_site              s,
+             si_site              s2
+       where d.i_ge_cle = 21876
+         and d.l_do_cle = i.l_is_reference
+         and d.l_si_cle = i.l_is_ref_site
+         and i.l_is_cle = sis.l_is_cle
+         and i.l_si_cle = sis.l_si_cle
+         and sis.l_is_site = s.l_si_cle
+         and d.d_do_date_debut >= $P{DATE_DEBUT}
+         and d.d_do_date_debut < $P{DATE_FIN} 
+         and d.i_na_cle in (21882)
+         and d.l_si_cle = s2.l_si_cle
+         and d.i_cc_cle <> 14920
+         and not exists (select sv.l_sv_reference
+                from sv_suivi sv
+               where d.l_do_cle = sv.l_sv_reference
+                 and d.l_si_cle = sv.l_sv_ref_site)
+      union
+      select substr(d.v_do_numero_dossier,1,3) as "Dossier",
+	'Détaillants LQ' as "Site",
+             'Salariés' as "Nature",
+             'Non jeux' as "Jeux",
+             s2.v_si_abreviation as "Dossier",
+             d.l_do_cle as "Total"
+        from v_do_dossier_ca_ty   d,
+             is_inscription       i,
+             sis_site_inscription sis,
+             si_site              s,
+             si_site              s2
+       where d.i_ge_cle = 21876
+         and d.l_do_cle = i.l_is_reference
+         and d.l_si_cle = i.l_is_ref_site
+         and i.l_is_cle = sis.l_is_cle
+         and i.l_si_cle = sis.l_si_cle
+         and sis.l_is_site = s.l_si_cle
+         and d.d_do_date_debut >= $P{DATE_DEBUT}
+         and d.d_do_date_debut < $P{DATE_FIN}
+         and d.i_na_cle in (25991)
+         and d.l_si_cle = s2.l_si_cle
+         and d.i_cc_cle <> 14920
+         and not exists (select sv.l_sv_reference
+                from sv_suivi sv
+               where d.l_do_cle = sv.l_sv_reference
+                 and d.l_si_cle = sv.l_sv_ref_site)
+      union
+      select substr(d.v_do_numero_dossier,1,3) as "Dossier",
+	'Détaillants LQ' as "Site",
+             'Salariés' as "Nature",
+             'Jeux SQ' as "Jeux",
+             s2.v_si_abreviation as "Dossier",
+             d.l_do_cle as "Total"
+        from v_do_dossier_ca_ty   d,
+             is_inscription       i,
+             sis_site_inscription sis,
+             si_site              s,
+             si_site              s2
+       where d.i_ge_cle = 21876
+         and d.l_do_cle = i.l_is_reference
+         and d.l_si_cle = i.l_is_ref_site
+         and i.l_is_cle = sis.l_is_cle
+         and i.l_si_cle = sis.l_si_cle
+         and sis.l_is_site = s.l_si_cle
+         and d.d_do_date_debut >= $P{DATE_DEBUT}
+         and d.d_do_date_debut < $P{DATE_FIN} 
+         and d.i_na_cle in (25991)
+         and d.l_si_cle = s2.l_si_cle
+         and d.i_cc_cle <> 14920
+         and exists (select sv.l_sv_reference
+                from sv_suivi sv
+               where d.l_do_cle = sv.l_sv_reference
+                 and d.l_si_cle = sv.l_sv_ref_site)
+      union
+      select substr(d.v_do_numero_dossier,1,3) as "Dossier",
+	'Autres' as "Site",
+             'Autres' as "Nature",
+             'Divers' as "Jeux",
+             s2.v_si_abreviation as "Dossier",
+             d.l_do_cle as "Total"
+        from v_do_dossier_ca_ty d, si_site s2, is_inscription i
+       where d.i_ge_cle = 21876
+         and d.l_do_cle = i.l_is_reference
+         and d.l_si_cle = i.l_is_ref_site
+         and d.l_si_cle = s2.l_si_cle
+         and d.i_cc_cle <> 14920
+         and d.d_do_date_debut >= $P{DATE_DEBUT}
+         and d.d_do_date_debut < $P{DATE_FIN}
+         and d.i_na_cle not in
+             (21882, 21884, 21880, 21883, 21877, 21878, 21881, 21879, 25991)]]>
+	</queryString>
+	<field name="Total" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Dossier" class="java.lang.String"/>
+	<sortField name="Dossier"/>
+	<variable name="Total_1" class="java.math.BigDecimal" calculation="DistinctCount">
+		<variableExpression><![CDATA[$F{Total}]]></variableExpression>
+	</variable>
+	<variable name="Total_2" class="java.lang.Integer" resetType="Group" resetGroup="Dossier" calculation="DistinctCount">
+		<variableExpression><![CDATA[$F{Total}]]></variableExpression>
+	</variable>
+	<group name="Dossier">
+		<groupExpression><![CDATA[$F{Dossier}]]></groupExpression>
+		<groupFooter>
+			<band height="20">
+				<textField>
+					<reportElement x="0" y="0" width="100" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{Dossier}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="100" y="0" width="100" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression class="java.lang.Integer"><![CDATA[$V{Total_2}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="78" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="555" height="24" backcolor="#0099CC"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="18" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Total des dossiers d'investigation]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Opaque" x="0" y="25" width="555" height="20" backcolor="#E4F7E4"/>
+				<box leftPadding="5">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA["Pour la période du " + $P{DATE_DEBUT} + " au " + $P{DATE_FIN}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="58" width="100" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Dossiers]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="58" width="100" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<summary>
+		<band height="39" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="100" y="7" width="100" height="28"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{Total_1}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

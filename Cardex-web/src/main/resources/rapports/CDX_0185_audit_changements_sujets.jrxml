@@ -1,0 +1,605 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CDX_0185_audit_changements_sujets" pageWidth="612" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["M:\\mazzucr_Cardex_EVOLUTION4\\V_GDJ_APP\\CARDEX\\Rapport\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="UTILISATEUR" class="java.lang.String"/>
+	<parameter name="DATE_CREATION" class="java.lang.String"/>
+	<parameter name="CLE_CREATEUR" class="java.lang.String"/>
+	<parameter name="NUMERO_FICHE" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT L_SU_CLE AS "cle",
+       TRSE.V_TR_DESCRIPTION AS "severiteDescription",
+       TRCC.V_TR_DESCRIPTION AS "confidentialiteDescription",
+       TRSX.V_TR_DESCRIPTION AS "sexeDescription",
+       TRST.V_TR_DESCRIPTION AS "statutDescription",
+       TRLS.V_TR_DESCRIPTION AS "langueDescription",
+       TRSEA.V_TR_DESCRIPTION AS "severiteDescriptionAutres",
+       V_SU_NOM AS "nom",
+       V_SU_PRENOM AS "prenom",
+       V_SU_SURNOM as "alias",
+       to_char(D_SU_DATE_NAISSANCE,'YYYY-MM-DD') AS "dateNaissance",
+       C_SU_ASSURANCE_SOCIALE AS "numeroAssuranceSociale",
+       V_SU_PERMIS_CONDUIRE AS "numeroPermisConduire",
+       TRRA.V_TR_DESCRIPTION AS "raceDescription",
+       I.V_IN_NOM || ', ' || I.V_IN_PRENOM || ' (' || TRSCI.V_TR_DESCRIPTION || ')'
+            AS "intervenantDescription",
+       V_SU_NO_PASSEPORT AS "passeport",
+       V_SU_ASSURANCE_MALADIE AS "numeroAssuranceMaladie",
+       D_SU_DATE_CREATION AS "dateCreation",
+       V_SU_CREE_PAR AS "createur",
+       V_SU_REFERENCE_1 AS "reference1",
+       V_SU_REFERENCE_2 AS "numeroClientEmploye",
+       V_SU_REFERENCE_3 AS "numeroFiche",
+       TRNT.V_TR_DESCRIPTION AS "ethnieDescription",
+       TRTYA.V_TR_DESCRIPTION as "typeAgeDescription",
+       TO_CHAR(S.D_SU_DATE_CHANGEMENT, 'YYYY-MM-DD HH24:MI:SS') AS "dateChangement",
+             I2.V_IN_NOM || ', ' || I2.V_IN_PRENOM || ' (' || I2.NAME || ', ' ||
+             TRSCI2.V_TR_DESCRIPTION || ')' AS "changePar",
+             SI.V_SI_SITE "siteDescription",
+       TRSEVCAS.V_TR_DESCRIPTION AS "severiteCasinoDescription"
+        FROM AUD_SU_SUJET S,
+             SI_SITE        SI,
+             TR_TRADUCTION  TRCC,
+             TR_TRADUCTION  TRSX,
+             TR_TRADUCTION  TRNT,
+             TR_TRADUCTION  TRSE,
+             TR_TRADUCTION  TRRA,
+             TR_TRADUCTION  TRLS,
+             TR_TRADUCTION  TRST,
+             TR_TRADUCTION  TRSEA,
+             TR_TRADUCTION  TRSCI,
+             TR_TRADUCTION  TRSCI2,
+             TR_TRADUCTION  TRSEVCAS,
+             TR_TRADUCTION  TRTYA,
+             IN_INTERVENANT I,
+             IN_INTERVENANT I2
+       WHERE S.V_SU_REFERENCE_3 = 'LVO-9485'
+         AND S.L_SI_CLE = SI.L_SI_CLE
+         AND S.I_CC_CLE = TRCC.L_TR_CLE(+) AND TRCC.I_LA_CLE(+) = 1
+         AND S.I_SX_CLE = TRSX.L_TR_CLE(+) AND TRSX.I_LA_CLE(+) = 1
+         AND S.I_ST_CLE = TRST.L_TR_CLE(+) AND TRST.I_LA_CLE(+) = 1
+         AND S.I_NT_CLE = TRNT.L_TR_CLE(+) AND TRNT.I_LA_CLE(+) = 1
+         AND S.I_SE_CLE = TRSE.L_TR_CLE(+) AND TRSE.I_LA_CLE(+) = 1
+         AND S.I_SE_CLE_AUTRES = TRSEA.L_TR_CLE(+) AND TRSEA.I_LA_CLE(+) = 1
+         AND S.I_SE_CLE_CASINO = TRSEVCAS.L_TR_CLE(+) AND TRSEVCAS.I_LA_CLE(+) = 1
+         AND S.I_RA_CLE = TRRA.L_TR_CLE(+) AND TRRA.I_LA_CLE(+) = 1
+         AND S.I_LS_CLE = TRLS.L_TR_CLE(+) AND TRLS.I_LA_CLE(+) = 1
+         AND S.V_SU_CREE_PAR = I.NAME
+         AND I.L_IN_SECTEUR = TRSCI.L_TR_CLE(+) AND TRSCI.I_LA_CLE(+) = 1
+         AND S.V_SU_CHANGE_PAR = I2.NAME
+         AND I2.L_IN_SECTEUR = TRSCI2.L_TR_CLE(+) AND TRSCI2.I_LA_CLE(+) = 1
+         AND S.L_SU_TYPE_AGE = TRTYA.L_TR_CLE(+) AND TRTYA.I_LA_CLE(+) = 1]]>
+	</queryString>
+	<field name="cle" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="severiteDescription" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="confidentialiteDescription" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="sexeDescription" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="statutDescription" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="langueDescription" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="severiteDescriptionAutres" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nom" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="prenom" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="alias" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="dateNaissance" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="numeroAssuranceSociale" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="numeroPermisConduire" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="raceDescription" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="intervenantDescription" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="passeport" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="numeroAssuranceMaladie" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="dateCreation" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="createur" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="reference1" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="numeroClientEmploye" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="numeroFiche" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ethnieDescription" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="typeAgeDescription" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="dateChangement" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="changePar" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="siteDescription" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="severiteCasinoDescription" class="java.lang.String"/>
+	<sortField name="dateChangement" order="Descending"/>
+	<group name="sujet">
+		<groupExpression><![CDATA[$F{numeroFiche}]]></groupExpression>
+		<groupHeader>
+			<band height="101">
+				<subreport>
+					<reportElement positionType="Float" x="0" y="0" width="572" height="100"/>
+					<subreportParameter name="CLE">
+						<subreportParameterExpression><![CDATA[$P{NUMERO_FICHE}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "CDX_0185_sous-rapport_audit_sujets.jasper"]]></subreportExpression>
+				</subreport>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="44">
+				<subreport>
+					<reportElement x="0" y="14" width="571" height="30"/>
+					<subreportParameter name="CLE">
+						<subreportParameterExpression><![CDATA[$P{CLE_CREATEUR}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="DATE_CREATION">
+						<subreportParameterExpression><![CDATA[$P{DATE_CREATION}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "sous-rapport_audit_createur.jasper"]]></subreportExpression>
+				</subreport>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="47" splitType="Stretch">
+			<staticText>
+				<reportElement x="1" y="26" width="570" height="20"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true" isItalic="true" pdfFontName="Helvetica-BoldOblique"/>
+				</textElement>
+				<text><![CDATA[Confidentiel]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="572" height="26" forecolor="#000000" backcolor="#0099CC"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Audit des changements - Sujets]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="365" splitType="Prevent">
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToTallestObject" x="0" y="5" width="572" height="36"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle" markup="html">
+					<font size="12" isBold="true" isItalic="true" pdfFontName="Helvetica-BoldOblique"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Données avant le changement du " + $F{dateChangement} + "<br> Effectué par " + $F{changePar}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="160" y="150" width="332" height="14"/>
+				<textElement markup="html">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{numeroClientEmploye}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="160" y="210" width="332" height="14"/>
+				<box leftPadding="0"/>
+				<textElement markup="html">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{langueDescription}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="160" y="281" width="332" height="14" isRemoveLineWhenBlank="true"/>
+				<box leftPadding="0"/>
+				<textElement markup="html">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{numeroPermisConduire}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="5" y="280" width="137" height="14"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Permis de conduire :]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="160" y="108" width="332" height="14"/>
+				<textElement markup="html">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{dateNaissance}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="160" y="337" width="332" height="14"/>
+				<box leftPadding="0"/>
+				<textElement markup="html">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{severiteDescription}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="5" y="94" width="137" height="14"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Alias :]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="160" y="80" width="332" height="14"/>
+				<textElement markup="html">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{prenom}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="5" y="108" width="137" height="14"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Date de naissance :]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="160" y="309" width="332" height="14" isRemoveLineWhenBlank="true"/>
+				<box leftPadding="0"/>
+				<textElement markup="html">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{passeport}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="160" y="295" width="332" height="14"/>
+				<box leftPadding="0"/>
+				<textElement markup="html">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{numeroAssuranceMaladie}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="160" y="239" width="332" height="14"/>
+				<box leftPadding="0"/>
+				<textElement markup="html">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{raceDescription}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="160" y="225" width="332" height="14"/>
+				<box leftPadding="0"/>
+				<textElement markup="html">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ethnieDescription}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="5" y="52" width="137" height="14"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[No de fiche :]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="160" y="66" width="332" height="14"/>
+				<textElement markup="html">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nom}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="160" y="52" width="332" height="14"/>
+				<textElement markup="html">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{numeroFiche}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="5" y="165" width="137" height="14"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Site d'origine :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="5" y="136" width="137" height="14"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Référence 1 :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="5" y="80" width="137" height="14"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Prénom :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="5" y="195" width="137" height="14"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Sexe :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="5" y="308" width="137" height="14"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Passeport :]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="160" y="94" width="332" height="14"/>
+				<textElement markup="html">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{alias}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="160" y="267" width="332" height="14"/>
+				<box leftPadding="0"/>
+				<textElement markup="html">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{numeroAssuranceSociale}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="4" y="336" width="137" height="14"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Sévérité investigation autre :]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="160" y="122" width="332" height="14"/>
+				<textElement markup="html">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{typeAgeDescription}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="5" y="252" width="137" height="14"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Statut :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="5" y="294" width="137" height="14"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[No assurance maladie :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="5" y="266" width="137" height="14"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[No assurance sociale :]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="160" y="136" width="332" height="14"/>
+				<textElement markup="html">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{reference1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="5" y="224" width="137" height="14"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Ethnie :]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="160" y="180" width="332" height="14"/>
+				<textElement markup="html">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{confidentialiteDescription}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="160" y="195" width="332" height="14"/>
+				<box leftPadding="0"/>
+				<textElement markup="html"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{sexeDescription}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="160" y="253" width="332" height="14"/>
+				<box leftPadding="0"/>
+				<textElement markup="html">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{statutDescription}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="5" y="180" width="137" height="14"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Confidentialité :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="5" y="66" width="137" height="14"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Nom :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="4" y="322" width="137" height="14"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Sévérité :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="5" y="122" width="137" height="14"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Type d'âge :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="5" y="150" width="137" height="14"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[No client/employé :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="5" y="238" width="137" height="14"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Teint :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="5" y="209" width="137" height="14"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Langue :]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="160" y="323" width="332" height="14"/>
+				<textElement markup="html">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{severiteDescriptionAutres}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="160" y="351" width="332" height="14"/>
+				<box leftPadding="0"/>
+				<textElement markup="html">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{severiteCasinoDescription}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="4" y="350" width="137" height="14"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Sévérité SQ/RACJ :]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="160" y="165" width="332" height="14"/>
+				<textElement markup="html">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{siteDescription}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="33" splitType="Stretch">
+			<textField evaluationTime="Report" pattern="" isBlankWhenNull="false">
+				<reportElement key="textField" x="527" y="9" width="36" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["" + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement key="textField" x="420" y="9" width="102" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Page " + $V{PAGE_NUMBER} + " de "]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="5" y="9" width="100" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[CDX_0185]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="false">
+				<reportElement stretchType="RelativeToTallestObject" x="105" y="9" width="315" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA["Imprimé le " + new SimpleDateFormat("EEEEE dd MMMMM yyyy à HH:mm", java.util.Locale.FRENCH).format(new java.util.Date()) + " par " + $P{UTILISATEUR}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="5" width="572" height="1"/>
+			</line>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

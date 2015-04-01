@@ -40,7 +40,7 @@ public class AuditAccesEmployeGenerateurRapport_CDX_0124 extends GenererRapport 
 	public JRDataSource construireDataSource(CardexAuthenticationSubject subject, RapportVO rapportVO, Connection connection) throws BusinessResourceException, BusinessException {
 		AccesRapportVO rapportDossierVO =(AccesRapportVO) rapportVO;
 		RapportBusinessDelegate delegate = new RapportBusinessDelegate();
-		ResultSet resultSet = delegate.auditAccesEmploye(rapportDossierVO);
+		ResultSet resultSet = delegate.auditAccesEmploye(rapportDossierVO,connection);
 
        	return new JRResultSetDataSource(resultSet);
 	}
@@ -57,7 +57,7 @@ public class AuditAccesEmployeGenerateurRapport_CDX_0124 extends GenererRapport 
         parameters.put("DATE_FIN",DateFormat.format(rapportDossierVO.getDateHeureDebutAu(), DateFormat.DATE_FORMAT_AVEC_HEURE));
         parameters.put("UTILISATEUR",subject.getPrincipal().getName());
         //On met un titre, pour le CDX_0124 
-        parameters.put("TITRE","Rapport sur les accès aux sujets employés");
+        parameters.put("TITRE","Rapport sur les accï¿½s aux sujets employï¿½s");
         
 		ListeCache listeCache = ListeCache.getInstance();
 		String site = "";
@@ -67,7 +67,7 @@ public class AuditAccesEmployeGenerateurRapport_CDX_0124 extends GenererRapport 
 			e.printStackTrace();
 		}
 		parameters.put("SITE_DESCRIPTION", site);
-		//TO_DO : ajouter le paramètre GROUPE
+		//TO_DO : ajouter le paramï¿½tre GROUPE
 		//parameters.put("GROUPE_DESCRIPTION", groupe);
 		return parameters;
 	}

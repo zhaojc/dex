@@ -46,7 +46,7 @@ public class TempsConsacreGraphiqueStatistiqueDossierGenererRapportSQL_CDX_0145 
 	@Override
 	public JRDataSource construireDataSource(CardexAuthenticationSubject subject, RapportVO rapportVO, Connection connection) throws BusinessResourceException, BusinessException {
 		RapportBusinessDelegate delegate = new RapportBusinessDelegate();
-       	ResultSet resultSet = delegate.tempsConsacre((StatistiqueDossierRapportVO) rapportVO);
+       	ResultSet resultSet = delegate.tempsConsacre((StatistiqueDossierRapportVO) rapportVO,connection);
        	return new JRResultSetDataSource(resultSet);
 	}
 

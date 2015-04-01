@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cumul_hebdo_enquetes" pageWidth="612" pageHeight="792" whenNoDataType="NoDataSection" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="36" bottomMargin="36">
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Program Files\\JasperSoft\\iReport-nb-3.5.2\\RapportsCompilation\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DATE_FIN" class="java.lang.String"/>
+	<parameter name="DATE_DEBUT" class="java.lang.String"/>
+	<parameter name="UTILISATEUR" class="java.lang.String"/>
+	<parameter name="sous_rapport_cumul_hebdo_enquetes_fermees" class="net.sf.jasperreports.engine.JasperReport"/>
+	<parameter name="sous_rapport_cumul_hebdo_enquetes_actives" class="net.sf.jasperreports.engine.JasperReport"/>
+	<parameter name="sous_rapport_cumul_hebdo_total_enquetes_fermees" class="net.sf.jasperreports.engine.JasperReport"/>
+	<parameter name="sous_rapport_cumul_hebdo_total_enquetes_actives" class="net.sf.jasperreports.engine.JasperReport"/>
+	<parameter name="sous_rapport_cumul_hebdo_enquetes" class="net.sf.jasperreports.engine.JasperReport"/>
+	<queryString>
+		<![CDATA[select  NA.I_NA_CLE, trna.v_tr_description nature, count(d.l_do_cle) total
+from tr_traduction trna, na_nature na, ty_type ty, ca_categorie ca, do_dossier d
+where na.i_ge_cle = 24423 and na.i_na_cle <> 26707 -- Le journal est traité à part.
+and ca.i_ty_cle = ty.i_ty_cle
+and ty.i_na_cle = na.i_na_cle
+and na.i_na_cle = trna.l_tr_cle
+and trna.i_la_cle = 1
+and ca.i_ca_cle = d.i_ca_cle(+)
+and trunc(d.d_do_date_debut(+)) between to_date($P{DATE_DEBUT},'YYYY-MM-DD') and to_date($P{DATE_FIN},'YYYY-MM-DD')
+and d.i_cc_cle(+) <> 14920
+group by NA.I_NA_CLE, trna.v_tr_description]]>
+	</queryString>
+	<field name="I_NA_CLE" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NATURE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="TOTAL" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<sortField name="NATURE"/>
+	<variable name="TOTAL_1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{TOTAL}]]></variableExpression>
+	</variable>
+	<group name="NATURE">
+		<groupExpression><![CDATA[$F{NATURE}]]></groupExpression>
+		<groupFooter>
+			<band height="22">
+				<textField>
+					<reportElement x="0" y="0" width="199" height="21"/>
+					<box leftPadding="5">
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{NATURE}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="199" y="0" width="71" height="21"/>
+					<box>
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{TOTAL}]]></textFieldExpression>
+				</textField>
+				<subreport isUsingCache="false">
+					<reportElement x="270" y="0" width="71" height="21"/>
+					<subreportParameter name="CLE_NATURE">
+						<subreportParameterExpression><![CDATA[$F{I_NA_CLE}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="DATE_FIN">
+						<subreportParameterExpression><![CDATA[$P{DATE_FIN}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="DATE_DEBUT">
+						<subreportParameterExpression><![CDATA[$P{DATE_DEBUT}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression class="net.sf.jasperreports.engine.JasperReport"><![CDATA[$P{sous_rapport_cumul_hebdo_enquetes_fermees}]]></subreportExpression>
+				</subreport>
+				<subreport>
+					<reportElement x="341" y="0" width="71" height="21"/>
+					<subreportParameter name="CLE_NATURE">
+						<subreportParameterExpression><![CDATA[$F{I_NA_CLE}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="DATE_FIN">
+						<subreportParameterExpression><![CDATA[$P{DATE_FIN}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression class="net.sf.jasperreports.engine.JasperReport"><![CDATA[$P{sous_rapport_cumul_hebdo_enquetes_actives}]]></subreportExpression>
+				</subreport>
+				<line>
+					<reportElement stretchType="RelativeToBandHeight" x="412" y="0" width="1" height="21"/>
+				</line>
+				<line>
+					<reportElement stretchType="RelativeToBandHeight" x="341" y="0" width="1" height="21"/>
+				</line>
+				<line>
+					<reportElement x="0" y="21" width="412" height="1"/>
+				</line>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="66" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="412" height="26" backcolor="#0099CC"/>
+				<box leftPadding="5">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="16" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Rapport cumulatif hebdomadaire des enquêtes]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Opaque" x="0" y="46" width="412" height="20" backcolor="#E4F7E4"/>
+				<box leftPadding="5">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Pour la période du " + $P{DATE_DEBUT} + " au " + $P{DATE_FIN}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="26" width="412" height="20"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true" isItalic="true" pdfFontName="Helvetica-BoldOblique"/>
+				</textElement>
+				<text><![CDATA[Confidentiel]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="199" height="35" backcolor="#99CCFF"/>
+				<box leftPadding="5">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Enquêtes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="199" y="0" width="71" height="35" backcolor="#99CCFF"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Dossiers ouverts]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="270" y="0" width="71" height="35" backcolor="#99CCFF"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Dossiers fermés]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="341" y="0" width="71" height="35" backcolor="#99CCFF"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Dossiers actifs]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<pageFooter>
+		<band height="33" splitType="Stretch">
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement key="textField" x="453" y="8" width="58" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Page " + $V{PAGE_NUMBER} + " de "]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" pattern="" isBlankWhenNull="false">
+				<reportElement key="textField" x="515" y="8" width="36" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["" + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="9" y="8" width="100" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[CDX_0041]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="false">
+				<reportElement stretchType="RelativeToTallestObject" x="109" y="8" width="344" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA["Imprimé le " + new SimpleDateFormat("EEEEE dd MMMMM yyyy à HH:mm", java.util.Locale.FRENCH).format(new java.util.Date()) + " par " + $P{UTILISATEUR}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="156" splitType="Stretch">
+			<textField>
+				<reportElement x="200" y="6" width="71" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{TOTAL_1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="6" width="186" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Total :]]></text>
+			</staticText>
+			<subreport isUsingCache="false" runToBottom="true">
+				<reportElement x="271" y="6" width="71" height="20"/>
+				<subreportParameter name="DATE_FIN">
+					<subreportParameterExpression><![CDATA[$P{DATE_FIN}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DATE_DEBUT">
+					<subreportParameterExpression><![CDATA[$P{DATE_DEBUT}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="net.sf.jasperreports.engine.JasperReport"><![CDATA[$P{sous_rapport_cumul_hebdo_total_enquetes_fermees}]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="342" y="6" width="71" height="20"/>
+				<subreportParameter name="DATE_FIN">
+					<subreportParameterExpression><![CDATA[$P{DATE_FIN}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="net.sf.jasperreports.engine.JasperReport"><![CDATA[$P{sous_rapport_cumul_hebdo_total_enquetes_actives}]]></subreportExpression>
+			</subreport>
+			<line>
+				<reportElement x="1" y="35" width="412" height="1"/>
+			</line>
+			<line>
+				<reportElement x="1" y="39" width="412" height="1"/>
+			</line>
+			<subreport>
+				<reportElement positionType="Float" x="0" y="46" width="404" height="100"/>
+				<subreportParameter name="DATE_FIN">
+					<subreportParameterExpression><![CDATA[$P{DATE_FIN}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DATE_DEBUT">
+					<subreportParameterExpression><![CDATA[$P{DATE_DEBUT}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="net.sf.jasperreports.engine.JasperReport"><![CDATA[$P{sous_rapport_cumul_hebdo_enquetes}]]></subreportExpression>
+			</subreport>
+		</band>
+	</summary>
+</jasperReport>

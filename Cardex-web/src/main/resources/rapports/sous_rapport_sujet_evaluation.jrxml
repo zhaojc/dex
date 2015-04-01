@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sous_rapport_sujet_evaluation" pageWidth="612" pageHeight="792" columnWidth="571" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" whenResourceMissingType="Empty">
+	<parameter name="DOSSIER_CLE" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DOSSIER_SITE" class="java.math.BigDecimal"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Program Files\\JasperSoft\\iReport-nb-3.5.2\\RapportsCompilation\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select e.d_date_debut_eval as "dateDebut", e.d_date_fin_eval as "dateFin", e.l_ev_no_client_bijou as "noClientBijou", 
+e.v_ev_faits_connus as "faitsConnus",
+e.v_ev_proximite as "proximite", e.v_ev_gradation as "gradation", e.v_ev_transaction as "transaction", e.v_ev_commentaire_etat as "commentaireEtat",
+e.v_ev_commentaire_propos as "commentairePropos", e.v_ev_commentaire_autre as "commentaireAutre", e.v_ev_commentaire_signe as "commentaireSigne",
+e.d_ev_date_evaluation as "dateEvaluation", 
+in1.v_in_nom||', '||in1.v_in_prenom||' ('||in1.name||' - '||trin.v_tr_description||')' as "createur", 
+in2.v_in_nom||', '||in2.v_in_prenom||' ('||in1.name||' - '||trs1.v_tr_description||')' as "signataire1", 
+in3.v_in_nom||', '||in3.v_in_prenom||' ('||in1.name||' - '||trs2.v_tr_description||')' as "signataire2", 
+in4.v_in_nom||', '||in4.v_in_prenom||' ('||in1.name||' - '||trs3.v_tr_description||')' as "signataire3", 
+in5.v_in_nom||', '||in5.v_in_prenom||' ('||in1.name||' - '||trs4.v_tr_description||')' as "signataire4", 
+in6.v_in_nom||', '||in6.v_in_prenom||' ('||in1.name||' - '||trs5.v_tr_description||')' as "signataire5", 
+e.d_ev_date_creation as "dateCreation", 
+e.l_ev_cle as "evaluationCle", e.l_si_cle as "evaluationSite"
+from cardex.ev_evaluation e, 
+in_intervenant in1, tr_traduction trin,
+in_intervenant in2, tr_traduction trs1,
+in_intervenant in3, tr_traduction trs2,
+in_intervenant in4, tr_traduction trs3,
+in_intervenant in5, tr_traduction trs4,
+in_intervenant in6, tr_traduction trs5
+where e.v_ev_cree_par = in1.name and in1.l_in_secteur = trin.l_tr_cle and trin.i_la_cle = 1
+and e.v_ev_signataire1 = in2.name(+) and in2.l_in_secteur = trs1.l_tr_cle(+) and trs1.i_la_cle(+) = 1
+and e.v_ev_signataire2 = in3.name(+) and in3.l_in_secteur = trs2.l_tr_cle(+) and trs2.i_la_cle(+) = 1
+and e.v_ev_signataire3 = in4.name(+) and in4.l_in_secteur = trs3.l_tr_cle(+) and trs3.i_la_cle(+) = 1
+and e.v_ev_signataire4 = in5.name(+) and in5.l_in_secteur = trs4.l_tr_cle(+) and trs4.i_la_cle(+) = 1
+and e.v_ev_signataire5 = in6.name(+) and in6.l_in_secteur = trs5.l_tr_cle(+) and trs5.i_la_cle(+) = 1
+and e.l_ev_ref_cle = $P{DOSSIER_CLE}
+and e.l_ev_ref_site = $P{DOSSIER_SITE}]]>
+	</queryString>
+	<field name="dateDebut" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="dateFin" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="noClientBijou" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="faitsConnus" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="proximite" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="gradation" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="transaction" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="commentaireEtat" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="commentairePropos" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="commentaireAutre" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="commentaireSigne" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="dateEvaluation" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="createur" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="signataire1" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="signataire2" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="signataire3" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="signataire4" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="signataire5" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="dateCreation" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="evaluationCle" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="evaluationSite" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<sortField name="dateCreation"/>
+	<title>
+		<band/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band/>
+	</columnHeader>
+	<detail>
+		<band height="589">
+			<textField pattern="yyyy-MM-dd" isBlankWhenNull="true">
+				<reportElement x="134" y="43" width="72" height="14" isRemoveLineWhenBlank="true" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{dateDebut}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="11" y="43" width="67" height="14"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Période du :]]></text>
+			</staticText>
+			<textField pattern="yyyy-MM-dd" isBlankWhenNull="true">
+				<reportElement x="243" y="43" width="72" height="14" isRemoveLineWhenBlank="true" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{dateFin}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="212" y="43" width="27" height="14"/>
+				<textElement textAlignment="Right">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Au :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="58" width="119" height="14"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Numéro de client Bijou :]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="134" y="58" width="181" height="14"/>
+				<textElement/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{noClientBijou}]]></textFieldExpression>
+			</textField>
+			<subreport runToBottom="false">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="4" y="79" width="573" height="20" isRemoveLineWhenBlank="true"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="EVALUATION_SITE">
+					<subreportParameterExpression><![CDATA[$F{evaluationSite}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="EVALUATION_CLE">
+					<subreportParameterExpression><![CDATA[$F{evaluationCle}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "sous_rapport_evaluation_mise.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement x="8" y="118" width="114" height="14" isRemoveLineWhenBlank="true"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Faits connus :]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="130" y="174" width="437" height="39" isRemoveLineWhenBlank="true"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{faitsConnus}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="18" y="221" width="114" height="17" isRemoveLineWhenBlank="true"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Proximité du casino :]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="69" y="239" width="511" height="28"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{proximite}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="18" y="269" width="114" height="17"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Gradation des mises :]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="67" y="286" width="511" height="32"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{gradation}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="14" y="318" width="168" height="17"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Fréquence des transactions :]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="64" y="336" width="510" height="33"/>
+				<textElement verticalAlignment="Top"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{transaction}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="7" y="216" width="571" height="1" isRemoveLineWhenBlank="true"/>
+			</line>
+			<line>
+				<reportElement x="13" y="370" width="571" height="1"/>
+			</line>
+			<line>
+				<reportElement positionType="Float" x="0" y="74" width="571" height="1"/>
+			</line>
+			<line>
+				<reportElement x="11" y="509" width="571" height="1"/>
+			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="136" y="442" width="439" height="45"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{commentaireEtat}]]></textFieldExpression>
+			</textField>
+			<subreport runToBottom="false">
+				<reportElement x="14" y="386" width="571" height="43"/>
+				<subreportParameter name="EVALUATION_SITE">
+					<subreportParameterExpression><![CDATA[$F{evaluationSite}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="EVALUATION_CLE">
+					<subreportParameterExpression><![CDATA[$F{evaluationCle}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "sous_rapport_evaluation_etat.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement x="15" y="442" width="115" height="14"/>
+				<textElement>
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Commentaire :]]></text>
+			</staticText>
+			<subreport runToBottom="false">
+				<reportElement stretchType="RelativeToBandHeight" x="130" y="118" width="436" height="52" isRemoveLineWhenBlank="true"/>
+				<subreportParameter name="EVALUATION_SITE">
+					<subreportParameterExpression><![CDATA[$F{evaluationSite}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="EVALUATION_CLE">
+					<subreportParameterExpression><![CDATA[$F{evaluationCle}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "sous_rapport_evaluation_faits_connus.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport runToBottom="false">
+				<reportElement stretchType="RelativeToBandHeight" x="9" y="529" width="555" height="31" isRemoveLineWhenBlank="true"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="EVALUATION_SITE">
+					<subreportParameterExpression><![CDATA[$F{evaluationSite}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="EVALUATION_CLE">
+					<subreportParameterExpression><![CDATA[$F{evaluationCle}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "sous_rapport_sujet_evaluation2.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement x="8" y="10" width="288" height="20" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="14" isBold="true" isItalic="true" isUnderline="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Vigilance - Évaluation]]></text>
+			</staticText>
+			<line>
+				<reportElement x="3" y="31" width="571" height="1"/>
+			</line>
+			<break>
+				<reportElement x="0" y="110" width="612" height="1"/>
+			</break>
+			<break>
+				<reportElement x="0" y="514" width="612" height="1"/>
+			</break>
+		</band>
+	</detail>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>

@@ -49,7 +49,7 @@ public class FacturationSQGenerateurRapport_CDX_0241 extends GenererRapport {
 	@Override
 	public JRDataSource construireDataSource(CardexAuthenticationSubject subject, RapportVO rapportVO, Connection connection) throws BusinessResourceException, BusinessException {
     	RapportBusinessDelegate delegate = new RapportBusinessDelegate();
-       	ResultSet resultSet = delegate.rapportProcedure(rapportVO, "CARDEX_RAPPORT.SP_RAP_FACTURATION_SQ");
+       	ResultSet resultSet = delegate.rapportProcedure(rapportVO, "CARDEX_RAPPORT.SP_RAP_FACTURATION_SQ",connection);
 		return new JRResultSetDataSource(resultSet);
 	}
 

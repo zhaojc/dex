@@ -54,7 +54,7 @@ public class RetardIntervenantSuiviGenerateurRapport_CDX_0095 extends GenererRap
 	@Override
 	public JRDataSource construireDataSource(CardexAuthenticationSubject subject, RapportVO rapportVO, Connection connection) throws BusinessResourceException, BusinessException {
 		RapportBusinessDelegate delegate = new RapportBusinessDelegate();
-       	ResultSet resultSet = delegate.rapportSuivisIntervenant((SiteIntervenantRapportVO) rapportVO, "CARDEX_RAPPORT.SP_RAP_SUIVI_RETARDS");
+       	ResultSet resultSet = delegate.rapportSuivisIntervenant((SiteIntervenantRapportVO) rapportVO, "CARDEX_RAPPORT.SP_RAP_SUIVI_RETARDS",connection);
        	return new JRResultSetDataSource(resultSet);
 	}
 

@@ -31,7 +31,7 @@ public class PartageIntervenantDossierGenerateurRapport_CDX_0100 extends Generer
 	@Override
 	public JRDataSource construireDataSource(CardexAuthenticationSubject subject, RapportVO rapportVO, Connection connection) throws BusinessResourceException, BusinessException {
 		RapportBusinessDelegate delegate = new RapportBusinessDelegate();
-		ResultSet resultSet = delegate.listesPartage("CARDEX_RAPPORT.SP_LISTES_PARTAGE");
+		ResultSet resultSet = delegate.listesPartage("CARDEX_RAPPORT.SP_LISTES_PARTAGE",connection);
        	return new JRResultSetDataSource(resultSet);
 	}
 

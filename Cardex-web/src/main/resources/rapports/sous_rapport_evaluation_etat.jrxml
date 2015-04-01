@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sous_rapport_evaluation_etat" printOrder="Horizontal" pageWidth="571" pageHeight="842" columnWidth="571" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<parameter name="EVALUATION_CLE" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="EVALUATION_SITE" class="java.math.BigDecimal"/>
+	<queryString>
+		<![CDATA[SELECT 
+       cardex_lien.concatene_liste(CURSOR(select t.v_tr_description 
+from lee_lien_etat_eval l, tr_traduction t 
+WHERE l.l_ev_cle = $P{EVALUATION_CLE}
+   AND l.l_ev_ref_site = $P{EVALUATION_SITE}
+and l.l_ee_cle = t.l_tr_cle and t.i_la_cle = 1 order by t.v_tr_description))  as "ETAT" 
+from lee_lien_etat_eval l, tr_traduction t 
+WHERE l.l_ev_cle = $P{EVALUATION_CLE}
+   AND l.l_ev_ref_site = $P{EVALUATION_SITE}
+and l.l_ee_cle = t.l_tr_cle and t.i_la_cle = 1
+GROUP BY l.l_ev_cle]]>
+	</queryString>
+	<field name="ETAT" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<title>
+		<band/>
+	</title>
+	<columnHeader>
+		<band/>
+	</columnHeader>
+	<detail>
+		<band height="17" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" mode="Transparent" x="128" y="0" width="443" height="17" isRemoveLineWhenBlank="true" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ETAT}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="11" y="0" width="92" height="17" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isBold="true" isUnderline="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[État :]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

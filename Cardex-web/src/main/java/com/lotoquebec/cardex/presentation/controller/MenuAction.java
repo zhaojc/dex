@@ -187,7 +187,6 @@ public class MenuAction extends Action {
         		}
         } catch ( AuthenticationException ae ) {
         		ae.printStackTrace();
-        		System.out.println("ASDf");
                 String message = "Le serveur d'authentification est hors service ...";
                 log.severe(message+" "+ae);
                 return mapping.findForward("authentication");

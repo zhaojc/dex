@@ -10,11 +10,12 @@ import java.util.ResourceBundle;
 
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
 
 import com.lotoquebec.cardex.business.vo.rapport.RapportVO;
-import com.lotoquebec.cardex.generateurRapport.rapports.RapportsConfiguration;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
 import com.lotoquebec.cardexCommun.exception.BusinessException;
 import com.lotoquebec.cardexCommun.exception.BusinessResourceException;
@@ -80,14 +81,16 @@ public abstract class GenererRapport {
 			InputStream gabarit = obtenirGabarit();
 			JRDataSource dataSource = construireDataSource(subject, rapportVO, connection);
 			Map parameters = construireParametres(subject, rapportVO, connection);
-			return JasperFillManager.fillReport( gabarit, parameters, dataSource);	
+			
+			JasperReport jasperReport = JasperCompileManager.compileReport(gabarit);
+			return JasperFillManager.fillReport(jasperReport, parameters, dataSource);
 			
 		} catch (DAOException e) {
 			e.printStackTrace();
 		} finally {
+			
 			if (connection != null){
 		         try {
-					//connection.commit();
 					connection.setAutoCommit(true);
 					connection.close();
 				} catch (SQLException e) {

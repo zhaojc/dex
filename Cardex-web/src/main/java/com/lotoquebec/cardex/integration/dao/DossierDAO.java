@@ -1,6 +1,7 @@
 package com.lotoquebec.cardex.integration.dao;
 
 import java.sql.CallableStatement;
+import java.sql.Clob;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -717,7 +718,7 @@ public class DossierDAO {
                 journal.setNumeroEmploye(OracleDAOUtils.getString(resultSet,"V_DO_REFERENCE1"));
                 journal.setReference2(OracleDAOUtils.getString(resultSet,"V_DO_REFERENCE3"));
                 journal.setReference3(OracleDAOUtils.getString(resultSet,"V_DO_REFERENCE5"));
-                journal.setDescription(OracleDAOUtils.CLOBToString((oracle.sql.CLOB)resultSet.getObject("CLOB_CO_TEXTE_NORMAL")));
+                journal.setDescription(OracleDAOUtils.CLOBToString((Clob)resultSet.getObject("CLOB_CO_TEXTE_NORMAL")));
                 journal.setDuree(OracleDAOUtils.getString(resultSet,"V_CO_TEMPS"));
                 journal.setDateDebut(resultSet.getTimestamp("D_DO_DATE_DEBUT"));
                 journal.setDateFin(resultSet.getTimestamp("D_DO_DATE_FIN"));
@@ -1486,7 +1487,7 @@ public class DossierDAO {
 		journal.setNumeroEmploye(OracleDAOUtils.getString(resultSet,"V_DO_REFERENCE1"));
 		journal.setReference2(OracleDAOUtils.getString(resultSet,"V_DO_REFERENCE3"));
 		journal.setReference3(OracleDAOUtils.getString(resultSet,"V_DO_REFERENCE5"));
-		journal.setDescription(OracleDAOUtils.CLOBToString((oracle.sql.CLOB)resultSet.getObject("CLOB_CO_TEXTE_NORMAL")));
+		journal.setDescription(OracleDAOUtils.CLOBToString((Clob)resultSet.getObject("CLOB_CO_TEXTE_NORMAL")));
 		journal.setDuree(OracleDAOUtils.getString(resultSet,"V_CO_TEMPS"));
 		journal.setDateDebut(resultSet.getTimestamp("D_DO_DATE_DEBUT"));
 		journal.setDateFin(resultSet.getTimestamp("D_DO_DATE_FIN"));

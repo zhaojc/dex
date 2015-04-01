@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CDX_0235_rapport_statistique_vigilance_sommaire" pageWidth="612" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="36" bottomMargin="36">
+	<parameter name="DATE_DEBUT" class="java.lang.String"/>
+	<parameter name="UTILISATEUR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["Confidentiel"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DATE_FIN" class="java.lang.String"/>
+	<parameter name="SITE" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select 'Nombre de dossiers analysés par le comité de vigilance' as "Description",
+count(d.l_do_cle) as "Total"
+from do_dossier d
+where d.i_ca_cle = 539
+and d.d_do_date_debut between $P{DATE_DEBUT} and $P{DATE_FIN}
+and (d.d_do_date_fin is null or d.d_do_date_fin > $P{DATE_DEBUT})
+union
+select 'Nombre de dossiers pour les sujets qui ont accepté de s''autoexclure' as "Description",
+count(d.l_do_cle) as "Total"
+from do_dossier d
+where d.i_ca_cle = 539
+and d.d_do_date_debut between $P{DATE_DEBUT} and $P{DATE_FIN}
+and (d.d_do_date_fin is null or d.d_do_date_fin > $P{DATE_DEBUT})
+and exists (select l.l_do_cle from ldd_lien_dossier l, su_sujet s where l.l_do_cle = d.l_do_cle and l.l_do_site = d.l_si_cle
+and l.c_do_genre = 'DO' and l.l_ldd_dossier_associe = s.l_su_cle and l.l_ldd_site = s.l_si_cle and l.c_ldd_genre = 'SU'
+and exists (select l2.l_ldd_dossier_associe from ldd_lien_dossier l2, do_dossier d2 where l2.l_do_cle = d2.l_do_cle and l2.l_do_site = d2.l_si_cle
+and l2.c_do_genre = 'DO' and l2.l_ldd_dossier_associe = s.l_su_cle and l2.l_ldd_site = s.l_si_cle and l2.c_ldd_genre = 'SU' and d2.i_ca_cle = 112
+and d2.d_do_date_debut > $P{DATE_DEBUT}))
+union
+select 'Nombre de dossiers pour les sujets dont l''interdiction d''accès est maintenue' as "Description",
+count(d.l_do_cle) as "Total"
+from do_dossier d
+where d.i_ca_cle = 539
+and d.d_do_date_debut between $P{DATE_DEBUT} and $P{DATE_FIN}
+and (d.d_do_date_fin is null or d.d_do_date_fin > $P{DATE_DEBUT})
+and exists (select l.l_do_cle from ldd_lien_dossier l, su_sujet s where l.l_do_cle = d.l_do_cle and l.l_do_site = d.l_si_cle
+and l.c_do_genre = 'DO' and l.l_ldd_dossier_associe = s.l_su_cle and l.l_ldd_site = s.l_si_cle and l.c_ldd_genre = 'SU'
+and exists (select l2.l_ldd_dossier_associe from ldd_lien_dossier l2, v_do_dossier_ca_ty d2 where l2.l_do_cle = d2.l_do_cle and l2.l_do_site = d2.l_si_cle
+and l2.c_do_genre = 'DO' and l2.l_ldd_dossier_associe = s.l_su_cle and l2.l_ldd_site = s.l_si_cle and l2.c_ldd_genre = 'SU' and d2.i_na_cle = 417
+and d2.i_st_cle = 359))
+union
+select 'Nombre de dossiers pour les sujets pour lesquels l''interdiction d''accès est finalement levée' as "Description",
+count(d.l_do_cle) as "Total"
+from do_dossier d
+where d.i_ca_cle = 539
+and d.d_do_date_debut between $P{DATE_DEBUT} and $P{DATE_FIN}
+and (d.d_do_date_fin is null or d.d_do_date_fin > $P{DATE_DEBUT})
+and exists (select l.l_do_cle from ldd_lien_dossier l, su_sujet s where l.l_do_cle = d.l_do_cle and l.l_do_site = d.l_si_cle
+and l.c_do_genre = 'DO' and l.l_ldd_dossier_associe = s.l_su_cle and l.l_ldd_site = s.l_si_cle and l.c_ldd_genre = 'SU'
+and exists (select l2.l_ldd_dossier_associe from ldd_lien_dossier l2, v_do_dossier_ca_ty d2 where l2.l_do_cle = d2.l_do_cle and l2.l_do_site = d2.l_si_cle
+and l2.c_do_genre = 'DO' and l2.l_ldd_dossier_associe = s.l_su_cle and l2.l_ldd_site = s.l_si_cle and l2.c_ldd_genre = 'SU' and d2.i_na_cle = 417
+and d2.i_st_cle != 359 and d2.d_do_date_fin between $P{DATE_DEBUT} and $P{DATE_FIN}))]]>
+	</queryString>
+	<field name="Description" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Total" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<sortField name="Description"/>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="103" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="2" width="572" height="20" forecolor="#FFFFFF" backcolor="#1469AB"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="16" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Rapport statistique sommaire de vigilance]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="0" y="26" width="126" height="18" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
+					<font fontName="Arial" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica-Bold" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[Date de début :]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="yyyy-MM-dd HH:mm" isBlankWhenNull="true">
+				<reportElement x="126" y="26" width="174" height="18"/>
+				<box leftPadding="2"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{DATE_DEBUT}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="80" width="572" height="20"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true" isItalic="true" pdfFontName="Helvetica-BoldOblique"/>
+				</textElement>
+				<text><![CDATA[Confidentiel]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="0" y="44" width="126" height="18" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
+					<font fontName="Arial" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica-Bold" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[Date de fin :]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="yyyy-MM-dd HH:mm" isBlankWhenNull="true">
+				<reportElement x="126" y="44" width="174" height="18"/>
+				<box leftPadding="2"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{DATE_FIN}]]></textFieldExpression>
+			</textField>
+			<textField pattern="yyyy-MM-dd HH:mm" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="126" y="62" width="174" height="18" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
+					<font fontName="Arial" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica-Bold" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{SITE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="0" y="62" width="126" height="18" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
+					<font fontName="Arial" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica-Bold" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[Site :]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="0" y="0" width="512" height="20"/>
+				<box leftPadding="5">
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{Description}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="512" y="0" width="60" height="20"/>
+				<box leftPadding="5">
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{Total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="26" splitType="Stretch">
+			<textField evaluationTime="Report" pattern="" isBlankWhenNull="false">
+				<reportElement key="textField" x="531" y="5" width="36" height="19" forecolor="#000000" backcolor="#FFFFFF"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["" + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement key="textField" x="450" y="5" width="77" height="19" forecolor="#000000" backcolor="#FFFFFF"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Page " + $V{PAGE_NUMBER} + " de "]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="false">
+				<reportElement stretchType="RelativeToTallestObject" x="112" y="4" width="327" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA["Imprimé le " + new SimpleDateFormat("EEEEE dd MMMMM yyyy à HH:mm", java.util.Locale.FRENCH).format(new java.util.Date()) + " par " + $P{UTILISATEUR}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="5" y="4" width="100" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[CDX_0235]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="41" splitType="Stretch">
+			<staticText>
+				<reportElement x="5" y="8" width="562" height="27"/>
+				<textElement>
+					<font isBold="true" isItalic="true" pdfFontName="Helvetica-BoldOblique"/>
+				</textElement>
+				<text><![CDATA[* Il est possible qu’un sujet ait plus d’un dossier de sujet d’intérêt (AE, AG ou AI) lié à son dossier de comité de vigilance.]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

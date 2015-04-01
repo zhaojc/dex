@@ -1,7 +1,6 @@
 package com.lotoquebec.cardex.generateurRapport.regroupement;
 
 import java.io.InputStream;
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -9,25 +8,17 @@ import java.util.List;
 import java.util.Map;
 
 import net.sf.jasperreports.engine.JRDataSource;
-import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.data.JRMapCollectionDataSource;
 
 import com.lotoquebec.cardex.business.delegate.RegroupementBusinessDelegate;
 import com.lotoquebec.cardex.business.vo.ResultatRegroupementVO;
-import com.lotoquebec.cardex.business.vo.rapport.CumulatifDossierRapportVO;
 import com.lotoquebec.cardex.business.vo.rapport.RapportVO;
 import com.lotoquebec.cardex.business.vo.rapport.regroupement.GlobalRegroupementRapportVO_CDX_0080;
 import com.lotoquebec.cardex.business.vo.rapport.regroupement.RegroupementRapportVO;
 import com.lotoquebec.cardex.generateurRapport.rapports.RapportsConfiguration;
-import com.lotoquebec.cardexCommun.GlobalConstants;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
 import com.lotoquebec.cardexCommun.exception.BusinessException;
-import com.lotoquebec.cardexCommun.exception.BusinessResourceException;
-import com.lotoquebec.cardexCommun.integration.dao.cleListe.cleSQLListeCache.TableValeurCleSQLListeCache;
 import com.lotoquebec.cardexCommun.securite.GestionnaireSecurite;
-import com.lotoquebec.cardexCommun.user.CardexUser;
-import com.lotoquebec.cardexCommun.util.ListeCache;
-import com.lotoquebec.cardexCommun.util.StringUtils;
 
 public class GlobalRegroupementGenerateurRapport_CDX_0080 extends RegroupementGenerateurRapport {
  

@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sommaire" pageWidth="612" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="36" bottomMargin="36">
+	<parameter name="DATE_DEBUT" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA["2003-05-01"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DATE_FIN" class="java.lang.String">
+		<defaultValueExpression><![CDATA["2003-07-01"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="UTILISATEUR" class="java.lang.String"/>
+	<parameter name="NO_DOSSIER" class="java.lang.String"/>
+	<parameter name="REFERENCE" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT S.V_SI_SITE,
+GS.V_GS_NOM AS "GROUPE_SECURITE",
+TRS.V_TR_DESCRIPTION AS "GROUPE",
+TRTY.V_TR_DESCRIPTION type,
+C.V_CO_TEMPS temps,
+I.V_IN_NOM||', '||I.V_IN_PRENOM intervenant
+FROM DO_DOSSIER DO,
+CA_CATEGORIE CA,
+CO_COMMENTAIRE2 C,
+TR_TRADUCTION TRTY,
+SI_SITE S,
+IN_INTERVENANT I,
+TR_TRADUCTION TRS,
+GS_GROUPE_SECURITE GS,
+IGS_INTERVENANT_GROUPE_SEC IGS
+WHERE DO.I_CC_CLE <> 14920
+AND (CA.I_CA_CLE = DO.I_CA_CLE)
+AND (I.NAME = C.V_CO_CREE_PAR)
+AND (DO.L_DO_CLE = C.L_CO_REFERENCE AND DO.L_SI_CLE = C.L_CO_REF_SITE AND
+C.C_CO_REF_GENRE = 'DO')
+AND (TRTY.I_LA_CLE = 1)
+AND C.V_CO_TEMPS is not null
+AND (CA.I_TY_CLE = TRTY.L_TR_CLE)
+AND I.L_IN_SECTEUR = TRS.L_TR_CLE AND TRS.I_LA_CLE = 1
+AND C.L_SI_CLE = 7 
+AND C.L_SI_CLE = S.L_SI_CLE
+AND I.NAME = IGS.V_NAME
+AND IGS.L_GS_CLE = GS.L_GS_CLE
+AND C.D_CO_DATE_CREATION BETWEEN TO_DATE($P{DATE_DEBUT},'yyyy-MM-DD') AND TO_DATE($P{DATE_FIN},'yyyy-MM-DD')]]>
+	</queryString>
+	<field name="V_SI_SITE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="GROUPE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="TYPE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="TEMPS" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="INTERVENANT" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="GROUPE_SECURITE" class="java.lang.String"/>
+	<sortField name="INTERVENANT"/>
+	<sortField name="TYPE"/>
+	<variable name="Temps_Type" class="java.lang.Integer" resetType="Group" resetGroup="Type" calculation="Sum">
+		<variableExpression><![CDATA[Integer.valueOf($F{TEMPS})]]></variableExpression>
+	</variable>
+	<variable name="Temps_Intervenant" class="java.lang.Integer" resetType="Group" resetGroup="Intervenant" calculation="Sum">
+		<variableExpression><![CDATA[Integer.valueOf($F{TEMPS})]]></variableExpression>
+	</variable>
+	<variable name="Temps_Total" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[Integer.valueOf($F{TEMPS})]]></variableExpression>
+	</variable>
+	<variable name="Type_Total" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA[$V{Type_COUNT}]]></variableExpression>
+	</variable>
+	<variable name="Heures_Type" class="java.lang.String" resetType="Group" resetGroup="Type">
+		<variableExpression><![CDATA[$V{Temps_Type}.intValue()/60+" h "+$V{Temps_Type}.intValue()%60+" m"]]></variableExpression>
+	</variable>
+	<variable name="Heures_Intervenant" class="java.lang.String">
+		<variableExpression><![CDATA[$V{Temps_Intervenant}.intValue()/60+" h "+$V{Temps_Intervenant}.intValue()%60+" m"]]></variableExpression>
+	</variable>
+	<variable name="Heures_Total" class="java.lang.String">
+		<variableExpression><![CDATA[$V{Temps_Total}.intValue()/60+" h "+$V{Temps_Total}.intValue()%60+" m"]]></variableExpression>
+	</variable>
+	<group name="Intervenant" isStartNewPage="true">
+		<groupExpression><![CDATA[$F{INTERVENANT}]]></groupExpression>
+		<groupHeader>
+			<band height="23">
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="101" y="1" width="100" height="20" backcolor="#F0F0F0"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{GROUPE_SECURITE}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="1" y="1" width="100" height="20" backcolor="#F0F0F0"/>
+					<box leftPadding="4"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{V_SI_SITE}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="201" y="1" width="91" height="20" backcolor="#F0F0F0"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{INTERVENANT}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement positionType="Float" x="1" y="21" width="554" height="1"/>
+				</line>
+				<staticText>
+					<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="292" y="1" width="263" height="20" backcolor="#F0F0F0"/>
+					<textElement/>
+					<text><![CDATA[]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="22">
+				<staticText>
+					<reportElement x="5" y="1" width="195" height="20"/>
+					<textElement verticalAlignment="Middle">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Total intervenant]]></text>
+				</staticText>
+				<line>
+					<reportElement x="1" y="0" width="554" height="1"/>
+				</line>
+				<textField isBlankWhenNull="true">
+					<reportElement x="200" y="1" width="201" height="20"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{INTERVENANT}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="401" y="1" width="48" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression class="java.lang.Integer"><![CDATA[$V{Intervenant_COUNT}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="449" y="1" width="40" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression class="java.lang.Integer"><![CDATA[$V{Temps_Intervenant}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="489" y="1" width="66" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$V{Heures_Intervenant}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="Type">
+		<groupExpression><![CDATA[$F{TYPE}]]></groupExpression>
+		<groupFooter>
+			<band height="20">
+				<textField isBlankWhenNull="true">
+					<reportElement x="200" y="2" width="201" height="17"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{TYPE}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="401" y="2" width="48" height="17"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression class="java.lang.Integer"><![CDATA[$V{Type_COUNT}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="449" y="2" width="40" height="17"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression class="java.lang.Integer"><![CDATA[$V{Temps_Type}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="489" y="2" width="66" height="17"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$V{Heures_Type}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="151" splitType="Stretch">
+			<staticText>
+				<reportElement x="7" y="49" width="100" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[En date du : ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="7" y="69" width="100" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Site d'origine : ]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="yyyy-MM-dd" isBlankWhenNull="true">
+				<reportElement x="108" y="49" width="438" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="7" y="90" width="100" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Secteur : ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="308" y="70" width="83" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ajouté entre le : ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="308" y="90" width="83" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[et le : ]]></text>
+			</staticText>
+			<textField pattern="yyyy-MM-dd" isBlankWhenNull="true">
+				<reportElement x="391" y="70" width="155" height="20"/>
+				<box leftPadding="3"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{DATE_DEBUT}]]></textFieldExpression>
+			</textField>
+			<textField pattern="yyyy-MM-dd" isBlankWhenNull="true">
+				<reportElement x="391" y="90" width="155" height="20"/>
+				<box leftPadding="3"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{DATE_FIN}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="7" y="110" width="100" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Intervenant : ]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="108" y="110" width="179" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{INTERVENANT}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="108" y="69" width="179" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{V_SI_SITE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="1" width="554" height="24" backcolor="#79B8F7"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Rapport journal sommaire]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="108" y="90" width="179" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{GROUPE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="25" width="554" height="20"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true" isItalic="true" pdfFontName="Helvetica-BoldOblique"/>
+				</textElement>
+				<text><![CDATA[Confidentiel]]></text>
+			</staticText>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="108" y="130" width="142" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<box leftPadding="3"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
+					<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{NO_DOSSIER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="3" y="130" width="104" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Numéro de dossier : ]]></text>
+			</staticText>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="391" y="110" width="142" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<box leftPadding="3"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
+					<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{REFERENCE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="287" y="110" width="104" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Référence : ]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="24">
+			<staticText>
+				<reportElement mode="Opaque" x="1" y="3" width="100" height="20" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Site]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="101" y="3" width="100" height="20" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Groupe de sécurité]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="201" y="3" width="200" height="20" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Intervenant]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="401" y="3" width="48" height="20" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="449" y="3" width="40" height="20" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="489" y="3" width="66" height="20" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[(heures)]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="23" width="554" height="1"/>
+			</line>
+			<line>
+				<reportElement x="0" y="1" width="554" height="1"/>
+			</line>
+		</band>
+	</columnHeader>
+	<pageFooter>
+		<band height="25">
+			<textField>
+				<reportElement x="434" y="3" width="80" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.String"><![CDATA["Page "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="515" y="3" width="40" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="false">
+				<reportElement stretchType="RelativeToTallestObject" x="105" y="3" width="329" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA["Imprimé le " + new SimpleDateFormat("EEEEE dd MMMMM yyyy à HH:mm", java.util.Locale.FRENCH).format(new java.util.Date()) + " par " + $P{UTILISATEUR}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="5" y="3" width="100" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[CDX_0020]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="49">
+			<staticText>
+				<reportElement x="178" y="25" width="223" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Grand Total du rapport :]]></text>
+			</staticText>
+			<line>
+				<reportElement x="1" y="4" width="554" height="1"/>
+				<graphicElement>
+					<pen lineWidth="2.0" lineColor="#000000"/>
+				</graphicElement>
+			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement x="449" y="25" width="40" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{Temps_Total}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="401" y="25" width="48" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{Type_Total}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="489" y="25" width="66" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$V{Heures_Total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

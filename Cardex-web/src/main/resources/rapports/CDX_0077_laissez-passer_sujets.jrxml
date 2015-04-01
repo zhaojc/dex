@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CDX_0077_laissez-passer_sujets" pageWidth="1080" pageHeight="14400" whenNoDataType="AllSectionsNoDetail" columnWidth="1060" leftMargin="0" rightMargin="20" topMargin="36" bottomMargin="36">
+	<subDataset name="dataset1"/>
+	<subDataset name="dataset2"/>
+	<parameter name="UTILISATEUR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["Confidentiel"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select s.v_su_reference_3 as "Fiche",
+       s.v_su_nom         as "Nom",
+       s.v_su_prenom      as "Prénom",
+       so.v_so_nom        as "Société",
+       d.d_do_date_debut  as "Date de début",
+       d.d_do_date_fin    as "Date de fin",
+       t.v_tr_description as "Sévérité"
+  from su_sujet                s,
+       ldd_lien_dossier        l,
+       do_dossier              d,
+       is_inscription          i,
+       sis_site_inscription    sis,
+       cardex.ldd_lien_dossier l2,
+       cardex.so_societe       so,
+       cardex.tr_traduction    t
+ where d.l_do_cle = l.l_do_cle
+   and d.l_si_cle = l.l_do_site
+   and l.c_do_genre = 'DO'
+   and l.l_ldd_dossier_associe = s.l_su_cle
+   and l.l_ldd_site = s.l_si_cle
+   and l.c_ldd_genre = 'SU'
+   and (d.l_si_cle = 30 or d.l_si_cle = 11)
+   and d.l_do_cle = i.l_is_reference
+   and d.l_si_cle = i.l_is_ref_site
+   and i.l_is_cle = sis.l_is_cle
+   and i.l_si_cle = sis.l_si_cle
+   and sis.l_is_site in (45, 46, 17, 19, 18, 49, 53, 15, 22)
+   and i.d_is_date_creation =
+       (select max(imax2.d_is_date_creation)
+          from is_inscription imax2
+         where d.l_do_cle = imax2.l_is_reference
+           and d.l_si_cle = imax2.l_is_ref_site)
+   and d.l_do_cle =
+       (select max(d4.l_do_cle)
+          from do_dossier           d4,
+               ldd_lien_dossier     l4,
+               is_inscription       i4,
+               sis_site_inscription sis4
+         where d4.l_do_cle = l4.l_do_cle
+           and d4.l_si_cle = l4.l_do_site
+           and l4.c_do_genre = 'DO'
+           and l4.l_ldd_dossier_associe = s.l_su_cle
+           and l4.l_ldd_site = s.l_si_cle
+           and l4.c_ldd_genre = 'SU'
+           and (d4.l_si_cle = 30 or d4.l_si_cle = 11)
+           and d4.l_do_cle = i4.l_is_reference
+           and d4.l_si_cle = i4.l_is_ref_site
+           and i4.l_is_cle = sis4.l_is_cle
+           and i4.l_si_cle = sis4.l_si_cle
+           and sis4.l_is_site in (45, 46, 17, 19, 18, 49, 53, 15, 22))
+   and s.l_su_cle = l2.l_do_cle
+   and s.l_si_cle = l2.l_do_site
+   and l2.c_do_genre = 'SU'
+   and l2.l_ldd_dossier_associe = so.l_so_cle
+   and l2.l_ldd_site = so.l_si_cle
+   and l2.c_ldd_genre = 'SO'
+   and s.i_se_cle_casino = t.l_tr_cle
+   and t.i_la_cle = 1
+      and d.i_cc_cle <> 14920
+   and s.i_cc_cle <> 14920]]>
+	</queryString>
+	<field name="Fiche" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Nom" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Prénom" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Société" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Date de début" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Date de fin" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Sévérité" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Cle_societe" class="java.lang.Long"/>
+	<sortField name="Fiche"/>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="17" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="68" height="17"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{Fiche}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="68" y="0" width="125" height="17"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{Nom}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="318" y="0" width="202" height="17"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{Société}]]></textFieldExpression>
+			</textField>
+			<textField pattern="yyyy-MM-dd" isBlankWhenNull="true">
+				<reportElement x="620" y="0" width="85" height="17"/>
+				<textElement/>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{Date de début}]]></textFieldExpression>
+			</textField>
+			<textField pattern="yyyy-MM-dd" isBlankWhenNull="true">
+				<reportElement x="705" y="0" width="85" height="17"/>
+				<textElement/>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{Date de fin}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="790" y="0" width="65" height="17"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{Sévérité}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="193" y="0" width="125" height="17"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{Prénom}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="520" y="0" width="100" height="17"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$F{Cle_societe}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

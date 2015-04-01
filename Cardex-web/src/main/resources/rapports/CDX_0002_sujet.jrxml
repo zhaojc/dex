@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sujet" pageWidth="612" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="36" bottomMargin="36">
+	<subDataset name="dataset1"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["M:\\mazzucr_Cardex_EVOLUTION4\\V_GDJ_APP\\CARDEX\\Rapport\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="FICHE_SUJET" class="java.lang.String"/>
+	<parameter name="UTILISATEUR" class="java.lang.String">
+		<defaultValueExpression><![CDATA["Confidentiel"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="CONFIDENTIALITE" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT sujet.v_su_reference_3     noFiche,
+       sujet.v_su_nom             nom,
+       sujet.v_su_prenom          prenom,
+       tr_sexe.v_tr_description   sexe,
+       tr_ethnie.v_tr_description ethnie,
+       tr_race.v_tr_description   race,
+       tr_langue.v_tr_description langue,
+       sujet.d_su_date_naissance  date_de_naissance,
+       sujet.l_su_cle,
+       sujet.l_si_cle,
+       sujet.v_su_permis_conduire, 
+       sujet.v_su_no_passeport, 
+       sujet.c_su_assurance_sociale
+  FROM su_sujet              sujet
+  LEFT OUTER JOIN tr_traduction tr_sexe ON (sujet.i_sx_cle =
+                                           tr_sexe.l_tr_cle AND
+                                           tr_sexe.i_la_cle = 1)
+  LEFT OUTER JOIN tr_traduction tr_ethnie ON (sujet.i_nt_cle =
+                                             tr_ethnie.l_tr_cle AND
+                                             tr_ethnie.i_la_cle = 1)
+  LEFT OUTER JOIN tr_traduction tr_race ON (sujet.i_ra_cle =
+                                           tr_race.l_tr_cle AND
+                                           tr_race.i_la_cle = 1)
+  LEFT OUTER JOIN tr_traduction tr_langue ON (sujet.i_ls_cle =
+                                             tr_langue.l_tr_cle AND
+                                             tr_langue.i_la_cle = 1)
+ WHERE sujet.v_su_reference_3 = $P{FICHE_SUJET}
+   and ((NVL(sujet.I_CC_CLE, $P{CONFIDENTIALITE}) <= $P{CONFIDENTIALITE}) OR
+       (sujet.V_SU_CREE_PAR = $P{UTILISATEUR}))]]>
+	</queryString>
+	<field name="NOFICHE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NOM" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PRENOM" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="SEXE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ETHNIE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="RACE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="LANGUE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DATE_DE_NAISSANCE" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="V_SU_PERMIS_CONDUIRE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="L_SU_CLE" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="L_SI_CLE" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="C_SU_ASSURANCE_SOCIALE" class="java.lang.String"/>
+	<field name="V_SU_NO_PASSEPORT" class="java.lang.String"/>
+	<pageHeader>
+		<band height="54" splitType="Stretch">
+			<line>
+				<reportElement x="1" y="3" width="572" height="1"/>
+			</line>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="1" y="30" width="572" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="2" y="7" width="571" height="21"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="16" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Sujet]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="31" width="571" height="20"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true" isItalic="true" pdfFontName="Helvetica-BoldOblique"/>
+				</textElement>
+				<text><![CDATA[Confidentiel]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="214" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="118" height="20"/>
+				<textElement textAlignment="Right" markup="html">
+					<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Numéro de sujet :]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="122" y="0" width="152" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{NOFICHE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="20" width="118" height="20"/>
+				<textElement textAlignment="Right" markup="html">
+					<font fontName="Arial" size="10" isBold="true" isUnderline="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Nom :]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="122" y="20" width="152" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{NOM}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="295" y="20" width="118" height="20"/>
+				<textElement textAlignment="Right" markup="html">
+					<font fontName="Arial" size="10" isBold="true" isUnderline="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Prénom :]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="416" y="20" width="152" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{PRENOM}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="295" y="40" width="118" height="20"/>
+				<textElement textAlignment="Right" markup="html">
+					<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Sexe :]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="416" y="40" width="152" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{SEXE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="295" y="60" width="118" height="20"/>
+				<textElement textAlignment="Right" markup="html">
+					<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Ethnie :]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="417" y="60" width="152" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ETHNIE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="82" width="118" height="20"/>
+				<textElement textAlignment="Right" markup="html">
+					<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Teint :]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="122" y="82" width="152" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{RACE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="61" width="118" height="20"/>
+				<textElement textAlignment="Right" markup="html">
+					<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Langue :]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="122" y="61" width="152" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{LANGUE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="41" width="118" height="20"/>
+				<textElement textAlignment="Right" markup="html">
+					<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Date de naissance :]]></text>
+			</staticText>
+			<textField pattern="yyyy-MM-dd" isBlankWhenNull="true">
+				<reportElement x="122" y="41" width="152" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{DATE_DE_NAISSANCE}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement positionType="Float" mode="Opaque" x="2" y="131" width="272" height="20" backcolor="#FFFFFF"/>
+				<subreportParameter name="CONFIDENTIALITE">
+					<subreportParameterExpression><![CDATA[$P{CONFIDENTIALITE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="UTILISATEUR">
+					<subreportParameterExpression><![CDATA[$P{UTILISATEUR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUJET_SITE">
+					<subreportParameterExpression><![CDATA[$F{L_SI_CLE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUJET_CLE">
+					<subreportParameterExpression><![CDATA[$F{L_SU_CLE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "sujet-galerie-caracteristiques.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement positionType="Float" x="1" y="196" width="571" height="11"/>
+				<subreportParameter name="CONFIDENTIALITE">
+					<subreportParameterExpression><![CDATA[$P{CONFIDENTIALITE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="UTILISATEUR">
+					<subreportParameterExpression><![CDATA[$P{UTILISATEUR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUJET_SITE">
+					<subreportParameterExpression><![CDATA[$F{L_SI_CLE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUJET_CLE">
+					<subreportParameterExpression><![CDATA[$F{L_SU_CLE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "sujet_dossiers.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement x="277" y="82" width="136" height="20"/>
+				<textElement textAlignment="Right" markup="html">
+					<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Permis de conduire :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="102" width="116" height="20"/>
+				<textElement textAlignment="Right" markup="html">
+					<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Passeport :]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="417" y="82" width="152" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{V_SU_PERMIS_CONDUIRE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="122" y="102" width="154" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{V_SU_NO_PASSEPORT}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="126" width="571" height="1"/>
+			</line>
+			<subreport>
+				<reportElement positionType="Float" x="2" y="158" width="570" height="15"/>
+				<subreportParameter name="CONFIDENTIALITE">
+					<subreportParameterExpression><![CDATA[$P{CONFIDENTIALITE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="UTILISATEUR">
+					<subreportParameterExpression><![CDATA[$P{UTILISATEUR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUJET_SITE">
+					<subreportParameterExpression><![CDATA[$F{L_SI_CLE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUJET_CLE">
+					<subreportParameterExpression><![CDATA[$F{L_SU_CLE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "sujet_adresse.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement positionType="Float" x="2" y="179" width="571" height="11"/>
+				<subreportParameter name="CONFIDENTIALITE">
+					<subreportParameterExpression><![CDATA[$P{CONFIDENTIALITE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="UTILISATEUR">
+					<subreportParameterExpression><![CDATA[$P{UTILISATEUR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUJET_SITE">
+					<subreportParameterExpression><![CDATA[$F{L_SI_CLE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUJET_CLE">
+					<subreportParameterExpression><![CDATA[$F{L_SU_CLE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "sujet_societe.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="27" splitType="Stretch">
+			<textField evaluationTime="Report">
+				<reportElement x="526" y="3" width="40" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="461" y="3" width="65" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA["Page "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="2" width="100" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[CDX_0002]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="false">
+				<reportElement stretchType="RelativeToTallestObject" x="101" y="3" width="347" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA["Imprimé le " + new SimpleDateFormat("EEEEE dd MMMMM yyyy à HH:mm", java.util.Locale.FRENCH).format(new java.util.Date()) + " par " + $P{UTILISATEUR}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

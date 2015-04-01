@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CDX_0170_matrice_roles_groupes" pageWidth="10000" pageHeight="100000" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="9960" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<style name="Crosstab Data Text" isDefault="false" hAlign="Center"/>
+	<parameter name="ECRAN" class="java.lang.String"/>
+	<parameter name="UTILISATEUR" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select rs.l_rs_ecran,
+       tr.v_tr_description as "Écran",
+       gr.v_gr_role as "Rôle",
+       rs.v_rs_description as "Description",
+       decode(substr(gr.v_gr_role, length(gr.v_gr_role) - 7, length(gr.v_gr_role)),'.inactif','Grisé','X') as "Valeur",
+       gs.v_gs_nom as "Groupe"
+  from cardex.rs_role_securite   rs,
+       cardex.gr_groupe_role     gr,
+       cardex.tr_traduction      tr,
+       cardex.gs_groupe_securite gs
+ where gs.l_gs_cle = gr.l_gr_cle
+   and gr.v_gr_role not like '%.inactif'
+   and gr.v_gr_role = rs.v_rs_role
+   and rs.l_rs_ecran = tr.l_tr_cle
+   and tr.i_la_cle = 1
+   and gs.l_gs_cle <> 1909
+UNION
+select rs.l_rs_ecran,
+       tr.v_tr_description as "Écran",
+       substr(gr.v_gr_role, 1, length(gr.v_gr_role) - 8) as "Rôle",
+       rs.v_rs_description as "Description",
+       decode(substr(gr.v_gr_role, length(gr.v_gr_role) - 7, length(gr.v_gr_role)),'.inactif','Grisé','X') as "Valeur",
+       gs.v_gs_nom as "Groupe"
+  from cardex.rs_role_securite   rs,
+       cardex.gr_groupe_role     gr,
+       cardex.tr_traduction      tr,
+       cardex.gs_groupe_securite gs
+ where gs.l_gs_cle = gr.l_gr_cle
+   and gr.v_gr_role like '%.inactif'
+   and substr(gr.v_gr_role, 1, length(gr.v_gr_role) - 8) = rs.v_rs_role
+   and rs.l_rs_ecran = tr.l_tr_cle
+   and tr.i_la_cle = 1
+   and gs.l_gs_cle <> 1909
+UNION
+select 423,
+       tr.v_tr_description as "Écran",
+       tv.v_tv_role as "Rôle",
+       tv.v_tv_description as "Description",
+       decode(substr(tv.v_tv_role, length(tv.v_tv_role) - 7, length(tv.v_tv_role)),'.inactif','Grisé','X') as "Valeur",
+       gs.v_gs_nom as "Groupe"
+  from cardex.tv_table_valeur    tv,
+       cardex.gr_groupe_role     gr,
+       cardex.tr_traduction      tr,
+       cardex.tr_traduction      tr2,
+       cardex.gs_groupe_securite gs
+ where gs.l_gs_cle = gr.l_gr_cle
+   and gr.v_gr_role = tv.v_tv_role
+   and 423 = tr.l_tr_cle
+   and gr.v_gr_role not like '%.inactif'
+   and tr.i_la_cle = 1
+   and tv.l_tv_valeur = tr2.l_tr_cle(+)
+   and tr2.i_la_cle(+) = 1
+   and gs.l_gs_cle <> 1909
+   UNION
+select 423,
+       tr.v_tr_description as "Écran",
+       substr(gr.v_gr_role, 1, length(gr.v_gr_role) - 8) as "Rôle",
+       tv.v_tv_description as "Description",
+       decode(substr(gr.v_gr_role, length(gr.v_gr_role) - 7, length(gr.v_gr_role)),'.inactif','Grisé','X') as "Valeur",
+       gs.v_gs_nom as "Groupe"
+  from cardex.tv_table_valeur    tv,
+       cardex.gr_groupe_role     gr,
+       cardex.tr_traduction      tr,
+       cardex.tr_traduction      tr2,
+       cardex.gs_groupe_securite gs
+ where gs.l_gs_cle = gr.l_gr_cle
+   and gr.v_gr_role = tv.v_tv_role
+   and 423 = tr.l_tr_cle
+   and gr.v_gr_role like '%.inactif'
+   and tr.i_la_cle = 1
+   and tv.l_tv_valeur = tr2.l_tr_cle(+)
+   and tr2.i_la_cle(+) = 1
+   and gs.l_gs_cle <> 1909]]>
+	</queryString>
+	<field name="L_RS_ECRAN" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Écran" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Rôle" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Description" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Valeur" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Groupe" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<sortField name="Rôle"/>
+	<sortField name="Groupe"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="28" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="890" height="25" backcolor="#CCFFFF"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Matrice des rôles par Écran et par Groupe de sécurité]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="33" splitType="Stretch">
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="false">
+				<reportElement stretchType="RelativeToTallestObject" x="0" y="11" width="890" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA["  CDX_0170 Imprimé le " + new SimpleDateFormat("EEEEE dd MMMMM yyyy à HH:mm", java.util.Locale.FRENCH).format(new java.util.Date()) + " par " + $P{UTILISATEUR} + " Page " + $V{PAGE_NUMBER} + " de " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="54" splitType="Stretch">
+			<crosstab>
+				<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="6" width="10000" height="45" backcolor="#E6F2F9"/>
+				<rowGroup name="Écran" width="123" totalPosition="End">
+					<bucket>
+						<bucketExpression class="java.lang.String"><![CDATA[$F{Écran}]]></bucketExpression>
+					</bucket>
+					<crosstabRowHeader>
+						<cellContents>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement style="Crosstab Data Text" stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="0" width="123" height="15" backcolor="#CCFFFF"/>
+								<box topPadding="2" leftPadding="3" bottomPadding="2" rightPadding="3">
+									<pen lineWidth="1.0"/>
+									<topPen lineWidth="1.0"/>
+									<leftPen lineWidth="1.0"/>
+									<bottomPen lineWidth="1.0"/>
+									<rightPen lineWidth="1.0"/>
+								</box>
+								<textElement textAlignment="Left" verticalAlignment="Top">
+									<font size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+								</textElement>
+								<textFieldExpression class="java.lang.String"><![CDATA[$V{Écran}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabRowHeader>
+					<crosstabTotalRowHeader>
+						<cellContents/>
+					</crosstabTotalRowHeader>
+				</rowGroup>
+				<rowGroup name="Rôle" width="283" totalPosition="End">
+					<bucket>
+						<bucketExpression class="java.lang.String"><![CDATA[$F{Rôle}]]></bucketExpression>
+					</bucket>
+					<crosstabRowHeader>
+						<cellContents backcolor="#F0F8FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement style="Crosstab Data Text" stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="0" width="283" height="15" backcolor="#CCFFFF"/>
+								<box topPadding="2" leftPadding="3" bottomPadding="2" rightPadding="3">
+									<pen lineWidth="1.0"/>
+									<topPen lineWidth="1.0"/>
+									<leftPen lineWidth="1.0"/>
+									<bottomPen lineWidth="1.0"/>
+									<rightPen lineWidth="1.0"/>
+								</box>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font isBold="true" pdfFontName="Helvetica-Bold"/>
+								</textElement>
+								<textFieldExpression class="java.lang.String"><![CDATA[$V{Rôle}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabRowHeader>
+					<crosstabTotalRowHeader>
+						<cellContents backcolor="#BFE1FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+						</cellContents>
+					</crosstabTotalRowHeader>
+				</rowGroup>
+				<rowGroup name="Description" width="152">
+					<bucket>
+						<bucketExpression class="java.lang.String"><![CDATA[$F{Description}]]></bucketExpression>
+					</bucket>
+					<crosstabRowHeader>
+						<cellContents backcolor="#FFFFFF" mode="Transparent">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement style="Crosstab Data Text" stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="0" width="152" height="15" backcolor="#CCFFFF"/>
+								<box topPadding="2" leftPadding="3" bottomPadding="2" rightPadding="3">
+									<pen lineWidth="1.0"/>
+									<topPen lineWidth="1.0"/>
+									<leftPen lineWidth="1.0"/>
+									<bottomPen lineWidth="1.0"/>
+									<rightPen lineWidth="1.0"/>
+								</box>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font isBold="true" pdfFontName="Helvetica-Bold"/>
+								</textElement>
+								<textFieldExpression class="java.lang.String"><![CDATA[$V{Description}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabRowHeader>
+					<crosstabTotalRowHeader>
+						<cellContents/>
+					</crosstabTotalRowHeader>
+				</rowGroup>
+				<columnGroup name="Groupe" height="29" totalPosition="End">
+					<bucket>
+						<bucketExpression class="java.lang.String"><![CDATA[$F{Groupe}]]></bucketExpression>
+					</bucket>
+					<crosstabColumnHeader>
+						<cellContents backcolor="#F0F8FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField isStretchWithOverflow="true">
+								<reportElement style="Crosstab Data Text" stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="0" width="128" height="28" backcolor="#FFCC99"/>
+								<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
+									<pen lineWidth="1.0"/>
+									<topPen lineWidth="1.0"/>
+									<leftPen lineWidth="1.0"/>
+									<bottomPen lineWidth="1.0"/>
+									<rightPen lineWidth="1.0"/>
+								</box>
+								<textElement verticalAlignment="Middle">
+									<font isBold="true" pdfFontName="Helvetica-Bold"/>
+								</textElement>
+								<textFieldExpression class="java.lang.String"><![CDATA[$V{Groupe}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabColumnHeader>
+					<crosstabTotalColumnHeader>
+						<cellContents backcolor="#BFE1FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+						</cellContents>
+					</crosstabTotalColumnHeader>
+				</columnGroup>
+				<measure name="RôleMeasure" class="java.lang.String">
+					<measureExpression><![CDATA[$F{Valeur}]]></measureExpression>
+				</measure>
+				<crosstabCell width="128" height="15">
+					<cellContents>
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField isBlankWhenNull="false">
+							<reportElement style="Crosstab Data Text" stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="0" width="128" height="15"/>
+							<box topPadding="2" leftPadding="3" bottomPadding="2">
+								<pen lineWidth="1.0"/>
+								<topPen lineWidth="1.0"/>
+								<leftPen lineWidth="1.0"/>
+								<bottomPen lineWidth="1.0"/>
+								<rightPen lineWidth="1.0"/>
+							</box>
+							<textElement verticalAlignment="Middle">
+								<font isBold="true" pdfFontName="Helvetica-Bold"/>
+							</textElement>
+							<textFieldExpression class="java.lang.String"><![CDATA[$V{RôleMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="128" height="5" rowTotalGroup="Rôle">
+					<cellContents backcolor="#BFE1FF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="0" height="15" columnTotalGroup="Groupe">
+					<cellContents backcolor="#BFE1FF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="0" height="5" rowTotalGroup="Rôle" columnTotalGroup="Groupe">
+					<cellContents backcolor="#BFE1FF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell height="1" rowTotalGroup="Écran">
+					<cellContents/>
+				</crosstabCell>
+				<crosstabCell height="1" rowTotalGroup="Écran" columnTotalGroup="Groupe">
+					<cellContents/>
+				</crosstabCell>
+				<crosstabCell rowTotalGroup="Description">
+					<cellContents/>
+				</crosstabCell>
+				<crosstabCell rowTotalGroup="Description" columnTotalGroup="Groupe">
+					<cellContents/>
+				</crosstabCell>
+			</crosstab>
+		</band>
+	</summary>
+</jasperReport>

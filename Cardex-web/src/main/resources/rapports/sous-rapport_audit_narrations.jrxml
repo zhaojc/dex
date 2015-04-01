@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sous-rapport_audit_societes" pageWidth="612" pageHeight="792" columnWidth="575" leftMargin="0" rightMargin="20" topMargin="7" bottomMargin="0">
+	<parameter name="CLE" class="java.lang.String"/>
+	<parameter name="SITE" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT 
+       TRCC.V_TR_DESCRIPTION AS "CONFIDENTIALITE",
+	     L_CO_CLE,
+             L_CO_REFERENCE,
+             V_CO_CREE_PAR,
+             D_CO_DATE_CREATION,
+             R_CO_MONTANT,
+             V_CO_APPROBATEUR,
+             D_CO_APPROBATION,
+             V_CO_REFERENCE,
+             V_CO_RAPPORTE_PAR,
+             V_CO_TEMPS,
+             I.V_IN_NOM || ', ' || I.V_IN_PRENOM || ' (' || TRSCI.V_TR_DESCRIPTION || ')'
+		           AS "intervenantDescription",
+             SI.V_SI_SITE,
+             I2.V_IN_NOM || ', ' || I2.V_IN_PRENOM || ' (' || I2.NAME || ', ' ||
+             TRSC2.V_TR_DESCRIPTION || ')' AS "APPROUVE_PAR",
+             I3.V_IN_NOM || ', ' || I3.V_IN_PRENOM || ' (' || I3.NAME || ', ' ||
+             TRSC3.V_TR_DESCRIPTION || ')' AS "RAPPORTE_PAR"
+        FROM CO_COMMENTAIRE2 P,
+             SI_SITE        SI,
+             TR_TRADUCTION  TRCC,
+             TR_TRADUCTION  TRSCI,
+             TR_TRADUCTION   TRSC2,
+             IN_INTERVENANT  I2,
+             TR_TRADUCTION   TRSC3,
+             IN_INTERVENANT  I3,
+	     IN_INTERVENANT I
+       WHERE 
+	       P.L_CO_CLE = $P{CLE}
+         AND P.L_SI_CLE = $P{SITE}
+         AND P.L_SI_CLE = SI.L_SI_CLE
+         AND P.I_CC_COMMENTAIRE = TRCC.L_TR_CLE(+) AND TRCC.I_LA_CLE(+) = 1
+         AND P.V_CO_CREE_PAR = I.NAME
+         AND I.L_IN_SECTEUR = TRSCI.L_TR_CLE(+) AND TRSCI.I_LA_CLE(+) = 1
+         AND P.V_CO_APPROBATEUR = I2.NAME(+)
+         AND I2.L_IN_SECTEUR = TRSC2.L_TR_CLE(+)
+         AND TRSC2.I_LA_CLE(+) = 1
+         AND P.V_CO_RAPPORTE_PAR = I3.NAME(+)
+         AND I3.L_IN_SECTEUR = TRSC3.L_TR_CLE(+)
+         AND TRSC3.I_LA_CLE(+) = 1]]>
+	</queryString>
+	<field name="CONFIDENTIALITE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="L_CO_CLE" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="L_CO_REFERENCE" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="V_CO_CREE_PAR" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="D_CO_DATE_CREATION" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="R_CO_MONTANT" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="V_CO_APPROBATEUR" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="D_CO_APPROBATION" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="V_CO_REFERENCE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="V_CO_RAPPORTE_PAR" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="V_CO_TEMPS" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="intervenantDescription" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="V_SI_SITE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="APPROUVE_PAR" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="RAPPORTE_PAR" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="28">
+			<staticText>
+				<reportElement x="4" y="3" width="212" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true" isItalic="true" pdfFontName="Helvetica-BoldOblique"/>
+				</textElement>
+				<text><![CDATA[Enregistrement courant en date du :]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Transparent" x="216" y="3" width="361" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
+					<font fontName="SansSerif" size="12" isBold="true" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica-BoldOblique" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[new SimpleDateFormat("EEEEE dd MMMMM yyyy à HH:mm", java.util.Locale.FRENCH).format(new java.util.Date())]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="25" width="572" height="1"/>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="138" splitType="Stretch">
+			<staticText>
+				<reportElement positionType="Float" x="5" y="38" width="100" height="14"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Rapporté par :]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00 ¤ " isBlankWhenNull="true">
+				<reportElement positionType="Float" x="148" y="9" width="391" height="14"/>
+				<textElement markup="html">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{R_CO_MONTANT}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="148" y="52" width="391" height="14" isRemoveLineWhenBlank="true"/>
+				<box leftPadding="0"/>
+				<textElement markup="html">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{CONFIDENTIALITE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="5" y="24" width="100" height="14"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Temps consacré :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="5" y="67" width="100" height="14"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Numéro séquentiel :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="5" y="10" width="100" height="14"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Montant :]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="148" y="23" width="391" height="14"/>
+				<textElement markup="html">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{V_CO_TEMPS}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="148" y="94" width="391" height="15">
+					<printWhenExpression><![CDATA[new Boolean($F{V_CO_APPROBATEUR} != null)]]></printWhenExpression>
+				</reportElement>
+				<textElement markup="html">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{APPROUVE_PAR}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="5" y="95" width="100" height="14"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Approbateur :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="5" y="52" width="100" height="14"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Confidentialité :]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="148" y="37" width="391" height="15"/>
+				<textElement markup="html">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{RAPPORTE_PAR}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="148" y="67" width="391" height="14"/>
+				<box leftPadding="0"/>
+				<textElement markup="html">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{V_CO_REFERENCE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="5" y="81" width="100" height="14"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Site d'origine :]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="148" y="80" width="391" height="14"/>
+				<box leftPadding="0"/>
+				<textElement markup="html">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{V_SI_SITE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="5" y="109" width="100" height="14"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Date d'approbation :]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy à HH:mm:ss" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="148" y="109" width="391" height="14" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="html">
+					<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{D_CO_APPROBATION}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

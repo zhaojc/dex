@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="dossier_narrations" pageWidth="555" pageHeight="802" columnWidth="535" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<parameter name="DOSSIER_CLE" class="java.math.BigDecimal"/>
+	<parameter name="DOSSIER_SITE" class="java.math.BigDecimal"/>
+	<parameter name="CONFIDENTIALITE" class="java.lang.String"/>
+	<parameter name="UTILISATEUR" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT intervenant.v_in_nom || ', ' || intervenant.v_in_prenom || ' / ' || groupes.v_tr_description intervenants,
+       narrations.d_co_date_creation dateCreation,
+       narrations.r_co_montant montant,
+       narrations.clob_co_texte_format narration,
+       dossier.l_do_cle,
+       dossier.l_si_cle
+  FROM co_commentaire2    narrations,
+       do_dossier         dossier,
+       in_intervenant     intervenant,
+       tr_traduction      groupes
+ WHERE dossier.l_do_cle = narrations.l_co_reference
+   AND dossier.l_si_cle = narrations.l_co_ref_site
+   AND narrations.c_co_ref_genre = 'DO'
+   AND narrations.v_co_reference IS null
+   AND narrations.v_co_rapporte_par = intervenant.name
+   AND intervenant.l_in_secteur = groupes.l_tr_cle
+   AND groupes.i_la_cle = 1
+   AND dossier.l_do_cle = $P{DOSSIER_CLE}
+   AND dossier.l_si_cle = $P{DOSSIER_SITE}
+   AND ((NVL(NARRATIONS.I_CC_COMMENTAIRE, $P{CONFIDENTIALITE}) <= $P{CONFIDENTIALITE}) OR
+       (NARRATIONS.V_CO_CREE_PAR = $P{UTILISATEUR}))]]>
+	</queryString>
+	<field name="INTERVENANTS" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DATECREATION" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="MONTANT" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NARRATION" class="java.sql.Clob">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="L_DO_CLE" class="java.math.BigDecimal"/>
+	<field name="L_SI_CLE" class="java.math.BigDecimal"/>
+	<sortField name="DATECREATION"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="21" splitType="Stretch">
+			<staticText>
+				<reportElement x="7" y="0" width="100" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Narration(s)]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="64" splitType="Stretch">
+			<staticText>
+				<reportElement x="7" y="6" width="69" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Rapporté par : ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="78" y="6" width="477" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{INTERVENANTS}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="240" y="26" width="92" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Date de création : ]]></text>
+			</staticText>
+			<textField pattern="yyyy-MM-dd HH:mm:ss">
+				<reportElement x="334" y="26" width="204" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{DATECREATION}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00 $">
+				<reportElement x="78" y="26" width="76" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{MONTANT}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="28" y="26" width="48" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Montant : ]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="7" y="46" width="548" height="18" isRemoveLineWhenBlank="true"/>
+				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
+					<pen lineWidth="1.0" lineStyle="Double"/>
+					<topPen lineWidth="1.0" lineStyle="Double"/>
+					<leftPen lineWidth="1.0" lineStyle="Double"/>
+					<bottomPen lineWidth="1.0" lineStyle="Double"/>
+					<rightPen lineWidth="1.0" lineStyle="Double"/>
+				</box>
+				<textElement markup="html"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{NARRATION}.getSubString( Long.parseLong("1"),  (int)($F{NARRATION}.length()) )]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

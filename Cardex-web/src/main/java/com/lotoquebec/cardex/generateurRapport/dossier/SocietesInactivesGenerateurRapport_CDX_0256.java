@@ -3,14 +3,11 @@ package com.lotoquebec.cardex.generateurRapport.dossier;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.ResultSet;
-
 import java.util.Map;
 
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRResultSetDataSource;
-import net.sf.jasperreports.engine.data.JRMapCollectionDataSource;
-import net.sf.jasperreports.engine.util.JRLoader;
 
 import com.lotoquebec.cardex.business.delegate.RapportBusinessDelegate;
 import com.lotoquebec.cardex.business.vo.rapport.RapportVO;
@@ -38,7 +35,7 @@ public class SocietesInactivesGenerateurRapport_CDX_0256 extends GenererRapport 
 	public JRDataSource construireDataSource(CardexAuthenticationSubject subject, RapportVO rapportVO, Connection connection) throws BusinessResourceException, BusinessException {
     	RapportBusinessDelegate delegate = new RapportBusinessDelegate();
     	SocietesInactivesRapportVO societesInactivesRapportVO = (SocietesInactivesRapportVO) rapportVO;
-       	ResultSet resultSet = delegate.rapportSocietesInactives(societesInactivesRapportVO);
+       	ResultSet resultSet = delegate.rapportSocietesInactives(societesInactivesRapportVO,connection);
 		return new JRResultSetDataSource(resultSet);
 	}
 

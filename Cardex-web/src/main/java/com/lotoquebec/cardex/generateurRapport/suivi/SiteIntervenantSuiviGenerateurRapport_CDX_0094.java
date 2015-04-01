@@ -54,7 +54,7 @@ public class SiteIntervenantSuiviGenerateurRapport_CDX_0094 extends GenererRappo
 	@Override
 	public JRDataSource construireDataSource(CardexAuthenticationSubject subject, RapportVO rapportVO, Connection connection) throws BusinessResourceException, BusinessException {
 		RapportBusinessDelegate delegate = new RapportBusinessDelegate();
-       	ResultSet resultSet = delegate.rapportSuivisIntervenant((SiteIntervenantRapportVO) rapportVO, "CARDEX_RAPPORT.SP_RAP_SUIVI_INVESTIGATION");
+       	ResultSet resultSet = delegate.rapportSuivisIntervenant((SiteIntervenantRapportVO) rapportVO, "CARDEX_RAPPORT.SP_RAP_SUIVI_INVESTIGATION",connection);
        	return new JRResultSetDataSource(resultSet);
 	}
 

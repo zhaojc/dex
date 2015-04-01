@@ -15,14 +15,11 @@ import com.lotoquebec.cardex.business.vo.rapport.AccesRapportVO;
 import com.lotoquebec.cardex.business.vo.rapport.RapportVO;
 import com.lotoquebec.cardex.generateurRapport.GenererRapport;
 import com.lotoquebec.cardex.generateurRapport.rapports.RapportsConfiguration;
-import com.lotoquebec.cardexCommun.GlobalConstants;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
 import com.lotoquebec.cardexCommun.exception.BusinessException;
 import com.lotoquebec.cardexCommun.exception.BusinessResourceException;
-import com.lotoquebec.cardexCommun.integration.dao.cleListe.cleSQLListeCache.TableValeurCleSQLListeCache;
 import com.lotoquebec.cardexCommun.securite.GestionnaireSecurite;
 import com.lotoquebec.cardexCommun.text.DateFormat;
-import com.lotoquebec.cardexCommun.util.ListeCache;
 
 public class AuditAccesFournisseurGenerateurRapport_CDX_0125 extends GenererRapport {
 
@@ -40,7 +37,7 @@ public class AuditAccesFournisseurGenerateurRapport_CDX_0125 extends GenererRapp
 	public JRDataSource construireDataSource(CardexAuthenticationSubject subject, RapportVO rapportVO, Connection connection) throws BusinessResourceException, BusinessException {
 		AccesRapportVO rapportDossierVO =(AccesRapportVO) rapportVO;
 		RapportBusinessDelegate delegate = new RapportBusinessDelegate();
-		ResultSet resultSet = delegate.auditAccesEmploye(rapportDossierVO);
+		ResultSet resultSet = delegate.auditAccesEmploye(rapportDossierVO,connection);
 
        	return new JRResultSetDataSource(resultSet);
 	}
@@ -57,7 +54,7 @@ public class AuditAccesFournisseurGenerateurRapport_CDX_0125 extends GenererRapp
         parameters.put("DATE_FIN",DateFormat.format(rapportDossierVO.getDateHeureDebutAu(), DateFormat.DATE_FORMAT_AVEC_HEURE));
         parameters.put("UTILISATEUR",subject.getPrincipal().getName());
 /*        //On met un titre, pour le CDX_0124 
-        parameters.put("TITRE","Rapport sur les accès aux sujets employés");
+        parameters.put("TITRE","Rapport sur les accï¿½s aux sujets employï¿½s");
         
 		ListeCache listeCache = ListeCache.getInstance();
 		String site = "";
@@ -67,7 +64,7 @@ public class AuditAccesFournisseurGenerateurRapport_CDX_0125 extends GenererRapp
 			e.printStackTrace();
 		}
 		parameters.put("SITE_DESCRIPTION", site);
-		//TO_DO : ajouter le paramètre GROUPE
+		//TO_DO : ajouter le paramï¿½tre GROUPE
 		//parameters.put("GROUPE_DESCRIPTION", groupe);
 */		return parameters;
 	}

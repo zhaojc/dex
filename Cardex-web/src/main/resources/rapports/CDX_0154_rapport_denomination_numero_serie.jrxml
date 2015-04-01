@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CDX_0154_rapport_denomination_numero_serie" pageWidth="612" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="36" bottomMargin="36">
+	<parameter name="DATE_DEBUT" class="java.lang.String"/>
+	<parameter name="DATE_FIN" class="java.lang.String"/>
+	<parameter name="UTILISATEUR" class="java.lang.String"/>
+	<parameter name="SITE" class="java.lang.Long"/>
+	<queryString>
+		<![CDATA[SELECT s.v_si_site as SITE,
+       c.v_cn_numero_serie as NUMERO_SERIE,
+       tde.v_tr_description as DEVISE,
+       tdn.v_tr_description as DENOMINATION,
+       nvl(C.l_Cn_Quantite, 0) as NOMBRE,
+       Abs(nvl(c.r_cn_montant, 0)) as VALEUR_ABSOLUE,
+       nvl(c.r_cn_montant, 0) as MONTANT
+  FROM CN_CONSIGNATION C,
+       tr_traduction   tdn,
+       tr_traduction   tde,
+       si_site         s
+ WHERE c.i_dn_cle = tdn.l_tr_cle
+   and tdn.i_la_cle = 1
+   and c.i_de_cle = tde.l_tr_cle
+   and tde.i_la_cle = 1
+   AND C.L_SI_CLE = $P{SITE}
+   and c.l_si_cle = s.l_si_cle
+   AND trunc(C.D_CN_DATE_CREATION) >=
+       TO_DATE($P{DATE_DEBUT}, 'YYYY-MM-DD HH24:MI:SS')
+   AND trunc(C.D_CN_DATE_CREATION) <=
+       TO_DATE($P{DATE_FIN}, 'YYYY-MM-DD HH24:MI:SS')
+ order by tde.v_tr_description, tdn.v_tr_description, c.v_cn_numero_serie]]>
+	</queryString>
+	<field name="SITE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NUMERO_SERIE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DENOMINATION" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NOMBRE" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="VALEUR_ABSOLUE" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="MONTANT" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DEVISE" class="java.lang.String"/>
+	<sortField name="SITE"/>
+	<sortField name="DENOMINATION"/>
+	<variable name="NOMBRE_1" class="java.math.BigDecimal" resetType="Group" resetGroup="Dénomination" calculation="Sum">
+		<variableExpression><![CDATA[$F{NOMBRE}]]></variableExpression>
+	</variable>
+	<variable name="VALEUR_ABSOLUE_1" class="java.math.BigDecimal" resetType="Group" resetGroup="Dénomination" calculation="Sum">
+		<variableExpression><![CDATA[$F{VALEUR_ABSOLUE}]]></variableExpression>
+	</variable>
+	<variable name="MONTANT_1" class="java.math.BigDecimal" resetType="Group" resetGroup="Dénomination" calculation="Sum">
+		<variableExpression><![CDATA[$F{MONTANT}]]></variableExpression>
+	</variable>
+	<variable name="VALEUR_ABSOLUE_2" class="java.math.BigDecimal" resetType="Group" resetGroup="Site" calculation="Sum">
+		<variableExpression><![CDATA[$F{VALEUR_ABSOLUE}]]></variableExpression>
+	</variable>
+	<variable name="NOMBRE_2" class="java.math.BigDecimal" resetType="Group" resetGroup="Site" calculation="Sum">
+		<variableExpression><![CDATA[$F{NOMBRE}]]></variableExpression>
+	</variable>
+	<variable name="MONTANT_2" class="java.math.BigDecimal" resetType="Group" resetGroup="Site" calculation="Sum">
+		<variableExpression><![CDATA[$F{MONTANT}]]></variableExpression>
+	</variable>
+	<group name="Site" isReprintHeaderOnEachPage="true">
+		<groupExpression><![CDATA[$F{SITE}]]></groupExpression>
+		<groupHeader>
+			<band height="57">
+				<line>
+					<reportElement x="0" y="56" width="572" height="1"/>
+				</line>
+				<textField isBlankWhenNull="true">
+					<reportElement mode="Opaque" x="0" y="0" width="572" height="20" backcolor="#CCCCCC"/>
+					<box leftPadding="5">
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font size="14" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{SITE}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="76" y="21" width="120" height="35"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<text><![CDATA[Dénomination]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="306" y="21" width="57" height="35"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<text><![CDATA[Nombre]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="468" y="21" width="100" height="35"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<text><![CDATA[Valeur nette]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="363" y="21" width="100" height="35"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<text><![CDATA[Valeur absolue]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="199" y="21" width="100" height="35"/>
+					<textElement verticalAlignment="Middle">
+						<font size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<text><![CDATA[Numéro de série]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="1" y="21" width="75" height="35"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<text><![CDATA[Devise]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<group name="Dénomination">
+		<groupExpression><![CDATA[$F{DENOMINATION}]]></groupExpression>
+		<groupFooter>
+			<band height="28">
+				<line>
+					<reportElement x="0" y="25" width="572" height="1"/>
+				</line>
+				<textField isBlankWhenNull="true">
+					<reportElement x="306" y="3" width="57" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{NOMBRE_1}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00 ¤" isBlankWhenNull="true">
+					<reportElement x="368" y="3" width="95" height="20"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{VALEUR_ABSOLUE_1}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00 ¤" isBlankWhenNull="true">
+					<reportElement x="468" y="3" width="100" height="20"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{MONTANT_1}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="119" y="3" width="180" height="20"/>
+					<textElement textAlignment="Right">
+						<font size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<text><![CDATA[Total de la dénomination :]]></text>
+				</staticText>
+			</band>
+			<band/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="64" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="44" width="572" height="20"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true" isItalic="true" pdfFontName="Helvetica-BoldOblique"/>
+				</textElement>
+				<text><![CDATA[Confidentiel]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="572" height="24" backcolor="#0099CC"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="18" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Rapport par dénomination et numéro de série]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="false">
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="24" width="572" height="20" backcolor="#E4F7E4"/>
+				<box leftPadding="5">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA["Pour la période du " + $P{DATE_DEBUT} + " au " + $P{DATE_FIN}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="17" splitType="Prevent">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="76" y="0" width="120" height="16"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{DENOMINATION}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00 ¤" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="368" y="0" width="95" height="16"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{VALEUR_ABSOLUE}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="yyyy-MM-dd" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="198" y="1" width="101" height="16"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{NUMERO_SERIE}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="16" width="572" height="1"/>
+			</line>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="306" y="0" width="57" height="16"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{NOMBRE}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00 ¤" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="468" y="0" width="100" height="16"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{MONTANT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="11" y="0" width="65" height="16"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{DEVISE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="26" splitType="Stretch">
+			<staticText>
+				<reportElement x="1" y="3" width="61" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[CDX_0154]]></text>
+			</staticText>
+			<textField evaluationTime="Report" pattern="" isBlankWhenNull="false">
+				<reportElement key="textField" x="532" y="4" width="36" height="19" forecolor="#000000" backcolor="#FFFFFF"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["" + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement key="textField" x="462" y="4" width="66" height="19" forecolor="#000000" backcolor="#FFFFFF"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Page " + $V{PAGE_NUMBER} + " de "]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="false">
+				<reportElement stretchType="RelativeToTallestObject" x="76" y="4" width="375" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA["Imprimé le " + new SimpleDateFormat("EEEEE dd MMMMM yyyy à HH:mm", java.util.Locale.FRENCH).format(new java.util.Date()) + " par " + $P{UTILISATEUR}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="47" splitType="Stretch">
+			<staticText>
+				<reportElement x="195" y="13" width="100" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Grand total :]]></text>
+			</staticText>
+			<textField pattern="#,##0.00 ¤" isBlankWhenNull="true">
+				<reportElement x="369" y="13" width="94" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{VALEUR_ABSOLUE_2}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement x="306" y="13" width="57" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{NOMBRE_2}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00 ¤" isBlankWhenNull="true">
+				<reportElement x="472" y="13" width="96" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{MONTANT_2}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

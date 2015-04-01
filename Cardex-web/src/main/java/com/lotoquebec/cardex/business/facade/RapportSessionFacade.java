@@ -54,14 +54,14 @@ public class RapportSessionFacade {
 
 
     /**
-     * Recherche des repérages.
-     * @param subject Le sujet qui consulte les accès
-     * @param criteria Les critères de recherche
+     * Recherche des repï¿½rages.
+     * @param subject Le sujet qui consulte les accï¿½s
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return Rapport sur les repérages.
+     * @return Rapport sur les repï¿½rages.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public Collection rapportReperageAccesInterdit(CardexAuthenticationSubject subject, ReperageAutoexclusionDossierRapportVO rapportDossierVO, String procedure) throws BusinessRuleException,
                         BusinessResourceException {
@@ -72,10 +72,10 @@ public class RapportSessionFacade {
         }
     }
 
-    public ResultSet cumulatifHebdomadaireEnquetesDossier(CumulatifHebdomadaireEnquetesDossierRapportVO_CDX_0041 rapportDossierVO) throws BusinessRuleException,
+    public ResultSet cumulatifHebdomadaireEnquetesDossier(CumulatifHebdomadaireEnquetesDossierRapportVO_CDX_0041 rapportDossierVO,Connection connection) throws BusinessRuleException,
     BusinessResourceException {
 		try {
-			return FabriqueCardexDAO.getInstance().getRapportDAO().procedureSite("CARDEX_RAPPORT.SP_RAP_CUMUL_HEBDO", rapportDossierVO, rapportDossierVO.getSite());
+			return FabriqueCardexDAO.getInstance().getRapportDAO().procedureSite("CARDEX_RAPPORT.SP_RAP_CUMUL_HEBDO", rapportDossierVO, rapportDossierVO.getSite(), connection);
 		} catch (DAOException dae) {
 			throw new BusinessResourceException(dae);
 		}
@@ -83,71 +83,71 @@ public class RapportSessionFacade {
     
     /**
      * Recherche des contrats.
-     * @param subject Le sujet qui consulte les accès
-     * @param criteria Les critères de recherche
+     * @param subject Le sujet qui consulte les accï¿½s
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return Rapport sur les repérages.
+     * @return Rapport sur les repï¿½rages.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
-    public ResultSet rapportContrats(ContratsAutoexclusionDossierRapportVO_CDX_0060 contratsAutoexclusionDossierRapportVO_CDX_0060) throws BusinessRuleException,
+    public ResultSet rapportContrats(ContratsAutoexclusionDossierRapportVO_CDX_0060 contratsAutoexclusionDossierRapportVO_CDX_0060, Connection connection) throws BusinessRuleException,
                         BusinessResourceException {
         try {
-            return FabriqueCardexDAO.getInstance().getRapportDAO().rapportContrats(contratsAutoexclusionDossierRapportVO_CDX_0060);
+            return FabriqueCardexDAO.getInstance().getRapportDAO().rapportContrats(contratsAutoexclusionDossierRapportVO_CDX_0060, connection);
         } catch (DAOException dae) {
             throw new BusinessResourceException(dae);
         }
     }
 
     /**
-     * Rapport sur les employés liés à des dossiers
-     * @param subject Le sujet qui consulte les accès
-     * @param criteria Les critères de recherche
+     * Rapport sur les employï¿½s liï¿½s ï¿½ des dossiers
+     * @param subject Le sujet qui consulte les accï¿½s
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return Rapport sur les employés liés à des dossiers
+     * @return Rapport sur les employï¿½s liï¿½s ï¿½ des dossiers
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
-    public ResultSet rapportEmployeDossier(EmployeDossierRapportVO_CDX_0042 employeDossierRapportVO_CDX_0042) throws BusinessRuleException,
+    public ResultSet rapportEmployeDossier(EmployeDossierRapportVO_CDX_0042 employeDossierRapportVO_CDX_0042,Connection connection) throws BusinessRuleException,
                         BusinessResourceException {
         try {
-            return FabriqueCardexDAO.getInstance().getRapportDAO().rapportEmployeDossier(employeDossierRapportVO_CDX_0042);
+            return FabriqueCardexDAO.getInstance().getRapportDAO().rapportEmployeDossier(employeDossierRapportVO_CDX_0042,connection);
         } catch (DAOException dae) {
             throw new BusinessResourceException(dae);
         }
     }
 
     /**
-     * Rapport sur le journal des enquêteurs.
-     * @param subject Le sujet qui consulte les accès
-     * @param criteria Les critères de recherche
+     * Rapport sur le journal des enquï¿½teurs.
+     * @param subject Le sujet qui consulte les accï¿½s
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return Rapport sur le journal des enquêteurs..
+     * @return Rapport sur le journal des enquï¿½teurs..
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
-    public ResultSet rapportJournalEnquetes(EnqueteurJournalRapportVO_CDX_0053 enqueteurJournalRapportVO_CDX_0053) throws BusinessRuleException,
+    public ResultSet rapportJournalEnquetes(EnqueteurJournalRapportVO_CDX_0053 enqueteurJournalRapportVO_CDX_0053,Connection connection) throws BusinessRuleException,
                         BusinessResourceException {
         try {
-            return FabriqueCardexDAO.getInstance().getRapportDAO().rapportJournalEnquetes(enqueteurJournalRapportVO_CDX_0053);
+            return FabriqueCardexDAO.getInstance().getRapportDAO().rapportJournalEnquetes(enqueteurJournalRapportVO_CDX_0053,connection);
         } catch (DAOException dae) {
             throw new BusinessResourceException(dae);
         }
     }
 
     /**
-     * Rapport sur les données à épurer.
+     * Rapport sur les donnï¿½es ï¿½ ï¿½purer.
      *
      * @param subject Le sujet qui recherche un dossier
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return La liste des accès.
+     * @return La liste des accï¿½s.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public ResultSet rapportEpuration(long site, Connection connection, String procedure) throws BusinessRuleException,
                         BusinessResourceException {
@@ -159,14 +159,14 @@ public class RapportSessionFacade {
     }
 
     /**
-     * Rapport sur les repérages avec critère du nombre de repérages.
-     * @param subject Le sujet qui consulte les accès
-     * @param criteria Les critères de recherche
+     * Rapport sur les repï¿½rages avec critï¿½re du nombre de repï¿½rages.
+     * @param subject Le sujet qui consulte les accï¿½s
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return Rapport sur les repérages.
+     * @return Rapport sur les repï¿½rages.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public Collection rapportReperageAutoexclusion(CardexAuthenticationSubject subject, ReperageAutoexclusionDossierRapportVO criteria, String procedure, long nombreReperages) throws BusinessRuleException,
                         BusinessResourceException {
@@ -177,19 +177,19 @@ public class RapportSessionFacade {
         }
     }
 
-    public ResultSet rapportProcedure(RapportVO rapportVO, String procedure) throws BusinessRuleException,
+    public ResultSet rapportProcedure(RapportVO rapportVO, String procedure,Connection connection) throws BusinessRuleException,
     BusinessResourceException {
     	try {
-    		return FabriqueCardexDAO.getInstance().getRapportDAO().rapportProcedure(rapportVO, procedure);
+    		return FabriqueCardexDAO.getInstance().getRapportDAO().rapportProcedure(rapportVO, procedure, connection);
     	} catch (DAOException dae) {
     		throw new BusinessResourceException(dae);
     	}
     }
 
-    public ResultSet rapportSocietesInactives(SocietesInactivesRapportVO societesInactivesRapportVO) throws BusinessRuleException,
+    public ResultSet rapportSocietesInactives(SocietesInactivesRapportVO societesInactivesRapportVO,Connection connection) throws BusinessRuleException,
     BusinessResourceException {
         try {
-            return FabriqueCardexDAO.getInstance().getRapportDAO().rapportSocietesInactives(societesInactivesRapportVO);
+            return FabriqueCardexDAO.getInstance().getRapportDAO().rapportSocietesInactives(societesInactivesRapportVO,connection);
         } catch (DAOException dae) {
             throw new BusinessResourceException(dae);
         }
@@ -213,20 +213,20 @@ public class RapportSessionFacade {
     	}
     }
 
-    public ResultSet rapportProcedureVigilance(EntiteRapportVO entiteRapportVO, String procedure) throws BusinessRuleException,
+    public ResultSet rapportProcedureVigilance(EntiteRapportVO entiteRapportVO, String procedure,Connection connection) throws BusinessRuleException,
     BusinessResourceException {
 		try {
-			return FabriqueCardexDAO.getInstance().getRapportDAO().rapportProcedureVigilance(entiteRapportVO, procedure);
+			return FabriqueCardexDAO.getInstance().getRapportDAO().rapportProcedureVigilance(entiteRapportVO, procedure,connection);
 		} catch (DAOException dae) {
 		throw new BusinessResourceException(dae);
 		}
     }
     
-    //Rapport sur les sévérités
-    public ResultSet rapportSeverite(SeveriteRapportVO rapportVO, String procedure) throws BusinessRuleException,
+    //Rapport sur les sï¿½vï¿½ritï¿½s
+    public ResultSet rapportSeverite(SeveriteRapportVO rapportVO, String procedure,Connection connection) throws BusinessRuleException,
     BusinessResourceException {
 		try {
-			return FabriqueCardexDAO.getInstance().getRapportDAO().rapportSeverite(rapportVO, procedure);
+			return FabriqueCardexDAO.getInstance().getRapportDAO().rapportSeverite(rapportVO, procedure,connection);
 		} catch (DAOException dae) {
 			throw new BusinessResourceException(dae);
 		}
@@ -234,56 +234,56 @@ public class RapportSessionFacade {
 
     /**
      * Rapport sur les statuts des dossiers
-     * @param subject Le sujet qui consulte les accès
-     * @param criteria Les critères de recherche
+     * @param subject Le sujet qui consulte les accï¿½s
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return Rapport sur les repérages.
+     * @return Rapport sur les repï¿½rages.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
-    public ResultSet statutDossiers(StatutDossierRapportVO_CDX_0055 statutDossierRapportVO_CDX_0055) throws BusinessRuleException,
+    public ResultSet statutDossiers(StatutDossierRapportVO_CDX_0055 statutDossierRapportVO_CDX_0055,Connection connection) throws BusinessRuleException,
                         BusinessResourceException {
         try {
-            return FabriqueCardexDAO.getInstance().getRapportDAO().statutDossiers(statutDossierRapportVO_CDX_0055);
+            return FabriqueCardexDAO.getInstance().getRapportDAO().statutDossiers(statutDossierRapportVO_CDX_0055,connection);
         } catch (DAOException dae) {
             throw new BusinessResourceException(dae);
         }
     }
 
     /**
-     * Rapport statistique sur le temps consacré
-     * @param subject Le sujet qui consulte les accès
-     * @param criteria Les critères de recherche
+     * Rapport statistique sur le temps consacrï¿½
+     * @param subject Le sujet qui consulte les accï¿½s
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return Rapport sur les repérages.
+     * @return Rapport sur les repï¿½rages.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
-    public ResultSet tempsConsacre(StatistiqueDossierRapportVO statistiqueDossierRapportVO) throws BusinessRuleException,
+    public ResultSet tempsConsacre(StatistiqueDossierRapportVO statistiqueDossierRapportVO,Connection connection) throws BusinessRuleException,
                         BusinessResourceException {
         try {
-            return FabriqueCardexDAO.getInstance().getRapportDAO().tempsConsacre(statistiqueDossierRapportVO);
+            return FabriqueCardexDAO.getInstance().getRapportDAO().tempsConsacre(statistiqueDossierRapportVO,connection);
         } catch (DAOException dae) {
             throw new BusinessResourceException(dae);
         }
     }
     
     /**
-     * Rapport sur les enquêtes de Loto-Québec sur les personnes au registre (PAR).
-     * @param subject Le sujet qui consulte les accès
-     * @param criteria Les critères de recherche
+     * Rapport sur les enquï¿½tes de Loto-Quï¿½bec sur les personnes au registre (PAR).
+     * @param subject Le sujet qui consulte les accï¿½s
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return Rapport sur les repérages.
+     * @return Rapport sur les repï¿½rages.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
-    public ResultSet rapportEnqueteReclamation(String anneeMois) throws BusinessRuleException,
+    public ResultSet rapportEnqueteReclamation(String anneeMois,Connection connection) throws BusinessRuleException,
                         BusinessResourceException {
         try {
-            return FabriqueCardexDAO.getInstance().getRapportDAO().rapportEnqueteReclamation(anneeMois);
+            return FabriqueCardexDAO.getInstance().getRapportDAO().rapportEnqueteReclamation(anneeMois,connection);
         } catch (DAOException dae) {
             throw new BusinessResourceException(dae);
         }
@@ -291,18 +291,18 @@ public class RapportSessionFacade {
 
     /**
      * Rapport sur les incidents de la DCSI.
-     * @param subject Le sujet qui consulte les accès
-     * @param criteria Les critères de recherche
+     * @param subject Le sujet qui consulte les accï¿½s
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return Rapport sur les repérages.
+     * @return Rapport sur les repï¿½rages.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
-    public ResultSet rapportIncidentsDCSI(String annee) throws BusinessRuleException,
+    public ResultSet rapportIncidentsDCSI(String annee,Connection connection) throws BusinessRuleException,
                         BusinessResourceException {
         try {
-            return FabriqueCardexDAO.getInstance().getRapportDAO().rapportIncidentsDCSI(annee);
+            return FabriqueCardexDAO.getInstance().getRapportDAO().rapportIncidentsDCSI(annee,connection);
         } catch (DAOException dae) {
             throw new BusinessResourceException(dae);
         }
@@ -310,19 +310,19 @@ public class RapportSessionFacade {
 
     
     /**
-     * Rapport pour produire les listes de dossiers partagés, par intervenant ou par responsable.
-     * @param subject Le sujet qui consulte les accès
-     * @param criteria Les critères de recherche
+     * Rapport pour produire les listes de dossiers partagï¿½s, par intervenant ou par responsable.
+     * @param subject Le sujet qui consulte les accï¿½s
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return Rapport sur les repérages.
+     * @return Rapport sur les repï¿½rages.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
-    public ResultSet listesPartage(String procedure) throws BusinessRuleException,
+    public ResultSet listesPartage(String procedure,Connection connection) throws BusinessRuleException,
                         BusinessResourceException {
         try {
-            return FabriqueCardexDAO.getInstance().getRapportDAO().listesPartage(procedure);
+            return FabriqueCardexDAO.getInstance().getRapportDAO().listesPartage(procedure,connection);
         } catch (DAOException dae) {
             throw new BusinessResourceException(dae);
         }
@@ -330,245 +330,245 @@ public class RapportSessionFacade {
 
     /**
      * Rapport pour produire les listes de dossiers actifs par intervenant.
-     * @param subject Le sujet qui consulte les accès
-     * @param criteria Les critères de recherche
+     * @param subject Le sujet qui consulte les accï¿½s
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return Rapport sur les repérages.
+     * @return Rapport sur les repï¿½rages.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
-    public ResultSet listesDossiersActifs(ActifIntervenantDossierRapportVO_CDX_0102 rapportDossierVO) throws BusinessRuleException,
+    public ResultSet listesDossiersActifs(ActifIntervenantDossierRapportVO_CDX_0102 rapportDossierVO,Connection connection) throws BusinessRuleException,
                         BusinessResourceException {
         try {
-            return FabriqueCardexDAO.getInstance().getRapportDAO().listesDossiersActifs(rapportDossierVO);
+            return FabriqueCardexDAO.getInstance().getRapportDAO().listesDossiersActifs(rapportDossierVO,connection);
         } catch (DAOException dae) {
             throw new BusinessResourceException(dae);
         }
     }
 
     /**
-     * Rapport pour produire les rapports sur les accès.
-     * @param subject Le sujet qui consulte les accès
-     * @param criteria Les critères de recherche
+     * Rapport pour produire les rapports sur les accï¿½s.
+     * @param subject Le sujet qui consulte les accï¿½s
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return Rapport sur les repérages.
+     * @return Rapport sur les repï¿½rages.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
-    public ResultSet auditAcces(AccesRapportVO rapportDossierVO) throws BusinessRuleException,
+    public ResultSet auditAcces(AccesRapportVO rapportDossierVO,Connection connection) throws BusinessRuleException,
                         BusinessResourceException {
         try {
-            return FabriqueCardexDAO.getInstance().getRapportDAO().auditAcces(rapportDossierVO);
+            return FabriqueCardexDAO.getInstance().getRapportDAO().auditAcces(rapportDossierVO,connection);
         } catch (DAOException dae) {
             throw new BusinessResourceException(dae);
         }
     }
 
     /**
-     * Rapport pour produire les rapports sur les accès aux sujets.
-     * @param subject Le sujet qui consulte les accès
-     * @param criteria Les critères de recherche
+     * Rapport pour produire les rapports sur les accï¿½s aux sujets.
+     * @param subject Le sujet qui consulte les accï¿½s
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return Rapport sur les repérages.
+     * @return Rapport sur les repï¿½rages.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
-    public ResultSet auditAccesSujets(AccesRapportVO rapportDossierVO) throws BusinessRuleException,
+    public ResultSet auditAccesSujets(AccesRapportVO rapportDossierVO,Connection connection) throws BusinessRuleException,
                         BusinessResourceException {
         try {
-            return FabriqueCardexDAO.getInstance().getRapportDAO().auditAccesSujets(rapportDossierVO);
+            return FabriqueCardexDAO.getInstance().getRapportDAO().auditAccesSujets(rapportDossierVO,connection);
         } catch (DAOException dae) {
             throw new BusinessResourceException(dae);
         }
     }
 
     /**
-     * Rapport pour produire les rapports sur l'analyse des accès aux dossiers (CDX_0072).
-     * @param subject Le sujet qui consulte les accès
-     * @param criteria Les critères de recherche
+     * Rapport pour produire les rapports sur l'analyse des accï¿½s aux dossiers (CDX_0072).
+     * @param subject Le sujet qui consulte les accï¿½s
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return Rapport sur les repérages.
+     * @return Rapport sur les repï¿½rages.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
-    public ResultSet auditAnalyseAccesDossiers(AccesRapportVO rapportDossierVO) throws BusinessRuleException,
+    public ResultSet auditAnalyseAccesDossiers(AccesRapportVO rapportDossierVO,Connection connection) throws BusinessRuleException,
                         BusinessResourceException {
         try {
-            return FabriqueCardexDAO.getInstance().getRapportDAO().auditAnalyseAccesDossiers(rapportDossierVO);
+            return FabriqueCardexDAO.getInstance().getRapportDAO().auditAnalyseAccesDossiers(rapportDossierVO,connection);
         } catch (DAOException dae) {
             throw new BusinessResourceException(dae);
         }
     }
 
     /**
-     * Rapport pour produire les rapports sur les accès aux sujets par intervenant.
-     * @param subject Le sujet qui consulte les accès
-     * @param criteria Les critères de recherche
+     * Rapport pour produire les rapports sur les accï¿½s aux sujets par intervenant.
+     * @param subject Le sujet qui consulte les accï¿½s
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return Rapport sur les repérages.
+     * @return Rapport sur les repï¿½rages.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
-    public ResultSet auditAccesSujetsIntervenant(AccesRapportVO rapportDossierVO) throws BusinessRuleException,
+    public ResultSet auditAccesSujetsIntervenant(AccesRapportVO rapportDossierVO,Connection connection) throws BusinessRuleException,
                         BusinessResourceException {
         try {
-            return FabriqueCardexDAO.getInstance().getRapportDAO().auditAccesSujetsIntervenant(rapportDossierVO);
+            return FabriqueCardexDAO.getInstance().getRapportDAO().auditAccesSujetsIntervenant(rapportDossierVO,connection);
         } catch (DAOException dae) {
             throw new BusinessResourceException(dae);
         }
     }
 
     /**
-     * Rapport pour produire les rapports sur les accès des intervenants.
-     * @param subject Le sujet qui consulte les accès
-     * @param criteria Les critères de recherche
+     * Rapport pour produire les rapports sur les accï¿½s des intervenants.
+     * @param subject Le sujet qui consulte les accï¿½s
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return Rapport sur les repérages.
+     * @return Rapport sur les repï¿½rages.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
-    public ResultSet auditAccesIntervenant(AccesRapportVO rapportDossierVO) throws BusinessRuleException,
+    public ResultSet auditAccesIntervenant(AccesRapportVO rapportDossierVO,Connection connection) throws BusinessRuleException,
                         BusinessResourceException {
         try {
-            return FabriqueCardexDAO.getInstance().getRapportDAO().auditAccesIntervenant(rapportDossierVO);
+            return FabriqueCardexDAO.getInstance().getRapportDAO().auditAccesIntervenant(rapportDossierVO,connection);
         } catch (DAOException dae) {
             throw new BusinessResourceException(dae);
         }
     }
 
     /**
-     * Rapport pour produire les rapports sur les accès des intervenants.
-     * @param subject Le sujet qui consulte les accès
-     * @param criteria Les critères de recherche
+     * Rapport pour produire les rapports sur les accï¿½s des intervenants.
+     * @param subject Le sujet qui consulte les accï¿½s
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return Rapport sur les repérages.
+     * @return Rapport sur les repï¿½rages.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
-    public ResultSet auditAccesDetailIntervenant(AccesRapportVO rapportDossierVO) throws BusinessRuleException,
+    public ResultSet auditAccesDetailIntervenant(AccesRapportVO rapportDossierVO,Connection connection) throws BusinessRuleException,
                         BusinessResourceException {
         try {
-            return FabriqueCardexDAO.getInstance().getRapportDAO().auditAccesDetailIntervenant(rapportDossierVO);
+            return FabriqueCardexDAO.getInstance().getRapportDAO().auditAccesDetailIntervenant(rapportDossierVO,connection);
         } catch (DAOException dae) {
             throw new BusinessResourceException(dae);
         }
     }
 
     /**
-     * Rapport pour produire les rapports sur les accès des superutilisateurs.
-     * @param subject Le sujet qui consulte les accès
-     * @param criteria Les critères de recherche
+     * Rapport pour produire les rapports sur les accï¿½s des superutilisateurs.
+     * @param subject Le sujet qui consulte les accï¿½s
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return Rapport sur les repérages.
+     * @return Rapport sur les repï¿½rages.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
-    public ResultSet auditAccesSuperutilisateurs(AccesRapportVO rapportDossierVO) throws BusinessRuleException,
+    public ResultSet auditAccesSuperutilisateurs(AccesRapportVO rapportDossierVO,Connection connection) throws BusinessRuleException,
                         BusinessResourceException {
         try {
-            return FabriqueCardexDAO.getInstance().getRapportDAO().auditAccesSuperutilisateurs(rapportDossierVO);
+            return FabriqueCardexDAO.getInstance().getRapportDAO().auditAccesSuperutilisateurs(rapportDossierVO,connection);
         } catch (DAOException dae) {
             throw new BusinessResourceException(dae);
         }
     }
     
     /**
-     * Rapport pour produire les rapports sur les accès des sujets.
-     * @param subject Le sujet qui consulte les accès
-     * @param criteria Les critères de recherche
+     * Rapport pour produire les rapports sur les accï¿½s des sujets.
+     * @param subject Le sujet qui consulte les accï¿½s
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return Rapport sur les repérages.
+     * @return Rapport sur les repï¿½rages.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
-    public ResultSet auditAccesEmploye(AccesRapportVO rapportDossierVO) throws BusinessRuleException,
+    public ResultSet auditAccesEmploye(AccesRapportVO rapportDossierVO,Connection connection) throws BusinessRuleException,
                         BusinessResourceException {
         try {
-            return FabriqueCardexDAO.getInstance().getRapportDAO().auditAccesEmploye(rapportDossierVO);
+            return FabriqueCardexDAO.getInstance().getRapportDAO().auditAccesEmploye(rapportDossierVO,connection);
         } catch (DAOException dae) {
             throw new BusinessResourceException(dae);
         }
     }
 
     /**
-     * Rapport pour produire les rapports sur les accès aux fournisseurs.
-     * @param subject Le sujet qui consulte les accès
-     * @param criteria Les critères de recherche
+     * Rapport pour produire les rapports sur les accï¿½s aux fournisseurs.
+     * @param subject Le sujet qui consulte les accï¿½s
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return Rapport sur les repérages.
+     * @return Rapport sur les repï¿½rages.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
-    public ResultSet auditAccesFournisseur(AccesRapportVO rapportDossierVO) throws BusinessRuleException,
+    public ResultSet auditAccesFournisseur(AccesRapportVO rapportDossierVO,Connection connection) throws BusinessRuleException,
                         BusinessResourceException {
         try {
-            return FabriqueCardexDAO.getInstance().getRapportDAO().auditAccesFournisseur(rapportDossierVO);
+            return FabriqueCardexDAO.getInstance().getRapportDAO().auditAccesFournisseur(rapportDossierVO,connection);
         } catch (DAOException dae) {
             throw new BusinessResourceException(dae);
         }
     }    
     /**
-     * Rapport pour produire les rapports sur les accès aux narrations.
-     * @param subject Le sujet qui consulte les accès
-     * @param criteria Les critères de recherche
+     * Rapport pour produire les rapports sur les accï¿½s aux narrations.
+     * @param subject Le sujet qui consulte les accï¿½s
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return Rapport sur les repérages.
+     * @return Rapport sur les repï¿½rages.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
-    public ResultSet auditAccesNarration(AccesRapportVO rapportDossierVO) throws BusinessRuleException,
+    public ResultSet auditAccesNarration(AccesRapportVO rapportDossierVO,Connection connection) throws BusinessRuleException,
                         BusinessResourceException {
         try {
-            return FabriqueCardexDAO.getInstance().getRapportDAO().auditAccesNarration(rapportDossierVO);
+            return FabriqueCardexDAO.getInstance().getRapportDAO().auditAccesNarration(rapportDossierVO,connection);
         } catch (DAOException dae) {
             throw new BusinessResourceException(dae);
         }
     }
 
     /**
-     * Rapport pour produire les rapports sur les accès des nouveaux intervenants.
-     * @param subject Le sujet qui consulte les accès
-     * @param criteria Les critères de recherche
+     * Rapport pour produire les rapports sur les accï¿½s des nouveaux intervenants.
+     * @param subject Le sujet qui consulte les accï¿½s
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return Rapport sur les repérages.
+     * @return Rapport sur les repï¿½rages.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
-    public ResultSet auditAccesNouveauxIntervenants(AccesRapportVO rapportDossierVO) throws BusinessRuleException,
+    public ResultSet auditAccesNouveauxIntervenants(AccesRapportVO rapportDossierVO,Connection connection) throws BusinessRuleException,
                         BusinessResourceException {
         try {
-            return FabriqueCardexDAO.getInstance().getRapportDAO().auditAccesNouveauxIntervenants(rapportDossierVO);
+            return FabriqueCardexDAO.getInstance().getRapportDAO().auditAccesNouveauxIntervenants(rapportDossierVO,connection);
         } catch (DAOException dae) {
             throw new BusinessResourceException(dae);
         }
     }
     
     /**
-     * Rapport pour produire les listes de dossiers actifs par enquêteur de Loto-Québec.
-     * @param subject Le sujet qui consulte les accès
-     * @param criteria Les critères de recherche
+     * Rapport pour produire les listes de dossiers actifs par enquï¿½teur de Loto-Quï¿½bec.
+     * @param subject Le sujet qui consulte les accï¿½s
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return Rapport sur les repérages.
+     * @return Rapport sur les repï¿½rages.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
-    public ResultSet listesDossiersActifsEnqueteurLQ() throws BusinessRuleException,
+    public ResultSet listesDossiersActifsEnqueteurLQ(Connection connection) throws BusinessRuleException,
                         BusinessResourceException {
         try {
-            return FabriqueCardexDAO.getInstance().getRapportDAO().listesDossiersActifsEnqueteurLQ();
+            return FabriqueCardexDAO.getInstance().getRapportDAO().listesDossiersActifsEnqueteurLQ(connection);
         } catch (DAOException dae) {
             throw new BusinessResourceException(dae);
         }
@@ -576,19 +576,19 @@ public class RapportSessionFacade {
 
 
     /**
-     * Impression des fiches (sujet, société et dossier)
-     * @param subject Le sujet qui consulte les accès
-     * @param criteria Les critères de recherche
+     * Impression des fiches (sujet, sociï¿½tï¿½ et dossier)
+     * @param subject Le sujet qui consulte les accï¿½s
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return Rapport sur les repérages.
+     * @return Rapport sur les repï¿½rages.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
-    public ResultSet rapportImpressionFiche(long cle, long site, String procedure) throws BusinessRuleException,
+    public ResultSet rapportImpressionFiche(long cle, long site, String procedure,Connection connection) throws BusinessRuleException,
                         BusinessResourceException {
         try {
-            return FabriqueCardexDAO.getInstance().getRapportDAO().rapportImpressionFiche(cle, site, procedure);
+            return FabriqueCardexDAO.getInstance().getRapportDAO().rapportImpressionFiche(cle, site, procedure,connection);
         } catch (DAOException dae) {
             throw new BusinessResourceException(dae);
         }
@@ -596,18 +596,18 @@ public class RapportSessionFacade {
 
     /**
      * Impression du rapport sur les suivis 30 jours
-     * @param subject Le sujet qui consulte les accès
-     * @param criteria Les critères de recherche
+     * @param subject Le sujet qui consulte les accï¿½s
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return Rapport sur les repérages.
+     * @return Rapport sur les repï¿½rages.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
-    public ResultSet rapportSuivis(SiteIntervenantRapportVO rapportVO, String procedure) throws BusinessRuleException,
+    public ResultSet rapportSuivis(SiteIntervenantRapportVO rapportVO, String procedure,Connection connection) throws BusinessRuleException,
                         BusinessResourceException {
         try {
-            return FabriqueCardexDAO.getInstance().getRapportDAO().rapportSuivis(rapportVO, procedure);
+            return FabriqueCardexDAO.getInstance().getRapportDAO().rapportSuivis(rapportVO, procedure,connection);
         } catch (DAOException dae) {
             throw new BusinessResourceException(dae);
         }
@@ -615,18 +615,18 @@ public class RapportSessionFacade {
 
     /**
      * Impression du rapport sur les suivis CDX_0098
-     * @param subject Le sujet qui consulte les accès
-     * @param criteria Les critères de recherche
+     * @param subject Le sujet qui consulte les accï¿½s
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return Rapport sur les repérages.
+     * @return Rapport sur les repï¿½rages.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
-    public Collection rapportSuivisEnquetes(SiteIntervenantRapportVO rapportVO) throws BusinessRuleException,
+    public Collection rapportSuivisEnquetes(SiteIntervenantRapportVO rapportVO,Connection connection) throws BusinessRuleException,
                         BusinessResourceException {
         try {
-            return FabriqueCardexDAO.getInstance().getRapportDAO().rapportSuivisEnquetes(rapportVO);
+            return FabriqueCardexDAO.getInstance().getRapportDAO().rapportSuivisEnquetes(rapportVO,connection);
         } catch (DAOException dae) {
             throw new BusinessResourceException(dae);
         }
@@ -634,18 +634,18 @@ public class RapportSessionFacade {
 
     /**
      * Impression du rapport sur les suivis par intervenant et par site
-     * @param subject Le sujet qui consulte les accès
-     * @param criteria Les critères de recherche
+     * @param subject Le sujet qui consulte les accï¿½s
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return Rapport sur les repérages.
+     * @return Rapport sur les repï¿½rages.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
-    public ResultSet rapportSuivisIntervenant(SiteIntervenantRapportVO rapportVO, String procedure) throws BusinessRuleException,
+    public ResultSet rapportSuivisIntervenant(SiteIntervenantRapportVO rapportVO, String procedure,Connection connection) throws BusinessRuleException,
                         BusinessResourceException {
         try {
-            return FabriqueCardexDAO.getInstance().getRapportDAO().rapportSuivisIntervenant(rapportVO, procedure);
+            return FabriqueCardexDAO.getInstance().getRapportDAO().rapportSuivisIntervenant(rapportVO, procedure,connection);
         } catch (DAOException dae) {
             throw new BusinessResourceException(dae);
         }
@@ -655,9 +655,9 @@ public class RapportSessionFacade {
      * Recherche des dossiers pour le rapport cumulatif (CDX_0146) et hebdomadaire (CDX_0147)
      *
      * @param subject Le sujet qui effectue la recherche
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return Les dosiers recherchés
+     * @return Les dosiers recherchï¿½s
      * @throws BusinessRuleException
      * @throws BusinessException
      */
@@ -673,9 +673,9 @@ public class RapportSessionFacade {
      * Recherche des dossiers pour le rapport cumulatif (CDX_0143) et hebdomadaire (CDX_0144) pour Espacejeux
      *
      * @param subject Le sujet qui effectue la recherche
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return Les dosiers recherchés
+     * @return Les dosiers recherchï¿½s
      * @throws BusinessRuleException
      * @throws BusinessException
      */
@@ -688,12 +688,12 @@ public class RapportSessionFacade {
     }
     
     /**
-     * Recherche des dossiers fondés pour le rapport cumulatif (CDX_0143)
+     * Recherche des dossiers fondï¿½s pour le rapport cumulatif (CDX_0143)
      *
      * @param subject Le sujet qui effectue la recherche
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return Les dosiers recherchés
+     * @return Les dosiers recherchï¿½s
      * @throws BusinessRuleException
      * @throws BusinessException
      */
@@ -706,12 +706,12 @@ public class RapportSessionFacade {
     }
     
     /**
-     * Recherche des dossiers aux enquêtes pour le rapport cumulatif (CDX_0143)
+     * Recherche des dossiers aux enquï¿½tes pour le rapport cumulatif (CDX_0143)
      *
      * @param subject Le sujet qui effectue la recherche
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return Les dosiers recherchés
+     * @return Les dosiers recherchï¿½s
      * @throws BusinessRuleException
      * @throws BusinessException
      */
@@ -724,12 +724,12 @@ public class RapportSessionFacade {
     }
     
     /**
-     * Calcul du cumul des dossiers depuis le 1er janvier de l'année en cours pour le rapport cumulatif (CDX_0143)
+     * Calcul du cumul des dossiers depuis le 1er janvier de l'annï¿½e en cours pour le rapport cumulatif (CDX_0143)
      *
      * @param subject Le sujet qui effectue la recherche
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return Les dosiers recherchés
+     * @return Les dosiers recherchï¿½s
      * @throws BusinessRuleException
      * @throws BusinessException
      */
@@ -742,30 +742,30 @@ public class RapportSessionFacade {
     }
     
     /**
-     * Pour la production manuelle du rapport sur la reconnaissance de plaques (pour le système Autovue) CDX_0075
+     * Pour la production manuelle du rapport sur la reconnaissance de plaques (pour le systï¿½me Autovue) CDX_0075
      *
      * @param subject Le sujet qui effectue la recherche
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return Les dosiers recherchés
+     * @return Les dosiers recherchï¿½s
      * @throws BusinessRuleException
      * @throws BusinessException
      */
-    public ResultSet produireRapportReconnaissance(String titre, StatistiqueDossierRapportVO reconnaissancePlaqueVO ) throws BusinessRuleException, BusinessException {
+    public ResultSet produireRapportReconnaissance(String titre, StatistiqueDossierRapportVO reconnaissancePlaqueVO,Connection connection) throws BusinessRuleException, BusinessException {
         try {
-            return FabriqueCardexDAO.getInstance().getRapportDAO().produireRapportReconnaissance(titre, reconnaissancePlaqueVO);
+            return FabriqueCardexDAO.getInstance().getRapportDAO().produireRapportReconnaissance(titre, reconnaissancePlaqueVO,connection);
         } catch (DAOException dae) {
         	throw new BusinessResourceException(dae);
         }
     }
 
     /**
-     * Calcul du délai de traitement des dossiers d'habilitation sécuritaire (CDX_0246)
+     * Calcul du dï¿½lai de traitement des dossiers d'habilitation sï¿½curitaire (CDX_0246)
      *
      * @param subject Le sujet qui effectue la recherche
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return Les dosiers recherchés
+     * @return Les dosiers recherchï¿½s
      * @throws BusinessRuleException
      * @throws BusinessException
      */
@@ -781,87 +781,87 @@ public class RapportSessionFacade {
      * Rapport sur les contrats d'autoexclusion actifs d'Espacejeux (CDX_0260)
      *
      * @param subject Le sujet qui effectue la recherche
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return Les dosiers recherchés
+     * @return Les dosiers recherchï¿½s
      * @throws BusinessRuleException
      * @throws BusinessException
      */
-    public ResultSet rapportEspaceJeuxAutoexclusionActif(EspaceJeuxAutoexclusionActifRapportVO_CDX_0260 espaceJeuxAutoexclusionActifRapportVO_CDX_0260 ) throws BusinessRuleException, BusinessException {
+    public ResultSet rapportEspaceJeuxAutoexclusionActif(EspaceJeuxAutoexclusionActifRapportVO_CDX_0260 espaceJeuxAutoexclusionActifRapportVO_CDX_0260,Connection connection) throws BusinessRuleException, BusinessException {
         try {
-            return FabriqueCardexDAO.getInstance().getRapportDAO().rapportEspaceJeuxAutoexclusionActif(espaceJeuxAutoexclusionActifRapportVO_CDX_0260);
+            return FabriqueCardexDAO.getInstance().getRapportDAO().rapportEspaceJeuxAutoexclusionActif(espaceJeuxAutoexclusionActifRapportVO_CDX_0260,connection);
         } catch (DAOException dae) {
         	throw new BusinessResourceException(dae);
         }
     }
 
     /**
-     * Rapport sur les dossiers de fraude fondé d'Espacejeux (CDX_0261)
+     * Rapport sur les dossiers de fraude fondï¿½ d'Espacejeux (CDX_0261)
      *
      * @param subject Le sujet qui effectue la recherche
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return Les dosiers recherchés
+     * @return Les dosiers recherchï¿½s
      * @throws BusinessRuleException
      * @throws BusinessException
      */
-    public ResultSet rapportEspaceJeuxFraudeFonde(EspaceJeuxFraudeFondeRapportVO_CDX_0261 espaceJeuxFraudeFondeRapportVO_CDX_0261 ) throws BusinessRuleException, BusinessException {
+    public ResultSet rapportEspaceJeuxFraudeFonde(EspaceJeuxFraudeFondeRapportVO_CDX_0261 espaceJeuxFraudeFondeRapportVO_CDX_0261,Connection connection) throws BusinessRuleException, BusinessException {
         try {
-            return FabriqueCardexDAO.getInstance().getRapportDAO().rapportEspaceJeuxFraudeFonde(espaceJeuxFraudeFondeRapportVO_CDX_0261);
+            return FabriqueCardexDAO.getInstance().getRapportDAO().rapportEspaceJeuxFraudeFonde(espaceJeuxFraudeFondeRapportVO_CDX_0261,connection);
         } catch (DAOException dae) {
         	throw new BusinessResourceException(dae);
         }
     }
 
     /**
-     * Rapport sur les dossiers de tricherie fondé d'Espacejeux (CDX_0262)
+     * Rapport sur les dossiers de tricherie fondï¿½ d'Espacejeux (CDX_0262)
      *
      * @param subject Le sujet qui effectue la recherche
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return Les dosiers recherchés
+     * @return Les dosiers recherchï¿½s
      * @throws BusinessRuleException
      * @throws BusinessException
      */
-    public ResultSet rapportEspaceJeuxTricherieFonde(EspaceJeuxTricherieFondeRapportVO_CDX_0262 espaceJeuxTricherieFondeRapportVO_CDX_0262 ) throws BusinessRuleException, BusinessException {
+    public ResultSet rapportEspaceJeuxTricherieFonde(EspaceJeuxTricherieFondeRapportVO_CDX_0262 espaceJeuxTricherieFondeRapportVO_CDX_0262,Connection connection) throws BusinessRuleException, BusinessException {
         try {
-            return FabriqueCardexDAO.getInstance().getRapportDAO().rapportEspaceJeuxTricherieFonde(espaceJeuxTricherieFondeRapportVO_CDX_0262);
+            return FabriqueCardexDAO.getInstance().getRapportDAO().rapportEspaceJeuxTricherieFonde(espaceJeuxTricherieFondeRapportVO_CDX_0262,connection);
         } catch (DAOException dae) {
         	throw new BusinessResourceException(dae);
         }
     }
 
     /**
-     * Rapport sur les statistiques par endroits regroupés (CDX_0149)
+     * Rapport sur les statistiques par endroits regroupï¿½s (CDX_0149)
      *
      * @param subject Le sujet qui effectue la recherche
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return Les dosiers recherchés
+     * @return Les dosiers recherchï¿½s
      * @throws BusinessRuleException
      * @throws BusinessException
      */
-    public ResultSet rapportEndroitsRegroupes(StatistiqueDossierRapportVO statistiqueDossierRapportVO) throws BusinessRuleException, BusinessException {
+    public ResultSet rapportEndroitsRegroupes(StatistiqueDossierRapportVO statistiqueDossierRapportVO,Connection connection) throws BusinessRuleException, BusinessException {
         try {
-            return FabriqueCardexDAO.getInstance().getRapportDAO().rapportEndroitsRegroupes(statistiqueDossierRapportVO);
+            return FabriqueCardexDAO.getInstance().getRapportDAO().rapportEndroitsRegroupes(statistiqueDossierRapportVO,connection);
         } catch (DAOException dae) {
         	throw new BusinessResourceException(dae);
         }
     }
 
     /**
-     * Tableau sur les statistiques par endroits regroupés (CDX_0149)
+     * Tableau sur les statistiques par endroits regroupï¿½s (CDX_0149)
      *
      * @param subject Le sujet qui effectue la recherche
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return Les dosiers recherchés
+     * @return Les dosiers recherchï¿½s
      * @throws BusinessRuleException
      * @throws BusinessException
      */
-    public ResultSet rapportTableauEndroitsRegroupes(StatistiqueDossierRapportVO statistiqueDossierRapportVO) throws BusinessRuleException, BusinessException {
+    public ResultSet rapportTableauEndroitsRegroupes(StatistiqueDossierRapportVO statistiqueDossierRapportVO,Connection connection) throws BusinessRuleException, BusinessException {
         try {
-            return FabriqueCardexDAO.getInstance().getRapportDAO().rapportTableauEndroitsRegroupes(statistiqueDossierRapportVO);
+            return FabriqueCardexDAO.getInstance().getRapportDAO().rapportTableauEndroitsRegroupes(statistiqueDossierRapportVO,connection);
         } catch (DAOException dae) {
         	throw new BusinessResourceException(dae);
         }

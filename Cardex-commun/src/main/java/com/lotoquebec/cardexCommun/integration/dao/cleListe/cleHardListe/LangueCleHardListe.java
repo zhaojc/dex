@@ -22,7 +22,7 @@ public class LangueCleHardListe extends CleHardListe {
 
 	@Override
 	protected void genererListe() {
-        add("1", "Français");
+        add("1", "FranÃ§ais");
         add("15472", "Anglais");
 	}
 

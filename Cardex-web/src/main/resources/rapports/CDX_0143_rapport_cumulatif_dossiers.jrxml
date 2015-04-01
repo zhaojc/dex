@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CDX_0143_rapport_cumulatif_dossiers" pageWidth="792" pageHeight="612" whenNoDataType="AllSectionsNoDetail" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="36" bottomMargin="36" whenResourceMissingType="Empty">
+	<parameter name="SiteOrigine" class="java.lang.String"/>
+	<parameter name="DateDebut" class="java.lang.String"/>
+	<parameter name="DateFin" class="java.lang.String"/>
+	<parameter name="UTILISATEUR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["Confidentiel"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Genre" class="java.lang.String"/>
+	<field name="Type" class="java.lang.String"/>
+	<field name="Categorie" class="java.lang.String"/>
+	<field name="nombreDossier" class="java.lang.Long"/>
+	<field name="Pourcentage" class="java.lang.Double"/>
+	<field name="nombreFonde" class="java.lang.Long"/>
+	<field name="nombreNonFonde" class="java.lang.Long"/>
+	<field name="nombreIndetermine" class="java.lang.Long"/>
+	<field name="nombreAuxEnquetes" class="java.lang.Long"/>
+	<variable name="nombreDossier_1" class="java.lang.Long" calculation="Sum">
+		<variableExpression><![CDATA[$F{nombreDossier}]]></variableExpression>
+	</variable>
+	<variable name="nombreDossier_SUM" class="java.lang.Long" calculation="Sum">
+		<variableExpression><![CDATA[$F{nombreDossier}]]></variableExpression>
+	</variable>
+	<variable name="nombreDossier_SUM_1" class="java.lang.Long" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{nombreDossier}]]></variableExpression>
+	</variable>
+	<variable name="nombreDossier_SUM_2" class="java.lang.Long" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{nombreDossier}]]></variableExpression>
+	</variable>
+	<variable name="nombreFonde_1" class="java.lang.Long" calculation="Sum">
+		<variableExpression><![CDATA[$F{nombreFonde}]]></variableExpression>
+	</variable>
+	<variable name="nombreNonFonde_1" class="java.lang.Long" calculation="Sum">
+		<variableExpression><![CDATA[$F{nombreNonFonde}]]></variableExpression>
+	</variable>
+	<variable name="nombreIndetermine_1" class="java.lang.Long" calculation="Sum">
+		<variableExpression><![CDATA[$F{nombreIndetermine}]]></variableExpression>
+	</variable>
+	<variable name="nombreAuxEnquetes_1" class="java.lang.Long" calculation="Sum">
+		<variableExpression><![CDATA[$F{nombreAuxEnquetes}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="150" splitType="Stretch">
+			<line>
+				<reportElement x="2" y="85" width="751" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="3" y="88" width="751" height="20"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true" isItalic="true" pdfFontName="Helvetica-BoldOblique"/>
+				</textElement>
+				<text><![CDATA[Confidentiel]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1" y="0" width="751" height="24" backcolor="#0099CC"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="18" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Rapport cumulatif des dossiers d'Espacejeux]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="396" y="113" width="87" height="18" forecolor="#FFFFFF" backcolor="#999999"/>
+				<box leftPadding="5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Dossiers]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="485" y="113" width="198" height="18" forecolor="#FFFFFF" backcolor="#999999"/>
+				<box leftPadding="5">
+					<pen lineColor="#FFFFFF"/>
+					<topPen lineColor="#FFFFFF"/>
+					<leftPen lineColor="#FFFFFF"/>
+					<bottomPen lineWidth="1.0" lineColor="#FFFFFF"/>
+					<rightPen lineWidth="1.0" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Statut du dossier]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="3" y="113" width="182" height="36" forecolor="#FFFFFF" backcolor="#999999"/>
+				<box leftPadding="5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Type]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="187" y="113" width="207" height="36" forecolor="#FFFFFF" backcolor="#999999"/>
+				<box leftPadding="5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Catégorie]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="485" y="131" width="57" height="18" forecolor="#FFFFFF" backcolor="#999999"/>
+				<box leftPadding="5">
+					<topPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Fondé]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="606" y="131" width="77" height="18" forecolor="#FFFFFF" backcolor="#999999"/>
+				<box leftPadding="5">
+					<topPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Inféterminé]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="187" y="64" width="29" height="18"/>
+				<box rightPadding="3"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[au :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="28" y="28" width="74" height="18"/>
+				<box rightPadding="3"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Site d'origine :]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="104" y="28" width="109" height="18"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{SiteOrigine}]]></textFieldExpression>
+			</textField>
+			<textField pattern="yyyy-MM-dd" isBlankWhenNull="true">
+				<reportElement x="218" y="64" width="100" height="18"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{DateFin}]]></textFieldExpression>
+			</textField>
+			<textField pattern="yyyy-MM-dd" isBlankWhenNull="true">
+				<reportElement x="104" y="64" width="81" height="18"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{DateDebut}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="4" y="64" width="98" height="18"/>
+				<box rightPadding="3"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Pour la période du :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="396" y="131" width="43" height="18" forecolor="#FFFFFF" backcolor="#999999"/>
+				<box leftPadding="5">
+					<topPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[N]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="439" y="131" width="44" height="18" forecolor="#FFFFFF" backcolor="#999999"/>
+				<box leftPadding="5">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="542" y="131" width="64" height="18" forecolor="#FFFFFF" backcolor="#999999"/>
+				<box leftPadding="5">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Non fondé]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="685" y="113" width="69" height="36" forecolor="#FFFFFF" backcolor="#999999">
+					<printWhenExpression><![CDATA[new Boolean($P{SiteOrigine}.equals("Espacejeux"))]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Aux enquêtes]]></text>
+			</staticText>
+			<line>
+				<reportElement x="2" y="149" width="751" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="28" y="46" width="74" height="18"/>
+				<box rightPadding="3"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Genre :]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="104" y="46" width="109" height="18"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{Genre}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToTallestObject" x="12" y="5" width="161" height="14"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{Type}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToTallestObject" x="200" y="5" width="179" height="14"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{Categorie}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="394" y="5" width="43" height="14"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$F{nombreDossier}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="540" y="5" width="64" height="14"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$F{nombreNonFonde}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="610" y="5" width="71" height="14"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$F{nombreIndetermine}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="683" y="5" width="67" height="13">
+					<printWhenExpression><![CDATA[new Boolean($P{SiteOrigine}.equals("Espacejeux"))]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$F{nombreAuxEnquetes}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Auto" pattern="#,##0.00%">
+				<reportElement x="440" y="5" width="43" height="14"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.Double"><![CDATA[new Double( $F{nombreDossier}.doubleValue() / $V{nombreDossier_1}.doubleValue() )]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="483" y="5" width="57" height="14"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$F{nombreFonde}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="28">
+			<textField evaluationTime="Report" pattern="" isBlankWhenNull="false">
+				<reportElement key="textField" x="714" y="5" width="36" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["" + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="4" y="5" width="100" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[CDX_0143]]></text>
+			</staticText>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement key="textField" x="633" y="5" width="77" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Page " + $V{PAGE_NUMBER} + " de "]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="false">
+				<reportElement stretchType="RelativeToTallestObject" x="111" y="5" width="522" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA["Imprimé le " + new SimpleDateFormat("EEEEE dd MMMMM yyyy à HH:mm", java.util.Locale.FRENCH).format(new java.util.Date()) + " par " + $P{UTILISATEUR}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="56" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="5" width="751" height="1"/>
+			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement x="394" y="6" width="43" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$V{nombreDossier_1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="289" y="6" width="100" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Total :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="289" y="26" width="100" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Pourcentage :]]></text>
+			</staticText>
+			<textField evaluationTime="Auto" pattern="#,##0.00%" isBlankWhenNull="true">
+				<reportElement x="437" y="26" width="44" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.Double"><![CDATA[new Double( $V{nombreDossier_1}.doubleValue() / $V{nombreDossier_1}.doubleValue() )]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="483" y="5" width="57" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$V{nombreFonde_1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="540" y="5" width="64" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$V{nombreNonFonde_1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="610" y="6" width="71" height="19"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$V{nombreIndetermine_1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="683" y="5" width="67" height="20">
+					<printWhenExpression><![CDATA[new Boolean($P{SiteOrigine}.equals("Espacejeux"))]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$V{nombreAuxEnquetes_1}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Auto" pattern="#,##0.00%" isBlankWhenNull="true">
+				<reportElement x="483" y="26" width="57" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.Double"><![CDATA[new Double( $V{nombreFonde_1}.doubleValue() / $V{nombreDossier_1}.doubleValue() )]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Auto" pattern="#,##0.00%" isBlankWhenNull="true">
+				<reportElement x="540" y="26" width="64" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.Double"><![CDATA[new Double( $V{nombreNonFonde_1}.doubleValue() / $V{nombreDossier_1}.doubleValue() )]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Auto" pattern="#,##0.00%" isBlankWhenNull="true">
+				<reportElement x="610" y="26" width="71" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.Double"><![CDATA[new Double( $V{nombreIndetermine_1}.doubleValue() / $V{nombreDossier_1}.doubleValue() )]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Auto" pattern="#,##0.00%" isBlankWhenNull="true">
+				<reportElement x="683" y="26" width="67" height="20">
+					<printWhenExpression><![CDATA[new Boolean($P{SiteOrigine}.equals("Espacejeux"))]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.Double"><![CDATA[new Double( $V{nombreAuxEnquetes_1}.doubleValue() / $V{nombreDossier_1}.doubleValue() )]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="50" width="751" height="1"/>
+			</line>
+		</band>
+	</summary>
+</jasperReport>

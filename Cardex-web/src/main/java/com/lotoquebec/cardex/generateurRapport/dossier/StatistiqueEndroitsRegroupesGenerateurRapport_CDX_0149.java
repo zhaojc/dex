@@ -3,25 +3,13 @@ package com.lotoquebec.cardex.generateurRapport.dossier;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRResultSetDataSource;
-import net.sf.jasperreports.engine.data.JRMapCollectionDataSource;
 
-import com.lotoquebec.cardex.business.RapportDossier;
 import com.lotoquebec.cardex.business.delegate.RapportBusinessDelegate;
-import com.lotoquebec.cardex.business.vo.RapportDossierVO;
-import com.lotoquebec.cardex.business.vo.rapport.CumulatifDossierRapportVO;
 import com.lotoquebec.cardex.business.vo.rapport.RapportVO;
 import com.lotoquebec.cardex.business.vo.rapport.StatistiqueDossierRapportVO;
 import com.lotoquebec.cardex.generateurRapport.GenererRapport;
@@ -30,18 +18,10 @@ import com.lotoquebec.cardexCommun.GlobalConstants;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
 import com.lotoquebec.cardexCommun.exception.BusinessException;
 import com.lotoquebec.cardexCommun.exception.BusinessResourceException;
-import com.lotoquebec.cardexCommun.exception.BusinessRuleException;
-import com.lotoquebec.cardexCommun.integration.dao.OracleDAOUtils;
-import com.lotoquebec.cardexCommun.integration.dao.cleListe.cleListeCache.CleListeCache;
 import com.lotoquebec.cardexCommun.integration.dao.cleListe.cleMultiListeCache.CategorieCleMultiListeCache;
-import com.lotoquebec.cardexCommun.integration.dao.cleListe.cleMultiListeCache.NatureCleMultiListeCache;
 import com.lotoquebec.cardexCommun.integration.dao.cleListe.cleMultiListeCache.TypeCleMultiListeCache;
-import com.lotoquebec.cardexCommun.integration.dao.cleListe.cleMultiListeCache.cleMultiExterneListeCache.NatureInscriptionCle;
-import com.lotoquebec.cardexCommun.integration.dao.cleListe.cleSQLListeCache.CategorieTypeCle;
-import com.lotoquebec.cardexCommun.integration.dao.cleListe.cleSQLListeCache.SousCategoriesCle;
 import com.lotoquebec.cardexCommun.integration.dao.cleListe.cleSQLListeCache.TableValeurCleSQLListeCache;
 import com.lotoquebec.cardexCommun.securite.GestionnaireSecurite;
-import com.lotoquebec.cardexCommun.text.DateFormat;
 import com.lotoquebec.cardexCommun.user.CardexUser;
 import com.lotoquebec.cardexCommun.util.ListeCache;
 import com.lotoquebec.cardexCommun.util.StringUtils;
@@ -64,7 +44,7 @@ public class StatistiqueEndroitsRegroupesGenerateurRapport_CDX_0149 extends Gene
 	protected JRDataSource construireDataSource(CardexAuthenticationSubject subject, RapportVO rapportVO, Connection connection) throws BusinessResourceException,BusinessException {
 		RapportBusinessDelegate delegate = new RapportBusinessDelegate();
 		StatistiqueDossierRapportVO statistiqueDossierRapportVO = (StatistiqueDossierRapportVO) rapportVO;
-		ResultSet resultSet = delegate.rapportEndroitsRegroupes(statistiqueDossierRapportVO);
+		ResultSet resultSet = delegate.rapportEndroitsRegroupes(statistiqueDossierRapportVO,connection);
 		return new JRResultSetDataSource(resultSet);
 	}
 

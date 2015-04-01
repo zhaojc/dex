@@ -33,7 +33,7 @@ public class ActifIntervenantDossierGenerateurRapport_CDX_0102 extends GenererRa
 	public JRDataSource construireDataSource(CardexAuthenticationSubject subject, RapportVO rapportVO, Connection connection) throws BusinessResourceException, BusinessException {
 		ActifIntervenantDossierRapportVO_CDX_0102 rapportDossierVO =(ActifIntervenantDossierRapportVO_CDX_0102) rapportVO;
 		RapportBusinessDelegate delegate = new RapportBusinessDelegate();
-		ResultSet resultSet = delegate.listesDossiersActifs(rapportDossierVO);
+		ResultSet resultSet = delegate.listesDossiersActifs(rapportDossierVO,connection);
        	return new JRResultSetDataSource(resultSet);
 	}
 

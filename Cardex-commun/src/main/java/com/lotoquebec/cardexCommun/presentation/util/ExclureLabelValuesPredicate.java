@@ -1,5 +1,6 @@
 package com.lotoquebec.cardexCommun.presentation.util;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.apache.commons.collections.Predicate;
@@ -11,8 +12,9 @@ import com.lotoquebec.cardexCommun.util.LongUtils;
  * @author levassc
  *
  */
-public class ExclureLabelValuesPredicate implements Predicate{
+public class ExclureLabelValuesPredicate implements Predicate,Serializable{
 
+	private static final long serialVersionUID = 6381383352221594327L;
 	private List<Long> exclureValeurs;	
 	
 	public ExclureLabelValuesPredicate(List<Long> exclureValeurs){

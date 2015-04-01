@@ -35,11 +35,11 @@ public class EnqueteurJournalGenerateurRapport_CDX_0053 extends GenererRapport {
 		EnqueteurJournalRapportVO_CDX_0053 enqueteurJournalRapportVO_CDX_0053 = (EnqueteurJournalRapportVO_CDX_0053) rapportVO;
 		RapportBusinessDelegate delegate = new RapportBusinessDelegate();
        	
-        //Si le critère Nature est vide, on inscrit par défaut celui du journal des enquêtes.
+        //Si le critï¿½re Nature est vide, on inscrit par dï¿½faut celui du journal des enquï¿½tes.
 		if(enqueteurJournalRapportVO_CDX_0053.getNature() == 0)
 			enqueteurJournalRapportVO_CDX_0053.setNature( GlobalConstants.Nature.JOURNAL_ENQUETES );
 
-		ResultSet resultSet = delegate.rapportJournalEnquetes(enqueteurJournalRapportVO_CDX_0053);
+		ResultSet resultSet = delegate.rapportJournalEnquetes(enqueteurJournalRapportVO_CDX_0053,connection);
        	return new JRResultSetDataSource(resultSet);        
 	}
 

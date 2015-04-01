@@ -1,0 +1,69 @@
+CREATE OR REPLACE PROCEDURE "SP_EPURATION_VEHICULES_SITE"(SITE IN SI_SITE.L_SI_CLE%TYPE) IS
+BEGIN
+  -- Épuration de tous les véhicules inactifs (confidentialité 8).
+  -- On supprime toutes les références des véhicules avant de les épurer
+  -- Créé le 98-08-05 par F. Guérin
+  DELETE FROM AD_ADRESSE
+   WHERE (L_AD_REFERENCE, L_AD_REF_SITE) IN
+         (SELECT L_VE_CLE, L_SI_CLE
+            FROM VE_VEHICULE
+           WHERE I_CC_CLE = 14920
+             AND L_SI_CLE = SITE) --Confidentialité 8 (inactif)
+     AND C_AD_REF_GENRE = 'VE';
+  COMMIT;
+  DELETE FROM CO_COMMENTAIRE2
+   WHERE (L_CO_REFERENCE, L_CO_REF_SITE) IN
+         (SELECT L_VE_CLE, L_SI_CLE
+            FROM VE_VEHICULE
+           WHERE I_CC_CLE = 14920
+             AND L_SI_CLE = SITE)
+     AND C_CO_REF_GENRE = 'VE';
+  COMMIT;
+  DELETE FROM LSC_CARACTERISTIQUE
+   WHERE (L_LSC_REFERENCE, L_LSC_REF_SITE) IN
+         (SELECT L_VE_CLE, L_SI_CLE
+            FROM VE_VEHICULE
+           WHERE I_CC_CLE = 14920
+             AND L_SI_CLE = SITE)
+     AND C_LSC_REF_GENRE = 'VE';
+  COMMIT;
+  DELETE FROM LDD_LIEN_DOSSIER
+   WHERE ((L_DO_CLE, L_DO_SITE) IN
+         (SELECT L_VE_CLE, L_SI_CLE
+             FROM VE_VEHICULE
+            WHERE I_CC_CLE = 14920
+              AND L_SI_CLE = SITE) AND C_DO_GENRE = 'VE')
+      OR ((L_LDD_DOSSIER_ASSOCIE, L_LDD_SITE) IN
+         (SELECT L_VE_CLE, L_SI_CLE
+             FROM VE_VEHICULE
+            WHERE I_CC_CLE = 14920
+              AND L_SI_CLE = SITE) AND C_LDD_GENRE = 'VE');
+  COMMIT;
+  DELETE FROM LMM_LIEN_MULTIMEDIA
+   WHERE (L_LMM_REFERENCE, L_LMM_REF_SITE) IN
+         (SELECT L_VE_CLE, L_SI_CLE
+            FROM VE_VEHICULE
+           WHERE I_CC_CLE = 14920
+             AND L_SI_CLE = SITE)
+     AND C_LMM_REF_GENRE = 'VE';
+  COMMIT;
+  DELETE FROM AC_ACCES A
+   WHERE (A.L_ORI_CLE, A.L_ORI_SITE) IN
+         (SELECT L_VE_CLE, L_SI_CLE
+            FROM VE_VEHICULE
+           WHERE I_CC_CLE = 14920
+             AND L_SI_CLE = SITE)
+     AND A.C_GF_REFERENCE = 'VE';
+  COMMIT;
+  delete from AUD_VE_VEHICULE
+   where L_VE_CLE IN
+         (SELECT V.L_VE_CLE FROM VE_VEHICULE V WHERE V.I_CC_CLE = 14920)
+     and L_SI_CLE = SITE;
+  commit;
+
+  DELETE FROM VE_VEHICULE
+   WHERE I_CC_CLE = 14920
+     AND L_SI_CLE = SITE;
+  COMMIT;
+END SP_EPURATION_VEHICULES_SITE;
+/

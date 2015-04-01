@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="societe" pageWidth="612" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="36" bottomMargin="36">
+	<parameter name="CLE_SOCIETE" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["M:\\mazzucr_Cardex_EVOLUTION4\\V_GDJ_APP\\CARDEX\\Rapport\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="UTILISATEUR" class="java.lang.String">
+		<defaultValueExpression><![CDATA["Confidentiel"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="CONFIDENTIALITE" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select s.l_so_cle,
+       s.l_si_cle,
+       trst.v_tr_description   as "Statut",
+       s.v_so_nom,
+       trcl.v_tr_description   as "Classe",
+       s.v_so_reference_nom,
+       s.v_so_reference_prenom,
+       s.v_so_reference_1,
+       s.v_so_reference_2,
+       s.v_so_reference_3,
+       s.v_so_raison_sociale
+  from so_societe s, tr_traduction trst, tr_traduction trcl
+ where s.l_so_cle = $P{CLE_SOCIETE}
+   and s.i_st_cle = trst.l_tr_cle(+)
+   and trst.i_la_cle(+) = 1
+   and s.i_cl_cle = trcl.l_tr_cle(+)
+   and trcl.i_la_cle(+) = 1
+   and ((NVL(S.I_CC_CLE, $P{CONFIDENTIALITE}) <= $P{CONFIDENTIALITE}) OR
+       (S.V_SO_CREE_PAR = $P{UTILISATEUR}))]]>
+	</queryString>
+	<field name="L_SO_CLE" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="L_SI_CLE" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Statut" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="V_SO_NOM" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Classe" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="V_SO_REFERENCE_NOM" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="V_SO_REFERENCE_PRENOM" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="V_SO_REFERENCE_1" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="V_SO_REFERENCE_2" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="V_SO_REFERENCE_3" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="V_SO_RAISON_SOCIALE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<group name="SOCIETE">
+		<groupExpression><![CDATA[$F{L_SO_CLE}]]></groupExpression>
+		<groupHeader>
+			<band height="100">
+				<staticText>
+					<reportElement x="14" y="30" width="91" height="20"/>
+					<textElement textAlignment="Right" markup="styled">
+						<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[Nom : ]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToTallestObject" x="107" y="30" width="184" height="20"/>
+					<textElement>
+						<font fontName="Arial" size="10"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{V_SO_NOM}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="11" y="50" width="94" height="20"/>
+					<textElement textAlignment="Right" markup="styled">
+						<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[Référence nom : ]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToTallestObject" x="107" y="50" width="184" height="20"/>
+					<textElement>
+						<font fontName="Arial" size="10"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{V_SO_REFERENCE_NOM}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="297" y="50" width="145" height="20"/>
+					<textElement textAlignment="Right" markup="styled">
+						<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[Référence prénom : ]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToTallestObject" x="443" y="50" width="108" height="20"/>
+					<textElement>
+						<font fontName="Arial" size="10"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{V_SO_REFERENCE_PRENOM}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="343" y="30" width="99" height="20"/>
+					<textElement textAlignment="Right" markup="styled">
+						<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[Région : ]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToTallestObject" x="443" y="30" width="108" height="20"/>
+					<textElement>
+						<font fontName="Arial" size="10"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{V_SO_REFERENCE_1}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="6" y="10" width="99" height="20"/>
+					<textElement textAlignment="Right" markup="styled">
+						<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[Numéro de fiche : ]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToTallestObject" x="107" y="10" width="184" height="20"/>
+					<textElement>
+						<font fontName="Arial" size="10"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{V_SO_REFERENCE_3}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="14" y="70" width="91" height="20"/>
+					<textElement textAlignment="Right" markup="styled">
+						<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[Raison d'être : ]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToTallestObject" x="107" y="70" width="184" height="20"/>
+					<textElement>
+						<font fontName="Arial" size="10"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{V_SO_RAISON_SOCIALE}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToTallestObject" x="443" y="70" width="108" height="20"/>
+					<textElement>
+						<font fontName="Arial" size="10"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{Classe}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="342" y="70" width="100" height="20"/>
+					<textElement textAlignment="Right" markup="styled">
+						<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[Classe : ]]></text>
+				</staticText>
+				<line>
+					<reportElement x="1" y="95" width="555" height="1"/>
+					<graphicElement>
+						<pen lineWidth="4.0" lineStyle="Double"/>
+					</graphicElement>
+				</line>
+			</band>
+		</groupHeader>
+	</group>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="58" splitType="Stretch">
+			<line>
+				<reportElement x="2" y="6" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="4.0" lineStyle="Double"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="7" y="10" width="550" height="25"/>
+				<textElement textAlignment="Center">
+					<font size="18" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Société]]></text>
+			</staticText>
+			<line>
+				<reportElement x="3" y="35" width="555" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="2" y="36" width="555" height="20"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true" isItalic="true" pdfFontName="Helvetica-BoldOblique"/>
+				</textElement>
+				<text><![CDATA[Confidentiel]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="97" splitType="Stretch">
+			<subreport>
+				<reportElement positionType="Float" x="14" y="74" width="200" height="16"/>
+				<subreportParameter name="SOCIETE_CLE">
+					<subreportParameterExpression><![CDATA[$F{L_SO_CLE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="CONFIDENTIALITE">
+					<subreportParameterExpression><![CDATA[$P{CONFIDENTIALITE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="UTILISATEUR">
+					<subreportParameterExpression><![CDATA[$P{UTILISATEUR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SOCIETE_SITE">
+					<subreportParameterExpression><![CDATA[$F{L_SI_CLE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "societe_dossiers.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement positionType="Float" x="14" y="38" width="331" height="20"/>
+				<subreportParameter name="SOCIETE_CLE">
+					<subreportParameterExpression><![CDATA[$F{L_SO_CLE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="CONFIDENTIALITE">
+					<subreportParameterExpression><![CDATA[$P{CONFIDENTIALITE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="UTILISATEUR">
+					<subreportParameterExpression><![CDATA[$P{UTILISATEUR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SOCIETE_SITE">
+					<subreportParameterExpression><![CDATA[$F{L_SI_CLE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "societe_sujets.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="14" y="7" width="200" height="15"/>
+				<subreportParameter name="SOCIETE_CLE">
+					<subreportParameterExpression><![CDATA[$F{L_SO_CLE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="CONFIDENTIALITE">
+					<subreportParameterExpression><![CDATA[$P{CONFIDENTIALITE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="UTILISATEUR">
+					<subreportParameterExpression><![CDATA[$P{UTILISATEUR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SOCIETE_SITE">
+					<subreportParameterExpression><![CDATA[$F{L_SI_CLE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "societe_adresse.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="29" splitType="Stretch">
+			<textField evaluationTime="Report" pattern="" isBlankWhenNull="false">
+				<reportElement key="textField" x="526" y="6" width="36" height="19" forecolor="#000000" backcolor="#FFFFFF"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["" + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement key="textField" x="452" y="6" width="70" height="19" isPrintWhenDetailOverflows="true" forecolor="#000000" backcolor="#FFFFFF"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Page " + $V{PAGE_NUMBER} + " de "]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="7" y="5" width="100" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[CDX_0003]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="false">
+				<reportElement stretchType="RelativeToTallestObject" x="107" y="6" width="335" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA["Imprimé le " + new SimpleDateFormat("EEEEE dd MMMMM yyyy à HH:mm", java.util.Locale.FRENCH).format(new java.util.Date()) + " par " + $P{UTILISATEUR}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

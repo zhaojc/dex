@@ -1,0 +1,110 @@
+CREATE OR REPLACE PROCEDURE "SP_EPURATION_DOSSIERS_SITE"(SITE IN SI_SITE.L_SI_CLE%TYPE) IS
+BEGIN
+  -- Épuration de tous les dossiers inactifs (confidentialité 8) par site.
+  -- On supprime toutes les références des dossiers avant de les épurer
+  -- Créé le 2000-10-03 par F. Guérin
+  DELETE FROM CO_COMMENTAIRE2
+   WHERE (L_CO_REFERENCE, L_CO_REF_SITE) IN
+         (SELECT L_DO_CLE, L_SI_CLE
+            FROM DO_DOSSIER
+           WHERE I_CC_CLE = 14920
+             AND L_SI_CLE = SITE)
+     AND C_CO_REF_GENRE = 'DO';
+  COMMIT;
+  DELETE FROM LJD_LIEN_JEU_DOSSIER
+   WHERE (L_DO_CLE, L_LJD_REF_SITE) IN
+         (SELECT L_DO_CLE, L_SI_CLE
+            FROM DO_DOSSIER
+           WHERE I_CC_CLE = 14920
+             AND L_SI_CLE = SITE)
+     AND C_LJD_REF_GENRE = 'DO';
+  COMMIT;
+  DELETE FROM LDD_LIEN_DOSSIER
+   WHERE ((L_DO_CLE, L_DO_SITE) IN
+         (SELECT L_DO_CLE, L_SI_CLE
+             FROM DO_DOSSIER
+            WHERE I_CC_CLE = 14920
+              AND L_SI_CLE = SITE) AND C_DO_GENRE = 'DO');
+  COMMIT;
+  DELETE FROM LMM_LIEN_MULTIMEDIA
+   WHERE (L_LMM_REFERENCE, L_LMM_REF_SITE) IN
+         (SELECT L_DO_CLE, L_SI_CLE
+            FROM DO_DOSSIER
+           WHERE I_CC_CLE = 14920
+             AND L_SI_CLE = SITE)
+     AND C_LMM_REF_GENRE = 'DO';
+  COMMIT;
+  DELETE FROM MM_MULTIMEDIA M
+   where not exists (select L.L_MM_CLE, L.L_MM_REF_SITE
+            from LMM_LIEN_MULTIMEDIA L
+           where L.L_MM_CLE = M.L_MM_CLE
+             AND L.L_MM_REF_SITE = M.L_SI_CLE)
+     AND M.L_SI_CLE = SITE;
+  COMMIT;
+  DELETE FROM AC_ACCES A
+   WHERE (A.L_ORI_CLE, A.L_ORI_SITE) IN
+         (SELECT L_DO_CLE, L_SI_CLE
+            FROM DO_DOSSIER
+           WHERE I_CC_CLE = 14920
+             AND L_SI_CLE = SITE)
+     AND A.C_GF_REFERENCE = 'DO';
+  COMMIT;
+  DELETE FROM SIS_SITE_INSCRIPTION
+   WHERE (L_IS_CLE, L_SI_CLE) IN
+         (SELECT L_IS_CLE, L_SI_CLE
+            FROM IS_INSCRIPTION
+           WHERE (L_IS_REFERENCE, L_IS_REF_SITE) IN
+                 (SELECT L_DO_CLE, L_SI_CLE
+                    FROM DO_DOSSIER
+                   WHERE I_CC_CLE = 14920
+                     AND L_SI_CLE = SITE)
+             AND C_IS_REF_GENRE = 'DO');
+  COMMIT;
+  DELETE FROM IS_INSCRIPTION
+   WHERE (L_IS_REFERENCE, L_IS_REF_SITE) IN
+         (SELECT L_DO_CLE, L_SI_CLE
+            FROM DO_DOSSIER
+           WHERE I_CC_CLE = 14920
+             AND L_SI_CLE = SITE)
+     AND C_IS_REF_GENRE = 'DO';
+  COMMIT;
+  DELETE FROM CN_CONSIGNATION C
+   WHERE (C.L_CN_REF_CLE, C.L_CN_REF_SITE) IN
+         (SELECT L_DO_CLE, L_SI_CLE
+            FROM DO_DOSSIER
+           WHERE I_CC_CLE = 14920
+             AND L_SI_CLE = SITE)
+     AND C.C_CN_REF_GENRE = 'DO';
+  COMMIT;
+  DELETE FROM LJD_LIEN_JEU_DOSSIER L
+   WHERE (L.L_DO_CLE, L.L_LJD_REF_SITE) IN
+         (SELECT L_DO_CLE, L_SI_CLE
+            FROM DO_DOSSIER
+           WHERE I_CC_CLE = 14920
+             AND L_SI_CLE = SITE);
+  COMMIT;
+  DELETE FROM LDC_LIEN_DOSSIER_CATEGORIE L
+   WHERE (L.L_DO_CLE, L.L_SI_CLE) IN
+         (SELECT L_DO_CLE, L_SI_CLE
+            FROM DO_DOSSIER
+           WHERE I_CC_CLE = 14920
+             AND L_SI_CLE = SITE);
+  COMMIT;
+  DELETE FROM SV_SUIVI S
+   WHERE (S.L_SV_REFERENCE, S.L_SV_REF_SITE) IN
+         (SELECT L_DO_CLE, L_SI_CLE
+            FROM DO_DOSSIER
+           WHERE I_CC_CLE = 14920
+             AND L_SI_CLE = SITE);
+  COMMIT;
+  delete from AUD_DO_DOSSIER
+   where L_DO_CLE IN
+         (SELECT D.L_DO_CLE FROM DO_DOSSIER D WHERE D.I_CC_CLE = 14920)
+     and L_SI_CLE = SITE;
+  commit;
+  DELETE FROM DO_DOSSIER
+   WHERE I_CC_CLE = 14920
+     AND L_SI_CLE = SITE;
+  COMMIT;
+END SP_EPURATION_DOSSIERS_SITE;
+/

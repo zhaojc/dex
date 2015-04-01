@@ -32,7 +32,7 @@ public class Heures24IntervenantSuiviGenerateurRapport_CDX_0091 extends GenererR
 	@Override
 	public JRDataSource construireDataSource(CardexAuthenticationSubject subject, RapportVO rapportVO, Connection connection) throws BusinessResourceException, BusinessException {
 		RapportBusinessDelegate delegate = new RapportBusinessDelegate();
-       	ResultSet resultSet = delegate.rapportSuivis((SiteIntervenantRapportVO) rapportVO, "CARDEX_RAPPORT.SP_RAP_SUIVI_24_HEURES");
+       	ResultSet resultSet = delegate.rapportSuivis((SiteIntervenantRapportVO) rapportVO, "CARDEX_RAPPORT.SP_RAP_SUIVI_24_HEURES",connection);
        	return new JRResultSetDataSource(resultSet);
 	}
 

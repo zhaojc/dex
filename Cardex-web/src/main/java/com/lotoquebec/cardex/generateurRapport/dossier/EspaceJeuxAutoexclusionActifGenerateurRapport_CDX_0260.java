@@ -33,7 +33,7 @@ public class EspaceJeuxAutoexclusionActifGenerateurRapport_CDX_0260 extends Gene
 	public JRDataSource construireDataSource(CardexAuthenticationSubject subject, RapportVO rapportVO, Connection connection) throws BusinessResourceException, BusinessException {
 		EspaceJeuxAutoexclusionActifRapportVO_CDX_0260 espaceJeuxAutoexclusionActifRapportVO_CDX_0260 = (EspaceJeuxAutoexclusionActifRapportVO_CDX_0260) rapportVO;
 		RapportBusinessDelegate delegate = new RapportBusinessDelegate();
-		ResultSet resultSet = delegate.rapportEspaceJeuxAutoexclusionActif(espaceJeuxAutoexclusionActifRapportVO_CDX_0260);
+		ResultSet resultSet = delegate.rapportEspaceJeuxAutoexclusionActif(espaceJeuxAutoexclusionActifRapportVO_CDX_0260,connection);
        	return new JRResultSetDataSource(resultSet);
 	}
 

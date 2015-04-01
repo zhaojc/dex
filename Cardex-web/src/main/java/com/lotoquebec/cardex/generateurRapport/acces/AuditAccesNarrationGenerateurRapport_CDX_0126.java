@@ -15,14 +15,11 @@ import com.lotoquebec.cardex.business.vo.rapport.AccesRapportVO;
 import com.lotoquebec.cardex.business.vo.rapport.RapportVO;
 import com.lotoquebec.cardex.generateurRapport.GenererRapport;
 import com.lotoquebec.cardex.generateurRapport.rapports.RapportsConfiguration;
-import com.lotoquebec.cardexCommun.GlobalConstants;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
 import com.lotoquebec.cardexCommun.exception.BusinessException;
 import com.lotoquebec.cardexCommun.exception.BusinessResourceException;
-import com.lotoquebec.cardexCommun.integration.dao.cleListe.cleSQLListeCache.TableValeurCleSQLListeCache;
 import com.lotoquebec.cardexCommun.securite.GestionnaireSecurite;
 import com.lotoquebec.cardexCommun.text.DateFormat;
-import com.lotoquebec.cardexCommun.util.ListeCache;
 
 public class AuditAccesNarrationGenerateurRapport_CDX_0126 extends GenererRapport {
 
@@ -40,7 +37,7 @@ public class AuditAccesNarrationGenerateurRapport_CDX_0126 extends GenererRappor
 	public JRDataSource construireDataSource(CardexAuthenticationSubject subject, RapportVO rapportVO, Connection connection) throws BusinessResourceException, BusinessException {
 		AccesRapportVO rapportDossierVO =(AccesRapportVO) rapportVO;
 		RapportBusinessDelegate delegate = new RapportBusinessDelegate();
-		ResultSet resultSet = delegate.auditAccesNarration(rapportDossierVO);
+		ResultSet resultSet = delegate.auditAccesNarration(rapportDossierVO,connection);
 
        	return new JRResultSetDataSource(resultSet);
 	}
@@ -57,7 +54,7 @@ public class AuditAccesNarrationGenerateurRapport_CDX_0126 extends GenererRappor
         parameters.put("DATE_FIN",DateFormat.format(rapportDossierVO.getDateHeureDebutAu(), DateFormat.DATE_FORMAT_AVEC_HEURE));
         parameters.put("UTILISATEUR",subject.getPrincipal().getName());
 /*        //On met un titre pour le rapport CDX_0126
-        parameters.put("TITRE","Rapport sur les accès aux narrations");
+        parameters.put("TITRE","Rapport sur les accï¿½s aux narrations");
         
 		ListeCache listeCache = ListeCache.getInstance();
 		String site = "";

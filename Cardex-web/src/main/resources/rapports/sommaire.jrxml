@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sommaire" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<parameter name="DATE_DEBUT" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA["2003-05-01"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DATE_FIN" class="java.lang.String">
+		<defaultValueExpression><![CDATA["2003-07-01"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT S.V_SI_SITE,
+GS.V_GS_NOM AS "GROUPE_SECURITE",
+TRS.V_TR_DESCRIPTION AS "GROUPE",
+TRTY.V_TR_DESCRIPTION,
+C.V_CO_TEMPS,
+I.V_IN_NOM||', '||I.V_IN_PRENOM DESCRIPTION
+FROM DO_DOSSIER DO,
+CA_CATEGORIE CA,
+CO_COMMENTAIRE2 C,
+TR_TRADUCTION TRTY,
+SI_SITE S,
+IN_INTERVENANT I,
+TR_TRADUCTION TRS,
+GS_GROUPE_SECURITE GS,
+IGS_INTERVENANT_GROUPE_SEC IGS
+WHERE DO.I_CC_CLE <> 14920
+AND (CA.I_CA_CLE = DO.I_CA_CLE)
+AND (I.NAME = C.V_CO_CREE_PAR)
+AND (DO.L_DO_CLE = C.L_CO_REFERENCE AND DO.L_SI_CLE = C.L_CO_REF_SITE AND
+C.C_CO_REF_GENRE = 'DO')
+AND (TRTY.I_LA_CLE = 1)
+AND C.V_CO_TEMPS is not null
+AND (CA.I_TY_CLE = TRTY.L_TR_CLE)
+AND I.L_IN_SECTEUR = TRS.L_TR_CLE AND TRS.I_LA_CLE = 1
+AND C.L_SI_CLE = 7 
+AND C.L_SI_CLE = S.L_SI_CLE
+AND I.NAME = IGS.V_NAME
+AND IGS.L_GS_CLE = GS.L_GS_CLE
+AND C.D_CO_DATE_CREATION BETWEEN TO_DATE($P{DATE_DEBUT},'yyyy-MM-DD') AND TO_DATE($P{DATE_FIN},'yyyy-MM-DD')]]>
+	</queryString>
+	<field name="V_SI_SITE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="GROUPE_SECURITE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="GROUPE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="V_TR_DESCRIPTION" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="V_CO_TEMPS" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DESCRIPTION" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<sortField name="DESCRIPTION"/>
+	<sortField name="V_TR_DESCRIPTION"/>
+	<variable name="Temps_Type" class="java.lang.Integer" resetType="Group" resetGroup="Type" calculation="Sum">
+		<variableExpression><![CDATA[Integer.valueOf($F{V_CO_TEMPS})]]></variableExpression>
+	</variable>
+	<variable name="Temps_Intervenant" class="java.lang.Integer" resetType="Group" resetGroup="Intervenant" calculation="Sum">
+		<variableExpression><![CDATA[Integer.valueOf($F{V_CO_TEMPS})]]></variableExpression>
+	</variable>
+	<variable name="Temps_Total" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[Integer.valueOf($F{V_CO_TEMPS})]]></variableExpression>
+	</variable>
+	<variable name="Type_Total" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA[$V{Type_COUNT}]]></variableExpression>
+	</variable>
+	<variable name="Heures_Type" class="java.lang.String" resetType="Group" resetGroup="Type">
+		<variableExpression><![CDATA[$V{Temps_Type}.intValue()/60+" h "+$V{Temps_Type}.intValue()%60+" m"]]></variableExpression>
+	</variable>
+	<variable name="Heures_Intervenant" class="java.lang.String">
+		<variableExpression><![CDATA[$V{Temps_Intervenant}.intValue()/60+" h "+$V{Temps_Intervenant}.intValue()%60+" m"]]></variableExpression>
+	</variable>
+	<variable name="Heures_Total" class="java.lang.String">
+		<variableExpression><![CDATA[$V{Temps_Total}.intValue()/60+" h "+$V{Temps_Total}.intValue()%60+" m"]]></variableExpression>
+	</variable>
+	<group name="Intervenant" isStartNewPage="true">
+		<groupExpression><![CDATA[$F{DESCRIPTION}]]></groupExpression>
+		<groupHeader>
+			<band height="23">
+				<textField>
+					<reportElement mode="Opaque" x="101" y="2" width="100" height="20" backcolor="#F0F0F0"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{GROUPE_SECURITE}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="1" y="2" width="100" height="20" backcolor="#F0F0F0"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{V_SI_SITE}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="201" y="2" width="91" height="20" backcolor="#F0F0F0"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{DESCRIPTION}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="1" y="22" width="555" height="1"/>
+				</line>
+				<line>
+					<reportElement x="1" y="0" width="555" height="1"/>
+				</line>
+				<staticText>
+					<reportElement mode="Opaque" x="292" y="1" width="264" height="20" backcolor="#F0F0F0"/>
+					<textElement/>
+					<text><![CDATA[]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="22">
+				<staticText>
+					<reportElement x="1" y="1" width="200" height="20"/>
+					<textElement verticalAlignment="Middle">
+						<font size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<text><![CDATA[Total intervenant]]></text>
+				</staticText>
+				<line>
+					<reportElement x="1" y="0" width="554" height="1"/>
+				</line>
+				<textField>
+					<reportElement x="201" y="1" width="201" height="20"/>
+					<textElement verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{DESCRIPTION}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="402" y="1" width="48" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<textFieldExpression class="java.lang.Integer"><![CDATA[$V{Intervenant_COUNT}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="450" y="1" width="40" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<textFieldExpression class="java.lang.Integer"><![CDATA[$V{Temps_Intervenant}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="490" y="1" width="66" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$V{Heures_Intervenant}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="Type">
+		<groupExpression><![CDATA[$F{V_TR_DESCRIPTION}]]></groupExpression>
+		<groupFooter>
+			<band height="20">
+				<textField>
+					<reportElement x="200" y="2" width="201" height="17"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{V_TR_DESCRIPTION}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="401" y="2" width="48" height="17"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression class="java.lang.Integer"><![CDATA[$V{Type_COUNT}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="449" y="2" width="40" height="17"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression class="java.lang.Integer"><![CDATA[$V{Temps_Type}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="489" y="2" width="66" height="17"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$V{Heures_Type}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="146" splitType="Stretch">
+			<staticText>
+				<reportElement x="1" y="61" width="100" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[En date du : ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="81" width="100" height="20"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Site d'origine : ]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM, yyyy">
+				<reportElement x="101" y="61" width="454" height="20"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="101" width="100" height="20"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Secteur : ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="101" y="101" width="191" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{GROUPE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="292" y="81" width="74" height="20"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Ajouté entre le : ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="292" y="101" width="74" height="20"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[et le : ]]></text>
+			</staticText>
+			<textField pattern="yyyy-MM-dd">
+				<reportElement x="366" y="81" width="189" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{DATE_DEBUT}]]></textFieldExpression>
+			</textField>
+			<textField pattern="yyyy-MM-dd">
+				<reportElement x="366" y="101" width="189" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{DATE_FIN}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="121" width="100" height="20"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Intervenant : ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="101" y="121" width="191" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{DESCRIPTION}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="101" y="81" width="179" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{V_SI_SITE}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="7" width="555" height="1"/>
+			</line>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="50" width="555" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="65" y="12" width="424" height="35"/>
+				<textElement textAlignment="Center">
+					<font size="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Rapport sommaire]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="22">
+			<line>
+				<reportElement x="1" y="0" width="554" height="1"/>
+			</line>
+			<staticText>
+				<reportElement mode="Opaque" x="2" y="1" width="100" height="20" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Site]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="102" y="1" width="100" height="20" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Groupe de sécurité]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="202" y="1" width="200" height="20" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Intervenant]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="402" y="1" width="48" height="20" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Nombre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="450" y="1" width="40" height="20" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="490" y="1" width="66" height="20" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[(heures)]]></text>
+			</staticText>
+			<line>
+				<reportElement x="1" y="21" width="555" height="1"/>
+			</line>
+		</band>
+	</columnHeader>
+	<pageFooter>
+		<band height="25">
+			<textField>
+				<reportElement x="434" y="3" width="80" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.String"><![CDATA["Page "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="515" y="3" width="40" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="5" y="3" width="96" height="20"/>
+				<textElement/>
+				<text><![CDATA[Produit par Cardex le]]></text>
+			</staticText>
+			<textField pattern=" dd MMMMM yyyy à HH:mm:ss">
+				<reportElement x="101" y="3" width="333" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="27">
+			<staticText>
+				<reportElement x="296" y="5" width="106" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Grand Total :]]></text>
+			</staticText>
+			<line>
+				<reportElement x="1" y="4" width="554" height="1"/>
+				<graphicElement>
+					<pen lineWidth="2.0" lineColor="#000000"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="450" y="5" width="40" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{Temps_Total}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="402" y="5" width="48" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{Type_Total}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="490" y="5" width="66" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$V{Heures_Total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

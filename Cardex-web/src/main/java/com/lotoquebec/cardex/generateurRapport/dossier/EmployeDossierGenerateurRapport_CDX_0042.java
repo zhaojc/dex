@@ -3,19 +3,9 @@ package com.lotoquebec.cardex.generateurRapport.dossier;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRResultSetDataSource;
-import net.sf.jasperreports.engine.data.JRMapCollectionDataSource;
 
 import com.lotoquebec.cardex.business.delegate.RapportBusinessDelegate;
 import com.lotoquebec.cardex.business.vo.rapport.EmployeDossierRapportVO_CDX_0042;
@@ -43,7 +33,7 @@ public class EmployeDossierGenerateurRapport_CDX_0042 extends GenererRapport {
 	public JRDataSource construireDataSource(CardexAuthenticationSubject subject, RapportVO rapportVO, Connection connection) throws BusinessResourceException, BusinessException {
 		EmployeDossierRapportVO_CDX_0042 employeDossierRapportVO_CDX_0042 = (EmployeDossierRapportVO_CDX_0042) rapportVO;
 		RapportBusinessDelegate delegate = new RapportBusinessDelegate();
-		ResultSet resultSet = delegate.rapportEmployeDossier(employeDossierRapportVO_CDX_0042);
+		ResultSet resultSet = delegate.rapportEmployeDossier(employeDossierRapportVO_CDX_0042,connection);
        	return new JRResultSetDataSource(resultSet);
 	}
 

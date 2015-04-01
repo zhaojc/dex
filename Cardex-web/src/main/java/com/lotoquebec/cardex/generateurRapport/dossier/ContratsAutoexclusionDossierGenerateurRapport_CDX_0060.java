@@ -3,6 +3,7 @@ package com.lotoquebec.cardex.generateurRapport.dossier;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRResultSetDataSource;
@@ -33,15 +34,15 @@ public class ContratsAutoexclusionDossierGenerateurRapport_CDX_0060 extends Gene
 	public JRDataSource construireDataSource(CardexAuthenticationSubject subject, RapportVO rapportVO, Connection connection) throws BusinessResourceException, BusinessException {
 		ContratsAutoexclusionDossierRapportVO_CDX_0060 contratsAutoexclusionDossierRapportVO_CDX_0060 = (ContratsAutoexclusionDossierRapportVO_CDX_0060) rapportVO;
 		RapportBusinessDelegate delegate = new RapportBusinessDelegate();
-		ResultSet resultSet = delegate.rapportContrats(contratsAutoexclusionDossierRapportVO_CDX_0060);
+		ResultSet resultSet = delegate.rapportContrats(contratsAutoexclusionDossierRapportVO_CDX_0060, connection);
+		
        	return new JRResultSetDataSource(resultSet);
 	}
 
 
 	@Override
 	protected InputStream obtenirGabarit() {
-		//return RapportsConfiguration.class.getResourceAsStream(RapportsConfiguration.MENSUEL_AUTOEXCLUSIONS);
-		return this.getClass().getResourceAsStream("/rapports/"+RapportsConfiguration.MENSUEL_AUTOEXCLUSIONS);
+		return RapportsConfiguration.class.getResourceAsStream(RapportsConfiguration.MENSUEL_AUTOEXCLUSIONS);
 	}
 
 }

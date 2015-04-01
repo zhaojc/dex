@@ -1,26 +1,22 @@
 package com.lotoquebec.cardex.servlet;
 
-import java.io.IOException;
-
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import net.sf.jasperreports.engine.JRAbstractExporter;
+import net.sf.jasperreports.engine.export.JRXlsExporter;
+import net.sf.jasperreports.export.SimpleXlsReportConfiguration;
 
 import com.lotoquebec.cardexCommun.GlobalConstants;
 
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.export.JRXlsExporter;
-import net.sf.jasperreports.engine.export.JRXlsExporterParameter;
-import net.sf.jasperreports.engine.export.JExcelApiExporter;
-
 
 /**
- * Cette classe est utilisé pour lancer une classe en réflexion.
- * La classe lancé est la classe qui prépare le rapport jasper.
+ * Cette classe est utilisï¿½ pour lancer une classe en rï¿½flexion.
+ * La classe lancï¿½ est la classe qui prï¿½pare le rapport jasper.
  */
 public class RapportAffichageExcel extends RapportAffichagePDF {
 
-	@Override
+	private static final long serialVersionUID = 7411182369215382967L;
+/*
 	protected void assignerServletOutput(HttpServletRequest request, HttpServletResponse  response, JasperPrint print) throws IOException, JRException{
 		JExcelApiExporter exporterXLS = new JExcelApiExporter ();
 
@@ -42,6 +38,23 @@ public class RapportAffichageExcel extends RapportAffichagePDF {
 		response.setContentType( GlobalConstants.TypeSortieServlet.EXCEL );
 
 		exporterXLS.exportReport();
-	}
+	}*/
 
+	@Override
+	protected void setContentType(HttpServletResponse response) {
+		response.setContentType(GlobalConstants.TypeSortieServlet.EXCEL);
+	}
+	
+	@Override
+	protected JRAbstractExporter obtenirJRExporter() {
+		JRXlsExporter exporter = new JRXlsExporter();
+		SimpleXlsReportConfiguration configuration = new SimpleXlsReportConfiguration();
+		configuration.setOnePagePerSheet(true);
+		configuration.setDetectCellType(true);
+		configuration.setCollapseRowSpan(false);
+		exporter.setConfiguration(configuration);
+		
+		return exporter;
+	}
+	
 }

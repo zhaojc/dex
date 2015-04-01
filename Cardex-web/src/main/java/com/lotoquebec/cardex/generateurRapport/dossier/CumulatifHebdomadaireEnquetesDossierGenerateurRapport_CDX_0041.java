@@ -36,7 +36,7 @@ public class CumulatifHebdomadaireEnquetesDossierGenerateurRapport_CDX_0041 exte
 	public JRDataSource construireDataSource(CardexAuthenticationSubject subject, RapportVO rapportVO, Connection connection) throws BusinessResourceException, BusinessException {
 		CumulatifHebdomadaireEnquetesDossierRapportVO_CDX_0041 rapportDossierVO =(CumulatifHebdomadaireEnquetesDossierRapportVO_CDX_0041) rapportVO;
 		RapportBusinessDelegate delegate = new RapportBusinessDelegate();
-		ResultSet resultSet = delegate.cumulatifHebdomadaireEnquetesDossier(rapportDossierVO);
+		ResultSet resultSet = delegate.cumulatifHebdomadaireEnquetesDossier(rapportDossierVO,connection);
        	return new JRResultSetDataSource(resultSet);
 	}
 

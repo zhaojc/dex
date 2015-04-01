@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CDX_0078_laissez-passer_societes" pageWidth="1080" pageHeight="14400" whenNoDataType="AllSectionsNoDetail" columnWidth="1060" leftMargin="0" rightMargin="20" topMargin="36" bottomMargin="36">
+	<subDataset name="dataset1"/>
+	<subDataset name="dataset2"/>
+	<parameter name="UTILISATEUR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["Confidentiel"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select s.v_so_nom         as "Société",
+       d2.d_do_date_debut as "Date de début",
+       d2.d_do_date_fin   as "Date de fin",
+       t.v_tr_description as "Sévérité"
+  from so_societe           s,
+       ldd_lien_dossier     l2,
+       do_dossier           d2,
+       is_inscription       i2,
+       sis_site_inscription sis2,
+       tr_traduction        t
+ where d2.l_do_cle = l2.l_do_cle
+   and d2.l_si_cle = l2.l_do_site
+   and l2.c_do_genre = 'DO'
+   and l2.l_ldd_dossier_associe = s.l_so_cle
+   and l2.l_ldd_site = s.l_si_cle
+   and l2.c_ldd_genre = 'SO'
+   and (d2.l_si_cle = 30 or d2.l_si_cle = 11)
+   and d2.l_do_cle = i2.l_is_reference
+   and d2.l_si_cle = i2.l_is_ref_site
+   and i2.l_is_cle = sis2.l_is_cle
+   and i2.l_si_cle = sis2.l_si_cle
+   and sis2.l_is_site in (45, 46, 17, 19, 18, 49, 53, 15, 22)
+   and i2.d_is_date_creation =
+       (select max(imax2.d_is_date_creation)
+          from is_inscription imax2
+         where d2.l_do_cle = imax2.l_is_reference
+           and d2.l_si_cle = imax2.l_is_ref_site)
+   and d2.l_do_cle =
+       (select max(d4.l_do_cle)
+          from do_dossier           d4,
+               ldd_lien_dossier     l4,
+               is_inscription       i4,
+               sis_site_inscription sis4
+         where d4.l_do_cle = l4.l_do_cle
+           and d4.l_si_cle = l4.l_do_site
+           and l4.c_do_genre = 'DO'
+           and l4.l_ldd_dossier_associe = s.l_so_cle
+           and l4.l_ldd_site = s.l_si_cle
+           and l4.c_ldd_genre = 'SO'
+           and (d4.l_si_cle = 30 or d4.l_si_cle = 11)
+           and d4.l_do_cle = i4.l_is_reference
+           and d4.l_si_cle = i4.l_is_ref_site
+           and i4.l_is_cle = sis4.l_is_cle
+           and i4.l_si_cle = sis4.l_si_cle
+           and sis4.l_is_site in (45, 46, 17, 19, 18, 49, 53, 15, 22))
+   and s.i_se_cle_casino = t.l_tr_cle
+   and t.i_la_cle = 1
+   and d2.i_cc_cle <> 14920
+   and s.i_cc_cle <> 14920
+   and s.v_so_raison_sociale not like 'Virtuell%']]>
+	</queryString>
+	<field name="Société" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Date de début" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Date de fin" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Sévérité" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Cle_societe" class="java.lang.Long"/>
+	<sortField name="Société"/>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="17" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="271" height="17"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{Société}]]></textFieldExpression>
+			</textField>
+			<textField pattern="yyyy-MM-dd">
+				<reportElement x="371" y="0" width="100" height="17"/>
+				<textElement/>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{Date de début}]]></textFieldExpression>
+			</textField>
+			<textField pattern="yyyy-MM-dd">
+				<reportElement x="471" y="0" width="100" height="17"/>
+				<textElement/>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{Date de fin}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="571" y="0" width="57" height="17"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{Sévérité}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="271" y="0" width="100" height="17"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$F{Cle_societe}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

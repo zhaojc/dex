@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CDX_0145_rapport_temps_consacre" pageWidth="792" pageHeight="612" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<style name="Crosstab Data Text" isDefault="false" hAlign="Center"/>
+	<parameter name="UTILISATEUR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["ASDASDSD"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DATE_DEBUT" class="java.lang.String"/>
+	<parameter name="DATE_FIN" class="java.lang.String"/>
+	<parameter name="SITE" class="java.lang.Long"/>
+	<queryString>
+		<![CDATA[select trs.v_tr_description as SECTEUR, i.v_in_prenom||' '||i.v_in_nom as INTERVENANT, trna.v_tr_description as NATURE, trty.v_tr_description as TYPE, trca.v_tr_description as CATEGORIE, d.v_do_numero_dossier as NUMERO_CARDEX,
+decode(d.I_DO_FONDE,16123,TRUNC(sum(c.v_co_temps)/60) || ' h ' || (sum(c.v_co_temps) - TRUNC(sum(c.v_co_temps)/60)*60) || ' m') as FONDE,
+decode(d.I_DO_FONDE,16124,TRUNC(sum(c.v_co_temps)/60) || ' h ' || (sum(c.v_co_temps) - TRUNC(sum(c.v_co_temps)/60)*60) || ' m') as NON_FONDE,
+decode(d.I_DO_FONDE,16122,TRUNC(sum(c.v_co_temps)/60) || ' h ' || (sum(c.v_co_temps) - TRUNC(sum(c.v_co_temps)/60)*60) || ' m') as INDETERMINE, 
+decode(d.I_DO_FONDE,16123,sum(c.v_co_temps)) as TOTAL_FONDE,
+decode(d.I_DO_FONDE,16124,sum(c.v_co_temps)) as TOTAL_NON_FONDE,
+decode(d.I_DO_FONDE,16122,sum(c.v_co_temps)) as TOTAL_INDETERMINE 
+from v_do_dossier_ca_ty d, co_commentaire2 c, in_intervenant i, tr_traduction trs, 
+tr_traduction trna, tr_traduction trty, tr_traduction trca
+where d.l_do_cle = c.l_co_reference and d.l_si_cle = c.l_co_ref_site and c.c_co_ref_genre = 'DO'
+and to_char(d.l_si_cle) like $P{SITE}
+and c.v_co_cree_par = i.name
+and i.l_in_secteur = trs.l_tr_cle and trs.i_la_cle = 1
+and d.i_na_cle = trna.l_tr_cle and trna.i_la_cle = 1
+and d.i_ty_cle = trty.l_tr_cle and trty.i_la_cle = 1
+and d.i_ca_cle = trca.l_tr_cle and trca.i_la_cle = 1
+and c.v_co_temps is not null
+and d.d_do_date_debut between $P{DATE_DEBUT} and $P{DATE_FIN}
+group by trs.v_tr_description, i.v_in_prenom||' '||i.v_in_nom, trna.v_tr_description, trty.v_tr_description, trca.v_tr_description, d.v_do_numero_dossier,d.I_DO_FONDE
+order by trs.v_tr_description, i.v_in_prenom||' '||i.v_in_nom, trna.v_tr_description, trty.v_tr_description, trca.v_tr_description, d.v_do_numero_dossier]]>
+	</queryString>
+	<field name="SECTEUR" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="INTERVENANT" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NATURE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="TYPE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CATEGORIE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NUMERO_CARDEX" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FONDE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NON_FONDE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="INDETERMINE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="TOTAL_FONDE" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="TOTAL_NON_FONDE" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="TOTAL_INDETERMINE" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<sortField name="SECTEUR"/>
+	<sortField name="INTERVENANT"/>
+	<sortField name="NATURE"/>
+	<sortField name="TYPE"/>
+	<sortField name="CATEGORIE"/>
+	<variable name="TOTAL_FONDE_1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{TOTAL_FONDE}]]></variableExpression>
+	</variable>
+	<variable name="TOTAL_NON_FONDE_1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{TOTAL_NON_FONDE}]]></variableExpression>
+	</variable>
+	<variable name="TOTAL_INDETERMINE_1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{TOTAL_INDETERMINE}]]></variableExpression>
+	</variable>
+	<variable name="TOTAL_FONDE_2" class="java.math.BigDecimal" resetType="Group" resetGroup="INTERVENANT" calculation="Sum">
+		<variableExpression><![CDATA[$F{TOTAL_FONDE}]]></variableExpression>
+	</variable>
+	<variable name="TOTAL_NON_FONDE_2" class="java.math.BigDecimal" resetType="Group" resetGroup="INTERVENANT" calculation="Sum">
+		<variableExpression><![CDATA[$F{TOTAL_NON_FONDE}]]></variableExpression>
+	</variable>
+	<variable name="TOTAL_INDETERMINE_2" class="java.math.BigDecimal" resetType="Group" resetGroup="INTERVENANT" calculation="Sum">
+		<variableExpression><![CDATA[$F{TOTAL_INDETERMINE}]]></variableExpression>
+	</variable>
+	<variable name="TOTAL_FONDE_3" class="java.math.BigDecimal" resetType="Group" resetGroup="SECTEUR" calculation="Sum">
+		<variableExpression><![CDATA[$F{TOTAL_FONDE}]]></variableExpression>
+	</variable>
+	<variable name="TOTAL_NON_FONDE_3" class="java.math.BigDecimal" resetType="Group" resetGroup="SECTEUR" calculation="Sum">
+		<variableExpression><![CDATA[$F{TOTAL_NON_FONDE}]]></variableExpression>
+	</variable>
+	<variable name="TOTAL_INDETERMINE_3" class="java.math.BigDecimal" resetType="Group" resetGroup="SECTEUR" calculation="Sum">
+		<variableExpression><![CDATA[$F{TOTAL_INDETERMINE}]]></variableExpression>
+	</variable>
+	<group name="SECTEUR" isStartNewPage="true">
+		<groupExpression><![CDATA[$F{SECTEUR}]]></groupExpression>
+		<groupHeader>
+			<band height="27" splitType="Stretch">
+				<textField>
+					<reportElement mode="Opaque" x="0" y="0" width="752" height="27" forecolor="#000000" backcolor="#CCCCCC"/>
+					<box leftPadding="5">
+						<topPen lineWidth="1.0" lineStyle="Solid"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font size="14" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA["Secteur : " + $F{SECTEUR}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="50" splitType="Stretch">
+				<line direction="BottomUp">
+					<reportElement key="line" x="1" y="4" width="752" height="1"/>
+					<graphicElement>
+						<pen lineWidth="2.0" lineStyle="Double"/>
+					</graphicElement>
+				</line>
+				<staticText>
+					<reportElement x="327" y="8" width="164" height="18"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<text><![CDATA[Total du secteur :]]></text>
+				</staticText>
+				<textField evaluationTime="Group" evaluationGroup="INTERVENANT" isBlankWhenNull="true">
+					<reportElement x="496" y="8" width="85" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="false"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$V{TOTAL_INDETERMINE_3}.divide(new BigDecimal("60"), 0, BigDecimal.ROUND_FLOOR) + " h " + $V{TOTAL_INDETERMINE_3}.subtract($V{TOTAL_INDETERMINE_3}.divide(new BigDecimal("60"), 0, BigDecimal.ROUND_FLOOR).multiply(new BigDecimal("60"))) + " m"]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="INTERVENANT" isBlankWhenNull="true">
+					<reportElement x="581" y="8" width="85" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$V{TOTAL_NON_FONDE_3}.divide(new BigDecimal("60"), 0, BigDecimal.ROUND_FLOOR) + " h " + $V{TOTAL_NON_FONDE_3}.subtract($V{TOTAL_NON_FONDE_3}.divide(new BigDecimal("60"), 0, BigDecimal.ROUND_FLOOR).multiply(new BigDecimal("60"))) + " m"]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Auto" isBlankWhenNull="true">
+					<reportElement x="496" y="28" width="255" height="20" isRemoveLineWhenBlank="true"/>
+					<box>
+						<topPen lineWidth="1.75" lineStyle="Double"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[(($V{TOTAL_INDETERMINE_3}.add($V{TOTAL_NON_FONDE_3})).add($V{TOTAL_FONDE_3})).divide(new BigDecimal("60"), 0, BigDecimal.ROUND_FLOOR) + " h " + (($V{TOTAL_INDETERMINE_3}.add($V{TOTAL_NON_FONDE_3})).add($V{TOTAL_FONDE_3})).subtract((($V{TOTAL_INDETERMINE_3}.add($V{TOTAL_NON_FONDE_3})).add($V{TOTAL_FONDE_3})).divide(new BigDecimal("60"), 0, BigDecimal.ROUND_FLOOR).multiply(new BigDecimal("60"))) + " m"]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="667" y="8" width="85" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$V{TOTAL_FONDE_3}.divide(new BigDecimal("60"), 0, BigDecimal.ROUND_FLOOR) + " h " + $V{TOTAL_FONDE_3}.subtract($V{TOTAL_FONDE_3}.divide(new BigDecimal("60"), 0, BigDecimal.ROUND_FLOOR).multiply(new BigDecimal("60"))) + " m"]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="INTERVENANT">
+		<groupExpression><![CDATA[$F{INTERVENANT}]]></groupExpression>
+		<groupHeader>
+			<band height="49" splitType="Stretch">
+				<textField>
+					<reportElement mode="Opaque" x="0" y="0" width="752" height="27" backcolor="#FFFFFF"/>
+					<box leftPadding="5">
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font size="14" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA["Intervenant : " + $F{INTERVENANT}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement mode="Opaque" x="0" y="30" width="128" height="18" forecolor="#FFFFFF" backcolor="#999999"/>
+					<box leftPadding="3"/>
+					<textElement verticalAlignment="Middle">
+						<font size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<text><![CDATA[Nature]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="128" y="30" width="132" height="18" forecolor="#FFFFFF" backcolor="#999999"/>
+					<textElement verticalAlignment="Middle">
+						<font size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<text><![CDATA[Type]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="260" y="30" width="144" height="18" forecolor="#FFFFFF" backcolor="#999999"/>
+					<textElement verticalAlignment="Middle">
+						<font size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<text><![CDATA[Catégorie]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="404" y="30" width="92" height="18" forecolor="#FFFFFF" backcolor="#999999"/>
+					<textElement verticalAlignment="Middle">
+						<font size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<text><![CDATA[Numéro Cardex]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="496" y="30" width="85" height="18" forecolor="#FFFFFF" backcolor="#999999"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<text><![CDATA[Indéterminé]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="581" y="30" width="86" height="18" forecolor="#FFFFFF" backcolor="#999999"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<text><![CDATA[Non fondé]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="667" y="30" width="85" height="18" forecolor="#FFFFFF" backcolor="#999999"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<text><![CDATA[Fondé]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="47" splitType="Stretch">
+				<line direction="BottomUp">
+					<reportElement key="line" x="1" y="4" width="752" height="1"/>
+				</line>
+				<textField evaluationTime="Auto" isBlankWhenNull="true">
+					<reportElement x="496" y="25" width="255" height="20" isRemoveLineWhenBlank="true"/>
+					<box>
+						<topPen lineWidth="1.75" lineStyle="Double"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[(($V{TOTAL_INDETERMINE_2}.add($V{TOTAL_NON_FONDE_2})).add($V{TOTAL_FONDE_2})).divide(new BigDecimal("60"), 0, BigDecimal.ROUND_FLOOR) + " h " + (($V{TOTAL_INDETERMINE_2}.add($V{TOTAL_NON_FONDE_2})).add($V{TOTAL_FONDE_2})).subtract((($V{TOTAL_INDETERMINE_2}.add($V{TOTAL_NON_FONDE_2})).add($V{TOTAL_FONDE_2})).divide(new BigDecimal("60"), 0, BigDecimal.ROUND_FLOOR).multiply(new BigDecimal("60"))) + " m"]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="INTERVENANT" isBlankWhenNull="true">
+					<reportElement x="496" y="5" width="85" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="false"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$V{TOTAL_INDETERMINE_2}.divide(new BigDecimal("60"), 0, BigDecimal.ROUND_FLOOR) + " h " + $V{TOTAL_INDETERMINE_2}.subtract($V{TOTAL_INDETERMINE_2}.divide(new BigDecimal("60"), 0, BigDecimal.ROUND_FLOOR).multiply(new BigDecimal("60"))) + " m"]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="INTERVENANT" isBlankWhenNull="true">
+					<reportElement x="667" y="4" width="85" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$V{TOTAL_FONDE_2}.divide(new BigDecimal("60"), 0, BigDecimal.ROUND_FLOOR) + " h " + $V{TOTAL_FONDE_2}.subtract($V{TOTAL_FONDE_2}.divide(new BigDecimal("60"), 0, BigDecimal.ROUND_FLOOR).multiply(new BigDecimal("60"))) + " m"]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="INTERVENANT" isBlankWhenNull="true">
+					<reportElement x="581" y="4" width="85" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$V{TOTAL_NON_FONDE_2}.divide(new BigDecimal("60"), 0, BigDecimal.ROUND_FLOOR) + " h " + $V{TOTAL_NON_FONDE_2}.subtract($V{TOTAL_NON_FONDE_2}.divide(new BigDecimal("60"), 0, BigDecimal.ROUND_FLOOR).multiply(new BigDecimal("60"))) + " m"]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="327" y="7" width="164" height="18"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<text><![CDATA[Total de l'intervenant :]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="64" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="1" y="0" width="752" height="24" backcolor="#0099CC"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="18" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Rapport statistique sur le temps consacré]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="44" width="752" height="20"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true" isItalic="true" pdfFontName="Helvetica-BoldOblique"/>
+				</textElement>
+				<text><![CDATA[Confidentiel]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Opaque" x="1" y="24" width="752" height="20" backcolor="#E4F7E4"/>
+				<box leftPadding="5">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA["Pour la période du " + $P{DATE_DEBUT} + " au " + $P{DATE_FIN}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="1" y="0" width="127" height="16"/>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{NATURE}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="260" y="0" width="144" height="16"/>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{CATEGORIE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="581" y="0" width="85" height="16"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{NON_FONDE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="496" y="0" width="85" height="16"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{INDETERMINE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="404" y="0" width="92" height="16"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{NUMERO_CARDEX}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="128" y="0" width="132" height="16"/>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{TYPE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="667" y="0" width="85" height="16"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{FONDE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="26" splitType="Stretch">
+			<staticText>
+				<reportElement x="12" y="4" width="61" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[CDX_0145]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="false">
+				<reportElement stretchType="RelativeToTallestObject" x="73" y="4" width="526" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA["Imprimé le " + new SimpleDateFormat("EEEEE dd MMMMM yyyy à HH:mm", java.util.Locale.FRENCH).format(new java.util.Date()) + " par " + $P{UTILISATEUR}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" pattern="" isBlankWhenNull="false">
+				<reportElement key="textField" x="707" y="5" width="36" height="19" forecolor="#000000" backcolor="#FFFFFF"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["" + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement key="textField" x="599" y="5" width="104" height="19" forecolor="#000000" backcolor="#FFFFFF"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Page " + $V{PAGE_NUMBER} + " de "]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="51" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="666" y="10" width="85" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$V{TOTAL_FONDE_1}.divide(new BigDecimal("60"), 0, BigDecimal.ROUND_FLOOR) + " h " + $V{TOTAL_FONDE_1}.subtract($V{TOTAL_FONDE_1}.divide(new BigDecimal("60"), 0, BigDecimal.ROUND_FLOOR).multiply(new BigDecimal("60"))) + " m"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="581" y="10" width="85" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$V{TOTAL_NON_FONDE_1}.divide(new BigDecimal("60"), 0, BigDecimal.ROUND_FLOOR) + " h " + $V{TOTAL_NON_FONDE_1}.subtract($V{TOTAL_NON_FONDE_1}.divide(new BigDecimal("60"), 0, BigDecimal.ROUND_FLOOR).multiply(new BigDecimal("60"))) + " m"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="496" y="10" width="85" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$V{TOTAL_INDETERMINE_1}.divide(new BigDecimal("60"), 0, BigDecimal.ROUND_FLOOR) + " h " + $V{TOTAL_INDETERMINE_1}.subtract($V{TOTAL_INDETERMINE_1}.divide(new BigDecimal("60"), 0, BigDecimal.ROUND_FLOOR).multiply(new BigDecimal("60"))) + " m"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="391" y="10" width="100" height="18"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Grand total :]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="496" y="30" width="255" height="20"/>
+				<box>
+					<topPen lineWidth="1.75" lineStyle="Double"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[(($V{TOTAL_INDETERMINE_1}.add($V{TOTAL_NON_FONDE_1})).add($V{TOTAL_FONDE_1})).divide(new BigDecimal("60"), 0, BigDecimal.ROUND_FLOOR) + " h " + (($V{TOTAL_INDETERMINE_1}.add($V{TOTAL_NON_FONDE_1})).add($V{TOTAL_FONDE_1})).subtract((($V{TOTAL_INDETERMINE_1}.add($V{TOTAL_NON_FONDE_1})).add($V{TOTAL_FONDE_1})).divide(new BigDecimal("60"), 0, BigDecimal.ROUND_FLOOR).multiply(new BigDecimal("60"))) + " m"]]></textFieldExpression>
+			</textField>
+			<line direction="BottomUp">
+				<reportElement key="line" x="3" y="4" width="752" height="2"/>
+				<graphicElement>
+					<pen lineWidth="2.0" lineStyle="Double"/>
+				</graphicElement>
+			</line>
+		</band>
+	</summary>
+</jasperReport>

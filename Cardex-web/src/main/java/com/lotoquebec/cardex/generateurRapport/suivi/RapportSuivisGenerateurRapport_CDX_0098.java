@@ -2,27 +2,18 @@ package com.lotoquebec.cardex.generateurRapport.suivi;
 
 import java.io.InputStream;
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JRResultSetDataSource;
 import net.sf.jasperreports.engine.data.JRMapCollectionDataSource;
 
 import com.lotoquebec.cardex.business.delegate.RapportBusinessDelegate;
 import com.lotoquebec.cardex.business.vo.rapport.RapportVO;
 import com.lotoquebec.cardex.business.vo.rapport.SiteIntervenantRapportVO;
-import com.lotoquebec.cardex.business.vo.rapport.regroupement.IntervenantCategorieRegroupementRapportVO_CDX_0084;
 import com.lotoquebec.cardex.generateurRapport.GenererRapport;
 import com.lotoquebec.cardex.generateurRapport.rapports.RapportsConfiguration;
-import com.lotoquebec.cardex.generateurRapport.regroupement.PresentationRegroupementRapport;
-import com.lotoquebec.cardex.generateurRapport.regroupement.ResultatPresentationRegroupement;
 import com.lotoquebec.cardexCommun.GlobalConstants;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
 import com.lotoquebec.cardexCommun.exception.BusinessException;
@@ -63,7 +54,7 @@ public class RapportSuivisGenerateurRapport_CDX_0098 extends GenererRapport {
 	@Override
 	public JRDataSource construireDataSource(CardexAuthenticationSubject subject, RapportVO rapportVO, Connection connection) throws BusinessResourceException, BusinessException {
 		RapportBusinessDelegate delegate = new RapportBusinessDelegate();
-		Collection liste = delegate.rapportSuivisEnquetes((SiteIntervenantRapportVO) rapportVO);
+		Collection liste = delegate.rapportSuivisEnquetes((SiteIntervenantRapportVO) rapportVO,connection);
        	return new JRMapCollectionDataSource(liste);
 	}
 

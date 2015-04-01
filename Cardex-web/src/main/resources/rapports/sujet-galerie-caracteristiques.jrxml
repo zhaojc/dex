@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sujet-galerie-caracteristiques" columnCount="3" printOrder="Horizontal" pageWidth="571" pageHeight="842" columnWidth="190" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<parameter name="SUJET_CLE" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUJET_SITE" class="java.math.BigDecimal"/>
+	<parameter name="CONFIDENTIALITE" class="java.lang.String"/>
+	<parameter name="UTILISATEUR" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT tr_caracteristique.v_tr_description caracteristique
+  FROM su_sujet sujet
+  LEFT OUTER JOIN lsc_caracteristique lsc ON (sujet.l_su_cle =
+                                             lsc.l_lsc_reference AND
+                                             sujet.l_si_cle =
+                                             lsc.l_lsc_ref_site AND
+                                             lsc.c_lsc_ref_genre = 'SU')
+  LEFT OUTER JOIN tr_traduction tr_caracteristique ON (tr_caracteristique.l_tr_cle =
+                                                      lsc.l_cr_cle AND
+                                                      tr_caracteristique.i_la_cle = 1)
+ WHERE sujet.l_su_cle = $P{SUJET_CLE}
+   AND sujet.l_si_cle = $P{SUJET_SITE}
+   and ((NVL(sujet.I_CC_CLE, $P{CONFIDENTIALITE}) <= $P{CONFIDENTIALITE}) 
+    OR (sujet.V_SU_CREE_PAR = $P{UTILISATEUR}))]]>
+	</queryString>
+	<field name="CARACTERISTIQUE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<title>
+		<band height="5"/>
+	</title>
+	<pageHeader>
+		<band height="30" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Transparent" x="11" y="5" width="288" height="20" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true" isUnderline="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Caractéristiques]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="26" width="571" height="1"/>
+			</line>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band/>
+	</columnHeader>
+	<detail>
+		<band height="24" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" mode="Transparent" x="32" y="4" width="178" height="14" isRemoveLineWhenBlank="true" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{CARACTERISTIQUE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="7" y="4" width="23" height="14"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="html"/>
+				<text><![CDATA[►]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

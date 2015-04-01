@@ -11,7 +11,6 @@ import net.sf.jasperreports.engine.JasperPrint;
 
 import com.lotoquebec.cardex.business.RapportDossier;
 import com.lotoquebec.cardex.business.facade.RapportSessionFacade;
-import com.lotoquebec.cardex.business.facade.rapport.SiteRAQRapportCDX_0070;
 import com.lotoquebec.cardex.business.vo.rapport.AccesRapportVO;
 import com.lotoquebec.cardex.business.vo.rapport.ActifIntervenantDossierRapportVO_CDX_0102;
 import com.lotoquebec.cardex.business.vo.rapport.ContratsAutoexclusionDossierRapportVO_CDX_0060;
@@ -58,15 +57,15 @@ public class RapportBusinessDelegate extends BusinessDelegate {
     }
 
     /**
-     * Rapport sur les repérages
+     * Rapport sur les repï¿½rages
      *
      * @param subject Le sujet qui recherche un dossier
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return La liste des accès.
+     * @return La liste des accï¿½s.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public Collection rapportReperageAccesInterdit(CardexAuthenticationSubject subject, ReperageAutoexclusionDossierRapportVO rapportDossierVO, String procedure) throws BusinessException,
                         BusinessResourceException {
@@ -77,10 +76,10 @@ public class RapportBusinessDelegate extends BusinessDelegate {
         }
     }
     
-    public ResultSet cumulatifHebdomadaireEnquetesDossier(CumulatifHebdomadaireEnquetesDossierRapportVO_CDX_0041 rapportDossierVO) throws BusinessException,
+    public ResultSet cumulatifHebdomadaireEnquetesDossier(CumulatifHebdomadaireEnquetesDossierRapportVO_CDX_0041 rapportDossierVO,Connection connection) throws BusinessException,
     BusinessResourceException {
     	try {
-    		return rapportSessionFacade.cumulatifHebdomadaireEnquetesDossier(rapportDossierVO);
+    		return rapportSessionFacade.cumulatifHebdomadaireEnquetesDossier(rapportDossierVO,connection);
     	} catch (BusinessRuleException e) {
     		throw handleAccesBusinessRuleException(e);
     	}
@@ -90,52 +89,52 @@ public class RapportBusinessDelegate extends BusinessDelegate {
      * Rapport sur les contrats
      *
      * @param subject Le sujet qui recherche un dossier
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return La liste des accès.
+     * @return La liste des accï¿½s.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
-    public ResultSet rapportContrats(ContratsAutoexclusionDossierRapportVO_CDX_0060 contratsAutoexclusionDossierRapportVO_CDX_0060) throws BusinessException,
+    public ResultSet rapportContrats(ContratsAutoexclusionDossierRapportVO_CDX_0060 contratsAutoexclusionDossierRapportVO_CDX_0060, Connection connection) throws BusinessException,
                         BusinessResourceException {
         try {
-            return rapportSessionFacade.rapportContrats(contratsAutoexclusionDossierRapportVO_CDX_0060);
+            return rapportSessionFacade.rapportContrats(contratsAutoexclusionDossierRapportVO_CDX_0060, connection);
         } catch (BusinessRuleException e) {
             throw handleAccesBusinessRuleException(e);
         }
     }
 
     /**
-     * Rapport sur les employés liés à des dossiers
+     * Rapport sur les employï¿½s liï¿½s ï¿½ des dossiers
      *
      * @param subject Le sujet qui recherche un dossier
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return La liste des employés.
+     * @return La liste des employï¿½s.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
-    public ResultSet rapportEmployeDossier(EmployeDossierRapportVO_CDX_0042 employeDossierRapportVO_CDX_0042) throws BusinessException,
+    public ResultSet rapportEmployeDossier(EmployeDossierRapportVO_CDX_0042 employeDossierRapportVO_CDX_0042,Connection connection) throws BusinessException,
                         BusinessResourceException {
         try {
-            return rapportSessionFacade.rapportEmployeDossier(employeDossierRapportVO_CDX_0042);
+            return rapportSessionFacade.rapportEmployeDossier(employeDossierRapportVO_CDX_0042,connection);
         } catch (BusinessRuleException e) {
             throw handleAccesBusinessRuleException(e);
         }
     }
 
     /**
-     * Rapport sur les données à épurer.
+     * Rapport sur les donnï¿½es ï¿½ ï¿½purer.
      *
      * @param subject Le sujet qui recherche un dossier
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return La liste des accès.
+     * @return La liste des accï¿½s.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public ResultSet rapportEpuration(long site, Connection connection, String procedure) throws BusinessException,
                         BusinessResourceException {
@@ -147,35 +146,35 @@ public class RapportBusinessDelegate extends BusinessDelegate {
     }
 
     /**
-     * Rapport sur le journal des enquêteurs
+     * Rapport sur le journal des enquï¿½teurs
      *
      * @param subject Le sujet qui recherche un dossier
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
      * @return La liste des dossiers.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
-    public ResultSet rapportJournalEnquetes(EnqueteurJournalRapportVO_CDX_0053 enqueteurJournalRapportVO_CDX_0053) throws BusinessException,
+    public ResultSet rapportJournalEnquetes(EnqueteurJournalRapportVO_CDX_0053 enqueteurJournalRapportVO_CDX_0053,Connection connection) throws BusinessException,
                         BusinessResourceException {
         try {
-            return rapportSessionFacade.rapportJournalEnquetes(enqueteurJournalRapportVO_CDX_0053);
+            return rapportSessionFacade.rapportJournalEnquetes(enqueteurJournalRapportVO_CDX_0053,connection);
         } catch (BusinessRuleException e) {
             throw handleAccesBusinessRuleException(e);
         }
     }
 
     /**
-     * Rapport sur les repérages avec critère du nombre de repérages à partir du menu des rapports.
+     * Rapport sur les repï¿½rages avec critï¿½re du nombre de repï¿½rages ï¿½ partir du menu des rapports.
      *
      * @param subject Le sujet qui recherche un dossier
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return La liste des accès.
+     * @return La liste des accï¿½s.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public Collection rapportReperageAutoexclusion(CardexAuthenticationSubject subject, ReperageAutoexclusionDossierRapportVO criteria, String procedure, long nombreReperages) throws BusinessException,
                         BusinessResourceException {
@@ -190,52 +189,52 @@ public class RapportBusinessDelegate extends BusinessDelegate {
      * Rapport sur les rencontres
      *
      * @param subject Le sujet qui recherche un dossier
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return La liste des accès.
+     * @return La liste des accï¿½s.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
-    public ResultSet rapportProcedure(RapportVO rapportVO, String procedure) throws BusinessException,
+    public ResultSet rapportProcedure(RapportVO rapportVO, String procedure,Connection connection) throws BusinessException,
                         BusinessResourceException {
         try {
-            return rapportSessionFacade.rapportProcedure(rapportVO, procedure);
+            return rapportSessionFacade.rapportProcedure(rapportVO, procedure,connection);
         } catch (BusinessRuleException e) {
             throw handleAccesBusinessRuleException(e);
         }
     }
 
     /**
-     * Rapport sur les détaillants devenus inactifs
+     * Rapport sur les dï¿½taillants devenus inactifs
      *
      * @param subject Le sujet qui recherche un dossier
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return La liste des sociétés.
+     * @return La liste des sociï¿½tï¿½s.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
-    public ResultSet rapportSocietesInactives(SocietesInactivesRapportVO societesInactivesRapportVO) throws BusinessException,
+    public ResultSet rapportSocietesInactives(SocietesInactivesRapportVO societesInactivesRapportVO,Connection connection) throws BusinessException,
                         BusinessResourceException {
         try {
-            return rapportSessionFacade.rapportSocietesInactives(societesInactivesRapportVO);
+            return rapportSessionFacade.rapportSocietesInactives(societesInactivesRapportVO,connection);
         } catch (BusinessRuleException e) {
             throw handleAccesBusinessRuleException(e);
         }
     }
 
     /**
-     * Rapport sur les enquêtes en retard (CDX_0247)
+     * Rapport sur les enquï¿½tes en retard (CDX_0247)
      *
      * @param subject Le sujet qui recherche un dossier
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return La liste des accès.
+     * @return La liste des accï¿½s.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public Collection rapportEnqueteRetard(RapportVO rapportVO) throws BusinessException,
                         BusinessResourceException {
@@ -247,15 +246,15 @@ public class RapportBusinessDelegate extends BusinessDelegate {
     }
 
     /**
-     * Rapport sur les enquêtes qui ont été traitées en retard (CDX_0248)
+     * Rapport sur les enquï¿½tes qui ont ï¿½tï¿½ traitï¿½es en retard (CDX_0248)
      *
      * @param subject Le sujet qui recherche un dossier
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return La liste des accès.
+     * @return La liste des accï¿½s.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public Collection rapportEnqueteTraitementRetard(RapportVO rapportVO) throws BusinessException,
                         BusinessResourceException {
@@ -270,37 +269,37 @@ public class RapportBusinessDelegate extends BusinessDelegate {
      * Rapport sur les dossiers de vigilance
      *
      * @param subject Le sujet qui recherche un dossier
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return La liste des accès.
+     * @return La liste des accï¿½s.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
-    public ResultSet rapportProcedureVigilance(EntiteRapportVO entiteRapportVO, String procedure) throws BusinessException,
+    public ResultSet rapportProcedureVigilance(EntiteRapportVO entiteRapportVO, String procedure,Connection connection) throws BusinessException,
                         BusinessResourceException {
         try {
-            return rapportSessionFacade.rapportProcedureVigilance(entiteRapportVO, procedure);
+            return rapportSessionFacade.rapportProcedureVigilance(entiteRapportVO, procedure,connection);
         } catch (BusinessRuleException e) {
             throw handleAccesBusinessRuleException(e);
         }
     }
 
     /**
-     * Rapport sur les sévérités
+     * Rapport sur les sï¿½vï¿½ritï¿½s
      *
      * @param subject Le sujet qui recherche un dossier
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return La liste des accès.
+     * @return La liste des accï¿½s.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
-    public ResultSet rapportSeverite(SeveriteRapportVO rapportVO, String procedure) throws BusinessException,
+    public ResultSet rapportSeverite(SeveriteRapportVO rapportVO, String procedure,Connection connection) throws BusinessException,
                         BusinessResourceException {
         try {
-            return rapportSessionFacade.rapportSeverite(rapportVO, procedure);
+            return rapportSessionFacade.rapportSeverite(rapportVO, procedure,connection);
         } catch (BusinessRuleException e) {
             throw handleAccesBusinessRuleException(e);
         }
@@ -310,57 +309,57 @@ public class RapportBusinessDelegate extends BusinessDelegate {
      * Rapport sur les statuts des dossiers
      *
      * @param subject Le sujet qui recherche un dossier
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return La liste des accès.
+     * @return La liste des accï¿½s.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
-    public ResultSet statutDossiers(StatutDossierRapportVO_CDX_0055 statutDossierRapportVO_CDX_0055) throws BusinessException,
+    public ResultSet statutDossiers(StatutDossierRapportVO_CDX_0055 statutDossierRapportVO_CDX_0055,Connection connection) throws BusinessException,
                         BusinessResourceException {
         try {
-            return rapportSessionFacade.statutDossiers(statutDossierRapportVO_CDX_0055);
+            return rapportSessionFacade.statutDossiers(statutDossierRapportVO_CDX_0055,connection);
         } catch (BusinessRuleException e) {
             throw handleAccesBusinessRuleException(e);
         }
     }
 
     /**
-     * Rapport statistique sur le temps consacré
+     * Rapport statistique sur le temps consacrï¿½
      *
      * @param subject Le sujet qui recherche un dossier
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return La liste des accès.
+     * @return La liste des accï¿½s.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
-    public ResultSet tempsConsacre(StatistiqueDossierRapportVO statistiqueDossierRapportVO) throws BusinessException,
+    public ResultSet tempsConsacre(StatistiqueDossierRapportVO statistiqueDossierRapportVO,Connection connection) throws BusinessException,
                         BusinessResourceException {
         try {
-            return rapportSessionFacade.tempsConsacre(statistiqueDossierRapportVO);
+            return rapportSessionFacade.tempsConsacre(statistiqueDossierRapportVO,connection);
         } catch (BusinessRuleException e) {
             throw handleAccesBusinessRuleException(e);
         }
     }
    
     /**
-     * Rapport sur les enquêtes de Loto-Québec sur les personnes au registre (PAR).
+     * Rapport sur les enquï¿½tes de Loto-Quï¿½bec sur les personnes au registre (PAR).
      *
      * @param subject Le sujet qui recherche un dossier
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return La liste des accès.
+     * @return La liste des accï¿½s.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
-    public ResultSet rapportEnqueteReclamation(String anneeMois) throws BusinessException,
+    public ResultSet rapportEnqueteReclamation(String anneeMois,Connection connection) throws BusinessException,
                         BusinessResourceException {
         try {
-            return rapportSessionFacade.rapportEnqueteReclamation(anneeMois);
+            return rapportSessionFacade.rapportEnqueteReclamation(anneeMois,connection);
         } catch (BusinessRuleException e) {
             throw handleAccesBusinessRuleException(e);
         }
@@ -370,37 +369,37 @@ public class RapportBusinessDelegate extends BusinessDelegate {
      * Rapport sur les incidents de la DCSI.
      *
      * @param subject Le sujet qui recherche un dossier
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return La liste des accès.
+     * @return La liste des accï¿½s.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
-    public ResultSet rapportIncidentsDCSI(String annee) throws BusinessException,
+    public ResultSet rapportIncidentsDCSI(String annee,Connection connection) throws BusinessException,
                         BusinessResourceException {
         try {
-            return rapportSessionFacade.rapportIncidentsDCSI(annee);
+            return rapportSessionFacade.rapportIncidentsDCSI(annee,connection);
         } catch (BusinessRuleException e) {
             throw handleAccesBusinessRuleException(e);
         }
     }
 
     /**
-     * Rapport pour produire les listes de dossiers partagés, par intervenant ou par responsable.
+     * Rapport pour produire les listes de dossiers partagï¿½s, par intervenant ou par responsable.
      *
      * @param subject Le sujet qui recherche un dossier
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return La liste des accès.
+     * @return La liste des accï¿½s.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
-    public ResultSet listesPartage(String procedure) throws BusinessException,
+    public ResultSet listesPartage(String procedure,Connection connection) throws BusinessException,
                         BusinessResourceException {
         try {
-            return rapportSessionFacade.listesPartage(procedure);
+            return rapportSessionFacade.listesPartage(procedure,connection);
         } catch (BusinessRuleException e) {
             throw handleAccesBusinessRuleException(e);
         }
@@ -410,276 +409,276 @@ public class RapportBusinessDelegate extends BusinessDelegate {
      * Rapport pour produire les listes de dossiers actifs par intervenant.
      *
      * @param subject Le sujet qui recherche un dossier
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return La liste des accès.
+     * @return La liste des accï¿½s.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
-    public ResultSet listesDossiersActifs(ActifIntervenantDossierRapportVO_CDX_0102 rapportDossierVO) throws BusinessException,
+    public ResultSet listesDossiersActifs(ActifIntervenantDossierRapportVO_CDX_0102 rapportDossierVO,Connection connection) throws BusinessException,
                         BusinessResourceException {
         try {
-            return rapportSessionFacade.listesDossiersActifs(rapportDossierVO);
+            return rapportSessionFacade.listesDossiersActifs(rapportDossierVO,connection);
         } catch (BusinessRuleException e) {
             throw handleAccesBusinessRuleException(e);
         }
     }
 
     /**
-     * Rapport pour produire les rapports sur les accès.
+     * Rapport pour produire les rapports sur les accï¿½s.
      *
      * @param subject Le sujet qui recherche un dossier
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return La liste des accès.
+     * @return La liste des accï¿½s.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
-    public ResultSet auditAcces(AccesRapportVO rapportDossierVO) throws BusinessException,
+    public ResultSet auditAcces(AccesRapportVO rapportDossierVO,Connection connection) throws BusinessException,
                         BusinessResourceException {
         try {
-            return rapportSessionFacade.auditAcces(rapportDossierVO);
+            return rapportSessionFacade.auditAcces(rapportDossierVO,connection);
         } catch (BusinessRuleException e) {
             throw handleAccesBusinessRuleException(e);
         }
     }
 
     /**
-     * Rapport pour produire les rapports sur les accès aux sujets.
+     * Rapport pour produire les rapports sur les accï¿½s aux sujets.
      *
      * @param subject Le sujet qui recherche un dossier
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return La liste des accès.
+     * @return La liste des accï¿½s.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
-    public ResultSet auditAccesSujets(AccesRapportVO rapportDossierVO) throws BusinessException,
+    public ResultSet auditAccesSujets(AccesRapportVO rapportDossierVO,Connection connection) throws BusinessException,
                         BusinessResourceException {
         try {
-            return rapportSessionFacade.auditAccesSujets(rapportDossierVO);
+            return rapportSessionFacade.auditAccesSujets(rapportDossierVO,connection);
         } catch (BusinessRuleException e) {
             throw handleAccesBusinessRuleException(e);
         }
     }
 
     /**
-     * Rapport pour produire les rapports sur l'analyse des accès aux dossiers (CDX_0072).
+     * Rapport pour produire les rapports sur l'analyse des accï¿½s aux dossiers (CDX_0072).
      *
      * @param subject Le sujet qui recherche un dossier
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return La liste des accès.
+     * @return La liste des accï¿½s.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
-    public ResultSet auditAnalyseAccesDossiers(AccesRapportVO rapportDossierVO) throws BusinessException,
+    public ResultSet auditAnalyseAccesDossiers(AccesRapportVO rapportDossierVO,Connection connection) throws BusinessException,
                         BusinessResourceException {
         try {
-            return rapportSessionFacade.auditAnalyseAccesDossiers(rapportDossierVO);
+            return rapportSessionFacade.auditAnalyseAccesDossiers(rapportDossierVO,connection);
         } catch (BusinessRuleException e) {
             throw handleAccesBusinessRuleException(e);
         }
     }
 
     /**
-     * Rapport pour produire les rapports sur les accès aux sujets par intervenant.
+     * Rapport pour produire les rapports sur les accï¿½s aux sujets par intervenant.
      *
      * @param subject Le sujet qui recherche un dossier
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return La liste des accès.
+     * @return La liste des accï¿½s.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
-    public ResultSet auditAccesSujetsIntervenant(AccesRapportVO rapportDossierVO) throws BusinessException,
+    public ResultSet auditAccesSujetsIntervenant(AccesRapportVO rapportDossierVO,Connection connection) throws BusinessException,
                         BusinessResourceException {
         try {
-            return rapportSessionFacade.auditAccesSujetsIntervenant(rapportDossierVO);
+            return rapportSessionFacade.auditAccesSujetsIntervenant(rapportDossierVO,connection);
         } catch (BusinessRuleException e) {
             throw handleAccesBusinessRuleException(e);
         }
     }
 
     /**
-     * Rapport pour produire les rapports sur les accès des intervenants.
+     * Rapport pour produire les rapports sur les accï¿½s des intervenants.
      *
      * @param subject Le sujet qui recherche un dossier
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return La liste des accès.
+     * @return La liste des accï¿½s.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
-    public ResultSet auditAccesIntervenant(AccesRapportVO rapportDossierVO) throws BusinessException,
+    public ResultSet auditAccesIntervenant(AccesRapportVO rapportDossierVO,Connection connection) throws BusinessException,
                         BusinessResourceException {
         try {
-            return rapportSessionFacade.auditAccesIntervenant(rapportDossierVO);
+            return rapportSessionFacade.auditAccesIntervenant(rapportDossierVO,connection);
         } catch (BusinessRuleException e) {
             throw handleAccesBusinessRuleException(e);
         }
     }
 
     /**
-     * Rapport pour produire les rapports détaillés sur les accès des intervenants.
+     * Rapport pour produire les rapports dï¿½taillï¿½s sur les accï¿½s des intervenants.
      *
      * @param subject Le sujet qui recherche un dossier
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return La liste des accès.
+     * @return La liste des accï¿½s.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
-    public ResultSet auditAccesDetailIntervenant(AccesRapportVO rapportDossierVO) throws BusinessException,
+    public ResultSet auditAccesDetailIntervenant(AccesRapportVO rapportDossierVO,Connection connection) throws BusinessException,
                         BusinessResourceException {
         try {
-            return rapportSessionFacade.auditAccesDetailIntervenant(rapportDossierVO);
+            return rapportSessionFacade.auditAccesDetailIntervenant(rapportDossierVO,connection);
         } catch (BusinessRuleException e) {
             throw handleAccesBusinessRuleException(e);
         }
     }
 
     /**
-     * Rapport pour produire les rapports sur les accès des superutilisateurs.
+     * Rapport pour produire les rapports sur les accï¿½s des superutilisateurs.
      *
      * @param subject Le sujet qui recherche un dossier
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return La liste des accès.
+     * @return La liste des accï¿½s.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
-    public ResultSet auditAccesSuperutilisateurs(AccesRapportVO rapportDossierVO) throws BusinessException,
+    public ResultSet auditAccesSuperutilisateurs(AccesRapportVO rapportDossierVO,Connection connection) throws BusinessException,
                         BusinessResourceException {
         try {
-            return rapportSessionFacade.auditAccesSuperutilisateurs(rapportDossierVO);
+            return rapportSessionFacade.auditAccesSuperutilisateurs(rapportDossierVO,connection);
         } catch (BusinessRuleException e) {
             throw handleAccesBusinessRuleException(e);
         }
     }
 
     /**
-     * Rapport pour produire les rapports sur les accès des sujets.
+     * Rapport pour produire les rapports sur les accï¿½s des sujets.
      *
      * @param subject Le sujet qui recherche un dossier
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return La liste des accès.
+     * @return La liste des accï¿½s.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
-    public ResultSet auditAccesEmploye(AccesRapportVO rapportDossierVO) throws BusinessException,
+    public ResultSet auditAccesEmploye(AccesRapportVO rapportDossierVO,Connection connection) throws BusinessException,
                         BusinessResourceException {
         try {
-            return rapportSessionFacade.auditAccesEmploye(rapportDossierVO);
+            return rapportSessionFacade.auditAccesEmploye(rapportDossierVO,connection);
         } catch (BusinessRuleException e) {
             throw handleAccesBusinessRuleException(e);
         }
     }
     
     /**
-     * Rapport pour produire les rapports sur les accès des sujets.
+     * Rapport pour produire les rapports sur les accï¿½s des sujets.
      *
      * @param subject Le sujet qui recherche un dossier
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return La liste des accès.
+     * @return La liste des accï¿½s.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
-    public ResultSet auditAccesFournisseur(AccesRapportVO rapportDossierVO) throws BusinessException,
+    public ResultSet auditAccesFournisseur(AccesRapportVO rapportDossierVO,Connection connection) throws BusinessException,
                         BusinessResourceException {
         try {
-            return rapportSessionFacade.auditAccesFournisseur(rapportDossierVO);
+            return rapportSessionFacade.auditAccesFournisseur(rapportDossierVO,connection);
         } catch (BusinessRuleException e) {
             throw handleAccesBusinessRuleException(e);
         }
     }
     /**
-     * Rapport pour produire les rapports sur les accès des narrations.
+     * Rapport pour produire les rapports sur les accï¿½s des narrations.
      *
      * @param subject Le sujet qui recherche un dossier
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return La liste des accès.
+     * @return La liste des accï¿½s.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
-    public ResultSet auditAccesNarration(AccesRapportVO rapportDossierVO) throws BusinessException,
+    public ResultSet auditAccesNarration(AccesRapportVO rapportDossierVO,Connection connection) throws BusinessException,
                         BusinessResourceException {
         try {
-            return rapportSessionFacade.auditAccesNarration(rapportDossierVO);
+            return rapportSessionFacade.auditAccesNarration(rapportDossierVO,connection);
         } catch (BusinessRuleException e) {
             throw handleAccesBusinessRuleException(e);
         }
     }
 
     /**
-     * Rapport pour produire les rapports sur les accès des nouveaux intervenants.
+     * Rapport pour produire les rapports sur les accï¿½s des nouveaux intervenants.
      *
      * @param subject Le sujet qui recherche un dossier
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return La liste des accès.
+     * @return La liste des accï¿½s.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
-    public ResultSet auditAccesNouveauxIntervenants(AccesRapportVO rapportDossierVO) throws BusinessException,
+    public ResultSet auditAccesNouveauxIntervenants(AccesRapportVO rapportDossierVO,Connection connection) throws BusinessException,
                         BusinessResourceException {
         try {
-            return rapportSessionFacade.auditAccesNouveauxIntervenants(rapportDossierVO);
+            return rapportSessionFacade.auditAccesNouveauxIntervenants(rapportDossierVO,connection);
         } catch (BusinessRuleException e) {
             throw handleAccesBusinessRuleException(e);
         }
     }
     
     /**
-     * Rapport pour produire les listes de dossiers actifs par enquêteur de Loto-Québec.
+     * Rapport pour produire les listes de dossiers actifs par enquï¿½teur de Loto-Quï¿½bec.
      *
      * @param subject Le sujet qui recherche un dossier
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return La liste des accès.
+     * @return La liste des accï¿½s.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
-    public ResultSet listesDossiersActifsEnqueteurLQ() throws BusinessException,
+    public ResultSet listesDossiersActifsEnqueteurLQ(Connection connection) throws BusinessException,
                         BusinessResourceException {
         try {
-            return rapportSessionFacade.listesDossiersActifsEnqueteurLQ();
+            return rapportSessionFacade.listesDossiersActifsEnqueteurLQ(connection);
         } catch (BusinessRuleException e) {
             throw handleAccesBusinessRuleException(e);
         }
     }
 
     /**
-     * Impression des fiches (sujet, société et dossier)
+     * Impression des fiches (sujet, sociï¿½tï¿½ et dossier)
      *
      * @param subject Le sujet qui recherche un dossier
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return La liste des accès.
+     * @return La liste des accï¿½s.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
-    public ResultSet rapportImpressionFiche(long cle, long site, String procedure) throws BusinessException,
+    public ResultSet rapportImpressionFiche(long cle, long site, String procedure,Connection connection) throws BusinessException,
                         BusinessResourceException {
         try {
-            return rapportSessionFacade.rapportImpressionFiche(cle, site, procedure);
+            return rapportSessionFacade.rapportImpressionFiche(cle, site, procedure,connection);
         } catch (BusinessRuleException e) {
             throw handleAccesBusinessRuleException(e);
         }
@@ -689,17 +688,17 @@ public class RapportBusinessDelegate extends BusinessDelegate {
      * Impression du rapport sur les suivis par intervenant et par site
      *
      * @param subject Le sujet qui recherche un dossier
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return La liste des accès.
+     * @return La liste des accï¿½s.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
-    public ResultSet rapportSuivis(SiteIntervenantRapportVO rapportVO, String procedure) throws BusinessException,
+    public ResultSet rapportSuivis(SiteIntervenantRapportVO rapportVO, String procedure,Connection connection) throws BusinessException,
                         BusinessResourceException {
         try {
-            return rapportSessionFacade.rapportSuivis(rapportVO, procedure);
+            return rapportSessionFacade.rapportSuivis(rapportVO, procedure,connection);
         } catch (BusinessRuleException e) {
             throw handleAccesBusinessRuleException(e);
         }
@@ -709,17 +708,17 @@ public class RapportBusinessDelegate extends BusinessDelegate {
      * Impression du rapport sur les suivis CDX_0098
      *
      * @param subject Le sujet qui recherche un dossier
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return La liste des accès.
+     * @return La liste des accï¿½s.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
-    public Collection rapportSuivisEnquetes(SiteIntervenantRapportVO rapportVO) throws BusinessException,
+    public Collection rapportSuivisEnquetes(SiteIntervenantRapportVO rapportVO,Connection connection) throws BusinessException,
                         BusinessResourceException {
         try {
-            return rapportSessionFacade.rapportSuivisEnquetes(rapportVO);
+            return rapportSessionFacade.rapportSuivisEnquetes(rapportVO,connection);
         } catch (BusinessRuleException e) {
             throw handleAccesBusinessRuleException(e);
         }
@@ -728,17 +727,17 @@ public class RapportBusinessDelegate extends BusinessDelegate {
      /* Impression du rapport sur les suivis 30 jours
      *
      * @param subject Le sujet qui recherche un dossier
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return La liste des accès.
+     * @return La liste des accï¿½s.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
-    public ResultSet rapportSuivisIntervenant(SiteIntervenantRapportVO rapportVO, String procedure) throws BusinessException,
+    public ResultSet rapportSuivisIntervenant(SiteIntervenantRapportVO rapportVO, String procedure,Connection connection) throws BusinessException,
                         BusinessResourceException {
         try {
-            return rapportSessionFacade.rapportSuivisIntervenant(rapportVO, procedure);
+            return rapportSessionFacade.rapportSuivisIntervenant(rapportVO, procedure,connection);
         } catch (BusinessRuleException e) {
             throw handleAccesBusinessRuleException(e);
         }
@@ -748,12 +747,12 @@ public class RapportBusinessDelegate extends BusinessDelegate {
      * Recherche de dossiers pour les rapports cumulatif (CDX_0146) et hebdomadaire (CDX_0147)
      *
      * @param subject Le sujet qui effectue la recherche
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return Les dosiers recherchés
+     * @return Les dosiers recherchï¿½s
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public RapportDossier produireListeTypeCategorie(CumulatifDossierRapportVO cumulatifDossierRapportVO) throws BusinessException,
                                     BusinessResourceException {
@@ -768,12 +767,12 @@ public class RapportBusinessDelegate extends BusinessDelegate {
      * Recherche de dossiers pour les rapports cumulatif (CDX_0143) et hebdomadaire (CDX_0144) pour Espacejeux
      *
      * @param subject Le sujet qui effectue la recherche
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return Les dosiers recherchés
+     * @return Les dosiers recherchï¿½s
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public RapportDossier produireListeTypeCategorieEspacejeux(RapportVO rapportVO) throws BusinessException,
                                     BusinessResourceException {
@@ -804,7 +803,7 @@ public class RapportBusinessDelegate extends BusinessDelegate {
 		}
     }
 
-    //Calcule le nombre de dossiers créés depuis le 1er janvier
+    //Calcule le nombre de dossiers crï¿½ï¿½s depuis le 1er janvier
     public long produireDossierCumul(RapportDossier rapportDossier, CumulatifDossierRapportVO cumulatifDossierRapportVO) throws BusinessException,
             BusinessResourceException {
     	try {
@@ -823,11 +822,11 @@ public class RapportBusinessDelegate extends BusinessDelegate {
     	}
     }    
 
-    //Pour la production manuelle du rapport sur la reconnaissance de plaques (pour le système Autovue)
-    public ResultSet produireRapportReconnaissance(String titre, StatistiqueDossierRapportVO reconnaissancePlaqueVO ) throws BusinessException,
+    //Pour la production manuelle du rapport sur la reconnaissance de plaques (pour le systï¿½me Autovue)
+    public ResultSet produireRapportReconnaissance(String titre, StatistiqueDossierRapportVO reconnaissancePlaqueVO,Connection connection) throws BusinessException,
             BusinessResourceException {
     	try {
-			return rapportSessionFacade.produireRapportReconnaissance(titre, reconnaissancePlaqueVO);
+			return rapportSessionFacade.produireRapportReconnaissance(titre, reconnaissancePlaqueVO,connection);
 		} catch (BusinessRuleException e) {
 			throw handleAccesBusinessRuleException(e);
 		}
@@ -835,16 +834,16 @@ public class RapportBusinessDelegate extends BusinessDelegate {
     
     /**
      * Construit une BusinessException contenant les messages d'erreurs qui
-     * doivent être présenté à un utilisateur. Cette méthode fait la mise en
-     * correspondance entre les codes de règles d'affaires reçus d'une
-     * BusinessRuleException et les messsages qui doivent être affiché
-     * à un utilisateur.
+     * doivent ï¿½tre prï¿½sentï¿½ ï¿½ un utilisateur. Cette mï¿½thode fait la mise en
+     * correspondance entre les codes de rï¿½gles d'affaires reï¿½us d'une
+     * BusinessRuleException et les messsages qui doivent ï¿½tre affichï¿½
+     * ï¿½ un utilisateur.
      *
      * @param bre BusinessRuleException BusinessRuleException contenant
-     *            les codes de règles d'affaires
+     *            les codes de rï¿½gles d'affaires
      *
      * @return BusinessException BusinessException contenant les messages
-     * d'erreurs qui doivent être présenté à un utilisateur.
+     * d'erreurs qui doivent ï¿½tre prï¿½sentï¿½ ï¿½ un utilisateur.
      */
     private BusinessException handleAccesBusinessRuleException(BusinessRuleException bre)
             throws BusinessException {
@@ -860,97 +859,97 @@ public class RapportBusinessDelegate extends BusinessDelegate {
      * Rapport sur les contrats d'autoexclusion actifs d'Espacejeux (CDX_0260)
      *
      * @param subject Le sujet qui recherche un dossier
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return La liste des accès.
+     * @return La liste des accï¿½s.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
-    public ResultSet rapportEspaceJeuxAutoexclusionActif(EspaceJeuxAutoexclusionActifRapportVO_CDX_0260 espaceJeuxAutoexclusionActifRapportVO_CDX_0260) throws BusinessException,
+    public ResultSet rapportEspaceJeuxAutoexclusionActif(EspaceJeuxAutoexclusionActifRapportVO_CDX_0260 espaceJeuxAutoexclusionActifRapportVO_CDX_0260,Connection connection) throws BusinessException,
                         BusinessResourceException {
         try {
-            return rapportSessionFacade.rapportEspaceJeuxAutoexclusionActif(espaceJeuxAutoexclusionActifRapportVO_CDX_0260);
+            return rapportSessionFacade.rapportEspaceJeuxAutoexclusionActif(espaceJeuxAutoexclusionActifRapportVO_CDX_0260,connection);
         } catch (BusinessRuleException e) {
             throw handleAccesBusinessRuleException(e);
         }
     }
 
     /**
-     * Rapport sur les dossiers de fraude fondé d'Espacejeux (CDX_0261)
+     * Rapport sur les dossiers de fraude fondï¿½ d'Espacejeux (CDX_0261)
      *
      * @param subject Le sujet qui recherche un dossier
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return La liste des accès.
+     * @return La liste des accï¿½s.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
-    public ResultSet rapportEspaceJeuxFraudeFonde(EspaceJeuxFraudeFondeRapportVO_CDX_0261 espaceJeuxFraudeFondeRapportVO_CDX_0261) throws BusinessException,
+    public ResultSet rapportEspaceJeuxFraudeFonde(EspaceJeuxFraudeFondeRapportVO_CDX_0261 espaceJeuxFraudeFondeRapportVO_CDX_0261,Connection connection) throws BusinessException,
                         BusinessResourceException {
         try {
-            return rapportSessionFacade.rapportEspaceJeuxFraudeFonde(espaceJeuxFraudeFondeRapportVO_CDX_0261);
+            return rapportSessionFacade.rapportEspaceJeuxFraudeFonde(espaceJeuxFraudeFondeRapportVO_CDX_0261,connection);
         } catch (BusinessRuleException e) {
             throw handleAccesBusinessRuleException(e);
         }
     }
 
     /**
-     * Rapport sur les dossiers de tricherie fondé d'Espacejeux (CDX_0262)
+     * Rapport sur les dossiers de tricherie fondï¿½ d'Espacejeux (CDX_0262)
      *
      * @param subject Le sujet qui recherche un dossier
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return La liste des accès.
+     * @return La liste des accï¿½s.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
-    public ResultSet rapportEspaceJeuxTricherieFonde(EspaceJeuxTricherieFondeRapportVO_CDX_0262 espaceJeuxTricherieFondeRapportVO_CDX_0262) throws BusinessException,
+    public ResultSet rapportEspaceJeuxTricherieFonde(EspaceJeuxTricherieFondeRapportVO_CDX_0262 espaceJeuxTricherieFondeRapportVO_CDX_0262,Connection connection) throws BusinessException,
                         BusinessResourceException {
         try {
-            return rapportSessionFacade.rapportEspaceJeuxTricherieFonde(espaceJeuxTricherieFondeRapportVO_CDX_0262);
+            return rapportSessionFacade.rapportEspaceJeuxTricherieFonde(espaceJeuxTricherieFondeRapportVO_CDX_0262,connection);
         } catch (BusinessRuleException e) {
             throw handleAccesBusinessRuleException(e);
         }
     }
 
     /**
-     * Rapport sur les statistiques par endroits regroupés (CDX_0149)
+     * Rapport sur les statistiques par endroits regroupï¿½s (CDX_0149)
      *
      * @param subject Le sujet qui recherche un dossier
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
      * @return La liste des totaux.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
-    public ResultSet rapportEndroitsRegroupes(StatistiqueDossierRapportVO statistiqueDossierRapportVO) throws BusinessException,
+    public ResultSet rapportEndroitsRegroupes(StatistiqueDossierRapportVO statistiqueDossierRapportVO,Connection connection) throws BusinessException,
                         BusinessResourceException {
         try {
-            return rapportSessionFacade.rapportEndroitsRegroupes(statistiqueDossierRapportVO);
+            return rapportSessionFacade.rapportEndroitsRegroupes(statistiqueDossierRapportVO,connection);
         } catch (BusinessRuleException e) {
             throw handleAccesBusinessRuleException(e);
         }
     }
 
     /**
-     * Tableau sur les statistiques par endroits regroupés (CDX_0280)
+     * Tableau sur les statistiques par endroits regroupï¿½s (CDX_0280)
      *
      * @param subject Le sujet qui recherche un dossier
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
      * @return La liste des totaux.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
-    public ResultSet rapportTableauEndroitsRegroupes(StatistiqueDossierRapportVO statistiqueDossierRapportVO) throws BusinessException,
+    public ResultSet rapportTableauEndroitsRegroupes(StatistiqueDossierRapportVO statistiqueDossierRapportVO,Connection connection) throws BusinessException,
                         BusinessResourceException {
         try {
-            return rapportSessionFacade.rapportTableauEndroitsRegroupes(statistiqueDossierRapportVO);
+            return rapportSessionFacade.rapportTableauEndroitsRegroupes(statistiqueDossierRapportVO,connection);
         } catch (BusinessRuleException e) {
             throw handleAccesBusinessRuleException(e);
         }

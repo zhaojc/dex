@@ -32,7 +32,7 @@ public class ActifEnqueteurLQDossierGenerateurRapport_CDX_0103 extends GenererRa
 	@Override
 	public JRDataSource construireDataSource(CardexAuthenticationSubject subject, RapportVO rapportVO, Connection connection) throws BusinessResourceException, BusinessException {
 		RapportBusinessDelegate delegate = new RapportBusinessDelegate();
-		ResultSet resultSet = delegate.listesDossiersActifsEnqueteurLQ();
+		ResultSet resultSet = delegate.listesDossiersActifsEnqueteurLQ(connection);
        	return new JRResultSetDataSource(resultSet);
 	}
 

@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sous-rapport_audit_suivis" pageWidth="612" pageHeight="792" columnWidth="575" leftMargin="0" rightMargin="20" topMargin="7" bottomMargin="0">
+	<parameter name="CLE" class="java.lang.String"/>
+	<parameter name="SITE" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select L_SV_CLE,
+             P.L_SI_CLE,
+             L_SV_REFERENCE,
+             L_SV_REF_SITE,
+             C_SV_REF_GENRE,
+             V_SV_SUIVI,
+             I_TC_CLE,
+             P.I_ST_CLE,
+             D_SV_DATE_PREVUE,
+             D_SV_DATE_COMPLETEE,
+             L_SV_PO_ORIGINE,
+             TRSC2.V_TR_DESCRIPTION AS "SECTEUR_DEMANDEUR",
+             V_SV_DEMANDEUR,
+             V_SV_INTERVENANT,
+             L_SV_PO_ASSIGNE,
+             TRSCi.V_TR_DESCRIPTION AS "SECTEUR_ASSIGNE",
+             V_SV_CREE_PAR,
+             I_CC_SUIVI,
+             I_NH_SUIVI,
+             I_CC_CREATEUR,
+             I_NH_CREATEUR,
+             D_SV_DATE_CREATION,
+             V_SV_MODIFIE_PAR,
+             D_SV_MODIFICATION,
+             V_SV_APPROBATEUR,
+             I_CC_APPROBATEUR,
+             I_NH_APPROBATEUR,
+             D_SV_APPROBATION,
+             V_SV_REFERENCE_1,
+             V_SV_REFERENCE_2,
+             V_SV_REFERENCE_3,
+             SI.V_SI_SITE,
+             I.V_IN_NOM || ', ' || I.V_IN_PRENOM || ' (' || TRSCI.V_TR_DESCRIPTION || ')'
+		           AS "intervenantDescription",
+             SI.V_SI_SITE,
+             I2.V_IN_NOM || ', ' || I2.V_IN_PRENOM || ' (' || I2.NAME || ', ' ||
+             TRSC2.V_TR_DESCRIPTION || ')' AS "DEMANDEUR",
+             I3.V_IN_NOM || ', ' || I3.V_IN_PRENOM || ' (' || I3.NAME || ', ' ||
+             TRSC3.V_TR_DESCRIPTION || ')' AS "APPROBATEUR",
+             I4.V_IN_NOM || ', ' || I4.V_IN_PRENOM || ' (' || I4.NAME || ', ' ||
+             TRSC4.V_TR_DESCRIPTION || ')' AS "ASSIGNE",
+             TRCC.V_TR_DESCRIPTION AS "CONFIDENTIALITE",
+             TRST.V_TR_DESCRIPTION AS "STATUT_SUIVI",
+             TRTC.V_TR_DESCRIPTION AS "TYPE_SUIVI"
+FROM SV_SUIVI P,             
+             SI_SITE        SI,
+             TR_TRADUCTION  TRCC,
+             TR_TRADUCTION  TRSCI,
+             TR_TRADUCTION   TRSC2,
+             IN_INTERVENANT  I2,
+             TR_TRADUCTION   TRSC3,
+             IN_INTERVENANT  I3,
+             TR_TRADUCTION   TRSC4,
+             IN_INTERVENANT  I4,
+             IN_INTERVENANT  I,
+             TR_TRADUCTION   TRST,
+             TR_TRADUCTION   TRTC
+       WHERE 
+	       P.L_SV_CLE = $P{CLE}
+         AND P.L_SI_CLE = $P{SITE}
+         AND P.L_SI_CLE = SI.L_SI_CLE
+         AND P.I_CC_SUIVI = TRCC.L_TR_CLE(+) AND TRCC.I_LA_CLE(+) = 1
+         AND P.V_SV_CREE_PAR = I.NAME
+         AND I.L_IN_SECTEUR = TRSCI.L_TR_CLE(+) AND TRSCI.I_LA_CLE(+) = 1
+         AND P.V_SV_DEMANDEUR = I2.NAME(+)
+         AND I2.L_IN_SECTEUR = TRSC2.L_TR_CLE(+)
+         AND TRSC2.I_LA_CLE(+) = 1
+         AND P.V_SV_APPROBATEUR = I3.NAME(+)
+         AND I3.L_IN_SECTEUR = TRSC3.L_TR_CLE(+)
+         AND TRSC3.I_LA_CLE(+) = 1
+         AND P.V_SV_INTERVENANT = I4.NAME(+)
+         AND I4.L_IN_SECTEUR = TRSC4.L_TR_CLE(+)
+         AND TRSC4.I_LA_CLE(+) = 1
+         AND P.I_ST_CLE = TRST.L_TR_CLE(+) AND TRST.I_LA_CLE(+) = 1
+         AND P.I_TC_CLE = TRTC.L_TR_CLE(+) AND TRTC.I_LA_CLE(+) = 1]]>
+	</queryString>
+	<field name="L_SV_CLE" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="L_SI_CLE" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="L_SV_REFERENCE" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="L_SV_REF_SITE" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="C_SV_REF_GENRE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="V_SV_SUIVI" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="I_TC_CLE" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="I_ST_CLE" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="D_SV_DATE_PREVUE" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="D_SV_DATE_COMPLETEE" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="L_SV_PO_ORIGINE" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="SECTEUR_DEMANDEUR" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="V_SV_DEMANDEUR" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="V_SV_INTERVENANT" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="L_SV_PO_ASSIGNE" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="SECTEUR_ASSIGNE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="V_SV_CREE_PAR" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="I_CC_SUIVI" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="I_NH_SUIVI" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="I_CC_CREATEUR" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="I_NH_CREATEUR" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="D_SV_DATE_CREATION" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="V_SV_MODIFIE_PAR" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="D_SV_MODIFICATION" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="V_SV_APPROBATEUR" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="I_CC_APPROBATEUR" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="I_NH_APPROBATEUR" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="D_SV_APPROBATION" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="V_SV_REFERENCE_1" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="V_SV_REFERENCE_2" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="V_SV_REFERENCE_3" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="V_SI_SITE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="intervenantDescription" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DEMANDEUR" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="APPROBATEUR" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ASSIGNE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CONFIDENTIALITE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="STATUT_SUIVI" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="TYPE_SUIVI" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="28">
+			<staticText>
+				<reportElement x="4" y="3" width="212" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true" isItalic="true" pdfFontName="Helvetica-BoldOblique"/>
+				</textElement>
+				<text><![CDATA[Enregistrement courant en date du :]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Transparent" x="216" y="3" width="361" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
+					<font fontName="SansSerif" size="12" isBold="true" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica-BoldOblique" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[new SimpleDateFormat("EEEEE dd MMMMM yyyy à HH:mm", java.util.Locale.FRENCH).format(new java.util.Date())]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="25" width="572" height="1"/>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="232" splitType="Stretch">
+			<staticText>
+				<reportElement positionType="Float" x="11" y="81" width="103" height="14"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Intervenant :]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="143" y="9" width="388" height="14"/>
+				<textElement markup="html">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{TYPE_SUIVI}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="143" y="38" width="388" height="14" isRemoveLineWhenBlank="true"/>
+				<box leftPadding="0"/>
+				<textElement markup="html">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{CONFIDENTIALITE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="11" y="24" width="103" height="14"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Statut :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="11" y="10" width="103" height="14"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Activité :]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="143" y="23" width="388" height="14"/>
+				<textElement markup="html">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{STATUT_SUIVI}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="143" y="151" width="388" height="15">
+					<printWhenExpression><![CDATA[new Boolean($F{V_SV_APPROBATEUR} != null)]]></printWhenExpression>
+				</reportElement>
+				<textElement markup="html">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{APPROBATEUR}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="11" y="152" width="103" height="14"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Approbateur :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="11" y="38" width="103" height="14"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Confidentialité :]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="143" y="80" width="388" height="15">
+					<printWhenExpression><![CDATA[new Boolean($F{V_SV_INTERVENANT} != null)]]></printWhenExpression>
+				</reportElement>
+				<textElement markup="html">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ASSIGNE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="11" y="52" width="103" height="14"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Site d'origine :]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="143" y="52" width="388" height="14"/>
+				<box leftPadding="0"/>
+				<textElement markup="html">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{V_SI_SITE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="11" y="166" width="103" height="14"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Date d'approbation :]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy à HH:mm:ss" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="143" y="166" width="388" height="14" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="html">
+					<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{D_SV_APPROBATION}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="11" y="137" width="103" height="14"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Demandeur :]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy à HH:mm:ss" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="143" y="109" width="388" height="14" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="html">
+					<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{D_SV_DATE_COMPLETEE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="11" y="109" width="103" height="14"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Date complétée :]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="143" y="137" width="388" height="15">
+					<printWhenExpression><![CDATA[new Boolean($F{V_SV_DEMANDEUR} != null)]]></printWhenExpression>
+				</reportElement>
+				<textElement markup="html">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{DEMANDEUR}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="11" y="95" width="103" height="14"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Date prévue :]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy à HH:mm:ss" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="143" y="95" width="388" height="14" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single" markup="html">
+					<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{D_SV_DATE_PREVUE}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="143" y="123" width="388" height="15"/>
+				<textElement markup="html">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{SECTEUR_DEMANDEUR}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="11" y="123" width="103" height="14"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Secteur demandeur :]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="14" y="194" width="549" height="22"/>
+				<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement markup="html"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{V_SV_SUIVI}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="11" y="180" width="103" height="14"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Suivi :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="67" width="103" height="14"/>
+				<textElement>
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Secteur assigné :]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="143" y="66" width="388" height="15"/>
+				<textElement markup="html">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{SECTEUR_ASSIGNE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

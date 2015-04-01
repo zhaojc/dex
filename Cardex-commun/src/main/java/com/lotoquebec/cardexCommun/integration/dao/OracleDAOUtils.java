@@ -1,21 +1,15 @@
 package com.lotoquebec.cardexCommun.integration.dao;
 
 import java.math.BigDecimal;
-import java.sql.Array;
 import java.sql.CallableStatement;
+import java.sql.Clob;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.sql.Types;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Locale;
 import java.util.Set;
-
-import javax.sql.rowset.serial.SerialArray;
-
-import oracle.sql.ARRAY;
 
 import com.lotoquebec.cardexCommun.GlobalConstants;
 import com.lotoquebec.cardexCommun.exception.DAOException;
@@ -24,18 +18,18 @@ import com.lotoquebec.cardexCommun.text.TimestampFormat;
 import com.lotoquebec.cardexCommun.util.StringUtils;
 
 /**
- * Offre tout les services d'utilités associés à la récupération de donnée d'une
- * base de donnée Oracle.
+ * Offre tout les services d'utilitï¿½s associï¿½s ï¿½ la rï¿½cupï¿½ration de donnï¿½e d'une
+ * base de donnï¿½e Oracle.
  *
  * @author $Author: mlibersan $
  * @version $Revision: 1.8 $, $Date: 2002/03/13 17:49:34 $
  */
 public class OracleDAOUtils {
     
-    private static final String CARACTERES_NON_NUMERIQUE = "/\\/-^¨:.,;=#+()$_&*!@%+ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzàÀâÂäÄéèÉÈëËîÎìÌïÏôÔöÖôÔòÒûùÛÙüÜçÇ";
+    private static final String CARACTERES_NON_NUMERIQUE = "/\\/-^ï¿½:.,;=#+()$_&*!@%+ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½";
 	private static BigDecimal zeroBD = new BigDecimal("0.00");
     /**
-     * Constructeur OracleDAOUtils par défaut.
+     * Constructeur OracleDAOUtils par dï¿½faut.
      */
     private OracleDAOUtils() {
     }
@@ -67,8 +61,8 @@ public class OracleDAOUtils {
     }
 
     /**
-    * Retourne une string sans les caractères numériques
-    * @param s (string à manipuler)
+    * Retourne une string sans les caractï¿½res numï¿½riques
+    * @param s (string ï¿½ manipuler)
     * @param parameterIndex
     * @throws SQLException
     */
@@ -138,7 +132,7 @@ public class OracleDAOUtils {
     }
     
     /**
-     * Test d'une valeur nulle dans un critère de recherche de dossier.
+     * Test d'une valeur nulle dans un critï¿½re de recherche de dossier.
      *
      * @param valeur
      * @return boolean
@@ -154,7 +148,7 @@ public class OracleDAOUtils {
     }
 
     /**
-     * Conversion d'un CLOB de la base de données en String.  Les champs de type
+     * Conversion d'un CLOB de la base de donnï¿½es en String.  Les champs de type
      * CLOB se retrouvent dans la table CO_COMMENTAIRE2.
      *
      * @param texteCLOB
@@ -162,7 +156,7 @@ public class OracleDAOUtils {
      * @throws SQLException 
      * @throws DAOException
      */
-    public static String CLOBToString(oracle.sql.CLOB texteCLOB) throws SQLException{
+    public static String CLOBToString(Clob texteCLOB) throws SQLException{
             int longueur = (int)texteCLOB.length();
             String texteConverti = texteCLOB.getSubString(1, longueur);
             return texteConverti;
@@ -245,7 +239,7 @@ public class OracleDAOUtils {
 	   }
 	}
 	
-	// C'est laid, mais c'est la seule façon de passer un array que j'ai trouvé
+	// C'est laid, mais c'est la seule faï¿½on de passer un array que j'ai trouvï¿½
 	public static void ajouterChampSQL(PreparerSQL preparerSQL, String champ, long[] valeurs){
 	    if (valeurs.length != 0){
 	    	preparerSQL.getSQL().append(" AND ");
@@ -300,14 +294,14 @@ public class OracleDAOUtils {
 	}
 
 	/**
-	    * Ajoute un champ dans un SQL qui sera comparé à une valeur formatée sans aucun caractère alphabétique
-	    * Les 4 premiers translate enlèvent les caractères espéciaux (espace, /, \ et '
-	    * Le dernier tranlate enlève les caractères indentifiés dans CARACTERES_NON_NUMERIQUE du champ de recherche.
-	    * En plus, la valeur persistée dans la BD sera aussi numérique (appel de retirerCaracteresNonNumeriques)
+	    * Ajoute un champ dans un SQL qui sera comparï¿½ ï¿½ une valeur formatï¿½e sans aucun caractï¿½re alphabï¿½tique
+	    * Les 4 premiers translate enlï¿½vent les caractï¿½res espï¿½ciaux (espace, /, \ et '
+	    * Le dernier tranlate enlï¿½ve les caractï¿½res indentifiï¿½s dans CARACTERES_NON_NUMERIQUE du champ de recherche.
+	    * En plus, la valeur persistï¿½e dans la BD sera aussi numï¿½rique (appel de retirerCaracteresNonNumeriques)
 	    * 
-	    * @param preparerSQL (PreparerSQL à manipuler)
-	    * @param champ (String qui représente la colonne de la BD)
-	    * @param valeur (String qui représente la valeur à formater)
+	    * @param preparerSQL (PreparerSQL ï¿½ manipuler)
+	    * @param champ (String qui reprï¿½sente la colonne de la BD)
+	    * @param valeur (String qui reprï¿½sente la valeur ï¿½ formater)
 	    */
 	public static void ajouterChampSQLConvertChaineAsChaineNumerique(PreparerSQL preparerSQL, String champ, String valeur){
 	    if (StringUtils.isNotEmpty(valeur)){

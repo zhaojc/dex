@@ -41,7 +41,7 @@ public class RegistreRFCMaitreDossierGenerateurRapport_CDX_0054 extends GenererR
 	@Override
 	public JRDataSource construireDataSource(CardexAuthenticationSubject subject, RapportVO rapportVO, Connection connection) throws BusinessResourceException, BusinessException {
 		RapportBusinessDelegate delegate = new RapportBusinessDelegate();
-       	ResultSet resultSet = delegate.rapportProcedure(rapportVO, "CARDEX_RAPPORT.SP_RAP_REGISTRE_RFC_MAITRE");
+       	ResultSet resultSet = delegate.rapportProcedure(rapportVO, "CARDEX_RAPPORT.SP_RAP_REGISTRE_RFC_MAITRE",connection);
        	return new JRResultSetDataSource(resultSet);
 	}
 

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sujet_photo" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<parameter name="SUJET_CLE" class="java.math.BigDecimal"/>
+	<parameter name="SUJET_SITE" class="java.math.BigDecimal"/>
+	<parameter name="CONFIDENTIALITE" class="java.lang.String"/>
+	<parameter name="UTILISATEUR" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT cardex_lien.F_LIRE_FICHIER(mm.l_em_cle || '.' || mm.v_mm_extension) AS "PHOTO",
+       sujet.v_su_nom
+  FROM su_sujet sujet, lmm_lien_multimedia lmm, mm_multimedia mm
+ WHERE sujet.l_su_cle = lmm.l_lmm_reference
+   AND sujet.l_si_cle = lmm.l_lmm_ref_site
+   AND lmm.c_lmm_ref_genre = 'SU'
+   AND lmm.l_mm_cle = mm.l_mm_cle
+   AND lmm.l_mm_ref_site = mm.l_si_cle
+   AND mm.b_mm_selectionner = 'yes'
+   AND mm.v_mm_extension in ('JPG', 'BMP', 'GIF', 'PNG')
+   AND sujet.l_su_cle = $P{SUJET_CLE}
+   AND sujet.l_si_cle = $P{SUJET_SITE}
+   AND ((NVL(lmm.I_CC_CLE, $P{CONFIDENTIALITE}) <= $P{CONFIDENTIALITE}) OR
+       (lmm.V_LMM_CREE_PAR = $P{UTILISATEUR}))]]>
+	</queryString>
+	<field name="PHOTO" class="java.io.InputStream">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="147" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="226" height="147"/>
+				<imageExpression class="java.io.InputStream"><![CDATA[$F{PHOTO}]]></imageExpression>
+			</image>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

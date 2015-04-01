@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rapport_coherence_donnees" columnCount="4" pageWidth="612" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="137" columnSpacing="8" leftMargin="20" rightMargin="20" topMargin="36" bottomMargin="36">
+	<parameter name="DATE_DEBUT" class="java.lang.String"/>
+	<parameter name="UTILISATEUR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["Confidentiel"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[      select 'Dossiers d''autoexclusion sans inscription' as "Type",
+             d.v_do_numero_dossier as "Description"
+        from do_dossier d
+       where d.i_ca_cle = 112
+         and d.i_cc_cle <> 14920
+         and not exists (select i.l_is_cle
+                from is_inscription i
+               where i.l_is_reference = d.l_do_cle
+                 and i.l_is_ref_site = d.l_si_cle)
+      union
+      select 'Dossiers d''autoexclusion sans sujet' as "Type",
+             d.v_do_numero_dossier as "Description"
+        from do_dossier d
+       where d.i_ca_cle = 112
+         and d.i_cc_cle <> 14920
+         and not exists (select l.l_do_cle
+                from ldd_lien_dossier l
+               where d.l_do_cle = l.l_do_cle
+                 and d.l_si_cle = l.l_do_site
+                 and l.c_do_genre = 'DO'
+                 and l.c_ldd_genre = 'SU')
+      union
+      select 'Dossiers d''autoexclusion sans date de fin' as "Type",
+             d.v_do_numero_dossier as "Description"
+        from do_dossier d
+       where d.i_ca_cle = 112
+         and d.i_cc_cle <> 14920
+         and d.d_do_date_fin is null
+      union
+      select 'Sujets orphelins' as "Type",
+             s.v_su_reference_3 as "Description"
+        from su_sujet s
+       where not exists
+       (select l.l_do_cle
+                from ldd_lien_dossier l
+               where ((s.l_su_cle = l.l_do_cle and s.l_si_cle = l.l_do_site and
+                     l.c_do_genre = 'SU') or
+                     (s.l_su_cle = l.l_ldd_dossier_associe and
+                     s.l_si_cle = l.l_ldd_site and l.c_ldd_genre = 'SU')))
+         and s.i_cc_cle <> 14920
+      union
+      select 'Sociétés orphelines' as "Type", so.v_so_nom as "Description"
+        from so_societe so
+       where not exists
+       (select l.l_do_cle
+                from ldd_lien_dossier l
+               where ((so.l_so_cle = l.l_do_cle and
+                     so.l_si_cle = l.l_do_site and l.c_do_genre = 'SO') or
+                     (so.l_so_cle = l.l_ldd_dossier_associe and
+                     so.l_si_cle = l.l_ldd_site and l.c_ldd_genre = 'SO')))
+         and so.l_si_cle <> 8 --(Loto-Québec)
+         and so.i_cc_cle <> 14920
+      union
+      select 'Véhicules orphelins' as "Type",
+             v.v_ve_immatriculation as "Description"
+        from ve_vehicule v
+       where not exists
+       (select l.l_do_cle
+                from ldd_lien_dossier l
+               where ((v.l_ve_cle = l.l_do_cle and v.l_si_cle = l.l_do_site and
+                     l.c_do_genre = 'VE') or
+                     (v.l_ve_cle = l.l_ldd_dossier_associe and
+                     v.l_si_cle = l.l_ldd_site and l.c_ldd_genre = 'VE')))
+         and v.i_cc_cle <> 14920
+      union
+      select 'Doublons de dossiers' as "Type",
+             d.v_do_numero_dossier as "Description"
+        from do_dossier d
+       where d.i_cc_cle <> 14920
+       group by d.v_do_numero_dossier
+      having count(d.v_do_numero_dossier) > 1
+      union
+      select 'Dossiers ambulance sans référence 3' as "Type",
+             vdo.v_do_numero_dossier as "Description"
+        from v_do_dossier_ca_ty vdo, co_commentaire2 c
+       where vdo.i_ty_cle = 194
+         and vdo.v_do_reference5 is null
+         and vdo.l_do_cle = c.l_co_reference
+         and vdo.l_si_cle = c.l_co_ref_site
+         and c.c_co_ref_genre = 'DO'
+         and contains(c.CLOB_CO_TEXTE_NORMAL, '$ambulance', 1) > 0
+         and vdo.i_cc_cle < 14920
+      union
+      select 'Dossiers d''enquête fondés sans narration' as "Type",
+             d.v_do_numero_dossier as "Description"
+        from v_do_dossier_ca_ty d
+       where (d.i_ge_cle = 413 or d.i_ge_cle = 16500)
+         and d.i_cc_cle <> 14920
+         and d.l_si_cle <> 25 --Acheteurs mystères
+         and d.i_do_fonde = 16123 --Fondés
+         and not exists (select c.l_co_cle
+                from co_commentaire2 c
+               where d.l_do_cle = c.l_co_reference
+                 and d.l_si_cle = c.l_co_ref_site
+                 and c.c_co_ref_genre = 'DO')
+      union
+      select 'Sujets en double' as "Type",
+             su.v_su_nom||', '||su.v_su_prenom||', '||to_char(su.d_su_date_naissance, 'YYYY-MM-DD') as "Description"
+      from su_sujet su
+      where su.i_cc_cle != 14920
+      group by su.v_su_nom, su.v_su_prenom, su.d_su_date_naissance
+      having count (su.v_su_nom||su.v_su_prenom||su.d_su_date_naissance) > 1
+    union
+    select 'Sociétés en double' as "Type",
+           so.v_so_nom as "Description"
+      from so_societe so
+      where so.i_cc_cle != 14920
+      group by so.v_so_nom
+      having count (so.v_so_nom) > 1
+    union
+    select 'Véhicules en double' as "Type",
+           ve.v_ve_immatriculation as "Description"
+      from ve_vehicule ve
+      where ve.i_cc_cle != 14920
+      group by ve.v_ve_immatriculation
+      having count (ve.v_ve_immatriculation) > 1]]>
+	</queryString>
+	<field name="Type" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Description" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<sortField name="Type"/>
+	<sortField name="Description"/>
+	<variable name="Type_1" class="java.lang.Integer" resetType="Group" resetGroup="Type" calculation="Count">
+		<variableExpression><![CDATA[$F{Type}]]></variableExpression>
+	</variable>
+	<group name="Type" isStartNewPage="true">
+		<groupExpression><![CDATA[$F{Type}]]></groupExpression>
+		<groupHeader>
+			<band/>
+		</groupHeader>
+		<groupFooter>
+			<band height="25">
+				<staticText>
+					<reportElement x="4" y="4" width="45" height="20"/>
+					<textElement verticalAlignment="Middle">
+						<font size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<text><![CDATA[Total :]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true">
+					<reportElement stretchType="RelativeToBandHeight" x="49" y="4" width="86" height="20"/>
+					<textElement verticalAlignment="Middle">
+						<font size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<textFieldExpression class="java.lang.Integer"><![CDATA[$V{Type_1}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="0" y="2" width="143" height="1"/>
+				</line>
+			</band>
+		</groupFooter>
+	</group>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="85" splitType="Stretch">
+			<rectangle>
+				<reportElement mode="Opaque" x="0" y="2" width="572" height="42" backcolor="#F4F0F0"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="247" y="6" width="320" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="16" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Rapport sur la cohérence des données ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="231" y="26" width="126" height="18" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
+					<font fontName="Arial" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica-Bold" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[En date du :]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="yyyy-MM-dd HH:mm" isBlankWhenNull="true">
+				<reportElement x="357" y="26" width="174" height="18"/>
+				<box leftPadding="2"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{DATE_DEBUT}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="19" y="6" width="204" height="25" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
+					<font fontName="Arial" size="18" isBold="true" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica-Bold" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[Direction Sécurité]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="44" width="572" height="20"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true" isItalic="true" pdfFontName="Helvetica-BoldOblique"/>
+				</textElement>
+				<text><![CDATA[Confidentiel]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="0" y="64" width="572" height="20"/>
+				<box leftPadding="5">
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{Type}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="0" y="0" width="135" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{Description}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="26" splitType="Stretch">
+			<textField evaluationTime="Report" pattern="" isBlankWhenNull="false">
+				<reportElement key="textField" x="531" y="5" width="36" height="19" forecolor="#000000" backcolor="#FFFFFF"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["" + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement key="textField" x="450" y="5" width="77" height="19" forecolor="#000000" backcolor="#FFFFFF"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Page " + $V{PAGE_NUMBER} + " de "]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="false">
+				<reportElement stretchType="RelativeToTallestObject" x="112" y="4" width="327" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA["Imprimé le " + new SimpleDateFormat("EEEEE dd MMMMM yyyy à HH:mm", java.util.Locale.FRENCH).format(new java.util.Date()) + " par " + $P{UTILISATEUR}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="5" y="4" width="100" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[CDX_0071]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

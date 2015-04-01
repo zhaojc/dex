@@ -38,17 +38,17 @@ public class ReconnaissancePlaqueGenerateurRapport_CDX_0075 extends GenererRappo
 		ListeCache cache = ListeCache.getInstance();
 		String siteDescription = cache.obtenirLabel(subject, reconnaissancePlaqueVO.getSite(), new TableValeurCleSQLListeCache(subject, GlobalConstants.TableValeur.SITE, GlobalConstants.Entite.MAISON_JEUX, GlobalConstants.ActionSecurite.SELECTION));
 		String natureDescription = cache.obtenirLabel(subject, reconnaissancePlaqueVO.getNature(), new TableValeurCleSQLListeCache(subject, GlobalConstants.TableValeur.NATURE, GlobalConstants.Genre.SUJETS_INTERET, GlobalConstants.ActionSecurite.RECHERCHE_DOSSIER));
-		//Le système AutoVu de reconnaissance de plaques supporte mal les accents. On les retire donc ici. Les autres l'ont déjà été dans la procédure SQL. 
-		if(natureDescription.equals("Accès interdits")){
+		//Le systï¿½me AutoVu de reconnaissance de plaques supporte mal les accents. On les retire donc ici. Les autres l'ont dï¿½jï¿½ ï¿½tï¿½ dans la procï¿½dure SQL. 
+		if(natureDescription.equals("Accï¿½s interdits")){
 			natureDescription = "Acces interdits";
 		}
-		if(siteDescription.equals("Casino Montréal")){
+		if(siteDescription.equals("Casino Montrï¿½al")){
 			siteDescription = "Casino Montreal";
 		}
 		String titre = natureDescription + " " + siteDescription;
 
 		RapportBusinessDelegate delegate = new RapportBusinessDelegate();
-		ResultSet resultSet = delegate.produireRapportReconnaissance(titre, reconnaissancePlaqueVO);
+		ResultSet resultSet = delegate.produireRapportReconnaissance(titre, reconnaissancePlaqueVO,connection);
        	return new JRResultSetDataSource(resultSet);
 	}
 

@@ -23,7 +23,6 @@ import com.lotoquebec.cardexCommun.integration.dao.cleListe.cleSQLListeCache.Tab
 import com.lotoquebec.cardexCommun.securite.GestionnaireSecurite;
 import com.lotoquebec.cardexCommun.text.DateFormat;
 import com.lotoquebec.cardexCommun.util.ListeCache;
-import com.lotoquebec.cardexCommun.util.ValueObjectMapper;
 
 public class AuditIntervenantAccesGenerateurRapport_CDX_0122 extends GenererRapport {
 
@@ -41,7 +40,7 @@ public class AuditIntervenantAccesGenerateurRapport_CDX_0122 extends GenererRapp
 	public JRDataSource construireDataSource(CardexAuthenticationSubject subject, RapportVO rapportVO, Connection connection) throws BusinessResourceException, BusinessException {
 		AccesRapportVO rapportDossierVO =(AccesRapportVO) rapportVO;
 		RapportBusinessDelegate delegate = new RapportBusinessDelegate();
-		ResultSet resultSet = delegate.auditAccesIntervenant(rapportDossierVO);
+		ResultSet resultSet = delegate.auditAccesIntervenant(rapportDossierVO,connection);
 
        	return new JRResultSetDataSource(resultSet);
 	}
@@ -58,7 +57,7 @@ public class AuditIntervenantAccesGenerateurRapport_CDX_0122 extends GenererRapp
         parameters.put("DATE_FIN",DateFormat.format(rapportDossierVO.getDateHeureDebutAu(), DateFormat.DATE_FORMAT_AVEC_HEURE));
         parameters.put("UTILISATEUR",subject.getPrincipal().getName());
         //On met un titre, car le CDX_0122 sert pour 3 rapports
-        parameters.put("TITRE","Rapport des accès par intervenant");
+        parameters.put("TITRE","Rapport des accï¿½s par intervenant");
         
 		ListeCache listeCache = ListeCache.getInstance();
 		String site = "";

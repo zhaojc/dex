@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sous-rapport_aides" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<queryString>
+		<![CDATA[select s.v_si_site,
+			 COUNT(i.d_is_rencontre_initiale) rencontre_initiale,
+			 COUNT(i.d_is_rencontre_finale) rencontre_finale
+	from v_do_dossier_ca_ty d, tr_traduction tpe, si_site s, is_inscription i
+ where d.d_do_date_debut between to_date('20071201', 'YYYYMMDD') and
+			 to_date('20090101', 'YYYYMMDD')
+	 and d.i_na_cle = 75
+	 and d.i_pe_cle = tpe.l_tr_cle
+	 and tpe.i_la_cle = 1
+	 and d.i_cc_cle <> 14920
+	 and d.l_do_cle = i.l_is_reference
+	 and d.l_si_cle = i.l_is_ref_site
+	 and d.l_si_cle = s.l_si_cle
+	 GROUP BY s.v_si_site, tpe.v_tr_description, i.b_is_aide_initiale, i.b_is_aide_immediate]]>
+	</queryString>
+	<field name="V_SI_SITE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="RENCONTRE_INITIALE" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="RENCONTRE_FINALE" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="TOTAL_INITIAL" class="java.lang.Integer" calculation="Count"/>
+	<variable name="TOTAL_FINAL" class="java.lang.Integer" calculation="Count"/>
+	<variable name="RENCONTRE_FINALE_SUM" class="java.math.BigDecimal" incrementType="Group" incrementGroup="V_SI_SITE" calculation="Sum">
+		<variableExpression><![CDATA[$F{RENCONTRE_FINALE}]]></variableExpression>
+	</variable>
+	<variable name="RENCONTRE_INITIALE_SUM" class="java.math.BigDecimal" incrementType="Group" incrementGroup="V_SI_SITE" calculation="Sum">
+		<variableExpression><![CDATA[$F{RENCONTRE_INITIALE}]]></variableExpression>
+	</variable>
+	<group name="V_SI_SITE">
+		<groupExpression><![CDATA[$F{V_SI_SITE}]]></groupExpression>
+		<groupHeader>
+			<band height="1" splitType="Stretch"/>
+		</groupHeader>
+		<groupFooter>
+			<band height="19" splitType="Stretch">
+				<line direction="BottomUp">
+					<reportElement key="line" x="1" y="2" width="329" height="1"/>
+				</line>
+				<textField>
+					<reportElement x="11" y="1" width="42" height="15"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10"/>
+					</textElement>
+					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{RENCONTRE_INITIALE}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="167" y="1" width="43" height="15"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10"/>
+					</textElement>
+					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{RENCONTRE_FINALE}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Auto" pattern="#,##0.00%">
+					<reportElement x="220" y="1" width="61" height="15"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression class="java.lang.Double"><![CDATA[new Double( $F{RENCONTRE_FINALE}.doubleValue() / $V{RENCONTRE_FINALE_SUM}.doubleValue() )]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Auto" pattern="#,##0.00%">
+					<reportElement x="63" y="1" width="62" height="15"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression class="java.lang.Double"><![CDATA[new Double( $F{RENCONTRE_INITIALE}.doubleValue() / $V{RENCONTRE_INITIALE_SUM}.doubleValue() )]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="32" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="3" width="330" height="1"/>
+				<graphicElement>
+					<pen lineWidth="2.0" lineStyle="Double"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="2" y="31" width="330" height="1"/>
+			</line>
+			<staticText>
+				<reportElement mode="Opaque" x="1" y="6" width="329" height="24" backcolor="#0099CC"/>
+				<textElement textAlignment="Center">
+					<font size="18" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Rencontres]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="2" y="0" width="158" height="18" forecolor="#FFFFFF" backcolor="#99CCFF"/>
+				<textElement>
+					<font size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Rencontres initiales]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="160" y="0" width="170" height="18" forecolor="#FFFFFF" backcolor="#99CCFF"/>
+				<textElement>
+					<font size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Rencontres finales]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<summary>
+		<band height="141" splitType="Stretch">
+			<textField>
+				<reportElement x="167" y="6" width="41" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{RENCONTRE_FINALE_SUM}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="11" y="6" width="46" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{RENCONTRE_INITIALE_SUM}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="4" width="330" height="1"/>
+				<graphicElement>
+					<pen lineWidth="2.0" lineStyle="Double"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="0" y="29" width="330" height="1"/>
+				<graphicElement>
+					<pen lineWidth="2.0" lineStyle="Double"/>
+				</graphicElement>
+			</line>
+		</band>
+	</summary>
+</jasperReport>

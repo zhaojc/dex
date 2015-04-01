@@ -25,9 +25,8 @@ public class LongUtils {
 		
 		if (StringUtils.isEmpty(strings))
 			return new long[0];
-		long[] sortie = new long[1];
-		sortie[0] = valueOf(strings);
-		return sortie;
+		
+		return valueOf(strings.split(","));
 	}
 
 	public static long[] listValueOf(long l){

@@ -32,7 +32,7 @@ public class AccesInterditNumeroDossierGenerateurRapport_CDX_0012 extends Genere
 	@Override
 	public JRDataSource construireDataSource(CardexAuthenticationSubject subject, RapportVO rapportVO, Connection connection) throws BusinessResourceException, BusinessException {
 		RapportBusinessDelegate delegate = new RapportBusinessDelegate();
-		ResultSet resultSet = delegate.listesPartage("CARDEX_RAPPORT.SP_LISTES_PARTAGE");
+		ResultSet resultSet = delegate.listesPartage("CARDEX_RAPPORT.SP_LISTES_PARTAGE",connection);
        	return new JRResultSetDataSource(resultSet);
 	}
 

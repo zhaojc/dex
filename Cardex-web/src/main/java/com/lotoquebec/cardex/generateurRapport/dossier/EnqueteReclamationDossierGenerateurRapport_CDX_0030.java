@@ -46,9 +46,9 @@ public class EnqueteReclamationDossierGenerateurRapport_CDX_0030 extends Generer
     	try{
    		 	Calendar calendar = Calendar.getInstance();
    		 	SimpleDateFormat moisDateFormat = new SimpleDateFormat("MMMM", java.util.Locale.FRENCH);
-   		 	//Pour ce rapport, il faut remonter au début de l'année financière. Si le mois courant est inférieur à avril,
-   		 	//la date de départ sera avril de l'année précédente. Sinon, avril de l'année en cours.
-   		 	//On vérifie d'abord si un critère de date a été saisi.
+   		 	//Pour ce rapport, il faut remonter au dï¿½but de l'annï¿½e financiï¿½re. Si le mois courant est infï¿½rieur ï¿½ avril,
+   		 	//la date de dï¿½part sera avril de l'annï¿½e prï¿½cï¿½dente. Sinon, avril de l'annï¿½e en cours.
+   		 	//On vï¿½rifie d'abord si un critï¿½re de date a ï¿½tï¿½ saisi.
    		 	Calendar dateDebutCal = Calendar.getInstance();
    		 	dateDebutCal.setTime(rapportVO.getDateDebutDu());
    		 	int annee = dateDebutCal.get(Calendar.YEAR);
@@ -61,7 +61,7 @@ public class EnqueteReclamationDossierGenerateurRapport_CDX_0030 extends Generer
     		for(int i=0;i<=11;i++){
     			Map enquetesPAR = new HashMap();
 	    		String anneeMois = calendar.get(Calendar.YEAR) + "-" + calendar.get(Calendar.MONTH);
-	    		resultSet = delegate.rapportEnqueteReclamation(anneeMois);
+	    		resultSet = delegate.rapportEnqueteReclamation(anneeMois,connection);
 	    		resultSet.next();
 	    		enquetesPAR.put("ANNEE", calendar.get(Calendar.YEAR)+"");
 	    		enquetesPAR.put("MOIS", moisDateFormat.format(calendar.getTime()));

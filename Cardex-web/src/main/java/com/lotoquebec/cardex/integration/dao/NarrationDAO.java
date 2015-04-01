@@ -1,21 +1,19 @@
 package com.lotoquebec.cardex.integration.dao;
 
 import java.sql.CallableStatement;
+import java.sql.Clob;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import oracle.jdbc.OracleTypes;
-import oracle.sql.CLOB;
 
 import com.lotoquebec.cardex.business.CriteresRechercheNarration;
 import com.lotoquebec.cardex.business.Dossier;
@@ -111,7 +109,7 @@ public class NarrationDAO {
 	  Statement stmt = null;
 	  ResultSet rs = null;
 	  try {
-           callableStatement = connection.prepareCall("begin CARDEX_WEB_NARRATION.SPW_E_CO_COMMENTAIRE2 (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); end;");
+           callableStatement = connection.prepareCall("begin CARDEX_WEB_NARRATION.SPW_E_CO_COMMENTAIRE2 (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); end;");
               callableStatement.setString(1,action);
               callableStatement.registerOutParameter(2, java.sql.Types.DECIMAL);
               callableStatement.registerOutParameter(3, java.sql.Types.DECIMAL);
@@ -137,9 +135,9 @@ public class NarrationDAO {
               callableStatement.setString(17,narration.getReference());  //v_co_reference
               callableStatement.setString(18,narration.getRapporteur()); //v_co_rapporte_par
               callableStatement.setString(19,narration.getTempsConsacre());  //v_co_temps
-              callableStatement.setClob(20,CLOB.empty_lob());
-              callableStatement.setClob(21,CLOB.empty_lob());
-              OracleDAOUtils.setLong(callableStatement,22,narration.getGabaritUtilise());  //L_CO_GABARIT
+              //callableStatement.setClob(20,(java.sql.Clob)CLOB.getEmptyCLOB());
+              //callableStatement.setClob(21,(java.sql.Clob)CLOB.getEmptyCLOB());
+              OracleDAOUtils.setLong(callableStatement,20,narration.getGabaritUtilise());  //L_CO_GABARIT
               callableStatement.execute();
               //Narration newNarration = new NarrationVO();
               //newNarration.setCle(callableStatement.getLong(2));
@@ -153,8 +151,8 @@ public class NarrationDAO {
                   connection.setAutoCommit(false);
                   log.fine("Traitement des CLOBs");
                   stmt = connection.createStatement();
-                  oracle.sql.CLOB clobNarrationAvecFormat = null;
-                  oracle.sql.CLOB clobNarrationSansFormat = null;
+                  Clob clobNarrationAvecFormat = null;
+                  Clob clobNarrationSansFormat = null;
                   rs = stmt.executeQuery("SELECT * FROM CO_COMMENTAIRE2  WHERE L_CO_CLE="
                                           + narration.getCle() + " AND L_SI_CLE="
                                           + narration.getSite() +" FOR UPDATE");
@@ -163,10 +161,10 @@ public class NarrationDAO {
            clobNarrationAvecFormat = ((OracleResultSet)rs).getCLOB("CLOB_CO_TEXTE_FORMAT");
          ne fonctionne pas avec WebSphere en mode Connection Pool.
       */ 
-                    clobNarrationAvecFormat = (oracle.sql.CLOB)rs.getClob("CLOB_CO_TEXTE_FORMAT");
-                    clobNarrationSansFormat = (oracle.sql.CLOB)rs.getClob("CLOB_CO_TEXTE_NORMAL");
-                    clobNarrationAvecFormat.putString(1, NarrationBaliseUtil.nettoyerNarration( narration.getNarrationAvecFormat() ));
-                    clobNarrationSansFormat.putString(1, narration.getNarrationSansFormat());
+                    clobNarrationAvecFormat = (Clob)rs.getClob("CLOB_CO_TEXTE_FORMAT");
+                    clobNarrationSansFormat = (Clob)rs.getClob("CLOB_CO_TEXTE_NORMAL");
+                    clobNarrationAvecFormat.setString(1, NarrationBaliseUtil.nettoyerNarration( narration.getNarrationAvecFormat() ));
+                    clobNarrationSansFormat.setString(1, narration.getNarrationSansFormat());
                   }
                   //connection.commit();
                   connection.setAutoCommit(true);
@@ -347,8 +345,8 @@ public class NarrationDAO {
               linkedNarration.setRapporteur(resultSet.getString("V_CO_RAPPORTE_PAR"));
               linkedNarration.setReference(resultSet.getString("V_CO_REFERENCE"));
               //Conversion en String des valeurs CLOB retourn�es de la base de donn�es.
-              linkedNarration.setNarrationAvecFormat(OracleDAOUtils.CLOBToString((oracle.sql.CLOB)resultSet.getObject("CLOB_CO_TEXTE_FORMAT")));
-              linkedNarration.setNarrationSansFormat(OracleDAOUtils.CLOBToString((oracle.sql.CLOB)resultSet.getObject("CLOB_CO_TEXTE_NORMAL")));
+              linkedNarration.setNarrationAvecFormat(OracleDAOUtils.CLOBToString((java.sql.Clob)resultSet.getObject("CLOB_CO_TEXTE_FORMAT")));
+              linkedNarration.setNarrationSansFormat(OracleDAOUtils.CLOBToString((java.sql.Clob)resultSet.getObject("CLOB_CO_TEXTE_NORMAL")));
               log.fine("   [Narration id='"+linkedNarration.getCle()+"' Site='"+linkedNarration.getSite()+"']");
               String secteur = listeCache.obtenirLabel(subject, linkedNarration.getCreateur(), new SecteurDeIntervenantCle());
               linkedNarration.setSecteur(secteur);
@@ -448,8 +446,8 @@ public class NarrationDAO {
               linkedNarration.setRapporteur(resultSet.getString("V_CO_RAPPORTE_PAR"));
               linkedNarration.setReference(resultSet.getString("V_CO_REFERENCE"));
               //Conversion en String des valeurs CLOB retourn�es de la base de donn�es.
-              linkedNarration.setNarrationAvecFormat(OracleDAOUtils.CLOBToString((oracle.sql.CLOB)resultSet.getObject("CLOB_CO_TEXTE_FORMAT")));
-              linkedNarration.setNarrationSansFormat(OracleDAOUtils.CLOBToString((oracle.sql.CLOB)resultSet.getObject("CLOB_CO_TEXTE_NORMAL")));
+              linkedNarration.setNarrationAvecFormat(OracleDAOUtils.CLOBToString((Clob)resultSet.getObject("CLOB_CO_TEXTE_FORMAT")));
+              linkedNarration.setNarrationSansFormat(OracleDAOUtils.CLOBToString((Clob)resultSet.getObject("CLOB_CO_TEXTE_NORMAL")));
               log.fine("   [Narration id='"+linkedNarration.getCle()+"' Site='"+linkedNarration.getSite()+"']");
               String secteur = listeCache.obtenirLabel(subject, linkedNarration.getCreateur(), new SecteurDeIntervenantCle());
               linkedNarration.setSecteur(secteur);
@@ -547,8 +545,8 @@ public class NarrationDAO {
               linkedNarration.setRapporteur(resultSet.getString("V_CO_RAPPORTE_PAR"));
               linkedNarration.setReference(resultSet.getString("V_CO_REFERENCE"));
               //Conversion en String des valeurs CLOB retourn�es de la base de donn�es.
-              linkedNarration.setNarrationAvecFormat(OracleDAOUtils.CLOBToString((oracle.sql.CLOB)resultSet.getObject("CLOB_CO_TEXTE_FORMAT")));
-              linkedNarration.setNarrationSansFormat(OracleDAOUtils.CLOBToString((oracle.sql.CLOB)resultSet.getObject("CLOB_CO_TEXTE_NORMAL")));
+              linkedNarration.setNarrationAvecFormat(OracleDAOUtils.CLOBToString((Clob)resultSet.getObject("CLOB_CO_TEXTE_FORMAT")));
+              linkedNarration.setNarrationSansFormat(OracleDAOUtils.CLOBToString((Clob)resultSet.getObject("CLOB_CO_TEXTE_NORMAL")));
               log.fine("   [Narration id='"+linkedNarration.getCle()+"' Site='"+linkedNarration.getSite()+"']");
               String secteur = listeCache.obtenirLabel(subject, linkedNarration.getCreateur(), new SecteurDeIntervenantCle());
               linkedNarration.setSecteur(secteur);
@@ -711,8 +709,8 @@ public class NarrationDAO {
 					narration.setReference(resultSet.getString("V_CO_REFERENCE"));
 					narration.setRapporteur(resultSet.getString("V_CO_RAPPORTE_PAR"));
 					narration.setTempsConsacre(resultSet.getString("V_CO_TEMPS"));
-					narration.setNarrationAvecFormat(OracleDAOUtils.CLOBToString((oracle.sql.CLOB)resultSet.getObject("CLOB_CO_TEXTE_FORMAT")));
-					narration.setNarrationSansFormat(OracleDAOUtils.CLOBToString((oracle.sql.CLOB)resultSet.getObject("CLOB_CO_TEXTE_NORMAL")));
+					narration.setNarrationAvecFormat(OracleDAOUtils.CLOBToString((Clob)resultSet.getObject("CLOB_CO_TEXTE_FORMAT")));
+					narration.setNarrationSansFormat(OracleDAOUtils.CLOBToString((Clob)resultSet.getObject("CLOB_CO_TEXTE_NORMAL")));
 					//Inscription des valeurs sur les dossiers associ�s aux recherches de narration
 					dossier.setCle(resultSet.getLong("L_DO_CLE"));
 					dossier.setSite(resultSet.getLong("L_CO_REF_SITE"));
@@ -794,8 +792,8 @@ public class NarrationDAO {
               narration.setTexte(resultSet.getString("V_CO_COMMENTAIRE"));
               narration.setRapporteur(resultSet.getString("V_CO_RAPPORTE_PAR"));
               narration.setTempsConsacre(resultSet.getString("V_CO_TEMPS"));
-              narration.setNarrationAvecFormat(OracleDAOUtils.CLOBToString((oracle.sql.CLOB)resultSet.getObject("CLOB_CO_TEXTE_FORMAT")));
-              narration.setNarrationSansFormat(OracleDAOUtils.CLOBToString((oracle.sql.CLOB)resultSet.getObject("CLOB_CO_TEXTE_NORMAL")));
+              narration.setNarrationAvecFormat(OracleDAOUtils.CLOBToString((Clob)resultSet.getObject("CLOB_CO_TEXTE_FORMAT")));
+              narration.setNarrationSansFormat(OracleDAOUtils.CLOBToString((Clob)resultSet.getObject("CLOB_CO_TEXTE_NORMAL")));
               narration.setGabaritUtilise(resultSet.getLong("L_CO_GABARIT"));
               dossier.setCle(narration.getLien());
               dossier.setSite(narration.getLienSite());
@@ -1092,7 +1090,7 @@ public class NarrationDAO {
 		        callableStatement.setLong(3, narration.getLien());
 		        callableStatement.setLong(4, narration.getLienSite());
 		        callableStatement.setString(5, narration.getGenreLiaison());
-				CLOB narrationTemporaire = construireClob(connection);
+				Clob narrationTemporaire = construireClob(connection);
 		        narrationTemporaire.setString(1, narration.getNarrationTemporaire()); 		        
 		        callableStatement.setClob(6, narrationTemporaire);
 			}
@@ -1127,7 +1125,7 @@ public class NarrationDAO {
 		        callableStatement.setLong(3, narration.getLien());
 		        callableStatement.setLong(4, narration.getLienSite());
 		        callableStatement.setString(5, narration.getGenreLiaison());
-				CLOB narrationTemporaire = construireClob(connection);
+				Clob narrationTemporaire = construireClob(connection);
 		        narrationTemporaire.setString(1, narration.getNarrationTemporaire()); 		        
 		        callableStatement.setClob(6, narrationTemporaire);
 			}
@@ -1164,13 +1162,13 @@ public class NarrationDAO {
 		storeProcTemplate.query(false);
 	}    
 	
-  	private CLOB construireClob(Connection connection) throws SQLException{
+  	private Clob construireClob(Connection connection) throws SQLException{
 		CallableStatement callableStatement = null;
 		try{
 			callableStatement = connection.prepareCall("{ call DBMS_LOB.CREATETEMPORARY(?, TRUE)}");
 			callableStatement.registerOutParameter(1, OracleTypes.CLOB);
 			callableStatement.execute();
-			return (CLOB)callableStatement.getObject(1);
+			return (Clob)callableStatement.getObject(1);
 		} finally {
 			if ( callableStatement != null ) {
 				try {callableStatement.close();} catch (Throwable e) {}

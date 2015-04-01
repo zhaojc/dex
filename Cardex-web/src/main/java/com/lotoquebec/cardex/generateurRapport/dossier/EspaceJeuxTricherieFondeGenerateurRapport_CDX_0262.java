@@ -33,7 +33,7 @@ public class EspaceJeuxTricherieFondeGenerateurRapport_CDX_0262 extends GenererR
 	public JRDataSource construireDataSource(CardexAuthenticationSubject subject, RapportVO rapportVO, Connection connection) throws BusinessResourceException, BusinessException {
 		EspaceJeuxTricherieFondeRapportVO_CDX_0262 espaceJeuxTricherieFondeRapportVO_CDX_0262 = (EspaceJeuxTricherieFondeRapportVO_CDX_0262) rapportVO;
 		RapportBusinessDelegate delegate = new RapportBusinessDelegate();
-		ResultSet resultSet = delegate.rapportEspaceJeuxTricherieFonde(espaceJeuxTricherieFondeRapportVO_CDX_0262);
+		ResultSet resultSet = delegate.rapportEspaceJeuxTricherieFonde(espaceJeuxTricherieFondeRapportVO_CDX_0262,connection);
        	return new JRResultSetDataSource(resultSet);
 	}
 
