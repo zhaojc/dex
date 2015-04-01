@@ -10,7 +10,7 @@
 	<artifactId>Cardex-web</artifactId>
 	<packaging>war</packaging>
 	<name>Cardex Web</name>
-	<description>Modele de reference Module Web</description>
+	<description>Modele de reference Module Web de l'application Cardex</description>
 
 	<properties>
 		<scm.url>${base.scm.url}/${project.group}/${project.parent.artifactId}</scm.url>
