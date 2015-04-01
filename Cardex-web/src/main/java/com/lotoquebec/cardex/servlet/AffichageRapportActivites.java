@@ -23,8 +23,8 @@ import net.sf.jasperreports.engine.export.JRPdfExporter;
 import net.sf.jasperreports.j2ee.servlets.ImageServlet;
 
 import com.lotoquebec.cardex.business.delegate.RapportBusinessDelegate;
-import com.lotoquebec.cardex.generateurRapport.rapports.RapportUtil;
 import com.lotoquebec.cardex.securite.GestionnaireSecuriteCardex;
+import com.lotoquebec.cardex.util.RapportUtils;
 import com.lotoquebec.cardexCommun.authentication.AuthenticationSubject;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
 import com.lotoquebec.cardexCommun.exception.BusinessResourceException;
@@ -35,7 +35,7 @@ import com.lotoquebec.cardexCommun.text.TimestampFormat;
 import com.lotoquebec.cardexCommun.util.StringUtils;
 
 /**
- * Ce servlet sert à afficher les rapports Jasper en format PDF à l'écran.
+ * Ce servlet sert ï¿½ afficher les rapports Jasper en format PDF ï¿½ l'ï¿½cran.
  * Il sert pour les dossiers.
  * Le code repose sur le concept AJAX (Asynchronous JavaScript and XML) et sur les librairies Jasper.
  * @date : novembre 2008
@@ -62,13 +62,13 @@ public class AffichageRapportActivites extends HttpServlet {
         	Date debutDate = DateFormat.parse(dateDebutString);
         	Date finDate = DateFormat.parse(dateFinString);
 
-            //Si les dates n'ont pas été sélectionnées, on met par défaut la date de la veille à 6 h 
-            //jusqu'à la date du jour à 6 h.
+            //Si les dates n'ont pas ï¿½tï¿½ sï¿½lectionnï¿½es, on met par dï¿½faut la date de la veille ï¿½ 6 h 
+            //jusqu'ï¿½ la date du jour ï¿½ 6 h.
         	if (debutDate == null)
-        		debutDate = RapportUtil.dateHier6h(DateFormat.parse(dateDebutString));
+        		debutDate = RapportUtils.dateHier7h(DateFormat.parse(dateDebutString));
         	
         	if (finDate == null)
-        		finDate = RapportUtil.dateAujourdHuiFin6h(DateFormat.parse(dateFinString));
+        		finDate = RapportUtils.dateAujourdHuiFin6h59(DateFormat.parse(dateFinString));
         	
            	CardexAuthenticationSubject subject = (CardexAuthenticationSubject)request.getSession().getAttribute(AuthenticationSubject.class.getName());
            	GestionnaireSecuriteCardex.validerSecuriteURL((CardexAuthenticationSubject) subject, request.getServletPath());

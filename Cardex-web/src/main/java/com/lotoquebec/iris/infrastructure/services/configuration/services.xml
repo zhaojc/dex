@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE services SYSTEM "services.dtd">
+
+<services>
+
+	<service
+		 name="diffusion"
+		 class="com.iris.infrastructure.services.diffusion.DiffusionServer"
+		 properties-file="diffusion.properties"		
+		 enabled="true"
+		 order="20">
+	</service>	
+
+	<service
+		 name="messaging"
+		 class="com.iris.infrastructure.services.messaging.MessagingServer"
+		 properties-file="messaging.properties"		
+		 enabled="true"
+		 order="15">
+	</service>		
+	
+	<service
+		 name="communication"
+		 class="com.iris.infrastructure.services.communication.CommunicationServer"
+		 properties-file="communication.properties"		
+		 enabled="true"
+		 order="25">
+	</service>		
+	
+	
+</services>
