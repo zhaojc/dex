@@ -5,6 +5,7 @@ import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -22,10 +23,10 @@ public class InformationAcces {
 	}
 
 	public static InformationAcces getInstance(){
-		System.err.println("Vérifier com.ibm.ws.jsp.BasicLogFormatter");
+		
 		if (informationLogon == null){
 			informationLogon = new InformationAcces();
-			//log.getHandlers()[0].setFormatter( new BasicLogFormatter() );
+			log.getHandlers()[0].setFormatter( new SimpleFormatter() );
 			simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS z");
 		}
 		return informationLogon;

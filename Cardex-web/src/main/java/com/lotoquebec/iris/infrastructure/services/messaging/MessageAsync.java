@@ -3,8 +3,6 @@ package com.lotoquebec.iris.infrastructure.services.messaging;
 import java.io.Serializable;
 import java.util.Set;
 
-import com.lotoquebec.iris.mei.BaseDTO;
-
 
 /**
  *
@@ -24,8 +22,6 @@ public class MessageAsync implements Serializable {
     protected String type = null;
 	/** Le type de date logique */
     protected String typeDateLogique = null;
-	/** Le DTO associ� au message asynchrone */
-	protected BaseDTO dto = null;
 	
 	/** Les trois attributs suivants servent � transmettre le contexte de s�curit� */
 	protected Set principals = null;
@@ -78,35 +74,6 @@ public class MessageAsync implements Serializable {
     }
 
     /**
-     * <p>Retourne le DTO sous la forme d'une cha�ne XML</p>
-     * 
-     * @return le DTO en XML
-     */
-    public String getParam()
-    {
-    	String xml = null;
-    	try
-    	{
-        	xml = dto.toXML();
-    	}
-    	catch (Exception e)
-    	{
-    		// Se produit si on n'arrive pas � s�rialiser en XML
-			throw new RuntimeException(e.getMessage());
-		}
-    	return xml;
-    }
-
-    /**
-     * <p>Initialise le DTO</p>
-     * 
-     * @param dto le DTO
-     */
-    public void setParam(BaseDTO dto) {
-		this.dto = dto;
-    }
-
-    /**
      * <p>Retourne le type de message asynchrone</p>
      * 
      * @return le type de message
@@ -142,17 +109,6 @@ public class MessageAsync implements Serializable {
         typeDateLogique = string;
     }
     
-    
-	/**
-	 * <p>Retourne le DTO</p>
-	 * 
-	 * @return le DTO
-	 */
-	public BaseDTO getDto() {
-		return dto;
-	}
-	
-
 	public Set getPrincipals() {
 		return principals;
 	}
