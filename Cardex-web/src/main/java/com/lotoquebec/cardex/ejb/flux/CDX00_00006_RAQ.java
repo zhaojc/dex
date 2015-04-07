@@ -8,12 +8,14 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRResultSetDataSource;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardex.business.facade.FabriqueFacade;
 import com.lotoquebec.cardex.generateurRapport.rapports.RapportsConfiguration;
@@ -25,7 +27,6 @@ import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
 import com.lotoquebec.cardexCommun.exception.BusinessResourceException;
 import com.lotoquebec.cardexCommun.exception.DAOException;
 import com.lotoquebec.cardexCommun.integration.dao.DAOConnection;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.rapport.PDFImpressionRapport;
 import com.lotoquebec.cardexCommun.text.DateFormat;
 import com.lotoquebec.cardexCommun.util.CourrielAction;
@@ -38,7 +39,7 @@ import com.lq.std.conf.impl.AppConfig;
  */
 public class CDX00_00006_RAQ implements Flux{
 
-	private final static Logger log = (Logger)LoggerCardex.getLogger(CDX00_00006_RAQ.class);
+	private final static Logger log = LoggerFactory.getLogger(CDX00_00006_RAQ.class);
 	private CardexAuthenticationSubject subject = null;
     private final static Map<Integer, String> siteSnIntervention = new HashMap<Integer, String>();
     private Date debutDate = null;
@@ -64,11 +65,11 @@ public class CDX00_00006_RAQ implements Flux{
 	 
 	public void execute() throws Exception {
 		Connection connection = null;
-		log.fine("Entr�e flux CDX00_00006");
+		log.info("Entr�e flux CDX00_00006");
 		
 		try{
 			subject = AutentificationCardex.construireCardexAuthenticationSubjectSystem();
-			log.fine("Ouverture de connection");
+			log.info("Ouverture de connection");
 			connection = DAOConnection.getInstance().getConnection(subject);
 			debutDate = RapportUtils.dateHier7h(null);
 			finDate = RapportUtils.dateAujourdHuiFin6h59(null);
@@ -81,7 +82,7 @@ public class CDX00_00006_RAQ implements Flux{
 			approbationAutomatique(connection);
 		} catch (Exception e) {
 			e.printStackTrace();
-			log.severe("Erreur dans le diff�r� CDX00_00006 RAQ");
+			log.error("Erreur dans le diff�r� CDX00_00006 RAQ");
         	try {
 				connection.rollback();
 			    connection.close();
@@ -102,7 +103,7 @@ public class CDX00_00006_RAQ implements Flux{
                 }
  		    }
 		}
-		log.fine("Fin flux CDX00_00006");
+		log.info("Fin flux CDX00_00006");
 	}
 
 	private void envoyerRAQParSite(CardexAuthenticationSubject subject, Connection connection) throws NumberFormatException, DAOException, FileNotFoundException, JRException, SQLException, BusinessResourceException {
@@ -119,7 +120,7 @@ public class CDX00_00006_RAQ implements Flux{
 			JasperPrint print = FabriqueFacade.getRapportSessionFacade().siteRAQCDX_0070(subject, debutDate, finDate, site);
 			(new PDFImpressionRapport()).impression(nomRapport, print);
 			
-			log.fine("Envoie du courriel");
+			log.info("Envoie du courriel");
 			String objectMessage = CourrielAction.constuireObjectMessageAvecDate(subject, GlobalConstants.TypesIntervention.RAQ);
 			CourrielAction.envoyerCourrielEtFichierDestinataire(subject, connection, objectMessage, nomSite, GlobalConstants.TypesIntervention.RAQ, snSite, nomRapport);
 		}
@@ -127,36 +128,36 @@ public class CDX00_00006_RAQ implements Flux{
 
 	private void envoyerRAQGlobal(CardexAuthenticationSubject subject, Connection connection) throws NumberFormatException, DAOException, FileNotFoundException, JRException, SQLException, BusinessResourceException {
 		String nomRapport = obtenirNomRapport(RAQ_GLOBAL);
-		log.fine("Choix nom rapport : '"+nomRapport+"'");
+		log.info("Choix nom rapport : '"+nomRapport+"'");
 		
 		JasperPrint print = FabriqueFacade.getRapportSessionFacade().globalRAQCDX_0070(subject, debutDate, finDate);
 		(new PDFImpressionRapport()).impression(nomRapport, print);
 		
-		log.fine("Envoie du courriel");
+		log.info("Envoie du courriel");
 		String objectMessage = CourrielAction.constuireObjectMessageAvecDate(subject, GlobalConstants.TypesIntervention.RAQ);
 		CourrielAction.envoyerCourrielEtFichierDestinataire(subject, connection, objectMessage, "Rapport global d'activit� quotidien", GlobalConstants.TypesIntervention.RAQ, "A", nomRapport);
 	}
 	
 	private void envoyerRAQLQDossierLQEvenementDCSI(CardexAuthenticationSubject subject, Connection connection) throws NumberFormatException, DAOException, FileNotFoundException, JRException, SQLException, BusinessResourceException {
 		String nomRapport = obtenirNomRapport(RAQ_DOSSIER_LQ_EVENEMENT_DCSI);
-		log.fine("Choix nom rapport : '"+nomRapport+"'");
+		log.info("Choix nom rapport : '"+nomRapport+"'");
 		
 		JasperPrint print = FabriqueFacade.getRapportSessionFacade().natureRAQRapportCDX_0070(subject, debutDate, finDate, GlobalConstants.Nature.EVENEMENTS_DCSI);
 		(new PDFImpressionRapport()).impression(nomRapport, print);		
 		
-		log.fine("Envoie du courriel");
+		log.info("Envoie du courriel");
 		String objectMessage = CourrielAction.constuireObjectMessageAvecDate(subject, GlobalConstants.TypesIntervention.RAQ_LQ_EVENEMENT_DCSI);
 		CourrielAction.envoyerCourrielEtFichierDestinataire(subject, connection, objectMessage, GlobalConstants.TypesIntervention.RAQ_LQ_EVENEMENT_DCSI, GlobalConstants.TypesIntervention.RAQ_LQ_EVENEMENT_DCSI, "A", nomRapport);
 	}
 	
 	private void envoyerRAQLQSansDossierLQEvenementDCSI(CardexAuthenticationSubject subject, Connection connection) throws NumberFormatException, DAOException, FileNotFoundException, JRException, SQLException, BusinessResourceException {
 		String nomRapport = obtenirNomRapport(RAQ_DOSSIER_LQ_SANS_EVENEMENT_DCSI);
-		log.fine("Choix nom rapport : '"+nomRapport+"'");
+		log.info("Choix nom rapport : '"+nomRapport+"'");
 		
 		JasperPrint print = FabriqueFacade.getRapportSessionFacade().sansNatureRAQRapportCDX_0070(subject, debutDate, finDate, GlobalConstants.Nature.EVENEMENTS_DCSI);
 		(new PDFImpressionRapport()).impression(nomRapport, print);		
 		
-		log.fine("Envoi du courriel");
+		log.info("Envoi du courriel");
 		String objectMessage = CourrielAction.constuireObjectMessageAvecDate(subject, GlobalConstants.TypesIntervention.RAQ_LQ_SANS_EVENEMENT_DCSI);
 		CourrielAction.envoyerCourrielEtFichierDestinataire(subject, connection, objectMessage, GlobalConstants.TypesIntervention.RAQ_LQ_SANS_EVENEMENT_DCSI, GlobalConstants.TypesIntervention.RAQ_LQ_SANS_EVENEMENT_DCSI, "A", nomRapport);
 	}
@@ -168,7 +169,7 @@ public class CDX00_00006_RAQ implements Flux{
 	}
 	
 	private void produireRapportActiviteQuotidienne(String nomRapport, ResultSet resultSet) throws FileNotFoundException, JRException {
-		log.fine("produireRapportActiviteQuotidienne d�but "+nomRapport);
+		log.info("produireRapportActiviteQuotidienne d�but "+nomRapport);
 		
 		Map parameters = new HashMap();
 
@@ -176,7 +177,7 @@ public class CDX00_00006_RAQ implements Flux{
 
 		// Utilisation d'un resultSet comme source de donn�es
 		//ResultSet resultSet = delegate.rapportActivites(dateDebut, dateFin, procedure);
-		log.fine("produireRapportActiviteQuotidienne (Constuire RS)");
+		log.info("produireRapportActiviteQuotidienne (Constuire RS)");
 		JRResultSetDataSource resultSetDataSource = new JRResultSetDataSource(resultSet);
 
 		parameters.put("DATE_DEBUT", DateFormat.format(debutDate, DateFormat.DATE_FORMAT_AVEC_HEURE));
@@ -185,11 +186,11 @@ public class CDX00_00006_RAQ implements Flux{
 		parameters.put("UTILISATEUR", "diff�r� Cardex");
 		JasperPrint print = JasperFillManager.fillReport(gabarit, parameters, resultSetDataSource);
 		
-		log.fine("produireRapportActiviteQuotidienne (Sauvegarde dans un fichier)");
+		log.info("produireRapportActiviteQuotidienne (Sauvegarde dans un fichier)");
 		 
 		(new PDFImpressionRapport()).impression(nomRapport, print);
 		
-		log.fine("produireRapportActiviteQuotidienne Fin");
+		log.info("produireRapportActiviteQuotidienne Fin");
 
 	}
 

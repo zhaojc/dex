@@ -2,19 +2,20 @@
 
 package com.lotoquebec.cardex.business.rule;
 
-import java.util.logging.Logger;
-import com.lotoquebec.cardex.business.vo.BilletVO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.lotoquebec.cardex.business.exception.BilletBusinessRuleException;
+import com.lotoquebec.cardex.business.vo.BilletVO;
 import com.lotoquebec.cardexCommun.GlobalConstants;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
 import com.lotoquebec.cardexCommun.business.BusinessRuleSet;
 import com.lotoquebec.cardexCommun.exception.BusinessException;
 import com.lotoquebec.cardexCommun.exception.BusinessRuleException;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.util.StringUtils;
 
 /**
- * Cette classe valide l'ensemble des règles d'affaire applicable aux billets.
+ * Cette classe valide l'ensemble des rï¿½gles d'affaire applicable aux billets.
  *
  * @see com.lotoquebec.cardexCommun.business.BusinessRuleSet
  * @author Author: mazzucr 
@@ -26,7 +27,7 @@ public class BilletBusinessRuleSet implements BusinessRuleSet {
      * L'instance du gestionnaire de journalisation.
      */
 	private final Logger      log =
-        (Logger)LoggerCardex.getLogger((this.getClass()));
+        LoggerFactory.getLogger((this.getClass()));
 
     /**
      * Construit une instance de BilletBusinessRuleSet
@@ -34,28 +35,28 @@ public class BilletBusinessRuleSet implements BusinessRuleSet {
     public BilletBusinessRuleSet() {}
 
     /**
-     * Valide les règles d'affaires applicable à un billet.
+     * Valide les rï¿½gles d'affaires applicable ï¿½ un billet.
      *
      * @param businessObject Le billet
      *
-     * @throws BusinessRuleException si les règles d'affaire
-     * d'un objet Billet ne sont pas respectées.
+     * @throws BusinessRuleException si les rï¿½gles d'affaire
+     * d'un objet Billet ne sont pas respectï¿½es.
      * @throws BusinessException 
      * @throws IllegalArgumentException si l'objet d'affaire n'est pas
      * une instance de  com.lotoquebec.cardex.business.vo.BilletVO
      */
     public void checkRules(CardexAuthenticationSubject subject, Object businessObject)
             throws BusinessRuleException, BusinessException {
-        log.fine("checkRules()");
+        log.debug("checkRules()");
 
         if (businessObject instanceof BilletVO) {
             BilletVO billet = (BilletVO) businessObject;
-            //Pour les dossiers de Client mystère, on valide la saisie du numéro de contrôle du billet
+            //Pour les dossiers de Client mystï¿½re, on valide la saisie du numï¿½ro de contrï¿½le du billet
             if(billet.getLienSite() == Long.valueOf(GlobalConstants.Sites.CLIENTS_MYSTERES)){
                 checkNumeroDeControleRule(billet);
             }
        } else {
-            throw new IllegalArgumentException("L'objet d'affaire doit être une instance de '"
+            throw new IllegalArgumentException("L'objet d'affaire doit ï¿½tre une instance de '"
                                                + BilletVO.class.getName()
                                                + "'");
         }
@@ -63,20 +64,20 @@ public class BilletBusinessRuleSet implements BusinessRuleSet {
 
     /**
      * Les 2 premiers chiffres seront toujours 07 et le 
-     * reste sans caractères autres que de chiffres, mais 
-     * toujours la même longueur de 14, les traits d'union   
-     * sont à la positionne 3 et 8 du numéro de contrôle
+     * reste sans caractï¿½res autres que de chiffres, mais 
+     * toujours la mï¿½me longueur de 14, les traits d'union   
+     * sont ï¿½ la positionne 3 et 8 du numï¿½ro de contrï¿½le
      * 
      * Exemple : 07-9999-999999
      *
      * @param billet Le billet
      *
-     * @throws BusinessRuleException si le numéro de contrôle n'est pas valide.
+     * @throws BusinessRuleException si le numï¿½ro de contrï¿½le n'est pas valide.
      *
      */
     private void checkNumeroDeControleRule(BilletVO billet)
             throws BusinessRuleException {
-        log.fine("checkNumeroDeControleRule()");
+        log.debug("checkNumeroDeControleRule()");
 
         boolean contientLettres = false;
         
@@ -92,8 +93,8 @@ public class BilletBusinessRuleSet implements BusinessRuleSet {
         if ((contientLettres == false)  
                 && (sNumCtrlAvecTrait.length() == 14) 
                 && (StringUtils.left(sNumCtrl,2).compareTo("07")==0) //commence par 07
-                && (StringUtils.mid(sNumCtrlAvecTrait, 2, 1).compareTo("-")==0) //troisième caractère doit être un trait d'union
-                && (StringUtils.mid(sNumCtrlAvecTrait, 7, 1).compareTo("-")==0) //septième caractère doit être un trait d'union
+                && (StringUtils.mid(sNumCtrlAvecTrait, 2, 1).compareTo("-")==0) //troisiï¿½me caractï¿½re doit ï¿½tre un trait d'union
+                && (StringUtils.mid(sNumCtrlAvecTrait, 7, 1).compareTo("-")==0) //septiï¿½me caractï¿½re doit ï¿½tre un trait d'union
                 ){
         }else {
             throw createException(BilletBusinessRuleException.NUMERO_DE_CONTROLE_INVALID);
@@ -101,8 +102,8 @@ public class BilletBusinessRuleSet implements BusinessRuleSet {
     }
 
     /**
-     * Retourne un DossierBusinessRuleException initialisé avec
-     * l'identificateur de règle.
+     * Retourne un DossierBusinessRuleException initialisï¿½ avec
+     * l'identificateur de rï¿½gle.
      *
      *
      * @param ruleId

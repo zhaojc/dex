@@ -7,7 +7,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import java.util.logging.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardex.business.Narration;
 import com.lotoquebec.cardex.business.vo.DossierVO;
@@ -24,7 +26,6 @@ import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
 import com.lotoquebec.cardexCommun.exception.BusinessResourceException;
 import com.lotoquebec.cardexCommun.exception.DAOException;
 import com.lotoquebec.cardexCommun.integration.dao.DAOConnection;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.text.TimestampFormat;
 import com.lotoquebec.cardexCommun.util.CourrielAction;
 
@@ -35,7 +36,7 @@ import com.lotoquebec.cardexCommun.util.CourrielAction;
  */
 public class CDX00_00005_Prevention implements Flux{
 	
-	private final Logger log = (Logger)LoggerCardex.getLogger(CDX00_00005_Prevention.class);
+	private final Logger log = LoggerFactory.getLogger(CDX00_00005_Prevention.class);
 	private boolean courrielEnvoye = false;	
 	private CardexAuthenticationSubject subject = null;
 	private DossierDAO dossierDAO = null;
@@ -52,14 +53,14 @@ public class CDX00_00005_Prevention implements Flux{
 	
 	public void execute() throws Exception{
 		Connection connection = null;
-		log.fine("Entr�e flux CDX00_00005");
+		log.info("Entr�e flux CDX00_00005");
 		
 		init();
 		
 		try{
 			subject = AutentificationCardex.construireCardexAuthenticationSubjectSystem();
 			
-			log.fine("Ouverture de connection");
+			log.info("Ouverture de connection");
 			connection = DAOConnection.getInstance().getConnection(subject);
 			
 			traiterDossierExpiration(subject, connection);
@@ -67,14 +68,14 @@ public class CDX00_00005_Prevention implements Flux{
 			traiterDossierBonifies(subject, connection);
 			
 			if (courrielEnvoye == false){
-		    	log.fine("Fin pr�vention sans courriel");
+		    	log.info("Fin pr�vention sans courriel");
 		    	String objectMessage = CourrielAction.constuireObjectMessage(subject, GlobalConstants.TypesIntervention.Fin_Prevention_Sans_Courriel);
 		 	    CourrielAction.envoyerCourrielDestinataire(subject, connection, objectMessage, "", GlobalConstants.TypesIntervention.Fin_Prevention_Sans_Courriel, "A");
 			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-			log.severe("Erreur dans le diff�r� CDX00_00005 Pr�vention");
+			log.error("Erreur dans le diff�r� CDX00_00005 Pr�vention");
         	try {
 				connection.rollback();
 			    connection.close();
@@ -93,7 +94,7 @@ public class CDX00_00005_Prevention implements Flux{
                 }
  		    }
 		}
-		log.fine("Fin flux CDX00_00005");
+		log.info("Fin flux CDX00_00005");
 	}
 
 	private void traiterDossierAideInitiale(CardexAuthenticationSubject subject, Connection connection) throws DAOException, BusinessResourceException, SQLException {
@@ -112,12 +113,12 @@ public class CDX00_00005_Prevention implements Flux{
 				DossierVO dossierVO = iter.next();
 				SujetVO sujetVO = (SujetVO) dossierVO.getSujets().iterator().next(); // Un seul sujet
 				message +=dossierVO.getNumeroCardex()+", "+sujetVO.getNumeroFiche()+"<br>";
-				log.fine("Traitement du sujet: "+sujetVO.getNumeroFiche());
+				log.info("Traitement du sujet: "+sujetVO.getNumeroFiche());
 				assignerSujetConfidentialiteC(subject, connectionIter, sujetVO);
-				log.fine("Traitement du dossier: "+dossierVO.getNumeroDossier());
+				log.info("Traitement du dossier: "+dossierVO.getNumeroDossier());
 		     	assignerDossierConfidentialiteC(subject, connectionIter, dossierVO);
 		     	ecrireNarration(subject, dossierVO, narration, connectionIter);
-		     	log.fine("Enregistrement de la date d'aide initiale");
+		     	log.info("Enregistrement de la date d'aide initiale");
 		     	inscriptionDAO.enregisterDateAideInitiale(connectionIter, dossierVO);
 		     	connectionIter.commit();
 		     	
@@ -128,7 +129,7 @@ public class CDX00_00005_Prevention implements Flux{
 		}
         
         if (listeDossiers.size() > 0){
-	    	log.fine("Recherche de destinataires (Aide)");
+	    	log.info("Recherche de destinataires (Aide)");
 	    	String objectMessage = CourrielAction.constuireObjectMessage(subject, GlobalConstants.TypesIntervention.Aide);
 	    	CourrielAction.envoyerCourrielDestinataire(subject, connection, objectMessage, message, GlobalConstants.TypesIntervention.Aide, "A");
 	 	    courrielEnvoye = true;
@@ -151,12 +152,12 @@ public class CDX00_00005_Prevention implements Flux{
 				DossierVO dossierVO = iter.next();
 				SujetVO sujetVO = (SujetVO) dossierVO.getSujets().iterator().next(); // Un seul sujet
 				message +=dossierVO.getNumeroCardex()+", "+sujetVO.getNumeroFiche()+"<br>";
-				log.fine("Traitement du sujet: "+sujetVO.getNumeroFiche());
+				log.info("Traitement du sujet: "+sujetVO.getNumeroFiche());
 				assignerSujetConfidentialiteC(subject, connectionIter, sujetVO);
-				log.fine("Traitement du dossier: "+dossierVO.getNumeroDossier());
+				log.info("Traitement du dossier: "+dossierVO.getNumeroDossier());
 		     	assignerDossierConfidentialiteC(subject, connectionIter, dossierVO);
 		     	ecrireNarration(subject, dossierVO, narration, connectionIter);
-		     	log.fine("Enregistrement de la date de suivi");
+		     	log.info("Enregistrement de la date de suivi");
 		     	inscriptionDAO.enregisterDateSuiviInscription(connectionIter, dossierVO);
 		     	
 		     	connectionIter.commit();
@@ -168,7 +169,7 @@ public class CDX00_00005_Prevention implements Flux{
 		}
         
         if (listeDossiers.size() > 0){
-	    	log.fine("Recherche de destinataires (Suivi)");
+	    	log.info("Recherche de destinataires (Suivi)");
 	    	String objectMessage = CourrielAction.constuireObjectMessage(subject, GlobalConstants.TypesIntervention.Suivi);
 	 	    CourrielAction.envoyerCourrielDestinataire(subject, connection, objectMessage, message, GlobalConstants.TypesIntervention.Suivi, "A");
 	 	    courrielEnvoye = true;
@@ -176,7 +177,7 @@ public class CDX00_00005_Prevention implements Flux{
 	}
 
 	private void ecrireNarration(CardexAuthenticationSubject subject, DossierVO dossierVO, String texte, Connection connection) throws DAOException {
-		log.fine("Enregistrement la narration");
+		log.info("Enregistrement la narration");
 		Timestamp maintenant = new Timestamp((new Date()).getTime());
 		Narration narration = new NarrationVO();
 		narration.setLien(dossierVO.getCle());
@@ -200,7 +201,7 @@ public class CDX00_00005_Prevention implements Flux{
 	private void traiterDossierBonifies(CardexAuthenticationSubject subject, Connection connection) throws DAOException, BusinessResourceException, SQLException{
         List<DossierVO> listeDossiers = dossierDAO.rechercheDossierAutoexeclusionBonifies(connection);
         Iterator<DossierVO> iter = listeDossiers.iterator();
-        log.fine("Traitement des contrats bonifi�s");
+        log.info("Traitement des contrats bonifi�s");
         
         while (iter.hasNext()) {
 			Connection connectionIter = null; 
@@ -208,9 +209,9 @@ public class CDX00_00005_Prevention implements Flux{
 				connectionIter = DAOConnection.getInstance().getConnection(subject);        	
 				DossierVO dossierVO = iter.next();
 				SujetVO sujetVO = (SujetVO) dossierVO.getSujets().iterator().next(); 
-				log.fine("Traitement du sujet: "+sujetVO.getNumeroFiche());
+				log.info("Traitement du sujet: "+sujetVO.getNumeroFiche());
 				assignerSujetConfidentialiteC(subject, connectionIter, sujetVO);
-				log.fine("Traitement du dossier: "+dossierVO.getNumeroDossier());
+				log.info("Traitement du dossier: "+dossierVO.getNumeroDossier());
 				assignerDossierConfidentialiteC(subject, connectionIter, dossierVO);
 				
 		     	connectionIter.commit();

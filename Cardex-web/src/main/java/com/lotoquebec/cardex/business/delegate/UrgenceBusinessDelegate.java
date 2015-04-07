@@ -1,8 +1,9 @@
 package com.lotoquebec.cardex.business.delegate;
 
 import java.util.List;
-import java.util.logging.Logger;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardex.business.CriteresRechercheUrgence;
 import com.lotoquebec.cardex.business.Urgence;
@@ -14,7 +15,6 @@ import com.lotoquebec.cardexCommun.business.BusinessDelegate;
 import com.lotoquebec.cardexCommun.exception.BusinessException;
 import com.lotoquebec.cardexCommun.exception.BusinessResourceException;
 import com.lotoquebec.cardexCommun.exception.BusinessRuleException;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 
 /**
  * Le UrgenceBusinessDelegate offre les
@@ -30,15 +30,15 @@ public class UrgenceBusinessDelegate extends BusinessDelegate {
     UrgenceSessionFacade urgenceSessionFacade;
     
 	private final Logger      log =
-        (Logger)LoggerCardex.getLogger((this.getClass()));
+        LoggerFactory.getLogger((this.getClass()));
 
     public UrgenceBusinessDelegate() {
 		this.urgenceSessionFacade = new UrgenceSessionFacade();
 	}
     
 	/**
-	 * Lors de l'ajout ou la modification d'un urgence il faut ajouter/supprimer (gérer)
-	 * les liaisons entres le dossier et la société.
+	 * Lors de l'ajout ou la modification d'un urgence il faut ajouter/supprimer (gï¿½rer)
+	 * les liaisons entres le dossier et la sociï¿½tï¿½.
 	 * Pour ce urgence
 	 * @param subject
 	 * @param urgenceVO
@@ -81,15 +81,15 @@ public class UrgenceBusinessDelegate extends BusinessDelegate {
 	}
 
     /**
-     * Recherche des services d'urgence créés dans les dernières 48 heures
+     * Recherche des services d'urgence crï¿½ï¿½s dans les derniï¿½res 48 heures
      *
      * @param subject L'utilisateur qui effectue la recherche
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return Les services d'urgence recherchés
+     * @return Les services d'urgence recherchï¿½s
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public List<Urgence> selectDefault(CardexAuthenticationSubject subject,
                                            CriteresRechercheUrgence criteria) throws BusinessException,
@@ -104,12 +104,12 @@ public class UrgenceBusinessDelegate extends BusinessDelegate {
      * Recherche des services d'urgence
      *
      * @param subject L'utilisateur qui effectue la recherche
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return Les services d'urgence recherchés
+     * @return Les services d'urgence recherchï¿½s
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public List<Urgence> select(CardexAuthenticationSubject subject,
                                     CriteresRechercheUrgence criteria) throws BusinessException,

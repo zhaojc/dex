@@ -4,13 +4,13 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
-import java.util.logging.Logger;
 
 import oracle.jdbc.OracleTypes;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardex.business.Jeux;
 import com.lotoquebec.cardex.business.vo.JeuxVO;
@@ -18,12 +18,11 @@ import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
 import com.lotoquebec.cardexCommun.exception.DAOException;
 import com.lotoquebec.cardexCommun.integration.dao.DAOConnection;
 import com.lotoquebec.cardexCommun.integration.dao.OracleDAOUtils;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 
 /**
- * Liste des appels à la base de données pour différents accès aux dossiers. Les
- * jeux sont liés aux dossiers.
- * Implémente l'interface JeuDAO.
+ * Liste des appels ï¿½ la base de donnï¿½es pour diffï¿½rents accï¿½s aux dossiers. Les
+ * jeux sont liï¿½s aux dossiers.
+ * Implï¿½mente l'interface JeuDAO.
  *
  * @author $Author: mlibersan $
  * @version $Revision: 1.4 $, $Date: 2002/03/13 17:49:34 $
@@ -32,26 +31,26 @@ import com.lotoquebec.cardexCommun.log.LoggerCardex;
 public class JeuDAO {
 
 	private final Logger      log =
-        (Logger)LoggerCardex.getLogger(JeuDAO.class);
+        LoggerFactory.getLogger(JeuDAO.class);
 
     /**
-     * Mise à jour des nouveaux jeux associés à un dossier, appelée
+     * Mise ï¿½ jour des nouveaux jeux associï¿½s ï¿½ un dossier, appelï¿½e
      * par update afin de faire une action "clear" et "insert".
-     * Selon le paramètre "action" il peut s'agir d'une insertion ("I")
+     * Selon le paramï¿½tre "action" il peut s'agir d'une insertion ("I")
      * ou d'un nettoyage ("C").
-     * Procédure appelée : CARDEX_LIEN.SP_E_LJD_LIEN_JEU_DOSSIER
-     * Date de création : (2002-03-04)
+     * Procï¿½dure appelï¿½e : CARDEX_LIEN.SP_E_LJD_LIEN_JEU_DOSSIER
+     * Date de crï¿½ation : (2002-03-04)
      * @author Philippe Caron
-     * @param subject CardexAuthenticationSubject : Données nominatives sur
+     * @param subject CardexAuthenticationSubject : Donnï¿½es nominatives sur
      * l'utilisateur.
-     * @param jeux Jeux : Jeux saisies à l'écran.
+     * @param jeux Jeux : Jeux saisies ï¿½ l'ï¿½cran.
      * @param action String : "I" ou "C"
-     * @param genreFichier String : Code à deux lettres de la table qui lie des
-     * jeux à un Dossier (DO).  Pour l'instant, seuls les dossiers possèdent des
+     * @param genreFichier String : Code ï¿½ deux lettres de la table qui lie des
+     * jeux ï¿½ un Dossier (DO).  Pour l'instant, seuls les dossiers possï¿½dent des
      * jeux.
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
      */
     private void editJeux(CardexAuthenticationSubject subject, Jeux jeux, String action, String genreFichier) throws DAOException {
@@ -86,7 +85,7 @@ public class JeuDAO {
                 }
             }
             else {
-                log.fine("Le code d'action '" + action + "', est invalide pour la méthode editJeux!");
+                log.debug("Le code d'action '" + action + "', est invalide pour la mï¿½thode editJeux!");
             }
         }
         catch (SQLException se) {
@@ -115,18 +114,18 @@ public class JeuDAO {
     }
 
     /**
-     * Met à jour les jeux.
-     * Date de création : (2002-03-04)
+     * Met ï¿½ jour les jeux.
+     * Date de crï¿½ation : (2002-03-04)
      * @author Philippe Caron
-     * @param subject CardexAuthenticationSubject : Données nominatives sur
+     * @param subject CardexAuthenticationSubject : Donnï¿½es nominatives sur
      * l'utilisateur.
-     * @param jeux Jeux : Jeux saisis à l'écran.
-     * @param genreFichier String : Code à deux lettres de la table qui lie un
-     * jeu à un Dossier (DO).  Pour l'instant, seuls les sujets possèdent des
+     * @param jeux Jeux : Jeux saisis ï¿½ l'ï¿½cran.
+     * @param genreFichier String : Code ï¿½ deux lettres de la table qui lie un
+     * jeu ï¿½ un Dossier (DO).  Pour l'instant, seuls les sujets possï¿½dent des
      * jeux.
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
      */
     public void update(CardexAuthenticationSubject subject, Jeux jeux, String genreFichier) throws DAOException {
@@ -135,23 +134,23 @@ public class JeuDAO {
     }
 
     /**
-     * Lecture des jeux associés à un dossier.
-     * Procédure appelée : SP_L_LJD_LIEN_JEU_DOSSIER
-     * Date de création : (2002-03-04)
+     * Lecture des jeux associï¿½s ï¿½ un dossier.
+     * Procï¿½dure appelï¿½e : SP_L_LJD_LIEN_JEU_DOSSIER
+     * Date de crï¿½ation : (2002-03-04)
      * @author Philippe Caron
-     * @param subject  CardexAuthenticationSubject : Données nominatives sur
+     * @param subject  CardexAuthenticationSubject : Donnï¿½es nominatives sur
      * l'utilisateur.
-     * @param cle long : Clé de référence du sujet.
-     * @param site long : Site de référence du sujet.
+     * @param cle long : Clï¿½ de rï¿½fï¿½rence du sujet.
+     * @param site long : Site de rï¿½fï¿½rence du sujet.
      * @param genreFichier String : ("DO").
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
-     * @return Jeux : Liste des jeux associés.
+     * @return Jeux : Liste des jeux associï¿½s.
      */
     public Jeux findLiensJeux(CardexAuthenticationSubject subject, long cle, long site, String genreFichier) throws DAOException {
-      log.fine("findLiensJeux()");
+      log.debug("findLiensJeux()");
       Connection connection = DAOConnection.getInstance().getConnection(subject);
 	  CallableStatement callableStatement = null;
 	  ResultSet resultSet = null;
@@ -174,7 +173,7 @@ public class JeuDAO {
                 linkedJeux.setLienSite(resultSet.getLong("L_LJD_REF_SITE"));
               }
               linkedJeux.addJeu( Long.toString(resultSet.getLong("I_JE_CLE")) );
-              log.fine("   [Jeu cle='" + resultSet.getLong("I_JE_CLE")+"', site='" + linkedJeux.getSite() + "']");
+              log.debug("   [Jeu cle='" + resultSet.getLong("I_JE_CLE")+"', site='" + linkedJeux.getSite() + "']");
          }//while
          if (linkedJeux == null){
           return new JeuxVO();
@@ -212,23 +211,23 @@ public class JeuDAO {
       } //finally
    }
     /**
-     * Lecture des jeux associés à une évaluation.
-     * Procédure appelée : SPW_L_LJV_JEU_EVAL
-     * Date de création : (2002-03-04)
+     * Lecture des jeux associï¿½s ï¿½ une ï¿½valuation.
+     * Procï¿½dure appelï¿½e : SPW_L_LJV_JEU_EVAL
+     * Date de crï¿½ation : (2002-03-04)
      * @author Philippe Caron
-     * @param subject  CardexAuthenticationSubject : Données nominatives sur
+     * @param subject  CardexAuthenticationSubject : Donnï¿½es nominatives sur
      * l'utilisateur.
-     * @param cle long : Clé de référence du sujet.
-     * @param site long : Site de référence du sujet.
+     * @param cle long : Clï¿½ de rï¿½fï¿½rence du sujet.
+     * @param site long : Site de rï¿½fï¿½rence du sujet.
      * @param genreFichier String : ("DO").
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
-     * @return Jeux : Liste des jeux associés.
+     * @return Jeux : Liste des jeux associï¿½s.
      */
     public Jeux findLiensJeuxMiseEvaluation(CardexAuthenticationSubject subject, long cle, long site) throws DAOException {
-      log.fine("findLiensJeuxEvaluation()");
+      log.debug("findLiensJeuxEvaluation()");
       Connection connection = DAOConnection.getInstance().getConnection(subject);
 	  CallableStatement callableStatement = null;
 	  ResultSet resultSet = null;
@@ -250,7 +249,7 @@ public class JeuDAO {
                 linkedJeux.setLienSite(resultSet.getLong("L_LME_REF_SITE"));
               }
               linkedJeux.addJeu( Long.toString(resultSet.getLong("L_JE_CLE")) );
-              log.fine("   [Jeu cle='" + resultSet.getLong("L_JE_CLE")+"', site='" + linkedJeux.getSite() + "']");
+              log.debug("   [Jeu cle='" + resultSet.getLong("L_JE_CLE")+"', site='" + linkedJeux.getSite() + "']");
          }//while
          if (linkedJeux == null){
           return new JeuxVO();

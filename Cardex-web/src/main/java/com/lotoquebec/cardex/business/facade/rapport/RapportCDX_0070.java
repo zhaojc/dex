@@ -1,30 +1,24 @@
 package com.lotoquebec.cardex.business.facade.rapport;
 
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardex.business.vo.rapport.RapportVOCDX_00070;
 import com.lotoquebec.cardex.generateurRapport.rapports.RapportsConfiguration;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
-import com.lotoquebec.cardexCommun.exception.BusinessResourceException;
 import com.lotoquebec.cardexCommun.exception.DAOException;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.text.DateFormat;
 
 public abstract class RapportCDX_0070 extends RapportCardex{
 
-	private final static Logger log = (Logger)LoggerCardex.getLogger(RapportCDX_0070.class);
+	private final static Logger log = LoggerFactory.getLogger(RapportCDX_0070.class);
 	private Date debutDate;
 	private Date finDate;
 	private CardexAuthenticationSubject subject;
@@ -54,7 +48,7 @@ public abstract class RapportCDX_0070 extends RapportCardex{
 		Map parameters = new HashMap();
 		parameters.put("DATE_DEBUT", DateFormat.format(debutDate, DateFormat.DATE_FORMAT_AVEC_HEURE));
 		parameters.put("DATE_FIN", DateFormat.format(finDate, DateFormat.DATE_FORMAT_AVEC_HEURE));
-		parameters.put("UTILISATEUR", "différé Cardex");
+		parameters.put("UTILISATEUR", "diffï¿½rï¿½ Cardex");
 		parameters.put("TITRE", obtenirTitre());
 		
 		return parameters;

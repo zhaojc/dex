@@ -5,36 +5,37 @@ package com.lotoquebec.cardex.securite;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.logging.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardex.business.Photo;
 import com.lotoquebec.cardexCommun.GlobalConstants;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
 import com.lotoquebec.cardexCommun.business.ValueListIterator;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.securite.GestionnaireSecurite;
 import com.lotoquebec.cardexCommun.securite.SecuritePredicate;
 
 
 public class GestionnaireSecuriteCardex extends GestionnaireSecurite{
-    private static final Logger log = (Logger)LoggerCardex.getLogger((GestionnaireSecuriteCardex.class.getClass()));
+    private static final Logger log = LoggerFactory.getLogger((GestionnaireSecuriteCardex.class.getClass()));
     
     /*
      * La modification est un cas particulier, car il faut :
-     * 1.	Valider que l’utilisateur peut consulter l’enregistrement qu’il modifie
-     * 2.	Valider la source des données 
-     * 3.	Valider les données de la cible de la modification.  
+     * 1.	Valider que lï¿½utilisateur peut consulter lï¿½enregistrement quï¿½il modifie
+     * 2.	Valider la source des donnï¿½es 
+     * 3.	Valider les donnï¿½es de la cible de la modification.  
      * 
-     * Par exemple, un utilisateur tente de modifier un dossier, mais ne possède 
-     * pas la confidentialité nécessaire.  Il connait l’URL envoie la modification 
-     * directement.  L’application valide les données fournies et constate qu’il ne 
-     * possède pas le rôle de confidentialité nécessaire.  L’utilisateur ressaye 
-     * de modifier le dossier en passant la bonne clé et site, mais pas les bons 
-     * renseignements dans les données.  Lors de la validation des données envoyées 
-     * par l’utilisateur, la validation constate que les données sources sont en règle.  
-     * Le système doit retrouver les données du dossier cible pour constater que 
-     * l’utilisateur n’a pas le droit de consulter ce dossier.  Car il ne possède pas 
-     * le rôle de confidentialité nécessaire.
+     * Par exemple, un utilisateur tente de modifier un dossier, mais ne possï¿½de 
+     * pas la confidentialitï¿½ nï¿½cessaire.  Il connait lï¿½URL envoie la modification 
+     * directement.  Lï¿½application valide les donnï¿½es fournies et constate quï¿½il ne 
+     * possï¿½de pas le rï¿½le de confidentialitï¿½ nï¿½cessaire.  Lï¿½utilisateur ressaye 
+     * de modifier le dossier en passant la bonne clï¿½ et site, mais pas les bons 
+     * renseignements dans les donnï¿½es.  Lors de la validation des donnï¿½es envoyï¿½es 
+     * par lï¿½utilisateur, la validation constate que les donnï¿½es sources sont en rï¿½gle.  
+     * Le systï¿½me doit retrouver les donnï¿½es du dossier cible pour constater que 
+     * lï¿½utilisateur nï¿½a pas le droit de consulter ce dossier.  Car il ne possï¿½de pas 
+     * le rï¿½le de confidentialitï¿½ nï¿½cessaire.
      */
     public static void validerSecuriteModificationDossierIntervenantEstAssigne(CardexAuthenticationSubject subject, Object source, Object cible) {
     	validerSecuriteModification(subject, source, cible, Arrays.asList((SecuritePredicate)new IntervenantEstAssigne()), GlobalConstants.ActionSecurite.CONSULTER_DOSSIER, GlobalConstants.ActionSecurite.SELECTION);
@@ -89,7 +90,7 @@ public class GestionnaireSecuriteCardex extends GestionnaireSecurite{
     }    
     
     /**
-     * L'action Rechercher est importante pour les listes qui ne sont pas le genre et nature ex: confidentialité 
+     * L'action Rechercher est importante pour les listes qui ne sont pas le genre et nature ex: confidentialitï¿½ 
      */
     
     public static List<Photo> validerEtFiltrerSecuriteRechercheGalerie(CardexAuthenticationSubject subject, List<Photo> photoList) {
@@ -122,8 +123,8 @@ public class GestionnaireSecuriteCardex extends GestionnaireSecurite{
     
 	
     /*
-     * On valide que chaque champ est correctement sécurisé. 
-     * Valide si la sécurité permet d'envoyer ce object à Cardex.
+     * On valide que chaque champ est correctement sï¿½curisï¿½. 
+     * Valide si la sï¿½curitï¿½ permet d'envoyer ce object ï¿½ Cardex.
      */
     public static void validerSecuriteEntreeUtilisateurRechercheGalerie(CardexAuthenticationSubject subject, Object vo) {
     	validerSecuriteEntreeUtilisateur(subject, vo, GlobalConstants.ActionSecurite.RECHERCHE, GlobalConstants.ActionSecurite.RECHERCHE_GALERIE);

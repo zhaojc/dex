@@ -18,7 +18,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -38,6 +37,8 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.upload.FormFile;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardex.business.Adresse;
 import com.lotoquebec.cardex.business.Caracteristiques;
@@ -102,7 +103,6 @@ import com.lotoquebec.cardexCommun.exception.ValueObjectMapperException;
 import com.lotoquebec.cardexCommun.integration.dao.DAOConnection;
 import com.lotoquebec.cardexCommun.integration.dao.OracleDAOUtils;
 import com.lotoquebec.cardexCommun.integration.dao.cleListe.cleSQLListeCache.TableValeurCleSQLListeCache;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.model.EntiteCardexForm;
 import com.lotoquebec.cardexCommun.presentation.util.AbstractAction;
 import com.lotoquebec.cardexCommun.presentation.util.AideController;
@@ -127,7 +127,7 @@ public class SujetAction extends AbstractAction {
      * L'instance du gestionnaire de journalisation.
      */
 	private final Logger      log =
-        (Logger)LoggerCardex.getLogger((this.getClass()));
+        LoggerFactory.getLogger((this.getClass()));
 
 
     public ActionForward refreshSujet(
@@ -136,7 +136,7 @@ public class SujetAction extends AbstractAction {
 			HttpServletResponse response) throws SecurityException,
 			IllegalArgumentException, NoSuchMethodException,
 			IllegalAccessException, InvocationTargetException {
-		log.fine("Refresh ecran de recherche sujet");
+		log.debug("Refresh ecran de recherche sujet");
 
 		return mapping.findForward("success");
 	}
@@ -168,7 +168,7 @@ public class SujetAction extends AbstractAction {
                                  ActionForm form,
                                  HttpServletRequest request,
                                  HttpServletResponse response) throws SecurityException, IllegalArgumentException, NoSuchMethodException, IllegalAccessException, InvocationTargetException{
-        log.fine("Refresh ecran de recherche sujet");
+        log.debug("Refresh ecran de recherche sujet");
 
         return mapping.findForward("success");
     }
@@ -190,7 +190,7 @@ public class SujetAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException, CloneNotSupportedException {
-        log.fine("Acc�s � l'ecran de recherche sujet liaison.");
+        log.debug("Acc�s � l'ecran de recherche sujet liaison.");
 
         ActionMessages errors = new ActionMessages();
         CriteresRechercheSujetForm rechercheSujetForm = new CriteresRechercheSujetForm();
@@ -220,7 +220,7 @@ public class SujetAction extends AbstractAction {
             rechercheSujetForm.setSociete(societeForm);
             rechercheSujetForm.setEntiteCardexLiaison((EntiteCardexForm) ((SocieteForm) form).clone() );
         }else {
-            log.severe("L'objet source de la liaison sujet n'est pas de type valide(sujet,societe,dossier,vehicule)");
+            log.error("L'objet source de la liaison sujet n'est pas de type valide(sujet,societe,dossier,vehicule)");
             return mapping.findForward("error");
         }
 
@@ -302,7 +302,7 @@ public class SujetAction extends AbstractAction {
                                 HttpServletResponse response) throws IOException,
                                 ServletException {
 
-        log.fine("Cr�ation d'un nouveau sujet");
+        log.debug("Cr�ation d'un nouveau sujet");
 
         SujetForm sujetForm = (SujetForm) form;
         sujetForm.init(subject);
@@ -349,7 +349,7 @@ public class SujetAction extends AbstractAction {
             HttpServletResponse response) throws IOException,
             ServletException {
 
-		log.fine("Cr�ation d'un nouveau sujet par un agent de s�curit�");
+		log.debug("Cr�ation d'un nouveau sujet par un agent de s�curit�");
 
 		ActionMessages errors = new ActionMessages();
         SujetForm sujetForm = new SujetForm();
@@ -401,7 +401,7 @@ public class SujetAction extends AbstractAction {
                               HttpServletResponse response) throws IOException,
                               ServletException {
 
-        log.fine("Sauvegarde de la cr�ation d'un nouveau sujet");
+        log.debug("Sauvegarde de la cr�ation d'un nouveau sujet");
 
         ActionMessages errors = new ActionMessages();
 		Sujet newSujet = new SujetVO();
@@ -414,9 +414,9 @@ public class SujetAction extends AbstractAction {
 			ValueObjectMapper.convertSujetHtmlForm(newSujetForm, newSujet,
 					subject.getLocale());
 
-			log.fine("Sujet � cr�er : " + newSujet);
+			log.debug("Sujet � cr�er : " + newSujet);
 			Sujet criteria = sujetDelegate.create(subject, newSujet);
-			log.fine("# Cl� de sujet retourn� : " + newSujet.getCle());
+			log.debug("# Cl� de sujet retourn� : " + newSujet.getCle());
 
 			//V�rification d'un mandat PSU associ� � la cr�ation d'un sujet par
 			// nom
@@ -433,7 +433,7 @@ public class SujetAction extends AbstractAction {
 			}
 
 			Sujet sujetCreated = sujetDelegate.find(subject, criteria);
-			log.fine("Sujet cr�� : " + sujetCreated);
+			log.debug("Sujet cr�� : " + sujetCreated);
 
 			if (newSujetForm.getEntiteCardexLiaison() != null){
 				//On fait la liaison automatique avec le module reli�
@@ -510,7 +510,7 @@ public class SujetAction extends AbstractAction {
                               HttpServletResponse response) throws IOException,
                               ServletException {
 
-        log.fine("Acc�s � un sujet");
+        log.debug("Acc�s � un sujet");
 
         ActionMessages errors = new ActionMessages();
 
@@ -519,12 +519,12 @@ public class SujetAction extends AbstractAction {
             SujetForm  sujetForm = (SujetForm) form;
             Sujet      sujet     = new SujetVO();
             
-            log.fine("Sujet recherch�: " + sujetForm.toString());
+            log.debug("Sujet recherch�: " + sujetForm.toString());
 
             if (AideController.isNullOrEquals(sujetForm.getMotPasse(),sujetForm.getConfirmationMotPasse()) ) {
               ValueObjectMapper.convertSujetHtmlForm(sujetForm, sujet,subject.getLocale());
               sujet = sujetDelegate.find(subject, sujet);
-              log.fine("Sujet trouv�: " + sujet.toString());
+              log.debug("Sujet trouv�: " + sujet.toString());
               ValueObjectMapper.convertSujet(sujet, sujetForm,subject.getLocale());
               //sujetForm.setNew(false);
               populateSujetFormShow(subject, sujet, sujetForm);
@@ -542,7 +542,7 @@ public class SujetAction extends AbstractAction {
               if (nbOfAttemps < GlobalConstants.MotDePasse.MAX_ATTEMPS) {
                 ValueObjectMapper.convertSujetHtmlForm(sujetForm, sujet,subject.getLocale());
                 sujet = sujetDelegate.findAcces(subject, sujet);
-                log.fine("Sujet prot�g�: " + sujet.toString());
+                log.debug("Sujet prot�g�: " + sujet.toString());
                 ValueObjectMapper.convertSujet(sujet, sujetForm,subject.getLocale());
                 populateSujetForm(subject, sujet, sujetForm);
                 sujetForm.setConfirmationMotPasse("");
@@ -584,7 +584,7 @@ public class SujetAction extends AbstractAction {
 			ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException {
 
-		log.fine("Acc�s � un sujet");
+		log.debug("Acc�s � un sujet");
 
 		ActionMessages errors = new ActionMessages();
 
@@ -593,13 +593,13 @@ public class SujetAction extends AbstractAction {
 			SujetForm sujetForm = (SujetForm) form;
 			Sujet sujet = new SujetVO();
 
-			log.fine("Sujet recherch�: " + sujetForm.toString());
+			log.debug("Sujet recherch�: " + sujetForm.toString());
 
 			ValueObjectMapper.convertSujetHtmlForm(sujetForm, sujet,
 					subject.getLocale());
-			log.fine("Avant recherche");
+			log.debug("Avant recherche");
 			sujet = sujetDelegate.find(subject, sujet);
-			log.fine("Sujet trouv�: " + sujet.toString());
+			log.debug("Sujet trouv�: " + sujet.toString());
 			ValueObjectMapper.convertSujet(sujet, sujetForm, subject
 					.getLocale());
 			sujetForm.setNew(false);
@@ -608,7 +608,7 @@ public class SujetAction extends AbstractAction {
 			request.getSession().setAttribute(
 					GlobalConstants.MotDePasse.SUJET_ATTEMPS,
 					new Integer(0));
-			log.fine("Avant retour");
+			log.debug("Avant retour");
 			return mapping.findForward("success");
 
 		} catch (BusinessResourceException bre) {
@@ -642,7 +642,7 @@ public class SujetAction extends AbstractAction {
                                   HttpServletRequest request,
                                   HttpServletResponse response) throws IOException,
                                   ServletException {
-        log.fine("Liaison d'un sujet");
+        log.debug("Liaison d'un sujet");
 
         return mapping.findForward("success");
     }    
@@ -668,7 +668,7 @@ public class SujetAction extends AbstractAction {
                               HttpServletResponse response) throws IOException,
                               ServletException {
 
-        log.fine("Acc�s � un sujet");
+        log.debug("Acc�s � un sujet");
 
         ActionMessages errors = new ActionMessages();
 
@@ -678,12 +678,12 @@ public class SujetAction extends AbstractAction {
             SujetForm   sujetForm 	= (SujetForm) form;
             Sujet       sujet 		= new SujetVO();
             
-            log.fine("Sujet recherch�: " + sujetForm.toString());
+            log.debug("Sujet recherch�: " + sujetForm.toString());
 
             if (AideController.isNullOrEquals(sujetForm.getMotPasse(),sujetForm.getConfirmationMotPasse()) ) {
               ValueObjectMapper.convertSujetHtmlForm(sujetForm, sujet,subject.getLocale());
               sujet = sujetDelegate.findAcces(subject, sujet);
-              log.fine("Sujet trouv�: " + sujet.toString());
+              log.debug("Sujet trouv�: " + sujet.toString());
               sujetForm.init(subject);
 
               ValueObjectMapper.convertSujet(sujet, sujetForm,subject.getLocale());
@@ -707,7 +707,7 @@ public class SujetAction extends AbstractAction {
               if (nbOfAttemps < GlobalConstants.MotDePasse.MAX_ATTEMPS) {
                 ValueObjectMapper.convertSujetHtmlForm(sujetForm, sujet,subject.getLocale());
                 sujet = sujetDelegate.findAcces(subject, sujet);
-                log.fine("Sujet prot�g�: " + sujet.toString());
+                log.debug("Sujet prot�g�: " + sujet.toString());
                 sujetForm.init(subject);
                 ValueObjectMapper.convertSujet(sujet, sujetForm,subject.getLocale());
                 populateSujetForm(subject, sujet, sujetForm);
@@ -769,7 +769,7 @@ public class SujetAction extends AbstractAction {
                                 ServletException {
 
 
-        log.fine("Mise � jour d'un sujet");
+        log.debug("Mise � jour d'un sujet");
 
         ActionMessages errors = new ActionMessages();
 
@@ -791,10 +791,10 @@ public class SujetAction extends AbstractAction {
                 sujetForm.getAjoutPhoto().setExtension(sujetForm.getAjoutPhoto().getExtensionDeFilePath());                
                 //Est ce que la taille du fichier exc�de la taille maximale accept�e?
                 if (sujetForm.getAjoutPhoto().isTailleAccepte() == false) {
-                    log.severe("La taille du fichier est sup�rieure � 7MB.");
+                    log.error("La taille du fichier est sup�rieure � 7MB.");
                     throw (new BusinessRuleExceptionHandle("erreur_fichier")).getBusinessException();
                 }else if(sujetForm.getAjoutPhoto().isPhoto() == false){
-                    log.severe("Ce fichier n'est pas une photo");
+                    log.error("Ce fichier n'est pas une photo");
                     throw (new BusinessRuleExceptionHandle("erreur.ajout.type.photo")).getBusinessException();
                 }else{
 	            	sujetForm.getAjoutPhoto().setLien(sujetForm.getCle());
@@ -803,7 +803,7 @@ public class SujetAction extends AbstractAction {
 	            	addLienPhotoAjout(subject, mapping, sujetForm.getAjoutPhoto(), request, response);
                 }
             }else{ //Sinon, on fait la mise � jour de la fiche sujet.
-	            log.fine("Mise � jour du sujet: " + sujet.toString());
+	            log.debug("Mise � jour du sujet: " + sujet.toString());
 	            sujetDelegate.update(subject, sujet);
 	            
 				//V�rification d'un mandat PSU associ� � la mise � jour d'un sujet
@@ -871,7 +871,7 @@ public class SujetAction extends AbstractAction {
                                 ServletException {
 
 
-        log.fine("Retour de la consultation d'un sujet");
+        log.debug("Retour de la consultation d'un sujet");
 
         //ActionMessages errors = new ActionMessages();
 
@@ -906,7 +906,7 @@ public class SujetAction extends AbstractAction {
     ServletException {
 
 
-    	log.fine("Mise � jour d'un sujet");
+    	log.debug("Mise � jour d'un sujet");
 
 		ActionMessages errors = new ActionMessages();
 
@@ -918,7 +918,7 @@ public class SujetAction extends AbstractAction {
 
 			ValueObjectMapper.convertSujetHtmlForm((SujetForm) form, sujet,
 					subject.getLocale());
-			log.fine("Mise � jour du sujet: " + sujet.toString());
+			log.debug("Mise � jour du sujet: " + sujet.toString());
 			sujetDelegate.update(subject, sujet);
 
 			//V�rification d'un mandat PSU associ� � la mise � jour d'un sujet
@@ -932,7 +932,7 @@ public class SujetAction extends AbstractAction {
 			if (sujet != null) {
 				ValueObjectMapper.convertSujet(sujet, sujetForm, subject
 						.getLocale());
-				log.fine("Modification effective du sujet: "
+				log.debug("Modification effective du sujet: "
 						+ sujet.toString());
 			}
 
@@ -974,7 +974,7 @@ public class SujetAction extends AbstractAction {
                                         HttpServletRequest request,
                                         HttpServletResponse response) throws IOException,
                                         ServletException {
-        log.fine("Liaison d'un dossier");
+        log.debug("Liaison d'un dossier");
 
         ActionMessages errors = new ActionMessages();
 
@@ -998,7 +998,7 @@ public class SujetAction extends AbstractAction {
             dossier.setTypeLien(lienForm.getTypeLien());
             dossier.setRole(Long.parseLong(lienForm.getRole()));
 
-            log.fine(lienForm.toString());
+            log.debug(lienForm.toString());
             delegate.addLienDossier(subject, sujet,
                                     dossier);
             populateSujetForm(subject, sujet, sujetForm);
@@ -1057,7 +1057,7 @@ public class SujetAction extends AbstractAction {
                                         HttpServletRequest request,
                                         HttpServletResponse response) throws IOException,
                                         ServletException {
-        log.fine("Liaison d'un societe");
+        log.debug("Liaison d'un societe");
 
         ActionMessages errors = new ActionMessages();
 
@@ -1081,7 +1081,7 @@ public class SujetAction extends AbstractAction {
             societe.setTypeLien(lienForm.getTypeLien());
             societe.setRole(Long.parseLong(lienForm.getRole()));
 
-            log.fine(lienForm.toString());
+            log.debug(lienForm.toString());
             delegate.addLienSociete(subject, sujet,
                                     societe);
             populateSujetForm(subject, sujet, sujetForm);
@@ -1149,7 +1149,7 @@ public class SujetAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Mise � jour des liens caract�ristiques avec audit");
+        log.debug("Mise � jour des liens caract�ristiques avec audit");
 
         ActionMessages errors = new ActionMessages();
 
@@ -1202,7 +1202,7 @@ public class SujetAction extends AbstractAction {
                                         HttpServletRequest request,
                                         HttpServletResponse response) throws IOException,
                                         ServletException {
-        log.fine("Liaison d'un sujet");
+        log.debug("Liaison d'un sujet");
 
         ActionMessages errors = new ActionMessages();
 
@@ -1225,7 +1225,7 @@ public class SujetAction extends AbstractAction {
             sujetDestination.setSite(lienForm.getSiteDestination());
             sujetDestination.setTypeLien(lienForm.getTypeLien());
             sujetDestination.setRole(Long.parseLong(lienForm.getRole()));
-            log.fine(lienForm.toString());
+            log.debug(lienForm.toString());
             delegate.addLienSujet(subject, sujetOrigine,
                                     sujetDestination);
             populateSujetForm(subject, sujetOrigine, sujetForm);
@@ -1286,7 +1286,7 @@ public class SujetAction extends AbstractAction {
                                         HttpServletRequest request,
                                         HttpServletResponse response) throws IOException,
                                         ServletException {
-        log.fine("Liaison d'un v�hicule");
+        log.debug("Liaison d'un v�hicule");
 
         ActionMessages errors = new ActionMessages();
 
@@ -1310,7 +1310,7 @@ public class SujetAction extends AbstractAction {
             vehicule.setTypeLien(lienForm.getTypeLien());
             vehicule.setRole(GlobalConstants.Role.SANS_OBJET);
 
-            log.fine(lienForm.toString());
+            log.debug(lienForm.toString());
             delegate.addLienVehicule(subject, sujet,
                                     vehicule);
             populateSujetForm(subject, sujet, sujetForm);
@@ -1372,7 +1372,7 @@ public class SujetAction extends AbstractAction {
                                            HttpServletRequest request,
                                            HttpServletResponse response) throws IOException,
                                            ServletException {
-        log.fine("Destruction d'un lien dossier");
+        log.debug("Destruction d'un lien dossier");
 
         ActionMessages errors = new ActionMessages();
 
@@ -1400,7 +1400,7 @@ public class SujetAction extends AbstractAction {
             dossier.setLien(lienForm.getCle());
             dossier.setLienSite(lienForm.getSite());
 
-            log.fine(lienForm.toString());
+            log.debug(lienForm.toString());
             delegate.deleteLienDossier(subject,sujet,dossier);
             populateSujetForm(subject, sujet, sujetForm);
             assignerNouveauSujet(request, sujetForm);
@@ -1450,7 +1450,7 @@ public class SujetAction extends AbstractAction {
                                            HttpServletRequest request,
                                            HttpServletResponse response) throws IOException,
                                            ServletException {
-        log.fine("Destruction d'un lien societe");
+        log.debug("Destruction d'un lien societe");
 
         ActionMessages errors = new ActionMessages();
 
@@ -1479,7 +1479,7 @@ public class SujetAction extends AbstractAction {
             societe.setLien(lienForm.getCle());
             societe.setLienSite(lienForm.getSite());
 
-            log.fine(lienForm.toString());
+            log.debug(lienForm.toString());
             delegate.deleteLienSociete(subject,sujet,societe);
             populateSujetForm(subject, sujet, sujetForm);
             assignerNouveauSujet(request, sujetForm);
@@ -1529,7 +1529,7 @@ public class SujetAction extends AbstractAction {
                                            HttpServletRequest request,
                                            HttpServletResponse response) throws IOException,
                                            ServletException {
-        log.fine("Destruction d'un lien vehicule");
+        log.debug("Destruction d'un lien vehicule");
 
         ActionMessages errors = new ActionMessages();
 
@@ -1557,7 +1557,7 @@ public class SujetAction extends AbstractAction {
             vehicule.setLien(lienForm.getCle());
             vehicule.setLienSite(lienForm.getSite());
 
-            log.fine(lienForm.toString());
+            log.debug(lienForm.toString());
             delegate.deleteLienVehicule(subject,sujet,vehicule);
             populateSujetForm(subject, sujet, sujetForm);
             assignerNouveauSujet(request, sujetForm);
@@ -1607,7 +1607,7 @@ public class SujetAction extends AbstractAction {
                                            HttpServletRequest request,
                                            HttpServletResponse response) throws IOException,
                                            ServletException {
-        log.fine("Destruction d'un lien sujet");
+        log.debug("Destruction d'un lien sujet");
 
         ActionMessages errors = new ActionMessages();
 
@@ -1636,7 +1636,7 @@ public class SujetAction extends AbstractAction {
             sujetDestination.setLien(lienForm.getCle());
             sujetDestination.setLienSite(lienForm.getSite());
 
-            log.fine(lienForm.toString());
+            log.debug(lienForm.toString());
             delegate.deleteLienSujet(subject, sujetOrigine,
                                        sujetDestination);
             populateSujetForm(subject, sujetOrigine, sujetForm);
@@ -1685,7 +1685,7 @@ public class SujetAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Liaison d'une narration � un sujet.");
+        log.debug("Liaison d'une narration � un sujet.");
         ActionMessages errors = new ActionMessages();
         ActionMessages messages = new ActionMessages();
 
@@ -1700,8 +1700,8 @@ public class SujetAction extends AbstractAction {
                     subject.getLocale());
             ValueObjectMapper.convertNarrationHtmlForm(narrationForm, narration,
                     subject.getLocale());
-            log.fine("Sujet: " + sujet);
-            log.fine("Narration: " + narration);
+            log.debug("Sujet: " + sujet);
+            log.debug("Narration: " + narration);
             NarrationBaliseUtil.assignerMessageSiNarrationANettoyer(messages, narrationForm.getNarrationAvecFormat());
             delegate.addLienNarration(subject,sujet,narration);
             populateSujetForm(subject, sujet, sujetForm);
@@ -1786,7 +1786,7 @@ public class SujetAction extends AbstractAction {
             SujetForm sujetForm = new SujetForm();
             Photo photo = new PhotoVO();
             Sujet sujet = new SujetVO();
-            log.fine("PhotoForm a li�e : " + photoForm);
+            log.debug("PhotoForm a li�e : " + photoForm);
 
             sujetForm.init(subject);
             sujetForm.setCle(photoForm.getLien());
@@ -1799,19 +1799,19 @@ public class SujetAction extends AbstractAction {
             
             //Est ce que la taille du fichier exc�de 4MB
             if (photoForm.isTailleAccepte() == false) {
-                log.severe("La taille du fichier est sup�rieure � 4MB.");
+                log.error("La taille du fichier est sup�rieure � 4MB.");
                 return mapping.findForward("error");
             }else if(photoForm.isPhoto() == false){
-                log.severe("Ce fichier n'est pas une photo");
+                log.error("Ce fichier n'est pas une photo");
                 throw (new BusinessRuleExceptionHandle("erreur.ajout.type.photo")).getBusinessException();
             }else{
             	byte[] data = file.getFileData();
             	photo.setImage( data );
             	
-	            log.fine("Photo a li�e : " + photo);
+	            log.debug("Photo a li�e : " + photo);
 	            photo = delegate.addLienPhoto(subject,sujet,photo);
 	            
-	            log.fine("Photo li�e : " + photo);
+	            log.debug("Photo li�e : " + photo);
 	            file.destroy();
 				populateSujetForm(subject, sujet, sujetForm);
 				assignerNouveauSujet(request, sujetForm);
@@ -1867,7 +1867,7 @@ public class SujetAction extends AbstractAction {
             SujetForm sujetForm = new SujetForm();
             Photo photo = new PhotoVO();
             Sujet sujet = new SujetVO();
-            log.fine("PhotoForm a li�e : " + photoForm);
+            log.debug("PhotoForm a li�e : " + photoForm);
 
             sujetForm.init(subject);
             sujetForm.setCle(photoForm.getLien());
@@ -1878,7 +1878,7 @@ public class SujetAction extends AbstractAction {
             FormFile   file = photoForm.getUploadImage();
         	byte[] data = file.getFileData();
         	photo.setImage( data );
-            log.fine("Photo a li�e : " + photo);
+            log.debug("Photo a li�e : " + photo);
             photo = delegate.addLienPhoto(subject,sujet,photo);
             //file.destroy();
 
@@ -1913,7 +1913,7 @@ public class SujetAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Suppression d'un lien entre une adresse et un sujet.");
+        log.debug("Suppression d'un lien entre une adresse et un sujet.");
         ActionMessages errors = new ActionMessages();
 
         try {
@@ -1930,8 +1930,8 @@ public class SujetAction extends AbstractAction {
                     subject.getLocale());
             ValueObjectMapper.convertAdresseHtmlForm(adresseForm, adresse,
                     subject.getLocale());
-            log.fine("Sujet: " + sujet);
-            log.fine("Adresse: " + adresse);
+            log.debug("Sujet: " + sujet);
+            log.debug("Adresse: " + adresse);
             delegate.addLienAdresse(subject,sujet,adresse);
             populateSujetForm(subject, sujet, sujetForm);
             assignerNouveauSujet(request, sujetForm);
@@ -1977,7 +1977,7 @@ public class SujetAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Suppression d'un lien entre une photo et un sujet.");
+        log.debug("Suppression d'un lien entre une photo et un sujet.");
         ActionMessages errors = new ActionMessages();
 
         try {
@@ -1994,8 +1994,8 @@ public class SujetAction extends AbstractAction {
                     subject.getLocale());
             ValueObjectMapper.convertPhotoHtmlForm(photoForm, photo,
                     subject.getLocale());
-            log.fine("Sujet: " + sujet);
-            log.fine("Photo: " + photo);
+            log.debug("Sujet: " + sujet);
+            log.debug("Photo: " + photo);
             delegate.deleteLienPhoto(subject,sujet,photo);
             //delegate.selectionnerDernierePhotoGalerie(subject, sujet);
             populateSujetForm(subject, sujet, sujetForm);
@@ -2041,7 +2041,7 @@ public class SujetAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Suppression d'un lien entre une narration et un sujet.");
+        log.debug("Suppression d'un lien entre une narration et un sujet.");
         ActionMessages errors = new ActionMessages();
 
         try {
@@ -2058,8 +2058,8 @@ public class SujetAction extends AbstractAction {
                     subject.getLocale());
             ValueObjectMapper.convertNarrationHtmlForm(narrationForm, narration,
                     subject.getLocale());
-            log.fine("Sujet: " + sujet);
-            log.fine("Narration: " + narration);
+            log.debug("Sujet: " + sujet);
+            log.debug("Narration: " + narration);
             delegate.deleteLienNarration(subject,sujet,narration);
             populateSujetForm(subject, sujet, sujetForm);
             assignerNouveauSujet(request, sujetForm);
@@ -2104,7 +2104,7 @@ public class SujetAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Suppression d'un lien entre une adresse et un sujet.");
+        log.debug("Suppression d'un lien entre une adresse et un sujet.");
         ActionMessages errors = new ActionMessages();
 
         try {
@@ -2121,8 +2121,8 @@ public class SujetAction extends AbstractAction {
                     subject.getLocale());
             ValueObjectMapper.convertAdresseHtmlForm(adresseForm, adresse,
                     subject.getLocale());
-            log.fine("Sujet: " + sujet);
-            log.fine("Adresse: " + adresse);
+            log.debug("Sujet: " + sujet);
+            log.debug("Adresse: " + adresse);
             delegate.deleteLienAdresse(subject,sujet,adresse);
             populateSujetForm(subject, sujet, sujetForm);
             assignerNouveauSujet(request, sujetForm);
@@ -2173,7 +2173,7 @@ public class SujetAction extends AbstractAction {
                                 HttpServletRequest request,
                                 HttpServletResponse response) throws IOException, DAOException,
                                 ServletException {
-        log.fine("�puration des sujets");
+        log.debug("�puration des sujets");
 
         ActionMessages errors = new ActionMessages();
         ResultSet resultSet = null;
@@ -2193,18 +2193,18 @@ public class SujetAction extends AbstractAction {
 			String siteDescription = cache.obtenirLabel(subject, String.valueOf(utilisateur.getSite()), new TableValeurCleSQLListeCache(subject, GlobalConstants.TableValeur.SITE, utilisateur.getEntite(), GlobalConstants.ActionSecurite.SELECTION));
     		String nomRapport = chemin+"Sujets � �purer "+ siteDescription + " (" + dateRapport+").pdf";
     		InputStream gabarit = getClass().getClassLoader().getResourceAsStream("rapports/" + RapportsConfiguration.RAPPORT_EPURATION_SUJETS);
-			log.fine("Sauvegarder sujets � �purer");
+			log.debug("Sauvegarder sujets � �purer");
 			long site = utilisateur.getSite();
 			resultSet = rapportDelegate.rapportEpuration(site, connection, "CARDEX_RAPPORT.SP_RAP_SU_EPURATION");
 			JRResultSetDataSource resultSetDataSource = new JRResultSetDataSource(resultSet);
-			// log.fine(context.getRealPath("/rapports/"));
+			// log.debug(context.getRealPath("/rapports/"));
 			ServletContext context = request.getSession().getServletContext();  
 	        parameters.put("SUBREPORT_DIR",context.getRealPath("/rapports/"));
             parameters.put("REPORT_CONNECTION",connection);
 			parameters.put("UTILISATEUR", utilisateur.getCode());
 			JasperPrint print = JasperFillManager.fillReport(gabarit, parameters, resultSetDataSource);
 			// Sauvegarde dans un fichier
-			log.fine("�puration des sujets (Sauvegarde dans un fichier)");
+			log.debug("�puration des sujets (Sauvegarde dans un fichier)");
 			(new PDFImpressionRapport()).impression(nomRapport, print);
 			//On proc�de ensuite � l'�puration
 			SujetBusinessDelegate sujetDelegate =
@@ -2247,7 +2247,7 @@ public class SujetAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Mise � jour d'un lien entre une narration et un sujet.");
+        log.debug("Mise � jour d'un lien entre une narration et un sujet.");
         ActionMessages errors = new ActionMessages();
 
         try {
@@ -2264,8 +2264,8 @@ public class SujetAction extends AbstractAction {
                     subject.getLocale());
             ValueObjectMapper.convertNarrationHtmlForm(narrationForm, narration,
                     subject.getLocale());
-            log.fine("Sujet: " + sujet);
-            log.fine("Narration: " + narration);
+            log.debug("Sujet: " + sujet);
+            log.debug("Narration: " + narration);
             delegate.updateLienNarration(subject,narration);
             populateSujetForm(subject, sujet, sujetForm);
             assignerNouveauSujet(request, sujetForm);
@@ -2313,7 +2313,7 @@ public class SujetAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Approbation d'une narration li�e � un sujet.");
+        log.debug("Approbation d'une narration li�e � un sujet.");
         ActionMessages errors = new ActionMessages();
         CardexUser user = (CardexUser)subject.getUser();
         CardexPrivilege privilege = (CardexPrivilege)subject.getPrivilege();
@@ -2338,8 +2338,8 @@ public class SujetAction extends AbstractAction {
                     subject.getLocale());
             ValueObjectMapper.convertNarrationHtmlForm(narrationForm, narration,
                     subject.getLocale());
-            log.fine("Sujet: " + sujet);
-            log.fine("Narration: " + narration);
+            log.debug("Sujet: " + sujet);
+            log.debug("Narration: " + narration);
             delegate.approuveLienNarration(subject,narration);
             populateSujetForm(subject, sujet, sujetForm);
             assignerNouveauSujet(request, sujetForm);
@@ -2375,7 +2375,7 @@ public class SujetAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Permettre la modification d'une narration li�e � un sujet.");
+        log.debug("Permettre la modification d'une narration li�e � un sujet.");
         ActionMessages errors = new ActionMessages();
 
         try {
@@ -2397,8 +2397,8 @@ public class SujetAction extends AbstractAction {
                     subject.getLocale());
             ValueObjectMapper.convertNarrationHtmlForm(narrationForm, narration,
                     subject.getLocale());
-            log.fine("Sujet: " + sujet);
-            log.fine("Narration: " + narration);
+            log.debug("Sujet: " + sujet);
+            log.debug("Narration: " + narration);
             delegate.approuveLienNarration(subject,narration);
             populateSujetForm(subject, sujet, sujetForm);
             request.getSession().setAttribute("sujet", sujetForm);
@@ -2434,7 +2434,7 @@ public class SujetAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Mise � jour d'un lien entre une adresse et un sujet.");
+        log.debug("Mise � jour d'un lien entre une adresse et un sujet.");
         ActionMessages errors = new ActionMessages();
 
         try {
@@ -2451,8 +2451,8 @@ public class SujetAction extends AbstractAction {
                     subject.getLocale());
             ValueObjectMapper.convertAdresseHtmlForm(adresseForm, adresse,
                     subject.getLocale());
-            log.fine("Sujet: " + sujet);
-            log.fine("Adresse: " + adresse);
+            log.debug("Sujet: " + sujet);
+            log.debug("Adresse: " + adresse);
             delegate.updateLienAdresse(subject,adresse);
             populateSujetForm(subject, sujet, sujetForm);
             assignerNouveauSujet(request, sujetForm);
@@ -2492,7 +2492,7 @@ public class SujetAction extends AbstractAction {
         Sujet sujet = delegate.find(subject, criteria);
 
         sujetForm.resetOnglets();
-        //log.fine("Sujet trouv�: " + sujet.toString());
+        //log.debug("Sujet trouv�: " + sujet.toString());
         ValueObjectMapper.convertSujet(sujet, sujetForm, subject.getLocale());
         sujetForm.setConfirmationMotPasse(sujetForm.getMotPasse());
         rechercheLiensSujet(subject, sujet, sujetForm, delegate);
@@ -2520,7 +2520,7 @@ public class SujetAction extends AbstractAction {
         DossierBusinessDelegate dossierDelegate = new DossierBusinessDelegate();
 		Collection liensSujet = delegate.findLiensSujet(subject,sujet);
         Iterator   it = liensSujet.iterator();
-        log.fine("Sujet li�s (" + liensSujet.size() + ") :");
+        log.debug("Sujet li�s (" + liensSujet.size() + ") :");
         while (it.hasNext()) {
             Sujet     linkSujet = (Sujet) it.next();
             SujetForm linkSujetForm = new SujetForm();
@@ -2530,7 +2530,7 @@ public class SujetAction extends AbstractAction {
                     subject.getLocale());
             linkSujetForm.assignerValeurDeListe(subject);
             sujetForm.addSujet(linkSujetForm);
-            log.fine(linkSujet.toString());
+            log.debug(linkSujet.toString());
         }
         sujetForm.getListeSujets().assignerTrierDefault(SujetOngletTrieListe.CLE_NOM, false, new SujetOngletTrieListe());
         
@@ -2539,7 +2539,7 @@ public class SujetAction extends AbstractAction {
                 sujet);
         it = liensNarration.iterator();
 
-        log.fine("Narration li�s (" + liensNarration.size() + ") :");
+        log.debug("Narration li�s (" + liensNarration.size() + ") :");
 
         while (it.hasNext()) {
             Narration     linkNarration = (Narration) it.next();
@@ -2553,7 +2553,7 @@ public class SujetAction extends AbstractAction {
                     subject.getLocale());
             linkNarrationForm.assignerValeurDeListe( subject );
             sujetForm.addNarration(linkNarrationForm);
-            log.fine(linkNarration.toString());
+            log.debug(linkNarration.toString());
         }
         sujetForm.getListeNarrations().assignerTrierDefault(NarrationOngletTrieListe.CLE_DATE_CREATION, true, new NarrationOngletTrieListe());
 
@@ -2561,7 +2561,7 @@ public class SujetAction extends AbstractAction {
         Collection liensDossier = findLiensDossier(subject, sujet, delegate);
         it = liensDossier.iterator();
 
-        log.fine("Dossier li�s (" + liensDossier.size() + ") :");
+        log.debug("Dossier li�s (" + liensDossier.size() + ") :");
 
         while (it.hasNext()) {
             Dossier     linkDossier = (Dossier) it.next();
@@ -2572,15 +2572,15 @@ public class SujetAction extends AbstractAction {
          // Recherche des liens jeux.  On n'effectue la recherche que pour les dossiers actifs
             if(linkDossierForm.getStatut().equals(GlobalConstants.Statut.DOSSIER_ACTIF)){
 		        Jeux liensJeux = dossierDelegate.findLiensJeux(subject,linkDossier);
-		        log.fine("Jeux li�s (" + liensJeux.getJeuxChoisis().size() + ") :");
+		        log.debug("Jeux li�s (" + liensJeux.getJeuxChoisis().size() + ") :");
 		        JeuxForm linkJeuxForm = new JeuxForm();
 		        ValueObjectMapper.convertJeux(subject, liensJeux,linkJeuxForm,subject.getLocale());
-		        log.fine(linkJeuxForm.toString());
+		        log.debug(linkJeuxForm.toString());
 		        linkDossierForm.setJeux(linkJeuxForm);
             }
             linkDossierForm.assignerValeurDeListe(subject);
             sujetForm.addDossier(linkDossierForm);
-            log.fine(linkDossier.toString());
+            log.debug(linkDossier.toString());
         }
         sujetForm.getListeDossiers().assignerTrierDefault(DossierOngletTrieListe.CLE_DATE_DEBUT, true, new DossierOngletTrieListe());        
 
@@ -2588,7 +2588,7 @@ public class SujetAction extends AbstractAction {
         Collection liensPhoto = delegate.findLiensPhoto(subject,
                 sujet);
         it = liensPhoto.iterator();
-        log.fine("Photos li�s (" + liensPhoto.size() + ") :");
+        log.debug("Photos li�s (" + liensPhoto.size() + ") :");
         
         while (it.hasNext()) {
             Collection sublist = new ArrayList();
@@ -2599,7 +2599,7 @@ public class SujetAction extends AbstractAction {
                 ValueObjectMapper.convertPhoto(linkPhoto, linkPhotoForm,
                         subject.getLocale());
                 sublist.add(linkPhotoForm);
-                log.fine(linkPhoto.toString());
+                log.debug(linkPhoto.toString());
               }//if
             }//for
             sujetForm.addPhoto(sublist);
@@ -2609,14 +2609,14 @@ public class SujetAction extends AbstractAction {
         Collection liensAdresse = delegate.findLiensAdresse(subject,
                 sujet);
         it = liensAdresse.iterator();
-        log.fine("Adresses li�s (" + liensAdresse.size() + ") :");
+        log.debug("Adresses li�s (" + liensAdresse.size() + ") :");
 
         while (it.hasNext()) {
             Adresse     linkAdresse = (Adresse) it.next();
             AdresseForm linkAdresseForm = new AdresseForm();
             ValueObjectMapper.convertAdresse(linkAdresse, linkAdresseForm,
                     subject.getLocale());
-            log.fine(linkAdresse.toString());
+            log.debug(linkAdresse.toString());
             linkAdresseForm.assignerValeurDeListe( subject );
             sujetForm.addAdresse(linkAdresseForm);
         }//while
@@ -2625,7 +2625,7 @@ public class SujetAction extends AbstractAction {
         // Recherche des liens caracteristiques
         Caracteristiques liensCaracteristiques = delegate.findLiensCaracteristique(subject,
                 sujet);
-        log.fine("Caracteristiques li�s (" + liensCaracteristiques.getCaracteristiquesChoisis().size() + ") :");
+        log.debug("Caracteristiques li�s (" + liensCaracteristiques.getCaracteristiquesChoisis().size() + ") :");
         CaracteristiquesForm linkCaracteristiquesForm = new CaracteristiquesForm();
         ValueObjectMapper.convertCaracteristiques(subject, liensCaracteristiques,linkCaracteristiquesForm,subject.getLocale());
         sujetForm.setCaracteristiques(linkCaracteristiquesForm);
@@ -2635,7 +2635,7 @@ public class SujetAction extends AbstractAction {
                 sujet);
         it = liensSociete.iterator();
 
-        log.fine("Societe li�s (" + liensSociete.size() + ") :");
+        log.debug("Societe li�s (" + liensSociete.size() + ") :");
 
         while (it.hasNext()) {
             Societe     linkSociete = (Societe) it.next();
@@ -2646,7 +2646,7 @@ public class SujetAction extends AbstractAction {
             linkSocieteForm.assignerValeurDeListe( subject );
             linkSocieteForm.assignerPermettreSuppressionLiaison(subject,sujetForm);
             sujetForm.addSociete(linkSocieteForm);
-            log.fine(linkSociete.toString());
+            log.debug(linkSociete.toString());
         }
         sujetForm.getListeSocietes().assignerTrierDefault(SocieteOngletTrieListe.CLE_NOM, false, new SocieteOngletTrieListe());
 
@@ -2654,7 +2654,7 @@ public class SujetAction extends AbstractAction {
         Collection liensVehicule = delegate.findLiensVehicule(subject,
                 sujet);
         it = liensVehicule.iterator();
-        log.fine("Vehicule li�s (" + liensVehicule.size() + ") :");
+        log.debug("Vehicule li�s (" + liensVehicule.size() + ") :");
         while (it.hasNext()) {
             Vehicule     linkVehicule = (Vehicule) it.next();
             VehiculeForm linkVehiculeForm = new VehiculeForm();
@@ -2662,7 +2662,7 @@ public class SujetAction extends AbstractAction {
                     subject.getLocale());
             linkVehiculeForm.assignerValeurDeListe( subject );
             sujetForm.addVehicule(linkVehiculeForm);
-            log.fine(linkVehicule.toString());
+            log.debug(linkVehicule.toString());
         }
         sujetForm.getListeVehicules().assignerTrierDefault(VehiculeOngletTrieListe.CLE_IMMATRICULATION, false, new VehiculeOngletTrieListe());
 
@@ -2700,7 +2700,7 @@ public class SujetAction extends AbstractAction {
                                      ValueObjectMapperException {
         SujetBusinessDelegate delegate = new SujetBusinessDelegate();
         sujetForm.resetOnglets();
-        //log.fine("Sujet trouv�: " + sujet.toString());
+        //log.debug("Sujet trouv�: " + sujet.toString());
         sujetForm.setConfirmationMotPasse(sujetForm.getMotPasse());
         rechercheLiensSujet(subject, sujet, sujetForm, delegate);
     }
@@ -2730,7 +2730,7 @@ public class SujetAction extends AbstractAction {
                                        HttpServletRequest request,
                                        HttpServletResponse response) throws IOException,
                                        ServletException {
-        log.fine("Param�tres de recherche par d�fault de sujet");
+        log.debug("Param�tres de recherche par d�fault de sujet");
 
         ActionMessages errors = new ActionMessages();
 
@@ -2774,7 +2774,7 @@ public class SujetAction extends AbstractAction {
                                        HttpServletRequest request,
                                        HttpServletResponse response) throws IOException,
                                        ServletException {
-        log.fine("Param�tres de recherche par d�fault de sujet en mode liaison");
+        log.debug("Param�tres de recherche par d�fault de sujet en mode liaison");
 
         ActionMessages errors = new ActionMessages();
 
@@ -2840,18 +2840,18 @@ public class SujetAction extends AbstractAction {
                                        HttpServletRequest request,
                                        HttpServletResponse response) throws IOException,
                                        ServletException {
-        log.fine("Recherche par d�fault de sujet");
+        log.debug("Recherche par d�fault de sujet");
 
         ActionMessages errors = new ActionMessages();
 
         try {
 			Cookie[] cookies = request.getCookies();
-			log.fine("cookies : " + cookies.length);
+			log.debug("cookies : " + cookies.length);
 			for (Enumeration enumeration=request.getHeaderNames(); enumeration.hasMoreElements();) {
 			    String headerName = (String)enumeration.nextElement();
-			    log.fine("Name = " + headerName);
+			    log.debug("Name = " + headerName);
 			}
-			log.fine("Header cookie : " + request.getHeader("cookie"));
+			log.debug("Header cookie : " + request.getHeader("cookie"));
             SujetBusinessDelegate delegate = new SujetBusinessDelegate();
             CriteresRechercheSujetForm criteresRechercheSujetHtmlForm = (CriteresRechercheSujetForm) form;
             CriteresRechercheSujetVO criteresRechercheSujet = new CriteresRechercheSujetVO();
@@ -2913,7 +2913,7 @@ public class SujetAction extends AbstractAction {
                                 HttpServletRequest request,
                                 HttpServletResponse response) throws IOException,
                                 ServletException {
-        log.fine("Recherche de sujet");
+        log.debug("Recherche de sujet");
 
         ActionMessages errors = new ActionMessages();
 
@@ -3017,7 +3017,7 @@ public class SujetAction extends AbstractAction {
                                        HttpServletRequest request,
                                        HttpServletResponse response) throws IOException,
                                        ServletException {
-        log.fine("Recherche de sujet");
+        log.debug("Recherche de sujet");
 
         ActionMessages errors = new ActionMessages();
 
@@ -3061,7 +3061,7 @@ public class SujetAction extends AbstractAction {
 	HttpServletRequest request,
 	HttpServletResponse response) throws IOException,
 	ServletException {
-    	log.fine("S�lectionner photo galerie sujet");
+    	log.debug("S�lectionner photo galerie sujet");
 		ActionMessages errors = new ActionMessages();
 
 		try {
@@ -3120,7 +3120,7 @@ public class SujetAction extends AbstractAction {
                                         HttpServletRequest request,
                                         HttpServletResponse response) throws IOException,
                                         ServletException {
-        log.fine("Mise � jour de la liaison dans un sujet");
+        log.debug("Mise � jour de la liaison dans un sujet");
 
         ActionMessages errors = new ActionMessages();
 
@@ -3173,7 +3173,7 @@ public class SujetAction extends AbstractAction {
                                         HttpServletRequest request,
                                         HttpServletResponse response) throws IOException,
                                         ServletException {
-        log.fine("Copie de donn�es de sujets");
+        log.debug("Copie de donn�es de sujets");
 
         ActionMessages errors = new ActionMessages();
 
@@ -3221,7 +3221,7 @@ public class SujetAction extends AbstractAction {
                                         HttpServletRequest request,
                                         HttpServletResponse response) throws IOException,
                                         ServletException {
-        log.fine("Recherche directe de sujets");
+        log.debug("Recherche directe de sujets");
 
         ActionMessages errors = new ActionMessages();
 

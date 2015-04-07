@@ -1,11 +1,11 @@
 package com.lotoquebec.cardex.ejb.flux;
 
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardex.integration.dao.FabriqueCardexDAO;
 import com.lotoquebec.cardexCommun.authentication.AutentificationCardex;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 
 /**
  * Supprimer les narrations temporaires qui existent depuis plus de 7 jours.
@@ -14,10 +14,10 @@ import com.lotoquebec.cardexCommun.log.LoggerCardex;
  */
 public class CDX00_00009_SupprimerNarrationTemporaire implements Flux{
 
-	private final static Logger log = (Logger)LoggerCardex.getLogger(CDX00_00009_SupprimerNarrationTemporaire.class);
+	private final static Logger log = LoggerFactory.getLogger(CDX00_00009_SupprimerNarrationTemporaire.class);
 	
 	public void execute() throws Exception {
-		log.fine("Entr�e flux CDX00_00009_SupprimerNarrationTemporaire");
+		log.info("Entr�e flux CDX00_00009_SupprimerNarrationTemporaire");
 		
 		try{
 			CardexAuthenticationSubject subject = AutentificationCardex.construireCardexAuthenticationSubjectSystem();
@@ -26,10 +26,10 @@ public class CDX00_00009_SupprimerNarrationTemporaire implements Flux{
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-			log.severe("Erreur dans le diff�r� CDX00_00009_SupprimerNarrationTemporaire");
+			log.error("Erreur dans le diff�r� CDX00_00009_SupprimerNarrationTemporaire");
         	throw new Exception(e);
 		} 
-		log.fine("Fin flux CDX00_00009_SupprimerNarrationTemporaire");
+		log.info("Fin flux CDX00_00009_SupprimerNarrationTemporaire");
 	}
 
 

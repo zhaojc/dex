@@ -8,7 +8,6 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +19,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardex.business.Dossier;
 import com.lotoquebec.cardex.business.Journal;
@@ -45,14 +46,13 @@ import com.lotoquebec.cardexCommun.exception.BusinessResourceException;
 import com.lotoquebec.cardexCommun.exception.ExceptionHandler;
 import com.lotoquebec.cardexCommun.exception.IteratorException;
 import com.lotoquebec.cardexCommun.exception.ValueObjectMapperException;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.presentation.util.AbstractAction;
 import com.lotoquebec.cardexCommun.text.TimestampFormat;
 import com.lotoquebec.cardexCommun.user.CardexPrivilege;
 import com.lotoquebec.cardexCommun.user.CardexUser;
 
 /**
- * Cette classe gère les événements en rapport
+ * Cette classe gï¿½re les ï¿½vï¿½nements en rapport
  * avec le cas d'utilisation gestion des journaux.
  *
  * @author $Author: mlibersan $
@@ -64,18 +64,18 @@ public class JournalAction extends AbstractAction {
      * L'instance du gestionnaire de journalisation.
      */
 	private final Logger      log =
-        (Logger)LoggerCardex.getLogger((this.getClass()));
+        LoggerFactory.getLogger((this.getClass()));
 
 
     /**
      *
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortieif an input/output survient
+     * @exception IOException si une erreur d'entrï¿½e/sortieif an input/output survient
      * @exception ServletException si une exception servlet survient
      * @throws InvocationTargetException
      * @throws IllegalAccessException
@@ -89,7 +89,7 @@ public class JournalAction extends AbstractAction {
                                  HttpServletRequest request,
                                  HttpServletResponse response) throws IOException,
                                  ServletException, SecurityException, IllegalArgumentException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
-        log.fine("Refresh ecran de recherche journal");
+        log.debug("Refresh ecran de recherche journal");
 
         // On vide la liste des journal car elle est plein de RapportJournalForm
         request.getSession().setAttribute(GlobalConstants.RechercheList.JOURNAL_CURRENT_LIST,new ArrayList());
@@ -99,13 +99,13 @@ public class JournalAction extends AbstractAction {
 
     /**
      *
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortieif an input/output survient
+     * @exception IOException si une erreur d'entrï¿½e/sortieif an input/output survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward refreshJournal(CardexAuthenticationSubject subject,
@@ -114,31 +114,31 @@ public class JournalAction extends AbstractAction {
                                  HttpServletRequest request,
                                  HttpServletResponse response) throws IOException,
                                  ServletException {
-        log.fine("Refresh écran de consultation du journal");
+        log.debug("Refresh ï¿½cran de consultation du journal");
         return mapping.findForward("success");
     }
 
     /**
      * <p>
-     * Cet événement survient lorsque l'utilisateur clique sur le bouton ajouter dans
-     * le panneau de recherche des journaux.  L'application affiche le panneau de mise à jour.
-     * L'utilisateur a préalablement saisie les informations  les données relatives à l'identification
+     * Cet ï¿½vï¿½nement survient lorsque l'utilisateur clique sur le bouton ajouter dans
+     * le panneau de recherche des journaux.  L'application affiche le panneau de mise ï¿½ jour.
+     * L'utilisateur a prï¿½alablement saisie les informations  les donnï¿½es relatives ï¿½ l'identification
      * du journal.
      * <p>
-     * Par défaut, l'application remplit automatiquement les champs suivants :
+     * Par dï¿½faut, l'application remplit automatiquement les champs suivants :
      * <li>
      * <ul> site d'origine (site de l'utilisateur)
      * <ul> utilisateur (Code de l'utilisateur)
-     * <ul> Date de début (date du jour)
+     * <ul> Date de dï¿½but (date du jour)
      * </li>
      *
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortieif an input/output survient
+     * @exception IOException si une erreur d'entrï¿½e/sortieif an input/output survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward create(CardexAuthenticationSubject subject,
@@ -148,13 +148,13 @@ public class JournalAction extends AbstractAction {
                                 HttpServletResponse response) throws IOException,
                                 ServletException {
 
-        log.fine("Création d'un nouveau journal");
+        log.debug("Crï¿½ation d'un nouveau journal");
 
         ActionMessages errors = new ActionMessages();
         JournalForm journalForm = (JournalForm)form;
         CardexUser user = (CardexUser)subject.getUser();
         
-        //Valeurs par défaut
+        //Valeurs par dï¿½faut
         journalForm.init();
         journalForm.setNew(true);
         journalForm.setModifiable(true);
@@ -183,23 +183,23 @@ public class JournalAction extends AbstractAction {
 
     /**
      * <p>
-     * Cet événement survient lorsque l'utilisateur clique sur le bouton sauvegarder dans
-     * le panneau de création d'un journal.  Le nouveau journal est enregistré dans le
-     * cardex et l'écran de mise a jour du journal est affiché.
+     * Cet ï¿½vï¿½nement survient lorsque l'utilisateur clique sur le bouton sauvegarder dans
+     * le panneau de crï¿½ation d'un journal.  Le nouveau journal est enregistrï¿½ dans le
+     * cardex et l'ï¿½cran de mise a jour du journal est affichï¿½.
      * <p>
-     * Par défaut, l'application remplit automatiquement les champs suivants :
+     * Par dï¿½faut, l'application remplit automatiquement les champs suivants :
      * <li>
-     * <ul> Hiéarchie (Niveau d'authorité de l'utilisateur)
-     * <ul> Numéro de cardex ("                  *")
+     * <ul> Hiï¿½archie (Niveau d'authoritï¿½ de l'utilisateur)
+     * <ul> Numï¿½ro de cardex ("                  *")
      * </li>
      *
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortieif an input/output survient
+     * @exception IOException si une erreur d'entrï¿½e/sortieif an input/output survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward save(CardexAuthenticationSubject subject,
@@ -208,7 +208,7 @@ public class JournalAction extends AbstractAction {
                               HttpServletResponse response) throws IOException,
                               ServletException {
 
-        log.fine("Sauvegarde de la création d'un nouveau journal");
+        log.debug("Sauvegarde de la crï¿½ation d'un nouveau journal");
 
         ActionMessages errors = new ActionMessages();
         Journal newJournal = new JournalVO();
@@ -221,25 +221,25 @@ public class JournalAction extends AbstractAction {
         	verifierToken(request);
             DossierBusinessDelegate journalDelegate =
                 new DossierBusinessDelegate();
-			//On transfère les données du journal à un dossier pour sauvegarder les changements.
+			//On transfï¿½re les donnï¿½es du journal ï¿½ un dossier pour sauvegarder les changements.
 			dossierForm = transfertJournalDossier(subject, newJournalForm, dossierForm);
 
             ValueObjectMapper.convertDossierHtmlForm(dossierForm,dossier, subject.getLocale());
-            //Numéro par défaut pour forcer la création d'un numéro unique dans Oracle
+            //Numï¿½ro par dï¿½faut pour forcer la crï¿½ation d'un numï¿½ro unique dans Oracle
             dossier.setNumeroCardex(GlobalConstants.NumeroCardex.DEFAULT);
 
-            log.fine("Journal à créer : " + newJournal);
+            log.debug("Journal ï¿½ crï¿½er : " + newJournal);
             Dossier newDossier = journalDelegate.create(subject, dossier);
-            log.fine("# Clé de journal retourné : " + newDossier.getCle());
-			//Transfert des données du journal pour la création de la narration associée
-			//au dossier nouvellement créé.
+            log.debug("# Clï¿½ de journal retournï¿½ : " + newDossier.getCle());
+			//Transfert des donnï¿½es du journal pour la crï¿½ation de la narration associï¿½e
+			//au dossier nouvellement crï¿½ï¿½.
 			narrationForm = transfertJournalNarration(subject, newJournalForm, narrationForm);
 
             ValueObjectMapper.convertNarrationHtmlForm(narrationForm,narration, subject.getLocale());
             narration.setDossier(newDossier);
             journalDelegate.addLienNarrationApprouve(subject,newDossier,narration);
 
-            //Journal créé à partir du sujet ou de la société (onglet Dossier). On fait un lien automatique avec le sujet ou la société.
+            //Journal crï¿½ï¿½ ï¿½ partir du sujet ou de la sociï¿½tï¿½ (onglet Dossier). On fait un lien automatique avec le sujet ou la sociï¿½tï¿½.
             if (newJournalForm.getEntiteCardexLiaison() != null){
             	newJournalForm.setCle(Long.toString(newDossier.getCle()));
             	newJournalForm.setSite(Long.toString(newDossier.getSite()));
@@ -255,11 +255,11 @@ public class JournalAction extends AbstractAction {
         } catch (BusinessResourceException bre) {
 			String ancestor = bre.getAncestor().toString();
 			ExceptionHandler.getInstance().handle( bre.getAncestor() );
-			//Cas spécial d'erreur. Durant la tâche qui reconstruit l'index des narrations
-			//les sauvegardes échouent. Dans ce cas, un message d'erreur est retourné et la
-			//narration est perdue. Le test suivant permet de détecter si l'erreur survient
-			//lors de la reconstruction et, si oui, de retourner la narration à l'écran avec
-			//un message plus approprié, sans perte de données. 
+			//Cas spï¿½cial d'erreur. Durant la tï¿½che qui reconstruit l'index des narrations
+			//les sauvegardes ï¿½chouent. Dans ce cas, un message d'erreur est retournï¿½ et la
+			//narration est perdue. Le test suivant permet de dï¿½tecter si l'erreur survient
+			//lors de la reconstruction et, si oui, de retourner la narration ï¿½ l'ï¿½cran avec
+			//un message plus appropriï¿½, sans perte de donnï¿½es. 
 			if((ancestor.indexOf("ORA-29861") > -1) || (ancestor.indexOf("ORA-29875") > -1) || (ancestor.indexOf("ORA-29877") > -1) || (ancestor.indexOf("DRG-10599") > -1)){
 				errors.add(Globals.ERROR_KEY, new ActionMessage("cardex_erreur_narration"));
 				saveErrors(request, errors);
@@ -279,19 +279,19 @@ public class JournalAction extends AbstractAction {
 
     /**
      * <p>
-     * Cet événement est appelé au lieu de la méthode showAcces afin d'éviter qu'un enregistrement
-     * ne soit inscrit dans la table AC_ACCES.  En mode Web, chaque retour à un journal (par
-     * exemple, après avoir inscrit une narration) se traduit par une relecture du journal.
+     * Cet ï¿½vï¿½nement est appelï¿½ au lieu de la mï¿½thode showAcces afin d'ï¿½viter qu'un enregistrement
+     * ne soit inscrit dans la table AC_ACCES.  En mode Web, chaque retour ï¿½ un journal (par
+     * exemple, aprï¿½s avoir inscrit une narration) se traduit par une relecture du journal.
      * Cela produit chaque fois un nouvel enregistrement Select dans la table
      * AC_ACCES. 
      *
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortieif an input/output survient
+     * @exception IOException si une erreur d'entrï¿½e/sortieif an input/output survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward show(CardexAuthenticationSubject subject,
@@ -300,7 +300,7 @@ public class JournalAction extends AbstractAction {
                               HttpServletResponse response) throws IOException,
                               ServletException {
 
-        log.fine("Accès à un journal");
+        log.debug("Accï¿½s ï¿½ un journal");
 
         ActionMessages errors = new ActionMessages();
 
@@ -310,17 +310,17 @@ public class JournalAction extends AbstractAction {
             Journal      journal     = new JournalVO();
             CardexUser user = (CardexUser)subject.getUser();
 
-            log.fine("Journal recherché: " + journalForm.toString());
+            log.debug("Journal recherchï¿½: " + journalForm.toString());
 
 			  ValueObjectMapper.convertJournalHtmlForm(journalForm, journal,subject.getLocale());
 			
 			  journal = journalDelegate.findJournal(subject, journal);
-			  log.fine("Journal trouvé: " + journal.toString());
+			  log.debug("Journal trouvï¿½: " + journal.toString());
 			  ValueObjectMapper.convertJournal(journal, journalForm,subject.getLocale());
-			  //La ligne suivante corrige un bogue pour le champ Origine lors de la consultation d'un journal des enquêteurs de Loto-Québec.
-			  //La vraie manière de corriger serait de retourner l'entité avec le journal, ce qui n'a pas été fait, car il s'agit d'une
-			  //correction de dernière minute avec trop peu de temps pour des tests. À revoir, bien que cette ligne soit sans conséquences, 
-			  //le seul risque étant que le champ Origine soit vide lors d'une consultation. Pour une modification, il sera toujours présent. 
+			  //La ligne suivante corrige un bogue pour le champ Origine lors de la consultation d'un journal des enquï¿½teurs de Loto-Quï¿½bec.
+			  //La vraie maniï¿½re de corriger serait de retourner l'entitï¿½ avec le journal, ce qui n'a pas ï¿½tï¿½ fait, car il s'agit d'une
+			  //correction de derniï¿½re minute avec trop peu de temps pour des tests. ï¿½ revoir, bien que cette ligne soit sans consï¿½quences, 
+			  //le seul risque ï¿½tant que le champ Origine soit vide lors d'une consultation. Pour une modification, il sera toujours prï¿½sent. 
 	          journalForm.setEntite(String.valueOf(user.getEntite()));
 			
 			  return mapping.findForward("success");
@@ -340,18 +340,18 @@ public class JournalAction extends AbstractAction {
 
     /**
      * <p>
-     * Cet événement survient lorsque l'utilisateur clique sur le bouton modifier dans
-     * le panneau de mise à jour d'un journal.  Les modifiactions du journal est enregistré dans le
-     * cardex et l'écran de mise a jour du journal est affiché.
+     * Cet ï¿½vï¿½nement survient lorsque l'utilisateur clique sur le bouton modifier dans
+     * le panneau de mise ï¿½ jour d'un journal.  Les modifiactions du journal est enregistrï¿½ dans le
+     * cardex et l'ï¿½cran de mise a jour du journal est affichï¿½.
      * <p>
      *
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortie survient
+     * @exception IOException si une erreur d'entrï¿½e/sortie survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward update(CardexAuthenticationSubject subject,
@@ -361,7 +361,7 @@ public class JournalAction extends AbstractAction {
                                 HttpServletResponse response) throws IOException,
                                 ServletException {
 
-        log.fine("Mise à jour d'un journal");
+        log.debug("Mise ï¿½ jour d'un journal");
 
         ActionMessages errors = new ActionMessages();
 
@@ -374,13 +374,13 @@ public class JournalAction extends AbstractAction {
             DossierForm dossierForm = new DossierForm();
 	        Narration     narration = new NarrationVO();
     	    NarrationForm narrationForm = new NarrationForm();
-			//On transfère les données du journal à un dossier pour sauvegarder les changements.
+			//On transfï¿½re les donnï¿½es du journal ï¿½ un dossier pour sauvegarder les changements.
 			dossierForm = transfertJournalDossier(subject, journalForm, dossierForm);
             ValueObjectMapper.convertDossierHtmlForm(dossierForm, dossier,
                     subject.getLocale());
-            log.fine("Mise à jour du journal: " + dossier.toString());
+            log.debug("Mise ï¿½ jour du journal: " + dossier.toString());
             journalDelegate.update(subject, dossier);
-			//Transfert des données du journal pour la mise à jour de la narration associée
+			//Transfert des donnï¿½es du journal pour la mise ï¿½ jour de la narration associï¿½e
 			//au dossier.
 			narrationForm = transfertJournalNarration(subject, journalForm, narrationForm);
 
@@ -392,11 +392,11 @@ public class JournalAction extends AbstractAction {
         } catch (BusinessResourceException bre) {
 			String ancestor = bre.getAncestor().toString();
 			ExceptionHandler.getInstance().handle( bre.getAncestor() );
-			//Cas spécial d'erreur. Durant la tâche qui reconstruit l'index des narrations
-			//les sauvegardes échouent. Dans ce cas, un message d'erreur est retourné et la
-			//narration est perdue. Le test suivant permet de détecter si l'erreur survient
-			//lors de la reconstruction et, si oui, de retourner la narration à l'écran avec
-			//un message plus approprié, sans perte de données. 
+			//Cas spï¿½cial d'erreur. Durant la tï¿½che qui reconstruit l'index des narrations
+			//les sauvegardes ï¿½chouent. Dans ce cas, un message d'erreur est retournï¿½ et la
+			//narration est perdue. Le test suivant permet de dï¿½tecter si l'erreur survient
+			//lors de la reconstruction et, si oui, de retourner la narration ï¿½ l'ï¿½cran avec
+			//un message plus appropriï¿½, sans perte de donnï¿½es. 
 			if((ancestor.indexOf("ORA-29861") > -1) || (ancestor.indexOf("ORA-29875") > -1) || (ancestor.indexOf("ORA-29877") > -1) || (ancestor.indexOf("DRG-10599") > -1)){
 				errors.add(Globals.ERROR_KEY, new ActionMessage("cardex_erreur_narration"));
 				saveErrors(request, errors);
@@ -416,14 +416,14 @@ public class JournalAction extends AbstractAction {
 
     /**
      * <p>
-     * Transfère les informations du journal à un dossier pour la sauvegarde ou
-     * la mise à jour.
+     * Transfï¿½re les informations du journal ï¿½ un dossier pour la sauvegarde ou
+     * la mise ï¿½ jour.
      *
-     * @param Dossier Les critères du dossier a obtenir
-     * @param DossierForm L'ActionForm bean a populé à partir du dossier obtenu
+     * @param Dossier Les critï¿½res du dossier a obtenir
+     * @param DossierForm L'ActionForm bean a populï¿½ ï¿½ partir du dossier obtenu
      *
-     * @exception BusinessResourceException si une erreur système survient
-     * @exception BusinessException si une règle d'affaire n'est pas respectée
+     * @exception BusinessResourceException si une erreur systï¿½me survient
+     * @exception BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
      */
     private DossierForm transfertJournalDossier(CardexAuthenticationSubject subject,
                                      JournalForm journalForm,
@@ -441,7 +441,7 @@ public class JournalAction extends AbstractAction {
                 dossierForm.setNumeroDossier(journalForm.getNumeroIncident());
                 dossierForm.setSiteOrigine(journalForm.getSite());
                 dossierForm.setStatut(GlobalConstants.Statut.DOSSIER_INACTIF);
-                //R10-0134 : les entrées de journal sont désormais considérées comme non-fondées.
+                //R10-0134 : les entrï¿½es de journal sont dï¿½sormais considï¿½rï¿½es comme non-fondï¿½es.
                 dossierForm.setFonde(GlobalConstants.Fonde.NON);
                 dossierForm.setDateDebut(journalForm.getDateDebut());
                 dossierForm.setDateFin(journalForm.getDateFin());
@@ -476,14 +476,14 @@ public class JournalAction extends AbstractAction {
 
     /**
      * <p>
-     * Transfère les informations du journal à une narration pour la sauvegarde ou
-     * la mise à jour.
+     * Transfï¿½re les informations du journal ï¿½ une narration pour la sauvegarde ou
+     * la mise ï¿½ jour.
      *
-     * @param Dossier Les critères du dossier a obtenir
-     * @param DossierForm L'ActionForm bean a populé à partir du dossier obtenu
+     * @param Dossier Les critï¿½res du dossier a obtenir
+     * @param DossierForm L'ActionForm bean a populï¿½ ï¿½ partir du dossier obtenu
      *
-     * @exception BusinessResourceException si une erreur système survient
-     * @exception BusinessException si une règle d'affaire n'est pas respectée
+     * @exception BusinessResourceException si une erreur systï¿½me survient
+     * @exception BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
      */
     private NarrationForm transfertJournalNarration(CardexAuthenticationSubject subject,
                                      JournalForm journalForm,
@@ -518,21 +518,21 @@ public class JournalAction extends AbstractAction {
 	}
 
     /**
-     * Par défaut, l'application remplit automatiquement les champs suivants :
+     * Par dï¿½faut, l'application remplit automatiquement les champs suivants :
      * <li>
      * <ul>Entite (Entite de l'utilisateur)
      * <ul>Site d'origine (Site de l'utilisateur)
-     * <ul>Groupe (selon la sélection de l'écran principal)
-     * <ul>Intervenant (selon la sélection de l'écran principal)
+     * <ul>Groupe (selon la sï¿½lection de l'ï¿½cran principal)
+     * <ul>Intervenant (selon la sï¿½lection de l'ï¿½cran principal)
      * </li>
      *
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortie survient
+     * @exception IOException si une erreur d'entrï¿½e/sortie survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward resetSearchDefault(CardexAuthenticationSubject subject,
@@ -541,7 +541,7 @@ public class JournalAction extends AbstractAction {
                                        HttpServletRequest request,
                                        HttpServletResponse response) throws IOException,
                                        ServletException {
-        log.fine("Paramètres de recherche par défault de journal");
+        log.debug("Paramï¿½tres de recherche par dï¿½fault de journal");
 
         ActionMessages errors = new ActionMessages();
 
@@ -551,7 +551,7 @@ public class JournalAction extends AbstractAction {
             
             criteresRechercheJournalHtmlForm.init(subject);
             
-            // Conversion du composant d'état(ActionForm) en composant d'affaire(Value Object)
+            // Conversion du composant d'ï¿½tat(ActionForm) en composant d'affaire(Value Object)
             ValueObjectMapper.convertCriteresRechercheJournalHtmlForm(criteresRechercheJournalHtmlForm,criteresRechercheJournal,subject.getLocale());
 
             return mapping.findForward("success");
@@ -564,25 +564,25 @@ public class JournalAction extends AbstractAction {
 
     /**
      * <p>
-     * Cet événement surivient lorsque dans le menu principal, l'utilisateur a choisi de rechercher un journal
-     * pour une catégorie et une nature donnée. L'application affiche alors le panneau de
+     * Cet ï¿½vï¿½nement surivient lorsque dans le menu principal, l'utilisateur a choisi de rechercher un journal
+     * pour une catï¿½gorie et une nature donnï¿½e. L'application affiche alors le panneau de
      * recherche des journaux.
      * <p>
-     * Par défaut, l'application remplit automatiquement les champs suivants :
+     * Par dï¿½faut, l'application remplit automatiquement les champs suivants :
      * <li>
      * <ul>Entite (Entite de l'utilisateur)
      * <ul>Site d'origine (Site de l'utilisateur)
-     * <ul>Genre (selon la sélection de l'écran principal)
-     * <ul>Nature (selon la sélection de l'écran principal)
+     * <ul>Genre (selon la sï¿½lection de l'ï¿½cran principal)
+     * <ul>Nature (selon la sï¿½lection de l'ï¿½cran principal)
      * </li>
      *
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortie survient
+     * @exception IOException si une erreur d'entrï¿½e/sortie survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward searchDefault(CardexAuthenticationSubject subject,
@@ -591,7 +591,7 @@ public class JournalAction extends AbstractAction {
                                        HttpServletRequest request,
                                        HttpServletResponse response) throws IOException,
                                        ServletException {
-        log.fine("Recherche par défault de journal");
+        log.debug("Recherche par dï¿½fault de journal");
 
         ActionMessages errors = new ActionMessages();
 
@@ -601,13 +601,13 @@ public class JournalAction extends AbstractAction {
             //CardexUser user = (CardexUser) subject.getUser();
             CriteresRechercheJournalVO criteresRechercheJournal = new CriteresRechercheJournalVO();
 
-            // Valeurs par défaut
+            // Valeurs par dï¿½faut
             criteresRechercheJournalHtmlForm.init(subject);
 
-            // Conversion du composant d'état(ActionForm) en composant d'affaire(Value Object)
+            // Conversion du composant d'ï¿½tat(ActionForm) en composant d'affaire(Value Object)
             ValueObjectMapper.convertCriteresRechercheJournalHtmlForm(criteresRechercheJournalHtmlForm,criteresRechercheJournal,subject.getLocale());
 
-            // Exécution de la recherche via le service d'affaire(BusinessDelegate)
+            // Exï¿½cution de la recherche via le service d'affaire(BusinessDelegate)
             List<Journal> results = delegate.selectDefaultJournal(subject,criteresRechercheJournal);
 
             assignerResultatJournal(subject, criteresRechercheJournalHtmlForm, results);
@@ -634,18 +634,18 @@ public class JournalAction extends AbstractAction {
 
     /**
      * <p>
-     * Cet événement surivient lorsque dans l'écran de recherche de journal, l'utilisateur a choisi
-     * de rechercher un journal selon des critères différents. L'application affiche alors le panneau de
-     * recherche des journaux avec les résultats de la nouvelle recherche.
+     * Cet ï¿½vï¿½nement surivient lorsque dans l'ï¿½cran de recherche de journal, l'utilisateur a choisi
+     * de rechercher un journal selon des critï¿½res diffï¿½rents. L'application affiche alors le panneau de
+     * recherche des journaux avec les rï¿½sultats de la nouvelle recherche.
      * <p>
      *
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortie survient
+     * @exception IOException si une erreur d'entrï¿½e/sortie survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward search(CardexAuthenticationSubject subject,
@@ -654,7 +654,7 @@ public class JournalAction extends AbstractAction {
                                 HttpServletRequest request,
                                 HttpServletResponse response) throws IOException,
                                 ServletException {
-        log.fine("Recherche de journal");
+        log.debug("Recherche de journal");
 
         ActionMessages errors = new ActionMessages();
 
@@ -663,10 +663,10 @@ public class JournalAction extends AbstractAction {
             CriteresRechercheJournalForm criteresRechercheJournalHtmlForm = (CriteresRechercheJournalForm) form;
             CriteresRechercheJournalVO criteresRechercheJournal = new CriteresRechercheJournalVO();
             criteresRechercheJournalHtmlForm.getListeResultat().vider();
-            // Conversion du composant d'état(ActionForm) en composant d'affaire(Value Object)
+            // Conversion du composant d'ï¿½tat(ActionForm) en composant d'affaire(Value Object)
             ValueObjectMapper.convertCriteresRechercheJournalHtmlForm(criteresRechercheJournalHtmlForm, criteresRechercheJournal,subject.getLocale());
 
-            // Exécution de la recherche via le service d'affaire(BusinessDelegate)
+            // Exï¿½cution de la recherche via le service d'affaire(BusinessDelegate)
             List<Journal> results = delegate.selectJournal(subject,criteresRechercheJournal);
 
             assignerResultatJournal(subject, criteresRechercheJournalHtmlForm, results);
@@ -688,7 +688,7 @@ public class JournalAction extends AbstractAction {
     }
     
 	private void assignerResultatJournal(CardexAuthenticationSubject subject, CriteresRechercheJournalForm criteresRechercheJournalHtmlForm, List list) throws IteratorException, ValueObjectMapperException, BusinessResourceException {
-		// Ajout des journaux dans le composant d'état (ActionForm)
+		// Ajout des journaux dans le composant d'ï¿½tat (ActionForm)
 		List currentList = new ArrayList();
 		Iterator   it = list.iterator();
 
@@ -706,28 +706,28 @@ public class JournalAction extends AbstractAction {
 
     /**
      * <p>
-     * Cet événement survient lorsque l'utilisateur clique sur le bouton ajouter dans
-     * l'onglet Dossiers d'un sujet ou d'une société. L'action sert à relier directement une entrée de journal
-     * au sujet ou à la société affiché à l'écran. Le bouton sert aux enquêteurs de Loto-Québec qui utilisent le journal. Ce bouton
-     * a pour but de leur faciliter la tâche puisque leurs dossiers, y compris le journal, sont
-     * pratiquement toujours reliés à un sujet ou à une société. 
-     * Pour les Maisons de jeux, le journal est réservé aux techniciens de surveillance. Il est disponible à partir du menu principal.
+     * Cet ï¿½vï¿½nement survient lorsque l'utilisateur clique sur le bouton ajouter dans
+     * l'onglet Dossiers d'un sujet ou d'une sociï¿½tï¿½. L'action sert ï¿½ relier directement une entrï¿½e de journal
+     * au sujet ou ï¿½ la sociï¿½tï¿½ affichï¿½ ï¿½ l'ï¿½cran. Le bouton sert aux enquï¿½teurs de Loto-Quï¿½bec qui utilisent le journal. Ce bouton
+     * a pour but de leur faciliter la tï¿½che puisque leurs dossiers, y compris le journal, sont
+     * pratiquement toujours reliï¿½s ï¿½ un sujet ou ï¿½ une sociï¿½tï¿½. 
+     * Pour les Maisons de jeux, le journal est rï¿½servï¿½ aux techniciens de surveillance. Il est disponible ï¿½ partir du menu principal.
      * <p>
-     * Par défaut, l'application remplit automatiquement les champs suivants :
+     * Par dï¿½faut, l'application remplit automatiquement les champs suivants :
      * <li>
      * <ul> site d'origine (site de l'utilisateur)
      * <ul> statut (actif)
-     * <ul> Fondé (indéterminé)
+     * <ul> Fondï¿½ (indï¿½terminï¿½)
      * <ul> Date de l'assignation (date du jour)
      * </li>
      *
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortieif an input/output survient
+     * @exception IOException si une erreur d'entrï¿½e/sortieif an input/output survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward createLiaison(CardexAuthenticationSubject subject,
@@ -737,12 +737,12 @@ public class JournalAction extends AbstractAction {
             HttpServletResponse response) throws IOException,
             ServletException {
 
-		log.fine("Création d'un lien entre une entrée de journal et un sujet ou une societe");
+		log.debug("Crï¿½ation d'un lien entre une entrï¿½e de journal et un sujet ou une societe");
 
         JournalForm journalForm = new JournalForm();
         CardexUser user = (CardexUser)subject.getUser();
 
-		//Valeurs par défaut
+		//Valeurs par dï¿½faut
         journalForm.reset(mapping, request);
         if (form instanceof SujetForm) {
         	journalForm.setEntiteCardexLiaison((SujetForm) form );

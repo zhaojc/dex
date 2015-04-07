@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +15,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessages;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardex.business.Acces;
 import com.lotoquebec.cardex.business.delegate.AccesBusinessDelegate;
@@ -36,11 +37,10 @@ import com.lotoquebec.cardexCommun.exception.BusinessException;
 import com.lotoquebec.cardexCommun.exception.BusinessResourceException;
 import com.lotoquebec.cardexCommun.exception.IteratorException;
 import com.lotoquebec.cardexCommun.exception.ValueObjectMapperException;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
-import com.lotoquebec.cardexCommun.presentation.util.AbstractAction;;
+import com.lotoquebec.cardexCommun.presentation.util.AbstractAction;
 
 /**
- * Cette classe gère les événements en rapport
+ * Cette classe gï¿½re les ï¿½vï¿½nements en rapport
  * avec le cas d'utilisation gestion des dossiers.
  *
  * @author $Author: mlibersan $
@@ -52,22 +52,22 @@ public class AccesAction extends AbstractAction {
      * L'instance du gestionnaire de journalisation.
      */
 	private final Logger      log =
-        (Logger)LoggerCardex.getLogger((this.getClass()));
-	//Nombre de lignes affichées dans les listes de résultat.
-	//Par défaut, pour les accès, l'utilisateur ne change pas cette valeur.
+        LoggerFactory.getLogger((this.getClass()));
+	//Nombre de lignes affichï¿½es dans les listes de rï¿½sultat.
+	//Par dï¿½faut, pour les accï¿½s, l'utilisateur ne change pas cette valeur.
 	private final int nombreDeResultats = 200;  
 
 
     /**
      * <p>
      *
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortieif an input/output survient
+     * @exception IOException si une erreur d'entrï¿½e/sortieif an input/output survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward selectAccesDossier(CardexAuthenticationSubject subject,
@@ -75,7 +75,7 @@ public class AccesAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Affichage des accès");
+        log.debug("Affichage des accï¿½s");
 
         ActionMessages errors = new ActionMessages();
 
@@ -84,12 +84,12 @@ public class AccesAction extends AbstractAction {
             DossierForm dossierHtmlForm = (DossierForm) form;
             DossierVO dossier = new DossierVO();
             ValueListIterator results;
-            // Conversion du composant d'état(ActionForm) en composant d'affaire(Value Object)
+            // Conversion du composant d'ï¿½tat(ActionForm) en composant d'affaire(Value Object)
             ValueObjectMapper.convertDossierHtmlForm(dossierHtmlForm, dossier,subject.getLocale());
-            log.fine(dossier.toString());
-            // Exécution de la recherche via le service d'affaire(BusinessDelegate)
+            log.debug(dossier.toString());
+            // Exï¿½cution de la recherche via le service d'affaire(BusinessDelegate)
             results = delegate.selectAccesDossier(subject,dossier);
-            // Ajout des accès dans le composant d'état (ActionForm)
+            // Ajout des accï¿½s dans le composant d'ï¿½tat (ActionForm)
             //int nombreDeResultats = (int)criteresRechercheDossier.getMaximumResultatsRecherche();
             Collection list = results.getNextElements(nombreDeResultats);
             Collection currentList = new ArrayList();
@@ -127,17 +127,17 @@ public class AccesAction extends AbstractAction {
 
     /**
      * <p>
-     * Cet événement surivient lorsque l'utilisateur clique sur l'élément de navigation
-     * first pour les listes d'accès.
+     * Cet ï¿½vï¿½nement surivient lorsque l'utilisateur clique sur l'ï¿½lï¿½ment de navigation
+     * first pour les listes d'accï¿½s.
      *
-     * @param subject Le sujet authentifié
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param subject Le sujet authentifiï¿½
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortie survient
+     * @exception IOException si une erreur d'entrï¿½e/sortie survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward searchFirstDossier(CardexAuthenticationSubject subject,
@@ -146,7 +146,7 @@ public class AccesAction extends AbstractAction {
                                      HttpServletRequest request,
                                      HttpServletResponse response) throws IOException,
                                      ServletException {
-        log.fine("Recherche des accès(first) ");
+        log.debug("Recherche des accï¿½s(first) ");
 
         ActionMessages errors = new ActionMessages();
 
@@ -155,10 +155,10 @@ public class AccesAction extends AbstractAction {
             DossierVO dossier = new DossierVO();
             ValueObjectMapper.convertDossierHtmlForm(dossierHtmlForm, dossier,subject.getLocale());
  
-            // Récupération des résultats de la recherche original
+            // Rï¿½cupï¿½ration des rï¿½sultats de la recherche original
             ValueListIterator completeList = (ValueListIterator) request.getSession().getAttribute(GlobalConstants.RechercheList.ACCES);
 
-            // Ajout des dossiers dans le composant d'état (ActionForm)
+            // Ajout des dossiers dans le composant d'ï¿½tat (ActionForm)
             Collection list = completeList.getFirstElements(nombreDeResultats);
             Collection currentList = new ArrayList();
             Iterator   it = list.iterator();
@@ -194,17 +194,17 @@ public class AccesAction extends AbstractAction {
     
     /**
      * <p>
-     * Cet événement surivient lorsque l'utilisateur clique sur l'élément de navigation
-     * next pour les listes d'accès.
+     * Cet ï¿½vï¿½nement surivient lorsque l'utilisateur clique sur l'ï¿½lï¿½ment de navigation
+     * next pour les listes d'accï¿½s.
      *
-     * @param subject Le sujet authentifié
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param subject Le sujet authentifiï¿½
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortie survient
+     * @exception IOException si une erreur d'entrï¿½e/sortie survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward searchNextDossier(CardexAuthenticationSubject subject,
@@ -213,7 +213,7 @@ public class AccesAction extends AbstractAction {
                                      HttpServletRequest request,
                                      HttpServletResponse response) throws IOException,
                                      ServletException {
-        log.fine("Recherche des accès(next) ");
+        log.debug("Recherche des accï¿½s(next) ");
 
         ActionMessages errors = new ActionMessages();
 
@@ -222,15 +222,15 @@ public class AccesAction extends AbstractAction {
             DossierVO dossier = new DossierVO();
             ValueObjectMapper.convertDossierHtmlForm(dossierHtmlForm, dossier,subject.getLocale());
  
-            // Récupération des résultats de la recherche original
+            // Rï¿½cupï¿½ration des rï¿½sultats de la recherche original
             ValueListIterator completeList = (ValueListIterator) request.getSession().getAttribute(GlobalConstants.RechercheList.ACCES);
             completeList.getNextElements(nombreDeResultats);
 
-            // Ajout des dossiers dans le composant d'état (ActionForm)
+            // Ajout des dossiers dans le composant d'ï¿½tat (ActionForm)
             Collection list = completeList.getNextElements(nombreDeResultats);
             Collection currentList = new ArrayList();
             Iterator   it = list.iterator();
-            log.fine("Dossier : " + dossier);
+            log.debug("Dossier : " + dossier);
      
             while (it.hasNext()) {
                 Acces acces = (Acces)it.next();
@@ -264,17 +264,17 @@ public class AccesAction extends AbstractAction {
     
     /**
      * <p>
-     * Cet événement surivient lorsque l'utilisateur clique sur l'élément de navigation
-     * previous pour les listes d'accès.
+     * Cet ï¿½vï¿½nement surivient lorsque l'utilisateur clique sur l'ï¿½lï¿½ment de navigation
+     * previous pour les listes d'accï¿½s.
      *
-     * @param subject Le sujet authentifié
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param subject Le sujet authentifiï¿½
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortie survient
+     * @exception IOException si une erreur d'entrï¿½e/sortie survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward searchPreviousDossier(CardexAuthenticationSubject subject,
@@ -283,7 +283,7 @@ public class AccesAction extends AbstractAction {
                                      HttpServletRequest request,
                                      HttpServletResponse response) throws IOException,
                                      ServletException {
-        log.fine("Recherche des accès(previous) ");
+        log.debug("Recherche des accï¿½s(previous) ");
 
         ActionMessages errors = new ActionMessages();
 
@@ -292,10 +292,10 @@ public class AccesAction extends AbstractAction {
             DossierVO dossier = new DossierVO();
             ValueObjectMapper.convertDossierHtmlForm(dossierHtmlForm, dossier,subject.getLocale());
  
-            // Récupération des résultats de la recherche original
+            // Rï¿½cupï¿½ration des rï¿½sultats de la recherche original
             ValueListIterator completeList = (ValueListIterator) request.getSession().getAttribute(GlobalConstants.RechercheList.ACCES);
 
-            // Ajout des dossiers dans le composant d'état (ActionForm)
+            // Ajout des dossiers dans le composant d'ï¿½tat (ActionForm)
             Collection list = completeList.getPreviousElements(nombreDeResultats);
             Collection currentList = new ArrayList();
             Iterator   it = list.iterator();
@@ -331,17 +331,17 @@ public class AccesAction extends AbstractAction {
     
     /**
      * <p>
-     * Cet événement surivient lorsque l'utilisateur clique sur l'élément de navigation
-     * last pour les listes d'accès.
+     * Cet ï¿½vï¿½nement surivient lorsque l'utilisateur clique sur l'ï¿½lï¿½ment de navigation
+     * last pour les listes d'accï¿½s.
      *
-     * @param subject Le sujet authentifié
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param subject Le sujet authentifiï¿½
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortie survient
+     * @exception IOException si une erreur d'entrï¿½e/sortie survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward searchLastDossier(CardexAuthenticationSubject subject,
@@ -350,7 +350,7 @@ public class AccesAction extends AbstractAction {
                                      HttpServletRequest request,
                                      HttpServletResponse response) throws IOException,
                                      ServletException {
-        log.fine("Recherche des accès(last) ");
+        log.debug("Recherche des accï¿½s(last) ");
 
         ActionMessages errors = new ActionMessages();
 
@@ -359,10 +359,10 @@ public class AccesAction extends AbstractAction {
             DossierVO dossier = new DossierVO();
             ValueObjectMapper.convertDossierHtmlForm(dossierHtmlForm, dossier,subject.getLocale());
  
-            // Récupération des résultats de la recherche original
+            // Rï¿½cupï¿½ration des rï¿½sultats de la recherche original
             ValueListIterator completeList = (ValueListIterator) request.getSession().getAttribute(GlobalConstants.RechercheList.ACCES);
 
-            // Ajout des dossiers dans le composant d'état (ActionForm)
+            // Ajout des dossiers dans le composant d'ï¿½tat (ActionForm)
             Collection list = completeList.getLastElements(nombreDeResultats);
             Collection currentList = new ArrayList();
             Iterator   it = list.iterator();
@@ -400,13 +400,13 @@ public class AccesAction extends AbstractAction {
     /**
      * <p>
      *
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortieif an input/output survient
+     * @exception IOException si une erreur d'entrï¿½e/sortieif an input/output survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward selectAccesSujet(CardexAuthenticationSubject subject,
@@ -414,7 +414,7 @@ public class AccesAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Affichage des accès");
+        log.debug("Affichage des accï¿½s");
 
         ActionMessages errors = new ActionMessages();
 
@@ -423,12 +423,12 @@ public class AccesAction extends AbstractAction {
             SujetForm sujetHtmlForm = (SujetForm) form;
             SujetVO sujet = new SujetVO();
             ValueListIterator results;
-            // Conversion du composant d'état(ActionForm) en composant d'affaire(Value Object)
+            // Conversion du composant d'ï¿½tat(ActionForm) en composant d'affaire(Value Object)
             ValueObjectMapper.convertSujetHtmlForm(sujetHtmlForm, sujet,subject.getLocale());
-            log.fine(sujet.toString());
-            // Exécution de la recherche via le service d'affaire(BusinessDelegate)
+            log.debug(sujet.toString());
+            // Exï¿½cution de la recherche via le service d'affaire(BusinessDelegate)
             results = delegate.selectAccesSujet(subject,sujet);
-            // Ajout des accès dans le composant d'état (ActionForm)
+            // Ajout des accï¿½s dans le composant d'ï¿½tat (ActionForm)
             //int nombreDeResultats = (int)criteresRechercheDossier.getMaximumResultatsRecherche();
             Collection list = results.getNextElements(nombreDeResultats);
             Collection currentList = new ArrayList();
@@ -466,17 +466,17 @@ public class AccesAction extends AbstractAction {
 
     /**
      * <p>
-     * Cet événement surivient lorsque l'utilisateur clique sur l'élément de navigation
-     * first pour les listes d'accès.
+     * Cet ï¿½vï¿½nement surivient lorsque l'utilisateur clique sur l'ï¿½lï¿½ment de navigation
+     * first pour les listes d'accï¿½s.
      *
-     * @param subject Le sujet authentifié
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param subject Le sujet authentifiï¿½
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortie survient
+     * @exception IOException si une erreur d'entrï¿½e/sortie survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward searchFirstSujet(CardexAuthenticationSubject subject,
@@ -485,7 +485,7 @@ public class AccesAction extends AbstractAction {
                                      HttpServletRequest request,
                                      HttpServletResponse response) throws IOException,
                                      ServletException {
-        log.fine("Recherche des accès(first) ");
+        log.debug("Recherche des accï¿½s(first) ");
 
         ActionMessages errors = new ActionMessages();
 
@@ -494,10 +494,10 @@ public class AccesAction extends AbstractAction {
             SujetVO sujet = new SujetVO();
             ValueObjectMapper.convertSujetHtmlForm(sujetHtmlForm, sujet,subject.getLocale());
  
-            // Récupération des résultats de la recherche original
+            // Rï¿½cupï¿½ration des rï¿½sultats de la recherche original
             ValueListIterator completeList = (ValueListIterator) request.getSession().getAttribute(GlobalConstants.RechercheList.ACCES);
 
-            // Ajout des dossiers dans le composant d'état (ActionForm)
+            // Ajout des dossiers dans le composant d'ï¿½tat (ActionForm)
             Collection list = completeList.getFirstElements(nombreDeResultats);
             Collection currentList = new ArrayList();
             Iterator   it = list.iterator();
@@ -533,17 +533,17 @@ public class AccesAction extends AbstractAction {
     
     /**
      * <p>
-     * Cet événement surivient lorsque l'utilisateur clique sur l'élément de navigation
-     * next pour les listes d'accès.
+     * Cet ï¿½vï¿½nement surivient lorsque l'utilisateur clique sur l'ï¿½lï¿½ment de navigation
+     * next pour les listes d'accï¿½s.
      *
-     * @param subject Le sujet authentifié
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param subject Le sujet authentifiï¿½
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortie survient
+     * @exception IOException si une erreur d'entrï¿½e/sortie survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward searchNextSujet(CardexAuthenticationSubject subject,
@@ -552,7 +552,7 @@ public class AccesAction extends AbstractAction {
                                      HttpServletRequest request,
                                      HttpServletResponse response) throws IOException,
                                      ServletException {
-        log.fine("Recherche des accès(next) ");
+        log.debug("Recherche des accï¿½s(next) ");
 
         ActionMessages errors = new ActionMessages();
 
@@ -561,15 +561,15 @@ public class AccesAction extends AbstractAction {
             SujetVO sujet = new SujetVO();
             ValueObjectMapper.convertSujetHtmlForm(sujetHtmlForm, sujet,subject.getLocale());
  
-            // Récupération des résultats de la recherche original
+            // Rï¿½cupï¿½ration des rï¿½sultats de la recherche original
             ValueListIterator completeList = (ValueListIterator) request.getSession().getAttribute(GlobalConstants.RechercheList.ACCES);
             completeList.getNextElements(nombreDeResultats);
 
-            // Ajout des sujets dans le composant d'état (ActionForm)
+            // Ajout des sujets dans le composant d'ï¿½tat (ActionForm)
             Collection list = completeList.getNextElements(nombreDeResultats);
             Collection currentList = new ArrayList();
             Iterator   it = list.iterator();
-            log.fine("sujet : " + sujet);
+            log.debug("sujet : " + sujet);
      
             while (it.hasNext()) {
                 Acces acces = (Acces)it.next();
@@ -603,17 +603,17 @@ public class AccesAction extends AbstractAction {
     
     /**
      * <p>
-     * Cet événement surivient lorsque l'utilisateur clique sur l'élément de navigation
-     * previous pour les listes d'accès.
+     * Cet ï¿½vï¿½nement surivient lorsque l'utilisateur clique sur l'ï¿½lï¿½ment de navigation
+     * previous pour les listes d'accï¿½s.
      *
-     * @param subject Le sujet authentifié
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param subject Le sujet authentifiï¿½
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortie survient
+     * @exception IOException si une erreur d'entrï¿½e/sortie survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward searchPreviousSujet(CardexAuthenticationSubject subject,
@@ -622,7 +622,7 @@ public class AccesAction extends AbstractAction {
                                      HttpServletRequest request,
                                      HttpServletResponse response) throws IOException,
                                      ServletException {
-        log.fine("Recherche des accès(previous) ");
+        log.debug("Recherche des accï¿½s(previous) ");
 
         ActionMessages errors = new ActionMessages();
 
@@ -631,10 +631,10 @@ public class AccesAction extends AbstractAction {
             SujetVO sujet = new SujetVO();
             ValueObjectMapper.convertSujetHtmlForm(sujetHtmlForm, sujet,subject.getLocale());
  
-            // Récupération des résultats de la recherche original
+            // Rï¿½cupï¿½ration des rï¿½sultats de la recherche original
             ValueListIterator completeList = (ValueListIterator) request.getSession().getAttribute(GlobalConstants.RechercheList.ACCES);
 
-            // Ajout des dossiers dans le composant d'état (ActionForm)
+            // Ajout des dossiers dans le composant d'ï¿½tat (ActionForm)
             Collection list = completeList.getPreviousElements(nombreDeResultats);
             Collection currentList = new ArrayList();
             Iterator   it = list.iterator();
@@ -670,17 +670,17 @@ public class AccesAction extends AbstractAction {
     
     /**
      * <p>
-     * Cet événement surivient lorsque l'utilisateur clique sur l'élément de navigation
-     * last pour les listes d'accès.
+     * Cet ï¿½vï¿½nement surivient lorsque l'utilisateur clique sur l'ï¿½lï¿½ment de navigation
+     * last pour les listes d'accï¿½s.
      *
-     * @param subject Le sujet authentifié
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param subject Le sujet authentifiï¿½
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortie survient
+     * @exception IOException si une erreur d'entrï¿½e/sortie survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward searchLastSujet(CardexAuthenticationSubject subject,
@@ -689,7 +689,7 @@ public class AccesAction extends AbstractAction {
                                      HttpServletRequest request,
                                      HttpServletResponse response) throws IOException,
                                      ServletException {
-        log.fine("Recherche des accès(last) ");
+        log.debug("Recherche des accï¿½s(last) ");
 
         ActionMessages errors = new ActionMessages();
 
@@ -698,10 +698,10 @@ public class AccesAction extends AbstractAction {
             SujetVO sujet = new SujetVO();
             ValueObjectMapper.convertSujetHtmlForm(sujetHtmlForm, sujet,subject.getLocale());
  
-            // Récupération des résultats de la recherche original
+            // Rï¿½cupï¿½ration des rï¿½sultats de la recherche original
             ValueListIterator completeList = (ValueListIterator) request.getSession().getAttribute(GlobalConstants.RechercheList.ACCES);
 
-            // Ajout des dossiers dans le composant d'état (ActionForm)
+            // Ajout des dossiers dans le composant d'ï¿½tat (ActionForm)
             Collection list = completeList.getLastElements(nombreDeResultats);
             Collection currentList = new ArrayList();
             Iterator   it = list.iterator();
@@ -739,13 +739,13 @@ public class AccesAction extends AbstractAction {
     /**
      * <p>
      *
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortieif an input/output survient
+     * @exception IOException si une erreur d'entrï¿½e/sortieif an input/output survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward selectAccesSociete(CardexAuthenticationSubject subject,
@@ -753,7 +753,7 @@ public class AccesAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Affichage des accès des sociétés");
+        log.debug("Affichage des accï¿½s des sociï¿½tï¿½s");
 
         ActionMessages errors = new ActionMessages();
 
@@ -762,12 +762,12 @@ public class AccesAction extends AbstractAction {
             SocieteForm societeHtmlForm = (SocieteForm) form;
             SocieteVO societe = new SocieteVO();
             ValueListIterator results;
-            // Conversion du composant d'état(ActionForm) en composant d'affaire(Value Object)
+            // Conversion du composant d'ï¿½tat(ActionForm) en composant d'affaire(Value Object)
             ValueObjectMapper.convertSocieteHtmlForm(societeHtmlForm, societe,subject.getLocale());
-            log.fine(societe.toString());
-            // Exécution de la recherche via le service d'affaire(BusinessDelegate)
+            log.debug(societe.toString());
+            // Exï¿½cution de la recherche via le service d'affaire(BusinessDelegate)
             results = delegate.selectAccesSociete(subject,societe);
-            // Ajout des accès dans le composant d'état (ActionForm)
+            // Ajout des accï¿½s dans le composant d'ï¿½tat (ActionForm)
             //int nombreDeResultats = (int)criteresRechercheDossier.getMaximumResultatsRecherche();
             Collection list = results.getNextElements(nombreDeResultats);
             Collection currentList = new ArrayList();
@@ -805,17 +805,17 @@ public class AccesAction extends AbstractAction {
 
     /**
      * <p>
-     * Cet événement surivient lorsque l'utilisateur clique sur l'élément de navigation
-     * first pour les listes d'accès.
+     * Cet ï¿½vï¿½nement surivient lorsque l'utilisateur clique sur l'ï¿½lï¿½ment de navigation
+     * first pour les listes d'accï¿½s.
      *
-     * @param subject Le sujet authentifié
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param subject Le sujet authentifiï¿½
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortie survient
+     * @exception IOException si une erreur d'entrï¿½e/sortie survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward searchFirstSociete(CardexAuthenticationSubject subject,
@@ -824,7 +824,7 @@ public class AccesAction extends AbstractAction {
                                      HttpServletRequest request,
                                      HttpServletResponse response) throws IOException,
                                      ServletException {
-        log.fine("Recherche des accès(first) ");
+        log.debug("Recherche des accï¿½s(first) ");
 
         ActionMessages errors = new ActionMessages();
 
@@ -833,10 +833,10 @@ public class AccesAction extends AbstractAction {
             SocieteVO societe = new SocieteVO();
             ValueObjectMapper.convertSocieteHtmlForm(societeHtmlForm, societe,subject.getLocale());
  
-            // Récupération des résultats de la recherche original
+            // Rï¿½cupï¿½ration des rï¿½sultats de la recherche original
             ValueListIterator completeList = (ValueListIterator) request.getSession().getAttribute(GlobalConstants.RechercheList.ACCES);
 
-            // Ajout des dossiers dans le composant d'état (ActionForm)
+            // Ajout des dossiers dans le composant d'ï¿½tat (ActionForm)
             Collection list = completeList.getFirstElements(nombreDeResultats);
             Collection currentList = new ArrayList();
             Iterator   it = list.iterator();
@@ -872,17 +872,17 @@ public class AccesAction extends AbstractAction {
     
     /**
      * <p>
-     * Cet événement surivient lorsque l'utilisateur clique sur l'élément de navigation
-     * next pour les listes d'accès.
+     * Cet ï¿½vï¿½nement surivient lorsque l'utilisateur clique sur l'ï¿½lï¿½ment de navigation
+     * next pour les listes d'accï¿½s.
      *
-     * @param subject Le sujet authentifié
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param subject Le sujet authentifiï¿½
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortie survient
+     * @exception IOException si une erreur d'entrï¿½e/sortie survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward searchNextSociete(CardexAuthenticationSubject subject,
@@ -891,7 +891,7 @@ public class AccesAction extends AbstractAction {
                                      HttpServletRequest request,
                                      HttpServletResponse response) throws IOException,
                                      ServletException {
-        log.fine("Recherche des accès(next) ");
+        log.debug("Recherche des accï¿½s(next) ");
 
         ActionMessages errors = new ActionMessages();
 
@@ -900,15 +900,15 @@ public class AccesAction extends AbstractAction {
             SocieteVO societe = new SocieteVO();
             ValueObjectMapper.convertSocieteHtmlForm(societeHtmlForm, societe,subject.getLocale());
  
-            // Récupération des résultats de la recherche original
+            // Rï¿½cupï¿½ration des rï¿½sultats de la recherche original
             ValueListIterator completeList = (ValueListIterator) request.getSession().getAttribute(GlobalConstants.RechercheList.ACCES);
             completeList.getNextElements(nombreDeResultats);
 
-            // Ajout des dossiers dans le composant d'état (ActionForm)
+            // Ajout des dossiers dans le composant d'ï¿½tat (ActionForm)
             Collection list = completeList.getNextElements(nombreDeResultats);
             Collection currentList = new ArrayList();
             Iterator   it = list.iterator();
-            log.fine("societe : " + societe);
+            log.debug("societe : " + societe);
      
             while (it.hasNext()) {
                 Acces acces = (Acces)it.next();
@@ -942,17 +942,17 @@ public class AccesAction extends AbstractAction {
     
     /**
      * <p>
-     * Cet événement surivient lorsque l'utilisateur clique sur l'élément de navigation
-     * previous pour les listes d'accès.
+     * Cet ï¿½vï¿½nement surivient lorsque l'utilisateur clique sur l'ï¿½lï¿½ment de navigation
+     * previous pour les listes d'accï¿½s.
      *
-     * @param subject Le sujet authentifié
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param subject Le sujet authentifiï¿½
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortie survient
+     * @exception IOException si une erreur d'entrï¿½e/sortie survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward searchPreviousSociete(CardexAuthenticationSubject subject,
@@ -961,7 +961,7 @@ public class AccesAction extends AbstractAction {
                                      HttpServletRequest request,
                                      HttpServletResponse response) throws IOException,
                                      ServletException {
-        log.fine("Recherche des accès(previous) ");
+        log.debug("Recherche des accï¿½s(previous) ");
 
         ActionMessages errors = new ActionMessages();
 
@@ -970,10 +970,10 @@ public class AccesAction extends AbstractAction {
             SocieteVO societe = new SocieteVO();
             ValueObjectMapper.convertSocieteHtmlForm(societeHtmlForm, societe,subject.getLocale());
  
-            // Récupération des résultats de la recherche original
+            // Rï¿½cupï¿½ration des rï¿½sultats de la recherche original
             ValueListIterator completeList = (ValueListIterator) request.getSession().getAttribute(GlobalConstants.RechercheList.ACCES);
 
-            // Ajout des dossiers dans le composant d'état (ActionForm)
+            // Ajout des dossiers dans le composant d'ï¿½tat (ActionForm)
             Collection list = completeList.getPreviousElements(nombreDeResultats);
             Collection currentList = new ArrayList();
             Iterator   it = list.iterator();
@@ -1009,17 +1009,17 @@ public class AccesAction extends AbstractAction {
     
     /**
      * <p>
-     * Cet événement surivient lorsque l'utilisateur clique sur l'élément de navigation
-     * last pour les listes d'accès.
+     * Cet ï¿½vï¿½nement surivient lorsque l'utilisateur clique sur l'ï¿½lï¿½ment de navigation
+     * last pour les listes d'accï¿½s.
      *
-     * @param subject Le sujet authentifié
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param subject Le sujet authentifiï¿½
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortie survient
+     * @exception IOException si une erreur d'entrï¿½e/sortie survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward searchLastSociete(CardexAuthenticationSubject subject,
@@ -1028,7 +1028,7 @@ public class AccesAction extends AbstractAction {
                                      HttpServletRequest request,
                                      HttpServletResponse response) throws IOException,
                                      ServletException {
-        log.fine("Recherche des accès(last) ");
+        log.debug("Recherche des accï¿½s(last) ");
 
         ActionMessages errors = new ActionMessages();
 
@@ -1037,10 +1037,10 @@ public class AccesAction extends AbstractAction {
             SocieteVO societe = new SocieteVO();
             ValueObjectMapper.convertSocieteHtmlForm(societeHtmlForm, societe,subject.getLocale());
  
-            // Récupération des résultats de la recherche original
+            // Rï¿½cupï¿½ration des rï¿½sultats de la recherche original
             ValueListIterator completeList = (ValueListIterator) request.getSession().getAttribute(GlobalConstants.RechercheList.ACCES);
 
-            // Ajout des dossiers dans le composant d'état (ActionForm)
+            // Ajout des dossiers dans le composant d'ï¿½tat (ActionForm)
             Collection list = completeList.getLastElements(nombreDeResultats);
             Collection currentList = new ArrayList();
             Iterator   it = list.iterator();
@@ -1077,13 +1077,13 @@ public class AccesAction extends AbstractAction {
     /**
      * <p>
      *
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortieif an input/output survient
+     * @exception IOException si une erreur d'entrï¿½e/sortieif an input/output survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward selectAccesVehicule(CardexAuthenticationSubject subject,
@@ -1091,7 +1091,7 @@ public class AccesAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Affichage des accès");
+        log.debug("Affichage des accï¿½s");
 
         ActionMessages errors = new ActionMessages();
 
@@ -1100,12 +1100,12 @@ public class AccesAction extends AbstractAction {
             VehiculeForm vehiculeHtmlForm = (VehiculeForm) form;
             VehiculeVO vehicule = new VehiculeVO();
             ValueListIterator results;
-            // Conversion du composant d'état(ActionForm) en composant d'affaire(Value Object)
+            // Conversion du composant d'ï¿½tat(ActionForm) en composant d'affaire(Value Object)
             ValueObjectMapper.convertVehiculeHtmlForm(vehiculeHtmlForm, vehicule,subject.getLocale());
-            log.fine(vehicule.toString());
-            // Exécution de la recherche via le service d'affaire(BusinessDelegate)
+            log.debug(vehicule.toString());
+            // Exï¿½cution de la recherche via le service d'affaire(BusinessDelegate)
             results = delegate.selectAccesVehicule(subject,vehicule);
-            // Ajout des accès dans le composant d'état (ActionForm)
+            // Ajout des accï¿½s dans le composant d'ï¿½tat (ActionForm)
             //int nombreDeResultats = (int)criteresRechercheDossier.getMaximumResultatsRecherche();
             Collection list = results.getNextElements(nombreDeResultats);
             Collection currentList = new ArrayList();
@@ -1143,17 +1143,17 @@ public class AccesAction extends AbstractAction {
 
     /**
      * <p>
-     * Cet événement surivient lorsque l'utilisateur clique sur l'élément de navigation
-     * first pour les listes d'accès.
+     * Cet ï¿½vï¿½nement surivient lorsque l'utilisateur clique sur l'ï¿½lï¿½ment de navigation
+     * first pour les listes d'accï¿½s.
      *
-     * @param subject Le sujet authentifié
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param subject Le sujet authentifiï¿½
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortie survient
+     * @exception IOException si une erreur d'entrï¿½e/sortie survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward searchFirstVehicule(CardexAuthenticationSubject subject,
@@ -1162,7 +1162,7 @@ public class AccesAction extends AbstractAction {
                                      HttpServletRequest request,
                                      HttpServletResponse response) throws IOException,
                                      ServletException {
-        log.fine("Recherche des accès(first) ");
+        log.debug("Recherche des accï¿½s(first) ");
 
         ActionMessages errors = new ActionMessages();
 
@@ -1171,10 +1171,10 @@ public class AccesAction extends AbstractAction {
             VehiculeVO vehicule = new VehiculeVO();
             ValueObjectMapper.convertVehiculeHtmlForm(vehiculeHtmlForm, vehicule, subject.getLocale());
  
-            // Récupération des résultats de la recherche original
+            // Rï¿½cupï¿½ration des rï¿½sultats de la recherche original
             ValueListIterator completeList = (ValueListIterator) request.getSession().getAttribute(GlobalConstants.RechercheList.ACCES);
 
-            // Ajout des dossiers dans le composant d'état (ActionForm)
+            // Ajout des dossiers dans le composant d'ï¿½tat (ActionForm)
             Collection list = completeList.getFirstElements(nombreDeResultats);
             Collection currentList = new ArrayList();
             Iterator   it = list.iterator();
@@ -1210,17 +1210,17 @@ public class AccesAction extends AbstractAction {
     
     /**
      * <p>
-     * Cet événement surivient lorsque l'utilisateur clique sur l'élément de navigation
-     * next pour les listes d'accès.
+     * Cet ï¿½vï¿½nement surivient lorsque l'utilisateur clique sur l'ï¿½lï¿½ment de navigation
+     * next pour les listes d'accï¿½s.
      *
-     * @param subject Le sujet authentifié
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param subject Le sujet authentifiï¿½
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortie survient
+     * @exception IOException si une erreur d'entrï¿½e/sortie survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward searchNextVehicule(CardexAuthenticationSubject subject,
@@ -1229,7 +1229,7 @@ public class AccesAction extends AbstractAction {
                                      HttpServletRequest request,
                                      HttpServletResponse response) throws IOException,
                                      ServletException {
-        log.fine("Recherche des accès(next) ");
+        log.debug("Recherche des accï¿½s(next) ");
 
         ActionMessages errors = new ActionMessages();
 
@@ -1238,15 +1238,15 @@ public class AccesAction extends AbstractAction {
             VehiculeVO vehicule = new VehiculeVO();
             ValueObjectMapper.convertVehiculeHtmlForm(vehiculeHtmlForm, vehicule,subject.getLocale());
  
-            // Récupération des résultats de la recherche original
+            // Rï¿½cupï¿½ration des rï¿½sultats de la recherche original
             ValueListIterator completeList = (ValueListIterator) request.getSession().getAttribute(GlobalConstants.RechercheList.ACCES);
             completeList.getNextElements(nombreDeResultats);
 
-            // Ajout des dossiers dans le composant d'état (ActionForm)
+            // Ajout des dossiers dans le composant d'ï¿½tat (ActionForm)
             Collection list = completeList.getNextElements(nombreDeResultats);
             Collection currentList = new ArrayList();
             Iterator   it = list.iterator();
-            log.fine("vehicule : " + vehicule);
+            log.debug("vehicule : " + vehicule);
      
             while (it.hasNext()) {
                 Acces acces = (Acces)it.next();
@@ -1280,17 +1280,17 @@ public class AccesAction extends AbstractAction {
     
     /**
      * <p>
-     * Cet événement surivient lorsque l'utilisateur clique sur l'élément de navigation
-     * previous pour les listes d'accès.
+     * Cet ï¿½vï¿½nement surivient lorsque l'utilisateur clique sur l'ï¿½lï¿½ment de navigation
+     * previous pour les listes d'accï¿½s.
      *
-     * @param subject Le sujet authentifié
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param subject Le sujet authentifiï¿½
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortie survient
+     * @exception IOException si une erreur d'entrï¿½e/sortie survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward searchPreviousVehicule(CardexAuthenticationSubject subject,
@@ -1299,7 +1299,7 @@ public class AccesAction extends AbstractAction {
                                      HttpServletRequest request,
                                      HttpServletResponse response) throws IOException,
                                      ServletException {
-        log.fine("Recherche des accès(previous) ");
+        log.debug("Recherche des accï¿½s(previous) ");
 
         ActionMessages errors = new ActionMessages();
 
@@ -1308,10 +1308,10 @@ public class AccesAction extends AbstractAction {
             VehiculeVO vehicule = new VehiculeVO();
             ValueObjectMapper.convertVehiculeHtmlForm(vehiculeHtmlForm, vehicule,subject.getLocale());
  
-            // Récupération des résultats de la recherche original
+            // Rï¿½cupï¿½ration des rï¿½sultats de la recherche original
             ValueListIterator completeList = (ValueListIterator) request.getSession().getAttribute(GlobalConstants.RechercheList.ACCES);
 
-            // Ajout des dossiers dans le composant d'état (ActionForm)
+            // Ajout des dossiers dans le composant d'ï¿½tat (ActionForm)
             Collection list = completeList.getPreviousElements(nombreDeResultats);
             Collection currentList = new ArrayList();
             Iterator   it = list.iterator();
@@ -1347,17 +1347,17 @@ public class AccesAction extends AbstractAction {
     
     /**
      * <p>
-     * Cet événement surivient lorsque l'utilisateur clique sur l'élément de navigation
-     * last pour les listes d'accès.
+     * Cet ï¿½vï¿½nement surivient lorsque l'utilisateur clique sur l'ï¿½lï¿½ment de navigation
+     * last pour les listes d'accï¿½s.
      *
-     * @param subject Le sujet authentifié
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param subject Le sujet authentifiï¿½
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortie survient
+     * @exception IOException si une erreur d'entrï¿½e/sortie survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward searchLastVehicule(CardexAuthenticationSubject subject,
@@ -1366,7 +1366,7 @@ public class AccesAction extends AbstractAction {
                                      HttpServletRequest request,
                                      HttpServletResponse response) throws IOException,
                                      ServletException {
-        log.fine("Recherche des accès(last) ");
+        log.debug("Recherche des accï¿½s(last) ");
 
         ActionMessages errors = new ActionMessages();
 
@@ -1375,10 +1375,10 @@ public class AccesAction extends AbstractAction {
             VehiculeVO vehicule = new VehiculeVO();
             ValueObjectMapper.convertVehiculeHtmlForm(vehiculeHtmlForm, vehicule,subject.getLocale());
  
-            // Récupération des résultats de la recherche original
+            // Rï¿½cupï¿½ration des rï¿½sultats de la recherche original
             ValueListIterator completeList = (ValueListIterator) request.getSession().getAttribute(GlobalConstants.RechercheList.ACCES);
 
-            // Ajout des dossiers dans le composant d'état (ActionForm)
+            // Ajout des dossiers dans le composant d'ï¿½tat (ActionForm)
             Collection list = completeList.getLastElements(nombreDeResultats);
             Collection currentList = new ArrayList();
             Iterator   it = list.iterator();

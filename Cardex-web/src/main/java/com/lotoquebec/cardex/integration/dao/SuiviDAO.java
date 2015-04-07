@@ -8,10 +8,11 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import oracle.jdbc.OracleTypes;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardex.business.CriteresRechercheSuivi;
 import com.lotoquebec.cardex.business.Suivi;
@@ -30,14 +31,13 @@ import com.lotoquebec.cardexCommun.integration.dao.jdbc.JDBCTemplate;
 import com.lotoquebec.cardexCommun.integration.dao.jdbc.PreparerSQL;
 import com.lotoquebec.cardexCommun.integration.dao.jdbc.RowCallbackHandler;
 import com.lotoquebec.cardexCommun.integration.dao.jdbc.UnEnregistrementPresent;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.user.CardexPrivilege;
 import com.lotoquebec.cardexCommun.user.CardexUser;
 import com.lotoquebec.cardexCommun.util.ListeCache;
 
 /**
- * Liste des appels à la base de données pour différents accès aux
- * narrations.  Implémente l'interface SuiviDAO.
+ * Liste des appels ï¿½ la base de donnï¿½es pour diffï¿½rents accï¿½s aux
+ * narrations.  Implï¿½mente l'interface SuiviDAO.
  *
  * @author $Author: fguerin $
  * @version $Revision: 1.11 $, $Date: 2002/05/02 13:06:09 $
@@ -47,26 +47,26 @@ import com.lotoquebec.cardexCommun.util.ListeCache;
 public class SuiviDAO{
 
    private final Logger      log =
-       (Logger)LoggerCardex.getLogger(SuiviDAO.class);
+       LoggerFactory.getLogger(SuiviDAO.class);
 
 /**
- * Écriture d'un suivi, appelée par la méthode "insert", "update",
+ * ï¿½criture d'un suivi, appelï¿½e par la mï¿½thode "insert", "update",
  * "approbation" ou "delete".
- * Selon le paramètre "action" il peut s'agir d'une insertion ("I")
- * d'une mise à jour ("U"), d'une approbation et modification ("M") ou
+ * Selon le paramï¿½tre "action" il peut s'agir d'une insertion ("I")
+ * d'une mise ï¿½ jour ("U"), d'une approbation et modification ("M") ou
  * d'une suppression ("D").
- * Procédure appelée : CARDEX_LIEN.SP_E_SV_SUIVI
- * Date de création : (2002-02-27)
+ * Procï¿½dure appelï¿½e : CARDEX_LIEN.SP_E_SV_SUIVI
+ * Date de crï¿½ation : (2002-02-27)
  * @author Philippe Caron
- * @param subject CardexAuthenticationSubject : Données nominatives sur
+ * @param subject CardexAuthenticationSubject : Donnï¿½es nominatives sur
  * l'utilisateur.
- * @param suivi Suivi : suivi saisie à l'écran.
+ * @param suivi Suivi : suivi saisie ï¿½ l'ï¿½cran.
  * @param action  java.lang.String : U ou I
- * @param genreFichier String : code à deux lettres de la table qui lie le suivi
+ * @param genreFichier String : code ï¿½ deux lettres de la table qui lie le suivi
  * (Dossier (DO).
- * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
- * rupture de connexion avec la base de données, ou que la table demandée est
- * non disponible, ou qu'un problème est survenu lors de l'exécution d'une
+ * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+ * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e est
+ * non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution d'une
  * "stored procedure".
  * @return Suivi
  */
@@ -144,17 +144,17 @@ public class SuiviDAO{
     }
 
 /**
- * Appel de la méthode editSuivi pour la création d'un suivi
- * Date de création : (2002-02-27)
+ * Appel de la mï¿½thode editSuivi pour la crï¿½ation d'un suivi
+ * Date de crï¿½ation : (2002-02-27)
  * @author Philippe Caron
- * @param subject CardexAuthenticationSubject : Données nominatives sur
+ * @param subject CardexAuthenticationSubject : Donnï¿½es nominatives sur
  * l'utilisateur.
- * @param suivi Suivi : Suivi saisie à l'écran.
+ * @param suivi Suivi : Suivi saisie ï¿½ l'ï¿½cran.
  * @param genreFichier String : Code identifiant la table source qui lie un
- * suivi à un Dossier.
- * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
- * rupture de connexion avec la base de données, ou que la table demandée est
- * non disponible, ou qu'un problème est survenu lors de l'exécution d'une
+ * suivi ï¿½ un Dossier.
+ * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+ * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e est
+ * non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution d'une
  * "stored procedure".
  * @return Suivi
  */
@@ -164,17 +164,17 @@ public class SuiviDAO{
     }
 
 /**
- * Appel de la méthode editSuivi pour la mise à jour d'un suivi
- * Date de création : (2002-02-27)
+ * Appel de la mï¿½thode editSuivi pour la mise ï¿½ jour d'un suivi
+ * Date de crï¿½ation : (2002-02-27)
  * @author Philippe Caron
- * @param subject CardexAuthenticationSubject : Données nominatives sur
+ * @param subject CardexAuthenticationSubject : Donnï¿½es nominatives sur
  * l'utilisateur.
- * @param suivi Suivi : Suivi saisie à l'écran.
+ * @param suivi Suivi : Suivi saisie ï¿½ l'ï¿½cran.
  * @param genreFichier String : Code identifiant la table source qui lie un
- * suivi à un Dossier.
- * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
- * rupture de connexion avec la base de données, ou que la table demandée est
- * non disponible, ou qu'un problème est survenu lors de l'exécution d'une
+ * suivi ï¿½ un Dossier.
+ * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+ * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e est
+ * non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution d'une
  * "stored procedure".
  */
     public void update(CardexAuthenticationSubject subject, Suivi suivi,
@@ -183,21 +183,21 @@ public class SuiviDAO{
     }
 
 /**
- * Appel de la méthode editSuivi pour l'approbation ou la modification d'un
+ * Appel de la mï¿½thode editSuivi pour l'approbation ou la modification d'un
  * suivi.
- * L'approbation consiste à bloquer toute modification à un suivi.
- * La modification consiste à permettre de nouveau les modifications à un suivi
- * approuvé.
- * Date de création : (2002-02-27)
+ * L'approbation consiste ï¿½ bloquer toute modification ï¿½ un suivi.
+ * La modification consiste ï¿½ permettre de nouveau les modifications ï¿½ un suivi
+ * approuvï¿½.
+ * Date de crï¿½ation : (2002-02-27)
  * @author Philippe Caron
- * @param subject CardexAuthenticationSubject : Données nominatives sur
+ * @param subject CardexAuthenticationSubject : Donnï¿½es nominatives sur
  * l'utilisateur.
- * @param suivi Suivi : Suivi saisie à l'écran.
+ * @param suivi Suivi : Suivi saisie ï¿½ l'ï¿½cran.
  * @param genreFichier String : Code identifiant la table source qui lie un
- * suivi à un Dossier.
- * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
- * rupture de connexion avec la base de données, ou que la table demandée est
- * non disponible, ou qu'un problème est survenu lors de l'exécution d'une
+ * suivi ï¿½ un Dossier.
+ * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+ * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e est
+ * non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution d'une
  * "stored procedure".
  * @return Suivi
  */
@@ -207,17 +207,17 @@ public class SuiviDAO{
     }
 
 /**
- * Appel de la méthode editSuivi pour la suppression d'un suivi
- * Date de création : (2002-02-27)
+ * Appel de la mï¿½thode editSuivi pour la suppression d'un suivi
+ * Date de crï¿½ation : (2002-02-27)
  * @author Philippe Caron
- * @param subject CardexAuthenticationSubject : Données nominatives sur
+ * @param subject CardexAuthenticationSubject : Donnï¿½es nominatives sur
  * l'utilisateur.
- * @param suivi Suivi : Suivi saisie à l'écran.
+ * @param suivi Suivi : Suivi saisie ï¿½ l'ï¿½cran.
  * @param genreFichier String : Code identifiant la table source qui lie un
- * suivi à un Dossier.
- * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
- * rupture de connexion avec la base de données, ou que la table demandée est
- * non disponible, ou qu'un problème est survenu lors de l'exécution d'une
+ * suivi ï¿½ un Dossier.
+ * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+ * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e est
+ * non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution d'une
  * "stored procedure".
  * @return Suivi
  */
@@ -227,24 +227,24 @@ public class SuiviDAO{
     }
 
 /**
- * Lecture des suivis associés à une entité Dossier.
- * Procédure appelée : CARDEX_LIEN.SP_E_SV_SUIVI
- * Date de création : (2002-02-27)
+ * Lecture des suivis associï¿½s ï¿½ une entitï¿½ Dossier.
+ * Procï¿½dure appelï¿½e : CARDEX_LIEN.SP_E_SV_SUIVI
+ * Date de crï¿½ation : (2002-02-27)
  * @author Philippe Caron
- * @param subject  CardexAuthenticationSubject : Données nominatives sur
+ * @param subject  CardexAuthenticationSubject : Donnï¿½es nominatives sur
  * l'utilisateur.
- * @param cle long : clé de référence de l'entité
- * @param site long : site de référence de l'entité
- * @param genreFichier String : identification de l'entité.
- * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
- * rupture de connexion avec la base de données, ou que la table demandée est
- * non disponible, ou qu'un problème est survenu lors de l'exécution d'une
+ * @param cle long : clï¿½ de rï¿½fï¿½rence de l'entitï¿½
+ * @param site long : site de rï¿½fï¿½rence de l'entitï¿½
+ * @param genreFichier String : identification de l'entitï¿½.
+ * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+ * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e est
+ * non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution d'une
  * "stored procedure".
- * @return Collection : liste des suivis associés
+ * @return Collection : liste des suivis associï¿½s
  */
     public Collection findLiensSuivi(CardexAuthenticationSubject subject,
             long cle, long site, String genreFichier) throws DAOException {
-      log.fine("findLiensSuivi()");
+      log.debug("findLiensSuivi()");
       Connection connection
             = DAOConnection.getInstance().getConnection(subject);
 	  CallableStatement callableStatement = null;
@@ -325,15 +325,15 @@ public class SuiviDAO{
    }
 
 /**
- * Routine pour traiter les ResultSet retournés par les recherches de suivi.
- * Date de création : (2002-02-27)
+ * Routine pour traiter les ResultSet retournï¿½s par les recherches de suivi.
+ * Date de crï¿½ation : (2002-02-27)
  * @author Philippe Caron
- * @param resultSet  ResultSet : Données retournées par une recherche.
- * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
- * rupture de connexion avec la base de données, ou que la table demandée est
- * non disponible, ou qu'un problème est survenu lors de l'exécution d'une
+ * @param resultSet  ResultSet : Donnï¿½es retournï¿½es par une recherche.
+ * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+ * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e est
+ * non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution d'une
  * "stored procedure".
- * @return ArrayList : liste des résultats traités.
+ * @return ArrayList : liste des rï¿½sultats traitï¿½s.
  */
 
     public RowCallbackHandler constuireRowCallBackHandler(final List<Suivi> listDossier){
@@ -348,7 +348,7 @@ public class SuiviDAO{
   private ArrayList traitementResultSet(ResultSet resultSet)
         throws DAOException {
        ArrayList results = new ArrayList();
-       try { //On limite le nombre d'enregistrements retournés à 3000.
+       try { //On limite le nombre d'enregistrements retournï¿½s ï¿½ 3000.
             while (resultSet.next() && results.size() < GlobalConstants.NombreEnregistrementRetourneRecherche.RECHERCHE_SUIVI){
               SuiviVO suiviVo = construireSuivi(resultSet);
               results.add(suiviVo);
@@ -389,7 +389,7 @@ private SuiviVO construireSuivi(ResultSet resultSet) throws SQLException {
 	  suiviVo.setReference2(resultSet.getString("V_SV_REFERENCE_2"));
 	  suiviVo.setReference3(resultSet.getString("V_SV_REFERENCE_3"));
 	  suiviVo.setEntite(resultSet.getLong("I_GE_ENTITE"));
-	  //Inscription des valeurs sur les dossiers associés aux recherches de suivis
+	  //Inscription des valeurs sur les dossiers associï¿½s aux recherches de suivis
 	  dossier.setCle(resultSet.getLong("L_DO_CLE"));
 	  dossier.setEntite(resultSet.getLong("I_GE_ENTITE"));
 	  dossier.setSite(resultSet.getLong("L_SI_CLE"));
@@ -407,15 +407,15 @@ private SuiviVO construireSuivi(ResultSet resultSet) throws SQLException {
 }
 
   /**
-   * Routine pour traiter les ResultSet retournés par l'audit des changements.
-   * Date de création : (2011-03-08)
+   * Routine pour traiter les ResultSet retournï¿½s par l'audit des changements.
+   * Date de crï¿½ation : (2011-03-08)
    * @author Philippe Caron
-   * @param resultSet  ResultSet : Données retournées par une recherche.
-   * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-   * rupture de connexion avec la base de données, ou que la table demandée est
-   * non disponible, ou qu'un problème est survenu lors de l'exécution d'une
+   * @param resultSet  ResultSet : Donnï¿½es retournï¿½es par une recherche.
+   * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+   * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e est
+   * non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution d'une
    * "stored procedure".
-   * @return ArrayList : liste des résultats traités.
+   * @return ArrayList : liste des rï¿½sultats traitï¿½s.
    */
     private ArrayList traitementResultSetAudit(ResultSet resultSet)
           throws DAOException {
@@ -460,18 +460,18 @@ private SuiviVO construireSuivi(ResultSet resultSet) throws SQLException {
       }
 
 /**
- * Recherche directe d'un suivi par sa clé unique.
- * Procédure appelée : SP_L2_SV_SUIVI
- * Date de création : (2002-02-27)
+ * Recherche directe d'un suivi par sa clï¿½ unique.
+ * Procï¿½dure appelï¿½e : SP_L2_SV_SUIVI
+ * Date de crï¿½ation : (2002-02-27)
  * @author Philippe Caron
- * @param subject  CardexAuthenticationSubject : Données nominatives sur
+ * @param subject  CardexAuthenticationSubject : Donnï¿½es nominatives sur
  * l'utilisateur.
- * @param criteria Suivi : Suivi à rechercher.
- * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
- * rupture de connexion avec la base de données, ou que la table demandée est
- * non disponible, ou qu'un problème est survenu lors de l'exécution d'une
+ * @param criteria Suivi : Suivi ï¿½ rechercher.
+ * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+ * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e est
+ * non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution d'une
  * "stored procedure".
- * @return Suivi : Données du dossier trouvé.
+ * @return Suivi : Donnï¿½es du dossier trouvï¿½.
  */
     public Suivi find(CardexAuthenticationSubject subject, Suivi criteria)
             throws DAOException {
@@ -491,7 +491,7 @@ private SuiviVO construireSuivi(ResultSet resultSet) throws SQLException {
          callableStatement.registerOutParameter(3, OracleTypes.CURSOR);
          callableStatement.execute();
          resultSet = (ResultSet)callableStatement.getObject(3);
-         //Traitement du résultat retourné
+         //Traitement du rï¿½sultat retournï¿½
          if (resultSet.next()) {
               suiviVo.setCle(resultSet.getLong("L_SV_CLE"));
               suiviVo.setSite(resultSet.getLong("L_SI_CLE"));
@@ -528,8 +528,8 @@ private SuiviVO construireSuivi(ResultSet resultSet) throws SQLException {
          //suiviVo.setPermettreComplete(false);
          //suiviVo.setApprouvable(false);
 
-         //Un suivi peut être approuvé ou complété seulement si un intervenant a été désigné
-         //et ne peut être modifié que par le demandeur ou par un intervenant du secteur assigné.
+         //Un suivi peut ï¿½tre approuvï¿½ ou complï¿½tï¿½ seulement si un intervenant a ï¿½tï¿½ dï¿½signï¿½
+         //et ne peut ï¿½tre modifiï¿½ que par le demandeur ou par un intervenant du secteur assignï¿½.
 
          // la table de suivi
 
@@ -541,8 +541,8 @@ private SuiviVO construireSuivi(ResultSet resultSet) throws SQLException {
               suiviVo.setApprouvable(false);
            }
 
-         //Un suivi peut être modifié seulement par le demandeur ou par l'intervenant
-         //et si seulement le suivi n'a pas été approuvé
+         //Un suivi peut ï¿½tre modifiï¿½ seulement par le demandeur ou par l'intervenant
+         //et si seulement le suivi n'a pas ï¿½tï¿½ approuvï¿½
          if ((user.getCode().equals(suiviVo.getDemandeur()) ||
                 (user.getCode().equals(suiviVo.getIntervenant()))) &&
                 (suiviVo.getDateApprobation() == null && suiviVo.getIntervenant() != null)
@@ -551,15 +551,15 @@ private SuiviVO construireSuivi(ResultSet resultSet) throws SQLException {
               suiviVo.setPermettreComplete(false);
            }
 
-         //Un suivi ne peut être complétée que par l'intervenant assigné
+         //Un suivi ne peut ï¿½tre complï¿½tï¿½e que par l'intervenant assignï¿½
          if ( user.getCode().equals(suiviVo.getIntervenant()) && suiviVo.getDateCompletee() == null) {
             suiviVo.setPermettreComplete(true);
          }
 
-         // Un suivi peut être approuvé si le niveau d'autorité de l'utilisateur
-         // est supérieur à celui du suivi et si le site est le même ou si
-         // l'utilisateur est le demandeur du suivi ou si le niveau d'autorité,
-         // le site et le secteur de l'utilisateur sont les mêmes que ceux du demandeur
+         // Un suivi peut ï¿½tre approuvï¿½ si le niveau d'autoritï¿½ de l'utilisateur
+         // est supï¿½rieur ï¿½ celui du suivi et si le site est le mï¿½me ou si
+         // l'utilisateur est le demandeur du suivi ou si le niveau d'autoritï¿½,
+         // le site et le secteur de l'utilisateur sont les mï¿½mes que ceux du demandeur
          ListeCache listeCache = ListeCache.getInstance();
          boolean isHierachieSuiviAccessible = listeCache.isValeurAccessible(subject, new TableValeurCleSQLListeCache(subject,GlobalConstants.TableValeur.NIVEAU_HIERARCHIQUE, GlobalConstants.ActionSecurite.SELECTION), String.valueOf(suiviVo.getNiveauHierarchiqueSuivi()));
          boolean isHierachieSuiviCreateurAccessible = listeCache.isValeurAccessible(subject, new TableValeurCleSQLListeCache(subject,GlobalConstants.TableValeur.NIVEAU_HIERARCHIQUE, GlobalConstants.ActionSecurite.SELECTION), String.valueOf(suiviVo.getNiveauHierarchiqueCreateur()));
@@ -575,23 +575,23 @@ private SuiviVO construireSuivi(ResultSet resultSet) throws SQLException {
               suiviVo.setApprouvable(true);
          }
 
-         if (log.isLoggable(Level.FINE)){
-           log.fine("  user.code = '"+user.getCode()+"'");
-           log.fine("  user.site = '"+user.getSite()+"'");
-           log.fine("  user.niveauAuthorite = '"+privilege.getNiveauAuthorite()+"'");
-           log.fine("  suivi.demandeur = '"+suiviVo.getDemandeur()+"'");
-           log.fine("  suivi.demandeur.niveauAuthorite = '"+suiviVo.getNiveauHierarchiqueCreateur()+"'");
-           log.fine("  suivi.demandeur.secteur = '"+suiviVo.getSecteurOrigine()+"'");
-           log.fine("  suivi.intervenant = '"+suiviVo.getIntervenant()+"'");
-           log.fine("  suivi.niveauAuthorite = '"+suiviVo.getNiveauHierarchiqueSuivi()+"'");
-           log.fine("  suivi.site = '"+suiviVo.getSite()+"'");
-           log.fine("  suivi.approbateur = '"+suiviVo.getApprobateur()+"'");
-           log.fine("Détermine si le suivi est modifiable");
-           log.fine("  suivi.isModifiable = '"+suiviVo.isModifiable()+"'");
-           log.fine("Détermine si le suivi est approuvable");
-           log.fine("  suivi.isApprouvable = '"+suiviVo.isApprouvable()+"'");
-           log.fine("Détermine si on peut compléter le suivi");
-           log.fine("  suivi.isPermettreComplete = '"+suiviVo.isPermettreComplete()+"'");
+         if (log.isDebugEnabled()){
+           log.debug("  user.code = '"+user.getCode()+"'");
+           log.debug("  user.site = '"+user.getSite()+"'");
+           log.debug("  user.niveauAuthorite = '"+privilege.getNiveauAuthorite()+"'");
+           log.debug("  suivi.demandeur = '"+suiviVo.getDemandeur()+"'");
+           log.debug("  suivi.demandeur.niveauAuthorite = '"+suiviVo.getNiveauHierarchiqueCreateur()+"'");
+           log.debug("  suivi.demandeur.secteur = '"+suiviVo.getSecteurOrigine()+"'");
+           log.debug("  suivi.intervenant = '"+suiviVo.getIntervenant()+"'");
+           log.debug("  suivi.niveauAuthorite = '"+suiviVo.getNiveauHierarchiqueSuivi()+"'");
+           log.debug("  suivi.site = '"+suiviVo.getSite()+"'");
+           log.debug("  suivi.approbateur = '"+suiviVo.getApprobateur()+"'");
+           log.debug("DÃ©termine si le suivi est modifiable");
+           log.debug("  suivi.isModifiable = '"+suiviVo.isModifiable()+"'");
+           log.debug("DÃ©termine si le suivi est approuvable");
+           log.debug("  suivi.isApprouvable = '"+suiviVo.isApprouvable()+"'");
+           log.debug("DÃ©termine si on peut complï¿½ter le suivi");
+           log.debug("  suivi.isPermettreComplete = '"+suiviVo.isPermettreComplete()+"'");
 
          }
 
@@ -632,21 +632,21 @@ private SuiviVO construireSuivi(ResultSet resultSet) throws SQLException {
     }
 
 /**
- * Recherche de suivis à l'aide de critères de recherche.
- * Cette recherche sert principalement à chercher des suivis.
- * La requête SQL est générée dans le code Java, avant d'être envoyée à Oracle,
- * en fonction des critères de recherche.
- * Le resultSet retourné par les recherches est traité dans la routine traitementResultSet.
- * Procédure appelée : générée ici.
- * Date de création : (2002-02-19)
- * @author François Guérin
- * @param subject  CardexAuthenticationSubject : données nominatives sur l'utilisateur
- * @param criteria CriteresRechercheSuivi : critères de recherche
- * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
- * rupture de connexion avec la base de données, ou que la table demandée est
- * non disponible, ou qu'un problème est survenu lors de l'exécution d'une
+ * Recherche de suivis ï¿½ l'aide de critï¿½res de recherche.
+ * Cette recherche sert principalement ï¿½ chercher des suivis.
+ * La requï¿½te SQL est gï¿½nï¿½rï¿½e dans le code Java, avant d'ï¿½tre envoyï¿½e ï¿½ Oracle,
+ * en fonction des critï¿½res de recherche.
+ * Le resultSet retournï¿½ par les recherches est traitï¿½ dans la routine traitementResultSet.
+ * Procï¿½dure appelï¿½e : gï¿½nï¿½rï¿½e ici.
+ * Date de crï¿½ation : (2002-02-19)
+ * @author Franï¿½ois Guï¿½rin
+ * @param subject  CardexAuthenticationSubject : donnï¿½es nominatives sur l'utilisateur
+ * @param criteria CriteresRechercheSuivi : critï¿½res de recherche
+ * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+ * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e est
+ * non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution d'une
  * "stored procedure".
- * @return ValueListIterator : liste des dossiers retournés par la recherche.
+ * @return ValueListIterator : liste des dossiers retournï¿½s par la recherche.
  */
 
     public List<Suivi> select(CardexAuthenticationSubject subject, CriteresRechercheSuivi criteria) throws DAOException {
@@ -676,17 +676,17 @@ private SuiviVO construireSuivi(ResultSet resultSet) throws SQLException {
    /**
     * Recherche de l'audit des changements d'un suivi.
     *
-    * Procédure appelée : CARDEX_AUDIT.SP_L_AUDIT_SUIVI
-    * Date de création : (2011-03-08)
-    * @author François Guérin
-    * @param subject  CardexAuthenticationSubject : Données nominatives sur
+    * Procï¿½dure appelï¿½e : CARDEX_AUDIT.SP_L_AUDIT_SUIVI
+    * Date de crï¿½ation : (2011-03-08)
+    * @author Franï¿½ois Guï¿½rin
+    * @param subject  CardexAuthenticationSubject : Donnï¿½es nominatives sur
     * l'utilisateur.
-    * @param criteria Sujet : Sujet à rechercher.
-    * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-    * rupture de connexion avec la base de données, ou que la table demandée
-    * est non disponible, ou qu'un problème est survenu lors de l'exécution
+    * @param criteria Sujet : Sujet ï¿½ rechercher.
+    * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+    * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+    * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
     * d'une "stored procedure".
-    * @return Dossier : Instance de dossier associée.
+    * @return Dossier : Instance de dossier associï¿½e.
     */
    public List audit(CardexAuthenticationSubject subject,Suivi criteria)
            throws DAOException {
@@ -703,7 +703,7 @@ private SuiviVO construireSuivi(ResultSet resultSet) throws SQLException {
            callableStatement.registerOutParameter(3, OracleTypes.CURSOR);
            callableStatement.execute();
            resultSet = (ResultSet)callableStatement.getObject(3);
-           //Traitement du résultat retourné
+           //Traitement du rï¿½sultat retournï¿½
            resultats = traitementResultSetAudit(resultSet);
 
 		}catch (SQLException se) {

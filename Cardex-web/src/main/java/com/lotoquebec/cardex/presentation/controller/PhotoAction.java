@@ -1,7 +1,6 @@
 package com.lotoquebec.cardex.presentation.controller;
 
 import java.io.IOException;
-import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -10,15 +9,16 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardex.presentation.model.form.PhotoForm;
 import com.lotoquebec.cardexCommun.GlobalConstants;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.presentation.util.AbstractAction;
 
 /**
- * Reçois et traite les informations reçu via l'upload d'un fichier afin de le
+ * Reï¿½ois et traite les informations reï¿½u via l'upload d'un fichier afin de le
  * persister sur disque.
  *
  * @author $Author: mlibersan $
@@ -31,7 +31,7 @@ public class PhotoAction extends AbstractAction {
      * L'instance du gestionnaire de journalisation.
      */
 	private final Logger      log =
-        (Logger)LoggerCardex.getLogger((this.getClass()));
+        LoggerFactory.getLogger((this.getClass()));
 
     
     public ActionForward updateImage(CardexAuthenticationSubject subject,
@@ -40,7 +40,7 @@ public class PhotoAction extends AbstractAction {
     HttpServletRequest request,
     HttpServletResponse response) throws IOException,
     ServletException {
-    	log.fine("Mise à jour d'un dossier");
+    	log.debug("Mise ï¿½ jour d'un dossier");
         
     	return mapping.findForward("success");
     }
@@ -49,15 +49,15 @@ public class PhotoAction extends AbstractAction {
     /**
      * <p>
      * <p>
-     * Par défaut, l'application remplit automatiquement les champs suivants :
+     * Par dï¿½faut, l'application remplit automatiquement les champs suivants :
      *
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortieif an input/output survient
+     * @exception IOException si une erreur d'entrï¿½e/sortieif an input/output survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward create(CardexAuthenticationSubject subject,
@@ -66,28 +66,28 @@ public class PhotoAction extends AbstractAction {
                                 HttpServletRequest request,
                                 HttpServletResponse response) throws IOException,
                                 ServletException {
-        log.fine("Création d'une nouvelle photo");
+        log.debug("Crï¿½ation d'une nouvelle photo");
 
-        //Valeur par défaut pour l'insertion
+        //Valeur par dï¿½faut pour l'insertion
         PhotoForm photoForm = (PhotoForm)form;
         photoForm.setTypeMultimedia(GlobalConstants.TypeMutliMedia.PHOTO);
 
-        log.fine("Photo : " + photoForm);
+        log.debug("Photo : " + photoForm);
         return mapping.findForward("success");
     }
 
     /**
      * <p>
      * <p>
-     * Par défaut, l'application remplit automatiquement les champs suivants :
+     * Par dï¿½faut, l'application remplit automatiquement les champs suivants :
      *
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortieif an input/output survient
+     * @exception IOException si une erreur d'entrï¿½e/sortieif an input/output survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward createPieceJointe(CardexAuthenticationSubject subject,
@@ -96,13 +96,13 @@ public class PhotoAction extends AbstractAction {
                                 HttpServletRequest request,
                                 HttpServletResponse response) throws IOException,
                                 ServletException {
-        log.fine("Création d'une nouvelle pièce jointe");
+        log.debug("Crï¿½ation d'une nouvelle piï¿½ce jointe");
 
-        //Valeur par défaut pour l'insertion
+        //Valeur par dï¿½faut pour l'insertion
         PhotoForm photoForm = (PhotoForm)form;
         photoForm.setTypeMultimedia(GlobalConstants.TypeMutliMedia.DOCUMENT_ANNEXE);
 
-        log.fine("Photo : " + photoForm);
+        log.debug("Photo : " + photoForm);
         return mapping.findForward("success");
     }
 

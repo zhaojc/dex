@@ -4,12 +4,13 @@ package com.lotoquebec.cardex.business.rule;
 
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.logging.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardex.business.Dossier;
 import com.lotoquebec.cardex.business.Narration;
 import com.lotoquebec.cardex.business.exception.NarrationBusinessRuleException;
-import com.lotoquebec.cardex.integration.dao.DossierDAO;
 import com.lotoquebec.cardex.integration.dao.FabriqueCardexDAO;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
 import com.lotoquebec.cardexCommun.business.BusinessRuleSet;
@@ -18,11 +19,10 @@ import com.lotoquebec.cardexCommun.exception.BusinessRuleException;
 import com.lotoquebec.cardexCommun.exception.BusinessRuleExceptionHandle;
 import com.lotoquebec.cardexCommun.exception.DAOException;
 import com.lotoquebec.cardexCommun.integration.dao.OracleDAOUtils;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.util.DateUtils;
 
 /**
- * Cette classe valide l'ensemble des règles d'affaire applicable aux societes.
+ * Cette classe valide l'ensemble des rï¿½gles d'affaire applicable aux societes.
  *
  * @see com.lotoquebec.cardexCommun.business.BusinessRuleSet
  * @author $Author: mlibersan $
@@ -34,22 +34,22 @@ public class NarrationBusinessRuleSet implements BusinessRuleSet {
      * L'instance du gestionnaire de journalisation.
      */
 	private final Logger      log =
-        (Logger)LoggerCardex.getLogger((this.getClass()));
+        LoggerFactory.getLogger((this.getClass()));
 
     /**
-     * Valide les règles d'affaires applicable à une narration.
+     * Valide les rï¿½gles d'affaires applicable ï¿½ une narration.
      *
-     * @param businessObject La société
+     * @param businessObject La sociï¿½tï¿½
      *
-     * @throws BusinessRuleException si les règles d'affaire
-     * d'un objet Societe ne sont pas respectées.
+     * @throws BusinessRuleException si les rï¿½gles d'affaire
+     * d'un objet Societe ne sont pas respectï¿½es.
      * @throws BusinessException 
      * @throws IllegalArgumentException si l'objet d'affaire n'est pas
      * une instance de  com.lotoquebec.cardex.business.Societe
      */
     public void checkRules(CardexAuthenticationSubject subject, Object businessObject)
             throws BusinessRuleException, BusinessException {
-        log.fine("checkRules()");
+        log.debug("checkRules()");
 
         if (businessObject instanceof Narration) {
 			try {
@@ -59,17 +59,17 @@ public class NarrationBusinessRuleSet implements BusinessRuleSet {
 	            validerRapportActiviteQuotidienne(narration);
 			} catch (DAOException e) {
 				e.printStackTrace();
-				throw new AssertionError("Problème DAO dans NarrationBusinessRuleSet");	
+				throw new AssertionError("Problï¿½me DAO dans NarrationBusinessRuleSet");	
 			}
         } else {
-            throw new IllegalArgumentException("L'objet d'affaire doit être une instance de '"
+            throw new IllegalArgumentException("L'objet d'affaire doit ï¿½tre une instance de '"
                                                + Narration.class.getName()
                                                + "'");
         }
     }
 
     /**
-     * Un seul rapport d'activité quotidienne par dossier par jour est permis 
+     * Un seul rapport d'activitï¿½ quotidienne par dossier par jour est permis 
      * @param narration
      * @throws BusinessException 
      */
@@ -104,28 +104,28 @@ public class NarrationBusinessRuleSet implements BusinessRuleSet {
     }    
     
 	/**
-     * Lors de l'approbation d'une narration, on s'assure qu'une valeur a été
-     * inscrite dans le champ Temps consacré.
+     * Lors de l'approbation d'une narration, on s'assure qu'une valeur a ï¿½tï¿½
+     * inscrite dans le champ Temps consacrï¿½.
      *
-     * @param businessObject La société
+     * @param businessObject La sociï¿½tï¿½
      *
      * @throws BusinessRuleException si la date de fondation n'est pas
-     * inférieure à la date courante.
+     * infï¿½rieure ï¿½ la date courante.
      */
     private void checkTempsConsacre(Narration narration)
             throws BusinessRuleException {
-        log.fine("checkTempsConsacre()");
+        log.debug("checkTempsConsacre()");
 
         if (OracleDAOUtils.isEmpty(narration.getTempsConsacre())) {
             throw createException(NarrationBusinessRuleException.NARRATION_TEMPS_CONSACRE);
         }else{
-        	log.fine("temps : " + narration.getTempsConsacre());
+        	log.debug("temps : " + narration.getTempsConsacre());
         }
     }
 
     /**
-     * Retourne un NarrationBusinessRuleException initialisé avec
-     * l'identificateur de règle.
+     * Retourne un NarrationBusinessRuleException initialisï¿½ avec
+     * l'identificateur de rï¿½gle.
      *
      *
      * @param ruleId

@@ -9,12 +9,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRResultSetDataSource;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardex.generateurRapport.rapports.RapportsConfiguration;
 import com.lotoquebec.cardex.integration.dao.FabriqueCardexDAO;
@@ -24,7 +26,6 @@ import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
 import com.lotoquebec.cardexCommun.exception.BusinessResourceException;
 import com.lotoquebec.cardexCommun.exception.DAOException;
 import com.lotoquebec.cardexCommun.integration.dao.DAOConnection;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.rapport.PDFImpressionRapport;
 import com.lotoquebec.cardexCommun.util.CourrielAction;
 import com.lq.std.conf.impl.AppConfig;
@@ -46,16 +47,16 @@ import com.lq.std.conf.impl.AppConfig;
  */
 public class CDX00_00013_MiseAJourDetaillants implements Flux{
 
-	private final static Logger log = (Logger)LoggerCardex.getLogger(CDX00_00013_MiseAJourDetaillants.class);
+	private final static Logger log = LoggerFactory.getLogger(CDX00_00013_MiseAJourDetaillants.class);
 	private CardexAuthenticationSubject subject = null;
 
 	
 	public void execute() throws Exception {
-		log.fine("Entr�e flux CDX00_00013");
+		log.info("Entr�e flux CDX00_00013");
 		
 		subject = AutentificationCardex.construireCardexAuthenticationSubjectSystem();
 		
-		log.fine("Traitement de la mise � jour des d�taillants");
+		log.info("Traitement de la mise � jour des d�taillants");
 		Connection connection = null; 
 		try {
 			connection = DAOConnection.getInstance().getConnection(subject);
@@ -74,55 +75,55 @@ public class CDX00_00013_MiseAJourDetaillants implements Flux{
 			connection = null;
 		}		
 		
-		log.fine("Fin flux CDX00_00013");
+		log.info("Fin flux CDX00_00013");
 	}
 
 	private void creerAuditSocietes(CardexAuthenticationSubject subject, Connection connection) throws AssertionError {
-		log.fine("Cr�ation de l'audit des soci�t�s");
+		log.info("Cr�ation de l'audit des soci�t�s");
 			
 			FabriqueCardexDAO.getInstance().getSocieteDAO().creerAuditSocietes(connection);
 
-			log.fine("Fin de la cr�ation de l'audit des soci�t�s");
+			log.info("Fin de la cr�ation de l'audit des soci�t�s");
 	}
 	
 	private void creerAuditPersonnesMorales(CardexAuthenticationSubject subject, Connection connection) throws AssertionError {
-		log.fine("Cr�ation de l'audit des soci�t�s lors de la mise � jour des personnes morales");
+		log.info("Cr�ation de l'audit des soci�t�s lors de la mise � jour des personnes morales");
 			
 			FabriqueCardexDAO.getInstance().getSocieteDAO().creerAuditPersonnesMorales(connection);
 
-			log.fine("Fin de la cr�ation de l'audit des soci�t�s lors de la mise � jour des personnes morales");
+			log.info("Fin de la cr�ation de l'audit des soci�t�s lors de la mise � jour des personnes morales");
 	}
 	
 	private void creerAuditAdresses(CardexAuthenticationSubject subject, Connection connection) throws AssertionError {
-		log.fine("Cr�ation de l'audit des adresses lors de la mise � jour des adresses");
+		log.info("Cr�ation de l'audit des adresses lors de la mise � jour des adresses");
 			
 			FabriqueCardexDAO.getInstance().getSocieteDAO().creerAuditAdresses(connection);
 
-			log.fine("Fin de la cr�ation de l'audit des adresses lors de la mise � jour des adresses");
+			log.info("Fin de la cr�ation de l'audit des adresses lors de la mise � jour des adresses");
 	}
 	
 	private void miseAJourDetaillants(CardexAuthenticationSubject subject, Connection connection) throws AssertionError {
-		log.fine("Mise � jour des d�taillants Loto-Qu�bec � partir de RDD");
+		log.info("Mise � jour des d�taillants Loto-Qu�bec � partir de RDD");
 			
 			FabriqueCardexDAO.getInstance().getSocieteDAO().miseAJourDetaillants(connection);
 
-			log.fine("Fin de la mise � jour des d�taillants Loto-Qu�bec � partir de RDD");
+			log.info("Fin de la mise � jour des d�taillants Loto-Qu�bec � partir de RDD");
 	}
 
     private void miseAJourAdresses(CardexAuthenticationSubject subject, Connection connection) throws AssertionError {
-        log.fine("Mise � jour des adresses des d�taillants Loto-Qu�bec � partir de RDD");
+        log.info("Mise � jour des adresses des d�taillants Loto-Qu�bec � partir de RDD");
             
             FabriqueCardexDAO.getInstance().getSocieteDAO().miseAJourAdressesDetaillant(connection);
 
-            log.fine("Fin de la mise � jour des adresses des d�taillants Loto-Qu�bec � partir de RDD");
+            log.info("Fin de la mise � jour des adresses des d�taillants Loto-Qu�bec � partir de RDD");
     }
 
 	private void ajoutAdressesManquantes(CardexAuthenticationSubject subject, Connection connection) throws DAOException, AssertionError {
-		log.fine("Ajout des adresses manquantes aux d�taillants Loto-Qu�bec � partir de RDD");
+		log.info("Ajout des adresses manquantes aux d�taillants Loto-Qu�bec � partir de RDD");
         try{   
             FabriqueCardexDAO.getInstance().getSocieteDAO().ajoutAdressesManquantes(subject, connection);
 
-            log.fine("Fin de l'ajout des adresses manquantes aux d�taillants Loto-Qu�bec � partir de RDD");
+            log.info("Fin de l'ajout des adresses manquantes aux d�taillants Loto-Qu�bec � partir de RDD");
          }catch (DAOException de) {
                 throw new DAOException(de);
          }
@@ -130,33 +131,33 @@ public class CDX00_00013_MiseAJourDetaillants implements Flux{
 	}
 
 	private void ajoutNouveauxDetaillants(CardexAuthenticationSubject subject, Connection connection) throws DAOException, AssertionError {
-		log.fine("Ajout des nouveaux d�taillants de RDD dans Cardex");
+		log.info("Ajout des nouveaux d�taillants de RDD dans Cardex");
 		 try{	
 			FabriqueCardexDAO.getInstance().getSocieteDAO().ajoutNouveauxDetaillants(subject, connection);
 
-			log.fine("Fin de l'ajout des d�taillants de RDD dans Cardex");
+			log.info("Fin de l'ajout des d�taillants de RDD dans Cardex");
 		 }catch (DAOException de) {
 	        	throw new DAOException(de);
 	     }
 	}
 
 	private void traitementPersonnesPhysiques(CardexAuthenticationSubject subject, Connection connection) throws DAOException, AssertionError {
-		log.fine("Traitement des personnes physiques de RDD dans Cardex");
+		log.info("Traitement des personnes physiques de RDD dans Cardex");
 		 try{	
 			FabriqueCardexDAO.getInstance().getSocieteDAO().traitementPersonnesPhysiques(subject, connection);
 
-			log.fine("Fin du traitement des personnes physiques");
+			log.info("Fin du traitement des personnes physiques");
 		 }catch (DAOException de) {
 	        	throw new DAOException(de);
 	     }
 	}
 
 	private void traitementPersonnesMorales(CardexAuthenticationSubject subject, Connection connection) throws DAOException, AssertionError {
-		log.fine("Traitement des soci�t�s et des personnes physiques de RDD dans Cardex");
+		log.info("Traitement des soci�t�s et des personnes physiques de RDD dans Cardex");
 		 try{	
 			FabriqueCardexDAO.getInstance().getSocieteDAO().traitementPersonnesMorales(subject, connection);
 
-			log.fine("Fin du traitement des personnes morales");
+			log.info("Fin du traitement des personnes morales");
 		 }catch (DAOException de){
 	        	throw new DAOException(de);
 	     }
@@ -170,7 +171,7 @@ public class CDX00_00013_MiseAJourDetaillants implements Flux{
 	}
 	
 	private void produireRapportChangementsDetaillants(CardexAuthenticationSubject subject, Connection connection) throws FileNotFoundException, BusinessResourceException, DAOException, JRException {
-		log.fine("produireRapportChangementsDetaillants d�but ");
+		log.info("produireRapportChangementsDetaillants d�but ");
 		
 		//On v�rifie d'abord s'il y a des dossiers de visite en cours.
 		Integer nombre = FabriqueCardexDAO.getInstance().getDossierDAO().verifierNombreDossierVisite(subject);
@@ -183,25 +184,25 @@ public class CDX00_00013_MiseAJourDetaillants implements Flux{
 
 			// Utilisation d'un resultSet comme source de donn�es
 			//ResultSet resultSet = delegate.rapportActivites(dateDebut, dateFin, procedure);
-			log.fine("produireRapportChangementsDetaillants");
+			log.info("produireRapportChangementsDetaillants");
 			ResultSet resultSet = FabriqueCardexDAO.getInstance().getRapportDAO().rapportChangementsDetaillants(connection);
 			JRResultSetDataSource resultSetDataSource = new JRResultSetDataSource(resultSet);
-			// log.fine(context.getRealPath("/rapports/"));
+			// log.info(context.getRealPath("/rapports/"));
 			parameters.put("SUBREPORT_DIR", "/rapports/");
 			parameters.put("REPORT_CONNECTION", connection);
 			parameters.put("UTILISATEUR", "Diff�r� Cardex");
 			JasperPrint print = JasperFillManager.fillReport(gabarit, parameters, resultSetDataSource);
 
 			// Sauvegarde dans un fichier
-			log.fine("produireRapportChangementsDetaillants (Sauvegarde dans un fichier)");
+			log.info("produireRapportChangementsDetaillants (Sauvegarde dans un fichier)");
 			String nomRapport = obtenirNomRapport();
 			(new PDFImpressionRapport()).impression(nomRapport, print);
-			//log.fine("Choix nom rapport : '"+nomRapport+"'");
-			log.fine("Envoi du courriel");
+			//log.info("Choix nom rapport : '"+nomRapport+"'");
+			log.info("Envoi du courriel");
 			String objectMessage = CourrielAction.constuireObjectMessage(subject, GlobalConstants.TypesIntervention.ChangementsDetaillants);
 			CourrielAction.envoyerCourrielEtFichierDestinataire(subject, connection, objectMessage, "", GlobalConstants.TypesIntervention.ChangementsDetaillants, "A", nomRapport);
 		}
-		log.fine("produireRapportChangementsDetaillants Fin");
+		log.info("produireRapportChangementsDetaillants Fin");
 
 	}
 

@@ -17,7 +17,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -36,6 +35,8 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.upload.FormFile;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardex.business.Adresse;
 import com.lotoquebec.cardex.business.Dossier;
@@ -93,7 +94,6 @@ import com.lotoquebec.cardexCommun.exception.ValueObjectMapperException;
 import com.lotoquebec.cardexCommun.integration.dao.DAOConnection;
 import com.lotoquebec.cardexCommun.integration.dao.OracleDAOUtils;
 import com.lotoquebec.cardexCommun.integration.dao.cleListe.cleSQLListeCache.TableValeurCleSQLListeCache;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.model.EntiteCardexForm;
 import com.lotoquebec.cardexCommun.presentation.util.AbstractAction;
 import com.lotoquebec.cardexCommun.presentation.util.AideController;
@@ -118,7 +118,7 @@ public class SocieteAction extends AbstractAction {
      * L'instance du gestionnaire de journalisation.
      */
 	private final Logger      log =
-        (Logger)LoggerCardex.getLogger((this.getClass()));
+        LoggerFactory.getLogger((this.getClass()));
 
     /**
      * <p>
@@ -150,7 +150,7 @@ public class SocieteAction extends AbstractAction {
                                 HttpServletRequest request,
                                 HttpServletResponse response) throws IOException,
                                 ServletException {
-        log.fine("Cr�ation d'une nouvelle societe");
+        log.debug("Cr�ation d'une nouvelle societe");
 
         SocieteForm societeForm = (SocieteForm) form;
     	societeForm.init(subject);
@@ -197,7 +197,7 @@ public class SocieteAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Sauvegarde d'une nouvelle soci�t�");
+        log.debug("Sauvegarde d'une nouvelle soci�t�");
 
         ActionErrors    errors = new ActionErrors();
         Societe         newSociete = new SocieteVO();
@@ -213,7 +213,7 @@ public class SocieteAction extends AbstractAction {
 
             // Pas de valeurs par d�faut.
 
-            log.fine("Societe � cr�er : " + newSociete);
+            log.debug("Societe � cr�er : " + newSociete);
 
             Societe criteria = societeDelegate.create(subject, newSociete);
 
@@ -225,7 +225,7 @@ public class SocieteAction extends AbstractAction {
 			}
 
 			Societe societeCreated = societeDelegate.find(subject, criteria);
-			log.fine("Societe cr�� : " + societeCreated);
+			log.debug("Societe cr�� : " + societeCreated);
 
 			if (newSocieteForm.getEntiteCardexLiaison() != null){
 				//On fait la liaison automatique avec le module reli�
@@ -300,7 +300,7 @@ public class SocieteAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Acc�s � une soci�t�");
+        log.debug("Acc�s � une soci�t�");
 
         ActionMessages errors = new ActionMessages();
 
@@ -309,12 +309,12 @@ public class SocieteAction extends AbstractAction {
             SocieteForm societeForm = (SocieteForm) form;
             Societe     societe     = new SocieteVO();
 
-            log.fine("Societe recherch�: " + societeForm.toString());
+            log.debug("Societe recherch�: " + societeForm.toString());
 
             if (AideController.isNullOrEquals(societeForm.getMotPasse(), societeForm.getConfirmationMotPasse()) ) {
               ValueObjectMapper.convertSocieteHtmlForm(societeForm, societe,subject.getLocale());
               societe = societeDelegate.find(subject, societe);
-              log.fine("Societe trouv�: " + societe.toString());
+              log.debug("Societe trouv�: " + societe.toString());
               ValueObjectMapper.convertSociete(societe, societeForm,subject.getLocale());
               //societeForm.setNew(false);
               populateSocieteFormShow(subject, societe, societeForm);
@@ -334,7 +334,7 @@ public class SocieteAction extends AbstractAction {
               if (nbOfAttemps < GlobalConstants.MotDePasse.MAX_ATTEMPS) {
                 ValueObjectMapper.convertSocieteHtmlForm(societeForm, societe,subject.getLocale());
                 societe = societeDelegate.find(subject, societe);
-                log.fine("Societe prot�g�: " + societe.toString());
+                log.debug("Societe prot�g�: " + societe.toString());
                 ValueObjectMapper.convertSociete(societe, societeForm,subject.getLocale());
                 populateSocieteForm(subject, societe, societeForm);
                 societeForm.setConfirmationMotPasse("");
@@ -376,7 +376,7 @@ public class SocieteAction extends AbstractAction {
 			CardexAuthenticationSubject subject, ActionMapping mapping,
 			ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException {
-		log.fine("Acc�s � une soci�t�");
+		log.debug("Acc�s � une soci�t�");
 
 		ActionMessages errors = new ActionMessages();
 
@@ -385,12 +385,12 @@ public class SocieteAction extends AbstractAction {
 			SocieteForm societeForm = (SocieteForm) form;
 			Societe societe = new SocieteVO();
 
-			log.fine("Societe recherch�: " + societeForm.toString());
+			log.debug("Societe recherch�: " + societeForm.toString());
 
 			ValueObjectMapper.convertSocieteHtmlForm(societeForm, societe,
 					subject.getLocale());
 			societe = societeDelegate.find(subject, societe);
-			log.fine("Societe trouv�: " + societe.toString());
+			log.debug("Societe trouv�: " + societe.toString());
 			ValueObjectMapper.convertSociete(societe, societeForm, subject
 					.getLocale());
 			societeForm.setNew(false);
@@ -436,7 +436,7 @@ public class SocieteAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Acc�s � une soci�t�");
+        log.debug("Acc�s � une soci�t�");
 
         ActionMessages errors = new ActionMessages();
 
@@ -445,12 +445,12 @@ public class SocieteAction extends AbstractAction {
             SocieteForm         societeForm = (SocieteForm) form;
             Societe                 societe = new SocieteVO();
 
-            log.fine("Societe recherch�: " + societeForm.toString());
+            log.debug("Societe recherch�: " + societeForm.toString());
 
             if (AideController.isNullOrEquals(societeForm.getMotPasse(), societeForm.getConfirmationMotPasse()) ) {
               ValueObjectMapper.convertSocieteHtmlForm(societeForm, societe,subject.getLocale());
               societe = societeDelegate.findAcces(subject, societe);
-              log.fine("Societe trouv�: " + societe.toString());
+              log.debug("Societe trouv�: " + societe.toString());
               societeForm.init(subject);
               ValueObjectMapper.convert(societe, societeForm);
               societeForm.setNew(false);
@@ -478,7 +478,7 @@ public class SocieteAction extends AbstractAction {
               if (nbOfAttemps < GlobalConstants.MotDePasse.MAX_ATTEMPS) {
                 ValueObjectMapper.convertSocieteHtmlForm(societeForm, societe,subject.getLocale());
                 societe = societeDelegate.findAcces(subject, societe);
-                log.fine("Societe prot�g�: " + societe.toString());
+                log.debug("Societe prot�g�: " + societe.toString());
                 ValueObjectMapper.convertSociete(societe, societeForm,subject.getLocale());
                 populateSocieteForm(subject, societe, societeForm);
                 societeForm.setConfirmationMotPasse("");
@@ -533,7 +533,7 @@ public class SocieteAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException, CloneNotSupportedException {
-        log.fine("Acc�s � l'ecran de recherche societe");
+        log.debug("Acc�s � l'ecran de recherche societe");
 
         ActionErrors errors = new ActionErrors();
         CriteresRechercheSocieteForm rechercheSocieteForm = new CriteresRechercheSocieteForm();
@@ -562,7 +562,7 @@ public class SocieteAction extends AbstractAction {
             //Le r�le n'est pas n�cessaire entre 2 soci�t�s
             rechercheSocieteForm.setLienRoleRequis(false);
         }else {
-            log.severe("L'objet source de la liaison dossier n'est pas de type valide(sujet,societe,dossier,vehicule)");
+            log.error("L'objet source de la liaison dossier n'est pas de type valide(sujet,societe,dossier,vehicule)");
             return mapping.findForward("error");
         }
 
@@ -628,7 +628,7 @@ public class SocieteAction extends AbstractAction {
                                  HttpServletRequest request,
                                  HttpServletResponse response) throws IOException,
                                  ServletException, SecurityException, IllegalArgumentException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
-        log.fine("Refresh ecran de recherche societe");
+        log.debug("Refresh ecran de recherche societe");
 
         return mapping.findForward("success");
     }
@@ -655,7 +655,7 @@ public class SocieteAction extends AbstractAction {
                                  HttpServletRequest request,
                                  HttpServletResponse response) throws IOException,
                                  ServletException, SecurityException, IllegalArgumentException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
-        log.fine("Refresh ecran de recherche societe");
+        log.debug("Refresh ecran de recherche societe");
 
         return mapping.findForward("success");
     }
@@ -682,7 +682,7 @@ public class SocieteAction extends AbstractAction {
                                 HttpServletRequest request,
                                 HttpServletResponse response) throws IOException,
                                 ServletException {
-        log.fine("Mise � jour d'une soci�t�");
+        log.debug("Mise � jour d'une soci�t�");
 
         ActionMessages errors = new ActionMessages();
 
@@ -695,7 +695,7 @@ public class SocieteAction extends AbstractAction {
 
             ValueObjectMapper.convertSocieteHtmlForm((SocieteForm) form,
                     societe, subject.getLocale());
-            log.fine("Mise � jour de la soci�t�: " + societe.toString());
+            log.debug("Mise � jour de la soci�t�: " + societe.toString());
             FormFile file = null;
             String nomFichier = "";
             //On v�rifie s'il s'agit de l'ajout d'une photo
@@ -706,10 +706,10 @@ public class SocieteAction extends AbstractAction {
                 societeForm.getAjoutPhoto().setExtension(societeForm.getAjoutPhoto().getExtensionDeFilePath());                
                 //Est ce que la taille du fichier exc�de 4MB
                 if (societeForm.getAjoutPhoto().isTailleAccepte() == false) {
-                    log.severe("La taille du fichier est sup�rieure � 7MB.");
+                    log.error("La taille du fichier est sup�rieure � 7MB.");
                     throw (new BusinessRuleExceptionHandle("erreur_fichier")).getBusinessException();
                 }else if(societeForm.getAjoutPhoto().isPhoto() == false){
-                    log.severe("Ce fichier n'est pas une photo");
+                    log.error("Ce fichier n'est pas une photo");
                     throw (new BusinessRuleExceptionHandle("erreur.ajout.type.photo")).getBusinessException();
                 }else{
                 	societeForm.getAjoutPhoto().setLien(societeForm.getCle());
@@ -771,7 +771,7 @@ public class SocieteAction extends AbstractAction {
                                   HttpServletRequest request,
                                   HttpServletResponse response) throws IOException,
                                   ServletException {
-        log.fine("Liaison d'une soci�t�");
+        log.debug("Liaison d'une soci�t�");
 
         return mapping.findForward("success");
     }
@@ -796,7 +796,7 @@ public class SocieteAction extends AbstractAction {
                                         HttpServletRequest request,
                                         HttpServletResponse response) throws IOException,
                                         ServletException {
-        log.fine("Liaison d'un dossier � une soci�t�");
+        log.debug("Liaison d'un dossier � une soci�t�");
 
         ActionMessages errors = new ActionMessages();
 
@@ -804,9 +804,9 @@ public class SocieteAction extends AbstractAction {
         	verifierToken(request);
             SocieteBusinessDelegate delegate =
                 new SocieteBusinessDelegate();
-            log.fine("Liaison d'un dossier: form: " + form);
+            log.debug("Liaison d'un dossier: form: " + form);
             LienForm                lienForm = (LienForm) form;
-            log.fine("Liaison d'un dossier: lienForm: " + lienForm);
+            log.debug("Liaison d'un dossier: lienForm: " + lienForm);
             SocieteForm             societeForm = new SocieteForm();
             Societe                 societeOrigine = new SocieteVO();
             Dossier                 dossierDestination = new DossierVO();
@@ -822,7 +822,7 @@ public class SocieteAction extends AbstractAction {
             dossierDestination.setTypeLien(lienForm.getTypeLien());
             dossierDestination.setRole(Long.parseLong(lienForm.getRole()));
 
-            log.fine(lienForm.toString());
+            log.debug(lienForm.toString());
             delegate.addLienDossier(subject, societeOrigine,
                                     dossierDestination);
             populateSocieteForm(subject, societeOrigine, societeForm);
@@ -885,7 +885,7 @@ public class SocieteAction extends AbstractAction {
                                         HttpServletRequest request,
                                         HttpServletResponse response) throws IOException,
                                         ServletException {
-        log.fine("Liaison d'une societe");
+        log.debug("Liaison d'une societe");
 
         ActionMessages errors = new ActionMessages();
 
@@ -908,7 +908,7 @@ public class SocieteAction extends AbstractAction {
             sujet.setTypeLien(lienForm.getTypeLien());
             sujet.setRole(Long.parseLong(lienForm.getRole()));
 
-            log.fine(lienForm.toString());
+            log.debug(lienForm.toString());
             delegate.addLienSujet(subject, societe, sujet);
             populateSocieteForm(subject, societe, societeForm);
     		societeForm.setEntiteCardexLiaison( obtenirEntiteCardexFiche(request));
@@ -971,7 +971,7 @@ public class SocieteAction extends AbstractAction {
                                          HttpServletRequest request,
                                          HttpServletResponse response) throws IOException,
                                          ServletException {
-        log.fine("Liaison d'un vehicule � une soci�t�");
+        log.debug("Liaison d'un vehicule � une soci�t�");
 
         ActionMessages errors = new ActionMessages();
 
@@ -994,7 +994,7 @@ public class SocieteAction extends AbstractAction {
             vehicule.setTypeLien(lienForm.getTypeLien());
             vehicule.setRole(Long.parseLong(lienForm.getRole()));
 
-            log.fine(lienForm.toString());
+            log.debug(lienForm.toString());
             delegate.addLienVehicule(subject, societe, vehicule);
             populateSocieteForm(subject, societe, societeForm);
     		societeForm.setEntiteCardexLiaison( obtenirEntiteCardexFiche(request));
@@ -1054,7 +1054,7 @@ public class SocieteAction extends AbstractAction {
                                         HttpServletRequest request,
                                         HttpServletResponse response) throws IOException,
                                         ServletException {
-        log.fine("Destruction d'un lien societe");
+        log.debug("Destruction d'un lien societe");
 
         ActionMessages errors = new ActionMessages();
 
@@ -1081,7 +1081,7 @@ public class SocieteAction extends AbstractAction {
             sujet.setLien(lienForm.getCle());
             sujet.setLienSite(lienForm.getSite());
 
-            log.fine(lienForm.toString());
+            log.debug(lienForm.toString());
             delegate.deleteLienSujet(subject, societe, sujet);
             populateSocieteForm(subject, societe, societeForm);
     		societeForm.setEntiteCardexLiaison( obtenirEntiteCardexFiche(request));
@@ -1130,7 +1130,7 @@ public class SocieteAction extends AbstractAction {
                                         HttpServletRequest request,
                                         HttpServletResponse response) throws IOException,
                                         ServletException {
-        log.fine("Destruction d'un lien Vehicule");
+        log.debug("Destruction d'un lien Vehicule");
 
         ActionMessages errors = new ActionMessages();
 
@@ -1157,7 +1157,7 @@ public class SocieteAction extends AbstractAction {
             vehicule.setLien(lienForm.getCle());
             vehicule.setLienSite(lienForm.getSite());
 
-            log.fine(lienForm.toString());
+            log.debug(lienForm.toString());
             delegate.deleteLienVehicule(subject, societe, vehicule);
             populateSocieteForm(subject, societe, societeForm);
     		societeForm.setEntiteCardexLiaison( obtenirEntiteCardexFiche(request));
@@ -1209,7 +1209,7 @@ public class SocieteAction extends AbstractAction {
                                         HttpServletRequest request,
                                         HttpServletResponse response) throws IOException,
                                         ServletException {
-        log.fine("Liaison d'une soci�t�");
+        log.debug("Liaison d'une soci�t�");
 
         ActionMessages errors = new ActionMessages();
 
@@ -1236,7 +1236,7 @@ public class SocieteAction extends AbstractAction {
             //R�le par d�faut pour ce lien
             societeDestination.setRole(GlobalConstants.Role.SANS_OBJET);
 
-            log.fine(lienForm.toString());
+            log.debug(lienForm.toString());
             delegate.addLienSociete(subject, societeOrigine,
                                     societeDestination);
             populateSocieteForm(subject, societeOrigine, societeForm);
@@ -1299,7 +1299,7 @@ public class SocieteAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Liaison d'une narration � une soci�t�.");
+        log.debug("Liaison d'une narration � une soci�t�.");
         ActionMessages errors = new ActionMessages();
         ActionMessages messages = new ActionMessages();
         
@@ -1314,8 +1314,8 @@ public class SocieteAction extends AbstractAction {
                     subject.getLocale());
             ValueObjectMapper.convertNarrationHtmlForm(narrationForm, narration,
                     subject.getLocale());
-            log.fine("Societe: " + societe);
-            log.fine("Narration: " + narration);
+            log.debug("Societe: " + societe);
+            log.debug("Narration: " + narration);
             NarrationBaliseUtil.assignerMessageSiNarrationANettoyer(messages, narrationForm.getNarrationAvecFormat());
             delegate.addLienNarration(subject,societe,narration);
             populateSocieteForm(subject, societe, societeForm);
@@ -1389,7 +1389,7 @@ public class SocieteAction extends AbstractAction {
             SocieteForm societeForm = new SocieteForm();
             Photo photo = new PhotoVO();
             Societe societe = new SocieteVO();
-            log.fine("PhotoForm a li�e : " + photoForm);
+            log.debug("PhotoForm a li�e : " + photoForm);
             
             societeForm.init(subject);
             societeForm.setCle(photoForm.getLien());
@@ -1402,18 +1402,18 @@ public class SocieteAction extends AbstractAction {
 
             //Est ce que la taille du fichier exc�de 4MB
             if (photoForm.isTailleAccepte() == false) {
-            	log.severe("La taille du fichier est sup�rieure � 4MB.");
+            	log.error("La taille du fichier est sup�rieure � 4MB.");
                 return mapping.findForward("error");
             }else if(photoForm.isPhoto() == false){
-                log.severe("Ce fichier n'est pas une photo");
+                log.error("Ce fichier n'est pas une photo");
                 throw (new BusinessRuleExceptionHandle("erreur.ajout.type.photo")).getBusinessException();
             }else{
             	byte[] data = file.getFileData();
             	photo.setImage( data );
             	
-	            log.fine("Photo a li�e : " + photo);
+	            log.debug("Photo a li�e : " + photo);
     	        photo= delegate.addLienPhoto(subject,societe,photo);
-        	    log.fine("Photo li�e : " + photo);
+        	    log.debug("Photo li�e : " + photo);
         	    file.destroy();
         	    
 				populateSocieteForm(subject, societe, societeForm);
@@ -1464,7 +1464,7 @@ public class SocieteAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Ajout d'un lien entre une adresse et une soci�t�.");
+        log.debug("Ajout d'un lien entre une adresse et une soci�t�.");
         ActionMessages errors = new ActionMessages();
 
         try {
@@ -1481,8 +1481,8 @@ public class SocieteAction extends AbstractAction {
                     subject.getLocale());
             ValueObjectMapper.convertAdresseHtmlForm(adresseForm, adresse,
                     subject.getLocale());
-            log.fine("Societe: " + societe);
-            log.fine("Adresse: " + adresse);
+            log.debug("Societe: " + societe);
+            log.debug("Adresse: " + adresse);
             delegate.addLienAdresse(subject,societe,adresse);
             populateSocieteForm(subject, societe, societeForm);
     		societeForm.setEntiteCardexLiaison( obtenirEntiteCardexFiche(request));
@@ -1532,7 +1532,7 @@ public class SocieteAction extends AbstractAction {
                                            HttpServletRequest request,
                                            HttpServletResponse response) throws IOException,
                                            ServletException {
-        log.fine("Destruction d'un lien dossier");
+        log.debug("Destruction d'un lien dossier");
 
         ActionMessages errors = new ActionMessages();
 
@@ -1560,7 +1560,7 @@ public class SocieteAction extends AbstractAction {
             dossier.setRole(Long.parseLong(lienForm.getRole()));
             dossier.setLien(lienForm.getCle());
             dossier.setLienSite(lienForm.getSite());
-            log.fine(lienForm.toString());
+            log.debug(lienForm.toString());
             delegate.deleteLienDossier(subject, societe, dossier);
             populateSocieteForm(subject, societe, societeForm);
     		societeForm.setEntiteCardexLiaison( obtenirEntiteCardexFiche(request));
@@ -1613,7 +1613,7 @@ public class SocieteAction extends AbstractAction {
                                            HttpServletRequest request,
                                            HttpServletResponse response) throws IOException,
                                            ServletException {
-        log.fine("Destruction d'un lien societe");
+        log.debug("Destruction d'un lien societe");
 
         ActionMessages errors = new ActionMessages();
 
@@ -1641,7 +1641,7 @@ public class SocieteAction extends AbstractAction {
             societeDestination.setRole(Long.parseLong(lienForm.getRole()));
             societeDestination.setLien(lienForm.getCle());
             societeDestination.setLienSite(lienForm.getSite());
-            log.fine(lienForm.toString());
+            log.debug(lienForm.toString());
             delegate.deleteLienSociete(subject, societeOrigine,
                                        societeDestination);
             populateSocieteForm(subject, societeOrigine, societeForm);
@@ -1693,7 +1693,7 @@ public class SocieteAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Suppression d'un lien entre une narration et une soci�t�.");
+        log.debug("Suppression d'un lien entre une narration et une soci�t�.");
         ActionMessages errors = new ActionMessages();
 
         try {
@@ -1710,8 +1710,8 @@ public class SocieteAction extends AbstractAction {
                     subject.getLocale());
             ValueObjectMapper.convertNarrationHtmlForm(narrationForm, narration,
                     subject.getLocale());
-            log.fine("Societe: " + societe);
-            log.fine("Narration: " + narration);
+            log.debug("Societe: " + societe);
+            log.debug("Narration: " + narration);
             delegate.deleteLienNarration(subject,societe,narration);
             populateSocieteForm(subject, societe, societeForm);
     		societeForm.setEntiteCardexLiaison( obtenirEntiteCardexFiche(request));
@@ -1759,7 +1759,7 @@ public class SocieteAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Suppression d'un lien entre une photo et une soci�t�.");
+        log.debug("Suppression d'un lien entre une photo et une soci�t�.");
         ActionMessages errors = new ActionMessages();
 
         try {
@@ -1776,8 +1776,8 @@ public class SocieteAction extends AbstractAction {
                     subject.getLocale());
             ValueObjectMapper.convertPhotoHtmlForm(photoForm, photo,
                     subject.getLocale());
-            log.fine("Societe: " + societe);
-            log.fine("Photo: " + photo);
+            log.debug("Societe: " + societe);
+            log.debug("Photo: " + photo);
             delegate.deleteLienPhoto(subject,societe,photo);
             populateSocieteForm(subject, societe, societeForm);
     		societeForm.setEntiteCardexLiaison( obtenirEntiteCardexFiche(request));
@@ -1825,7 +1825,7 @@ public class SocieteAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Suppression d'un lien entre une adresse et une soci�t�");
+        log.debug("Suppression d'un lien entre une adresse et une soci�t�");
         ActionMessages errors = new ActionMessages();
 
         try {
@@ -1842,8 +1842,8 @@ public class SocieteAction extends AbstractAction {
                     subject.getLocale());
             ValueObjectMapper.convertAdresseHtmlForm(adresseForm, adresse,
                     subject.getLocale());
-            log.fine("Societe: " + societe);
-            log.fine("Adresse: " + adresse);
+            log.debug("Societe: " + societe);
+            log.debug("Adresse: " + adresse);
             delegate.deleteLienAdresse(subject,societe,adresse);
             populateSocieteForm(subject, societe, societeForm);
             societeForm.setNew(obtenirStatutNouveau(request));
@@ -1895,7 +1895,7 @@ public class SocieteAction extends AbstractAction {
                                 HttpServletRequest request,
                                 HttpServletResponse response) throws IOException, DAOException,
                                 ServletException {
-        log.fine("�puration des soci�t�s");
+        log.debug("�puration des soci�t�s");
 
         ActionMessages errors = new ActionMessages();
 
@@ -1916,18 +1916,18 @@ public class SocieteAction extends AbstractAction {
 			String siteDescription = cache.obtenirLabel(subject, String.valueOf(utilisateur.getSite()), new TableValeurCleSQLListeCache(subject, GlobalConstants.TableValeur.SITE, utilisateur.getEntite(), GlobalConstants.ActionSecurite.SELECTION));
     		String nomRapport = chemin+"Soci�t�s � �purer "+ siteDescription + " (" + dateRapport+").pdf";
     		InputStream gabarit = getClass().getClassLoader().getResourceAsStream("rapports/" + RapportsConfiguration.RAPPORT_EPURATION_SOCIETES);
-			log.fine("Sauvegarder soci�t�s � �purer");
+			log.debug("Sauvegarder soci�t�s � �purer");
 			long site = utilisateur.getSite();
 			resultSet = rapportDelegate.rapportEpuration(site, connection, "CARDEX_RAPPORT.SP_RAP_SO_EPURATION");
 			JRResultSetDataSource resultSetDataSource = new JRResultSetDataSource(resultSet);
-			// log.fine(context.getRealPath("/rapports/"));
+			// log.debug(context.getRealPath("/rapports/"));
 			ServletContext context = request.getSession().getServletContext();  
 	        parameters.put("SUBREPORT_DIR",context.getRealPath("/rapports/"));
             parameters.put("REPORT_CONNECTION",connection);
 			parameters.put("UTILISATEUR", utilisateur.getCode());
 			JasperPrint print = JasperFillManager.fillReport(gabarit, parameters, resultSetDataSource);
 			// Sauvegarde dans un fichier
-			log.fine("�puration des sujets (Sauvegarde dans un fichier)");
+			log.debug("�puration des sujets (Sauvegarde dans un fichier)");
 			(new PDFImpressionRapport()).impression(nomRapport, print);
 			//On proc�de ensuite � l'�puration
             SocieteBusinessDelegate societeDelegate =
@@ -1968,7 +1968,7 @@ public class SocieteAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Mise � jour d'un lien entre une narration et une soci�t�.");
+        log.debug("Mise � jour d'un lien entre une narration et une soci�t�.");
         ActionMessages errors = new ActionMessages();
 
         try {
@@ -1985,8 +1985,8 @@ public class SocieteAction extends AbstractAction {
                     subject.getLocale());
             ValueObjectMapper.convertNarrationHtmlForm(narrationForm, narration,
                     subject.getLocale());
-            log.fine("Societe: " + societe);
-            log.fine("Narration: " + narration);
+            log.debug("Societe: " + societe);
+            log.debug("Narration: " + narration);
             delegate.updateLienNarration(subject,narration);
             populateSocieteForm(subject, societe, societeForm);
     		societeForm.setEntiteCardexLiaison( obtenirEntiteCardexFiche(request));
@@ -2024,7 +2024,7 @@ public class SocieteAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Approbation d'une narration li�e � un societe.");
+        log.debug("Approbation d'une narration li�e � un societe.");
         ActionMessages errors = new ActionMessages();
         CardexUser user = (CardexUser)subject.getUser();
         CardexPrivilege privilege = (CardexPrivilege)subject.getPrivilege();
@@ -2049,8 +2049,8 @@ public class SocieteAction extends AbstractAction {
                     subject.getLocale());
             ValueObjectMapper.convertNarrationHtmlForm(narrationForm, narration,
                     subject.getLocale());
-            log.fine("Societe: " + societe);
-            log.fine("Narration: " + narration);
+            log.debug("Societe: " + societe);
+            log.debug("Narration: " + narration);
             delegate.approuveLienNarration(subject,narration);
             populateSocieteForm(subject, societe, societeForm);
             request.getSession().setAttribute("societe", societeForm);
@@ -2086,7 +2086,7 @@ public class SocieteAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Permettre la modification d'une narration li�e � un societe.");
+        log.debug("Permettre la modification d'une narration li�e � un societe.");
         ActionMessages errors = new ActionMessages();
 
         try {
@@ -2108,8 +2108,8 @@ public class SocieteAction extends AbstractAction {
                     subject.getLocale());
             ValueObjectMapper.convertNarrationHtmlForm(narrationForm, narration,
                     subject.getLocale());
-            log.fine("Societe: " + societe);
-            log.fine("Narration: " + narration);
+            log.debug("Societe: " + societe);
+            log.debug("Narration: " + narration);
             delegate.approuveLienNarration(subject,narration);
             populateSocieteForm(subject, societe, societeForm);
             request.getSession().setAttribute("societe", societeForm);
@@ -2145,7 +2145,7 @@ public class SocieteAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Mise � jour d'un lien entre une adresse et une soci�t�.");
+        log.debug("Mise � jour d'un lien entre une adresse et une soci�t�.");
         ActionMessages errors = new ActionMessages();
 
         try {
@@ -2162,8 +2162,8 @@ public class SocieteAction extends AbstractAction {
                     subject.getLocale());
             ValueObjectMapper.convertAdresseHtmlForm(adresseForm, adresse,
                     subject.getLocale());
-            log.fine("Societe: " + societe);
-            log.fine("Adresse: " + adresse);
+            log.debug("Societe: " + societe);
+            log.debug("Adresse: " + adresse);
             delegate.updateLienAdresse(subject,adresse);
             populateSocieteForm(subject, societe, societeForm);
     		societeForm.setEntiteCardexLiaison( obtenirEntiteCardexFiche(request));
@@ -2200,13 +2200,13 @@ public class SocieteAction extends AbstractAction {
                                      SocieteForm societeForm) throws BusinessResourceException,
                                      BusinessException,
                                      ValueObjectMapperException {
-        log.fine("populateSocieteForm");
+        log.debug("populateSocieteForm");
         SocieteBusinessDelegate delegate =
             new SocieteBusinessDelegate();
         Societe societe = delegate.find(subject, criteria);
 
         societeForm.resetOnglets();
-        //log.fine("Societe trouv�e: " + societe.toString());
+        //log.debug("Societe trouv�e: " + societe.toString());
         ValueObjectMapper.convert(societe, societeForm);
         societeForm.setConfirmationMotPasse(societeForm.getMotPasse());
         //Recherche de tous les enregistrements li�s dans les onglets
@@ -2235,7 +2235,7 @@ public class SocieteAction extends AbstractAction {
         // Recherche des liens dossier
         Collection liensDossier = delegate.findLiensDossier(subject, societe);
         Iterator   it = liensDossier.iterator();
-        log.fine("Dossier li�s (" + liensDossier.size() + ") :");
+        log.debug("Dossier li�s (" + liensDossier.size() + ") :");
         while (it.hasNext()) {
             Dossier     linkDossier = (Dossier) it.next();
             DossierForm linkDossierForm = new DossierForm();
@@ -2243,7 +2243,7 @@ public class SocieteAction extends AbstractAction {
                     subject.getLocale());
             linkDossierForm.assignerValeurDeListe( subject );
             societeForm.addDossier(linkDossierForm);
-            log.fine(linkDossier.toString());
+            log.debug(linkDossier.toString());
         }
         societeForm.getListeDossiers().assignerTrierDefault(DossierOngletTrieListe.CLE_DATE_DEBUT, true, new DossierOngletTrieListe());
 
@@ -2252,7 +2252,7 @@ public class SocieteAction extends AbstractAction {
                 societe);
         it = liensNarration.iterator();
 
-        log.fine("Narration li�s (" + liensNarration.size() + ") :");
+        log.debug("Narration li�s (" + liensNarration.size() + ") :");
 
         while (it.hasNext()) {
             Narration     linkNarration = (Narration) it.next();
@@ -2264,7 +2264,7 @@ public class SocieteAction extends AbstractAction {
                     subject.getLocale());
             linkNarrationForm.assignerValeurDeListe( subject );
             societeForm.addNarration(linkNarrationForm);
-            log.fine(linkNarration.toString());
+            log.debug(linkNarration.toString());
         }
         societeForm.getListeNarrations().assignerTrierDefault(NarrationOngletTrieListe.CLE_DATE_CREATION, true, new NarrationOngletTrieListe());
 
@@ -2272,7 +2272,7 @@ public class SocieteAction extends AbstractAction {
         Collection liensSujet = delegate.findLiensSujet(subject, societe);
         it = liensSujet.iterator();
 
-        log.fine("Sujets li�s (" + liensSujet.size() + ") :");
+        log.debug("Sujets li�s (" + liensSujet.size() + ") :");
 
         while (it.hasNext()) {
             Sujet     linkSujet = (Sujet) it.next();
@@ -2283,7 +2283,7 @@ public class SocieteAction extends AbstractAction {
             linkSujetForm.assignerValeurDeListe(subject);
             linkSujetForm.assignerPermettreSuppressionLiaison(societeForm);
             societeForm.addSujet(linkSujetForm);
-            log.fine(linkSujet.toString());
+            log.debug(linkSujet.toString());
         }
         societeForm.getListeSujets().assignerTrierDefault(SujetOngletTrieListe.CLE_NOM, false, new SujetOngletTrieListe());
 
@@ -2292,7 +2292,7 @@ public class SocieteAction extends AbstractAction {
                 societe);
         it = liensProprietaires.iterator();
 
-        log.fine("Proprietaires li�s (" + liensProprietaires.size() + ") :");
+        log.debug("Proprietaires li�s (" + liensProprietaires.size() + ") :");
 
         while (it.hasNext()) {
             Sujet     linkSujet = (Sujet) it.next();
@@ -2303,7 +2303,7 @@ public class SocieteAction extends AbstractAction {
             linkSujetForm.assignerValeurDeListe(subject);
             linkSujetForm.assignerPermettreSuppressionLiaison(societeForm);
             societeForm.addProprietaires(linkSujetForm);
-            log.fine(linkSujet.toString());
+            log.debug(linkSujet.toString());
         }
         societeForm.getListeProprietaires().assignerTrierDefault(SujetOngletTrieListe.CLE_DATE_CREATION, false, new SujetOngletTrieListe());
 
@@ -2312,7 +2312,7 @@ public class SocieteAction extends AbstractAction {
                 societe);
         it = liensPhoto.iterator();
 
-        log.fine("Photos li�s (" + liensPhoto.size() + ") :");
+        log.debug("Photos li�s (" + liensPhoto.size() + ") :");
 
         while (it.hasNext()) {
             Collection sublist = new ArrayList();
@@ -2323,7 +2323,7 @@ public class SocieteAction extends AbstractAction {
                 ValueObjectMapper.convertPhoto(linkPhoto, linkPhotoForm,
                         subject.getLocale());
                 sublist.add(linkPhotoForm);
-                // log.fine(linkPhoto.toString());
+                // log.debug(linkPhoto.toString());
               }
             }
             societeForm.addPhoto(sublist);
@@ -2333,14 +2333,14 @@ public class SocieteAction extends AbstractAction {
         Collection liensAdresse = delegate.findLiensAdresse(subject,
                 societe);
         it = liensAdresse.iterator();
-        log.fine("Adresses li�s (" + liensAdresse.size() + ") :");
+        log.debug("Adresses li�s (" + liensAdresse.size() + ") :");
 
         while (it.hasNext()) {
             Adresse     linkAdresse = (Adresse) it.next();
             AdresseForm linkAdresseForm = new AdresseForm();
             ValueObjectMapper.convertAdresse(linkAdresse, linkAdresseForm,
                     subject.getLocale());
-            log.fine(linkAdresse.toString());
+            log.debug(linkAdresse.toString());
             linkAdresseForm.assignerValeurDeListe( subject );
             societeForm.addAdresse(linkAdresseForm);
         }//while
@@ -2350,7 +2350,7 @@ public class SocieteAction extends AbstractAction {
         Collection liensSociete = delegate.findLiensSociete(subject, societe);
         it = liensSociete.iterator();
 
-        log.fine("Soci�t�s li�es (" + liensSociete.size() + ") :");
+        log.debug("Soci�t�s li�es (" + liensSociete.size() + ") :");
 
         while (it.hasNext()) {
             Societe     linkSociete = (Societe) it.next();
@@ -2361,7 +2361,7 @@ public class SocieteAction extends AbstractAction {
                     subject.getLocale());
             linkSocieteForm.assignerValeurDeListe( subject );
             societeForm.addSociete(linkSocieteForm);
-            log.fine(linkSociete.toString());
+            log.debug(linkSociete.toString());
         }
         societeForm.getListeSocietes().assignerTrierDefault(SocieteOngletTrieListe.CLE_NOM, false, new SocieteOngletTrieListe());
 
@@ -2370,7 +2370,7 @@ public class SocieteAction extends AbstractAction {
                 societe);
         it = liensVehicule.iterator();
 
-        log.fine("Vehicules li�s (" + liensVehicule.size() + ") :");
+        log.debug("Vehicules li�s (" + liensVehicule.size() + ") :");
 
         while (it.hasNext()) {
             Vehicule     linkVehicule = (Vehicule) it.next();
@@ -2380,7 +2380,7 @@ public class SocieteAction extends AbstractAction {
                     subject.getLocale());
             linkVehiculeForm.assignerValeurDeListe( subject );
             societeForm.addVehicule(linkVehiculeForm);
-            log.fine(linkVehicule.toString());
+            log.debug(linkVehicule.toString());
         }
         societeForm.getListeVehicules().assignerTrierDefault(VehiculeOngletTrieListe.CLE_IMMATRICULATION, false, new VehiculeOngletTrieListe());
 
@@ -2412,7 +2412,7 @@ public class SocieteAction extends AbstractAction {
                                      SocieteForm societeForm) throws BusinessResourceException,
                                      BusinessException,
                                      ValueObjectMapperException {
-        log.fine("populateSocieteFormShow");
+        log.debug("populateSocieteFormShow");
         SocieteBusinessDelegate delegate = new SocieteBusinessDelegate();
         societeForm.resetOnglets();
         societeForm.setConfirmationMotPasse(societeForm.getMotPasse());
@@ -2444,7 +2444,7 @@ public class SocieteAction extends AbstractAction {
                                        HttpServletRequest request,
                                        HttpServletResponse response) throws IOException,
                                        ServletException {
-        log.fine("Param�tres de recherche par d�fault de societe");
+        log.debug("Param�tres de recherche par d�fault de societe");
 
         ActionMessages errors = new ActionMessages();
 
@@ -2491,7 +2491,7 @@ public class SocieteAction extends AbstractAction {
                                        HttpServletRequest request,
                                        HttpServletResponse response) throws IOException,
                                        ServletException {
-        log.fine("Param�tres de recherche par d�fault de societe en mode liaison");
+        log.debug("Param�tres de recherche par d�fault de societe en mode liaison");
 
         ActionMessages errors = new ActionMessages();
 
@@ -2549,7 +2549,7 @@ public class SocieteAction extends AbstractAction {
                                        HttpServletRequest request,
                                        HttpServletResponse response) throws IOException,
                                        ServletException {
-        log.fine("Recherche par d�fault de societe");
+        log.debug("Recherche par d�fault de societe");
 
         ActionMessages errors = new ActionMessages();
 
@@ -2612,7 +2612,7 @@ public class SocieteAction extends AbstractAction {
                                 HttpServletRequest request,
                                 HttpServletResponse response) throws IOException,
                                 ServletException {
-        log.fine("Recherche de soci�t�");
+        log.debug("Recherche de soci�t�");
 
         ActionMessages errors = new ActionMessages();
 
@@ -2730,7 +2730,7 @@ public class SocieteAction extends AbstractAction {
                                        HttpServletRequest request,
                                        HttpServletResponse response) throws IOException,
                                        ServletException {
-        log.fine("Recherche de soci�t�");
+        log.debug("Recherche de soci�t�");
 
         ActionMessages errors = new ActionMessages();
 
@@ -2821,7 +2821,7 @@ public class SocieteAction extends AbstractAction {
                                         HttpServletRequest request,
                                         HttpServletResponse response) throws IOException,
                                         ServletException {
-        log.fine("Mise � jour de la liaison dans une soci�t�");
+        log.debug("Mise � jour de la liaison dans une soci�t�");
 
         ActionMessages errors = new ActionMessages();
 
@@ -2874,7 +2874,7 @@ public class SocieteAction extends AbstractAction {
                                         HttpServletRequest request,
                                         HttpServletResponse response) throws IOException,
                                         ServletException {
-        log.fine("Copie de donn�es de soci�t�s");
+        log.debug("Copie de donn�es de soci�t�s");
 
         ActionMessages errors = new ActionMessages();
 
@@ -2931,7 +2931,7 @@ public class SocieteAction extends AbstractAction {
             SocieteForm societeForm = new SocieteForm();
             Photo photo = new PhotoVO();
             Societe societe = new SocieteVO();
-            log.fine("PhotoForm a li�e : " + photoForm);
+            log.debug("PhotoForm a li�e : " + photoForm);
 
             societeForm.init(subject);
             societeForm.setCle(photoForm.getLien());
@@ -2942,7 +2942,7 @@ public class SocieteAction extends AbstractAction {
             FormFile   file = photoForm.getUploadImage();
         	byte[] data = file.getFileData();
         	photo.setImage( data );
-            log.fine("Photo a li�e : " + photo);
+            log.debug("Photo a li�e : " + photo);
             photo = delegate.addLienPhoto(subject,societe,photo);
             //file.destroy();
 
@@ -2981,7 +2981,7 @@ public class SocieteAction extends AbstractAction {
                                 ServletException {
 
 
-        log.fine("Retour de la consultation d'une soci�t�");
+        log.debug("Retour de la consultation d'une soci�t�");
 
         //ActionMessages errors = new ActionMessages();
 

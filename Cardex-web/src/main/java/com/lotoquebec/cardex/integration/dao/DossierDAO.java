@@ -13,10 +13,11 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import oracle.jdbc.OracleTypes;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardex.business.Consignation;
 import com.lotoquebec.cardex.business.CriteresRechercheDossier;
@@ -39,7 +40,6 @@ import com.lotoquebec.cardex.business.vo.JournalVO;
 import com.lotoquebec.cardex.business.vo.LiaisonBilletSocieteVO;
 import com.lotoquebec.cardex.business.vo.RapportJournalVO;
 import com.lotoquebec.cardex.business.vo.SocieteVO;
-import com.lotoquebec.cardex.business.vo.SousCategorieVO;
 import com.lotoquebec.cardex.business.vo.SousCategoriesVO;
 import com.lotoquebec.cardex.business.vo.SujetVO;
 import com.lotoquebec.cardex.business.vo.UrgenceVO;
@@ -66,7 +66,6 @@ import com.lotoquebec.cardexCommun.integration.dao.jdbc.PreparerSQL;
 import com.lotoquebec.cardexCommun.integration.dao.jdbc.RowCallbackHandler;
 import com.lotoquebec.cardexCommun.integration.dao.jdbc.StoreProcTemplate;
 import com.lotoquebec.cardexCommun.integration.dao.jdbc.UnEnregistrementPresent;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.securite.GestionnaireSecurite;
 import com.lotoquebec.cardexCommun.securite.UIComponentState;
 import com.lotoquebec.cardexCommun.text.DateFormat;
@@ -87,7 +86,7 @@ import com.lotoquebec.cardexCommun.util.ListeCache;
 public class DossierDAO {
  
 	private final Logger      log =
-        (Logger)LoggerCardex.getLogger((DossierDAO.class));
+        LoggerFactory.getLogger((DossierDAO.class));
 
      /**
      * Modification d'un dossier, appel� par la m�thode "insert" ou "update".
@@ -293,7 +292,7 @@ public class DossierDAO {
     public boolean isAvecInscription(CardexAuthenticationSubject subject,
                        Dossier dossier) throws DAOException {
 
-        log.fine("isAvecInscription()");
+        log.debug("isAvecInscription()");
       	ListeCache listeCache = ListeCache.getInstance();
 		
 		try {
@@ -359,7 +358,7 @@ public class DossierDAO {
             resultSet = (ResultSet)callableStatement.getObject(3);
             //Traitement du r�sultat retourn�
             if (resultSet.next()) {
-                //log.fine("   [LabelValueBean label='" + label
+                //log.debug("   [LabelValueBean label='" + label
                 //      + "' value='"+value+"']");
 				dossier = traitementResultSetFind(resultSet);
             }
@@ -377,19 +376,19 @@ public class DossierDAO {
              // D�termine si le dossier est avec inscription
              dossier.setInscription(isAvecInscription(subject,dossier));
 
-             if (log.isLoggable(Level.FINE)){
-               log.fine("D�termine si le dossier est modifiable");
-               log.fine("  user.niveauAuthorite = '"+privilege.getNiveauAuthorite()+"'");
-               log.fine("  dossier.hierarchie = '"+dossier.getHierarchie()+"'");
-               log.fine("  user.code = '"+user.getCode()+"'");
-               log.fine("  dossier.intervenant = '"+dossier.getIntervenant()+"'");
-               log.fine("  user.site = '"+user.getSite()+"'");
-               log.fine("  dossier.site = '"+dossier.getSite()+"'");
-               log.fine("  dossier.statut = '"+dossier.getStatut()+"'");
-               log.fine("  GlobalConstants.Statut.DOSSIER_ACTIF = '"+GlobalConstants.Statut.DOSSIER_ACTIF+"'");
-               log.fine("  dossier.isModifiable = '"+dossier.isModifiable()+"'");
-               log.fine("D�termine si le dossier est avec inscription");
-               log.fine("  dossier.isInscription = '"+dossier.isInscription()+"'");
+             if (log.isDebugEnabled()){
+               log.debug("Détermine si le dossier est modifiable");
+               log.debug("  user.niveauAuthorite = '"+privilege.getNiveauAuthorite()+"'");
+               log.debug("  dossier.hierarchie = '"+dossier.getHierarchie()+"'");
+               log.debug("  user.code = '"+user.getCode()+"'");
+               log.debug("  dossier.intervenant = '"+dossier.getIntervenant()+"'");
+               log.debug("  user.site = '"+user.getSite()+"'");
+               log.debug("  dossier.site = '"+dossier.getSite()+"'");
+               log.debug("  dossier.statut = '"+dossier.getStatut()+"'");
+               log.debug("  GlobalConstants.Statut.DOSSIER_ACTIF = '"+GlobalConstants.Statut.DOSSIER_ACTIF+"'");
+               log.debug("  dossier.isModifiable = '"+dossier.isModifiable()+"'");
+               log.debug("D�termine si le dossier est avec inscription");
+               log.debug("  dossier.isInscription = '"+dossier.isInscription()+"'");
              }
 
         }catch (SQLException se) {
@@ -467,7 +466,7 @@ public class DossierDAO {
             resultSet = (ResultSet)callableStatement.getObject(3);
             //Traitement du r�sultat retourn�
             if (resultSet.next()) {
-                //log.fine("   [LabelValueBean label='" + label
+                //log.debug("   [LabelValueBean label='" + label
                 //      + "' value='"+value+"']");
 				dossier = traitementResultSetFind(resultSet);
             }
@@ -485,19 +484,19 @@ public class DossierDAO {
              // D�termine si le dossier est avec inscription
              dossier.setInscription(isAvecInscription(subject,dossier));
 
-             if (log.isLoggable(Level.FINE)){
-               log.fine("D�termine si le dossier est modifiable");
-               log.fine("  user.niveauAuthorite = '"+privilege.getNiveauAuthorite()+"'");
-               log.fine("  dossier.hierarchie = '"+dossier.getHierarchie()+"'");
-               log.fine("  user.code = '"+user.getCode()+"'");
-               log.fine("  dossier.intervenant = '"+dossier.getIntervenant()+"'");
-               log.fine("  user.site = '"+user.getSite()+"'");
-               log.fine("  dossier.site = '"+dossier.getSite()+"'");
-               log.fine("  dossier.statut = '"+dossier.getStatut()+"'");
-               log.fine("  GlobalConstants.Statut.DOSSIER_ACTIF = '"+GlobalConstants.Statut.DOSSIER_ACTIF+"'");
-               log.fine("  dossier.isModifiable = '"+dossier.isModifiable()+"'");
-               log.fine("D�termine si le dossier est avec inscription");
-               log.fine("  dossier.isInscription = '"+dossier.isInscription()+"'");
+             if (log.isDebugEnabled()){
+               log.debug("D�termine si le dossier est modifiable");
+               log.debug("  user.niveauAuthorite = '"+privilege.getNiveauAuthorite()+"'");
+               log.debug("  dossier.hierarchie = '"+dossier.getHierarchie()+"'");
+               log.debug("  user.code = '"+user.getCode()+"'");
+               log.debug("  dossier.intervenant = '"+dossier.getIntervenant()+"'");
+               log.debug("  user.site = '"+user.getSite()+"'");
+               log.debug("  dossier.site = '"+dossier.getSite()+"'");
+               log.debug("  dossier.statut = '"+dossier.getStatut()+"'");
+               log.debug("  GlobalConstants.Statut.DOSSIER_ACTIF = '"+GlobalConstants.Statut.DOSSIER_ACTIF+"'");
+               log.debug("  dossier.isModifiable = '"+dossier.isModifiable()+"'");
+               log.debug("D�termine si le dossier est avec inscription");
+               log.debug("  dossier.isInscription = '"+dossier.isInscription()+"'");
              }
 
           }catch (SQLException se) {
@@ -617,18 +616,18 @@ public class DossierDAO {
             resultSet = (ResultSet)callableStatement.getObject(3);
             //Traitement du r�sultat retourn�
 			resultats = traitementResultSetAudit(resultSet);
-             if (log.isLoggable(Level.FINE)){
-               log.fine("  user.niveauAuthorite = '"+privilege.getNiveauAuthorite()+"'");
-               log.fine("  dossier.hierarchie = '"+dossier.getHierarchie()+"'");
-               log.fine("  user.code = '"+user.getCode()+"'");
-               log.fine("  dossier.intervenant = '"+dossier.getIntervenant()+"'");
-               log.fine("  user.site = '"+user.getSite()+"'");
-               log.fine("  dossier.site = '"+dossier.getSite()+"'");
-               log.fine("  dossier.statut = '"+dossier.getStatut()+"'");
-               log.fine("  GlobalConstants.Statut.DOSSIER_ACTIF = '"+GlobalConstants.Statut.DOSSIER_ACTIF+"'");
-               log.fine("  dossier.isModifiable = '"+dossier.isModifiable()+"'");
-               log.fine("D�termine si le dossier est avec inscription");
-               log.fine("  dossier.isInscription = '"+dossier.isInscription()+"'");
+             if (log.isDebugEnabled()){
+               log.debug("  user.niveauAuthorite = '"+privilege.getNiveauAuthorite()+"'");
+               log.debug("  dossier.hierarchie = '"+dossier.getHierarchie()+"'");
+               log.debug("  user.code = '"+user.getCode()+"'");
+               log.debug("  dossier.intervenant = '"+dossier.getIntervenant()+"'");
+               log.debug("  user.site = '"+user.getSite()+"'");
+               log.debug("  dossier.site = '"+dossier.getSite()+"'");
+               log.debug("  dossier.statut = '"+dossier.getStatut()+"'");
+               log.debug("  GlobalConstants.Statut.DOSSIER_ACTIF = '"+GlobalConstants.Statut.DOSSIER_ACTIF+"'");
+               log.debug("  dossier.isModifiable = '"+dossier.isModifiable()+"'");
+               log.debug("D�termine si le dossier est avec inscription");
+               log.debug("  dossier.isInscription = '"+dossier.isInscription()+"'");
              }
 
 		}catch (SQLException se) {
@@ -702,7 +701,7 @@ public class DossierDAO {
             resultSet = (ResultSet)callableStatement.getObject(3);
             //Traitement du r�sultat retourn�
             if (resultSet.next()) {
-                //log.fine("   [LabelValueBean label='" + label
+                //log.debug("   [LabelValueBean label='" + label
                 //      + "' value='"+value+"']");
                 journal.setCle(resultSet.getLong("L_DO_CLE"));
                 journal.setSite(resultSet.getLong("L_SI_CLE"));
@@ -741,22 +740,22 @@ public class DossierDAO {
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 			String strJour = formatter.format(jour);
 			String dateDebut = DateFormat.format(journal.getDateDebut());
-			log.fine("strJour = " + strJour + "  dateDebut = " + dateDebut + " dossier : " + journal.getDateDebut());
+			log.debug("strJour = " + strJour + "  dateDebut = " + dateDebut + " dossier : " + journal.getDateDebut());
             if (user.getCode().equals(journal.getIntervenant()) && 
 			   (user.getSite() == journal.getSite()) && 
 			   (dateDebut.equals(strJour))){
                 journal.setModifiable(true);
              }
-             if (log.isLoggable(Level.FINE)){
-               log.fine("D�termine si le dossier est modifiable");
-               log.fine("  user.niveauAuthorite = '"+privilege.getNiveauAuthorite()+"'");
-               log.fine("  user.code = '"+user.getCode()+"'");
-               log.fine("  dossier.intervenant = '"+journal.getIntervenant()+"'");
-               log.fine("  user.site = '"+user.getSite()+"'");
-               log.fine("  dossier.site = '"+journal.getSite()+"'");
-               log.fine("  GlobalConstants.Statut.DOSSIER_ACTIF = '"+GlobalConstants.Statut.DOSSIER_ACTIF+"'");
-               log.fine("  dossier.isModifiable = '"+journal.isModifiable()+"'");
-               log.fine("D�termine si le dossier est avec inscription");
+             if (log.isDebugEnabled()){
+               log.debug("Détermine si le dossier est modifiable");
+               log.debug("  user.niveauAuthorite = '"+privilege.getNiveauAuthorite()+"'");
+               log.debug("  user.code = '"+user.getCode()+"'");
+               log.debug("  dossier.intervenant = '"+journal.getIntervenant()+"'");
+               log.debug("  user.site = '"+user.getSite()+"'");
+               log.debug("  dossier.site = '"+journal.getSite()+"'");
+               log.debug("  GlobalConstants.Statut.DOSSIER_ACTIF = '"+GlobalConstants.Statut.DOSSIER_ACTIF+"'");
+               log.debug("  dossier.isModifiable = '"+journal.isModifiable()+"'");
+               log.debug("Détermine si le dossier est avec inscription");
              }
 
           }catch (SQLException se) {
@@ -884,7 +883,7 @@ public class DossierDAO {
             resultSet = (ResultSet)callableStatement.getObject(4);
             //Traitement des donn�es retourn�es.
             if (resultSet.next()) {
-                //log.fine("   [LabelValueBean label='" + label
+                //log.debug("   [LabelValueBean label='" + label
                 //      + "' value='"+value+"']");
                 dossier.setCle(resultSet.getLong("L_DO_CLE"));
                 dossier.setSite(resultSet.getLong("L_SI_CLE"));
@@ -1136,7 +1135,7 @@ public class DossierDAO {
      */
     public List<Dossier> recherchePartage(CardexAuthenticationSubject subject,
             CriteresRechercheDossier criteria) throws DAOException {
-        log.fine(criteria.toString());
+        log.debug(criteria.toString());
         final List<Dossier> dossierList = new ArrayList<Dossier>();
         
         retraitDuSiteApplicablePourAccesInterditEtAvisDeGuet(criteria);
@@ -1740,18 +1739,18 @@ public class DossierDAO {
             callableStatement = connection.prepareCall(
                     "begin CARDEX_LIEN.SP_E_LDD_LIEN_DOSSIER"
                     + " (?,?,?,?,?,?,?,?,?,?,?); end;");
-                log.fine("begin CARDEX_LIEN.SP_E_");
-                log.fine("  action '" + action + "'");
-                log.fine("  L_LDD_CLE '" + sujet.getLien() + "'");
-                log.fine("  L_SI_CLE '" + sujet.getLienSite() + "'");
-                log.fine("  L_DO_CLE '" + dossier.getCle() + "'");
-                log.fine("  L_LDD_DOSSIER_ASSOCIE '" + sujet.getCle() + "'");
-                log.fine("  I_RO_CLE '" + sujet.getRole() + "'");
-                log.fine("  I_TL_CLE '" + sujet.getTypeLien() + "'");
-                log.fine("  L_DO_SITE '" + dossier.getSite() + "'");
-                log.fine("  C_DO_GENRE '" + GlobalConstants.GenreFichier.DOSSIER + "'");
-                log.fine("  L_LDD_SITE '" + sujet.getSite());
-                log.fine("  C_LDD_GENRE '" + GlobalConstants.GenreFichier.SUJET + "'");
+                log.debug("begin CARDEX_LIEN.SP_E_");
+                log.debug("  action '" + action + "'");
+                log.debug("  L_LDD_CLE '" + sujet.getLien() + "'");
+                log.debug("  L_SI_CLE '" + sujet.getLienSite() + "'");
+                log.debug("  L_DO_CLE '" + dossier.getCle() + "'");
+                log.debug("  L_LDD_DOSSIER_ASSOCIE '" + sujet.getCle() + "'");
+                log.debug("  I_RO_CLE '" + sujet.getRole() + "'");
+                log.debug("  I_TL_CLE '" + sujet.getTypeLien() + "'");
+                log.debug("  L_DO_SITE '" + dossier.getSite() + "'");
+                log.debug("  C_DO_GENRE '" + GlobalConstants.GenreFichier.DOSSIER + "'");
+                log.debug("  L_LDD_SITE '" + sujet.getSite());
+                log.debug("  C_LDD_GENRE '" + GlobalConstants.GenreFichier.SUJET + "'");
 
                 callableStatement.setString(1,action); //action
                 callableStatement.registerOutParameter(2,
@@ -2780,7 +2779,7 @@ public class DossierDAO {
      * @return Collection : Liste des dossiers associ�s.
      */
     public Collection findLiensDossier(long cle, long site, String genreFichier, Connection connection) throws DAOException {
-        log.fine("findLiensDossier()");
+        log.debug("findLiensDossier()");
 		
         CallableStatement callableStatement = null;
 		ResultSet resultSet = null;
@@ -2861,7 +2860,7 @@ public class DossierDAO {
                 linkedDossier.setEntite(resultSet.getLong("I_EN_CLE"));
                 linkedDossier.setOrigine(resultSet.getLong("L_DO_ORIGINE"));
                 results.add(linkedDossier);
-                log.fine("   [DOSSIER id='" + linkedDossier.getNumeroCardex()
+                log.debug("   [DOSSIER id='" + linkedDossier.getNumeroCardex()
                         + "' date='" + linkedDossier.getDateDebut() + "']");
             }//while
             return results;
@@ -2889,7 +2888,7 @@ public class DossierDAO {
     
     public Collection findLiensDossier(CardexAuthenticationSubject subject,
             long cle, long site, String genreFichier) throws DAOException {
-        log.fine("findLiensDossier()");
+        log.debug("findLiensDossier()");
         Connection connection = null;
         
         try {
@@ -2927,7 +2926,7 @@ public class DossierDAO {
      */
     public Collection findLiensDossier(CardexAuthenticationSubject subject,
             Dossier dossier) throws DAOException {
-        log.fine("findLiensDossier()");
+        log.debug("findLiensDossier()");
         Connection connection =
         	DAOConnection.getInstance().getConnection(subject);
 		CallableStatement callableStatement = null;
@@ -3011,7 +3010,7 @@ public class DossierDAO {
                 linkedDossier.setEntite(resultSet.getLong("I_EN_CLE"));
                 linkedDossier.setOrigine(resultSet.getLong("L_DO_ORIGINE"));
                 results.add(linkedDossier);
-                log.fine("   [DOSSIER id='" + linkedDossier.getNumeroCardex()
+                log.debug("   [DOSSIER id='" + linkedDossier.getNumeroCardex()
                         + "' date='" + linkedDossier.getDateDebut() + "']");
             }//while
             return results;

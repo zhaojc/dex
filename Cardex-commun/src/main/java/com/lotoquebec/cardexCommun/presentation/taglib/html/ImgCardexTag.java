@@ -1,13 +1,13 @@
 package com.lotoquebec.cardexCommun.presentation.taglib.html;
 
 
-import java.util.logging.Logger;
-
 import javax.servlet.jsp.JspException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardexCommun.authentication.AuthenticationSubject;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.securite.GestionnaireSecurite;
 import com.lotoquebec.cardexCommun.securite.UIComponentState;
 
@@ -25,45 +25,45 @@ public class ImgCardexTag extends org.apache.struts.taglib.html.ImgTag {
      * L'instance du gestionnaire de journalisation.
      */
 	private final Logger      log =
-        (Logger)LoggerCardex.getLogger((this.getClass()));
+        LoggerFactory.getLogger((this.getClass()));
 
     /**
-     * L'état par défaut si aucune règle de sécurité n'est applicable.
+     * L'ï¿½tat par dï¿½faut si aucune rï¿½gle de sï¿½curitï¿½ n'est applicable.
      */
     protected String defaultState= UIComponentState.ENABLED.toString();
 
     /**
-     * Retourne l'état par dédauft si aucune règel de sécurité n'est applicable.
+     * Retourne l'ï¿½tat par dï¿½dauft si aucune rï¿½gel de sï¿½curitï¿½ n'est applicable.
      */
     public String getDefaultState() {
         return (this.defaultState);
     }
 
     /**
-     * Affecte l'état par dédauft si aucune règel de sécurité n'est applicable.
+     * Affecte l'ï¿½tat par dï¿½dauft si aucune rï¿½gel de sï¿½curitï¿½ n'est applicable.
      *
-     * @param securityConstraint La contrainte de sécurité applicable
+     * @param securityConstraint La contrainte de sï¿½curitï¿½ applicable
      */
     public void setDefaultState(String state) {
         this.defaultState = state;
     }
 
     /**
-     * La contrainte de sécurité applicable.
+     * La contrainte de sï¿½curitï¿½ applicable.
      */
     protected String securityConstraint= null;
 
     /**
-     * Retourne la contrainte de sécurité
+     * Retourne la contrainte de sï¿½curitï¿½
      */
     public String getSecurityConstraint() {
         return (this.securityConstraint);
     }
 
     /**
-     * Affecte la contrainte de sécurité
+     * Affecte la contrainte de sï¿½curitï¿½
      *
-     * @param securityConstraint La contrainte de sécurité applicable
+     * @param securityConstraint La contrainte de sï¿½curitï¿½ applicable
      */
     public void setSecurityConstraint(String securityConstraint) {
         this.securityConstraint = securityConstraint;

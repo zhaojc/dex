@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +15,8 @@ import org.apache.struts.Globals;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardex.presentation.model.form.IntervenantForm;
 import com.lotoquebec.cardex.presentation.model.form.ProfilsForm;
@@ -30,7 +31,6 @@ import com.lotoquebec.cardexCommun.exception.ValueObjectMapperException;
 import com.lotoquebec.cardexCommun.integration.dao.FabriqueDAO;
 import com.lotoquebec.cardexCommun.integration.dao.SecuriteDAO;
 import com.lotoquebec.cardexCommun.integration.dao.cleListe.cleSQLListeCache.TableValeurCleSQLListeCache;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.presentation.util.AbstractAction;
 import com.lotoquebec.cardexCommun.presentation.util.LabelValueBean;
 import com.lotoquebec.cardexCommun.user.CardexUser;
@@ -39,7 +39,7 @@ import com.lotoquebec.cardexCommun.util.ListeCache;
 public class ProfilAction extends AbstractAction {
 
 	private final Logger      log =
-        (Logger)LoggerCardex.getLogger((this.getClass()));
+        LoggerFactory.getLogger((this.getClass()));
 	
 	public ProfilAction() throws BusinessResourceException {
 		super();
@@ -51,7 +51,7 @@ public class ProfilAction extends AbstractAction {
     HttpServletRequest request,
     HttpServletResponse response) throws IOException,
     ServletException {
-        log.fine("Sélection d'un profil");
+        log.debug("Sï¿½lection d'un profil");
 
 		try {
 			CardexUser cardexUser = (CardexUser) subject.getUser();
@@ -83,19 +83,19 @@ public class ProfilAction extends AbstractAction {
     HttpServletRequest request,
     HttpServletResponse response) throws IOException,
     ServletException {
-        log.fine("Choix d'un profil");
+        log.debug("Choix d'un profil");
 
 		try {
 	        ProfilsForm profilForm = (ProfilsForm) form;
 			CardexUser cardexUser = (CardexUser)subject.getUser();
-			//On s'assure que le code retourné fait partie de la liste des profils de l'utilisateur.
+			//On s'assure que le code retournï¿½ fait partie de la liste des profils de l'utilisateur.
 	    	SecuriteDAO securiteDAO = new SecuriteDAO();
 	    	List<IntervenantVO> listeProfils = securiteDAO.obtenirListeProfils(cardexUser.getCode());
 	    	for(IntervenantVO intervenantVO:listeProfils){
 		    	IntervenantForm intervenantForm = new IntervenantForm(); 
 		    	ValueObjectMapper.convert(intervenantVO, intervenantForm);
 		    	if(intervenantForm.getCode().equals(profilForm.getChoixProfil())){
-		    		//On vérifie également que le code parent correspond au code de l'utilisateur authentifié.
+		    		//On vï¿½rifie ï¿½galement que le code parent correspond au code de l'utilisateur authentifiï¿½.
 		    		if(intervenantForm.getCodeParent().equals(cardexUser.getCodeParent())){
 		    			subject = FabriqueDAO.getInstance().getIntervenantDAO().find(intervenantVO.getCode());
 						
@@ -118,7 +118,7 @@ public class ProfilAction extends AbstractAction {
 	public static void assignerValeursAuLogon(CardexAuthenticationSubject subject, HttpServletRequest request){
 		CardexUser cardexUser = (CardexUser)subject.getUser();
 		
-		// Il faut retirer cet attribue, sinon, il gardera les accès de son ancien accès.
+		// Il faut retirer cet attribue, sinon, il gardera les accï¿½s de son ancien accï¿½s.
 		request.getSession().removeAttribute(GlobalConstants.Securite.SESSION_RACCOURCIT_GESTION_ACCES_SECURITE);
 		
         //Traitement de l'affichage des dossiers et de la Galerie

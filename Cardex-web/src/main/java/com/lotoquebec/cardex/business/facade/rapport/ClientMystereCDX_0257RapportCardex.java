@@ -4,7 +4,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.logging.Logger;
 
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -12,6 +11,8 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardex.business.facade.rapport.util.InfractionCDX_0257Predicate;
 import com.lotoquebec.cardex.business.facade.rapport.util.VisiteCDX_0257Predicate;
@@ -20,11 +21,10 @@ import com.lotoquebec.cardex.generateurRapport.rapports.RapportsConfiguration;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
 import com.lotoquebec.cardexCommun.exception.BusinessResourceException;
 import com.lotoquebec.cardexCommun.exception.DAOException;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 
 public class ClientMystereCDX_0257RapportCardex extends ClientMystereCDX_0255RapportCardex{
 
-	private final static Logger log = (Logger)LoggerCardex.getLogger(ClientMystereCDX_0257RapportCardex.class);
+	private final static Logger log = LoggerFactory.getLogger(ClientMystereCDX_0257RapportCardex.class);
 	
 	public ClientMystereCDX_0257RapportCardex(CardexAuthenticationSubject subject) {
 		super(subject);

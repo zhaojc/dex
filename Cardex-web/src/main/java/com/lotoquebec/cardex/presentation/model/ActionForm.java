@@ -1,13 +1,11 @@
 package com.lotoquebec.cardex.presentation.model;
 
-import java.util.logging.Logger;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.ValidatorForm;
-
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * <p>This class extends <strong>ActionForm</strong> and provides
@@ -25,7 +23,7 @@ public class ActionForm extends ValidatorForm {
      * Log manager instance.
      */
 	private final Logger      log =
-        (Logger)LoggerCardex.getLogger((this.getClass()));
+        LoggerFactory.getLogger((this.getClass()));
 
     /**
      * Reset all properties to their default values.

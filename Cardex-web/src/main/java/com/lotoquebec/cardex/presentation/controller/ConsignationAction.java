@@ -8,7 +8,6 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +17,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessages;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardex.business.Consignation;
 import com.lotoquebec.cardex.business.delegate.ConsignationBusinessDelegate;
@@ -33,13 +34,12 @@ import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
 import com.lotoquebec.cardexCommun.exception.BusinessException;
 import com.lotoquebec.cardexCommun.exception.BusinessResourceException;
 import com.lotoquebec.cardexCommun.exception.ValueObjectMapperException;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.presentation.util.AbstractAction;
 import com.lotoquebec.cardexCommun.text.TimestampFormat;
 import com.lotoquebec.cardexCommun.user.CardexUser;
 
 /**
- * Cette classe gère les événements en rapport
+ * Cette classe gï¿½re les ï¿½vï¿½nements en rapport
  * avec le cas d'utilisation gestion des dossiers.
  *
  * @author $Author: mlibersan $
@@ -51,20 +51,20 @@ public class ConsignationAction extends AbstractAction {
      * L'instance du gestionnaire de journalisation.
      */
 	private final Logger      log =
-        (Logger)LoggerCardex.getLogger((this.getClass()));
+        LoggerFactory.getLogger((this.getClass()));
 
     /**
      * <p>
      * <p>
-     * Par défaut, l'application remplit automatiquement les champs suivants :
+     * Par dï¿½faut, l'application remplit automatiquement les champs suivants :
      *
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortieif an input/output survient
+     * @exception IOException si une erreur d'entrï¿½e/sortieif an input/output survient
      * @exception ServletException si une exception servlet survient
      * @throws BusinessResourceException 
      */
@@ -76,28 +76,28 @@ public class ConsignationAction extends AbstractAction {
                                 ServletException, BusinessResourceException {
 
 
-        log.fine("Création d'une nouvelle consignation");
+        log.debug("Crï¿½ation d'une nouvelle consignation");
         CardexUser user = (CardexUser)subject.getUser();
         String currentDate = TimestampFormat.format(new Timestamp(System.currentTimeMillis()),subject.getLocale(),true);
 
         ConsignationForm consignationForm = new ConsignationForm();
         if (form instanceof DossierForm) {
-          log.fine("Création d'une consignation liée au dossier: " + form);
+          log.debug("Crï¿½ation d'une consignation liï¿½e au dossier: " + form);
           DossierForm dossierForm = (DossierForm)form;
 		  consignationForm.setLien(dossierForm.getCle());
 		  consignationForm.setLienSite(dossierForm.getSite());;
         }
 
-        //Valeur par défaut
+        //Valeur par dï¿½faut
 		consignationForm.setCreateur(user.getCode());
 		consignationForm.setDateCreation(currentDate);
 		consignationForm.setModifiable(true);
 		consignationForm.setApprouvable(false);
 		consignationForm.setDevise(Long.toString(GlobalConstants.Consignations.CDN));
 
-        log.fine("Consignation : " + consignationForm);
+        log.debug("Consignation : " + consignationForm);
         request.getSession().setAttribute("consignation",consignationForm);
-        // Stockage des données de référence concernant le contenu des liste déroulante
+        // Stockage des donnï¿½es de rï¿½fï¿½rence concernant le contenu des liste dï¿½roulante
 
 		request.getSession().setAttribute("consignation",consignationForm);
 		
@@ -108,13 +108,13 @@ public class ConsignationAction extends AbstractAction {
     /**
      * <p>
      *
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortieif an input/output survient
+     * @exception IOException si une erreur d'entrï¿½e/sortieif an input/output survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward refresh(CardexAuthenticationSubject subject,
@@ -122,22 +122,22 @@ public class ConsignationAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Refresh d'une consignation");
+        log.debug("Refresh d'une consignation");
 
         return mapping.findForward("success");
 
     }
 
     /**
-     * Affichage d'une consignation à partir de l'onglet.
+     * Affichage d'une consignation ï¿½ partir de l'onglet.
      *
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortieif an input/output survient
+     * @exception IOException si une erreur d'entrï¿½e/sortieif an input/output survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward show(CardexAuthenticationSubject subject,
@@ -145,7 +145,7 @@ public class ConsignationAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Accès à une consignation");
+        log.debug("Accï¿½s ï¿½ une consignation");
 
         ActionMessages errors = new ActionMessages();
 
@@ -173,19 +173,19 @@ public class ConsignationAction extends AbstractAction {
 
 
     /**
-     * Par défaut, l'application remplit automatiquement les champs suivants :
+     * Par dï¿½faut, l'application remplit automatiquement les champs suivants :
      * <li>
      * <ul>Entite (Entite de l'utilisateur)
      * <ul>Site d'origine (Site de l'utilisateur)
      * </li>
      *
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortie survient
+     * @exception IOException si une erreur d'entrï¿½e/sortie survient
      * @exception ServletException si une exception servlet survient
      * @throws InvocationTargetException
      * @throws IllegalAccessException
@@ -199,26 +199,26 @@ public class ConsignationAction extends AbstractAction {
                                        HttpServletRequest request,
                                        HttpServletResponse response) throws IOException,
                                        ServletException, SecurityException, IllegalArgumentException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
-        log.fine("Refresh de recherche Consignation");
+        log.debug("Refresh de recherche Consignation");
 
         return mapping.findForward("success");
     }
 
 
     /**
-     * Par défaut, l'application remplit automatiquement les champs suivants :
+     * Par dï¿½faut, l'application remplit automatiquement les champs suivants :
      * <li>
      * <ul>Entite (Entite de l'utilisateur)
      * <ul>Site d'origine (Site de l'utilisateur)
      * </li>
      *
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortie survient
+     * @exception IOException si une erreur d'entrï¿½e/sortie survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward searchDefault(CardexAuthenticationSubject subject,
@@ -227,10 +227,10 @@ public class ConsignationAction extends AbstractAction {
                                        HttpServletRequest request,
                                        HttpServletResponse response) throws IOException,
                                        ServletException {
-        log.fine("Recherche par défault de consignation");
+        log.debug("Recherche par dï¿½fault de consignation");
 
 
-		//On inscrit les valeurs par défaut.
+		//On inscrit les valeurs par dï¿½faut.
         CriteresRechercheConsignationForm consignationForm = new CriteresRechercheConsignationForm();
     	CardexUser user = (CardexUser)subject.getUser();
         consignationForm.setEntite(Long.toString(user.getEntite()));
@@ -244,21 +244,21 @@ public class ConsignationAction extends AbstractAction {
 
 
     /**
-     * Par défaut, l'application remplit automatiquement les champs suivants :
+     * Par dï¿½faut, l'application remplit automatiquement les champs suivants :
      * <li>
      * <ul>Entite (Entite de l'utilisateur)
      * <ul>Site d'origine (Site de l'utilisateur)
-     * <ul>Genre (selon la sélection de l'écran principal)
-     * <ul>Nature (selon la sélection de l'écran principal)
+     * <ul>Genre (selon la sï¿½lection de l'ï¿½cran principal)
+     * <ul>Nature (selon la sï¿½lection de l'ï¿½cran principal)
      * </li>
      *
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortie survient
+     * @exception IOException si une erreur d'entrï¿½e/sortie survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward resetSearchDefault(CardexAuthenticationSubject subject,
@@ -267,7 +267,7 @@ public class ConsignationAction extends AbstractAction {
                                        HttpServletRequest request,
                                        HttpServletResponse response) throws IOException,
                                        ServletException {
-        log.fine("Réinitialisation de la recherche de consignations");
+        log.debug("Rï¿½initialisation de la recherche de consignations");
 
         ActionMessages errors = new ActionMessages();
 
@@ -277,7 +277,7 @@ public class ConsignationAction extends AbstractAction {
 
             criteresRechercheConsignationHtmlForm.init();
 
-            // Conversion du composant d'état(ActionForm) en composant d'affaire(Value Object)
+            // Conversion du composant d'ï¿½tat(ActionForm) en composant d'affaire(Value Object)
             ValueObjectMapper.convertCriteresRechercheConsignationHtmlForm(criteresRechercheConsignationHtmlForm,criteresRechercheConsignation,subject.getLocale());
 
             return mapping.findForward("success");
@@ -290,18 +290,18 @@ public class ConsignationAction extends AbstractAction {
 
     /**
      * <p>
-     * Cet événement surivient lorsque dans l'écran de recherche de consignation, l'utilisateur a choisi
-     * de rechercher les consignations selon des critères différents. L'application affiche alors le panneau de
-     * recherche des consignations avec les résultats de la nouvelle recherche.
+     * Cet ï¿½vï¿½nement surivient lorsque dans l'ï¿½cran de recherche de consignation, l'utilisateur a choisi
+     * de rechercher les consignations selon des critï¿½res diffï¿½rents. L'application affiche alors le panneau de
+     * recherche des consignations avec les rï¿½sultats de la nouvelle recherche.
      * <p>
      *
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortie survient
+     * @exception IOException si une erreur d'entrï¿½e/sortie survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward search(CardexAuthenticationSubject subject,
@@ -310,7 +310,7 @@ public class ConsignationAction extends AbstractAction {
                                 HttpServletRequest request,
                                 HttpServletResponse response) throws IOException,
                                 ServletException {
-        log.fine("Recherche de consignations");
+        log.debug("Recherche de consignations");
 
         ActionMessages errors = new ActionMessages();
 
@@ -320,15 +320,15 @@ public class ConsignationAction extends AbstractAction {
             CriteresRechercheConsignationVO criteresRechercheConsignation = new CriteresRechercheConsignationVO();
             criteresRechercheConsignationHtmlForm.getListeResultat().vider();
 
-            // Conversion du composant d'état(ActionForm) en composant d'affaire(Value Object)
+            // Conversion du composant d'ï¿½tat(ActionForm) en composant d'affaire(Value Object)
             ValueObjectMapper.convertCriteresRechercheConsignationHtmlForm(criteresRechercheConsignationHtmlForm, criteresRechercheConsignation,subject.getLocale());
 
-            // Exécution de la recherche via le service d'affaire(BusinessDelegate)
+            // Exï¿½cution de la recherche via le service d'affaire(BusinessDelegate)
             List<Consignation> list = delegate.select(subject,criteresRechercheConsignation);
-            log.fine(criteresRechercheConsignation.toString());
-            log.fine(list.size() + " Consignations trouvées ...");
+            log.debug(criteresRechercheConsignation.toString());
+            log.debug(list.size() + " Consignations trouvï¿½es ...");
 
-            // Ajout des suivis dans le composant d'état (ActionForm)
+            // Ajout des suivis dans le composant d'ï¿½tat (ActionForm)
             List currentList = new ArrayList();
             Iterator   it = list.iterator();
 

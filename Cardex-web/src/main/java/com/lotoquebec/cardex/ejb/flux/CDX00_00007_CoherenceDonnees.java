@@ -9,12 +9,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRResultSetDataSource;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardex.generateurRapport.rapports.RapportsConfiguration;
 import com.lotoquebec.cardex.integration.dao.FabriqueCardexDAO;
@@ -24,7 +26,6 @@ import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
 import com.lotoquebec.cardexCommun.exception.BusinessResourceException;
 import com.lotoquebec.cardexCommun.exception.DAOException;
 import com.lotoquebec.cardexCommun.integration.dao.DAOConnection;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.rapport.PDFImpressionRapport;
 import com.lotoquebec.cardexCommun.util.CourrielAction;
 import com.lq.std.conf.impl.AppConfig;
@@ -36,16 +37,16 @@ import com.lq.std.conf.impl.AppConfig;
  */
 public class CDX00_00007_CoherenceDonnees implements Flux{
 
-	private final static Logger log = (Logger)LoggerCardex.getLogger(CDX00_00007_CoherenceDonnees.class);
+	private final static Logger log = LoggerFactory.getLogger(CDX00_00007_CoherenceDonnees.class);
 	private CardexAuthenticationSubject subject = null;
 
 	
 	public void execute() throws Exception {
-		log.fine("Entr�e flux CDX00_00007");
+		log.info("Entr�e flux CDX00_00007");
 		
 		subject = AutentificationCardex.construireCardexAuthenticationSubjectSystem();
 		
-		log.fine("Traitement de la coh�rence des donn�es");
+		log.info("Traitement de la coh�rence des donn�es");
 		Connection connection = null; 
 		try {
 			connection = DAOConnection.getInstance().getConnection(subject);
@@ -55,13 +56,13 @@ public class CDX00_00007_CoherenceDonnees implements Flux{
 			connection = null;
 		}		
 		
-		log.fine("Fin flux CDX00_00007");
+		log.info("Fin flux CDX00_00007");
 	}
 
 	private void envoyerConfirmation(CardexAuthenticationSubject subject, Connection connection) throws FileNotFoundException, JRException, BusinessResourceException, DAOException  {
 		String nomRapport = obtenirNomRapport();
-		//log.fine("Choix nom rapport : '"+nomRapport+"'");
-		log.fine("Envoi du courriel");
+		//log.info("Choix nom rapport : '"+nomRapport+"'");
+		log.info("Envoi du courriel");
 		produireRapportCoherence(nomRapport, connection);
 		String objectMessage = CourrielAction.constuireObjectMessage(subject, GlobalConstants.TypesIntervention.Coherence);
 		CourrielAction.envoyerCourrielEtFichierDestinataire(subject, connection, objectMessage, "", GlobalConstants.TypesIntervention.Coherence, "A", nomRapport);
@@ -75,7 +76,7 @@ public class CDX00_00007_CoherenceDonnees implements Flux{
 	}
 
 	private void produireRapportCoherence(String nomRapport, Connection connection) throws JRException, FileNotFoundException, DAOException {
-		log.fine("produireRapportCoherence d�but "+nomRapport);
+		log.info("produireRapportCoherence d�but "+nomRapport);
 		
 		Map parameters = new HashMap();
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -84,10 +85,10 @@ public class CDX00_00007_CoherenceDonnees implements Flux{
 
 		// Utilisation d'un resultSet comme source de donn�es
 		//ResultSet resultSet = delegate.rapportActivites(dateDebut, dateFin, procedure);
-		log.fine("produireRapportCoherence");
+		log.info("produireRapportCoherence");
 		ResultSet resultSet = FabriqueCardexDAO.getInstance().getRapportDAO().rapportCoherence(connection);
 		JRResultSetDataSource resultSetDataSource = new JRResultSetDataSource(resultSet);
-		// log.fine(context.getRealPath("/rapports/"));
+		// log.info(context.getRealPath("/rapports/"));
 		parameters.put("SUBREPORT_DIR", "/rapports/");
 		parameters.put("REPORT_CONNECTION", connection);
 		parameters.put("DATE_DEBUT", dateRapport);
@@ -95,9 +96,9 @@ public class CDX00_00007_CoherenceDonnees implements Flux{
 		JasperPrint print = JasperFillManager.fillReport(gabarit, parameters, resultSetDataSource);
 
 		// Sauvegarde dans un fichier
-		log.fine("produireRapportCoherence (Sauvegarde dans un fichier)");
+		log.info("produireRapportCoherence (Sauvegarde dans un fichier)");
 		(new PDFImpressionRapport()).impression(nomRapport, print);
-		log.fine("produireRapportCoherence Fin");
+		log.info("produireRapportCoherence Fin");
 
 	}
 	

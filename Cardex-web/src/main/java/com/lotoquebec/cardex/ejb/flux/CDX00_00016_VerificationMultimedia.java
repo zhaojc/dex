@@ -13,13 +13,15 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRMapCollectionDataSource;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoQuebec.correcteurAdresse.util.StringUtils;
 import com.lotoquebec.cardex.business.Dossier;
@@ -46,7 +48,6 @@ import com.lotoquebec.cardexCommun.exception.BusinessException;
 import com.lotoquebec.cardexCommun.exception.BusinessResourceException;
 import com.lotoquebec.cardexCommun.exception.DAOException;
 import com.lotoquebec.cardexCommun.integration.dao.DAOConnection;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.rapport.PDFImpressionRapport;
 import com.lotoquebec.cardexCommun.util.CourrielAction;
 import com.lq.std.conf.impl.AppConfig;
@@ -58,16 +59,16 @@ import com.lq.std.conf.impl.AppConfig;
  */
 public class CDX00_00016_VerificationMultimedia implements Flux{
 
-	private final static Logger log = (Logger)LoggerCardex.getLogger(CDX00_00016_VerificationMultimedia.class);
+	private final static Logger log = LoggerFactory.getLogger(CDX00_00016_VerificationMultimedia.class);
 	private CardexAuthenticationSubject subject = null;
 
 	
 	public void execute() throws Exception {
-		log.fine("Entr�e flux CDX00_00016");
+		log.info("Entr�e flux CDX00_00016");
 		
 		subject = AutentificationCardex.construireCardexAuthenticationSubjectSystem();
 		
-		log.fine("V�rification des �l�ments multim�dia");
+		log.info("Vérification des �l�ments multimédia");
 		Connection connection = null; 
 		try {
 			connection = DAOConnection.getInstance().getConnection(subject);
@@ -77,13 +78,13 @@ public class CDX00_00016_VerificationMultimedia implements Flux{
 			connection = null;
 		}		
 		
-		log.fine("Fin flux CDX00_00016");
+		log.info("Fin flux CDX00_00016");
 	}
 
 	private void envoyerConfirmation(CardexAuthenticationSubject subject, Connection connection) throws FileNotFoundException, JRException, BusinessResourceException, DAOException, IOException{
 		String nomRapport = obtenirNomRapport();
-		//log.fine("Choix nom rapport : '"+nomRapport+"'");
-		log.fine("Envoi du courriel");
+		//log.info("Choix nom rapport : '"+nomRapport+"'");
+		log.info("Envoi du courriel");
 		produireRapportVerificationMultimedia(nomRapport, connection);
 		String objectMessage = CourrielAction.constuireObjectMessage(subject, GlobalConstants.TypesIntervention.Coherence);
 		CourrielAction.envoyerCourrielEtFichierDestinataire(subject, connection, objectMessage, "", GlobalConstants.TypesIntervention.Coherence, "A", nomRapport);
@@ -97,7 +98,7 @@ public class CDX00_00016_VerificationMultimedia implements Flux{
 	}
 
 	private void produireRapportVerificationMultimedia(String nomRapport, Connection connection) throws JRException, FileNotFoundException, DAOException, IOException {
-		log.fine("produireRapportVerificationMultimedia d�but "+nomRapport);
+		log.info("produireRapportVerificationMultimedia d�but "+nomRapport);
 		
 		Map parameters = new HashMap();
 		List liste = new ArrayList();
@@ -105,7 +106,7 @@ public class CDX00_00016_VerificationMultimedia implements Flux{
 		String dateRapport = dateFormat.format(new Date());
 		InputStream gabarit = RapportsConfiguration.class.getResourceAsStream(RapportsConfiguration.VERIFICATION_ELEMENTS_MULTIMEDIA);
 		try{
-			log.fine("produireRapportVerificationMultimedia");
+			log.info("produireRapportVerificationMultimedia");
 			ResultSet resultSet = FabriqueCardexDAO.getInstance().getRapportDAO().rapportVerificationMultimedia(connection);
 			//Pour chaque lien trouv�, on v�rifie la pr�sence de l'�l�ment multimedia.
 			while(resultSet.next()){
@@ -232,7 +233,7 @@ public class CDX00_00016_VerificationMultimedia implements Flux{
 				se.printStackTrace();
 	      }
   		JRDataSource dataSource = new JRMapCollectionDataSource(liste);
-		// log.fine(context.getRealPath("/rapports/"));
+		// log.info(context.getRealPath("/rapports/"));
 		parameters.put("SUBREPORT_DIR", "/rapports/");
 		parameters.put("REPORT_CONNECTION", connection);
 		parameters.put("UTILISATEUR", "Diff�r� Cardex");
@@ -240,9 +241,9 @@ public class CDX00_00016_VerificationMultimedia implements Flux{
 		JasperPrint print = JasperFillManager.fillReport(gabarit, parameters, dataSource);
 
 		// Sauvegarde dans un fichier
-		log.fine("produireRapportVerificationMultimedia (Sauvegarde dans un fichier)");
+		log.info("produireRapportVerificationMultimedia (Sauvegarde dans un fichier)");
 		(new PDFImpressionRapport()).impression(nomRapport, print);
-		log.fine("produireRapportVerificationMultimedia Fin");
+		log.info("produireRapportVerificationMultimedia Fin");
 
 	}
 	

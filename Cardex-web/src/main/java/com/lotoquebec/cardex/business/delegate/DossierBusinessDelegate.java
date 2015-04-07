@@ -6,7 +6,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import java.util.logging.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardex.business.Consignation;
 import com.lotoquebec.cardex.business.CriteresRechercheDossier;
@@ -37,7 +39,6 @@ import com.lotoquebec.cardex.business.facade.UrgenceSessionFacade;
 import com.lotoquebec.cardex.business.facade.VehiculeSessionFacade;
 import com.lotoquebec.cardex.business.vo.BilletVO;
 import com.lotoquebec.cardex.business.vo.CriteresRechercheDossierVO;
-import com.lotoquebec.cardex.business.vo.SousCategorieVO;
 import com.lotoquebec.cardex.business.vo.SousCategoriesVO;
 import com.lotoquebec.cardex.business.vo.rapport.AmbulanceDossierRapportVO;
 import com.lotoquebec.cardexCommun.GlobalConstants;
@@ -50,7 +51,6 @@ import com.lotoquebec.cardexCommun.exception.BusinessResourceException;
 import com.lotoquebec.cardexCommun.exception.BusinessRuleException;
 import com.lotoquebec.cardexCommun.exception.BusinessRuleExceptionHandle;
 import com.lotoquebec.cardexCommun.integration.dao.cleListe.cleSQLListeCache.TableValeurCleAbreviationSQLListeCache;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.user.CardexUser;
 import com.lotoquebec.cardexCommun.util.ListeCache;
 import com.lotoquebec.cardexCommun.util.StringUtils;
@@ -75,7 +75,7 @@ public class DossierBusinessDelegate extends BusinessDelegate {
 	 * L'instance du gestionnaire de journalisation.
 	 */
     private final Logger      log =
-        (Logger)LoggerCardex.getLogger((this.getClass()));
+        LoggerFactory.getLogger((this.getClass()));
 
     /**
      * Construit une instance de DossierBusinessDelegate
@@ -90,13 +90,13 @@ public class DossierBusinessDelegate extends BusinessDelegate {
     }
 
     /**
-     * Création d'un dossier
+     * Crï¿½ation d'un dossier
      *
-     * @param subject Le sujet qui créé le dossier
-     * @param info Le dossier à créer
+     * @param subject Le sujet qui crï¿½ï¿½ le dossier
+     * @param info Le dossier ï¿½ crï¿½er
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public Dossier create(CardexAuthenticationSubject subject,
                        Dossier info) throws BusinessException,
@@ -109,13 +109,13 @@ public class DossierBusinessDelegate extends BusinessDelegate {
     }
 
     /**
-     * Détermine si un dossier est avec inscription.
+     * Dï¿½termine si un dossier est avec inscription.
      *
-     * @param subject Le sujet qui créé le dossier
+     * @param subject Le sujet qui crï¿½ï¿½ le dossier
      * @param info Le dossier
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public boolean isAvecInscription(CardexAuthenticationSubject subject,
                        Dossier info) throws BusinessException,
@@ -131,12 +131,12 @@ public class DossierBusinessDelegate extends BusinessDelegate {
      * Recherche d'un dossier (sans audit, lors de relecture du dossier)
      *
      * @param subject Le sujet qui recherche un dossier
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return Le dossier recherché
+     * @return Le dossier recherchï¿½
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public Dossier find(CardexAuthenticationSubject subject,
                         Dossier criteria) throws BusinessException,
@@ -149,15 +149,15 @@ public class DossierBusinessDelegate extends BusinessDelegate {
     }
     
 	/**
-     * Recherche d'une entrée de journal pour consultation à l'écran
+     * Recherche d'une entrï¿½e de journal pour consultation ï¿½ l'ï¿½cran
      *
      * @param subject Le sujet qui recherche un dossier
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return Le dossier recherché
+     * @return Le dossier recherchï¿½
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public Journal findJournal(CardexAuthenticationSubject subject,
                         Journal criteria) throws BusinessException,
@@ -170,15 +170,15 @@ public class DossierBusinessDelegate extends BusinessDelegate {
     }
     
 	/**
-     * Consultation à l'écran d'une inscription.
+     * Consultation ï¿½ l'ï¿½cran d'une inscription.
      *
      * @param subject Le sujet qui recherche un dossier
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return Le dossier recherché
+     * @return Le dossier recherchï¿½
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public Inscription findInscription(CardexAuthenticationSubject subject,
                         Inscription criteria) throws BusinessException,
@@ -191,15 +191,15 @@ public class DossierBusinessDelegate extends BusinessDelegate {
     }
     
 	/**
-     * Consultation à l'écran du partage de dossier à partir de l'onglet Partage
+     * Consultation ï¿½ l'ï¿½cran du partage de dossier ï¿½ partir de l'onglet Partage
      *
      * @param subject Le sujet qui recherche un dossier
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return Le dossier recherché
+     * @return Le dossier recherchï¿½
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public Partage ouvrirPartage(CardexAuthenticationSubject subject,
                         Dossier criteria) throws BusinessException,
@@ -215,12 +215,12 @@ public class DossierBusinessDelegate extends BusinessDelegate {
      * Recherche des changements d'un dossier.
      *
      * @param subject Le sujet qui recherche un dossier
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return Le dossier recherché
+     * @return Le dossier recherchï¿½
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public List audit(CardexAuthenticationSubject subject,
                         Dossier criteria) throws BusinessException,
@@ -233,15 +233,15 @@ public class DossierBusinessDelegate extends BusinessDelegate {
     }    
 
     /**
-     * Recherche d'un dossier (avec écriture d'un audit dans AC_ACCES)
+     * Recherche d'un dossier (avec ï¿½criture d'un audit dans AC_ACCES)
      *
      * @param subject Le sujet qui recherche un dossier
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return Le dossier recherché
+     * @return Le dossier recherchï¿½
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public Dossier findAcces(CardexAuthenticationSubject subject,
                         Dossier criteria) throws BusinessException,
@@ -254,15 +254,15 @@ public class DossierBusinessDelegate extends BusinessDelegate {
     }    
 
     /**
-     * Recherche des dossiers créés dans les dernières 48 heures
+     * Recherche des dossiers crï¿½ï¿½s dans les derniï¿½res 48 heures
      *
      * @param subject Le sujet qui effectue la recherche
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return Les dosiers recherchés
+     * @return Les dosiers recherchï¿½s
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public List<Dossier> selectDefault(CardexAuthenticationSubject subject,
                                            CriteresRechercheDossier criteria) throws BusinessException,
@@ -275,16 +275,16 @@ public class DossierBusinessDelegate extends BusinessDelegate {
     }
 
     /**
-     * Recherche des entrées de la journée pour afficher par défaut dans l'écran 
-     * de recherche des entrées du journal de surveillance.
+     * Recherche des entrï¿½es de la journï¿½e pour afficher par dï¿½faut dans l'ï¿½cran 
+     * de recherche des entrï¿½es du journal de surveillance.
      *
      * @param subject Le sujet qui effectue la recherche
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return Les dosiers recherchés
+     * @return Les dosiers recherchï¿½s
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public List<Journal> selectDefaultJournal(CardexAuthenticationSubject subject,
                                            CriteresRechercheJournal criteria) throws BusinessException,
@@ -301,12 +301,12 @@ public class DossierBusinessDelegate extends BusinessDelegate {
      * Recherche de dossiers
      *
      * @param subject Le sujet qui effectue la recherche
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return Les dosiers recherchés
+     * @return Les dosiers recherchï¿½s
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public List<Dossier> select(CardexAuthenticationSubject subject,
                                     CriteresRechercheDossier criteria) throws BusinessException,
@@ -319,15 +319,15 @@ public class DossierBusinessDelegate extends BusinessDelegate {
     }
 
     /**
-     * Recherche du nombre de dossiers retournés par une recherche
+     * Recherche du nombre de dossiers retournï¿½s par une recherche
      *
      * @param subject Le sujet qui effectue la recherche
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return Le nombre de dosiers recherchés
+     * @return Le nombre de dosiers recherchï¿½s
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public int nombreDossiers(CardexAuthenticationSubject subject,
                                     CriteresRechercheDossier criteria) throws BusinessException,
@@ -340,15 +340,15 @@ public class DossierBusinessDelegate extends BusinessDelegate {
     }
     
     /**
-     * Recherche des entrées du journal de surveillance
+     * Recherche des entrï¿½es du journal de surveillance
      *
      * @param subject Le sujet qui effectue la recherche
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return Les dossiers recherchés
+     * @return Les dossiers recherchï¿½s
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public List<Journal> selectJournal(CardexAuthenticationSubject subject,
                                     CriteresRechercheJournal criteria) throws BusinessException,
@@ -361,15 +361,15 @@ public class DossierBusinessDelegate extends BusinessDelegate {
     }
 
     /**
-     * Recherche des entrées du journal de surveillance pour les rapports.
+     * Recherche des entrï¿½es du journal de surveillance pour les rapports.
      *
      * @param subject Le sujet qui effectue la recherche
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return Les dossiers recherchés
+     * @return Les dossiers recherchï¿½s
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
 /*    public ValueListIterator selectRapportJournal(CardexAuthenticationSubject subject,
                                     CriteresRechercheJournal criteria) throws BusinessException,
@@ -390,13 +390,13 @@ public class DossierBusinessDelegate extends BusinessDelegate {
 	}
     
     /**
-     * Mise à jour d'un dossier
+     * Mise ï¿½ jour d'un dossier
      *
      * @param subject Le sujet qui modifie le dossier
-     * @param info Le dossier à modifier
+     * @param info Le dossier ï¿½ modifier
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public void update(CardexAuthenticationSubject subject,
                        Dossier info) throws BusinessException,
@@ -412,10 +412,10 @@ public class DossierBusinessDelegate extends BusinessDelegate {
      * Mise  d'un lien entre un journal et un dossier.
      *
      * @param subject Le sujet qui effectue le lien
-     * @param narration La narration à supprimer
+     * @param narration La narration ï¿½ supprimer
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public void updateLienJournal(CardexAuthenticationSubject subject,
                              Narration narration) throws BusinessException,
@@ -428,13 +428,13 @@ public class DossierBusinessDelegate extends BusinessDelegate {
     }
     
     /**
-     * Mise à jour d'une inscription
+     * Mise ï¿½ jour d'une inscription
      *
      * @param subject Le sujet qui modifie le dossier
-     * @param info L'inscription à modifier
+     * @param info L'inscription ï¿½ modifier
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public void updateInscription(CardexAuthenticationSubject subject,
                        Inscription info) throws BusinessException,
@@ -447,12 +447,12 @@ public class DossierBusinessDelegate extends BusinessDelegate {
     }
     
     /**
-     * Suppression des dossiers de confidentialité 8.
+     * Suppression des dossiers de confidentialitï¿½ 8.
      *
      * @param subject Le sujet qui modifie le dossier
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public void delete(CardexAuthenticationSubject subject) 
     			throws BusinessException, BusinessResourceException {
@@ -467,11 +467,11 @@ public class DossierBusinessDelegate extends BusinessDelegate {
      * Ajout d'un lien entre une narration et un dossier.
      *
      * @param subject Le sujet qui effectue le lien
-     * @param dossier Le dossier à lier
-     * @param narration La narration à lier
+     * @param dossier Le dossier ï¿½ lier
+     * @param narration La narration ï¿½ lier
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public void addLienNarration(CardexAuthenticationSubject subject,
                              Dossier dossier,
@@ -500,11 +500,11 @@ public class DossierBusinessDelegate extends BusinessDelegate {
      * Ajout d'un lien entre une narration et un dossier lors d'une sauvegarde automatique.
      *
      * @param subject Le sujet qui effectue le lien
-     * @param dossier Le dossier à lier
-     * @param narration La narration à lier
+     * @param dossier Le dossier ï¿½ lier
+     * @param narration La narration ï¿½ lier
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     /*public Narration addLienNarrationAuto(CardexAuthenticationSubject subject,
                              Dossier dossier,
@@ -522,10 +522,10 @@ public class DossierBusinessDelegate extends BusinessDelegate {
      * Mise  d'un lien entre une narration et un dossier.
      *
      * @param subject Le sujet qui effectue le lien
-     * @param narration La narration à supprimer
+     * @param narration La narration ï¿½ supprimer
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public void deleteLienNarration(CardexAuthenticationSubject subject,
                              Dossier dossier,
@@ -542,10 +542,10 @@ public class DossierBusinessDelegate extends BusinessDelegate {
      * Suppression d'un lien entre une suivi et un dossier.
      *
      * @param subject Le sujet qui effectue le lien
-     * @param suivi La suivi à supprimer
+     * @param suivi La suivi ï¿½ supprimer
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public void deleteLienSuivi(CardexAuthenticationSubject subject,
                              Dossier dossier,
@@ -562,10 +562,10 @@ public class DossierBusinessDelegate extends BusinessDelegate {
      * Suppression d'un lien entre une consignation et un dossier.
      *
      * @param subject Le sujet qui effectue le lien
-     * @param suivi La consignation à supprimer
+     * @param suivi La consignation ï¿½ supprimer
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public void deleteLienConsignation(CardexAuthenticationSubject subject,
                              Dossier dossier,
@@ -582,10 +582,10 @@ public class DossierBusinessDelegate extends BusinessDelegate {
      * Suppression d'un lien entre un service d'urgence et un dossier.
      *
      * @param subject Le sujet qui effectue le lien
-     * @param suivi La consignation à supprimer
+     * @param suivi La consignation ï¿½ supprimer
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public void deleteLienUrgence(CardexAuthenticationSubject subject,
                              Dossier dossier,
@@ -602,10 +602,10 @@ public class DossierBusinessDelegate extends BusinessDelegate {
      * Suppression d'un lien entre une photo et un dossier.
      *
      * @param subject Le sujet qui effectue le lien
-     * @param photo La photon à supprimer
+     * @param photo La photon ï¿½ supprimer
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public void deleteLienPhoto(CardexAuthenticationSubject subject,
                              Dossier dossier,
@@ -622,10 +622,10 @@ public class DossierBusinessDelegate extends BusinessDelegate {
      * Mise  d'un lien entre une narration et un dossier.
      *
      * @param subject Le sujet qui effectue le lien
-     * @param narration La narration à supprimer
+     * @param narration La narration ï¿½ supprimer
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public void updateLienNarration(CardexAuthenticationSubject subject,
                              Narration narration) throws BusinessException,
@@ -641,10 +641,10 @@ public class DossierBusinessDelegate extends BusinessDelegate {
      * Mise  d'un lien entre une suivi et un dossier.
      *
      * @param subject Le sujet qui effectue le lien
-     * @param suivi La suivi à supprimer
+     * @param suivi La suivi ï¿½ supprimer
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public void updateLienSuivi(CardexAuthenticationSubject subject,
                              Suivi suivi) throws BusinessException,
@@ -658,13 +658,13 @@ public class DossierBusinessDelegate extends BusinessDelegate {
     }
 
     /**
-     * Modification du rôle d'un lien entre un dossier et une société.
+     * Modification du rï¿½le d'un lien entre un dossier et une sociï¿½tï¿½.
      *
      * @param subject Le sujet qui effectue le lien
-     * @param suivi La suivi à supprimer
+     * @param suivi La suivi ï¿½ supprimer
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public void updateLien(CardexAuthenticationSubject subject,
                              Dossier dossier) throws BusinessException,
@@ -677,13 +677,13 @@ public class DossierBusinessDelegate extends BusinessDelegate {
     }
 
     /**
-     * Mise à jour d'un lien entre une consignation et un dossier.
+     * Mise ï¿½ jour d'un lien entre une consignation et un dossier.
      *
      * @param subject Le sujet qui effectue le lien
-     * @param suivi La suivi à supprimer
+     * @param suivi La suivi ï¿½ supprimer
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public void updateLienConsignation(CardexAuthenticationSubject subject,
                              Consignation consignation) throws BusinessException,
@@ -696,13 +696,13 @@ public class DossierBusinessDelegate extends BusinessDelegate {
     }
 
     /**
-     * Mise à jour d'un lien entre un service d'urgence et un dossier.
+     * Mise ï¿½ jour d'un lien entre un service d'urgence et un dossier.
      *
      * @param subject Le sujet qui effectue le lien
-     * @param suivi La suivi à supprimer
+     * @param suivi La suivi ï¿½ supprimer
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public void updateLienUrgence(CardexAuthenticationSubject subject,
     		Dossier dossier, Urgence urgence) throws BusinessException,
@@ -715,13 +715,13 @@ public class DossierBusinessDelegate extends BusinessDelegate {
     }
 
     /**
-     * Approbation d'une narration liée à un dossier.
+     * Approbation d'une narration liï¿½e ï¿½ un dossier.
      *
      * @param subject Le sujet qui effectue le lien
-     * @param narration La narration à aprouver
+     * @param narration La narration ï¿½ aprouver
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public void approuveLienNarration(CardexAuthenticationSubject subject,
                              Narration narration) throws BusinessException,
@@ -734,13 +734,13 @@ public class DossierBusinessDelegate extends BusinessDelegate {
     }
 
     /**
-     * Approbation d'une suivi liée à un dossier.
+     * Approbation d'une suivi liï¿½e ï¿½ un dossier.
      *
      * @param subject Le sujet qui effectue le lien
-     * @param suivi La suivi à aprouver
+     * @param suivi La suivi ï¿½ aprouver
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public void approuveLienSuivi(CardexAuthenticationSubject subject,
                              Suivi suivi) throws BusinessException,
@@ -753,7 +753,7 @@ public class DossierBusinessDelegate extends BusinessDelegate {
     }
 
     /**
-     * Approuver les sous catégories
+     * Approuver les sous catï¿½gories
      * @param subject
      * @param dossier
      * @param approuver TODO
@@ -771,13 +771,13 @@ public class DossierBusinessDelegate extends BusinessDelegate {
 	}    
     
     /**
-     * Approbation d'une consignation liée à un dossier.
+     * Approbation d'une consignation liï¿½e ï¿½ un dossier.
      *
      * @param subject Le sujet qui effectue le lien
-     * @param suivi La consignation à aprouver
+     * @param suivi La consignation ï¿½ aprouver
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public void approuveLienConsignation(CardexAuthenticationSubject subject,
                              Consignation consignation) throws BusinessException,
@@ -793,11 +793,11 @@ public class DossierBusinessDelegate extends BusinessDelegate {
      * Ajout d'un lien entre deux dossiers.
      *
      * @param subject Le sujet qui effectue le lien
-     * @param dossier Le dossier à lier
-     * @param addedDossier Le 2e dossier à lier
+     * @param dossier Le dossier ï¿½ lier
+     * @param addedDossier Le 2e dossier ï¿½ lier
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public BusinessRuleExceptionHandle addLienDossier(CardexAuthenticationSubject subject,
                            Dossier dossier,
@@ -833,11 +833,11 @@ public class DossierBusinessDelegate extends BusinessDelegate {
      * Destruction d'un lien entre deux dossiers.
      *
      * @param subject Le sujet qui effectue le lien
-     * @param dossier Le dossier à lier
-     * @param addedDossier Le 2e dossier à lier
+     * @param dossier Le dossier ï¿½ lier
+     * @param addedDossier Le 2e dossier ï¿½ lier
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public void deleteLienDossier(CardexAuthenticationSubject subject,
                            Dossier dossier,
@@ -858,8 +858,8 @@ public class DossierBusinessDelegate extends BusinessDelegate {
      * @param dossier Le dossier lier
      * @param sujet Le sujet lier
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public void deleteLienSujet(CardexAuthenticationSubject subject,
                            Dossier dossier,
@@ -874,14 +874,14 @@ public class DossierBusinessDelegate extends BusinessDelegate {
     }
 
     /**
-     * Destruction d'un lien entre un dossier et un véhicule.
+     * Destruction d'un lien entre un dossier et un vï¿½hicule.
      *
      * @param subject Le sujet qui effectue le lien
      * @param dossier Le dossier lier
-     * @param sujet Le véhicule lier
+     * @param sujet Le vï¿½hicule lier
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public void deleteLienVehicule(CardexAuthenticationSubject subject,
                            Dossier dossier,
@@ -902,8 +902,8 @@ public class DossierBusinessDelegate extends BusinessDelegate {
      * @param dossier Le dossier lier
      * @param societe Le societe lier
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public void deleteLienSociete(CardexAuthenticationSubject subject,
                            Dossier dossier,
@@ -921,11 +921,11 @@ public class DossierBusinessDelegate extends BusinessDelegate {
      * Recherche des liens entre deux dossiers.
      *
      * @param subject Le sujet qui effectue le lien
-     * @param dossier Le dossier lié
-     * @return  Les dossiers liés
+     * @param dossier Le dossier liï¿½
+     * @return  Les dossiers liï¿½s
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public Collection findLiensDossier(CardexAuthenticationSubject subject,
                            Dossier dossier) throws BusinessException,
@@ -938,14 +938,14 @@ public class DossierBusinessDelegate extends BusinessDelegate {
     }
 
     /**
-     * Recherche des liens société.
+     * Recherche des liens sociï¿½tï¿½.
      *
      * @param subject Le sujet qui effectue le lien
-     * @param dossier Le dossier lié
-     * @return  Les sujets liés
+     * @param dossier Le dossier liï¿½
+     * @return  Les sujets liï¿½s
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public Collection findLiensSociete(CardexAuthenticationSubject subject,
                            Dossier dossier) throws BusinessException,
@@ -961,11 +961,11 @@ public class DossierBusinessDelegate extends BusinessDelegate {
      * Recherche des liens sujets.
      *
      * @param subject Le sujet qui effectue le lien
-     * @param dossier Le dossier lié
-     * @return  Les sujets liés
+     * @param dossier Le dossier liï¿½
+     * @return  Les sujets liï¿½s
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public Collection findLiensSujet(CardexAuthenticationSubject subject,
                            Dossier dossier) throws BusinessException,
@@ -978,14 +978,14 @@ public class DossierBusinessDelegate extends BusinessDelegate {
     }
 
     /**
-     * Recherche des liens véhicule.
+     * Recherche des liens vï¿½hicule.
      *
      * @param subject Le sujet qui effectue le lien
-     * @param dossier Le dossier lié
-     * @return  Les sujets liés
+     * @param dossier Le dossier liï¿½
+     * @return  Les sujets liï¿½s
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public Collection findLiensVehicule(CardexAuthenticationSubject subject,
                            Dossier dossier) throws BusinessException,
@@ -1001,11 +1001,11 @@ public class DossierBusinessDelegate extends BusinessDelegate {
      * Recherche des liens inscriptions.
      *
      * @param subject Le sujet qui effectue le lien
-     * @param dossier Le dossier lié
-     * @return  Les inscriptions liés
+     * @param dossier Le dossier liï¿½
+     * @return  Les inscriptions liï¿½s
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public Collection findLiensInscription(CardexAuthenticationSubject subject,
                            Dossier dossier) throws BusinessException,
@@ -1021,11 +1021,11 @@ public class DossierBusinessDelegate extends BusinessDelegate {
      * Recherche des liens jeux.
      *
      * @param subject Le sujet qui effectue le lien
-     * @param dossier Le dossier lié
-     * @return  Les sujets liés
+     * @param dossier Le dossier liï¿½
+     * @return  Les sujets liï¿½s
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public Jeux findLiensJeux(CardexAuthenticationSubject subject,
                            Dossier dossier) throws BusinessException,
@@ -1041,11 +1041,11 @@ public class DossierBusinessDelegate extends BusinessDelegate {
      * Recherche des liens Partage.
      *
      * @param subject Le sujet qui effectue le lien
-     * @param dossier Le dossier lié
-     * @return  Les sujets liés
+     * @param dossier Le dossier liï¿½
+     * @return  Les sujets liï¿½s
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public Collection findLiensPartage(CardexAuthenticationSubject subject,
                            Dossier dossier) throws BusinessException,
@@ -1071,11 +1071,11 @@ public class DossierBusinessDelegate extends BusinessDelegate {
      * Recherche des liens entre un dossier et ses narrations.
      *
      * @param subject Le sujet qui effectue le lien
-     * @param dossier Le dossier lié
-     * @return  Les narrations liés
+     * @param dossier Le dossier liï¿½
+     * @return  Les narrations liï¿½s
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public Collection findLiensNarration(CardexAuthenticationSubject subject,
                            Dossier dossier) throws BusinessException,
@@ -1106,11 +1106,11 @@ public class DossierBusinessDelegate extends BusinessDelegate {
      * Recherche des liens entre un dossier et ses narrations pour un rapport.
      *
      * @param subject Le sujet qui effectue le lien
-     * @param dossier Le dossier lié
-     * @return  Les narrations liés
+     * @param dossier Le dossier liï¿½
+     * @return  Les narrations liï¿½s
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public Collection findLiensNarrationRapport(CardexAuthenticationSubject subject,
                            Dossier dossier) throws BusinessException,
@@ -1123,14 +1123,14 @@ public class DossierBusinessDelegate extends BusinessDelegate {
     }
 
     /**
-     * Recherche des liens entre un dossier et ses narrations pour un rapport uniformisé.
+     * Recherche des liens entre un dossier et ses narrations pour un rapport uniformisï¿½.
      *
      * @param subject Le sujet qui effectue le lien
-     * @param dossier Le dossier lié
-     * @return  Les narrations liés
+     * @param dossier Le dossier liï¿½
+     * @return  Les narrations liï¿½s
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public Collection findLiensNarrationRapportUniforme(CardexAuthenticationSubject subject,
                            Dossier dossier, String section) throws BusinessException,
@@ -1146,11 +1146,11 @@ public class DossierBusinessDelegate extends BusinessDelegate {
      * Recherche des liens entre un dossier et ses suivis.
      *
      * @param subject Le sujet qui effectue le lien
-     * @param dossier Le dossier lié
-     * @return  Les suivis liés
+     * @param dossier Le dossier liï¿½
+     * @return  Les suivis liï¿½s
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public Collection findLiensSuivi(CardexAuthenticationSubject subject,
                            Dossier dossier) throws BusinessException,
@@ -1166,11 +1166,11 @@ public class DossierBusinessDelegate extends BusinessDelegate {
      * Recherche des liens entre un dossier et ses consignations.
      *
      * @param subject Le sujet qui effectue le lien
-     * @param dossier Le dossier lié
-     * @return  Les consignations liées
+     * @param dossier Le dossier liï¿½
+     * @return  Les consignations liï¿½es
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public Collection findLiensConsignation(CardexAuthenticationSubject subject,
                            Dossier dossier) throws BusinessException,
@@ -1186,11 +1186,11 @@ public class DossierBusinessDelegate extends BusinessDelegate {
      * Recherche des liens entre un dossier et les services d'urgence.
      *
      * @param subject Le sujet qui effectue le lien
-     * @param dossier Le dossier lié
-     * @return  Les urgences liées
+     * @param dossier Le dossier liï¿½
+     * @return  Les urgences liï¿½es
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public Collection findLiensUrgence(CardexAuthenticationSubject subject,
                            Dossier dossier) throws BusinessException,
@@ -1206,11 +1206,11 @@ public class DossierBusinessDelegate extends BusinessDelegate {
      * Recherche des liens entre un dossier et ses photos.
      *
      * @param subject Le sujet qui effectue le lien
-     * @param dossier Le dossier lié
-     * @return  Les photos liées
+     * @param dossier Le dossier liï¿½
+     * @return  Les photos liï¿½es
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public Collection findLiensPhoto(CardexAuthenticationSubject subject,
                            Dossier dossier) throws BusinessException,
@@ -1226,11 +1226,11 @@ public class DossierBusinessDelegate extends BusinessDelegate {
      * Recherche des liens entre un dossier et ses photos.
      *
      * @param subject Le sujet qui effectue le lien
-     * @param dossier Le dossier lié
-     * @return  Les photos liées
+     * @param dossier Le dossier liï¿½
+     * @return  Les photos liï¿½es
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public Collection findLiensPieceJointe(CardexAuthenticationSubject subject,
                            Dossier dossier) throws BusinessException,
@@ -1243,14 +1243,14 @@ public class DossierBusinessDelegate extends BusinessDelegate {
     }
 
     /**
-     * Ajout d'un lien entre un véhicule et un dossier.
+     * Ajout d'un lien entre un vï¿½hicule et un dossier.
      *
      * @param subject Le sujet qui effectue le lien
-     * @param dossier Le dossier à lié
-     * @param vehicule Le véhicule à lier
+     * @param dossier Le dossier ï¿½ liï¿½
+     * @param vehicule Le vï¿½hicule ï¿½ lier
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public void addLienVehicule(CardexAuthenticationSubject subject,
                             Dossier dossier,
@@ -1268,7 +1268,7 @@ public class DossierBusinessDelegate extends BusinessDelegate {
 					Vehicule vehiculePopuler = vehiculeSessionFacade.find(subject, vehicule);
 					businessRuleExceptionHandle.add("cardex_lien_existe", vehiculePopuler.getImmatriculation());
 				} catch (Exception exp) {
-					// on ne prends pas cette exception pour pouvoir garder la première
+					// on ne prends pas cette exception pour pouvoir garder la premiï¿½re
 					businessRuleExceptionHandle.add("cardex_lien_existe");
 				}
 				throw businessRuleExceptionHandle.getBusinessException();
@@ -1278,14 +1278,14 @@ public class DossierBusinessDelegate extends BusinessDelegate {
     }
 
     /**
-     * Ajout d'un lien entre une société et un dossier.
+     * Ajout d'un lien entre une sociï¿½tï¿½ et un dossier.
      *
      * @param subject Le sujet qui effectue le lien
-     * @param dossier Le dossier à lier
-     * @param societe La société à lier
+     * @param dossier Le dossier ï¿½ lier
+     * @param societe La sociï¿½tï¿½ ï¿½ lier
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public BusinessRuleExceptionHandle addLienSociete(CardexAuthenticationSubject subject,
                            Dossier dossier,
@@ -1304,7 +1304,7 @@ public class DossierBusinessDelegate extends BusinessDelegate {
     				Societe societePopuler = societeSessionFacade.find(subject, societe);
     				businessRuleExceptionHandle.add("cardex_lien_existe", societePopuler.getNom());
     				} catch (Exception exp) {
-    					// on ne prends pas cette exception pour pouvoir garder la première
+    					// on ne prends pas cette exception pour pouvoir garder la premiï¿½re
     					businessRuleExceptionHandle.add("cardex_lien_existe");
     				}
     			throw businessRuleExceptionHandle.getBusinessException();
@@ -1317,11 +1317,11 @@ public class DossierBusinessDelegate extends BusinessDelegate {
      * Ajout d'un lien entre un sujet et un dossier.
      *
      * @param subject Le sujet qui effectue le lien
-     * @param dossier Le dossier à lier
-     * @param sujet Le sujet à lier
+     * @param dossier Le dossier ï¿½ lier
+     * @param sujet Le sujet ï¿½ lier
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public void addLienSujet(CardexAuthenticationSubject subject,
                          Dossier dossier,
@@ -1338,7 +1338,7 @@ public class DossierBusinessDelegate extends BusinessDelegate {
 	        		Sujet sujetPopuler = sujetSessionFacade.find(subject, sujet);
 	        		businessRuleExceptionHandle.add("cardex_lien_existe", sujetPopuler.getNumeroFiche());
 				} catch (Exception exp) {
-					// on ne prends pas cette exception pour pouvoir garder la première
+					// on ne prends pas cette exception pour pouvoir garder la premiï¿½re
 					businessRuleExceptionHandle.add("cardex_lien_existe");
 				}
 	        	throw businessRuleExceptionHandle.getBusinessException();
@@ -1351,11 +1351,11 @@ public class DossierBusinessDelegate extends BusinessDelegate {
      * Ajout d'un lien entre une photo et un dossier.
      *
      * @param subject Le sujet qui effectue le lien
-     * @param dossier Le dossier à lier
-     * @param photo La photo à lier
+     * @param dossier Le dossier ï¿½ lier
+     * @param photo La photo ï¿½ lier
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public Photo addLienPhoto(CardexAuthenticationSubject subject,
                          Dossier dossier,
@@ -1369,14 +1369,14 @@ public class DossierBusinessDelegate extends BusinessDelegate {
     }
 
     /**
-     * Ajout d'un lien entre une pièce jointe et un dossier.
+     * Ajout d'un lien entre une piï¿½ce jointe et un dossier.
      *
      * @param subject Le sujet qui effectue le lien
-     * @param dossier Le dossier à lier
-     * @param pieceJointe La pièce jointe à lier
+     * @param dossier Le dossier ï¿½ lier
+     * @param pieceJointe La piï¿½ce jointe ï¿½ lier
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public Photo addLienPieceJointe(CardexAuthenticationSubject subject,
             Dossier dossier,
@@ -1394,11 +1394,11 @@ public class DossierBusinessDelegate extends BusinessDelegate {
      * Ajout d'un lien entre un suivi et un dossier.
      *
      * @param subject Le sujet qui effectue le lien
-     * @param dossier Le dossier à lier
-     * @param suivi Le suivi à lier
+     * @param dossier Le dossier ï¿½ lier
+     * @param suivi Le suivi ï¿½ lier
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public void addLienSuivi(CardexAuthenticationSubject subject,
                          Dossier dossier,
@@ -1426,11 +1426,11 @@ public class DossierBusinessDelegate extends BusinessDelegate {
      * Ajout d'un lien entre une consignation et un dossier.
      *
      * @param subject Le sujet qui effectue le lien
-     * @param dossier Le dossier à lier
-     * @param suivi La consignation à lier
+     * @param dossier Le dossier ï¿½ lier
+     * @param suivi La consignation ï¿½ lier
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public void addLienConsignation(CardexAuthenticationSubject subject,
                          Dossier dossier,
@@ -1447,11 +1447,11 @@ public class DossierBusinessDelegate extends BusinessDelegate {
      * Ajout d'un lien entre un service d'urgence et un dossier.
      *
      * @param subject Le sujet qui effectue le lien
-     * @param dossier Le dossier à lier
-     * @param suivi La consignation à lier
+     * @param dossier Le dossier ï¿½ lier
+     * @param suivi La consignation ï¿½ lier
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public void addLienUrgence(CardexAuthenticationSubject subject,
                          Dossier dossier,
@@ -1468,11 +1468,11 @@ public class DossierBusinessDelegate extends BusinessDelegate {
      * Ajout d'un lien entre une inscription et un dossier .
      *
      * @param subject Le sujet qui effectue le lien
-     * @param dossier Le dossier à lier
-     * @param inscription L'inscription à lier
+     * @param dossier Le dossier ï¿½ lier
+     * @param inscription L'inscription ï¿½ lier
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public void addLienInscription(CardexAuthenticationSubject subject,
                          Dossier dossier,
@@ -1490,11 +1490,11 @@ public class DossierBusinessDelegate extends BusinessDelegate {
      * Destruction d'un lien entre une inscription et un dossier .
      *
      * @param subject Le sujet qui effectue le lien
-     * @param dossier Le dossier à lier
-     * @param inscription L'inscription à lier
+     * @param dossier Le dossier ï¿½ lier
+     * @param inscription L'inscription ï¿½ lier
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public void deleteLienInscription(CardexAuthenticationSubject subject,
                          Dossier dossier,
@@ -1509,14 +1509,14 @@ public class DossierBusinessDelegate extends BusinessDelegate {
     }
 
     /**
-     * Mise à jour des liens entre jeux et un dossier .
+     * Mise ï¿½ jour des liens entre jeux et un dossier .
      *
      * @param subject Le sujet qui effectue le lien
-     * @param dossier Le dossier à lier
-     * @param jeux Les jeux à lier
+     * @param dossier Le dossier ï¿½ lier
+     * @param jeux Les jeux ï¿½ lier
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public void updateLiensJeu(CardexAuthenticationSubject subject,
                          Dossier dossier,
@@ -1530,14 +1530,14 @@ public class DossierBusinessDelegate extends BusinessDelegate {
     }
 
     /**
-     * Mise à jour des liens du partage de dossiers.
+     * Mise ï¿½ jour des liens du partage de dossiers.
      *
      * @param subject Le sujet qui effectue le lien
-     * @param dossier Le dossier à lier
-     * @param jeux Les intervenants à lier
+     * @param dossier Le dossier ï¿½ lier
+     * @param jeux Les intervenants ï¿½ lier
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public void updateLiensPartage(CardexAuthenticationSubject subject,
                          Dossier dossier,
@@ -1559,15 +1559,15 @@ public class DossierBusinessDelegate extends BusinessDelegate {
 	}
 
     /**
-     * Recherche des dossiers partagés de l'utilisateur
+     * Recherche des dossiers partagï¿½s de l'utilisateur
      *
      * @param subject Le sujet qui effectue la recherche
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return Les dosiers recherchés
+     * @return Les dosiers recherchï¿½s
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public List<Dossier> recherchePartage(CardexAuthenticationSubject subject,
                                     CriteresRechercheDossier criteria) throws BusinessException,
@@ -1580,15 +1580,15 @@ public class DossierBusinessDelegate extends BusinessDelegate {
     }
     
     /**
-     * Inscription de la date de paiement dans les billets associés au dossier
+     * Inscription de la date de paiement dans les billets associï¿½s au dossier
      *
      * @param subject Le sujet qui effectue la recherche
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return Les dosiers recherchés
+     * @return Les dosiers recherchï¿½s
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public void inscrireDatePaiement(CardexAuthenticationSubject subject,
     								 long cle,
@@ -1663,16 +1663,16 @@ public class DossierBusinessDelegate extends BusinessDelegate {
 	
     /**
      * Construit une BusinessException contenant les messages d'erreurs qui
-     * doivent être présenté à un utilisateur. Cette méthode fait la mise en
-     * correspondance entre les codes de règles d'affaires reçus d'une
-     * BusinessRuleException et les messsages qui doivent être affiché
-     * à un utilisateur.
+     * doivent ï¿½tre prï¿½sentï¿½ ï¿½ un utilisateur. Cette mï¿½thode fait la mise en
+     * correspondance entre les codes de rï¿½gles d'affaires reï¿½us d'une
+     * BusinessRuleException et les messsages qui doivent ï¿½tre affichï¿½
+     * ï¿½ un utilisateur.
      *
      * @param bre BusinessRuleException BusinessRuleException contenant
-     *            les codes de règles d'affaires
+     *            les codes de rï¿½gles d'affaires
      *
      * @return BusinessException BusinessException contenant les messages
-     * d'erreurs qui doivent être présenté à un utilisateur.
+     * d'erreurs qui doivent ï¿½tre prï¿½sentï¿½ ï¿½ un utilisateur.
      */
     private BusinessException handleDossierBusinessRuleException(BusinessRuleException bre)
             throws BusinessException {
@@ -1681,7 +1681,7 @@ public class DossierBusinessDelegate extends BusinessDelegate {
         BusinessMessage       message = new BusinessMessage();
         int                   businessRule = bre.getBusinessRule();
 
-		log.fine("handleDossierBusinessRuleException" );
+		log.debug("handleDossierBusinessRuleException" );
         switch (businessRule) {
 
         case DossierBusinessRuleException.DATE_DEBUT_INVALIDE:
@@ -1737,9 +1737,9 @@ public class DossierBusinessDelegate extends BusinessDelegate {
             break;
 
         default:
-            throw new IllegalArgumentException("La règle d'affaire '"
+            throw new IllegalArgumentException("La rï¿½gle d'affaire '"
                                                + businessRule
-                                               + "' n'est pas une règle supportée pour un objet d'affaire du type '"
+                                               + "' n'est pas une rï¿½gle supportï¿½e pour un objet d'affaire du type '"
                                                + Dossier.class.getName()
                                                + "'");
         }
@@ -1750,16 +1750,16 @@ public class DossierBusinessDelegate extends BusinessDelegate {
 
     /**
      * Construit une BusinessException contenant les messages d'erreurs qui
-     * doivent être présenté à un utilisateur. Cette méthode fait la mise en
-     * correspondance entre les codes de règles d'affaires reçus d'une
-     * BusinessRuleException et les messsages qui doivent être affiché
-     * à un utilisateur.
+     * doivent ï¿½tre prï¿½sentï¿½ ï¿½ un utilisateur. Cette mï¿½thode fait la mise en
+     * correspondance entre les codes de rï¿½gles d'affaires reï¿½us d'une
+     * BusinessRuleException et les messsages qui doivent ï¿½tre affichï¿½
+     * ï¿½ un utilisateur.
      *
      * @param bre BusinessRuleException BusinessRuleException contenant
-     *            les codes de règles d'affaires
+     *            les codes de rï¿½gles d'affaires
      *
      * @return BusinessException BusinessException contenant les messages
-     * d'erreurs qui doivent être présenté à un utilisateur.
+     * d'erreurs qui doivent ï¿½tre prï¿½sentï¿½ ï¿½ un utilisateur.
      */
     private BusinessException handleSuiviBusinessRuleException(BusinessRuleException bre)
             throws BusinessException {
@@ -1779,9 +1779,9 @@ public class DossierBusinessDelegate extends BusinessDelegate {
             break;
             
         default:
-            throw new IllegalArgumentException("La règle d'affaire '"
+            throw new IllegalArgumentException("La rï¿½gle d'affaire '"
                                                + businessRule
-                                               + "' n'est pas une règle supportée pour un objet d'affaire du type '"
+                                               + "' n'est pas une rï¿½gle supportï¿½e pour un objet d'affaire du type '"
                                                + Dossier.class.getName()
                                                + "'");
         }
@@ -1793,16 +1793,16 @@ public class DossierBusinessDelegate extends BusinessDelegate {
 
     /**
      * Construit une BusinessException contenant les messages d'erreurs qui
-     * doivent être présenté à un utilisateur. Cette méthode fait la mise en
-     * correspondance entre les codes de règles d'affaires reçus d'une
-     * BusinessRuleException et les messsages qui doivent être affiché
-     * à un utilisateur.
+     * doivent ï¿½tre prï¿½sentï¿½ ï¿½ un utilisateur. Cette mï¿½thode fait la mise en
+     * correspondance entre les codes de rï¿½gles d'affaires reï¿½us d'une
+     * BusinessRuleException et les messsages qui doivent ï¿½tre affichï¿½
+     * ï¿½ un utilisateur.
      *
      * @param bre BusinessRuleException BusinessRuleException contenant
-     *            les codes de règles d'affaires
+     *            les codes de rï¿½gles d'affaires
      *
      * @return BusinessException BusinessException contenant les messages
-     * d'erreurs qui doivent être présenté à un utilisateur.
+     * d'erreurs qui doivent ï¿½tre prï¿½sentï¿½ ï¿½ un utilisateur.
      */
     private BusinessException handleInscriptionBusinessRuleException(BusinessRuleException bre)
             throws BusinessException {
@@ -1822,9 +1822,9 @@ public class DossierBusinessDelegate extends BusinessDelegate {
             break;
 
         default:
-            throw new IllegalArgumentException("La règle d'affaire '"
+            throw new IllegalArgumentException("La rï¿½gle d'affaire '"
                                                + businessRule
-                                               + "' n'est pas une règle supportée pour un objet d'affaire du type '"
+                                               + "' n'est pas une rï¿½gle supportï¿½e pour un objet d'affaire du type '"
                                                + Dossier.class.getName()
                                                + "'");
         }
@@ -1835,16 +1835,16 @@ public class DossierBusinessDelegate extends BusinessDelegate {
 
 	/**
 	 * Construit une BusinessException contenant les messages d'erreurs qui
-	 * doivent être présenté à un utilisateur. Cette méthode fait la mise en
-	 * correspondance entre les codes de règles d'affaires reçus d'une
-	 * BusinessRuleException et les messsages qui doivent être affiché
-	 * à un utilisateur.
+	 * doivent ï¿½tre prï¿½sentï¿½ ï¿½ un utilisateur. Cette mï¿½thode fait la mise en
+	 * correspondance entre les codes de rï¿½gles d'affaires reï¿½us d'une
+	 * BusinessRuleException et les messsages qui doivent ï¿½tre affichï¿½
+	 * ï¿½ un utilisateur.
 	 *
 	 * @param bre BusinessRuleException BusinessRuleException contenant
-	 *            les codes de règles d'affaires
+	 *            les codes de rï¿½gles d'affaires
 	 *
 	 * @return BusinessException BusinessException contenant les messages
-	 * d'erreurs qui doivent être présenté à un utilisateur.
+	 * d'erreurs qui doivent ï¿½tre prï¿½sentï¿½ ï¿½ un utilisateur.
 	 */
 	private BusinessException handleNarrationBusinessRuleException(BusinessRuleException bre)
 			throws BusinessException {
@@ -1860,9 +1860,9 @@ public class DossierBusinessDelegate extends BusinessDelegate {
 			break;
 
 		default:
-			throw new IllegalArgumentException("La règle d'affaire '"
+			throw new IllegalArgumentException("La rï¿½gle d'affaire '"
 											   + businessRule
-											   + "' n'est pas une règle supportée pour un objet d'affaire du type '"
+											   + "' n'est pas une rï¿½gle supportï¿½e pour un objet d'affaire du type '"
 											   + Dossier.class.getName()
 											   + "'");
 		}
@@ -1873,16 +1873,16 @@ public class DossierBusinessDelegate extends BusinessDelegate {
 
     /**
      * Construit une BusinessException contenant les messages d'erreurs qui
-     * doivent être présenté à un utilisateur. Cette méthode fait la mise en
-     * correspondance entre les codes de règles d'affaires reçus d'une
-     * BusinessRuleException et les messsages qui doivent être affiché
-     * à un utilisateur.
+     * doivent ï¿½tre prï¿½sentï¿½ ï¿½ un utilisateur. Cette mï¿½thode fait la mise en
+     * correspondance entre les codes de rï¿½gles d'affaires reï¿½us d'une
+     * BusinessRuleException et les messsages qui doivent ï¿½tre affichï¿½
+     * ï¿½ un utilisateur.
      *
      * @param bre BusinessRuleException BusinessRuleException contenant
-     *            les codes de règles d'affaires
+     *            les codes de rï¿½gles d'affaires
      *
      * @return BusinessException BusinessException contenant les messages
-     * d'erreurs qui doivent être présenté à un utilisateur.
+     * d'erreurs qui doivent ï¿½tre prï¿½sentï¿½ ï¿½ un utilisateur.
      */
     private BusinessException handleCriteresRecherDossierBusinessRuleException(BusinessRuleException bre)
             throws BusinessException {
@@ -1903,9 +1903,9 @@ public class DossierBusinessDelegate extends BusinessDelegate {
             //message.addArgument();
             break;
         default:
-            throw new IllegalArgumentException("La règle d'affaire '"
+            throw new IllegalArgumentException("La rï¿½gle d'affaire '"
                                                + businessRule
-                                               + "' n'est pas une règle supportée pour un objet d'affaire du type '"
+                                               + "' n'est pas une rï¿½gle supportï¿½e pour un objet d'affaire du type '"
                                                + CriteresRechercheDossier.class.getName()
                                                + "'");
         }
@@ -1924,14 +1924,14 @@ public class DossierBusinessDelegate extends BusinessDelegate {
     }	
 
     /**
-     * Ajout d'un lien entre une évaluation et un dossier.
+     * Ajout d'un lien entre une ï¿½valuation et un dossier.
      *
      * @param subject Le sujet qui effectue le lien
-     * @param sujet Le suejt à lier
-     * @param evaluation L'évaluation à lier
+     * @param sujet Le suejt ï¿½ lier
+     * @param evaluation L'ï¿½valuation ï¿½ lier
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public Evaluation addLienEvaluation(CardexAuthenticationSubject subject,
                          Dossier dossier,
@@ -1945,13 +1945,13 @@ public class DossierBusinessDelegate extends BusinessDelegate {
     }
 
     /**
-     * Suppression d'un lien entre une évaluation et un sujet.
+     * Suppression d'un lien entre une ï¿½valuation et un sujet.
      *
      * @param subject Le sujet qui effectue le lien
-     * @param suivi L'évaluation à supprimer
+     * @param suivi L'ï¿½valuation ï¿½ supprimer
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public void deleteLienEvaluation(CardexAuthenticationSubject subject,
     						 Dossier dossier,
@@ -1965,14 +1965,14 @@ public class DossierBusinessDelegate extends BusinessDelegate {
     }
 
     /**
-     * Recherche des liens évaluation.
+     * Recherche des liens ï¿½valuation.
      *
      * @param subject Le sujet qui effectue le lien
-     * @param sujet Le sujet lié
-     * @return  Les adresse liés
+     * @param sujet Le sujet liï¿½
+     * @return  Les adresse liï¿½s
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public Collection findLiensEvaluation(CardexAuthenticationSubject subject,
                            Dossier dossier) throws BusinessException,
@@ -1985,13 +1985,13 @@ public class DossierBusinessDelegate extends BusinessDelegate {
     }
 
     /**
-     * Mise à jour d'un lien entre une évaluation et un dossier.
+     * Mise ï¿½ jour d'un lien entre une ï¿½valuation et un dossier.
      *
      * @param subject Le sujet qui effectue le lien
-     * @param adresse L'évaluation à mettre à jour
+     * @param adresse L'ï¿½valuation ï¿½ mettre ï¿½ jour
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public void updateLienEvaluation(CardexAuthenticationSubject subject,
     		Evaluation evaluation) throws BusinessException,
@@ -2003,7 +2003,7 @@ public class DossierBusinessDelegate extends BusinessDelegate {
         }
     }
    
-    //Recherche directe d'un dossier à partir du menu principal
+    //Recherche directe d'un dossier ï¿½ partir du menu principal
     public Dossier rechercheDirecte(CardexAuthenticationSubject subject, Dossier dossier) throws BusinessException, BusinessResourceException {
 
 		try {
@@ -2013,7 +2013,7 @@ public class DossierBusinessDelegate extends BusinessDelegate {
 		}
 	}
 
-    //Ajout d'une entrée dans la table des accès
+    //Ajout d'une entrï¿½e dans la table des accï¿½s
     public void ajoutAcces(CardexAuthenticationSubject subject, Dossier dossier) throws BusinessException, BusinessResourceException {
 
 		try {

@@ -10,10 +10,11 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import oracle.jdbc.OracleTypes;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardex.business.Consignation;
 import com.lotoquebec.cardex.business.CriteresRechercheConsignation;
@@ -29,14 +30,13 @@ import com.lotoquebec.cardexCommun.integration.dao.jdbc.JDBCTemplate;
 import com.lotoquebec.cardexCommun.integration.dao.jdbc.PreparerSQL;
 import com.lotoquebec.cardexCommun.integration.dao.jdbc.RowCallbackHandler;
 import com.lotoquebec.cardexCommun.integration.dao.jdbc.UnEnregistrementPresent;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.user.CardexPrivilege;
 import com.lotoquebec.cardexCommun.user.CardexUser;
 import com.lotoquebec.cardexCommun.util.GererTacheUtilisateur;
 
 /**
- * Liste des appels à la base de données pour différents accès aux
- * consignations.  Implémente l'interface ConsignationDAO.
+ * Liste des appels ï¿½ la base de donnï¿½es pour diffï¿½rents accï¿½s aux
+ * consignations.  Implï¿½mente l'interface ConsignationDAO.
  *
  * @author $Author: fguerin $
  * @version $Revision: 1.11 $, $Date: 2002/05/02 13:06:09 $
@@ -50,28 +50,28 @@ public class ConsignationDAO {
    }
 
    private final Logger      log =
-       (Logger)LoggerCardex.getLogger((ConsignationDAO.class));
+       LoggerFactory.getLogger((ConsignationDAO.class));
    
    private Map TYPES_CONSIGNATION = null;
 
 /**
- * Écriture d'une consignation, appelée par la méthode "insert", "update",
+ * ï¿½criture d'une consignation, appelï¿½e par la mï¿½thode "insert", "update",
  * "approbation" ou "delete".
- * Selon le paramètre "action" il peut s'agir d'une insertion ("I")
- * d'une mise à jour ("U"), d'une approbation et modification ("M") ou
+ * Selon le paramï¿½tre "action" il peut s'agir d'une insertion ("I")
+ * d'une mise ï¿½ jour ("U"), d'une approbation et modification ("M") ou
  * d'une suppression ("D").
- * Procédure appelée : CARDEX_LIEN.SP_E_CN_CONSIGNATION
- * Date de création : (2006-05-29)
- * @author François Guérin
- * @param subject CardexAuthenticationSubject : Données nominatives sur
+ * Procï¿½dure appelï¿½e : CARDEX_LIEN.SP_E_CN_CONSIGNATION
+ * Date de crï¿½ation : (2006-05-29)
+ * @author Franï¿½ois Guï¿½rin
+ * @param subject CardexAuthenticationSubject : Donnï¿½es nominatives sur
  * l'utilisateur.
- * @param consignation Consignation : consignation saisie à l'écran.
+ * @param consignation Consignation : consignation saisie ï¿½ l'ï¿½cran.
  * @param action  java.lang.String : U ou I
- * @param genreFichier String : code à deux lettres de la table qui lie laconsignation
+ * @param genreFichier String : code ï¿½ deux lettres de la table qui lie laconsignation
  * (Dossier (DO).
- * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
- * rupture de connexion avec la base de données, ou que la table demandée est
- * non disponible, ou qu'un problème est survenu lors de l'exécution d'une
+ * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+ * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e est
+ * non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution d'une
  * "stored procedure".
  * @return Consignation
  */
@@ -152,17 +152,17 @@ public class ConsignationDAO {
 	}
 
 /**
- * Appel de la méthode editConsignation pour la création d'un consignation
- * Date de création : (2002-02-27)
+ * Appel de la mï¿½thode editConsignation pour la crï¿½ation d'un consignation
+ * Date de crï¿½ation : (2002-02-27)
  * @author Philippe Caron
- * @param subject CardexAuthenticationSubject : Données nominatives sur
+ * @param subject CardexAuthenticationSubject : Donnï¿½es nominatives sur
  * l'utilisateur.
- * @param consignation Consignation : Consignation saisie à l'écran.
+ * @param consignation Consignation : Consignation saisie ï¿½ l'ï¿½cran.
  * @param genreFichier String : Code identifiant la table source qui lie un
- * consignation à un Dossier.
- * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
- * rupture de connexion avec la base de données, ou que la table demandée est
- * non disponible, ou qu'un problème est survenu lors de l'exécution d'une
+ * consignation ï¿½ un Dossier.
+ * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+ * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e est
+ * non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution d'une
  * "stored procedure".
  * @return Consignation
  */
@@ -172,17 +172,17 @@ public class ConsignationDAO {
 	}
 
 /**
- * Appel de la méthode editConsignation pour la mise à jour d'une consignation
- * Date de création : (2002-02-27)
+ * Appel de la mï¿½thode editConsignation pour la mise ï¿½ jour d'une consignation
+ * Date de crï¿½ation : (2002-02-27)
  * @author Philippe Caron
- * @param subject CardexAuthenticationSubject : Données nominatives sur
+ * @param subject CardexAuthenticationSubject : Donnï¿½es nominatives sur
  * l'utilisateur.
- * @param consignation Consignation : Consignation saisie à l'écran.
+ * @param consignation Consignation : Consignation saisie ï¿½ l'ï¿½cran.
  * @param genreFichier String : Code identifiant la table source qui lie un
- * consignation à un Dossier.
- * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
- * rupture de connexion avec la base de données, ou que la table demandée est
- * non disponible, ou qu'un problème est survenu lors de l'exécution d'une
+ * consignation ï¿½ un Dossier.
+ * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+ * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e est
+ * non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution d'une
  * "stored procedure".
  */
 	public void update(CardexAuthenticationSubject subject, Consignation consignation,
@@ -191,21 +191,21 @@ public class ConsignationDAO {
 	}
 
 /**
- * Appel de la méthode editConsignation pour l'approbation ou la modification d'un
+ * Appel de la mï¿½thode editConsignation pour l'approbation ou la modification d'un
  * consignation.
- * L'approbation consiste à bloquer toute modification à un consignation.
- * La modification consiste à permettre de nouveau les modifications à un consignation
- * approuvé.
- * Date de création : (2002-02-27)
+ * L'approbation consiste ï¿½ bloquer toute modification ï¿½ un consignation.
+ * La modification consiste ï¿½ permettre de nouveau les modifications ï¿½ un consignation
+ * approuvï¿½.
+ * Date de crï¿½ation : (2002-02-27)
  * @author Philippe Caron
- * @param subject CardexAuthenticationSubject : Données nominatives sur
+ * @param subject CardexAuthenticationSubject : Donnï¿½es nominatives sur
  * l'utilisateur.
- * @param consignation Consignation : Consignation saisie à l'écran.
+ * @param consignation Consignation : Consignation saisie ï¿½ l'ï¿½cran.
  * @param genreFichier String : Code identifiant la table source qui lie un
- * consignation à un Dossier.
- * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
- * rupture de connexion avec la base de données, ou que la table demandée est
- * non disponible, ou qu'un problème est survenu lors de l'exécution d'une
+ * consignation ï¿½ un Dossier.
+ * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+ * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e est
+ * non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution d'une
  * "stored procedure".
  * @return Consignation
  */
@@ -215,17 +215,17 @@ public class ConsignationDAO {
 	}
 
 /**
- * Appel de la méthode editConsignation pour la suppression d'un consignation
- * Date de création : (2002-02-27)
+ * Appel de la mï¿½thode editConsignation pour la suppression d'un consignation
+ * Date de crï¿½ation : (2002-02-27)
  * @author Philippe Caron
- * @param subject CardexAuthenticationSubject : Données nominatives sur
+ * @param subject CardexAuthenticationSubject : Donnï¿½es nominatives sur
  * l'utilisateur.
- * @param consignation Consignation : Consignation saisie à l'écran.
+ * @param consignation Consignation : Consignation saisie ï¿½ l'ï¿½cran.
  * @param genreFichier String : Code identifiant la table source qui lie un
- * consignation à un Dossier.
- * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
- * rupture de connexion avec la base de données, ou que la table demandée est
- * non disponible, ou qu'un problème est survenu lors de l'exécution d'une
+ * consignation ï¿½ un Dossier.
+ * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+ * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e est
+ * non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution d'une
  * "stored procedure".
  * @return Consignation
  */
@@ -235,24 +235,24 @@ public class ConsignationDAO {
 	}
 
 /**
- * Lecture des consignations associés à une entité Dossier.
- * Procédure appelée : CARDEX_WEB_LIRE_DOC_TRI.SPW_L_CN_CONSIGNATION
- * Date de création : (2002-02-27)
+ * Lecture des consignations associï¿½s ï¿½ une entitï¿½ Dossier.
+ * Procï¿½dure appelï¿½e : CARDEX_WEB_LIRE_DOC_TRI.SPW_L_CN_CONSIGNATION
+ * Date de crï¿½ation : (2002-02-27)
  * @author Philippe Caron
- * @param subject  CardexAuthenticationSubject : Données nominatives sur
+ * @param subject  CardexAuthenticationSubject : Donnï¿½es nominatives sur
  * l'utilisateur.
- * @param cle long : clé de référence de l'entité
- * @param site long : site de référence de l'entité
- * @param genreFichier String : identification de l'entité.
- * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
- * rupture de connexion avec la base de données, ou que la table demandée est
- * non disponible, ou qu'un problème est survenu lors de l'exécution d'une
+ * @param cle long : clï¿½ de rï¿½fï¿½rence de l'entitï¿½
+ * @param site long : site de rï¿½fï¿½rence de l'entitï¿½
+ * @param genreFichier String : identification de l'entitï¿½.
+ * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+ * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e est
+ * non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution d'une
  * "stored procedure".
- * @return Collection : liste des consignations associées
+ * @return Collection : liste des consignations associï¿½es
  */
 	public Collection findLiensConsignation(CardexAuthenticationSubject subject,
 			long cle, long site, String genreFichier) throws DAOException {
-	  log.fine("findLiensConsignation()");
+	  log.debug("findLiensConsignation()");
 	  Connection connection
 			= DAOConnection.getInstance().getConnection(subject);
 	  CallableStatement callableStatement = null;
@@ -334,15 +334,15 @@ public class ConsignationDAO {
    }
 
 /**
- * Routine pour traiter les ResultSet retournés par les recherches de consignation.
- * Date de création : (2002-02-27)
+ * Routine pour traiter les ResultSet retournï¿½s par les recherches de consignation.
+ * Date de crï¿½ation : (2002-02-27)
  * @author Philippe Caron
- * @param resultSet  ResultSet : Données retournées par une recherche.
- * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
- * rupture de connexion avec la base de données, ou que la table demandée est
- * non disponible, ou qu'un problème est survenu lors de l'exécution d'une
+ * @param resultSet  ResultSet : Donnï¿½es retournï¿½es par une recherche.
+ * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+ * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e est
+ * non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution d'une
  * "stored procedure".
- * @return ArrayList : liste des résultats traités.
+ * @return ArrayList : liste des rï¿½sultats traitï¿½s.
  */
     public RowCallbackHandler constuireRowCallBackHandler(final List<Consignation> listDossier){
   	   return new RowCallbackHandler(){
@@ -356,7 +356,7 @@ public class ConsignationDAO {
   private ArrayList traitementResultSet(ResultSet resultSet)
 		throws DAOException {
 	   ArrayList results = new ArrayList();
-	   try { //On limite le nombre d'enregistrements retournés à 3000.
+	   try { //On limite le nombre d'enregistrements retournï¿½s ï¿½ 3000.
 			while (resultSet.next() && results.size() < 3000){
 				GererTacheUtilisateur.verifierThreadCourrant();
 				
@@ -402,7 +402,7 @@ private ConsignationVO construireConsignation(ResultSet resultSet)
 	  consignationVo.setApprouve(OracleDAOUtils.convertirStringABoolean(resultSet.getString("C_CN_APPROUVE")));
 	  consignationVo.setReference1(resultSet.getString("V_CN_REFERENCE1"));
 	  consignationVo.setReference2(resultSet.getString("V_CN_REFERENCE2"));
-	  //Inscription des valeurs sur les dossiers associés aux recherches de suivis
+	  //Inscription des valeurs sur les dossiers associï¿½s aux recherches de suivis
 	  dossier.setCle(resultSet.getLong("L_DO_CLE"));
 	  dossier.setSite(resultSet.getLong("SITE_DOSSIER"));
 	  dossier.setNumeroCardex(resultSet.getString("V_DO_NUMERO_DOSSIER"));
@@ -422,14 +422,14 @@ private ConsignationVO construireConsignation(ResultSet resultSet)
 	return consignationVo;
 }
 	/**
-	 * Routine pour traiter les ResultSet retournés par les recherches de consignation
+	 * Routine pour traiter les ResultSet retournï¿½s par les recherches de consignation
 	 * pour l'impression du rapport.
-	 * @param resultSet  ResultSet : Données retournées par une recherche.
-	 * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-	 * rupture de connexion avec la base de données, ou que la table demandée est
-	 * non disponible, ou qu'un problème est survenu lors de l'exécution d'une
+	 * @param resultSet  ResultSet : Donnï¿½es retournï¿½es par une recherche.
+	 * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+	 * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e est
+	 * non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution d'une
 	 * "stored procedure".
-	 * @return ArrayList : liste des résultats traités.
+	 * @return ArrayList : liste des rï¿½sultats traitï¿½s.
 	 */
 	  private ArrayList traitementResultSetRapport(ResultSet resultSet)
 			throws DAOException {
@@ -485,18 +485,18 @@ private ConsignationVO construireConsignation(ResultSet resultSet)
 		}
 
 /**
- * Recherche directe d'une consignation par sa clé unique.
- * Procédure appelée : SP_L2_CN_CONSIGNATION
- * Date de création : (2002-02-27)
+ * Recherche directe d'une consignation par sa clï¿½ unique.
+ * Procï¿½dure appelï¿½e : SP_L2_CN_CONSIGNATION
+ * Date de crï¿½ation : (2002-02-27)
  * @author Philippe Caron
- * @param subject  CardexAuthenticationSubject : Données nominatives sur
+ * @param subject  CardexAuthenticationSubject : Donnï¿½es nominatives sur
  * l'utilisateur.
- * @param criteria Consignation : Consignation à rechercher.
- * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
- * rupture de connexion avec la base de données, ou que la table demandée est
- * non disponible, ou qu'un problème est survenu lors de l'exécution d'une
+ * @param criteria Consignation : Consignation ï¿½ rechercher.
+ * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+ * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e est
+ * non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution d'une
  * "stored procedure".
- * @return Consignation : Données du dossier trouvé.
+ * @return Consignation : Donnï¿½es du dossier trouvï¿½.
  */
 	public Consignation find(CardexAuthenticationSubject subject, Consignation criteria)
 			throws DAOException {
@@ -516,7 +516,7 @@ private ConsignationVO construireConsignation(ResultSet resultSet)
 		 callableStatement.registerOutParameter(3, OracleTypes.CURSOR);
 		 callableStatement.execute();
 		 resultSet = (ResultSet)callableStatement.getObject(3);
-		 //Traitement du résultat retourné
+		 //Traitement du rï¿½sultat retournï¿½
 		 if (resultSet.next()) {
 			  consignationVo.setCle(resultSet.getLong("L_CN_CLE"));
 			  consignationVo.setSite(resultSet.getLong("L_SI_CLE"));
@@ -549,20 +549,20 @@ private ConsignationVO construireConsignation(ResultSet resultSet)
 			  consignationVo.setReference2(resultSet.getString("V_CN_REFERENCE2"));
 		 }
 
-		 //Un consignation peut être modifiée seulement si elle n'a pas été approuvée
+		 //Un consignation peut ï¿½tre modifiï¿½e seulement si elle n'a pas ï¿½tï¿½ approuvï¿½e
 		 if (consignationVo.getDateApprobation() == null){
 			  consignationVo.setModifiable(true);
 		 }
 /*
-		 //Un consignation ne peut être complétée que par l'intervenant assigné
+		 //Un consignation ne peut ï¿½tre complï¿½tï¿½e que par l'intervenant assignï¿½
 		 if ( user.getCode().equals(consignationVo.getIntervenant())) {
 			consignationVo.setPermettreComplete(true);
 		 }
 
-		 // Un consignation peut être approuvé si le niveau d'autorité de l'utilisateur
-		 // est supérieur à celui du consignation et si le site est le même ou si
-		 // l'utilisateur est le demandeur du consignation ou si le niveau d'autorité,
-		 // le site et le secteur de l'utilisateur sont les mêmes que ceux du demandeur
+		 // Un consignation peut ï¿½tre approuvï¿½ si le niveau d'autoritï¿½ de l'utilisateur
+		 // est supï¿½rieur ï¿½ celui du consignation et si le site est le mï¿½me ou si
+		 // l'utilisateur est le demandeur du consignation ou si le niveau d'autoritï¿½,
+		 // le site et le secteur de l'utilisateur sont les mï¿½mes que ceux du demandeur
 		 if ((privilege.getNiveauAuthorite() > consignationVo.getNiveauHierarchiqueConsignation() &&
 			 user.getSite() == consignationVo.getSite()) ||
 			 (user.getCode().equals(consignationVo.getDemandeur()) ||
@@ -573,18 +573,18 @@ private ConsignationVO construireConsignation(ResultSet resultSet)
 			consignationVo.setApprouvable(true);
 		 }
 */
-		 if (log.isLoggable(Level.FINE)){
-		   log.fine("  user.code = '"+user.getCode()+"'");
-		   log.fine("  user.site = '"+user.getSite()+"'");
-		   log.fine("  user.niveauAuthorite = '"+privilege.getNiveauAuthorite()+"'");
-		   log.fine("  consignation.createur = '"+consignationVo.getCreateur()+"'");
-		   log.fine("  consignation.site = '"+consignationVo.getSite()+"'");
-		   log.fine("  consignation.approbateur = '"+consignationVo.getApprobateur()+"'");
-		   log.fine("Détermine si le consignation est modifiable");
-		   log.fine("  consignation.isModifiable = '"+consignationVo.isModifiable()+"'");
-		   log.fine("Détermine si le consignation est approuvable");
-		   log.fine("  consignation.isApprouvable = '"+consignationVo.isApprouvable()+"'");
-		   log.fine("Détermine si on peut compléter le consignation");
+		 if (log.isDebugEnabled()){
+		   log.debug("  user.code = '"+user.getCode()+"'");
+		   log.debug("  user.site = '"+user.getSite()+"'");
+		   log.debug("  user.niveauAuthorite = '"+privilege.getNiveauAuthorite()+"'");
+		   log.debug("  consignation.createur = '"+consignationVo.getCreateur()+"'");
+		   log.debug("  consignation.site = '"+consignationVo.getSite()+"'");
+		   log.debug("  consignation.approbateur = '"+consignationVo.getApprobateur()+"'");
+		   log.debug("Dï¿½termine si le consignation est modifiable");
+		   log.debug("  consignation.isModifiable = '"+consignationVo.isModifiable()+"'");
+		   log.debug("Dï¿½termine si le consignation est approuvable");
+		   log.debug("  consignation.isApprouvable = '"+consignationVo.isApprouvable()+"'");
+		   log.debug("Dï¿½termine si on peut complï¿½ter le consignation");
 
 		 }
 
@@ -623,21 +623,21 @@ private ConsignationVO construireConsignation(ResultSet resultSet)
 	}
 
 /**
- * Recherche de consignations à l'aide de critères de recherche.
- * Cette recherche sert principalement à chercher des consignations.
- * La requête SQL est générée dans le code Java, avant d'être envoyée à Oracle,
- * en fonction des critères de recherche.
- * Le resultSet retourné par les recherches est traité dans la routine traitementResultSet.
- * Procédure appelée : générée ici.
- * Date de création : (2002-02-19)
- * @author François Guérin
- * @param subject  CardexAuthenticationSubject : données nominatives sur l'utilisateur
- * @param criteria CriteresRechercheConsignation : critères de recherche
- * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
- * rupture de connexion avec la base de données, ou que la table demandée est
- * non disponible, ou qu'un problème est survenu lors de l'exécution d'une
+ * Recherche de consignations ï¿½ l'aide de critï¿½res de recherche.
+ * Cette recherche sert principalement ï¿½ chercher des consignations.
+ * La requï¿½te SQL est gï¿½nï¿½rï¿½e dans le code Java, avant d'ï¿½tre envoyï¿½e ï¿½ Oracle,
+ * en fonction des critï¿½res de recherche.
+ * Le resultSet retournï¿½ par les recherches est traitï¿½ dans la routine traitementResultSet.
+ * Procï¿½dure appelï¿½e : gï¿½nï¿½rï¿½e ici.
+ * Date de crï¿½ation : (2002-02-19)
+ * @author Franï¿½ois Guï¿½rin
+ * @param subject  CardexAuthenticationSubject : donnï¿½es nominatives sur l'utilisateur
+ * @param criteria CriteresRechercheConsignation : critï¿½res de recherche
+ * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+ * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e est
+ * non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution d'une
  * "stored procedure".
- * @return ValueListIterator : liste des dossiers retournés par la recherche.
+ * @return ValueListIterator : liste des dossiers retournï¿½s par la recherche.
  */
     public List<Consignation> select(CardexAuthenticationSubject subject, CriteresRechercheConsignation criteria) throws DAOException {
   		JDBCTemplate template = new JDBCTemplate(subject);
@@ -666,23 +666,23 @@ private ConsignationVO construireConsignation(ResultSet resultSet)
 	
 
 	/**
-	 * Détermine si une consignation est approuvable selon le type de consignation
+	 * Dï¿½termine si une consignation est approuvable selon le type de consignation
 	 * choisi.
 	 *
-	 * @param subject Le sujet qui créé le dossier
+	 * @param subject Le sujet qui crï¿½ï¿½ le dossier
 	 * @param info Le dossier
 	 *
-	 * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-	 * rupture de connexion avec la base de données, ou que la table demandée
-	 * est non disponible, ou qu'un problème est survenu lors de l'exécution
+	 * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+	 * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+	 * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
 	 */
 	public synchronized String isApprouvable(CardexAuthenticationSubject subject,
 					   long cleType) throws DAOException {
 
-		  log.fine("isApprouvable()");
+		  log.debug("isApprouvable()");
 
 		  if (TYPES_CONSIGNATION == null) {
-			  log.fine("Loading TYPES_CONSIGNATION in cache ...");
+			  log.debug("Loading TYPES_CONSIGNATION in cache ...");
 			TYPES_CONSIGNATION = new HashMap();
 			  Connection connection =
 				  DAOConnection.getInstance().getConnection(subject);
@@ -698,7 +698,7 @@ private ConsignationVO construireConsignation(ResultSet resultSet)
 				  while (resultSet.next()) {
 					  String inscriptionFlag = OracleDAOUtils.getString(resultSet,"B_TN_APPROBATION");
 					  String cle = OracleDAOUtils.getString(resultSet,"I_TN_CLE");
-					  log.fine("   [TYPES_CONSIGNATION cle='" + cle
+					  log.debug("   [TYPES_CONSIGNATION cle='" + cle
 								+ "' flag='" + inscriptionFlag + "']");
 					TYPES_CONSIGNATION.put(cle,inscriptionFlag);
 				  }
@@ -735,8 +735,8 @@ private ConsignationVO construireConsignation(ResultSet resultSet)
 		}
 		String type = Long.toString(cleType);
 		String approuvable = (String)TYPES_CONSIGNATION.get(type);
-		log.fine("  type = '"+type+"'");
-		log.fine("  approuvable = '"+approuvable+"'");
+		log.debug("  type = '"+type+"'");
+		log.debug("  approuvable = '"+approuvable+"'");
 		return (approuvable);
    }
 

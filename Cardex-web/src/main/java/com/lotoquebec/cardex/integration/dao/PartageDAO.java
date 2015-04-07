@@ -7,25 +7,25 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.logging.Logger;
 
 import oracle.jdbc.OracleTypes;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardex.business.Dossier;
 import com.lotoquebec.cardex.business.Partage;
 import com.lotoquebec.cardex.business.vo.PartageVO;
-import com.lotoquebec.cardexCommun.GlobalConstants;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
 import com.lotoquebec.cardexCommun.exception.DAOException;
 import com.lotoquebec.cardexCommun.integration.dao.DAOConnection;
 import com.lotoquebec.cardexCommun.integration.dao.OracleDAOUtils;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.user.CardexUser;
 
 /**
- * Liste des appels à la base de données pour différents accès aux dossiers. Les
- * jeux sont liés aux dossiers.
- * Implémente l'interface JeuDAO.
+ * Liste des appels ï¿½ la base de donnï¿½es pour diffï¿½rents accï¿½s aux dossiers. Les
+ * jeux sont liï¿½s aux dossiers.
+ * Implï¿½mente l'interface JeuDAO.
  *
  * @author $Author: mlibersan $
  * @version $Revision: 1.4 $, $Date: 2002/03/13 17:49:34 $
@@ -34,26 +34,26 @@ import com.lotoquebec.cardexCommun.user.CardexUser;
 public class PartageDAO {
 
 	private final Logger      log =
-        (Logger)LoggerCardex.getLogger(PartageDAO.class);
+        LoggerFactory.getLogger(PartageDAO.class);
 
     /**
-     * Mise à jour du partage associé à un dossier, appelée
+     * Mise ï¿½ jour du partage associï¿½ ï¿½ un dossier, appelï¿½e
      * par update afin de faire une action "clear" et "insert".
-     * Selon le paramètre "action" il peut s'agir d'une insertion ("I")
+     * Selon le paramï¿½tre "action" il peut s'agir d'une insertion ("I")
      * ou d'un nettoyage ("C").
-     * Procédure appelée : CARDEX_LIEN.SP_E_LPD_PARTAGE_DOSSIER
-     * Date de création : (2009-11-04)
+     * Procï¿½dure appelï¿½e : CARDEX_LIEN.SP_E_LPD_PARTAGE_DOSSIER
+     * Date de crï¿½ation : (2009-11-04)
      * @author guerinf
-     * @param subject CardexAuthenticationSubject : Données nominatives sur
+     * @param subject CardexAuthenticationSubject : Donnï¿½es nominatives sur
      * l'utilisateur.
-     * @param partage Partage : Intervenants saisis à l'écran.
+     * @param partage Partage : Intervenants saisis ï¿½ l'ï¿½cran.
      * @param action String : "I" ou "U"
-     * @param genreFichier String : Code à deux lettres de la table qui lie des
-     * jeux à un Dossier (DO).  Pour l'instant, seuls les dossiers possèdent des
+     * @param genreFichier String : Code ï¿½ deux lettres de la table qui lie des
+     * jeux ï¿½ un Dossier (DO).  Pour l'instant, seuls les dossiers possï¿½dent des
      * jeux.
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
      */
     private void editPartage(CardexAuthenticationSubject subject, Partage partage, String action) throws DAOException {
@@ -91,8 +91,8 @@ public class PartageDAO {
                     callableStatement.setString(7, partage.getGenrePartage());
                     callableStatement.execute();
                 }
-                //Si la liste contient des valeurs, on ajoute le nom de l'intervenant qui crée le partage afin qu'il puisse lui aussi
-                //accéder à ces dossiers.
+                //Si la liste contient des valeurs, on ajoute le nom de l'intervenant qui crï¿½e le partage afin qu'il puisse lui aussi
+                //accï¿½der ï¿½ ces dossiers.
                 it = intervenantsChoisis.iterator(); 
                 if ((it.hasNext()) && (trouve.equals("false"))){
                 	callableStatement = connection.prepareCall("begin CARDEX_LIEN.SP_E_LPD_PARTAGE_DOSSIER (?,?,?,?,?,?,?); end;");
@@ -100,13 +100,13 @@ public class PartageDAO {
                     callableStatement.registerOutParameter(2, java.sql.Types.DECIMAL);
                     callableStatement.registerOutParameter(3, java.sql.Types.DECIMAL);
                     OracleDAOUtils.setLong(callableStatement,4, partage.getLien());
-                    callableStatement.setString(5, user.getCode()); //L'intervenant qui crée le partage.
+                    callableStatement.setString(5, user.getCode()); //L'intervenant qui crï¿½e le partage.
                     OracleDAOUtils.setLong(callableStatement,6, partage.getLienSite());
                     callableStatement.setString(7, partage.getGenrePartage());
                     callableStatement.execute();
                 }
             }else {
-                log.fine("Le code d'action '" + action + "', est invalide pour la méthode editPartage!");
+                log.debug("Le code d'action '" + action + "', est invalide pour la mï¿½thode editPartage!");
             }
         }
         catch (SQLException se) {
@@ -135,18 +135,18 @@ public class PartageDAO {
     }
 
     /**
-     * Met à jour du partage de dossier.
-     * Date de création : (2009-11-04)
+     * Met ï¿½ jour du partage de dossier.
+     * Date de crï¿½ation : (2009-11-04)
      * @author guerinf
-     * @param subject CardexAuthenticationSubject : Données nominatives sur
+     * @param subject CardexAuthenticationSubject : Donnï¿½es nominatives sur
      * l'utilisateur.
-     * @param partage Partage : Intervenants saisis à l'écran.
-     * @param genreFichier String : Code à deux lettres de la table qui lie un
-     * jeu à un Dossier (DO).  Pour l'instant, seuls les sujets possèdent des
+     * @param partage Partage : Intervenants saisis ï¿½ l'ï¿½cran.
+     * @param genreFichier String : Code ï¿½ deux lettres de la table qui lie un
+     * jeu ï¿½ un Dossier (DO).  Pour l'instant, seuls les sujets possï¿½dent des
      * jeux.
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
      */
     public void update(CardexAuthenticationSubject subject, Partage partage) throws DAOException {
@@ -155,23 +155,23 @@ public class PartageDAO {
     }
 
     /**
-     * Lecture des intervenants associés à un dossier.
-     * Procédure appelée : SP_L_LPD_PARTAGE_DOSSIER
-     * Date de création : (2009-11-04)
+     * Lecture des intervenants associï¿½s ï¿½ un dossier.
+     * Procï¿½dure appelï¿½e : SP_L_LPD_PARTAGE_DOSSIER
+     * Date de crï¿½ation : (2009-11-04)
      * @author guerinf
-     * @param subject  CardexAuthenticationSubject : Données nominatives sur
+     * @param subject  CardexAuthenticationSubject : Donnï¿½es nominatives sur
      * l'utilisateur.
-     * @param cle long : Clé de référence du sujet.
-     * @param site long : Site de référence du sujet.
+     * @param cle long : Clï¿½ de rï¿½fï¿½rence du sujet.
+     * @param site long : Site de rï¿½fï¿½rence du sujet.
      * @param genreFichier String : ("DO").
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
-     * @return Partage : Liste des intervenants associés.
+     * @return Partage : Liste des intervenants associï¿½s.
      */
     public Collection findLiensPartage(CardexAuthenticationSubject subject, long cle, long site) throws DAOException {
-      log.fine("findLiensPartage()");
+      log.debug("findLiensPartage()");
       Connection connection = DAOConnection.getInstance().getConnection(subject);
 	  CallableStatement callableStatement = null;
 	  ResultSet resultSet = null;
@@ -196,7 +196,7 @@ public class PartageDAO {
                   linkedPartage.setIntervenant(resultSet.getString("V_LPD_NAME"));
                   linkedPartage.setCreateur(resultSet.getString("V_LPD_CREE_PAR"));
 		          linkedPartage.setGenrePartage(resultSet.getString("C_LPD_GENRE"));
-                  log.fine("   [Intervenant ='" + resultSet.getString("V_LPD_NAME")+"', site='" + linkedPartage.getLienSite() + "']");
+                  log.debug("   [Intervenant ='" + resultSet.getString("V_LPD_NAME")+"', site='" + linkedPartage.getLienSite() + "']");
                   results.add(linkedPartage);
          }//while
            return results;
@@ -232,23 +232,23 @@ public class PartageDAO {
    }
 
     /**
-     * Lecture des intervenants lors de l'ouverture de l'écran de gestion du partage.
-     * Procédure appelée : CARDEX_LIRE_LIEN.SP_L_LPD_PARTAGE_DOSSIER2
-     * Date de création : (2009-11-04)
+     * Lecture des intervenants lors de l'ouverture de l'ï¿½cran de gestion du partage.
+     * Procï¿½dure appelï¿½e : CARDEX_LIRE_LIEN.SP_L_LPD_PARTAGE_DOSSIER2
+     * Date de crï¿½ation : (2009-11-04)
      * @author guerinf
-     * @param subject  CardexAuthenticationSubject : Données nominatives sur
+     * @param subject  CardexAuthenticationSubject : Donnï¿½es nominatives sur
      * l'utilisateur.
-     * @param cle long : Clé de référence du sujet.
-     * @param site long : Site de référence du sujet.
+     * @param cle long : Clï¿½ de rï¿½fï¿½rence du sujet.
+     * @param site long : Site de rï¿½fï¿½rence du sujet.
      * @param genreFichier String : ("DO").
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
      * @return Inscription : Inscription comportant une liste des sites admis.
      */
     public Partage findPartage(CardexAuthenticationSubject subject, Dossier dossier) throws DAOException {
-      log.fine("findPartage()");
+      log.debug("findPartage()");
       Connection connection = DAOConnection.getInstance().getConnection(subject);
 	  CallableStatement callableStatement = null;
 	  ResultSet resultSet = null;
@@ -273,7 +273,7 @@ public class PartageDAO {
 		          linkedPartage.setCreateur(resultSet.getString("V_LPD_CREE_PAR"));
 		          linkedPartage.setGenrePartage(resultSet.getString("C_LPD_GENRE"));
         	 }
-             log.fine("   [Intervenant ='" + resultSet.getString("V_LPD_NAME")+"', site='" + linkedPartage.getLienSite() + "']");
+             log.debug("   [Intervenant ='" + resultSet.getString("V_LPD_NAME")+"', site='" + linkedPartage.getLienSite() + "']");
              linkedPartage.addIntervenant(resultSet.getString("V_LPD_NAME")); // Intervenant
          }//while
          if (linkedPartage == null){
@@ -315,22 +315,22 @@ public class PartageDAO {
     
     /**
      * Lecture du partage.
-     * Procédure appelée : CARDEX_LIRE_LIEN.SP_L_LPD_PARTAGE_DOSSIER
-     * Date de création : (2009-11-04)
+     * Procï¿½dure appelï¿½e : CARDEX_LIRE_LIEN.SP_L_LPD_PARTAGE_DOSSIER
+     * Date de crï¿½ation : (2009-11-04)
      * @author guerinf
-     * @param subject  CardexAuthenticationSubject : Données nominatives sur
+     * @param subject  CardexAuthenticationSubject : Donnï¿½es nominatives sur
      * l'utilisateur.
-     * @param cle long : Clé de référence du sujet.
-     * @param site long : Site de référence du sujet.
+     * @param cle long : Clï¿½ de rï¿½fï¿½rence du sujet.
+     * @param site long : Site de rï¿½fï¿½rence du sujet.
      * @param genreFichier String : ("DO").
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
      * @return Inscription : Inscription comportant une liste des sites admis.
      */
     public Partage ouvrirPartage(CardexAuthenticationSubject subject, Dossier dossier) throws DAOException {
-      log.fine("ouvrirPartage()");
+      log.debug("ouvrirPartage()");
       Connection connection = DAOConnection.getInstance().getConnection(subject);
 	  CallableStatement callableStatement = null;
 	  ResultSet resultSet = null;
@@ -355,7 +355,7 @@ public class PartageDAO {
 		          linkedPartage.setCreateur(resultSet.getString("V_LPD_CREE_PAR"));
 		          linkedPartage.setGenrePartage(resultSet.getString("C_LPD_GENRE"));
         	 }
-             log.fine("   [Intervenant ='" + resultSet.getString("V_LPD_NAME")+"', site='" + linkedPartage.getLienSite() + "']");
+             log.debug("   [Intervenant ='" + resultSet.getString("V_LPD_NAME")+"', site='" + linkedPartage.getLienSite() + "']");
              linkedPartage.addIntervenant(resultSet.getString("V_LPD_NAME")); // Intervenant
          }//while
          if (linkedPartage == null){

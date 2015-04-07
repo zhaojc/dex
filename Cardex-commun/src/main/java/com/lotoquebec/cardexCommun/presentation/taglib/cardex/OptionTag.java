@@ -6,18 +6,17 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
-import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.struts.taglib.TagUtils;
 import org.apache.struts.taglib.html.BaseHandlerTag;
 import org.apache.struts.taglib.html.Constants;
 import org.apache.struts.taglib.html.SelectTag;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardexCommun.authentication.AuthenticationSubject;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
@@ -26,18 +25,17 @@ import com.lotoquebec.cardexCommun.exception.ValueObjectMapperException;
 import com.lotoquebec.cardexCommun.integration.dao.cleListe.CleListe;
 import com.lotoquebec.cardexCommun.integration.dao.cleListe.CleListeUtil;
 import com.lotoquebec.cardexCommun.integration.dao.cleListe.cleSQLListeCache.TableValeurCleSQLListeCache;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.presentation.util.LabelValueBean;
 import com.lotoquebec.cardexCommun.util.ListeCache;
 import com.lotoquebec.cardexCommun.util.StringUtils;
 
 
 /**
- * Ce tag défini dans la requête des attributs par rapport à la sécurité ClearTrust
+ * Ce tag dï¿½fini dans la requï¿½te des attributs par rapport ï¿½ la sï¿½curitï¿½ ClearTrust
  */
 public class OptionTag extends BaseHandlerTag {
 	
-	private final Logger log = (Logger)LoggerCardex.getLogger(this.getClass());
+	private final Logger log = LoggerFactory.getLogger(this.getClass());
 	
 	private String classe = "";
 	private String valeurDiscriminant = "";
@@ -98,12 +96,12 @@ public class OptionTag extends BaseHandlerTag {
         if (StringUtils.isNotEmpty(filtrerOptionPredicatesList))
         	filtrerOptionPredicates = (List<Predicate>) this.pageContext.getAttribute(filtrerOptionPredicatesList);
 
-        // Si le discriminant est requis et qu'il n'est pas là, c'est la liste vide!
+        // Si le discriminant est requis et qu'il n'est pas lï¿½, c'est la liste vide!
         if (cleListe.isDiscriminantValeurRequis() && cleListe.isDiscreminantVide())
         	return new ArrayList();
 		
         if (cleListe instanceof TableValeurCleSQLListeCache){
-	        //obtenir la valeur du tag supérieur
+	        //obtenir la valeur du tag supï¿½rieur
 	        TagUtils tagUtils = TagUtils.getInstance();
 	        
 	        SelectTag selectTag = (SelectTag) pageContext.getAttribute(Constants.SELECT_KEY);        

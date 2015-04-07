@@ -11,9 +11,11 @@ import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import oracle.jdbc.OracleTypes;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoQuebec.correcteurAdresse.AdresseSortie;
 import com.lotoquebec.cardex.business.Adresse;
@@ -46,7 +48,6 @@ import com.lotoquebec.cardexCommun.integration.dao.jdbc.PreparerSQL;
 import com.lotoquebec.cardexCommun.integration.dao.jdbc.RowCallbackHandler;
 import com.lotoquebec.cardexCommun.integration.dao.jdbc.StoreProcTemplate;
 import com.lotoquebec.cardexCommun.integration.dao.jdbc.UnEnregistrementPresent;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.user.CardexUser;
 import com.lotoquebec.cardexCommun.util.StringHelper;
 import com.lotoquebec.cardexCommun.util.StringUtils;
@@ -63,9 +64,9 @@ import com.lotoquebec.cardexCommun.util.ValiderNAS;
 public class SujetDAO {
 
 	private final Logger      log =
-        (Logger)LoggerCardex.getLogger(SujetDAO.class);
+        LoggerFactory.getLogger(SujetDAO.class);
 	
-	private Logger courantLog = (Logger)LoggerCardex.getLogger(SujetDAO.class);
+	private Logger courantLog = LoggerFactory.getLogger(SujetDAO.class);
 	
 /**
  * �criture d'un sujet, appel� par la m�thode "insert" ou "update".
@@ -570,7 +571,7 @@ public class SujetDAO {
 			  sujet.setDateCreation(resultSet.getTimestamp("D_SU_DATE_CREATION"));
 			  sujet.setIndicateurRdd(OracleDAOUtils.convertirStringABoolean(resultSet.getString("B_SU_IND_RDD")));
 			  sujet.setDateFinEmploi(resultSet.getTimestamp("D_SU_DATE_FIN_EMPLOI"));
-			  log.fine("   [SUJET id='"+sujet.getNumeroFiche()+"' Nom='"+sujet.getNom()+"']");
+			  log.debug("   [SUJET id='"+sujet.getNumeroFiche()+"' Nom='"+sujet.getNom()+"']");
 		 return sujet;
 	}
 
@@ -605,7 +606,7 @@ public class SujetDAO {
 	  sujet.setDateCreation(resultSet.getTimestamp("D_SU_DATE_CREATION"));
 	  sujet.setIndicateurRdd(OracleDAOUtils.convertirStringABoolean(resultSet.getString("B_SU_IND_RDD")));
 	  sujet.setDateFinEmploi(resultSet.getTimestamp("D_SU_DATE_FIN_EMPLOI"));
-	  log.fine("   [SUJET id='"+sujet.getNumeroFiche()+"' Nom='"+sujet.getNom()+"']");
+	  log.debug("   [SUJET id='"+sujet.getNumeroFiche()+"' Nom='"+sujet.getNom()+"']");
 	  return sujet;
 }
 
@@ -702,7 +703,7 @@ public class SujetDAO {
 		  sujet.setDateCreation(resultSet.getTimestamp("D_SU_DATE_CREATION"));
 		  sujet.setIndicateurRdd(OracleDAOUtils.convertirStringABoolean(resultSet.getString("B_SU_IND_RDD")));
 		  sujet.setDateFinEmploi(resultSet.getTimestamp("D_SU_DATE_FIN_EMPLOI"));
-		  log.fine("   [SUJET id='"+sujet.getNumeroFiche()+"']");
+		  log.debug("   [SUJET id='"+sujet.getNumeroFiche()+"']");
 	 return sujet;
 	}
 	/*
@@ -783,10 +784,10 @@ public class SujetDAO {
 		Connection connection = DAOConnection.getInstance().getConnection(subject);
 		CallableStatement callableStatement = null;
 		try {
-			log.fine("begin CARDEX_LIEN.SP_E_LDD_LIEN_DOSSIER");
-			log.fine("  action '" + action + "'");
-			log.fine("  L_LDD_CLE '" + addedSujet.getLien() + "'");
-			log.fine("  L_SI_CLE '" + addedSujet.getLienSite() + "'");
+			log.debug("begin CARDEX_LIEN.SP_E_LDD_LIEN_DOSSIER");
+			log.debug("  action '" + action + "'");
+			log.debug("  L_LDD_CLE '" + addedSujet.getLien() + "'");
+			log.debug("  L_SI_CLE '" + addedSujet.getLienSite() + "'");
 
 			callableStatement =
 				connection.prepareCall("begin CARDEX_LIEN.SP_E_LDD_LIEN_DOSSIER (?,?,?,?,?,?,?,?,?,?,?); end;");
@@ -904,22 +905,22 @@ public class SujetDAO {
 	 * "stored procedure".
 	 */
 	public void editLienSujet(CardexAuthenticationSubject subject, Sujet sujet, Societe societe, String action) throws DAOException {
-		log.fine("editLienSujet");
+		log.debug("editLienSujet");
 		Connection connection = DAOConnection.getInstance().getConnection(subject);
 		CallableStatement callableStatement = null;
 		try {
-			log.fine("begin CARDEX_LIEN.SP_E_LDD_LIEN_DOSSIER");
-			log.fine("  action '" + action + "'");
-			log.fine("  L_LDD_CLE '" + societe.getLien() + "'");
-			log.fine("  L_SI_CLE '" + societe.getLienSite() + "'");
-			log.fine("  L_DO_CLE '" + sujet.getCle() + "'");
-			log.fine("  L_LDD_DOSSIER_ASSOCIE '" + societe.getCle() + "'");
-			log.fine("  I_RO_CLE '" + societe.getRole() + "'");
-			log.fine("  I_TL_CLE '" + societe.getTypeLien() + "'");
-			log.fine("  L_DO_SITE '" + sujet.getSite() + "'");
-			log.fine("  C_DO_GENRE '" + GlobalConstants.GenreFichier.SUJET + "'");
-			log.fine("  L_LDD_SITE '" + societe.getSite() + "'");
-			log.fine("  C_LDD_GENRE '" + GlobalConstants.GenreFichier.SOCIETE + "'");
+			log.debug("begin CARDEX_LIEN.SP_E_LDD_LIEN_DOSSIER");
+			log.debug("  action '" + action + "'");
+			log.debug("  L_LDD_CLE '" + societe.getLien() + "'");
+			log.debug("  L_SI_CLE '" + societe.getLienSite() + "'");
+			log.debug("  L_DO_CLE '" + sujet.getCle() + "'");
+			log.debug("  L_LDD_DOSSIER_ASSOCIE '" + societe.getCle() + "'");
+			log.debug("  I_RO_CLE '" + societe.getRole() + "'");
+			log.debug("  I_TL_CLE '" + societe.getTypeLien() + "'");
+			log.debug("  L_DO_SITE '" + sujet.getSite() + "'");
+			log.debug("  C_DO_GENRE '" + GlobalConstants.GenreFichier.SUJET + "'");
+			log.debug("  L_LDD_SITE '" + societe.getSite() + "'");
+			log.debug("  C_LDD_GENRE '" + GlobalConstants.GenreFichier.SOCIETE + "'");
 
 			callableStatement =
 				connection.prepareCall("begin CARDEX_LIEN.SP_E_LDD_LIEN_DOSSIER (?,?,?,?,?,?,?,?,?,?,?); end;");
@@ -937,7 +938,7 @@ public class SujetDAO {
 				callableStatement.setLong(10, societe.getSite());
 				callableStatement.setString(11, GlobalConstants.GenreFichier.SOCIETE);
 				callableStatement.execute();
-		log.fine("editLienSujet ex�cut�");
+		log.debug("editLienSujet ex�cut�");
 		} catch (SQLException se) {
 			throw new DAOException(se);
 		} finally {
@@ -1149,7 +1150,7 @@ public class SujetDAO {
 	 */
 	public Collection findLiensSujet(CardexAuthenticationSubject subject,
 			long cle, long site, String genreFichier) throws DAOException {
-		log.fine("findLiensSujet()");
+		log.debug("findLiensSujet()");
 		Connection connection =
 			DAOConnection.getInstance().getConnection(subject);
 		CallableStatement callableStatement = null;
@@ -1236,7 +1237,7 @@ public class SujetDAO {
 	 */
 	public Collection findLiensSujetEnquete(CardexAuthenticationSubject subject,
 			long cle, long site, String genreFichier) throws DAOException {
-		log.fine("findLiensSujetEnquete()");
+		log.debug("findLiensSujetEnquete()");
 		Connection connection =
 			DAOConnection.getInstance().getConnection(subject);
 		CallableStatement callableStatement = null;
@@ -1322,7 +1323,7 @@ public class SujetDAO {
 	 */
 	public Collection findLiensSujetProvisoire(CardexAuthenticationSubject subject,
 			long cle, long site, String genreFichier) throws DAOException {
-		log.fine("findLiensSujet()");
+		log.debug("findLiensSujet()");
 		Connection connection =
 			DAOConnection.getInstance().getConnection(subject);
 		CallableStatement callableStatement = null;
@@ -1411,7 +1412,7 @@ private Sujet traitementResultSetLiens(ResultSet resultSet) throws SQLException 
 		linkedSujet.setSeveriteCasino(resultSet.getLong("I_SE_CLE_CASINO"));
 		linkedSujet.setPasseport(resultSet.getString(
 				"V_SU_NO_PASSEPORT"));
-		log.fine("   [SUJET id='" + linkedSujet.getNumeroFiche()
+		log.debug("   [SUJET id='" + linkedSujet.getNumeroFiche()
 				+ "' Nom='"+linkedSujet.getNom() + "']");
 		linkedSujet.setLien(resultSet.getLong("L_LDD_CLE"));
 		linkedSujet.setLienSite(resultSet.getLong("L_LDD_SI_CLE"));
@@ -1420,7 +1421,7 @@ private Sujet traitementResultSetLiens(ResultSet resultSet) throws SQLException 
 		linkedSujet.setLienDateCreation(resultSet.getTimestamp("D_LDD_DATE_CREATION"));
 		linkedSujet.setIndicateurRdd(OracleDAOUtils.convertirStringABoolean(resultSet.getString("B_SU_IND_RDD")));
 		linkedSujet.setDateFinEmploi(resultSet.getTimestamp("D_SU_DATE_FIN_EMPLOI"));
-		log.fine("   [SUJET id='" + linkedSujet.getNumeroFiche()
+		log.debug("   [SUJET id='" + linkedSujet.getNumeroFiche()
 				+ "' Nom='" + linkedSujet.getNom() + "']");
 	return linkedSujet;
 }
@@ -1462,7 +1463,7 @@ private Sujet traitementResultSetLiens(ResultSet resultSet) throws SQLException 
           sujet.setAudit(GlobalConstants.BooleanString.TRUE); //On indique que le sujet provient de l'audit des liaisons.
 		  sujet.setIndicateurRdd(OracleDAOUtils.convertirStringABoolean(resultSet.getString("B_SU_IND_RDD")));
 		  sujet.setDateFinEmploi(resultSet.getTimestamp("D_SU_DATE_FIN_EMPLOI"));
-		  log.fine("   [SUJET id='" + sujet.getNumeroFiche()
+		  log.debug("   [SUJET id='" + sujet.getNumeroFiche()
 				+ "' Nom='" + sujet.getNom() + "']");
 	return sujet;
 }
@@ -1486,7 +1487,7 @@ private Sujet traitementResultSetLiens(ResultSet resultSet) throws SQLException 
 	 */
 	public Collection findLiensProprietaires(CardexAuthenticationSubject subject,
 			long cle, long site, String genreFichier) throws DAOException {
-		log.fine("findLiensProprietaires()");
+		log.debug("findLiensProprietaires()");
 		Connection connection =
 			DAOConnection.getInstance().getConnection(subject);
 		CallableStatement callableStatement = null;
@@ -2391,7 +2392,7 @@ private Sujet traitementResultSetLiens(ResultSet resultSet) throws SQLException 
   			linkedSujet.setSeveriteCasino(resultSet.getLong("I_SE_CLE_CASINO"));
   			linkedSujet.setPasseport(resultSet.getString(
   					"V_SU_NO_PASSEPORT"));
-  			log.fine("   [SUJET id='" + linkedSujet.getNumeroFiche()
+  			log.debug("   [SUJET id='" + linkedSujet.getNumeroFiche()
   					+ "' Nom='"+linkedSujet.getNom() + "']");
   			linkedSujet.setLien(resultSet.getLong("L_LDD_CLE"));
   			linkedSujet.setLienSite(resultSet.getLong("L_LDD_SI_CLE"));
@@ -2401,7 +2402,7 @@ private Sujet traitementResultSetLiens(ResultSet resultSet) throws SQLException 
   			linkedSujet.setIndicateurRdd(OracleDAOUtils.convertirStringABoolean(resultSet.getString("B_SU_IND_RDD")));
   			linkedSujet.setDateFinEmploi(resultSet.getTimestamp("D_SU_DATE_FIN_EMPLOI"));
   			linkedSujet.setDateFinEnquete(resultSet.getTimestamp("DATE_FIN_ENQUETE"));
-  			log.fine("   [SUJET id='" + linkedSujet.getNumeroFiche()
+  			log.debug("   [SUJET id='" + linkedSujet.getNumeroFiche()
   					+ "' Nom='" + linkedSujet.getNom() + "']");
   		return linkedSujet;
   	}

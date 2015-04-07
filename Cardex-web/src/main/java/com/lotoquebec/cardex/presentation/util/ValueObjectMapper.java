@@ -15,9 +15,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoQuebec.correcteurAdresse.AdresseSortie;
 import com.lotoQuebec.correcteurAdresse.AdresseSortieRecherche;
@@ -119,10 +120,8 @@ import com.lotoquebec.cardexCommun.integration.dao.cleListe.cleMultiListeCache.c
 import com.lotoquebec.cardexCommun.integration.dao.cleListe.cleSQLListeCache.CardinaliteAbreviationCle;
 import com.lotoquebec.cardexCommun.integration.dao.cleListe.cleSQLListeCache.ProvinceAbreviationCle;
 import com.lotoquebec.cardexCommun.integration.dao.cleListe.cleSQLListeCache.UniteAbreviationCle;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.model.EntiteCardexForm;
 import com.lotoquebec.cardexCommun.presentation.util.LabelValue;
-import com.lotoquebec.cardexCommun.presentation.util.LabelValueBean;
 import com.lotoquebec.cardexCommun.text.CurrencyFormat;
 import com.lotoquebec.cardexCommun.text.TimestampFormat;
 import com.lotoquebec.cardexCommun.util.ListeCache;
@@ -132,7 +131,7 @@ import com.lotoquebec.cardexCommun.util.StringUtils;
 
 
 /**
- * Méthodes utilitaires pour convertir(mettre en correspondance)
+ * Mï¿½thodes utilitaires pour convertir(mettre en correspondance)
  * les value objects et les action form de l'application cardex.
  *
  * @author $Author: mlibersan $
@@ -141,7 +140,7 @@ import com.lotoquebec.cardexCommun.util.StringUtils;
 public class ValueObjectMapper {
 
     /**
-     * Constructeur de ValueObjectMapper par défaut.
+     * Constructeur de ValueObjectMapper par dï¿½faut.
      */
     private ValueObjectMapper() {}
 
@@ -149,12 +148,12 @@ public class ValueObjectMapper {
      * L'instance du gestionnaire de journalisation.
      */
     private final Logger      log =
-        (Logger)LoggerCardex.getLogger((this.getClass()));
+        LoggerFactory.getLogger((this.getClass()));
 
     /**
-     * Convertis une structure Dossier représentant le dossier dans le model
+     * Convertis une structure Dossier reprï¿½sentant le dossier dans le model
      * d'affaire de l'application, en une structure DossierHtmlForm,
-     * représentant les informations du formulaire de dossier.
+     * reprï¿½sentant les informations du formulaire de dossier.
      *
      * @param dossier Structure contenant les informations du dossier.
      * @param form Structure contenant les informations relative au formulaire
@@ -164,9 +163,9 @@ public class ValueObjectMapper {
             Locale locale) throws ValueObjectMapperException {
         try {
             Map map = BeanUtils.describe(dossier);
-            // Les attributs suivants doivent être retirés du map, puisqu'ils
+            // Les attributs suivants doivent ï¿½tre retirï¿½s du map, puisqu'ils
             // sont des types complexes (NumeroCardex et Timestamp) et qu'ils
-            // ne peuvent être convertis par la méthode "populate" de BeanUtils.
+            // ne peuvent ï¿½tre convertis par la mï¿½thode "populate" de BeanUtils.
             map.remove("numeroCardex");
             map.remove("dateDebut");
             map.remove("dateFin");
@@ -208,9 +207,9 @@ public class ValueObjectMapper {
     }
 
     /**
-     * Convertis une structure FrequenceVisites représentant le dossier dans le model
+     * Convertis une structure FrequenceVisites reprï¿½sentant le dossier dans le model
      * d'affaire de l'application, en une structure FrequenceVisitesHtmlForm,
-     * représentant les informations du formulaire de dossier.
+     * reprï¿½sentant les informations du formulaire de dossier.
      *
      * @param dossier Structure contenant les informations du dossier.
      * @param form Structure contenant les informations relative au formulaire
@@ -220,9 +219,9 @@ public class ValueObjectMapper {
             Locale locale) throws ValueObjectMapperException {
         try {
             Map map = BeanUtils.describe(frequenceVisites);
-            // Les attributs suivants doivent être retirés du map, puisqu'ils
+            // Les attributs suivants doivent ï¿½tre retirï¿½s du map, puisqu'ils
             // sont des types complexes (NumeroCardex et Timestamp) et qu'ils
-            // ne peuvent être convertis par la méthode "populate" de BeanUtils.
+            // ne peuvent ï¿½tre convertis par la mï¿½thode "populate" de BeanUtils.
             map.remove("dateCreation");
             BeanUtils.populate(form, map);
             form.setDateCreation(TimestampFormat.format(
@@ -237,9 +236,9 @@ public class ValueObjectMapper {
     }
 
     /**
-     * Convertis une structure Consignation représentant le dossier dans le model
+     * Convertis une structure Consignation reprï¿½sentant le dossier dans le model
      * d'affaire de l'application, en une structure ConsignationHtmlForm,
-     * représentant les informations du formulaire de Consignation.
+     * reprï¿½sentant les informations du formulaire de Consignation.
      *
      * @param dossier Structure contenant les informations de Consignation.
      * @param form Structure contenant les informations relative au formulaire
@@ -249,9 +248,9 @@ public class ValueObjectMapper {
             Locale locale) throws ValueObjectMapperException {
         try {
             Map map = BeanUtils.describe(consignation);
-            // Les attributs suivants doivent être retirés du map, puisqu'ils
+            // Les attributs suivants doivent ï¿½tre retirï¿½s du map, puisqu'ils
             // sont des types complexes (NumeroCardex et Timestamp) et qu'ils
-            // ne peuvent être convertis par la méthode "populate" de BeanUtils.
+            // ne peuvent ï¿½tre convertis par la mï¿½thode "populate" de BeanUtils.
             map.remove("dateCreation");
             map.remove("dateModification");
             map.remove("dateApprobation");
@@ -277,9 +276,9 @@ public class ValueObjectMapper {
     }
 
     /**
-     * Convertis une structure Journal représentant le dossier dans le model
+     * Convertis une structure Journal reprï¿½sentant le dossier dans le model
      * d'affaire de l'application, en une structure JournalHtmlForm,
-     * représentant les informations du formulaire de dossier.
+     * reprï¿½sentant les informations du formulaire de dossier.
      *
      * @param dossier Structure contenant les informations du dossier.
      * @param form Structure contenant les informations relative au formulaire
@@ -289,9 +288,9 @@ public class ValueObjectMapper {
             Locale locale) throws ValueObjectMapperException {
         try {
             Map map = BeanUtils.describe(journal);
-            // Les attributs suivants doivent être retirés du map, puisqu'ils
+            // Les attributs suivants doivent ï¿½tre retirï¿½s du map, puisqu'ils
             // sont des types complexes (NumeroCardex et Timestamp) et qu'ils
-            // ne peuvent être convertis par la méthode "populate" de BeanUtils.
+            // ne peuvent ï¿½tre convertis par la mï¿½thode "populate" de BeanUtils.
             map.remove("numeroDossier");
             map.remove("dateDebut");
             map.remove("dateFin");
@@ -314,9 +313,9 @@ public class ValueObjectMapper {
     }
 
     /**
-     * Convertis une structure Journal représentant le dossier dans le model
+     * Convertis une structure Journal reprï¿½sentant le dossier dans le model
      * d'affaire de l'application, en une structure JournalHtmlForm,
-     * représentant les informations du formulaire de dossier.
+     * reprï¿½sentant les informations du formulaire de dossier.
      *
      * @param dossier Structure contenant les informations du dossier.
      * @param form Structure contenant les informations relative au formulaire
@@ -326,9 +325,9 @@ public class ValueObjectMapper {
             Locale locale) throws ValueObjectMapperException {
         try {
             Map map = BeanUtils.describe(rapportJournal);
-            // Les attributs suivants doivent être retirés du map, puisqu'ils
+            // Les attributs suivants doivent ï¿½tre retirï¿½s du map, puisqu'ils
             // sont des types complexes (NumeroCardex et Timestamp) et qu'ils
-            // ne peuvent être convertis par la méthode "populate" de BeanUtils.
+            // ne peuvent ï¿½tre convertis par la mï¿½thode "populate" de BeanUtils.
             map.remove("dateDebut");
             map.remove("dateFin");
             BeanUtils.populate(form, map);
@@ -346,9 +345,9 @@ public class ValueObjectMapper {
     }
 
 	/**
-	 * Convertis une structure Journal représentant le dossier dans le model
+	 * Convertis une structure Journal reprï¿½sentant le dossier dans le model
 	 * d'affaire de l'application, en une structure JournalHtmlForm,
-	 * représentant les informations du formulaire de dossier.
+	 * reprï¿½sentant les informations du formulaire de dossier.
 	 *
 	 * @param dossier Structure contenant les informations du dossier.
 	 * @param form Structure contenant les informations relative au formulaire
@@ -358,9 +357,9 @@ public class ValueObjectMapper {
 			Locale locale) throws ValueObjectMapperException {
 		try {
 			Map map = BeanUtils.describe(rapportConsignation);
-			// Les attributs suivants doivent être retirés du map, puisqu'ils
+			// Les attributs suivants doivent ï¿½tre retirï¿½s du map, puisqu'ils
 			// sont des types complexes (NumeroCardex et Timestamp) et qu'ils
-			// ne peuvent être convertis par la méthode "populate" de BeanUtils.
+			// ne peuvent ï¿½tre convertis par la mï¿½thode "populate" de BeanUtils.
 			map.remove("dateDebut");
 			map.remove("dateFin");
 			BeanUtils.populate(form, map);
@@ -378,9 +377,9 @@ public class ValueObjectMapper {
 	}
 
     /**
-     * Convertis une structure Sujet représentant le sujet dans le model
+     * Convertis une structure Sujet reprï¿½sentant le sujet dans le model
      * d'affaire de l'application, en une structure SujetHtmlForm,
-     * représentant les informations du formulaire de sujet.
+     * reprï¿½sentant les informations du formulaire de sujet.
      *
      * @param sujet Structure contenant les informations du sujet.
      * @param form Structure contenant les informations relative au formulaire
@@ -390,9 +389,9 @@ public class ValueObjectMapper {
             Locale locale) throws ValueObjectMapperException {
         try {
             Map map = BeanUtils.describe(sujet);
-            // L'attributs suivant doivt être retiré du map, puisqu'il
-            // est un type complexe (Timestamp) et qu'il ne peut être converti
-            // par la méthode "populate" de BeanUtils.
+            // L'attributs suivant doivt ï¿½tre retirï¿½ du map, puisqu'il
+            // est un type complexe (Timestamp) et qu'il ne peut ï¿½tre converti
+            // par la mï¿½thode "populate" de BeanUtils.
             map.remove("dateNaissance");
             map.remove("dateCreation");
             map.remove("dateChangement");
@@ -408,7 +407,7 @@ public class ValueObjectMapper {
                     sujet.getDateChangement(), locale, true));
             form.setLienDateCreation(TimestampFormat.format(
                     sujet.getLienDateCreation(), locale, true));
-          //log.debug("Sujet converti à HTML : " + form.toString());
+          //log.debug("Sujet converti ï¿½ HTML : " + form.toString());
             form.setDateNaissance(TimestampFormat.format(
                     sujet.getDateNaissance(), locale, false));
             form.setDateFinEnquete(TimestampFormat.format(
@@ -431,9 +430,9 @@ public class ValueObjectMapper {
     }
 
     /**
-     * Convertis une structure Narration représentant la narration dans le
+     * Convertis une structure Narration reprï¿½sentant la narration dans le
      * model d'affaire de l'application, en une structure NarrationHtmlForm,
-     * représentant les informations du formulaire de la narration.
+     * reprï¿½sentant les informations du formulaire de la narration.
      *
      * @param narration Structure contenant les informations de la narration.
      * @param form Structure contenant les informations relative au formulaire
@@ -444,9 +443,9 @@ public class ValueObjectMapper {
             throws ValueObjectMapperException {
         try {
             Map map = BeanUtils.describe(narration);
-            // Les attributs suivants doivent être retirés du map, puisqu'ils
+            // Les attributs suivants doivent ï¿½tre retirï¿½s du map, puisqu'ils
             // sont des types complexes (Timestamp et Dossier) et qu'ils
-            // ne peuvent être convertis par la méthode "populate" de BeanUtils.
+            // ne peuvent ï¿½tre convertis par la mï¿½thode "populate" de BeanUtils.
             map.remove("dateCreation");
             map.remove("dateModification");
             map.remove("dateApprobation");
@@ -473,9 +472,9 @@ public class ValueObjectMapper {
     }
 
     /**
-     * Convertis une structure Photo représentant la photo dans le
+     * Convertis une structure Photo reprï¿½sentant la photo dans le
      * model d'affaire de l'application, en une structure PhotoHtmlForm,
-     * représentant les informations du formulaire de la photo.
+     * reprï¿½sentant les informations du formulaire de la photo.
      *
      * @param photo Structure contenant les informations de la photo.
      * @param form Structure contenant les informations relative au formulaire
@@ -485,9 +484,9 @@ public class ValueObjectMapper {
             Locale locale) throws ValueObjectMapperException {
         try {
             Map map = BeanUtils.describe(photo);
-            // L'attributs suivant doit être retiré du map, puisqu'il
-            // est un type complexe (Timestamp) et qu'il ne peut être converti
-            // par la méthode "populate" de BeanUtils.
+            // L'attributs suivant doit ï¿½tre retirï¿½ du map, puisqu'il
+            // est un type complexe (Timestamp) et qu'il ne peut ï¿½tre converti
+            // par la mï¿½thode "populate" de BeanUtils.
             map.remove("dateCreation");
             map.remove("cardex01");
             map.remove("dossier");
@@ -556,21 +555,21 @@ public class ValueObjectMapper {
     }*/
     
     /**
-     * Convertis une structure Societe représentant la société dans le
+     * Convertis une structure Societe reprï¿½sentant la sociï¿½tï¿½ dans le
      * model d'affaire de l'application, en une structure SocieteHtmlForm,
-     * représentant les informations du formulaire de la société.
+     * reprï¿½sentant les informations du formulaire de la sociï¿½tï¿½.
      *
-     * @param société Structure contenant les informations de la société.
+     * @param sociï¿½tï¿½ Structure contenant les informations de la sociï¿½tï¿½.
      * @param form Structure contenant les informations relative au formulaire
-     * de la société.
+     * de la sociï¿½tï¿½.
      */
     public static void convertSociete(Societe societe, SocieteHtmlForm form,
             Locale locale) throws ValueObjectMapperException {
         try {
             Map map = BeanUtils.describe(societe);
-            // L'attributs suivant doit être retiré du map, puisqu'il
-            // est un type complexe (Timestamp) et qu'il ne peut être converti
-            // par la méthode "populate" de BeanUtils.
+            // L'attributs suivant doit ï¿½tre retirï¿½ du map, puisqu'il
+            // est un type complexe (Timestamp) et qu'il ne peut ï¿½tre converti
+            // par la mï¿½thode "populate" de BeanUtils.
             map.remove("dateDeFondation");
             map.remove("dateCreation");
             map.remove("dateChangement");
@@ -597,9 +596,9 @@ public class ValueObjectMapper {
     }
 
     /**
-     * Convertis une structure Suivi représentant le suivi dans le
+     * Convertis une structure Suivi reprï¿½sentant le suivi dans le
      * model d'affaire de l'application, en une structure SuiviHtmlForm,
-     * représentant les informations du formulaire du suivi.
+     * reprï¿½sentant les informations du formulaire du suivi.
      *
      * @param suivi Structure contenant les informations du suivi.
      * @param form Structure contenant les informations relative au formulaire
@@ -609,9 +608,9 @@ public class ValueObjectMapper {
             Locale locale) throws ValueObjectMapperException {
         try {
             Map map = BeanUtils.describe(suivi);
-            // Les attributs suivants doivent être retirés du map, puisqu'ils
+            // Les attributs suivants doivent ï¿½tre retirï¿½s du map, puisqu'ils
             // sont des types complexes (Timestamp) et qu'ils
-            // ne peuvent être convertis par la méthode "populate" de BeanUtils.
+            // ne peuvent ï¿½tre convertis par la mï¿½thode "populate" de BeanUtils.
             map.remove("datePrevue");
             map.remove("dateCompletee");
             map.remove("dateCreation");
@@ -642,21 +641,21 @@ public class ValueObjectMapper {
     }
 
     /**
-     * Convertis une structure Acces représentant Acces dans le
+     * Convertis une structure Acces reprï¿½sentant Acces dans le
      * model d'affaire de l'application, en une structure AccesHtmlForm,
-     * représentant les informations sur les accès.
+     * reprï¿½sentant les informations sur les accï¿½s.
      *
-     * @param acces Structure contenant les informations des accès.
-     * @param form Structure contenant les informations relative à la liste
-     * des accès.
+     * @param acces Structure contenant les informations des accï¿½s.
+     * @param form Structure contenant les informations relative ï¿½ la liste
+     * des accï¿½s.
      */
     public static void convertAcces(Acces acces, AccesHtmlForm form,
             Locale locale) throws ValueObjectMapperException {
         try {
             Map map = BeanUtils.describe(acces);
-            // Les attributs suivants doivent être retirés du map, puisqu'ils
+            // Les attributs suivants doivent ï¿½tre retirï¿½s du map, puisqu'ils
             // sont des types complexes (Timestamp) et qu'ils
-            // ne peuvent être convertis par la méthode "populate" de BeanUtils.
+            // ne peuvent ï¿½tre convertis par la mï¿½thode "populate" de BeanUtils.
             map.remove("dateAcces");
             map.remove("dateCreation");
             BeanUtils.populate(form, map);
@@ -674,9 +673,9 @@ public class ValueObjectMapper {
     }
     
     /**
-     * Convertis une structure Adresse représentant l'adresse dans le
+     * Convertis une structure Adresse reprï¿½sentant l'adresse dans le
      * model d'affaire de l'application, en une structure AdresseHtmlForm,
-     * représentant les informations du formulaire de l'adresse.
+     * reprï¿½sentant les informations du formulaire de l'adresse.
      *
      * @param adresse Structure contenant les informations de l'adresse.
      * @param form Structure contenant les informations relative au formulaire
@@ -686,9 +685,9 @@ public class ValueObjectMapper {
             Locale locale) throws ValueObjectMapperException {
         try {
             Map map = BeanUtils.describe(adresse);
-            // Les attributs suivants doivent être retirés du map, puisqu'ils
+            // Les attributs suivants doivent ï¿½tre retirï¿½s du map, puisqu'ils
             // sont des types complexes (Timestamp) et qu'ils
-            // ne peuvent être convertis par la méthode "populate" de BeanUtils.
+            // ne peuvent ï¿½tre convertis par la mï¿½thode "populate" de BeanUtils.
             map.remove("dateCreation");
             map.remove("dateModification");
             map.remove("dateChangement");
@@ -710,24 +709,24 @@ public class ValueObjectMapper {
     }
 
     /**
-     * Convertis une structure Caracteristiques représentant les
-     * caractéristiques dans le model d'affaire de l'application, en une
-     * structure CaracteristiquesHtmlForm, représentant les informations du
-     * formulaire des caractéristiques.
+     * Convertis une structure Caracteristiques reprï¿½sentant les
+     * caractï¿½ristiques dans le model d'affaire de l'application, en une
+     * structure CaracteristiquesHtmlForm, reprï¿½sentant les informations du
+     * formulaire des caractï¿½ristiques.
      *
      * @param caracteristiques Structure contenant les informations des
-     * caractéristiques.
+     * caractï¿½ristiques.
      * @param form Structure contenant les informations relative au formulaire
-     * des caractéristiques.
+     * des caractï¿½ristiques.
      */
     public static void convertCaracteristiques(CardexAuthenticationSubject subject, Caracteristiques caracteristiques,
             CaracteristiquesHtmlForm form, Locale locale)
             throws ValueObjectMapperException {
         try {
             Map map = BeanUtils.describe(caracteristiques);
-            // L'attributs suivant doivt être retiré du map, puisqu'il
-            // est un type complexe (ArrayList) et qu'il ne peut être converti
-            // par la méthode "populate" de BeanUtils.
+            // L'attributs suivant doivt ï¿½tre retirï¿½ du map, puisqu'il
+            // est un type complexe (ArrayList) et qu'il ne peut ï¿½tre converti
+            // par la mï¿½thode "populate" de BeanUtils.
             map.remove("caracteristiquesChoisis");
             BeanUtils.populate(form, map);
 
@@ -746,21 +745,21 @@ public class ValueObjectMapper {
 
     /**
      * Convertis une structure Partage dans le model d'affaire de l'application, en une
-     * structure PartageHtmlForm, représentant les informations de l'onglet Partage.
+     * structure PartageHtmlForm, reprï¿½sentant les informations de l'onglet Partage.
      *
      * @param caracteristiques Structure contenant les informations des
-     * caractéristiques.
+     * caractï¿½ristiques.
      * @param form Structure contenant les informations relative au formulaire
-     * des caractéristiques.
+     * des caractï¿½ristiques.
      */
     public static void convertPartage(Partage partage,
     		PartageHtmlForm form, Locale locale)
             throws ValueObjectMapperException {
         try {
             Map map = BeanUtils.describe(partage);
-            // L'attributs suivant doivt être retiré du map, puisqu'il
-            // est un type complexe (ArrayList) et qu'il ne peut être converti
-            // par la méthode "populate" de BeanUtils.
+            // L'attributs suivant doivt ï¿½tre retirï¿½ du map, puisqu'il
+            // est un type complexe (ArrayList) et qu'il ne peut ï¿½tre converti
+            // par la mï¿½thode "populate" de BeanUtils.
             map.remove("intervenantsChoisis");
             BeanUtils.populate(form, map);
             Collection collection = partage.getIntervenantsChoisis();
@@ -783,9 +782,9 @@ public class ValueObjectMapper {
     }
 
     /**
-     * Convertis une structure Inscription représentant l'inscription dans le
+     * Convertis une structure Inscription reprï¿½sentant l'inscription dans le
      * model d'affaire de l'application, en une structure InscriptionHtmlForm,
-     * représentant les informations du formulaire de l'inscription.
+     * reprï¿½sentant les informations du formulaire de l'inscription.
      *
      * @param inscription Structure contenant les informations de
      * l'inscription.
@@ -797,9 +796,9 @@ public class ValueObjectMapper {
             throws ValueObjectMapperException {
         try {
             Map map = BeanUtils.describe(inscription);
-            // Les attributs suivants doivent être retirés du map, puisqu'ils
+            // Les attributs suivants doivent ï¿½tre retirï¿½s du map, puisqu'ils
             // sont des types complexes (ArrayList et Timestamp) et qu'ils
-            // ne peuvent être convertis par la méthode "populate" de BeanUtils.
+            // ne peuvent ï¿½tre convertis par la mï¿½thode "populate" de BeanUtils.
             map.remove("sitesChoisis");
             map.remove("dateInscription");
             map.remove("dateDebut");
@@ -843,9 +842,9 @@ public class ValueObjectMapper {
     }
 
     /**
-     * Convertis une structure Jeux représentant les jeux dans le
+     * Convertis une structure Jeux reprï¿½sentant les jeux dans le
      * model d'affaire de l'application, en une structure JeuxHtmlForm,
-     * représentant les informations du formulaire de jeux.
+     * reprï¿½sentant les informations du formulaire de jeux.
      *
      * @param jeux Structure contenant les informations des jeux.
      * @param form Structure contenant les informations relative au formulaire
@@ -855,9 +854,9 @@ public class ValueObjectMapper {
             throws ValueObjectMapperException {
         try {
             Map map = BeanUtils.describe(jeux);
-            // L'attributs suivant doivt être retiré du map, puisqu'il
-            // est un type complexe (ArrayList) et qu'il ne peut être converti
-            // par la méthode "populate" de BeanUtils.
+            // L'attributs suivant doivt ï¿½tre retirï¿½ du map, puisqu'il
+            // est un type complexe (ArrayList) et qu'il ne peut ï¿½tre converti
+            // par la mï¿½thode "populate" de BeanUtils.
             map.remove("jeuxChoisis");
             BeanUtils.populate(form, map);
             
@@ -875,24 +874,24 @@ public class ValueObjectMapper {
     }
 
     /**
-     * Convertis une structure Particularites représentant les particularités
+     * Convertis une structure Particularites reprï¿½sentant les particularitï¿½s
      * dans le model d'affaire de l'application, en une structure
-     * ParticularitesHtmlForm, représentant les informations du formulaire des
-     * particularités.
+     * ParticularitesHtmlForm, reprï¿½sentant les informations du formulaire des
+     * particularitï¿½s.
      *
      * @param particularites Structure contenant les informations des
-     * particularités.
+     * particularitï¿½s.
      * @param form Structure contenant les informations relative au formulaire
-     * des particularités.
+     * des particularitï¿½s.
      */
     public static void convertParticularites(CardexAuthenticationSubject subject, Particularites particularites,
             ParticularitesHtmlForm form, Locale locale)
             throws ValueObjectMapperException {
         try {
             Map map = BeanUtils.describe(particularites);
-            // L'attributs suivant doivt être retiré du map, puisqu'il
-            // est un type complexe (ArrayList) et qu'il ne peut être converti
-            // par la méthode "populate" de BeanUtils.
+            // L'attributs suivant doivt ï¿½tre retirï¿½ du map, puisqu'il
+            // est un type complexe (ArrayList) et qu'il ne peut ï¿½tre converti
+            // par la mï¿½thode "populate" de BeanUtils.
             map.remove("particularitesChoisis");
             BeanUtils.populate(form, map);
             
@@ -910,13 +909,13 @@ public class ValueObjectMapper {
     }
 
     /**
-     * Convertis une structure CriteresRechercheDossier représentant le dossier
-     * recherché dans le model d'affaire de l'application, en une structure
-     * CriteresRechercheDossierHtmlForm, représentant les informations du
+     * Convertis une structure CriteresRechercheDossier reprï¿½sentant le dossier
+     * recherchï¿½ dans le model d'affaire de l'application, en une structure
+     * CriteresRechercheDossierHtmlForm, reprï¿½sentant les informations du
      * formulaire de recherche de dossier.
      *
      * @param criteresDossier Structure contenant les informations du dossier
-     * recherché.
+     * recherchï¿½.
      * @param form Structure contenant les informations relative au formulaire
      * de recherche de dossier.
      */
@@ -926,9 +925,9 @@ public class ValueObjectMapper {
             throws ValueObjectMapperException {
         try {
             Map map = BeanUtils.describe(criteresDossier);
-            // Les attributs suivants doivent être retirés du map, puisqu'ils
+            // Les attributs suivants doivent ï¿½tre retirï¿½s du map, puisqu'ils
             // sont des types complexes (NumeroCardex et Timestamp) et qu'ils
-            // ne peuvent être convertis par la méthode "populate" de BeanUtils.
+            // ne peuvent ï¿½tre convertis par la mï¿½thode "populate" de BeanUtils.
             map.remove("numeroCardex");
             map.remove("dateFinDu");
             map.remove("dateDebutAu");
@@ -959,13 +958,13 @@ public class ValueObjectMapper {
     }
 
     /**
-     * Convertis une structure CriteresRechercheSujet représentant le sujet
-     * recherché dans le model d'affaire de l'application, en une structure
-     * CriteresRechercheSujetHtmlForm, représentant les informations du
+     * Convertis une structure CriteresRechercheSujet reprï¿½sentant le sujet
+     * recherchï¿½ dans le model d'affaire de l'application, en une structure
+     * CriteresRechercheSujetHtmlForm, reprï¿½sentant les informations du
      * formulaire de recherche de sujet.
      *
      * @param criteresSujet Structure contenant les informations du sujet
-     * recherché.
+     * recherchï¿½.
      * @param form Structure contenant les informations relative au formulaire
      * de recherche de sujet.
      */
@@ -986,13 +985,13 @@ public class ValueObjectMapper {
     }
 
     /**
-     * Convertis une structure CriteresRechercheNarration représentant la
-     * narration recherchée dans le model d'affaire de l'application, en une
-     * structure CriteresRechercheNarrationHtmlForm, représentant les
+     * Convertis une structure CriteresRechercheNarration reprï¿½sentant la
+     * narration recherchï¿½e dans le model d'affaire de l'application, en une
+     * structure CriteresRechercheNarrationHtmlForm, reprï¿½sentant les
      * informations du formulaire de recherche de la narration.
      *
      * @param criteresNarration Structure contenant les informations de la narration
-     * recherchée.
+     * recherchï¿½e.
      * @param form Structure contenant les informations relative au formulaire
      * de recherche de la narration.
      */
@@ -1002,9 +1001,9 @@ public class ValueObjectMapper {
             throws ValueObjectMapperException {
         try {
             Map map = BeanUtils.describe(criteresNarration);
-            // Les attributs suivants doivent être retirés du map, puisqu'ils
+            // Les attributs suivants doivent ï¿½tre retirï¿½s du map, puisqu'ils
             // sont des types complexes (Timestamp) et qu'ils
-            // ne peuvent être convertis par la méthode "populate" de BeanUtils.
+            // ne peuvent ï¿½tre convertis par la mï¿½thode "populate" de BeanUtils.
             map.remove("dateCreationDebut");
             map.remove("dateApprobationDebut");
             map.remove("dateCreationFin");
@@ -1029,13 +1028,13 @@ public class ValueObjectMapper {
     }
 
     /**
-     * Convertis une structure CriteresRecherchePhoto représentant la
-     * photo recherchée dans le model d'affaire de l'application, en une
-     * structure CriteresRecherchePhotoHtmlForm, représentant les
+     * Convertis une structure CriteresRecherchePhoto reprï¿½sentant la
+     * photo recherchï¿½e dans le model d'affaire de l'application, en une
+     * structure CriteresRecherchePhotoHtmlForm, reprï¿½sentant les
      * informations du formulaire de recherche de la photo.
      *
      * @param criteresPhoto Structure contenant les informations de la photo
-     * recherchée.
+     * recherchï¿½e.
      * @param form Structure contenant les informations relative au formulaire
      * de recherche de la photo.
      */
@@ -1045,9 +1044,9 @@ public class ValueObjectMapper {
             throws ValueObjectMapperException {
         try {
             Map map = BeanUtils.describe(criteresPhoto);
-            // Les attributs suivants doivent être retirés du map, puisqu'ils
+            // Les attributs suivants doivent ï¿½tre retirï¿½s du map, puisqu'ils
             // sont des types complexes (Timestamp) et qu'ils
-            // ne peuvent être convertis par la méthode "populate" de BeanUtils.
+            // ne peuvent ï¿½tre convertis par la mï¿½thode "populate" de BeanUtils.
             map.remove("dateAjoutDebut");
             map.remove("dateAjoutFin");
             map.remove("dateValideDebut");
@@ -1077,15 +1076,15 @@ public class ValueObjectMapper {
     }
 
     /**
-     * Convertis une structure CriteresRechercheSociete représentant la
-     * société recherchée dans le model d'affaire de l'application, en une
-     * structure CriteresRechercheSocieteHtmlForm, représentant les
-     * informations du formulaire de recherche de la société.
+     * Convertis une structure CriteresRechercheSociete reprï¿½sentant la
+     * sociï¿½tï¿½ recherchï¿½e dans le model d'affaire de l'application, en une
+     * structure CriteresRechercheSocieteHtmlForm, reprï¿½sentant les
+     * informations du formulaire de recherche de la sociï¿½tï¿½.
      *
-     * @param criteresSociete Structure contenant les informations de la société
-     * recherchée.
+     * @param criteresSociete Structure contenant les informations de la sociï¿½tï¿½
+     * recherchï¿½e.
      * @param form Structure contenant les informations relative au formulaire
-     * de recherche de la société.
+     * de recherche de la sociï¿½tï¿½.
      */
     public static void convertCriteresRechercheSociete(
             CriteresRechercheSociete criteresSociete,
@@ -1104,13 +1103,13 @@ public class ValueObjectMapper {
     }
 
     /**
-     * Convertis une structure CriteresRechercheSuivi représentant le
-     * suivi recherché dans le model d'affaire de l'application, en une
-     * structure CriteresRechercheSuiviHtmlForm, représentant les
+     * Convertis une structure CriteresRechercheSuivi reprï¿½sentant le
+     * suivi recherchï¿½ dans le model d'affaire de l'application, en une
+     * structure CriteresRechercheSuiviHtmlForm, reprï¿½sentant les
      * informations du formulaire de recherche du suivi.
      *
      * @param criteresSuivi Structure contenant les informations du suivi
-     * recherché.
+     * recherchï¿½.
      * @param form Structure contenant les informations relative au formulaire
      * de recherche du suivi.
      */
@@ -1120,9 +1119,9 @@ public class ValueObjectMapper {
             throws ValueObjectMapperException {
         try {
             Map map = BeanUtils.describe(criteresSuivi);
-            // Les attributs suivants doivent être retirés du map, puisqu'ils
+            // Les attributs suivants doivent ï¿½tre retirï¿½s du map, puisqu'ils
             // sont des types complexes (Timestamp) et qu'ils
-            // ne peuvent être convertis par la méthode "populate" de BeanUtils.
+            // ne peuvent ï¿½tre convertis par la mï¿½thode "populate" de BeanUtils.
             map.remove("dateEmisDebut");
             map.remove("datePrevueDebut");
             map.remove("dateCompleteeDebut");
@@ -1152,13 +1151,13 @@ public class ValueObjectMapper {
     }
 
     /**
-     * Convertis une structure convertCriteresRechercheConsignation représentant le
-     * suivi recherché dans le model d'affaire de l'application, en une
-     * structure CriteresRechercheConsignationHtmlForm, représentant les
+     * Convertis une structure convertCriteresRechercheConsignation reprï¿½sentant le
+     * suivi recherchï¿½ dans le model d'affaire de l'application, en une
+     * structure CriteresRechercheConsignationHtmlForm, reprï¿½sentant les
      * informations du formulaire de recherche de Consignation.
      *
      * @param criteresConsignation Structure contenant les informations de Consignation
-     * recherché.
+     * recherchï¿½.
      * @param form Structure contenant les informations relative au formulaire
      * de recherche de Consignation.
      */
@@ -1168,9 +1167,9 @@ public class ValueObjectMapper {
             throws ValueObjectMapperException {
         try {
             Map map = BeanUtils.describe(criteresConsignation);
-            // Les attributs suivants doivent être retirés du map, puisqu'ils
+            // Les attributs suivants doivent ï¿½tre retirï¿½s du map, puisqu'ils
             // sont des types complexes (Timestamp) et qu'ils
-            // ne peuvent être convertis par la méthode "populate" de BeanUtils.
+            // ne peuvent ï¿½tre convertis par la mï¿½thode "populate" de BeanUtils.
             map.remove("dateDebut");
             map.remove("dateFin");
             BeanUtils.populate(form, map);
@@ -1188,13 +1187,13 @@ public class ValueObjectMapper {
     }
 
 	/**
-	 * Convertis une structure convertCriteresRechercheConsignation représentant le
-	 * suivi recherché dans le model d'affaire de l'application, en une
-	 * structure CriteresRechercheConsignationHtmlForm, représentant les
+	 * Convertis une structure convertCriteresRechercheConsignation reprï¿½sentant le
+	 * suivi recherchï¿½ dans le model d'affaire de l'application, en une
+	 * structure CriteresRechercheConsignationHtmlForm, reprï¿½sentant les
 	 * informations du formulaire de recherche de Consignation.
 	 *
 	 * @param criteresConsignation Structure contenant les informations de Consignation
-	 * recherché.
+	 * recherchï¿½.
 	 * @param form Structure contenant les informations relative au formulaire
 	 * de recherche de Consignation.
 	 */
@@ -1204,9 +1203,9 @@ public class ValueObjectMapper {
 			throws ValueObjectMapperException {
 		try {
 			Map map = BeanUtils.describe(criteresPSUMandat);
-			// Les attributs suivants doivent être retirés du map, puisqu'ils
+			// Les attributs suivants doivent ï¿½tre retirï¿½s du map, puisqu'ils
 			// sont des types complexes (Timestamp) et qu'ils
-			// ne peuvent être convertis par la méthode "populate" de BeanUtils.
+			// ne peuvent ï¿½tre convertis par la mï¿½thode "populate" de BeanUtils.
 			map.remove("dateDebut");
 			map.remove("dateFin");
 			BeanUtils.populate(form, map);
@@ -1224,8 +1223,8 @@ public class ValueObjectMapper {
 	}
 
     /**
-     * Convertis une structure DossierHtmlForm, représentant les informations
-     * du formulaire de dossier, en une structure Dossier représentant le
+     * Convertis une structure DossierHtmlForm, reprï¿½sentant les informations
+     * du formulaire de dossier, en une structure Dossier reprï¿½sentant le
      * dossier dans le model d'affaire de l'application.
      *
      * @param form Structure contenant les informations relative au formulaire
@@ -1236,9 +1235,9 @@ public class ValueObjectMapper {
             Dossier dossier, Locale locale) throws ValueObjectMapperException {
         try {
             Map map = BeanUtils.describe(form);
-            // Les attributs suivants doivent être retirés du map, puisqu'ils
+            // Les attributs suivants doivent ï¿½tre retirï¿½s du map, puisqu'ils
             // sont des types complexes (NumeroCardex et Timestamp) et qu'ils
-            // ne peuvent être convertis par la méthode "populate" de BeanUtils.
+            // ne peuvent ï¿½tre convertis par la mï¿½thode "populate" de BeanUtils.
             map.remove("numeroCardex");
             map.remove("dateDebut");
             map.remove("dateFin");
@@ -1281,21 +1280,21 @@ public class ValueObjectMapper {
     }
 
     /**
-     * Convertis une structure FrequenceVisitesHtmlForm, représentant les informations
-     * du formulaire de FrequenceVisites, en une structure FrequenceVisites représentant le
-     * FrequenceVisites dans le modèle d'affaire de l'application.
+     * Convertis une structure FrequenceVisitesHtmlForm, reprï¿½sentant les informations
+     * du formulaire de FrequenceVisites, en une structure FrequenceVisites reprï¿½sentant le
+     * FrequenceVisites dans le modï¿½le d'affaire de l'application.
      *
      * @param form Structure contenant les informations relative au formulaire
-     * d'évaluation.
+     * d'ï¿½valuation.
      * @param FrequenceVisites Structure contenant les informations du FrequenceVisites.
      */
     public static void convertFrequenceVisitesHtmlForm(FrequenceVisitesHtmlForm form,
     		FrequenceVisites frequenceVisites, Locale locale) throws ValueObjectMapperException {
         try {
             Map map = BeanUtils.describe(form);
-            // Les attributs suivants doivent être retirés du map, puisqu'ils
+            // Les attributs suivants doivent ï¿½tre retirï¿½s du map, puisqu'ils
             // sont des types complexes (Timestamp) et qu'ils
-            // ne peuvent être convertis par la méthode "populate" de BeanUtils.
+            // ne peuvent ï¿½tre convertis par la mï¿½thode "populate" de BeanUtils.
             map.remove("dateCreation");
             BeanUtils.populate(frequenceVisites, map);
             frequenceVisites.setDateCreation(TimestampFormat.parse(
@@ -1312,8 +1311,8 @@ public class ValueObjectMapper {
     }
 
     /**
-     * Convertis une structure JournalHtmlForm, représentant les informations
-     * du formulaire de dossier, en une structure Journal représentant le
+     * Convertis une structure JournalHtmlForm, reprï¿½sentant les informations
+     * du formulaire de dossier, en une structure Journal reprï¿½sentant le
      * dossier dans le model d'affaire de l'application.
      *
      * @param form Structure contenant les informations relative au formulaire
@@ -1324,9 +1323,9 @@ public class ValueObjectMapper {
             Journal journal, Locale locale) throws ValueObjectMapperException {
         try {
             Map map = BeanUtils.describe(form);
-            // Les attributs suivants doivent être retirés du map, puisqu'ils
+            // Les attributs suivants doivent ï¿½tre retirï¿½s du map, puisqu'ils
             // sont des types complexes (NumeroCardex et Timestamp) et qu'ils
-            // ne peuvent être convertis par la méthode "populate" de BeanUtils.
+            // ne peuvent ï¿½tre convertis par la mï¿½thode "populate" de BeanUtils.
             map.remove("numeroDossier");
             map.remove("dateDebut");
             map.remove("dateFin");
@@ -1351,8 +1350,8 @@ public class ValueObjectMapper {
     }
 
     /**
-     * Convertis une structure SujetHtmlForm, représentant les informations
-     * du formulaire de sujet, en une structure Sujet représentant le
+     * Convertis une structure SujetHtmlForm, reprï¿½sentant les informations
+     * du formulaire de sujet, en une structure Sujet reprï¿½sentant le
      * sujet dans le model d'affaire de l'application.
      *
      * @param form Structure contenant les informations relative au formulaire
@@ -1363,9 +1362,9 @@ public class ValueObjectMapper {
             Locale locale) throws ValueObjectMapperException {
         try {
             Map map = BeanUtils.describe(form);
-            // L'attributs suivant doivt être retiré du map, puisqu'il
-            // est un type complexe (Timestamp) et qu'il ne peut être converti
-            // par la méthode "populate" de BeanUtils.
+            // L'attributs suivant doivt ï¿½tre retirï¿½ du map, puisqu'il
+            // est un type complexe (Timestamp) et qu'il ne peut ï¿½tre converti
+            // par la mï¿½thode "populate" de BeanUtils.
             map.remove("dateNaissance");
             map.remove("dateCreation");
             map.remove("dateChangement");
@@ -1398,8 +1397,8 @@ public class ValueObjectMapper {
     }
 
     /**
-     * Convertis une structure NarrationHtmlForm, représentant les informations
-     * du formulaire de narration, en une structure Narration représentant la
+     * Convertis une structure NarrationHtmlForm, reprï¿½sentant les informations
+     * du formulaire de narration, en une structure Narration reprï¿½sentant la
      * narration dans le model d'affaire de l'application.
      *
      * @param form Structure contenant les informations relative au formulaire
@@ -1411,9 +1410,9 @@ public class ValueObjectMapper {
             throws ValueObjectMapperException {
         try {
             Map map = BeanUtils.describe(form);
-            // Les attributs suivants doivent être retirés du map, puisqu'ils
+            // Les attributs suivants doivent ï¿½tre retirï¿½s du map, puisqu'ils
             // sont des types complexes (Timestamp) et qu'ils
-            // ne peuvent être convertis par la méthode "populate" de BeanUtils.
+            // ne peuvent ï¿½tre convertis par la mï¿½thode "populate" de BeanUtils.
             map.remove("dateCreation");
             map.remove("dateModification");
             map.remove("dateApprobation");
@@ -1443,8 +1442,8 @@ public class ValueObjectMapper {
     }
     
     /**
-     * Convertis une structure PhotoHtmlForm, représentant les informations
-     * du formulaire de photo, en une structure Photo représentant la
+     * Convertis une structure PhotoHtmlForm, reprï¿½sentant les informations
+     * du formulaire de photo, en une structure Photo reprï¿½sentant la
      * photo dans le model d'affaire de l'application.
      *
      * @param form Structure contenant les informations relative au formulaire
@@ -1456,9 +1455,9 @@ public class ValueObjectMapper {
     	
         try {
             Map map = BeanUtils.describe(form);
-            // L'attributs suivant doivt être retiré du map, puisqu'il
-            // est un type complexe (Timestamp) et qu'il ne peut être converti
-            // par la méthode "populate" de BeanUtils.
+            // L'attributs suivant doivt ï¿½tre retirï¿½ du map, puisqu'il
+            // est un type complexe (Timestamp) et qu'il ne peut ï¿½tre converti
+            // par la mï¿½thode "populate" de BeanUtils.
             map.remove("dateCreation");
             map.remove("cardex01");
             map.remove("dossier");
@@ -1482,21 +1481,21 @@ public class ValueObjectMapper {
     }
 
     /**
-     * Convertis une structure SocieteHtmlForm, représentant les informations
-     * du formulaire de société, en une structure Societe représentant la
-     * société dans le model d'affaire de l'application.
+     * Convertis une structure SocieteHtmlForm, reprï¿½sentant les informations
+     * du formulaire de sociï¿½tï¿½, en une structure Societe reprï¿½sentant la
+     * sociï¿½tï¿½ dans le model d'affaire de l'application.
      *
      * @param form Structure contenant les informations relative au formulaire
-     * de société.
-     * @param societe Structure contenant les informations de la société.
+     * de sociï¿½tï¿½.
+     * @param societe Structure contenant les informations de la sociï¿½tï¿½.
      */
     public static void convertSocieteHtmlForm(SocieteHtmlForm form,
             Societe societe, Locale locale) throws ValueObjectMapperException {
         try {
             Map map = BeanUtils.describe(form);
-            // L'attributs suivant doivt être retiré du map, puisqu'il
-            // est un type complexe (Timestamp) et qu'il ne peut être converti
-            // par la méthode "populate" de BeanUtils.
+            // L'attributs suivant doivt ï¿½tre retirï¿½ du map, puisqu'il
+            // est un type complexe (Timestamp) et qu'il ne peut ï¿½tre converti
+            // par la mï¿½thode "populate" de BeanUtils.
             map.remove("dateDeFondation");
             map.remove("dateCreation");
             map.remove("dateChangement");
@@ -1524,8 +1523,8 @@ public class ValueObjectMapper {
     }
 
     /**
-     * Convertis une structure SuiviHtmlForm, représentant les informations
-     * du formulaire de suivi, en une structure Suivi représentant le
+     * Convertis une structure SuiviHtmlForm, reprï¿½sentant les informations
+     * du formulaire de suivi, en une structure Suivi reprï¿½sentant le
      * suivi dans le model d'affaire de l'application.
      *
      * @param form Structure contenant les informations relative au formulaire
@@ -1536,9 +1535,9 @@ public class ValueObjectMapper {
             Locale locale) throws ValueObjectMapperException {
         try {
             Map map = BeanUtils.describe(form);
-            // Les attributs suivants doivent être retirés du map, puisqu'ils
+            // Les attributs suivants doivent ï¿½tre retirï¿½s du map, puisqu'ils
             // sont des types complexes (Timestamp) et qu'ils
-            // ne peuvent être convertis par la méthode "populate" de BeanUtils.
+            // ne peuvent ï¿½tre convertis par la mï¿½thode "populate" de BeanUtils.
             map.remove("datePrevue");
             map.remove("dateCompletee");
             map.remove("dateCreation");
@@ -1571,21 +1570,21 @@ public class ValueObjectMapper {
     }
 
     /**
-     * Convertis une structure AccesHtmlForm, représentant les informations
-     * du formulaire des accès, en une structure Acces représentant
+     * Convertis une structure AccesHtmlForm, reprï¿½sentant les informations
+     * du formulaire des accï¿½s, en une structure Acces reprï¿½sentant
      * acces dans le model d'affaire de l'application.
      *
-     * @param form Structure contenant les informations relative à la liste
-     * des accès
-     * @param acces Structure contenant les informations des accèes.
+     * @param form Structure contenant les informations relative ï¿½ la liste
+     * des accï¿½s
+     * @param acces Structure contenant les informations des accï¿½es.
      */
     public static void convertAccesHtmlForm(AccesHtmlForm form,
             Acces acces, Locale locale)throws ValueObjectMapperException {
         try {
             Map map = BeanUtils.describe(form);
-            // Les attributs suivants doivent être retirés du map, puisqu'ils
+            // Les attributs suivants doivent ï¿½tre retirï¿½s du map, puisqu'ils
             // sont des types complexes (Timestamp) et qu'ils
-            // ne peuvent être convertis par la méthode "populate" de BeanUtils.
+            // ne peuvent ï¿½tre convertis par la mï¿½thode "populate" de BeanUtils.
             map.remove("dateCreation");
             map.remove("dateAcces");
             BeanUtils.populate(acces, map);
@@ -1605,8 +1604,8 @@ public class ValueObjectMapper {
     }
     
     /**
-     * Convertis une structure AdresseHtmlForm, représentant les informations
-     * du formulaire de l'adresse, en une structure Adresse représentant
+     * Convertis une structure AdresseHtmlForm, reprï¿½sentant les informations
+     * du formulaire de l'adresse, en une structure Adresse reprï¿½sentant
      * l'adresse dans le model d'affaire de l'application.
      *
      * @param form Structure contenant les informations relative au formulaire
@@ -1617,9 +1616,9 @@ public class ValueObjectMapper {
             Adresse adresse, Locale locale)throws ValueObjectMapperException {
         try {
             Map map = BeanUtils.describe(form);
-            // Les attributs suivants doivent être retirés du map, puisqu'ils
+            // Les attributs suivants doivent ï¿½tre retirï¿½s du map, puisqu'ils
             // sont des types complexes (Timestamp) et qu'ils
-            // ne peuvent être convertis par la méthode "populate" de BeanUtils.
+            // ne peuvent ï¿½tre convertis par la mï¿½thode "populate" de BeanUtils.
             map.remove("dateCreation");
             map.remove("dateModification");
             map.remove("dateChangement");
@@ -1642,24 +1641,24 @@ public class ValueObjectMapper {
     }
 
     /**
-     * Convertis une structure CaracteristiquesHtmlForm, représentant les
-     * informations du formulaire des caratéristiques, en une structure
-     * Caracteristiques représentant les caractéristiques dans le model
+     * Convertis une structure CaracteristiquesHtmlForm, reprï¿½sentant les
+     * informations du formulaire des caratï¿½ristiques, en une structure
+     * Caracteristiques reprï¿½sentant les caractï¿½ristiques dans le model
      * d'affaire de l'application.
      *
      * @param form Structure contenant les informations relative au formulaire
-     * des caractéristiques.
+     * des caractï¿½ristiques.
      * @param caracteristiques Structure contenant les informations des
-     * caractéristiques.
+     * caractï¿½ristiques.
      */
     public static void convertCaracteristiquesHtmlForm(
             CaracteristiquesHtmlForm form, Caracteristiques caracteristiques,
             Locale locale) throws ValueObjectMapperException {
         try {
             Map map = BeanUtils.describe(form);
-            // L'attributs suivant doivt être retiré du map, puisqu'il
-            // est un type complexe (ArrayList) et qu'il ne peut être converti
-            // par la méthode "populate" de BeanUtils.
+            // L'attributs suivant doivt ï¿½tre retirï¿½ du map, puisqu'il
+            // est un type complexe (ArrayList) et qu'il ne peut ï¿½tre converti
+            // par la mï¿½thode "populate" de BeanUtils.
             map.remove("caracteristiquesChoisis");
             BeanUtils.populate(caracteristiques, map);
 
@@ -1677,23 +1676,23 @@ public class ValueObjectMapper {
     }
 
     /**
-     * Convertis une structure PartageHtmlForm, représentant les
+     * Convertis une structure PartageHtmlForm, reprï¿½sentant les
      * informations de l'onglet Partage, en une structure
      * Partage.
      * 
      * @param form Structure contenant les informations relative au formulaire
-     * des caractéristiques.
+     * des caractï¿½ristiques.
      * @param caracteristiques Structure contenant les informations des
-     * caractéristiques.
+     * caractï¿½ristiques.
      */
     public static void convertPartageHtmlForm(
             PartageHtmlForm form, Partage partage,
             Locale locale) throws ValueObjectMapperException {
         try {
             Map map = BeanUtils.describe(form);
-            // L'attributs suivant doivt être retiré du map, puisqu'il
-            // est un type complexe (ArrayList) et qu'il ne peut être converti
-            // par la méthode "populate" de BeanUtils.
+            // L'attributs suivant doivt ï¿½tre retirï¿½ du map, puisqu'il
+            // est un type complexe (ArrayList) et qu'il ne peut ï¿½tre converti
+            // par la mï¿½thode "populate" de BeanUtils.
             map.remove("intervenantsChoisis");
             BeanUtils.populate(partage, map);
             for(int i=0;form.getIntervenantsChoisis() != null && i<form.getIntervenantsChoisis().length;i++){
@@ -1710,9 +1709,9 @@ public class ValueObjectMapper {
     }
 
     /**
-     * Convertis une structure InscriptionHtmlForm, représentant les
+     * Convertis une structure InscriptionHtmlForm, reprï¿½sentant les
      * informations du formulaire de l'inscription, en une structure
-     * Inscription représentant l'inscription dans le model d'affaire de
+     * Inscription reprï¿½sentant l'inscription dans le model d'affaire de
      * l'application.
      *
      * @param form Structure contenant les informations relative au formulaire
@@ -1724,9 +1723,9 @@ public class ValueObjectMapper {
             throws ValueObjectMapperException {
         try {
             Map map = BeanUtils.describe(form);
-            // Les attributs suivants doivent être retirés du map, puisqu'ils
+            // Les attributs suivants doivent ï¿½tre retirï¿½s du map, puisqu'ils
             // sont des types complexes (ArrayList et Timestamp) et qu'ils
-            // ne peuvent être convertis par la méthode "populate" de BeanUtils.
+            // ne peuvent ï¿½tre convertis par la mï¿½thode "populate" de BeanUtils.
             //if(form.getSitesChoisis().length > 0){
 	            map.remove("sitesChoisis");
             //}
@@ -1769,8 +1768,8 @@ public class ValueObjectMapper {
     }
 
     /**
-     * Convertis une structure JeuxHtmlForm, représentant les informations du
-     * formulaire des jeux, en une structure Jeux représentant l'inscription
+     * Convertis une structure JeuxHtmlForm, reprï¿½sentant les informations du
+     * formulaire des jeux, en une structure Jeux reprï¿½sentant l'inscription
      * dans le model d'affaire de l'application.
      *
      * @param form Structure contenant les informations relative au formulaire
@@ -1781,9 +1780,9 @@ public class ValueObjectMapper {
             Locale locale) throws ValueObjectMapperException {
         try {
             Map map = BeanUtils.describe(form);
-            // L'attributs suivant doivt être retiré du map, puisqu'il
-            // est un type complexe (ArrayList) et qu'il ne peut être converti
-            // par la méthode "populate" de BeanUtils.
+            // L'attributs suivant doivt ï¿½tre retirï¿½ du map, puisqu'il
+            // est un type complexe (ArrayList) et qu'il ne peut ï¿½tre converti
+            // par la mï¿½thode "populate" de BeanUtils.
             //map.remove("jeuxChoisis");
             BeanUtils.populate(jeux, map);
 
@@ -1801,24 +1800,24 @@ public class ValueObjectMapper {
     }
 
     /**
-     * Convertis une structure ParticularitesHtmlForm, représentant les
-     * informations du formulaire des particulartiés, en une structure
-     * Particularites représentant les particularités dans le model d'affaire
+     * Convertis une structure ParticularitesHtmlForm, reprï¿½sentant les
+     * informations du formulaire des particulartiï¿½s, en une structure
+     * Particularites reprï¿½sentant les particularitï¿½s dans le model d'affaire
      * de l'application.
      *
      * @param form Structure contenant les informations relative au formulaire
-     * des particularités.
+     * des particularitï¿½s.
      * @param particularites Structure contenant les informations des
-     * particularités.
+     * particularitï¿½s.
      */
     public static void convertParticularitesHtmlForm(
             ParticularitesHtmlForm form, Particularites particularites,
             Locale locale) throws ValueObjectMapperException {
         try {
             Map map = BeanUtils.describe(form);
-            // L'attributs suivant doivt être retiré du map, puisqu'il
-            // est un type complexe (ArrayList) et qu'il ne peut être converti
-            // par la méthode "populate" de BeanUtils.
+            // L'attributs suivant doivt ï¿½tre retirï¿½ du map, puisqu'il
+            // est un type complexe (ArrayList) et qu'il ne peut ï¿½tre converti
+            // par la mï¿½thode "populate" de BeanUtils.
             map.remove("particularitesChoisis");
             BeanUtils.populate(particularites, map);
             
@@ -1835,14 +1834,14 @@ public class ValueObjectMapper {
     }
 
     /**
-     * Convertis une structure CriteresRechercheDossierHtmlForm, représentant
+     * Convertis une structure CriteresRechercheDossierHtmlForm, reprï¿½sentant
      * les informations du formulaire de recherche de dossier, en une structure
-     * CriteresRechercheDossier représentant le dossier recherché dans le model
+     * CriteresRechercheDossier reprï¿½sentant le dossier recherchï¿½ dans le model
      * d'affaire de l'application.
      *
      * @param form Structure contenant les informations relative au formulaire
      * de recherche de dossier.
-     * @param dossier Structure contenant les informations du dossier recherché.
+     * @param dossier Structure contenant les informations du dossier recherchï¿½.
      */
     public static void convertCriteresRechercheDossierHtmlForm(
             CriteresRechercheDossierHtmlForm form,
@@ -1850,9 +1849,9 @@ public class ValueObjectMapper {
             throws ValueObjectMapperException {
         try {
             Map map = BeanUtils.describe(form);
-            // Les attributs suivants doivent être retirés du map, puisqu'ils
+            // Les attributs suivants doivent ï¿½tre retirï¿½s du map, puisqu'ils
             // sont des types complexes (Timestamp) et qu'ils
-            // ne peuvent être convertis par la méthode "populate" de BeanUtils.
+            // ne peuvent ï¿½tre convertis par la mï¿½thode "populate" de BeanUtils.
             map.remove("dateDebutDu");
             map.remove("dateFinDu");
             map.remove("dateDebutAu");
@@ -1886,14 +1885,14 @@ public class ValueObjectMapper {
     }
 
 	/**
-	 * Convertis une structure CriteresRechercheRegroupementHtmlForm, représentant
+	 * Convertis une structure CriteresRechercheRegroupementHtmlForm, reprï¿½sentant
 	 * les informations du formulaire de recherche du journal, en une structure
-	 * CriteresRechercheJournal représentant le dossier recherché dans le model
+	 * CriteresRechercheJournal reprï¿½sentant le dossier recherchï¿½ dans le model
 	 * d'affaire de l'application.
 	 *
 	 * @param form Structure contenant les informations relative au formulaire
 	 * de recherche de dossier.
-	 * @param dossier Structure contenant les informations du dossier recherché.
+	 * @param dossier Structure contenant les informations du dossier recherchï¿½.
 	 */
 	public static void convertCriteresRechercheJournalHtmlForm(
 	        CriteresRechercheJournalHtmlForm form,
@@ -1901,9 +1900,9 @@ public class ValueObjectMapper {
 	        throws ValueObjectMapperException {
 	    try {
 	        Map map = BeanUtils.describe(form);
-	        // Les attributs suivants doivent être retirés du map, puisqu'ils
+	        // Les attributs suivants doivent ï¿½tre retirï¿½s du map, puisqu'ils
 	        // sont des types complexes (Timestamp) et qu'ils
-	        // ne peuvent être convertis par la méthode "populate" de BeanUtils.
+	        // ne peuvent ï¿½tre convertis par la mï¿½thode "populate" de BeanUtils.
 	        map.remove("dateCreationDu");
 	        map.remove("dateCreationAu");
 	        BeanUtils.populate(criteresJournal, map);
@@ -1923,13 +1922,13 @@ public class ValueObjectMapper {
 	}
 
 	/**
-	 * Convertis une structure CriteresRechercheJournal représentant le dossier
-	 * recherché dans le model d'affaire de l'application, en une structure
-	 * CriteresRechercheJournalHtmlForm, représentant les informations du
+	 * Convertis une structure CriteresRechercheJournal reprï¿½sentant le dossier
+	 * recherchï¿½ dans le model d'affaire de l'application, en une structure
+	 * CriteresRechercheJournalHtmlForm, reprï¿½sentant les informations du
 	 * formulaire de recherche de dossier.
 	 *
 	 * @param criteresDossier Structure contenant les informations du dossier
-	 * recherché.
+	 * recherchï¿½.
 	 * @param form Structure contenant les informations relative au formulaire
 	 * de recherche de dossier.
 	 */
@@ -1939,9 +1938,9 @@ public class ValueObjectMapper {
 	        throws ValueObjectMapperException {
 	    try {
 	        Map map = BeanUtils.describe(criteresJournal);
-	        // Les attributs suivants doivent être retirés du map, puisqu'ils
+	        // Les attributs suivants doivent ï¿½tre retirï¿½s du map, puisqu'ils
 	        // sont des types complexes (NumeroCardex et Timestamp) et qu'ils
-	        // ne peuvent être convertis par la méthode "populate" de BeanUtils.
+	        // ne peuvent ï¿½tre convertis par la mï¿½thode "populate" de BeanUtils.
 	        map.remove("dateCreationDu");
 	        map.remove("dateCreationAu");
 	        BeanUtils.populate(form, map);
@@ -1959,14 +1958,14 @@ public class ValueObjectMapper {
 	}
 
     /**
-     * Convertis une structure CriteresRechercheSujetHtmlForm, représentant
+     * Convertis une structure CriteresRechercheSujetHtmlForm, reprï¿½sentant
      * les informations du formulaire de recherche de sujet, en une structure
-     * CriteresRechercheSujet représentant le sujet recherché dans le model
+     * CriteresRechercheSujet reprï¿½sentant le sujet recherchï¿½ dans le model
      * d'affaire de l'application.
      *
      * @param form Structure contenant les informations relative au formulaire
      * de recherche de sujet.
-     * @param dossier Structure contenant les informations du sujet recherché.
+     * @param dossier Structure contenant les informations du sujet recherchï¿½.
      */
     public static void convertCriteresRechercheSujetHtmlForm(
             CriteresRechercheSujetHtmlForm form,
@@ -1974,9 +1973,9 @@ public class ValueObjectMapper {
             throws ValueObjectMapperException {
         try {
             Map map = BeanUtils.describe(form);
-            // L'attributs suivant doivt être retiré du map, puisqu'il
-            // est un type complexe (ArrayList) et qu'il ne peut être converti
-            // par la méthode "populate" de BeanUtils.
+            // L'attributs suivant doivt ï¿½tre retirï¿½ du map, puisqu'il
+            // est un type complexe (ArrayList) et qu'il ne peut ï¿½tre converti
+            // par la mï¿½thode "populate" de BeanUtils.
             map.remove("sujets");
             BeanUtils.populate(criteresSujet, map);
         } catch (IllegalAccessException iae) {
@@ -1989,15 +1988,15 @@ public class ValueObjectMapper {
     }
 
     /**
-     * Convertis une structure CriteresRechercheNarrationHtmlForm, représentant
+     * Convertis une structure CriteresRechercheNarrationHtmlForm, reprï¿½sentant
      * les informations du formulaire de recherche de narration, en une
-     * structure CriteresRechercheNarration représentant la narration recherché
+     * structure CriteresRechercheNarration reprï¿½sentant la narration recherchï¿½
      * dans le model d'affaire de l'application.
      *
      * @param form Structure contenant les informations relative au formulaire
      * de recherche de la narration.
      * @param dossier Structure contenant les informations de la narration
-     * recherchée.
+     * recherchï¿½e.
      */
     public static void convertCriteresRechercheNarrationHtmlForm(
             CriteresRechercheNarrationHtmlForm form,
@@ -2005,9 +2004,9 @@ public class ValueObjectMapper {
             throws ValueObjectMapperException {
         try {
             Map map = BeanUtils.describe(form);
-            // Les attributs suivants doivent être retirés du map, puisqu'ils
+            // Les attributs suivants doivent ï¿½tre retirï¿½s du map, puisqu'ils
             // sont des types complexes (Timestamp) et qu'ils
-            // ne peuvent être convertis par la méthode "populate" de BeanUtils.
+            // ne peuvent ï¿½tre convertis par la mï¿½thode "populate" de BeanUtils.
             map.remove("dateCreationDebut");
             map.remove("dateApprobationDebut");
             map.remove("dateCreationFin");
@@ -2033,15 +2032,15 @@ public class ValueObjectMapper {
     }
 
     /**
-     * Convertis une structure CriteresRecherchePhotoHtmlForm, représentant
+     * Convertis une structure CriteresRecherchePhotoHtmlForm, reprï¿½sentant
      * les informations du formulaire de recherche de photo, en une
-     * structure CriteresRecherchePhoto représentant la photo recherché dans
+     * structure CriteresRecherchePhoto reprï¿½sentant la photo recherchï¿½ dans
      * le model d'affaire de l'application.
      *
      * @param form Structure contenant les informations relative au formulaire
      * de recherche de la photo.
      * @param criteresPhoto Structure contenant les informations de la photo
-     * recherchée.
+     * recherchï¿½e.
      */
     public static void convertCriteresRecherchePhotoHtmlForm(
             CriteresRecherchePhotoHtmlForm form,
@@ -2049,9 +2048,9 @@ public class ValueObjectMapper {
             throws ValueObjectMapperException {
         try {
             Map map = BeanUtils.describe(form);
-            // Les attributs suivants doivent être retirés du map, puisqu'ils
+            // Les attributs suivants doivent ï¿½tre retirï¿½s du map, puisqu'ils
             // sont des types complexes (Timestamp) et qu'ils
-            // ne peuvent être convertis par la méthode "populate" de BeanUtils.
+            // ne peuvent ï¿½tre convertis par la mï¿½thode "populate" de BeanUtils.
             map.remove("dateAjoutDebut");
             map.remove("dateAjoutFin");
             map.remove("dateValideDebut");
@@ -2083,15 +2082,15 @@ public class ValueObjectMapper {
     }
 
     /**
-     * Convertis une structure CriteresRechercheSocieteHtmlForm, représentant
-     * les informations du formulaire de recherche de société, en une
-     * structure CriteresRechercheSociete représentant la société recherchée
+     * Convertis une structure CriteresRechercheSocieteHtmlForm, reprï¿½sentant
+     * les informations du formulaire de recherche de sociï¿½tï¿½, en une
+     * structure CriteresRechercheSociete reprï¿½sentant la sociï¿½tï¿½ recherchï¿½e
      * dans le model d'affaire de l'application.
      *
      * @param form Structure contenant les informations relative au formulaire
-     * de recherche de la société.
-     * @param criteresSociete Structure contenant les informations de la société
-     * recherchée.
+     * de recherche de la sociï¿½tï¿½.
+     * @param criteresSociete Structure contenant les informations de la sociï¿½tï¿½
+     * recherchï¿½e.
      */
     public static void convertCriteresRechercheSocieteHtmlForm(
             CriteresRechercheSocieteHtmlForm form,
@@ -2123,15 +2122,15 @@ public class ValueObjectMapper {
     }
 
     /**
-     * Convertis une structure CriteresRechercheSuiviHtmlForm, représentant
+     * Convertis une structure CriteresRechercheSuiviHtmlForm, reprï¿½sentant
      * les informations du formulaire de recherche de suivi, en une
-     * structure CriteresRechercheSuivi représentant la suivi recherché
+     * structure CriteresRechercheSuivi reprï¿½sentant la suivi recherchï¿½
      * dans le model d'affaire de l'application.
      *
      * @param form Structure contenant les informations relative au formulaire
      * de recherche du suivi.
      * @param criteresSuivi Structure contenant les informations du suivi
-     * recherché.
+     * recherchï¿½.
      */
     public static void convertCriteresRechercheSuiviHtmlForm(
             CriteresRechercheSuiviHtmlForm form,
@@ -2139,9 +2138,9 @@ public class ValueObjectMapper {
             throws ValueObjectMapperException {
         try {
             Map map = BeanUtils.describe(form);
-            // Les attributs suivants doivent être retirés du map, puisqu'ils
+            // Les attributs suivants doivent ï¿½tre retirï¿½s du map, puisqu'ils
             // sont des types complexes (Timestamp) et qu'ils
-            // ne peuvent être convertis par la méthode "populate" de BeanUtils.
+            // ne peuvent ï¿½tre convertis par la mï¿½thode "populate" de BeanUtils.
             map.remove("dateEmisDebut");
             map.remove("datePrevueDebut");
             map.remove("dateCompleteeDebut");
@@ -2173,15 +2172,15 @@ public class ValueObjectMapper {
     }
 
     /**
-     * Convertis une structure CriteresRechercheConsignationHtmlForm, représentant
+     * Convertis une structure CriteresRechercheConsignationHtmlForm, reprï¿½sentant
      * les informations du formulaire de recherche de Consignation, en une
-     * structure CriteresRechercheConsignation représentant la Consignation recherchée
+     * structure CriteresRechercheConsignation reprï¿½sentant la Consignation recherchï¿½e
      * dans le model d'affaire de l'application.
      *
      * @param form Structure contenant les informations relative au formulaire
      * de recherche de Consignation.
      * @param criteresConsignation Structure contenant les informations de Consignation
-     * recherché.
+     * recherchï¿½.
      */
     public static void convertCriteresRechercheConsignationHtmlForm(
             CriteresRechercheConsignationHtmlForm form,
@@ -2189,9 +2188,9 @@ public class ValueObjectMapper {
             throws ValueObjectMapperException {
         try {
             Map map = BeanUtils.describe(form);
-            // Les attributs suivants doivent être retirés du map, puisqu'ils
+            // Les attributs suivants doivent ï¿½tre retirï¿½s du map, puisqu'ils
             // sont des types complexes (Timestamp) et qu'ils
-            // ne peuvent être convertis par la méthode "populate" de BeanUtils.
+            // ne peuvent ï¿½tre convertis par la mï¿½thode "populate" de BeanUtils.
             map.remove("dateDebut");
             map.remove("dateFin");
             BeanUtils.populate(criteresConsignation, map);
@@ -2211,15 +2210,15 @@ public class ValueObjectMapper {
     }
 
     /**
-     * Convertis une structure CriteresRechercheVehicule représentant le véhicule
-     * recherché dans le model d'affaire de l'application, en une structure
-     * CriteresRechercheVehiculeHtmlForm, représentant les informations du
-     * formulaire de recherche de véhicule.
+     * Convertis une structure CriteresRechercheVehicule reprï¿½sentant le vï¿½hicule
+     * recherchï¿½ dans le model d'affaire de l'application, en une structure
+     * CriteresRechercheVehiculeHtmlForm, reprï¿½sentant les informations du
+     * formulaire de recherche de vï¿½hicule.
      *
-     * @param criteresVehicule Structure contenant les informations du véhicule
-     * recherché.
+     * @param criteresVehicule Structure contenant les informations du vï¿½hicule
+     * recherchï¿½.
      * @param form Structure contenant les informations relative au formulaire
-     * de recherche de véhicule.
+     * de recherche de vï¿½hicule.
      */
     public static void convertCriteresRechercheVehicule(
             CriteresRechercheVehicule criteresVehicule,
@@ -2237,14 +2236,14 @@ public class ValueObjectMapper {
         }
     }
     /**
-     * Convertis une structure CriteresRechercheVehiculeHtmlForm, représentant
-     * les informations du formulaire de recherche de véhicule, en une structure
-     * CriteresRechercheVehicule représentant le véhicule recherché dans le modèle
+     * Convertis une structure CriteresRechercheVehiculeHtmlForm, reprï¿½sentant
+     * les informations du formulaire de recherche de vï¿½hicule, en une structure
+     * CriteresRechercheVehicule reprï¿½sentant le vï¿½hicule recherchï¿½ dans le modï¿½le
      * d'affaire de l'application.
      *
      * @param form Structure contenant les informations relative au formulaire
      * de recherche de sujet.
-     * @param criteresVehicule Structure contenant les informations du sujet recherché.
+     * @param criteresVehicule Structure contenant les informations du sujet recherchï¿½.
      */
     public static void convertCriteresRechercheVehiculeHtmlForm(
             CriteresRechercheVehiculeHtmlForm form,
@@ -2264,14 +2263,14 @@ public class ValueObjectMapper {
     }
 
     /**
-     * Convertis une structure CriteresRechercheUrgenceHtmlForm, représentant
+     * Convertis une structure CriteresRechercheUrgenceHtmlForm, reprï¿½sentant
      * les informations du formulaire de recherche du service d'urgence, en une structure
-     * CriteresRechercheUrgence représentant le service d'urgence recherché dans le modèle
+     * CriteresRechercheUrgence reprï¿½sentant le service d'urgence recherchï¿½ dans le modï¿½le
      * d'affaire de l'application.
      *
      * @param form Structure contenant les informations relative au formulaire
      * de recherche du service d'urgence.
-     * @param criteresUrgence Structure contenant les informations du service d'urgence recherché.
+     * @param criteresUrgence Structure contenant les informations du service d'urgence recherchï¿½.
      */
     public static void convertCriteresRechercheUrgenceHtmlForm(
             CriteresRechercheUrgenceHtmlForm form,
@@ -2291,13 +2290,13 @@ public class ValueObjectMapper {
     }
     
     /**
-     * Convertis une structure Véhicule représentant le véhicule dans le model
+     * Convertis une structure Vï¿½hicule reprï¿½sentant le vï¿½hicule dans le model
      * d'affaire de l'application, en une structure VehiculeHtmlForm,
-     * représentant les informations du formulaire de véhicule.
+     * reprï¿½sentant les informations du formulaire de vï¿½hicule.
      *
-     * @param vehicule Structure contenant les informations du véhicule.
+     * @param vehicule Structure contenant les informations du vï¿½hicule.
      * @param form Structure contenant les informations relative au formulaire
-     * de véhicule.
+     * de vï¿½hicule.
      */
     public static void convertVehicule(Vehicule vehicule, VehiculeHtmlForm form,
             Locale locale) throws ValueObjectMapperException {
@@ -2328,12 +2327,12 @@ public class ValueObjectMapper {
         }
     }
    /**
-     * Convertis une structure VehiculeHtmlForm, représentant les informations
-     * du formulaire de véhicule, en une structure Vehicule représentant le
-     * véhicule dans le model d'affaire de l'application.
+     * Convertis une structure VehiculeHtmlForm, reprï¿½sentant les informations
+     * du formulaire de vï¿½hicule, en une structure Vehicule reprï¿½sentant le
+     * vï¿½hicule dans le model d'affaire de l'application.
      *
      * @param form Structure contenant les informations relative au formulaire
-     * de véhicule.
+     * de vï¿½hicule.
      * @param vehicule Structure contenant les informations du sujet.
      */
     public static void convertVehiculeHtmlForm(VehiculeHtmlForm form, Vehicule vehicule,
@@ -2369,8 +2368,8 @@ public class ValueObjectMapper {
     }
 
     /**
-     * Convertis une structure SuiviHtmlForm, représentant les informations
-     * du formulaire de suivi, en une structure Suivi représentant le
+     * Convertis une structure SuiviHtmlForm, reprï¿½sentant les informations
+     * du formulaire de suivi, en une structure Suivi reprï¿½sentant le
      * suivi dans le model d'affaire de l'application.
      *
      * @param form Structure contenant les informations relative au formulaire
@@ -2381,9 +2380,9 @@ public class ValueObjectMapper {
             Locale locale) throws ValueObjectMapperException {
         try {
             Map map = BeanUtils.describe(form);
-            // Les attributs suivants doivent être retirés du map, puisqu'ils
+            // Les attributs suivants doivent ï¿½tre retirï¿½s du map, puisqu'ils
             // sont des types complexes (Timestamp) et qu'ils
-            // ne peuvent être convertis par la méthode "populate" de BeanUtils.
+            // ne peuvent ï¿½tre convertis par la mï¿½thode "populate" de BeanUtils.
             map.remove("dateApprobation");
             map.remove("dateCreation");
             map.remove("dateModification");
@@ -2411,8 +2410,8 @@ public class ValueObjectMapper {
     }
 
 	/**
-	 * Convertis une structure SuiviHtmlForm, représentant les informations
-	 * du formulaire de suivi, en une structure Suivi représentant le
+	 * Convertis une structure SuiviHtmlForm, reprï¿½sentant les informations
+	 * du formulaire de suivi, en une structure Suivi reprï¿½sentant le
 	 * suivi dans le model d'affaire de l'application.
 	 *
 	 * @param form Structure contenant les informations relative au formulaire
@@ -2423,9 +2422,9 @@ public class ValueObjectMapper {
 			Locale locale) throws ValueObjectMapperException {
 		try {
 			Map map = BeanUtils.describe(form);
-			// Les attributs suivants doivent être retirés du map, puisqu'ils
+			// Les attributs suivants doivent ï¿½tre retirï¿½s du map, puisqu'ils
 			// sont des types complexes (Timestamp) et qu'ils
-			// ne peuvent être convertis par la méthode "populate" de BeanUtils.
+			// ne peuvent ï¿½tre convertis par la mï¿½thode "populate" de BeanUtils.
 			map.remove("dateDebut");
 			map.remove("dateFin");
 			BeanUtils.populate(criteresRecherchePSUMandat, map);
@@ -2445,8 +2444,8 @@ public class ValueObjectMapper {
 	}
 
 	/**
-	 * Convertis une structure SuiviHtmlForm, représentant les informations
-	 * du formulaire de suivi, en une structure Suivi représentant le
+	 * Convertis une structure SuiviHtmlForm, reprï¿½sentant les informations
+	 * du formulaire de suivi, en une structure Suivi reprï¿½sentant le
 	 * suivi dans le model d'affaire de l'application.
 	 *
 	 * @param form Structure contenant les informations relative au formulaire
@@ -2457,17 +2456,17 @@ public class ValueObjectMapper {
 			Locale locale) throws ValueObjectMapperException {
 		try {
 			Map map = BeanUtils.describe(form);
-			// Les attributs suivants doivent être retirés du map, puisqu'ils
+			// Les attributs suivants doivent ï¿½tre retirï¿½s du map, puisqu'ils
 			// sont des types complexes (Timestamp) et qu'ils
-			// ne peuvent être convertis par la méthode "populate" de BeanUtils.
+			// ne peuvent ï¿½tre convertis par la mï¿½thode "populate" de BeanUtils.
 			map.remove("dateApprobation");
 			map.remove("dateCreation");
 			map.remove("dateModification");
 			map.remove("dateDebut");
 			map.remove("dateFin");
-			//Pour une raison inxepliquée, "servlet" est associé à psuMandat, ce qui
+			//Pour une raison inxepliquï¿½e, "servlet" est associï¿½ ï¿½ psuMandat, ce qui
 			//provoque une erreur de conversion lors du "Populate". Le retirant la variable,
-			//le problème est réglé.
+			//le problï¿½me est rï¿½glï¿½.
 			map.remove("servlet");
 			map.remove("validatorResults");
 			BeanUtils.populate(psuMandat, map);
@@ -2493,9 +2492,9 @@ public class ValueObjectMapper {
 	}
 
 	/**
-	 * Convertis une structure Consignation représentant le dossier dans le model
+	 * Convertis une structure Consignation reprï¿½sentant le dossier dans le model
 	 * d'affaire de l'application, en une structure ConsignationHtmlForm,
-	 * représentant les informations du formulaire de Consignation.
+	 * reprï¿½sentant les informations du formulaire de Consignation.
 	 *
 	 * @param dossier Structure contenant les informations de Consignation.
 	 * @param form Structure contenant les informations relative au formulaire
@@ -2505,9 +2504,9 @@ public class ValueObjectMapper {
 			Locale locale) throws ValueObjectMapperException {
 		try {
 			Map map = BeanUtils.describe(psuMandat);
-			// Les attributs suivants doivent être retirés du map, puisqu'ils
+			// Les attributs suivants doivent ï¿½tre retirï¿½s du map, puisqu'ils
 			// sont des types complexes (NumeroCardex et Timestamp) et qu'ils
-			// ne peuvent être convertis par la méthode "populate" de BeanUtils.
+			// ne peuvent ï¿½tre convertis par la mï¿½thode "populate" de BeanUtils.
 			map.remove("dateCreation");
 			map.remove("dateModification");
 			map.remove("dateApprobation");
@@ -2534,9 +2533,9 @@ public class ValueObjectMapper {
 	}
 
 	/**
-	 * Convertis une structure ConsignationAction représentant le dossier dans le model
+	 * Convertis une structure ConsignationAction reprï¿½sentant le dossier dans le model
 	 * d'affaire de l'application, en une structure ConsignationActionHtmlForm,
-	 * représentant les informations du formulaire de Consignation.
+	 * reprï¿½sentant les informations du formulaire de Consignation.
 	 *
 	 * @param dossier Structure contenant les informations de Consignation.
 	 * @param form Structure contenant les informations relative au formulaire
@@ -2546,9 +2545,9 @@ public class ValueObjectMapper {
 			Locale locale) throws ValueObjectMapperException {
 		try {
 			Map map = BeanUtils.describe(consignationAction);
-			// Les attributs suivants doivent être retirés du map, puisqu'ils
+			// Les attributs suivants doivent ï¿½tre retirï¿½s du map, puisqu'ils
 			// sont des types complexes (NumeroCardex et Timestamp) et qu'ils
-			// ne peuvent être convertis par la méthode "populate" de BeanUtils.
+			// ne peuvent ï¿½tre convertis par la mï¿½thode "populate" de BeanUtils.
 			map.remove("dateConsignation");
 			map.remove("dateCourriel");
 			map.remove("dossier");
@@ -2566,8 +2565,8 @@ public class ValueObjectMapper {
 		}
 	}
 	/**
-	 * Convertis une structure ConsignationActionPSUHtmlForm, représentant les informations
-	 * du formulaire de suivi, en une structure ConsignationActionPSU représentant le
+	 * Convertis une structure ConsignationActionPSUHtmlForm, reprï¿½sentant les informations
+	 * du formulaire de suivi, en une structure ConsignationActionPSU reprï¿½sentant le
 	 * suivi dans le model d'affaire de l'application.
 	 *
 	 * @param form Structure contenant les informations relative au formulaire
@@ -2578,15 +2577,15 @@ public class ValueObjectMapper {
 			Locale locale) throws ValueObjectMapperException {
 		try {
 			Map map = BeanUtils.describe(form);
-			// Les attributs suivants doivent être retirés du map, puisqu'ils
+			// Les attributs suivants doivent ï¿½tre retirï¿½s du map, puisqu'ils
 			// sont des types complexes (Timestamp) et qu'ils
-			// ne peuvent être convertis par la méthode "populate" de BeanUtils.
+			// ne peuvent ï¿½tre convertis par la mï¿½thode "populate" de BeanUtils.
 			map.remove("dateConsignation");
 			map.remove("dateCourriel");
 			map.remove("dossier");
-			//Pour une raison inxepliquée, "servlet" est associé à psuMandat, ce qui
+			//Pour une raison inxepliquï¿½e, "servlet" est associï¿½ ï¿½ psuMandat, ce qui
 			//provoque une erreur de conversion lors du "Populate". Le retirant la variable,
-			//le problème est réglé.
+			//le problï¿½me est rï¿½glï¿½.
 			map.remove("servlet");
 			BeanUtils.populate(consignationActionPSU, map);
 			consignationActionPSU.setDateConsignation(TimestampFormat.parse(
@@ -2967,21 +2966,21 @@ public class ValueObjectMapper {
 	}
 	
     /**
-     * Convertit une structure EvaluationHtmlForm, représentant les informations
-     * du formulaire d'évaluation, en une structure Evaluation représentant le
+     * Convertit une structure EvaluationHtmlForm, reprï¿½sentant les informations
+     * du formulaire d'ï¿½valuation, en une structure Evaluation reprï¿½sentant le
      * dossier dans le model d'affaire de l'application.
      *
      * @param form Structure contenant les informations relative au formulaire
-     * d'évaluaiton du Comité de vigilance.
+     * d'ï¿½valuaiton du Comitï¿½ de vigilance.
      * @param dossier Structure contenant les informations du dossier.
      */
     public static void convertEvaluationHtmlForm(EvaluationHtmlForm form,
     		Evaluation evaluation, Locale locale) throws ValueObjectMapperException {
         try {
             Map map = BeanUtils.describe(form);
-            // Les attributs suivants doivent être retirés du map, puisqu'ils
+            // Les attributs suivants doivent ï¿½tre retirï¿½s du map, puisqu'ils
             // sont des types complexes (NumeroCardex et Timestamp) et qu'ils
-            // ne peuvent être convertis par la méthode "populate" de BeanUtils.
+            // ne peuvent ï¿½tre convertis par la mï¿½thode "populate" de BeanUtils.
             map.remove("dateDebutEval");
             map.remove("dateFinEval");
             map.remove("dateCreation");
@@ -3069,20 +3068,20 @@ public class ValueObjectMapper {
     }
 
     /**
-     * Convertit une structure Evaluation représentant l'évaluation dans le
+     * Convertit une structure Evaluation reprï¿½sentant l'ï¿½valuation dans le
      * model d'affaire de l'application, en une structure EvaluationHtmlForm,
-     * représentant les informations du formulaire d'évaluation.
+     * reprï¿½sentant les informations du formulaire d'ï¿½valuation.
      *
-     * @param suivi Structure contenant les informations de l'évaluation.
+     * @param suivi Structure contenant les informations de l'ï¿½valuation.
      * @param form Structure contenant les informations relative au formulaire
      * du suivi.
      */
     public static void convertEvaluation(CardexAuthenticationSubject subject, Evaluation evaluation, EvaluationHtmlForm form, Locale locale) throws ValueObjectMapperException {
         try {
             Map map = BeanUtils.describe(evaluation);
-            // Les attributs suivants doivent être retirés du map, puisqu'ils
+            // Les attributs suivants doivent ï¿½tre retirï¿½s du map, puisqu'ils
             // sont des types complexes (Timestamp) et qu'ils
-            // ne peuvent être convertis par la méthode "populate" de BeanUtils.
+            // ne peuvent ï¿½tre convertis par la mï¿½thode "populate" de BeanUtils.
             map.remove("dateDebutEval");
             map.remove("dateFinEval");
             map.remove("dateCreation");
@@ -3143,9 +3142,9 @@ public class ValueObjectMapper {
     }
 
     /**
-     * Convertis une structure Urgence représentant le service d'urgence dans le
+     * Convertis une structure Urgence reprï¿½sentant le service d'urgence dans le
      * model d'affaire de l'application, en une structure UrgenceHtmlForm,
-     * représentant les informations du formulaire de service d'urgence.
+     * reprï¿½sentant les informations du formulaire de service d'urgence.
      *
      * @param adresse Structure contenant les informations de l'urgence.
      * @param form Structure contenant les informations relative au formulaire
@@ -3155,9 +3154,9 @@ public class ValueObjectMapper {
             Locale locale) throws ValueObjectMapperException {
         try {
             Map map = BeanUtils.describe(urgence);
-            // Les attributs suivants doivent être retirés du map, puisqu'ils
+            // Les attributs suivants doivent ï¿½tre retirï¿½s du map, puisqu'ils
             // sont des types complexes (Timestamp) et qu'ils
-            // ne peuvent être convertis par la méthode "populate" de BeanUtils.
+            // ne peuvent ï¿½tre convertis par la mï¿½thode "populate" de BeanUtils.
             map.remove("dateCreation");
             map.remove("dossier");
             BeanUtils.populate(form, map);
@@ -3173,9 +3172,9 @@ public class ValueObjectMapper {
     }
 
     /**
-     * Convertis une structure UrgenceHtmlForm, représentant les informations
-     * du formulaire de l'adresse, en une structure Urgence représentant
-     * l'urgence dans le modèle d'affaire de l'application.
+     * Convertis une structure UrgenceHtmlForm, reprï¿½sentant les informations
+     * du formulaire de l'adresse, en une structure Urgence reprï¿½sentant
+     * l'urgence dans le modï¿½le d'affaire de l'application.
      *
      * @param form Structure contenant les informations relative au formulaire
      * du service d'urgence.
@@ -3185,9 +3184,9 @@ public class ValueObjectMapper {
     		Urgence urgence, Locale locale)throws ValueObjectMapperException {
         try {
             Map map = BeanUtils.describe(form);
-            // Les attributs suivants doivent être retirés du map, puisqu'ils
+            // Les attributs suivants doivent ï¿½tre retirï¿½s du map, puisqu'ils
             // sont des types complexes (Timestamp) et qu'ils
-            // ne peuvent être convertis par la méthode "populate" de BeanUtils.
+            // ne peuvent ï¿½tre convertis par la mï¿½thode "populate" de BeanUtils.
             map.remove("dateCreation");
             map.remove("dossier");
             BeanUtils.populate(urgence, map);

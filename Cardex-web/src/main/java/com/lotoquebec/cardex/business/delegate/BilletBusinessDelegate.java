@@ -2,9 +2,10 @@ package com.lotoquebec.cardex.business.delegate;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardex.business.Dossier;
 import com.lotoquebec.cardex.business.Societe;
@@ -26,7 +27,6 @@ import com.lotoquebec.cardexCommun.exception.BusinessException;
 import com.lotoquebec.cardexCommun.exception.BusinessResourceException;
 import com.lotoquebec.cardexCommun.exception.BusinessRuleException;
 import com.lotoquebec.cardexCommun.exception.BusinessRuleExceptionHandle;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 
 /**
  * Le BilletBusinessDelegate offre les
@@ -38,7 +38,7 @@ import com.lotoquebec.cardexCommun.log.LoggerCardex;
 public class BilletBusinessDelegate extends BusinessDelegate {
 
 	private final Logger      log =
-        (Logger)LoggerCardex.getLogger((this.getClass()));
+        LoggerFactory.getLogger((this.getClass()));
 
     public BilletBusinessDelegate() {
 		super();
@@ -46,8 +46,8 @@ public class BilletBusinessDelegate extends BusinessDelegate {
 	}
     
 	/**
-	 * Lors de l'ajout ou la modification d'un billet il faut ajouter/supprimer (gérer)
-	 * les liaisons entres le dossier et la société.
+	 * Lors de l'ajout ou la modification d'un billet il faut ajouter/supprimer (gï¿½rer)
+	 * les liaisons entres le dossier et la sociï¿½tï¿½.
 	 * Pour ce billet
 	 * @param subject
 	 * @param billetVO
@@ -244,16 +244,16 @@ public class BilletBusinessDelegate extends BusinessDelegate {
 
     /**
      * Construit une BusinessException contenant les messages d'erreurs qui
-     * doivent être présenté à un utilisateur. Cette méthode fait la mise en
-     * correspondance entre les codes de règles d'affaires reçus d'une
-     * BusinessRuleException et les messsages qui doivent être affiché
-     * à un utilisateur.
+     * doivent ï¿½tre prï¿½sentï¿½ ï¿½ un utilisateur. Cette mï¿½thode fait la mise en
+     * correspondance entre les codes de rï¿½gles d'affaires reï¿½us d'une
+     * BusinessRuleException et les messsages qui doivent ï¿½tre affichï¿½
+     * ï¿½ un utilisateur.
      *
      * @param bre BusinessRuleException BusinessRuleException contenant
-     *            les codes de règles d'affaires
+     *            les codes de rï¿½gles d'affaires
      *
      * @return BusinessException BusinessException contenant les messages
-     * d'erreurs qui doivent être présenté à un utilisateur.
+     * d'erreurs qui doivent ï¿½tre prï¿½sentï¿½ ï¿½ un utilisateur.
      */
     private BusinessException handleBilletBusinessRuleException(BusinessRuleException bre)
             throws BusinessException {
@@ -262,7 +262,7 @@ public class BilletBusinessDelegate extends BusinessDelegate {
         BusinessMessage       message = new BusinessMessage();
         int                   businessRule = bre.getBusinessRule();
 
-        log.fine("handleBilletBusinessRuleException" );
+        log.debug("handleBilletBusinessRuleException" );
         switch (businessRule) {
 
         case BilletBusinessRuleException.NUMERO_DE_CONTROLE_INVALID:
@@ -270,9 +270,9 @@ public class BilletBusinessDelegate extends BusinessDelegate {
             break;
 
         default:
-            throw new IllegalArgumentException("La règle d'affaire '"
+            throw new IllegalArgumentException("La rï¿½gle d'affaire '"
                                                + businessRule
-                                               + "' n'est pas une règle supportée pour un objet d'affaire du type '"
+                                               + "' n'est pas une rï¿½gle supportï¿½e pour un objet d'affaire du type '"
                                                + Dossier.class.getName()
                                                + "'");
         }

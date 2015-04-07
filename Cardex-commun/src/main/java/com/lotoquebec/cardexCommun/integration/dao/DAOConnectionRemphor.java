@@ -2,17 +2,17 @@ package com.lotoquebec.cardexCommun.integration.dao;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.lotoquebec.cardexCommun.GlobalConstants;
 import com.lotoquebec.cardexCommun.exception.DAOException;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lq.std.conf.impl.AppConfig;
 
 /**
@@ -32,7 +32,7 @@ public class DAOConnectionRemphor {
      * L'instance du gestionnaire de journalisation.
      */
 	private final static Logger      log =
-        (Logger)LoggerCardex.getLogger(DAOConnectionRemphor.class);
+        LoggerFactory.getLogger(DAOConnectionRemphor.class);
 
     private static DAOConnectionRemphor daoConnectionRemphor;
 
@@ -69,9 +69,9 @@ public class DAOConnectionRemphor {
             throws DAOException {
     	DAOException exception  = null;
     	
-        if (log.isLoggable(Level.FINE)) {
-            log.fine("Cr�ation d'un connection anonyme � la bd ..");
-            log.fine("   DATA_SOURCE_JNDI_NAME = '" + AppConfig.INSTANCE.get(GlobalConstants.Configuration.DATASOURCE_REMPHOR) + "'");
+        if (log.isDebugEnabled()) {
+            log.debug("Cr�ation d'un connection anonyme � la bd ..");
+            log.debug("   DATA_SOURCE_JNDI_NAME = '" + AppConfig.INSTANCE.get(GlobalConstants.Configuration.DATASOURCE_REMPHOR) + "'");
         }
 
         // Trois tentative d'ouvrir la connexion remphor
@@ -88,10 +88,10 @@ public class DAOConnectionRemphor {
                 connection.setAutoCommit(false);
                 return connection;
               } catch (SQLException se) {
-            	  log.severe("Probl�me de connexion Remphor");
+            	  log.error("Probl�me de connexion Remphor");
             	  exception = new DAOException(se);
               } catch (NamingException ne) {
-            	  log.severe("Probl�me de connexion Remphor");
+            	  log.error("Probl�me de connexion Remphor");
             	  exception = new DAOException(ne);
               }
 		}

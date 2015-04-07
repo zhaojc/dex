@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +16,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessages;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardex.business.Adresse;
 import com.lotoquebec.cardex.business.Caracteristiques;
@@ -38,7 +39,6 @@ import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
 import com.lotoquebec.cardexCommun.exception.BusinessException;
 import com.lotoquebec.cardexCommun.exception.BusinessResourceException;
 import com.lotoquebec.cardexCommun.exception.ValueObjectMapperException;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 
 
 public class AmbulanceRapportAction extends RapportAction {
@@ -47,23 +47,23 @@ public class AmbulanceRapportAction extends RapportAction {
      * L'instance du gestionnaire de journalisation.
      */
 	private final Logger      log =
-        (Logger)LoggerCardex.getLogger((this.getClass()));
+        LoggerFactory.getLogger((this.getClass()));
 
    /**
 	 * Produire des rapports
-	 * pour la cour d'appel dans une cause concernant le droit d'accès à l'information.
-	 * Rapports produits pour être éventuellement déposés en cour par les avocats
-	 * de Loto-Québec, à la demande du juge.
-	 * La principe consiste à rechercher toutes les narrations qui contiennent le
-	 * mot "ambulance" et à produire le rapport complet du dossier attaché.
-	 * Ce rapport doit être le même que celui produit par le bouton Imprimer
-	 * de la fiche dossier affichée à l'écran. Comme on ne veut pas imprimer manuellement
-	 * chacun des centaines de dossiers, ce programme va générer un 
-	 * rapport global à l'écran prêt pour l'impression. La page utilisée est 
+	 * pour la cour d'appel dans une cause concernant le droit d'accï¿½s ï¿½ l'information.
+	 * Rapports produits pour ï¿½tre ï¿½ventuellement dï¿½posï¿½s en cour par les avocats
+	 * de Loto-Quï¿½bec, ï¿½ la demande du juge.
+	 * La principe consiste ï¿½ rechercher toutes les narrations qui contiennent le
+	 * mot "ambulance" et ï¿½ produire le rapport complet du dossier attachï¿½.
+	 * Ce rapport doit ï¿½tre le mï¿½me que celui produit par le bouton Imprimer
+	 * de la fiche dossier affichï¿½e ï¿½ l'ï¿½cran. Comme on ne veut pas imprimer manuellement
+	 * chacun des centaines de dossiers, ce programme va gï¿½nï¿½rer un 
+	 * rapport global ï¿½ l'ï¿½cran prï¿½t pour l'impression. La page utilisï¿½e est 
 	 * w_impression_sans_inscription2.jsp_contentieux qu'il faut renommer
-	 * w_impression_sans_inscription2.jsp avant d'exécuter le rapport.
+	 * w_impression_sans_inscription2.jsp avant d'exï¿½cuter le rapport.
 	 * Un bouton mis en commentaire dans la page tpl_recherche_dossier_formulaire.jsp
-	 * permet de lancer l'exécution du rapport.
+	 * permet de lancer l'exï¿½cution du rapport.
 	 */
     public ActionForward imprimer(CardexAuthenticationSubject subject,
     ActionMapping mapping,
@@ -71,19 +71,19 @@ public class AmbulanceRapportAction extends RapportAction {
     HttpServletRequest request,
     HttpServletResponse response) throws IOException,
     ServletException {
-		log.fine("Production du rapport d'ambulance");
+		log.debug("Production du rapport d'ambulance");
 		ActionMessages errors = new ActionMessages();
 
 		try {
-			// On recherche d'abord les narrations concernées.
+			// On recherche d'abord les narrations concernï¿½es.
 			AmbulanceDossierRapportForm ambulanceDossierRapportForm = (AmbulanceDossierRapportForm) form;
 			AmbulanceDossierRapportVO ambulanceDossierRapportVO = new AmbulanceDossierRapportVO();
 			ValueObjectMapper.convert(ambulanceDossierRapportForm, ambulanceDossierRapportVO);
 			List<Dossier> results = FabriqueBusinessDelegate.getDossierBusinessDelegate().rapportAmbulance(subject, ambulanceDossierRapportVO);
 			Collection<DossierForm> currentList = new ArrayList<DossierForm>();
 			Iterator<Dossier> it = results.iterator();
-			// Il faut ensuite bâtir les rapports à partir des dossiers
-			// auquels les narrations sont rattachées.
+			// Il faut ensuite bï¿½tir les rapports ï¿½ partir des dossiers
+			// auquels les narrations sont rattachï¿½es.
 			DossierBusinessDelegate dossierDelegate = new DossierBusinessDelegate();
 
 			while (it.hasNext()) {
@@ -105,23 +105,23 @@ public class AmbulanceRapportAction extends RapportAction {
 						
 				        // Recherche des adresses du sujet:
 				        Collection adresses = FabriqueBusinessDelegate.getSujetBusinessDelegate().findLiensAdresse(subject, linkSujet);
-				        log.fine("Adresses liées (" + adresses.size() + ") :");
+				        log.debug("Adresses liï¿½es (" + adresses.size() + ") :");
 						if (adresses.size() > 0){
 				        	Iterator it2 = adresses.iterator();
-				        //while (it.hasNext()) { //On ne prend que la première adresse retournée
+				        //while (it.hasNext()) { //On ne prend que la premiï¿½re adresse retournï¿½e
 				            Adresse     linkAdresse = (Adresse) it2.next();
 				            AdresseForm linkAdresseForm = new AdresseForm();
 				            ValueObjectMapper.convertAdresse(linkAdresse, linkAdresseForm,
 				                    subject.getLocale());
-				            log.fine(linkAdresse.toString());
+				            log.debug(linkAdresse.toString());
 				            linkAdresseForm.assignerValeurDeListe( subject );
 				            linkSujetForm.addAdresse(linkAdresseForm);
 				        //}
 						}
 						
-				        // Recherche des caractéristiques du sujet:
+				        // Recherche des caractï¿½ristiques du sujet:
 				        Caracteristiques liensCaracteristiques = FabriqueBusinessDelegate.getSujetBusinessDelegate().findLiensCaracteristique(subject, linkSujet);
-				        log.fine("Caracteristiques liées (" + liensCaracteristiques.getCaracteristiquesChoisis().size() + ") :");
+				        log.debug("Caracteristiques liï¿½es (" + liensCaracteristiques.getCaracteristiquesChoisis().size() + ") :");
 				        CaracteristiquesForm linkCaracteristiquesForm = new CaracteristiquesForm();
 				        ValueObjectMapper.convertCaracteristiques(subject, liensCaracteristiques,linkCaracteristiquesForm,subject.getLocale());
 				        linkSujetForm.setCaracteristiques(linkCaracteristiquesForm);

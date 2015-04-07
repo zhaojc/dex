@@ -6,26 +6,25 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.logging.Logger;
 
 import oracle.jdbc.OracleTypes;
 
-import com.lotoquebec.cardex.business.Caracteristiques;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.lotoquebec.cardex.business.Particularites;
 import com.lotoquebec.cardex.business.Vehicule;
-import com.lotoquebec.cardex.business.vo.CaracteristiquesVO;
 import com.lotoquebec.cardex.business.vo.ParticularitesVO;
 import com.lotoquebec.cardexCommun.GlobalConstants;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
 import com.lotoquebec.cardexCommun.exception.DAOException;
 import com.lotoquebec.cardexCommun.integration.dao.DAOConnection;
 import com.lotoquebec.cardexCommun.integration.dao.OracleDAOUtils;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 
 /**
- * Liste des appels à la base de données pour différents accès aux
- * particularités.  Les particularités sont liées aux véhicules.
- * Implémente l'interface ParticulariteDAO.
+ * Liste des appels ï¿½ la base de donnï¿½es pour diffï¿½rents accï¿½s aux
+ * particularitï¿½s.  Les particularitï¿½s sont liï¿½es aux vï¿½hicules.
+ * Implï¿½mente l'interface ParticulariteDAO.
  *
  * @author $Author: fguerin $
  * @version $Revision: 1.7 $, $Date: 2002/04/12 19:42:01 $
@@ -34,32 +33,32 @@ import com.lotoquebec.cardexCommun.log.LoggerCardex;
 public class ParticulariteDAO {
 
 	private final Logger      log =
-        (Logger)LoggerCardex.getLogger(ParticulariteDAO.class);
+        LoggerFactory.getLogger(ParticulariteDAO.class);
 
     /**
-     * Mise à jour des nouvelles particularités associées à un véhicule, appelée
+     * Mise ï¿½ jour des nouvelles particularitï¿½s associï¿½es ï¿½ un vï¿½hicule, appelï¿½e
      * par update afin de faire une action "clear" et "insert".
-     * Selon le paramètre "action" il peut s'agir d'une insertion ("I")
+     * Selon le paramï¿½tre "action" il peut s'agir d'une insertion ("I")
      * ou d'un nettoyage ("C").
-     * Procédure appelée : CARDEX_LIEN.SP_E_LPV_LIEN_PARTICULARITE
-     * Date de création : (2002-03-04)
+     * Procï¿½dure appelï¿½e : CARDEX_LIEN.SP_E_LPV_LIEN_PARTICULARITE
+     * Date de crï¿½ation : (2002-03-04)
      * @author Philippe Caron
-     * @param subject CardexAuthenticationSubject : Données nominatives sur
+     * @param subject CardexAuthenticationSubject : Donnï¿½es nominatives sur
      * l'utilisateur.
-     * @param particularites Particularites : Particularités saisies à l'écran.
+     * @param particularites Particularites : Particularitï¿½s saisies ï¿½ l'ï¿½cran.
      * @param action String : "I" ou "C"
-     * @param genreFichier String : Code à deux lettres de la table qui lie des
-     * particularités à un Vehicule (VE).  Pour l'instant, seuls les véhicules
-     * possèdent des particularités.
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * @param genreFichier String : Code ï¿½ deux lettres de la table qui lie des
+     * particularitï¿½s ï¿½ un Vehicule (VE).  Pour l'instant, seuls les vï¿½hicules
+     * possï¿½dent des particularitï¿½s.
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
      */
     private void editParticularites(CardexAuthenticationSubject subject, Particularites particularites, String action, String genreFichier) throws DAOException {
         Connection connection = DAOConnection.getInstance().getConnection(subject);
 		CallableStatement callableStatement = null;
-        log.fine("Particularités : " +particularites.toString());
+        log.debug("Particularitï¿½s : " +particularites.toString());
         try {
             if ( action.equalsIgnoreCase("C") || action.equalsIgnoreCase("A")) {
                 callableStatement = connection.prepareCall("begin CARDEX_LIEN.SP_E_LPV_LIEN_PARTICULARITE (?,?,?,?,?,?,?); end;");
@@ -89,7 +88,7 @@ public class ParticulariteDAO {
                 }
             }
             else {
-                log.fine("Le code d'action '" + action + "', est invalide pour la méthode editParticularites!");
+                log.debug("Le code d'action '" + action + "', est invalide pour la mï¿½thode editParticularites!");
             }
         }
         catch (SQLException se) {
@@ -118,57 +117,57 @@ public class ParticulariteDAO {
     }
 
     /**
-     * Met à jour les particularités avec audit.
+     * Met ï¿½ jour les particularitï¿½s avec audit.
      * Cet audit est inscrit dans la table AUD_LSC_PARTICULARITE.
-     * Il sert à retrouver l'historique des particularités lors de l'impression d'un dossier.
-     * Date de création : (2012-01-09)
+     * Il sert ï¿½ retrouver l'historique des particularitï¿½s lors de l'impression d'un dossier.
+     * Date de crï¿½ation : (2012-01-09)
      * @author guerinf
-     * @param subject CardexAuthenticationSubject : Données nominatives sur
+     * @param subject CardexAuthenticationSubject : Donnï¿½es nominatives sur
      * l'utilisateur.
-     * @param caracteristiques Caracteristiques : Particularités saisies à
-     * l'écran.
-     * @param genreFichier String : Code à deux lettres de la table qui lie une
-     * caractéristique à un Sujet (SU).  Pour l'instant, seuls les sujets
-     * possèdent des caractéristiques.
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * @param caracteristiques Caracteristiques : Particularitï¿½s saisies ï¿½
+     * l'ï¿½cran.
+     * @param genreFichier String : Code ï¿½ deux lettres de la table qui lie une
+     * caractï¿½ristique ï¿½ un Sujet (SU).  Pour l'instant, seuls les sujets
+     * possï¿½dent des caractï¿½ristiques.
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
      */
     public void update(CardexAuthenticationSubject subject,
     		Particularites particularites, String genreFichier)
             throws DAOException {
-    	//On supprime toutes les entrées avant d'inscrire les choix. Les valeurs actuelles
-    	//sont sauvegardées dans l'audit des changements (action A).
+    	//On supprime toutes les entrï¿½es avant d'inscrire les choix. Les valeurs actuelles
+    	//sont sauvegardï¿½es dans l'audit des changements (action A).
     	editParticularites(subject, particularites, "A", genreFichier);
     	editParticularites(subject, particularites, "I", genreFichier);
     }
    
     /**
-     * Lecture des particularités associées à un véhicule.
-     * Procédure appelée : SP_L_LPV_LIEN_PARTICULARITE
-     * Date de création : (2002-03-04)
+     * Lecture des particularitï¿½s associï¿½es ï¿½ un vï¿½hicule.
+     * Procï¿½dure appelï¿½e : SP_L_LPV_LIEN_PARTICULARITE
+     * Date de crï¿½ation : (2002-03-04)
      * @author Philippe Caron
-     * @param subject  CardexAuthenticationSubject : Données nominatives sur
+     * @param subject  CardexAuthenticationSubject : Donnï¿½es nominatives sur
      * l'utilisateur.
-     * @param cle long : Clé de référence du sujet.
-     * @param site long : Site de référence du sujet.
+     * @param cle long : Clï¿½ de rï¿½fï¿½rence du sujet.
+     * @param site long : Site de rï¿½fï¿½rence du sujet.
      * @param genreFichier String : ("VE").
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
-     * @return Particularites : Liste des particularités associées.
+     * @return Particularites : Liste des particularitï¿½s associï¿½es.
      */
     public Particularites findLiensParticularite(CardexAuthenticationSubject subject, Vehicule vehicule) throws DAOException {
-      log.fine("findLiensParticularite()");
+      log.debug("findLiensParticularite()");
       Connection connection = DAOConnection.getInstance().getConnection(subject);
 	  CallableStatement callableStatement = null;
 	  ResultSet resultSet = null;
       ParticularitesVO linkedParticularites = null;
 
       try {
-      	//On vérifie d'abord si un historique des données existe en fonction de la date de liaison (utilisé lors de l'impression du dossier).
+      	//On vï¿½rifie d'abord si un historique des donnï¿½es existe en fonction de la date de liaison (utilisï¿½ lors de l'impression du dossier).
       	if(vehicule.getLienDateCreation() != null){
 	        	callableStatement = connection.prepareCall(
 	            	"begin cardex_audit.SP_L_AUD_LPV_PARTICULARITE (?,?,?,?); end;");
@@ -190,13 +189,13 @@ public class ParticulariteDAO {
                   }
                   linkedParticularites.addParticularite( Long.toString(
                           resultSet.getLong("L_PT_CLE")) );
-                  log.fine("   [Caracteristiques id='"
+                  log.debug("   [Caracteristiques id='"
                           + resultSet.getLong("L_PT_CLE")
                           + "' Site='" + linkedParticularites.getSite() + "']");
               } // while
       	}
           if (linkedParticularites == null) {
-             //Pas de données historiques ou pas de date de liaison. On retourne les données actuelles.
+             //Pas de donnï¿½es historiques ou pas de date de liaison. On retourne les donnï¿½es actuelles.
 	         callableStatement =
 	            connection.prepareCall("begin SP_L_LPV_LIEN_PARTICULARITE (?,?,?,?); end;");
 	         callableStatement.setLong(1,vehicule.getCle());
@@ -213,7 +212,7 @@ public class ParticulariteDAO {
 	                linkedParticularites.setLienSite(resultSet.getLong("L_LPV_REF_SITE"));
 	              }
 	              linkedParticularites.addParticularite( Long.toString(resultSet.getLong("I_PT_CLE")) );
-	              log.fine("   [Particularites id='" + resultSet.getLong("I_PT_CLE")+"' Site='" + linkedParticularites.getSite() + "']");
+	              log.debug("   [Particularites id='" + resultSet.getLong("I_PT_CLE")+"' Site='" + linkedParticularites.getSite() + "']");
 	         }//while
           }
         if (linkedParticularites == null) {

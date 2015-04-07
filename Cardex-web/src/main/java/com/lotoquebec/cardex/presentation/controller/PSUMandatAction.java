@@ -10,7 +10,6 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
-import java.util.logging.Logger;
 
 import javax.mail.Address;
 import javax.mail.Message;
@@ -30,6 +29,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessages;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardex.business.ConsignationActionPSU;
 import com.lotoquebec.cardex.business.PSUMandat;
@@ -55,18 +56,17 @@ import com.lotoquebec.cardexCommun.integration.dao.cleListe.cleMultiListeCache.c
 import com.lotoquebec.cardexCommun.integration.dao.cleListe.cleMultiListeCache.cleMultiExterneListeCache.InterventionCodeCourrielCle;
 import com.lotoquebec.cardexCommun.integration.dao.cleListe.cleSQLListeCache.IntervenantCle;
 import com.lotoquebec.cardexCommun.integration.dao.cleListe.cleSQLListeCache.TableValeurCleSQLListeCache;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.presentation.util.AbstractAction;
 import com.lotoquebec.cardexCommun.text.TimestampFormat;
 import com.lotoquebec.cardexCommun.user.CardexUser;
 import com.lotoquebec.cardexCommun.util.ListeCache;
 
 /**
- * Cette classe gère les événements en rapport
+ * Cette classe gï¿½re les ï¿½vï¿½nements en rapport
  * avec le cas d'utilisation PSU (Programme de Suivi des utilisateurs).
- * Cette fonction sert à étiqueter des données dont on désire être informé
- * en temps réel d'actions spécifiques les concernant, par exemple, chaque fois
- * qu'une fiche sujet est consultée.
+ * Cette fonction sert ï¿½ ï¿½tiqueter des donnï¿½es dont on dï¿½sire ï¿½tre informï¿½
+ * en temps rï¿½el d'actions spï¿½cifiques les concernant, par exemple, chaque fois
+ * qu'une fiche sujet est consultï¿½e.
  *
  * @author $Author: mlibersan $
  * @version $Revision: 1.6 $, $Date: 2002/04/30 12:18:08 $
@@ -77,20 +77,20 @@ public class PSUMandatAction extends AbstractAction {
      * L'instance du gestionnaire de journalisation.
      */
 	private final Logger      log =
-        (Logger)LoggerCardex.getLogger((this.getClass()));
+        LoggerFactory.getLogger((this.getClass()));
 
     /**
      * <p>
      * <p>
-     * Par défaut, l'application remplit automatiquement les champs suivants :
+     * Par dï¿½faut, l'application remplit automatiquement les champs suivants :
      *
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortieif an input/output survient
+     * @exception IOException si une erreur d'entrï¿½e/sortieif an input/output survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward create(CardexAuthenticationSubject subject,
@@ -101,23 +101,23 @@ public class PSUMandatAction extends AbstractAction {
                                 ServletException {
 
 
-        log.fine("Création d'un nouveau mandat");
+        log.debug("Crï¿½ation d'un nouveau mandat");
         ActionErrors errors = new ActionErrors();
         CardexUser user = (CardexUser)subject.getUser();
         String currentDate = TimestampFormat.format(new Timestamp(System.currentTimeMillis()),subject.getLocale(),true);
 
         PSUMandatForm psuMandatForm = new PSUMandatForm();
 
-        //Valeur par défaut
+        //Valeur par dï¿½faut
 		psuMandatForm.setCreateur(user.getCode());
 		psuMandatForm.setDateCreation(currentDate);
 		psuMandatForm.setModifiable(true);
 		psuMandatForm.setStatut(GlobalConstants.Statut.DOSSIER_INACTIF);
 		psuMandatForm.setNumeroMandat(" "); //Pour indiquer qu'il s'agit d'un nouveau mandat.
-        log.fine("Mandat : " + psuMandatForm);
+        log.debug("Mandat : " + psuMandatForm);
         request.getSession().setAttribute("PSUMandat",psuMandatForm);
         
-		//On vide le message de validation au cas où.
+		//On vide le message de validation au cas oï¿½.
 		request.getSession().setAttribute("message", "");
         return mapping.findForward("success");
     }
@@ -126,13 +126,13 @@ public class PSUMandatAction extends AbstractAction {
     /**
      * <p>
      *
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortieif an input/output survient
+     * @exception IOException si une erreur d'entrï¿½e/sortieif an input/output survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward refresh(CardexAuthenticationSubject subject,
@@ -140,24 +140,24 @@ public class PSUMandatAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Refresh des mandats PSU");
+        log.debug("Refresh des mandats PSU");
 
-		//On vide le message de validation au cas où.
+		//On vide le message de validation au cas oï¿½.
 		request.getSession().setAttribute("message", "");
 
         return mapping.findForward("success");
     }
 
     /**
-     * Affichage d'un mandat à partir des résultats de recherche.
+     * Affichage d'un mandat ï¿½ partir des rï¿½sultats de recherche.
      *
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortieif an input/output survient
+     * @exception IOException si une erreur d'entrï¿½e/sortieif an input/output survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward show(CardexAuthenticationSubject subject,
@@ -165,7 +165,7 @@ public class PSUMandatAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Accès à un mandat PSU");
+        log.debug("Accï¿½s ï¿½ un mandat PSU");
 
         ActionMessages errors = new ActionMessages();
 
@@ -179,7 +179,7 @@ public class PSUMandatAction extends AbstractAction {
             ValueObjectMapper.convertPSUMandat(psuMandat, psuMandatForm,
                     subject.getLocale());
 
-			//On vide le message de validation au cas où.
+			//On vide le message de validation au cas oï¿½.
 			request.getSession().setAttribute("message", "");
             return mapping.findForward("success");
         } catch (BusinessResourceException bre) {
@@ -194,15 +194,15 @@ public class PSUMandatAction extends AbstractAction {
     }
 
 	/**
-	 * Mise à jour d'un mandat à partir de l'écran de consultation.
+	 * Mise ï¿½ jour d'un mandat ï¿½ partir de l'ï¿½cran de consultation.
 	 *
-	 * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-	 * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-	 * @param request La requête HTTP traitée
-	 * @param response La réponse HTTP créée
+	 * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+	 * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+	 * @param request La requï¿½te HTTP traitï¿½e
+	 * @param response La rï¿½ponse HTTP crï¿½ï¿½e
 	 * @param delegate Le business delegate offrant les services d'affaires
 	 *
-	 * @exception IOException si une erreur d'entrée/sortieif an input/output survient
+	 * @exception IOException si une erreur d'entrï¿½e/sortieif an input/output survient
 	 * @exception ServletException si une exception servlet survient
 	 */
 	public ActionForward update(CardexAuthenticationSubject subject,
@@ -210,7 +210,7 @@ public class PSUMandatAction extends AbstractAction {
 							  HttpServletRequest request,
 							  HttpServletResponse response) throws IOException,
 							  ServletException {
-		log.fine("Mise à jour d'un mandat PSU");
+		log.debug("Mise ï¿½ jour d'un mandat PSU");
 
 		ActionMessages errors = new ActionMessages();
 
@@ -230,7 +230,7 @@ public class PSUMandatAction extends AbstractAction {
 			delegate.update(subject,psuMandat);
 			//ValueObjectMapper.convertPSUMandat(psuMandat, psuMandatForm,subject.getLocale());
 
-			// Stockage des données de référence concernant le contenu des liste déroulante
+			// Stockage des donnï¿½es de rï¿½fï¿½rence concernant le contenu des liste dï¿½roulante
 			//DonneeReferenceCache.storePSUMandatDonneeReference(subject, mapping,form, request,response);
 
 			return mapping.findForward("success");
@@ -248,13 +248,13 @@ public class PSUMandatAction extends AbstractAction {
 	/**
 	 * Sauvegarde d'un nouveau mandat.
 	 *
-	 * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-	 * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-	 * @param request La requête HTTP traitée
-	 * @param response La réponse HTTP créée
+	 * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+	 * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+	 * @param request La requï¿½te HTTP traitï¿½e
+	 * @param response La rï¿½ponse HTTP crï¿½ï¿½e
 	 * @param delegate Le business delegate offrant les services d'affaires
 	 *
-	 * @exception IOException si une erreur d'entrée/sortieif an input/output survient
+	 * @exception IOException si une erreur d'entrï¿½e/sortieif an input/output survient
 	 * @exception ServletException si une exception servlet survient
 	 */
 	public ActionForward save(CardexAuthenticationSubject subject,
@@ -262,7 +262,7 @@ public class PSUMandatAction extends AbstractAction {
 							  HttpServletRequest request,
 							  HttpServletResponse response) throws IOException,
 							  ServletException {
-		log.fine("Sauvegarde d'un nouveau mandat PSU");
+		log.debug("Sauvegarde d'un nouveau mandat PSU");
 
 		ActionMessages errors = new ActionMessages();
 
@@ -282,7 +282,7 @@ public class PSUMandatAction extends AbstractAction {
 			delegate.insert(subject,psuMandat);
 			//ValueObjectMapper.convertPSUMandat(psuMandat, psuMandatForm,subject.getLocale());
 
-			// Stockage des données de référence concernant le contenu des liste déroulante
+			// Stockage des donnï¿½es de rï¿½fï¿½rence concernant le contenu des liste dï¿½roulante
 			//DonneeReferenceCache.storePSUMandatDonneeReference(subject, mapping,form, request,response);
 
 			return mapping.findForward("success");
@@ -298,15 +298,15 @@ public class PSUMandatAction extends AbstractAction {
 	}
 
 	/**
-	 * Suppression ou désactivation d'un mandat.
+	 * Suppression ou dï¿½sactivation d'un mandat.
 	 *
-	 * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-	 * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-	 * @param request La requête HTTP traitée
-	 * @param response La réponse HTTP créée
+	 * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+	 * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+	 * @param request La requï¿½te HTTP traitï¿½e
+	 * @param response La rï¿½ponse HTTP crï¿½ï¿½e
 	 * @param delegate Le business delegate offrant les services d'affaires
 	 *
-	 * @exception IOException si une erreur d'entrée/sortieif an input/output survient
+	 * @exception IOException si une erreur d'entrï¿½e/sortieif an input/output survient
 	 * @exception ServletException si une exception servlet survient
 	 */
 	public ActionForward delete(CardexAuthenticationSubject subject,
@@ -314,7 +314,7 @@ public class PSUMandatAction extends AbstractAction {
 							  HttpServletRequest request,
 							  HttpServletResponse response) throws IOException,
 							  ServletException {
-		log.fine("Suppression d'un mandat PSU");
+		log.debug("Suppression d'un mandat PSU");
 
 		ActionMessages errors = new ActionMessages();
 
@@ -327,7 +327,7 @@ public class PSUMandatAction extends AbstractAction {
 			ValueObjectMapper.convertPSUMandatHtmlForm(psuMandatForm, psuMandat,
 					subject.getLocale());
 			delegate.delete(subject,psuMandat);
-			//On relance la recherche par défaut.
+			//On relance la recherche par dï¿½faut.
 			CriteresRecherchePSUMandatForm psuMandatForm2 = new CriteresRecherchePSUMandatForm();
 			CardexUser user = (CardexUser)subject.getUser();
 			psuMandatForm2.init();
@@ -348,19 +348,19 @@ public class PSUMandatAction extends AbstractAction {
 	}
 
     /**
-     * Par défaut, l'application remplit automatiquement les champs suivants :
+     * Par dï¿½faut, l'application remplit automatiquement les champs suivants :
      * <li>
      * <ul>Entite (Entite de l'utilisateur)
      * <ul>Site d'origine (Site de l'utilisateur)
      * </li>
      *
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortie survient
+     * @exception IOException si une erreur d'entrï¿½e/sortie survient
      * @exception ServletException si une exception servlet survient
      * @throws InvocationTargetException
      * @throws IllegalAccessException
@@ -374,27 +374,27 @@ public class PSUMandatAction extends AbstractAction {
                                        HttpServletRequest request,
                                        HttpServletResponse response) throws IOException,
                                        ServletException, SecurityException, IllegalArgumentException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
-        log.fine("Refresh de recherche des mandats");
+        log.debug("Refresh de recherche des mandats");
 
         return mapping.findForward("success");
     }
 
 
     /**
-     * Par défaut, l'application remplit automatiquement les champs suivants :
+     * Par dï¿½faut, l'application remplit automatiquement les champs suivants :
      * <li>
      * <ul>Entite (Entite de l'utilisateur)
      * <ul>Site d'origine (Site de l'utilisateur)
      * <ul>Intervenant (code de l'intervenant)
      * </li>
      *
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortie survient
+     * @exception IOException si une erreur d'entrï¿½e/sortie survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward searchDefault(CardexAuthenticationSubject subject,
@@ -403,9 +403,9 @@ public class PSUMandatAction extends AbstractAction {
                                        HttpServletRequest request,
                                        HttpServletResponse response) throws IOException,
                                        ServletException {
-        log.fine("Recherche par défaut de mandats");
+        log.debug("Recherche par dï¿½faut de mandats");
 
-		//On inscrit les valeurs par défaut.
+		//On inscrit les valeurs par dï¿½faut.
         CriteresRecherchePSUMandatForm psuMandatForm = new CriteresRecherchePSUMandatForm();
     	CardexUser user = (CardexUser)subject.getUser();
     	psuMandatForm.init();
@@ -420,17 +420,17 @@ public class PSUMandatAction extends AbstractAction {
 
     /**
      * <p>
-     * Cet événement survient lorsque dans l'écran de recherche de mandats PSU, l'utilisateur a choisi
-     * de rechercher les mandats selon des critères différents. 
+     * Cet ï¿½vï¿½nement survient lorsque dans l'ï¿½cran de recherche de mandats PSU, l'utilisateur a choisi
+     * de rechercher les mandats selon des critï¿½res diffï¿½rents. 
      * <p>
      *
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortie survient
+     * @exception IOException si une erreur d'entrï¿½e/sortie survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward search(CardexAuthenticationSubject subject,
@@ -439,7 +439,7 @@ public class PSUMandatAction extends AbstractAction {
                                 HttpServletRequest request,
                                 HttpServletResponse response) throws IOException,
                                 ServletException {
-        log.fine("Recherche de mandats");
+        log.debug("Recherche de mandats");
 
         ActionMessages errors = new ActionMessages();
 
@@ -448,15 +448,15 @@ public class PSUMandatAction extends AbstractAction {
             CriteresRecherchePSUMandatForm criteresRecherchePSUMandatHtmlForm = (CriteresRecherchePSUMandatForm) form;
             CriteresRecherchePSUMandatVO criteresRecherchePSUMandat = new CriteresRecherchePSUMandatVO();
 
-            // Conversion du composant d'état(ActionForm) en composant d'affaire(Value Object)
+            // Conversion du composant d'ï¿½tat(ActionForm) en composant d'affaire(Value Object)
             ValueObjectMapper.convertCriteresRecherchePSUMandatHtmlForm(criteresRecherchePSUMandatHtmlForm, criteresRecherchePSUMandat,subject.getLocale());
 
-            // Exécution de la recherche via le service d'affaire(BusinessDelegate)
+            // Exï¿½cution de la recherche via le service d'affaire(BusinessDelegate)
             List<PSUMandat> list = delegate.select(subject,criteresRecherchePSUMandat);
-            log.fine(criteresRecherchePSUMandat.toString());
-            log.fine(list.size() + " Mandats trouvés...");
+            log.debug(criteresRecherchePSUMandat.toString());
+            log.debug(list.size() + " Mandats trouvï¿½s...");
 
-            // Ajout des mandats dans le composant d'état (ActionForm)
+            // Ajout des mandats dans le composant d'ï¿½tat (ActionForm)
             List currentList = new ArrayList();
             Iterator   it = list.iterator();
 
@@ -486,17 +486,17 @@ public class PSUMandatAction extends AbstractAction {
 
 	/**
 	 * <p>
-	 * Cet événement survient lorsque dans l'écran de recherche de mandats PSU, l'utilisateur a choisi
-	 * d'afficher les actions consignées pour un mandat de la liste de recherche.
+	 * Cet ï¿½vï¿½nement survient lorsque dans l'ï¿½cran de recherche de mandats PSU, l'utilisateur a choisi
+	 * d'afficher les actions consignï¿½es pour un mandat de la liste de recherche.
 	 * <p>
 	 *
-	 * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-	 * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-	 * @param request La requête HTTP traitée
-	 * @param response La réponse HTTP créée
+	 * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+	 * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+	 * @param request La requï¿½te HTTP traitï¿½e
+	 * @param response La rï¿½ponse HTTP crï¿½ï¿½e
 	 * @param delegate Le business delegate offrant les services d'affaires
 	 *
-	 * @exception IOException si une erreur d'entrée/sortie survient
+	 * @exception IOException si une erreur d'entrï¿½e/sortie survient
 	 * @exception ServletException si une exception servlet survient
 	 */
 	public ActionForward findLiensConsignationAction(CardexAuthenticationSubject subject,
@@ -505,7 +505,7 @@ public class PSUMandatAction extends AbstractAction {
 								HttpServletRequest request,
 								HttpServletResponse response) throws IOException,
 								ServletException {
-		log.fine("Affichage des actions consignées");
+		log.debug("Affichage des actions consignï¿½es");
 
 		ActionMessages errors = new ActionMessages();
 
@@ -514,7 +514,7 @@ public class PSUMandatAction extends AbstractAction {
 			PSUMandatForm psuMandatForm = (PSUMandatForm) form;
 			ValueListIterator results;
 
-			// Conversion du composant d'état(ActionForm) en composant d'affaire(Value Object)
+			// Conversion du composant d'ï¿½tat(ActionForm) en composant d'affaire(Value Object)
 			//ValueObjectMapper.convertPSUMandatHtmlForm(psuMandatForm, psuMandat,subject.getLocale());
 
 			// Aller rechercher les informations sur le mandat
@@ -525,12 +525,12 @@ public class PSUMandatAction extends AbstractAction {
             ValueObjectMapper.convertPSUMandat(psuMandat, psuMandatForm,
                     subject.getLocale());
 			
-			// Exécution de la recherche via le service d'affaire(BusinessDelegate)
+			// Exï¿½cution de la recherche via le service d'affaire(BusinessDelegate)
 			results = delegate.findLiensConsignationAction(subject,psuMandatForm.getNumeroMandat());
-			log.fine(psuMandatForm.toString());
-			log.fine(results.getSize() + " Consignations trouvées...");
+			log.debug(psuMandatForm.toString());
+			log.debug(results.getSize() + " Consignations trouvï¿½es...");
 
-			// Ajout des mandats dans le composant d'état (ActionForm)
+			// Ajout des mandats dans le composant d'ï¿½tat (ActionForm)
 			//int nombreDeResultats = (int)criteresRecherchePSUMandat.getMaximumResultatsRecherche();
 			Collection list = results.getNextElements(2000);
 			Collection currentList = new ArrayList();
@@ -563,15 +563,15 @@ public class PSUMandatAction extends AbstractAction {
 	}
 
 	/**
-	 * Approbation d'un mandat à partir de l'écran de consultation.
+	 * Approbation d'un mandat ï¿½ partir de l'ï¿½cran de consultation.
 	 *
-	 * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-	 * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-	 * @param request La requête HTTP traitée
-	 * @param response La réponse HTTP créée
+	 * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+	 * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+	 * @param request La requï¿½te HTTP traitï¿½e
+	 * @param response La rï¿½ponse HTTP crï¿½ï¿½e
 	 * @param delegate Le business delegate offrant les services d'affaires
 	 *
-	 * @exception IOException si une erreur d'entrée/sortieif an input/output survient
+	 * @exception IOException si une erreur d'entrï¿½e/sortieif an input/output survient
 	 * @exception ServletException si une exception servlet survient
 	 */
 	public ActionForward approbation(CardexAuthenticationSubject subject,
@@ -579,7 +579,7 @@ public class PSUMandatAction extends AbstractAction {
 							  HttpServletRequest request,
 							  HttpServletResponse response) throws IOException,
 							  ServletException {
-		log.fine("Approbation d'un mandat PSU");
+		log.debug("Approbation d'un mandat PSU");
 
 		ActionMessages errors = new ActionMessages();
 		CardexUser user = (CardexUser)subject.getUser();
@@ -597,7 +597,7 @@ public class PSUMandatAction extends AbstractAction {
 			delegate.approbation(subject,psuMandat);
 			//ValueObjectMapper.convertPSUMandat(psuMandat, psuMandatForm,subject.getLocale());
 
-			// Stockage des données de référence concernant le contenu des liste déroulante
+			// Stockage des donnï¿½es de rï¿½fï¿½rence concernant le contenu des liste dï¿½roulante
 			//DonneeReferenceCache.storePSUMandatDonneeReference(subject, mapping,form, request,response);
 
 			return mapping.findForward("success");
@@ -613,18 +613,18 @@ public class PSUMandatAction extends AbstractAction {
 	}
 
 	/**
-	 * Renversement de l'approbation d'un mandat à partir de l'écran de consultation.
-	 * Un mandat approuvé ne pouvant plus être modifié, cette action permet d'annuler
-	 * l'approbation en cas de besoin de modifier le mandat (même principe que dans
+	 * Renversement de l'approbation d'un mandat ï¿½ partir de l'ï¿½cran de consultation.
+	 * Un mandat approuvï¿½ ne pouvant plus ï¿½tre modifiï¿½, cette action permet d'annuler
+	 * l'approbation en cas de besoin de modifier le mandat (mï¿½me principe que dans
 	 * les narrations).
 	 *
-	 * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-	 * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-	 * @param request La requête HTTP traitée
-	 * @param response La réponse HTTP créée
+	 * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+	 * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+	 * @param request La requï¿½te HTTP traitï¿½e
+	 * @param response La rï¿½ponse HTTP crï¿½ï¿½e
 	 * @param delegate Le business delegate offrant les services d'affaires
 	 *
-	 * @exception IOException si une erreur d'entrée/sortieif an input/output survient
+	 * @exception IOException si une erreur d'entrï¿½e/sortieif an input/output survient
 	 * @exception ServletException si une exception servlet survient
 	 */
 	public ActionForward permettreModification(CardexAuthenticationSubject subject,
@@ -632,7 +632,7 @@ public class PSUMandatAction extends AbstractAction {
 							  HttpServletRequest request,
 							  HttpServletResponse response) throws IOException,
 							  ServletException {
-		log.fine("Permettre la modification d'un mandat PSU");
+		log.debug("Permettre la modification d'un mandat PSU");
 
 		ActionMessages errors = new ActionMessages();
 
@@ -649,7 +649,7 @@ public class PSUMandatAction extends AbstractAction {
 			delegate.approbation(subject,psuMandat);
 			//ValueObjectMapper.convertPSUMandat(psuMandat, psuMandatForm,subject.getLocale());
 
-			// Stockage des données de référence concernant le contenu des liste déroulante
+			// Stockage des donnï¿½es de rï¿½fï¿½rence concernant le contenu des liste dï¿½roulante
 			//DonneeReferenceCache.storePSUMandatDonneeReference(subject, mapping,form, request,response);
 
 			return mapping.findForward("success");
@@ -665,23 +665,23 @@ public class PSUMandatAction extends AbstractAction {
 	}
 
 	/**
-	 * Cette fonction valide les informations retournées par un mandat pour
-	 * s'assurer de la cohérence. Voici la logique qui commande cette validation.
-	 * À noter que dès qu'une condition logique est rencontrée dans cet ordre, la
-	 * validation s'arrête et une réponse positive est retournée. Dans le cas,
-	 * contraire, l'erreur est retournée et elle sera renvoyée à l'utilisateur.
-	 * 1.	Critères de dossier : site, catégorie, fondé, intervenant.  Les champs Fondé et Site devront obligatoirement être associés à une catégorie pour réduire la quantité de messages générés.  Le champ Intervenant peut être utilisé seul ou en combinaison avec Fondé et Catégorie. Actions possibles : Ajout ou Recherche.
-	 * 2.	Critères de dossier : Numéro de dossier ou Numéro Cardex.  Actions possibles : Consultation, Liaison, Suppression ou Mise à jour.
-	 * 3.	Critères de sujet : Numéro de fiche. Actions possibles : Consultation, Liaison, Suppression ou Mise à jour.
-	 * 4.	Critères de sujet : Nom, Prénom.  Une combinaison des deux critères est préférable, mais l’un ou l’autre pourra être utilisé.  Actions possibles : Ajout ou Recherche.
-	 * 5.	Critères de société : Numéro de fiche. Actions possibles : Consultation, Liaison, Suppression ou Mise à jour.
-	 * 6.	Critères de société : Nom.  Il faudra s’assurer que le nom de société est inscrit exactement tel que voulu dans la base de données étant donné l’imprécision qui entoure souvent les noms de société.  Actions possibles : Recherche, Consultation, Mise à jour, Liaison, Suppression
-	 * 7.	Critères de véhicule : Numéro d’immatriculation.  Actions possibles : Consultation, Mise à jour, Liaison, Suppression, Ajout.
-	 * 8.	Critères de véhicule : Province.  Si la province est Québec, beaucoup de messages seront générés.  Actions possibles : Ajout, Recherche
-	 * 9.	Critères de narration : Mots clés.  Actions possibles : Ajout, Recherche
-	 * Les actions LIAISON et SUPPRESSION ne s'appliquent qu'à des actions dans les onglets.  La mise à jour dans un onglet
-	 * n'apparaît pas pertinente pour un suivi d'utilisateurs, étant donné le trop grand nombre de messages
-	 * que cela pourrait générer.
+	 * Cette fonction valide les informations retournï¿½es par un mandat pour
+	 * s'assurer de la cohï¿½rence. Voici la logique qui commande cette validation.
+	 * ï¿½ noter que dï¿½s qu'une condition logique est rencontrï¿½e dans cet ordre, la
+	 * validation s'arrï¿½te et une rï¿½ponse positive est retournï¿½e. Dans le cas,
+	 * contraire, l'erreur est retournï¿½e et elle sera renvoyï¿½e ï¿½ l'utilisateur.
+	 * 1.	Critï¿½res de dossier : site, catï¿½gorie, fondï¿½, intervenant.  Les champs Fondï¿½ et Site devront obligatoirement ï¿½tre associï¿½s ï¿½ une catï¿½gorie pour rï¿½duire la quantitï¿½ de messages gï¿½nï¿½rï¿½s.  Le champ Intervenant peut ï¿½tre utilisï¿½ seul ou en combinaison avec Fondï¿½ et Catï¿½gorie. Actions possibles : Ajout ou Recherche.
+	 * 2.	Critï¿½res de dossier : Numï¿½ro de dossier ou Numï¿½ro Cardex.  Actions possibles : Consultation, Liaison, Suppression ou Mise ï¿½ jour.
+	 * 3.	Critï¿½res de sujet : Numï¿½ro de fiche. Actions possibles : Consultation, Liaison, Suppression ou Mise ï¿½ jour.
+	 * 4.	Critï¿½res de sujet : Nom, Prï¿½nom.  Une combinaison des deux critï¿½res est prï¿½fï¿½rable, mais lï¿½un ou lï¿½autre pourra ï¿½tre utilisï¿½.  Actions possibles : Ajout ou Recherche.
+	 * 5.	Critï¿½res de sociï¿½tï¿½ : Numï¿½ro de fiche. Actions possibles : Consultation, Liaison, Suppression ou Mise ï¿½ jour.
+	 * 6.	Critï¿½res de sociï¿½tï¿½ : Nom.  Il faudra sï¿½assurer que le nom de sociï¿½tï¿½ est inscrit exactement tel que voulu dans la base de donnï¿½es ï¿½tant donnï¿½ lï¿½imprï¿½cision qui entoure souvent les noms de sociï¿½tï¿½.  Actions possibles : Recherche, Consultation, Mise ï¿½ jour, Liaison, Suppression
+	 * 7.	Critï¿½res de vï¿½hicule : Numï¿½ro dï¿½immatriculation.  Actions possibles : Consultation, Mise ï¿½ jour, Liaison, Suppression, Ajout.
+	 * 8.	Critï¿½res de vï¿½hicule : Province.  Si la province est Quï¿½bec, beaucoup de messages seront gï¿½nï¿½rï¿½s.  Actions possibles : Ajout, Recherche
+	 * 9.	Critï¿½res de narration : Mots clï¿½s.  Actions possibles : Ajout, Recherche
+	 * Les actions LIAISON et SUPPRESSION ne s'appliquent qu'ï¿½ des actions dans les onglets.  La mise ï¿½ jour dans un onglet
+	 * n'apparaï¿½t pas pertinente pour un suivi d'utilisateurs, ï¿½tant donnï¿½ le trop grand nombre de messages
+	 * que cela pourrait gï¿½nï¿½rer.
 	 * @param psuMandatForm
 	 * @return
 	 */
@@ -689,8 +689,8 @@ public class PSUMandatAction extends AbstractAction {
 
 	String reponse = "OK";
 	String action = psuMandatForm.getTypeAction();
-		//Dès qu'une condition valable est rencontrée, on supprime les valeurs non concernées.
-		//Vérification des critères de dossier
+		//Dï¿½s qu'une condition valable est rencontrï¿½e, on supprime les valeurs non concernï¿½es.
+		//Vï¿½rification des critï¿½res de dossier
 		if(!OracleDAOUtils.isEmpty(psuMandatForm.getIntervenant()) && 
 		   OracleDAOUtils.isEmpty(psuMandatForm.getCategorie())){
 			if((action.equals(GlobalConstants.TypeAction.AJOUT)) ||
@@ -709,11 +709,11 @@ public class PSUMandatAction extends AbstractAction {
 				psuMandatForm.setMotCle3("");
 				psuMandatForm.setGenreFichier(GlobalConstants.GenreFichier.DOSSIER);
 			}else{
-				reponse = "Le type d'action doit être Ajout ou Recherche avec un intervenant.";
+				reponse = "Le type d'action doit ï¿½tre Ajout ou Recherche avec un intervenant.";
 			}
 		}else{
 			if(!OracleDAOUtils.isEmpty(psuMandatForm.getCategorie())){
-				//Fondé obligatoires avec Catégorie
+				//Fondï¿½ obligatoires avec Catï¿½gorie
 				if(!OracleDAOUtils.isEmpty(psuMandatForm.getFonde())){
 					if((action.equals(GlobalConstants.TypeAction.AJOUT)) ||
    					   (action.equals(GlobalConstants.TypeAction.RECHERCHE))){
@@ -731,10 +731,10 @@ public class PSUMandatAction extends AbstractAction {
 						psuMandatForm.setMotCle3("");
 						psuMandatForm.setGenreFichier(GlobalConstants.GenreFichier.DOSSIER);
 					}else{
-						reponse = "Le type d'action doit être Ajout ou Recherche avec une catégorie.";
+						reponse = "Le type d'action doit ï¿½tre Ajout ou Recherche avec une catï¿½gorie.";
 					}
 				}else{
-					reponse = "La valeura Fondé est obligatoire avec une catégorie.";
+					reponse = "La valeura Fondï¿½ est obligatoire avec une catï¿½gorie.";
 				}
 			}else{
 				if((!OracleDAOUtils.isEmpty(psuMandatForm.getNumeroDossier())) ||
@@ -760,9 +760,9 @@ public class PSUMandatAction extends AbstractAction {
 								psuMandatForm.setMotCle3("");
 								psuMandatForm.setGenreFichier(GlobalConstants.GenreFichier.DOSSIER);
 					    }else{
-					    	reponse = "Le type d'action doit être Consultation, Liaison ou Mise à jour avec un numéro de dossier.";
+					    	reponse = "Le type d'action doit ï¿½tre Consultation, Liaison ou Mise ï¿½ jour avec un numï¿½ro de dossier.";
 					    }
-				  }else{ //Vérification des critères de sujet
+				  }else{ //Vï¿½rification des critï¿½res de sujet
 					if(!OracleDAOUtils.isEmpty(psuMandatForm.getFicheSujet())){
 						if((action.equals(GlobalConstants.TypeAction.CONSULTATION)) ||
 						   (action.equals(GlobalConstants.TypeAction.LIAISON))   ||
@@ -786,7 +786,7 @@ public class PSUMandatAction extends AbstractAction {
 								psuMandatForm.setMotCle3("");
 								psuMandatForm.setGenreFichier(GlobalConstants.GenreFichier.SUJET);
 							}else{
-								reponse = "Le type d'action doit être Consultation, Liaison ou Suppression avec un numéro de sujet.";
+								reponse = "Le type d'action doit ï¿½tre Consultation, Liaison ou Suppression avec un numï¿½ro de sujet.";
 							}
 					}else{
 						if(!OracleDAOUtils.isEmpty(psuMandatForm.getSujetNom()) || 
@@ -811,9 +811,9 @@ public class PSUMandatAction extends AbstractAction {
 								psuMandatForm.setMotCle2("");
 								psuMandatForm.setMotCle3("");
 							}else{
-								reponse = "Le type d'action doit être Insertion, Mise à jour ou Recherche avec un nom de sujet.";
+								reponse = "Le type d'action doit ï¿½tre Insertion, Mise ï¿½ jour ou Recherche avec un nom de sujet.";
 							}
-						}else{//Vérification des critères de societe
+						}else{//Vï¿½rification des critï¿½res de societe
 						  if(!OracleDAOUtils.isEmpty(psuMandatForm.getFicheSociete())){
 							if((action.equals(GlobalConstants.TypeAction.CONSULTATION)) ||
 							   (action.equals(GlobalConstants.TypeAction.LIAISON))   ||
@@ -838,7 +838,7 @@ public class PSUMandatAction extends AbstractAction {
 									psuMandatForm.setMotCle3("");
 									psuMandatForm.setGenreFichier(GlobalConstants.GenreFichier.SOCIETE);
 								}else{
-									reponse = "Le type d'action doit être Consultation, Liaison, Suppression ou Mise à jour avec un numéro de société.";
+									reponse = "Le type d'action doit ï¿½tre Consultation, Liaison, Suppression ou Mise ï¿½ jour avec un numï¿½ro de sociï¿½tï¿½.";
 								}
 						}else{
 							if(!OracleDAOUtils.isEmpty(psuMandatForm.getSocieteNom())){
@@ -865,9 +865,9 @@ public class PSUMandatAction extends AbstractAction {
 									psuMandatForm.setMotCle3("");
 									psuMandatForm.setGenreFichier(GlobalConstants.GenreFichier.SOCIETE);
 								}else{
-									reponse = "Le type d'action doit être Insertion, Consultation, Liaison, Suppression, Mise à jour ou Recherche avec un nom de société.";
+									reponse = "Le type d'action doit ï¿½tre Insertion, Consultation, Liaison, Suppression, Mise ï¿½ jour ou Recherche avec un nom de sociï¿½tï¿½.";
 								}
-						   }else{//Vérification des critères de vehicule
+						   }else{//Vï¿½rification des critï¿½res de vehicule
 						   if(!OracleDAOUtils.isEmpty(psuMandatForm.getImmatriculation())){
 							 if((action.equals(GlobalConstants.TypeAction.CONSULTATION)) ||
 								(action.equals(GlobalConstants.TypeAction.LIAISON))   ||
@@ -893,7 +893,7 @@ public class PSUMandatAction extends AbstractAction {
 									 psuMandatForm.setMotCle3("");
 									psuMandatForm.setGenreFichier(GlobalConstants.GenreFichier.VEHICULE);
 								 }else{
-									 reponse = "Le type d'action doit être Consultation, Insertion, Liaison ou Mise à jour avec un numéro d'immatriculation.";
+									 reponse = "Le type d'action doit ï¿½tre Consultation, Insertion, Liaison ou Mise ï¿½ jour avec un numï¿½ro d'immatriculation.";
 								 }
 						 }else{
 							 if(!OracleDAOUtils.isEmpty(psuMandatForm.getProvince())){
@@ -916,9 +916,9 @@ public class PSUMandatAction extends AbstractAction {
 									 psuMandatForm.setMotCle3("");
 									 psuMandatForm.setGenreFichier(GlobalConstants.GenreFichier.VEHICULE);
 								 }else{
-									 reponse = "Le type d'action doit être Insertion ou Recherche avec une province.";
+									 reponse = "Le type d'action doit ï¿½tre Insertion ou Recherche avec une province.";
 								 }
-							 }else{//Vérification des critères de narrations
+							 }else{//Vï¿½rification des critï¿½res de narrations
 								if((!OracleDAOUtils.isEmpty(psuMandatForm.getMotCle1())) || (!OracleDAOUtils.isEmpty(psuMandatForm.getMotCle2())) || (!OracleDAOUtils.isEmpty(psuMandatForm.getMotCle3()))){
 									if((action.equals(GlobalConstants.TypeAction.AJOUT)) ||
 									   (action.equals(GlobalConstants.TypeAction.RECHERCHE))){
@@ -939,7 +939,7 @@ public class PSUMandatAction extends AbstractAction {
 										  psuMandatForm.setImmatriculation("");
 										  psuMandatForm.setGenreFichier(GlobalConstants.GenreFichier.NARRATION);
 									  }else{
-										  reponse = "Le type d'action doit être Insertion ou Recherche avec les mots-clés.";
+										  reponse = "Le type d'action doit ï¿½tre Insertion ou Recherche avec les mots-clï¿½s.";
 									  }
 								}
 							 }
@@ -957,11 +957,11 @@ public class PSUMandatAction extends AbstractAction {
   }
 
   /**
-   * Cette fonction centrale est appelée par toutes les actions effectuées par 
-   * l'application (recherche, consultation, liaison, mise-à-jour, insertion) pour
-   * vérifier si un mandat est associé aux données traitées. Si c'est le cas, une 
-   * entrée est créée dans la table CS_CONSIGNATION_ACTION et un message est envoyée
-   * aux intervenants qui ont demandé le suivi.
+   * Cette fonction centrale est appelï¿½e par toutes les actions effectuï¿½es par 
+   * l'application (recherche, consultation, liaison, mise-ï¿½-jour, insertion) pour
+   * vï¿½rifier si un mandat est associï¿½ aux donnï¿½es traitï¿½es. Si c'est le cas, une 
+   * entrï¿½e est crï¿½ï¿½e dans la table CS_CONSIGNATION_ACTION et un message est envoyï¿½e
+   * aux intervenants qui ont demandï¿½ le suivi.
    * 
    * @param psuMandatForm
    * @return
@@ -970,7 +970,7 @@ public class PSUMandatAction extends AbstractAction {
   					PSUMandatForm psuMandatForm, String genreFichier, String action)
   		 throws IOException, ServletException {
 	
-	//log.fine("Vérification d'un mandat PSU");
+	//log.debug("Vï¿½rification d'un mandat PSU");
 	ValueListIterator results;
 	ListeCache listeCache = ListeCache.getInstance();
 	
@@ -987,8 +987,8 @@ public class PSUMandatAction extends AbstractAction {
 			String dateAction = TimestampFormat.format(new Timestamp(System.currentTimeMillis()),subject.getLocale(),true);
 			boolean traitement = false;
 			while(it.hasNext()){
-			    //Un mandat a été trouvé. Un message est envoyé et une incription
-			    //est effectuée dans la table cs_consignation_action
+			    //Un mandat a ï¿½tï¿½ trouvï¿½. Un message est envoyï¿½ et une incription
+			    //est effectuï¿½e dans la table cs_consignation_action
 				psuMandat = (PSUMandat)it.next();
 				PSUMandatHtmlForm psuMandatForm2 = new PSUMandatForm();
 				ValueObjectMapper.convertPSUMandat(psuMandat, psuMandatForm2,subject.getLocale());
@@ -1010,7 +1010,7 @@ public class PSUMandatAction extends AbstractAction {
 					message = psuMandatForm2.getMessage();
 				}
 				
-				//Lecture des données du mandat à afficher dans le message, selon le genre de fichier. 
+				//Lecture des donnï¿½es du mandat ï¿½ afficher dans le message, selon le genre de fichier. 
 				if(genreFichier.equals(GlobalConstants.GenreFichier.SUJET)){
 					traitement = true;
 					if(!OracleDAOUtils.isEmpty(psuMandatForm.getFicheSujet())){
@@ -1024,13 +1024,13 @@ public class PSUMandatAction extends AbstractAction {
 						}
 					}
 					if(action.equals(GlobalConstants.TypeAction.LIAISON)){
-						message = message + "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Élément ajouté : " + genreFichierAction;
+						message = message + "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ï¿½lï¿½ment ajoutï¿½ : " + genreFichierAction;
 						if(!OracleDAOUtils.isEmpty(psuMandatForm.getReference1())){
 							message = message + " - " + psuMandatForm.getReference1();
 						}
 					}
 					if(action.equals(GlobalConstants.TypeAction.SUPPRESSION)){
-						message = message + "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Élément supprimé : " + genreFichierAction;
+						message = message + "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ï¿½lï¿½ment supprimï¿½ : " + genreFichierAction;
 						if(!OracleDAOUtils.isEmpty(psuMandatForm.getReference1())){
 							message = message + " - " + psuMandatForm.getReference1();
 						}
@@ -1040,13 +1040,13 @@ public class PSUMandatAction extends AbstractAction {
 				if(genreFichier.equals(GlobalConstants.GenreFichier.DOSSIER)){
 					traitement = true;
 					if(action.equals(GlobalConstants.TypeAction.LIAISON)){
-						message = message + "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Élément ajouté : " + genreFichierAction;
+						message = message + "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ï¿½lï¿½ment ajoutï¿½ : " + genreFichierAction;
 						if(!OracleDAOUtils.isEmpty(psuMandatForm.getReference1())){
 							message = message + " - " + psuMandatForm.getReference1();
 						}
 					}
 					if(action.equals(GlobalConstants.TypeAction.SUPPRESSION)){
-						message = message + "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Élément supprimé : " + genreFichierAction;
+						message = message + "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ï¿½lï¿½ment supprimï¿½ : " + genreFichierAction;
 						if(!OracleDAOUtils.isEmpty(psuMandatForm.getReference1())){
 							message = message + " - " + psuMandatForm.getReference1();
 						}
@@ -1054,10 +1054,10 @@ public class PSUMandatAction extends AbstractAction {
 					//if((action.equals(GlobalConstants.TypeAction.CONSULTATION)) || (action.equals(GlobalConstants.TypeAction.MISE_A_JOUR)) || (action.equals(GlobalConstants.TypeAction.INSERTION))){
 						if(!OracleDAOUtils.isEmpty(psuMandatForm.getNumeroCardex())){
 							reference = psuMandatForm.getNumeroCardex();
-							message = message + "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Numéro Cardex : " + reference;
+							message = message + "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Numï¿½ro Cardex : " + reference;
 						}
 						if(!OracleDAOUtils.isEmpty(psuMandatForm.getNumeroDossier())){
-							message = message + "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Numéro de dossier : " + psuMandatForm.getNumeroDossier();
+							message = message + "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Numï¿½ro de dossier : " + psuMandatForm.getNumeroDossier();
 						}
 					//}
 				}
@@ -1065,47 +1065,47 @@ public class PSUMandatAction extends AbstractAction {
 				if(genreFichier.equals(GlobalConstants.GenreFichier.SOCIETE)){
 					traitement = true;
 					if(action.equals(GlobalConstants.TypeAction.LIAISON)){
-						message = message + "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Élément ajouté : " + genreFichierAction;
+						message = message + "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ï¿½lï¿½ment ajoutï¿½ : " + genreFichierAction;
 						if(!OracleDAOUtils.isEmpty(psuMandatForm.getReference1())){
 							message = message + " - " + psuMandatForm.getReference1();
 						}
 					}
 					if(action.equals(GlobalConstants.TypeAction.SUPPRESSION)){
-						message = message + "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Élément supprimé : " + genreFichierAction;
+						message = message + "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ï¿½lï¿½ment supprimï¿½ : " + genreFichierAction;
 						if(!OracleDAOUtils.isEmpty(psuMandatForm.getReference1())){
 							message = message + " - " + psuMandatForm.getReference1();
 						}
 					}
 					if(!OracleDAOUtils.isEmpty(psuMandatForm.getFicheSociete())){
-						message = message + "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Société : " + psuMandatForm.getFicheSociete();
+						message = message + "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sociï¿½tï¿½ : " + psuMandatForm.getFicheSociete();
 					}
 					if(!OracleDAOUtils.isEmpty(psuMandatForm.getSocieteNom())){
 						reference = psuMandatForm.getSocieteNom();
-						message = message + "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nom de la société : " + reference;
+						message = message + "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nom de la sociï¿½tï¿½ : " + reference;
 					}
 				}
 				if(genreFichier.equals(GlobalConstants.GenreFichier.VEHICULE)){
 					traitement = true;
 					if(action.equals(GlobalConstants.TypeAction.LIAISON)){
-						message = message + "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Élément ajouté : " + genreFichierAction;
+						message = message + "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ï¿½lï¿½ment ajoutï¿½ : " + genreFichierAction;
 						if(!OracleDAOUtils.isEmpty(psuMandatForm.getReference1())){
 							message = message + " - " + psuMandatForm.getReference1();
 						}
 					}
 					if(action.equals(GlobalConstants.TypeAction.SUPPRESSION)){
-						message = message + "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Élément supprimé : " + genreFichierAction;
+						message = message + "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ï¿½lï¿½ment supprimï¿½ : " + genreFichierAction;
 						if(!OracleDAOUtils.isEmpty(psuMandatForm.getReference1())){
 							message = message + " - " + psuMandatForm.getReference1();
 						}
 					}
 					if(!OracleDAOUtils.isEmpty(psuMandatForm.getImmatriculation())){
 						reference = psuMandatForm.getImmatriculation();
-						message = message + "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Véhicule : " + reference;
+						message = message + "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Vï¿½hicule : " + reference;
 					}
 				}
 				if(genreFichier == GlobalConstants.GenreFichier.NARRATION){
-				  //Les narrations constituent un cas spécial. Pour chaque mot-clé de
-				  //chaque mandat retourné, on effectue une vérification avec les valeurs
+				  //Les narrations constituent un cas spï¿½cial. Pour chaque mot-clï¿½ de
+				  //chaque mandat retournï¿½, on effectue une vï¿½rification avec les valeurs
 				  //saisies soit dans une recherche, soit dans un ajout.
 				  String motcle1 = " ";
 				  String motcle2 = " ";
@@ -1126,7 +1126,7 @@ public class PSUMandatAction extends AbstractAction {
 					  	    || (psuMandatForm.getMotCle1().toUpperCase().equals(motcle3.toUpperCase()))){
 								traitement = true;
 								reference = psuMandatForm.getMotCle1();
-								message = message + "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mot clé cherché : " + reference;
+								message = message + "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mot clï¿½ cherchï¿½ : " + reference;
 					  	    }
 				  	}
 					if(!OracleDAOUtils.isEmpty(psuMandatForm.getMotCle2())){
@@ -1135,7 +1135,7 @@ public class PSUMandatAction extends AbstractAction {
 							|| (psuMandatForm.getMotCle2().toUpperCase().equals(motcle3.toUpperCase()))){
 								traitement = true;
 								reference = psuMandatForm.getMotCle2();
-								message = message + "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mot clé cherché : " + reference;
+								message = message + "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mot clï¿½ cherchï¿½ : " + reference;
 							}
 					}
 					if(!OracleDAOUtils.isEmpty(psuMandatForm.getMotCle3())){
@@ -1144,35 +1144,35 @@ public class PSUMandatAction extends AbstractAction {
 							|| (psuMandatForm.getMotCle3().toUpperCase().equals(motcle3.toUpperCase()))){
 								traitement = true;
 								reference = psuMandatForm.getMotCle3();
-								message = message + "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mot clé cherché : " + reference;
+								message = message + "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mot clï¿½ cherchï¿½ : " + reference;
 							}
 					}
 				  }//recherche
 				  if(action.equals(GlobalConstants.TypeAction.AJOUT)){
-				  	 //On vérifie si les mots-clés se retrouvent dans la narration qui vient d'être saisie
+				  	 //On vï¿½rifie si les mots-clï¿½s se retrouvent dans la narration qui vient d'ï¿½tre saisie
 					if(!OracleDAOUtils.isEmpty(psuMandatForm2.getMotCle1())){
 						if(psuMandatForm.getReference1().toUpperCase().indexOf(psuMandatForm2.getMotCle1().toUpperCase()) > -1){
 							traitement = true;
 							reference = psuMandatForm2.getMotCle1();
-							message = message + "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mot clé cherché : " + reference;
+							message = message + "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mot clï¿½ cherchï¿½ : " + reference;
 						}
 					}
 					if(!OracleDAOUtils.isEmpty(psuMandatForm2.getMotCle2())){
 						if(psuMandatForm.getReference1().toUpperCase().indexOf(psuMandatForm2.getMotCle2().toUpperCase()) > -1){
 							traitement = true;
 							reference = psuMandatForm2.getMotCle2();
-							message = message + "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mot clé cherché : " + reference;
+							message = message + "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mot clï¿½ cherchï¿½ : " + reference;
 						}
 					}
 					if(!OracleDAOUtils.isEmpty(psuMandatForm2.getMotCle3())){
 						if(psuMandatForm.getReference1().toUpperCase().indexOf(psuMandatForm2.getMotCle3().toUpperCase()) > -1){
 							traitement = true;
 							reference = psuMandatForm2.getMotCle3();
-							message = message + "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mot clé cherché : " + reference;
+							message = message + "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mot clï¿½ cherchï¿½ : " + reference;
 						}
 					}
 					if(traitement){
-						//Si un mot clé a été trouvé, on complète le message pour indiquer l'élément auquel la narration a été ajoutée.
+						//Si un mot clï¿½ a ï¿½tï¿½ trouvï¿½, on complï¿½te le message pour indiquer l'ï¿½lï¿½ment auquel la narration a ï¿½tï¿½ ajoutï¿½e.
 						if(psuMandatForm.getGenreFichier().equals(GlobalConstants.GenreFichier.SUJET)){
 						   message = message + "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sujet : " + psuMandatForm.getFicheSujet();
 						   psuMandatForm.setReference1(psuMandatForm.getFicheSujet());
@@ -1182,18 +1182,18 @@ public class PSUMandatAction extends AbstractAction {
 						   psuMandatForm.setReference1(psuMandatForm.getNumeroCardex());
 						}
 						if(psuMandatForm.getGenreFichier().equals(GlobalConstants.GenreFichier.SOCIETE)){
-						   message = message + "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Société : " + psuMandatForm.getSocieteNom();
+						   message = message + "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sociï¿½tï¿½ : " + psuMandatForm.getSocieteNom();
 						   psuMandatForm.setReference1(psuMandatForm.getSocieteNom());
 						}
 						if(psuMandatForm.getGenreFichier().equals(GlobalConstants.GenreFichier.VEHICULE)){
-						   message = message + "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Véhicule : " + psuMandatForm.getImmatriculation();
+						   message = message + "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Vï¿½hicule : " + psuMandatForm.getImmatriculation();
 						   psuMandatForm.setReference1(psuMandatForm.getImmatriculation());
 						}
 					}
 				  }//Insertion
 				}//narration
-				//Si les conditions d'un mandat ont été rencontrées, on envoie un message aux destinataires
-				//concernés et on crée une entrée dans la table CS_CONSIGNATION_ACTION.
+				//Si les conditions d'un mandat ont ï¿½tï¿½ rencontrï¿½es, on envoie un message aux destinataires
+				//concernï¿½s et on crï¿½e une entrï¿½e dans la table CS_CONSIGNATION_ACTION.
 				if(traitement){				
 					CardexUser user = (CardexUser)subject.getUser();
 					
@@ -1204,7 +1204,7 @@ public class PSUMandatAction extends AbstractAction {
 						envoiCourriel(subject, destinataireA, destinataireCC, destinataireCCI, message);
 					}
 					String dateEnvoi = TimestampFormat.format(new Timestamp(System.currentTimeMillis()),subject.getLocale(),true);
-					//Ecriture de l'accès
+					//Ecriture de l'accï¿½s
 					ConsignationActionPSUForm consignationActionPSUForm = new ConsignationActionPSUForm(); 
 					consignationActionPSUForm.setDateConsignation(dateAction);
 					consignationActionPSUForm.setDateCourriel(dateEnvoi);
@@ -1213,7 +1213,7 @@ public class PSUMandatAction extends AbstractAction {
 					consignationActionPSUForm.setIntervenant(user.getCode());
 					consignationActionPSUForm.setTypeAction(action);
 					consignationActionPSUForm.setReferenceSource(reference);
-					consignationActionPSUForm.setReferenceAction(psuMandatForm.getReference1()); //Élément en liaison
+					consignationActionPSUForm.setReferenceAction(psuMandatForm.getReference1()); //ï¿½lï¿½ment en liaison
 					consignationActionPSUForm.setGenreFichierAction(psuMandatForm.getGenreFichier());
 					ConsignationActionPSU  consignationActionPSU = new ConsignationActionPSUVO();
 					ValueObjectMapper.convertConsignationActionPSUHtmlForm(consignationActionPSUForm, consignationActionPSU, subject.getLocale());
@@ -1288,7 +1288,7 @@ public class PSUMandatAction extends AbstractAction {
 			message.setSubject(objet, "iso-8859-1");
 
 			// set the message body
-			//On force l'acceptation de caractères latins avec setContent au lieu de setText
+			//On force l'acceptation de caractï¿½res latins avec setContent au lieu de setText
 			//message.setText(texte);
 			message.setContent(texte, "text/html;charset=\"UTF-8\"");
 

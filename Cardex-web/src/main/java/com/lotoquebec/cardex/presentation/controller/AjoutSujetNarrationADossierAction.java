@@ -5,7 +5,6 @@ package com.lotoquebec.cardex.presentation.controller;
 
 import java.io.IOException;
 import java.sql.Timestamp;
-import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +15,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessages;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
 
 import com.lotoquebec.cardex.business.Adresse;
@@ -38,7 +39,6 @@ import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
 import com.lotoquebec.cardexCommun.exception.BusinessException;
 import com.lotoquebec.cardexCommun.exception.BusinessResourceException;
 import com.lotoquebec.cardexCommun.exception.ValueObjectMapperException;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 
 /**
  * @author levassc
@@ -49,13 +49,13 @@ public class AjoutSujetNarrationADossierAction extends DossierAction {
      * L'instance du gestionnaire de journalisation.
      */
 	private final Logger      log =
-        (Logger)LoggerCardex.getLogger((this.getClass()));
+        LoggerFactory.getLogger((this.getClass()));
 	
 	
     public ActionForward ajoutSujet(CardexAuthenticationSubject subject,
 			ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException, ParserConfigurationException, SAXException {
-    	log.fine("Ajout d'un sujet à partir d'une grille de narration");
+    	log.debug("Ajout d'un sujet ï¿½ partir d'une grille de narration");
 		ActionMessages errors = new ActionMessages();
 		
 		try {
@@ -79,12 +79,12 @@ public class AjoutSujetNarrationADossierAction extends DossierAction {
 	            Adresse adresse = obtenirAdresseVO(subject, sujetNarration);
 	            creationAdresseLienSujet(subject, sujetVONew, adresse);
 			}
-			//On ne fait pas les caractérisques
+			//On ne fait pas les caractï¿½risques
 
-			// Sauvegarder la narration si elle a changée
+			// Sauvegarder la narration si elle a changï¿½e
             //sauvegardeNarration(subject, narrationForm);
 			
-			//Vérification d'un mandat PSU associé à la consultation d'un dossier
+			//Vï¿½rification d'un mandat PSU associï¿½ ï¿½ la consultation d'un dossier
 			verificationMandat(subject, dossierLierANarration);
 
 			// retour consultation dossier
@@ -130,7 +130,7 @@ public class AjoutSujetNarrationADossierAction extends DossierAction {
 	}*/
 
 	private void creationAdresseLienSujet(CardexAuthenticationSubject subject, Sujet sujetVONew, Adresse adresse) throws BusinessResourceException, BusinessException {
-		log.fine("Ajout d'une adresse et lien avec le sujet de la narration");
+		log.debug("Ajout d'une adresse et lien avec le sujet de la narration");
 		SujetBusinessDelegate delegate = new SujetBusinessDelegate();
 		adresse.setLien( sujetVONew.getCle() );
 		adresse.setLienSite( sujetVONew.getSite() );
@@ -169,7 +169,7 @@ public class AjoutSujetNarrationADossierAction extends DossierAction {
      * @throws BusinessException
 	 */
 	private void lierSujet(CardexAuthenticationSubject subject, Dossier dossierLierANarration, Sujet sujetVONew) throws BusinessResourceException, BusinessException{
-		log.fine("Liaison d'un sujet au dossier.");
+		log.debug("Liaison d'un sujet au dossier.");
 		DossierBusinessDelegate delegate = new DossierBusinessDelegate();
 		
 		delegate.addLienSujet(subject, dossierLierANarration, sujetVONew);
@@ -182,7 +182,7 @@ public class AjoutSujetNarrationADossierAction extends DossierAction {
 		dossierCritere.setCle( Long.parseLong(narrationForm.getLien()) );
 		dossierCritere.setSite( Long.parseLong(narrationForm.getLienSite()) );
 
-        // Exécution de la recherche via le service d'affaire(BusinessDelegate)
+        // Exï¿½cution de la recherche via le service d'affaire(BusinessDelegate)
 		Dossier dossierLierANarration = delegate.find(subject, dossierCritere);
 
         if (dossierLierANarration == null)
@@ -210,14 +210,14 @@ public class AjoutSujetNarrationADossierAction extends DossierAction {
 	}
 
 	/**
-     * Création d'un sujet
+     * Crï¿½ation d'un sujet
 	 * @param subject
 	 * @param sujetVO
      * @throws BusinessResourceException
      * @throws BusinessException
 	 */
 	private void creationSujet(CardexAuthenticationSubject subject, Sujet sujetVO) throws BusinessResourceException, BusinessException {
-		log.fine("Création d'un sujet.");
+		log.debug("Crï¿½ation d'un sujet.");
 		SujetBusinessDelegate delegate = new SujetBusinessDelegate();
 		sujetVO.setConfidentialite( GlobalConstants.Confidentialite.UN );
 		Sujet sujetVONew = delegate.create(subject, sujetVO);

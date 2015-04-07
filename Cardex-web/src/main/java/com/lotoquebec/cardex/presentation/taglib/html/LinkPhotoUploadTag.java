@@ -3,11 +3,12 @@ package com.lotoquebec.cardex.presentation.taglib.html;
 import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import javax.servlet.jsp.JspException;
 
 import org.apache.struts.taglib.TagUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardex.presentation.model.DossierHtmlForm;
 import com.lotoquebec.cardex.presentation.model.SocieteHtmlForm;
@@ -16,17 +17,16 @@ import com.lotoquebec.cardex.presentation.model.VehiculeHtmlForm;
 import com.lotoquebec.cardex.securite.GestionnaireSecuriteCardex;
 import com.lotoquebec.cardexCommun.authentication.AuthenticationSubject;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.presentation.taglib.html.LinkCardexTag;
 import com.lotoquebec.cardexCommun.presentation.taglib.html.TagLibUtils;
 import com.lotoquebec.cardexCommun.securite.UIComponentState;
 import com.lotoquebec.cardexCommun.util.StringUtils;
 
 /**
- * Genere un hyperlink URL-encoded au URI spécifié avec
- * les paramètres de query string correspondant aux
- * propriétés cle, site, et mot de passe du dossier
- * spécifié.
+ * Genere un hyperlink URL-encoded au URI spï¿½cifiï¿½ avec
+ * les paramï¿½tres de query string correspondant aux
+ * propriï¿½tï¿½s cle, site, et mot de passe du dossier
+ * spï¿½cifiï¿½.
  *
  * @see org.apache.struts.taglib.html.LinkTag
  * @author $Author: mlibersan $
@@ -38,7 +38,7 @@ public class LinkPhotoUploadTag extends LinkCardexTag {
      * L'instance du gestionnaire de journalisation.
      */
 	private final Logger      log =
-        (Logger)LoggerCardex.getLogger((this.getClass()));
+        LoggerFactory.getLogger((this.getClass()));
 
     private String source;
 
@@ -75,10 +75,10 @@ public class LinkPhotoUploadTag extends LinkCardexTag {
         return super.doStartTag();
       }
 
-      log.fine("doStartTag()");
-      log.fine("   source '" + this.source + "'");
+      log.debug("doStartTag()");
+      log.debug("   source '" + this.source + "'");
 
-      // Cas spécial pour le nom anchors
+      // Cas spï¿½cial pour le nom anchors
       if (linkName != null) {
           StringBuffer results = new StringBuffer("<a name=\"");
           results.append(linkName);
@@ -101,9 +101,9 @@ public class LinkPhotoUploadTag extends LinkCardexTag {
             Map parameters = new HashMap();
             parameters.put("lien",dossierBean.getCle());
             parameters.put("lienSite",dossierBean.getSite());
-            //La confidentialité est ajoutée pour servir de valeur dans le champ
-            //confidentialité de la table LMM_LIEN_MULTIMEDIA. Ce champ est nécessaire
-            //pour des raisons de filtrage des données dans la réplication.
+            //La confidentialitï¿½ est ajoutï¿½e pour servir de valeur dans le champ
+            //confidentialitï¿½ de la table LMM_LIEN_MULTIMEDIA. Ce champ est nï¿½cessaire
+            //pour des raisons de filtrage des donnï¿½es dans la rï¿½plication.
             parameters.put("confidentialite",dossierBean.getConfidentialite());
 
             pageContext.setAttribute("source.parameters",parameters);
@@ -152,7 +152,7 @@ public class LinkPhotoUploadTag extends LinkCardexTag {
               (messages.getMessage("rewrite.url", e.toString()));
       }
 
-      // Generation de la balise ouvrante de l'élément anchor
+      // Generation de la balise ouvrante de l'ï¿½lï¿½ment anchor
       StringBuffer results = new StringBuffer("<a href=\"");
       results.append(url);
       results.append("\" ");
@@ -160,7 +160,7 @@ public class LinkPhotoUploadTag extends LinkCardexTag {
       results.append(prepareEventHandlers());
       results.append(">");
 
-      // Affichage de l'élément dans le output writer
+      // Affichage de l'ï¿½lï¿½ment dans le output writer
       tagUtils.write(pageContext, results.toString());
 
       // Evalaution du  body pour ce tag

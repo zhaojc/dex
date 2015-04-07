@@ -2,16 +2,14 @@ package com.lotoquebec.cardexCommun.util;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import com.lotoquebec.cardexCommun.GlobalConstants;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.securite.RolesCacheSecuriteCache;
 
 public class ViderCacheUtil {
 
 	private static ViderCacheUtil viderCacheUtil = null;
-	//private final static Logger log = (Logger)LoggerCardex.getLogger(ViderCacheUtil.class);
+	//private final static Logger log = LoggerFactory.getLogger(ViderCacheUtil.class);
 	
 	private ViderCacheUtil(){}
 	
@@ -31,7 +29,7 @@ public class ViderCacheUtil {
 	
 	/**
 	 * On ne peut pas cibler la classe ou la liste exacte.
-	 * Ça ne fonctionne pas avec la DistributedCache.
+	 * ï¿½a ne fonctionne pas avec la DistributedCache.
 	 * Il faut d'abord flager que c'est fait avant de le faire..
 	 */
  	private void vider() {
@@ -43,7 +41,7 @@ public class ViderCacheUtil {
 		viderCacheListeMap.put(nomReference, false);
 		DistributedMapUtil.getInstance().assignerDistributedCache(GlobalConstants.Configuration.SERVICES_VIDER_CACHE_LISTE, viderCacheListeMap);
 
-		//Liste de caches à vider.
+		//Liste de caches ï¿½ vider.
 		ListeCache.getInstance().vider();
 		RolesCacheSecuriteCache.getInstance().vider();
 	}

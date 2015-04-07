@@ -5,7 +5,6 @@ package com.lotoquebec.cardex.presentation.controller;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +15,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessages;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardex.business.Inscription;
 import com.lotoquebec.cardex.business.delegate.DossierBusinessDelegate;
@@ -29,7 +30,6 @@ import com.lotoquebec.cardexCommun.exception.BusinessException;
 import com.lotoquebec.cardexCommun.exception.BusinessResourceException;
 import com.lotoquebec.cardexCommun.exception.ValueObjectMapperException;
 import com.lotoquebec.cardexCommun.integration.dao.cleListe.cleSQLListeCache.SiteApplicableTableValeurCle;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.presentation.util.AbstractAction;
 import com.lotoquebec.cardexCommun.presentation.util.LabelValueBean;
 import com.lotoquebec.cardexCommun.user.CardexUser;
@@ -37,7 +37,7 @@ import com.lotoquebec.cardexCommun.util.ListeCache;
 import com.lotoquebec.cardexCommun.util.StringUtils;
 
 /**
- * Cette classe gère les événements en rapport
+ * Cette classe gï¿½re les ï¿½vï¿½nements en rapport
  * avec le cas d'utilisation onglets inscription.
  *
  * @author $Author: mlibersan $
@@ -49,18 +49,18 @@ public class InscriptionAction extends AbstractAction {
      * L'instance du gestionnaire de journalisation.
      */
 	private final Logger      log =
-        (Logger)LoggerCardex.getLogger((this.getClass()));
+        LoggerFactory.getLogger((this.getClass()));
 
     /**
      * <p>
      *
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortieif an input/output survient
+     * @exception IOException si une erreur d'entrï¿½e/sortieif an input/output survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward create(CardexAuthenticationSubject subject,
@@ -68,7 +68,7 @@ public class InscriptionAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Création d'une inscription");
+        log.debug("Crï¿½ation d'une inscription");
 
         ActionErrors errors = new ActionErrors();
 
@@ -81,12 +81,12 @@ public class InscriptionAction extends AbstractAction {
             
             inscriptionForm.init( subject );
             assignerTousSiteApplicable(subject, inscriptionForm, dossierForm);
-            //Pour les jeux en ligne, seul le site EspaceJeux doit être disponible.
+            //Pour les jeux en ligne, seul le site EspaceJeux doit ï¿½tre disponible.
             if(dossierForm.getCategorie().equals(GlobalConstants.Categorie.AE_ESPACEJEUX)){
 	            String[] sitesChoisis = new String[1];
 	            sitesChoisis[0] = GlobalConstants.SiteMaisonJeux.ESPACEJEUX;
 	            inscriptionForm.setSitesChoisis(sitesChoisis);
-	            //La période est obligatoirement fixe.
+	            //La pï¿½riode est obligatoirement fixe.
 	            inscriptionForm.setPeriode(GlobalConstants.Periode.FIXE);
             }
             request.getSession().setAttribute("inscription",inscriptionForm);
@@ -103,7 +103,7 @@ public class InscriptionAction extends AbstractAction {
     }
 
 	/**
-     * On assigne "tous les sites applicables" si c'est un dossier d'"accès interdit"
+     * On assigne "tous les sites applicables" si c'est un dossier d'"accï¿½s interdit"
      * ou "avis de guet".
      * @param subject
      * @param inscription
@@ -140,19 +140,19 @@ public class InscriptionAction extends AbstractAction {
     
 	/**
      * <p>
-     * Cet événement survient lorsque l'utilisateur change l'entité dans l'écran d'ajout
-     * d'une inscription.  Cette opération n'est normalement permise qu'aux Investigations.
-     * Elle permet de rafraîchir la liste des sites disponibles pour l'origine de la demande.
+     * Cet ï¿½vï¿½nement survient lorsque l'utilisateur change l'entitï¿½ dans l'ï¿½cran d'ajout
+     * d'une inscription.  Cette opï¿½ration n'est normalement permise qu'aux Investigations.
+     * Elle permet de rafraï¿½chir la liste des sites disponibles pour l'origine de la demande.
      * <p>
      *
-     * @param subject Le sujet authentifié
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param subject Le sujet authentifiï¿½
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortieif an input/output survient
+     * @exception IOException si une erreur d'entrï¿½e/sortieif an input/output survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward refreshInscription(CardexAuthenticationSubject subject,
@@ -161,21 +161,21 @@ public class InscriptionAction extends AbstractAction {
                                  HttpServletRequest request,
                                  HttpServletResponse response) throws IOException,
                                  ServletException {
-        log.fine("Refresh ecran d'inscription");
+        log.debug("Refresh ecran d'inscription");
 
         return mapping.findForward("success");
     }
     /**
      * <p>
-     * La consultation d'une inscription sert à mettre à jour les champs sur les rencontres.
-     * La fonction n'est en pricipe accessible qu'aux consultants des centres d'évaluation.
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * La consultation d'une inscription sert ï¿½ mettre ï¿½ jour les champs sur les rencontres.
+     * La fonction n'est en pricipe accessible qu'aux consultants des centres d'ï¿½valuation.
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortieif an input/output survient
+     * @exception IOException si une erreur d'entrï¿½e/sortieif an input/output survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward consulter(CardexAuthenticationSubject subject,
@@ -183,7 +183,7 @@ public class InscriptionAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Consultation d'une inscription");
+        log.debug("Consultation d'une inscription");
 
         ActionMessages errors = new ActionMessages();
 		CardexUser  cardexUser = (CardexUser)subject.getUser();
@@ -219,21 +219,21 @@ public class InscriptionAction extends AbstractAction {
 
     /**
      * <p>
-     * La mise à jour d'une inscription sert à inscrire les informations sur les rencontres.
-     * La fonction n'est en pricipe accessible qu'aux consultants des centres d'évaluation.
-     * L'inscription permet de rendre inactif le contrat (tâche en différé) sans avoir
-     * à modifier la nature du contrat (et donc de conserver l'historique des données).
-     * La fonction vise à remplacer la procédure en place qui consistait à rendre un 
-     * contrat bonifié de Montréal en contrat fixe pour qu'il soit invalidé par la tâche en 
-     * différé. Cette façon de faire modifiait la nature du contrat et donc faisait
-     * perdre l'historique des données.
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * La mise ï¿½ jour d'une inscription sert ï¿½ inscrire les informations sur les rencontres.
+     * La fonction n'est en pricipe accessible qu'aux consultants des centres d'ï¿½valuation.
+     * L'inscription permet de rendre inactif le contrat (tï¿½che en diffï¿½rï¿½) sans avoir
+     * ï¿½ modifier la nature du contrat (et donc de conserver l'historique des donnï¿½es).
+     * La fonction vise ï¿½ remplacer la procï¿½dure en place qui consistait ï¿½ rendre un 
+     * contrat bonifiï¿½ de Montrï¿½al en contrat fixe pour qu'il soit invalidï¿½ par la tï¿½che en 
+     * diffï¿½rï¿½. Cette faï¿½on de faire modifiait la nature du contrat et donc faisait
+     * perdre l'historique des donnï¿½es.
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortieif an input/output survient
+     * @exception IOException si une erreur d'entrï¿½e/sortieif an input/output survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward update(CardexAuthenticationSubject subject,
@@ -241,7 +241,7 @@ public class InscriptionAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Mise à jour d'une inscription");
+        log.debug("Mise ï¿½ jour d'une inscription");
 
         ActionMessages errors = new ActionMessages();
 
@@ -249,10 +249,10 @@ public class InscriptionAction extends AbstractAction {
         	verifierToken(request);
         	DossierBusinessDelegate delegate = new DossierBusinessDelegate();
         	InscriptionForm inscriptionForm = (InscriptionForm)form;
-        	//On s'assure qu'une date a été saisie.
+        	//On s'assure qu'une date a ï¿½tï¿½ saisie.
         	if (StringUtils.isNotEmpty(inscriptionForm.getDateRencontreFinale()) 
         	|| StringUtils.isNotEmpty(inscriptionForm.getDateRencontreInitiale())) {
-        		//On vide l'intervenant si les dates de rencontre n'ont pas été saisiee.
+        		//On vide l'intervenant si les dates de rencontre n'ont pas ï¿½tï¿½ saisiee.
             	if (StringUtils.isEmpty(inscriptionForm.getDateRencontreFinale())) {
             		inscriptionForm.setIntervenantRencontreFinale("");
             	}

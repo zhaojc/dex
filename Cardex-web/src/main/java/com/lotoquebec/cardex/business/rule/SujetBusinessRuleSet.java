@@ -5,7 +5,9 @@ package com.lotoquebec.cardex.business.rule;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.logging.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardex.business.Sujet;
 import com.lotoquebec.cardex.business.exception.SujetBusinessRuleException;
@@ -14,12 +16,11 @@ import com.lotoquebec.cardexCommun.business.BusinessRuleSet;
 import com.lotoquebec.cardexCommun.exception.BusinessException;
 import com.lotoquebec.cardexCommun.exception.BusinessRuleException;
 import com.lotoquebec.cardexCommun.exception.BusinessRuleExceptionHandle;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.util.StringUtils;
 import com.lotoquebec.cardexCommun.util.ValiderNAS;
 
 /**
- * Cette classe valide l'ensemble des règles d'affaire applicable aux sujets.
+ * Cette classe valide l'ensemble des rï¿½gles d'affaire applicable aux sujets.
  *
  * @see com.lotoquebec.cardexCommun.business.BusinessRuleSet
  * @author $Author: mlibersan $
@@ -31,7 +32,7 @@ public class SujetBusinessRuleSet implements BusinessRuleSet {
      * L'instance du gestionnaire de journalisation.
      */
 	private final Logger      log =
-        (Logger)LoggerCardex.getLogger((this.getClass()));
+        LoggerFactory.getLogger((this.getClass()));
 
     /**
      * Construit une instance de SujetBusinessRuleSet
@@ -39,19 +40,19 @@ public class SujetBusinessRuleSet implements BusinessRuleSet {
     public SujetBusinessRuleSet() {}
 
     /**
-     * Valide les règles d'affaires applicable à un sujet.
+     * Valide les rï¿½gles d'affaires applicable ï¿½ un sujet.
      *
      * @param businessObject Le sujet
      *
-     * @throws BusinessRuleException si les règles d'affaire
-     * d'un objet Sujet ne sont pas respectées.
+     * @throws BusinessRuleException si les rï¿½gles d'affaire
+     * d'un objet Sujet ne sont pas respectï¿½es.
      * @throws BusinessException 
      * @throws IllegalArgumentException si l'objet d'affaire n'est pas
      * une instance de  com.lotoquebec.cardex.business.Sujet
      */
     public void checkRules(CardexAuthenticationSubject subject, Object businessObject)
             throws BusinessRuleException, BusinessException {
-        log.fine("checkRules()");
+        log.debug("checkRules()");
 
         if (businessObject instanceof Sujet) {
             Sujet sujet = (Sujet) businessObject;
@@ -60,23 +61,23 @@ public class SujetBusinessRuleSet implements BusinessRuleSet {
             checkMotDePasseRule(sujet);
             checkNumeroAssuranceSocial(sujet);
         } else {
-            throw new IllegalArgumentException("L'objet d'affaire doit être une instance de '"
+            throw new IllegalArgumentException("L'objet d'affaire doit ï¿½tre une instance de '"
                                                + Sujet.class.getName()
                                                + "'");
         }
     }
 
     /**
-     * Dates de début supérieure ou égale à 1993-01-01.
+     * Dates de dï¿½but supï¿½rieure ou ï¿½gale ï¿½ 1993-01-01.
      *
      * @param dossier Le dossier
      *
-     * @throws BusinessRuleException si la date de début est trop petite.
+     * @throws BusinessRuleException si la date de dï¿½but est trop petite.
      *
      */
     private void checkMotDePasseRule(Sujet sujet)
             throws BusinessRuleException {
-        log.fine("checkMotDePasseRule()");
+        log.debug("checkMotDePasseRule()");
 
         if (sujet.getMotPasse().trim().equals(sujet.getConfirmationMotPasse().trim())) {
         }else {
@@ -85,8 +86,8 @@ public class SujetBusinessRuleSet implements BusinessRuleSet {
     }
 
     /**
-     * Retourne un DossierBusinessRuleException initialisé avec
-     * l'identificateur de règle.
+     * Retourne un DossierBusinessRuleException initialisï¿½ avec
+     * l'identificateur de rï¿½gle.
      *
      *
      * @param ruleId
@@ -109,12 +110,12 @@ public class SujetBusinessRuleSet implements BusinessRuleSet {
      *
      * @param businessObject Le sujet
      *
-     * @throws BusinessRuleException si les dates de début sont
-     * inférieures ou égales aux dates de fin.
+     * @throws BusinessRuleException si les dates de dï¿½but sont
+     * infï¿½rieures ou ï¿½gales aux dates de fin.
      */
     private void checkDateNaissanceRule(Sujet businessObject)
             throws BusinessRuleException {
-        log.fine("checkDateDebutSuperieurDateFinRule()");
+        log.debug("checkDateDebutSuperieurDateFinRule()");
 
         Timestamp dateNaissance = businessObject.getDateNaissance();
         long typeAge = businessObject.getTypeAge();
@@ -133,7 +134,7 @@ public class SujetBusinessRuleSet implements BusinessRuleSet {
     }
 
     private void checkNumeroAssuranceSocial(Sujet sujet) throws BusinessException {
-		log.fine("checkNumeroAssuranceSocial()");
+		log.debug("checkNumeroAssuranceSocial()");
 		String numeroAssuranceSociale = sujet.getNumeroAssuranceSociale();
 		
 		if (StringUtils.isNotEmpty(numeroAssuranceSociale)

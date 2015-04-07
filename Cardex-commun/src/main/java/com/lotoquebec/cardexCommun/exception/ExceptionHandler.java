@@ -4,21 +4,22 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.lang.Thread.UncaughtExceptionHandler;
-import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardexCommun.GlobalConstants;
 import com.lotoquebec.cardexCommun.authentication.AutentificationCardex;
 import com.lotoquebec.cardexCommun.authentication.AuthenticationSubject;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
 import com.lotoquebec.cardexCommun.log.InformationAcces;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.util.CourrielAction;
 
 public class ExceptionHandler implements UncaughtExceptionHandler{
 
-	private final Logger log = (Logger)LoggerCardex.getLogger((this.getClass()));
+	private final Logger log = LoggerFactory.getLogger((this.getClass()));
 	private static ExceptionHandler exceptionHandler = null;
 	
 	private ExceptionHandler() {
@@ -47,7 +48,7 @@ public class ExceptionHandler implements UncaughtExceptionHandler{
 	
 	public void traiterException(CardexAuthenticationSubject subject, String message, Throwable throwable){
 		throwable.printStackTrace();
-		LoggerCardex.severe(log, message, throwable);
+		log.error("Exception", message, throwable);
 		
 		StringBuilder stringBuilder = new StringBuilder();
 	    Writer writer = new StringWriter();
@@ -71,10 +72,10 @@ public class ExceptionHandler implements UncaughtExceptionHandler{
 			CourrielAction.envoyerCourrielDestinataire(subject, objectMessage, stringBuilder.toString(), GlobalConstants.TypesIntervention.COURRIEL_EXCEPTION, "A");
 		} catch (BusinessResourceException e) {
 			e.printStackTrace();
-			LoggerCardex.severe(log, message, e);
+			log.error("BusinessResourceException", message, e);
 		} catch (DAOException e) {
 			e.printStackTrace();
-			LoggerCardex.severe(log, message, e);
+			log.error("DAOException", message, e);
 		}
 		
 	}

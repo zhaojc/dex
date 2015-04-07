@@ -8,9 +8,11 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.logging.Logger;
 
 import oracle.jdbc.OracleTypes;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoQuebec.correcteurAdresse.util.StringUtils;
 import com.lotoquebec.cardex.business.Adresse;
@@ -21,11 +23,10 @@ import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
 import com.lotoquebec.cardexCommun.exception.DAOException;
 import com.lotoquebec.cardexCommun.integration.dao.DAOConnection;
 import com.lotoquebec.cardexCommun.integration.dao.OracleDAOUtils;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 
 /**
- * Offre tout les services de récupération des informations d'une base de donnée
- * Oracle, relatives aux adresses de sujets ou de sociétés.
+ * Offre tout les services de rï¿½cupï¿½ration des informations d'une base de donnï¿½e
+ * Oracle, relatives aux adresses de sujets ou de sociï¿½tï¿½s.
  *
  * @author $Author: mlibersan $
  * @version $Revision: 1.6 $, $Date: 2002/04/16 20:57:31 $
@@ -34,28 +35,28 @@ import com.lotoquebec.cardexCommun.log.LoggerCardex;
 public class AdresseDAO {
 
 
-    private final Logger log = (Logger)LoggerCardex.getLogger((AdresseDAO.class));
+    private final Logger log = LoggerFactory.getLogger((AdresseDAO.class));
 
     /**
-     * Effectue le travail relatif à une adresse, appelée par la méthode
+     * Effectue le travail relatif ï¿½ une adresse, appelï¿½e par la mï¿½thode
      * "insert", "update", "approbation" ou "delete".
-     * Selon le paramètre "action" il peut s'agir d'une insertion ("I")
-     * d'une mise à jour ("U"), d'une approbation et modification ("M") ou
+     * Selon le paramï¿½tre "action" il peut s'agir d'une insertion ("I")
+     * d'une mise ï¿½ jour ("U"), d'une approbation et modification ("M") ou
      * d'une suppression ("D").
-     * Procédure appelée : CARDEX_LIEN.SP_E_AD_ADRESSE
-     * Date de création : (2002-02-28)
+     * Procï¿½dure appelï¿½e : CARDEX_LIEN.SP_E_AD_ADRESSE
+     * Date de crï¿½ation : (2002-02-28)
      * @author Philippe Caron
-     * @param subject CardexAuthenticationSubject : Données nominatives sur
+     * @param subject CardexAuthenticationSubject : Donnï¿½es nominatives sur
      * l'utilisateur.
-     * @param adresse Adresse : Adresse saisie à l'écran.
+     * @param adresse Adresse : Adresse saisie ï¿½ l'ï¿½cran.
      * @param action  java.lang.String : "U" ou "I".
-     * @param genreFichier String : Code à deux lettres de la table qui lie
+     * @param genreFichier String : Code ï¿½ deux lettres de la table qui lie
      * l'adresse Sujet (SU) ou Societe (SO).
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
-     * @return Adresse Une adresse correspondant à celle éditée.
+     * @return Adresse Une adresse correspondant ï¿½ celle ï¿½ditï¿½e.
      */
     private Adresse editAdresse(CardexAuthenticationSubject subject,
             Adresse adresse, String action, String genreFichier)
@@ -146,19 +147,19 @@ public class AdresseDAO {
     }
 
     /**
-     * Appel la méthode editAdresse pour la création d'une adresse.
-     * Date de création : (2002-02-28)
+     * Appel la mï¿½thode editAdresse pour la crï¿½ation d'une adresse.
+     * Date de crï¿½ation : (2002-02-28)
      * @author Philippe Caron
-     * @param subject CardexAuthenticationSubject : Données nominatives sur
+     * @param subject CardexAuthenticationSubject : Donnï¿½es nominatives sur
      * l'utilisateur.
-     * @param adresse Adresse : Adresse saisie à l'écran.
+     * @param adresse Adresse : Adresse saisie ï¿½ l'ï¿½cran.
      * @param genreFichier String : Code identifiant la table source qui lie une
-     * adresse à un Sujet (SU) ou Societe (SO).
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * adresse ï¿½ un Sujet (SU) ou Societe (SO).
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
-     * @return Adresse Une adresse correspondant à celle insérée.
+     * @return Adresse Une adresse correspondant ï¿½ celle insï¿½rï¿½e.
      */
     public Adresse insert(CardexAuthenticationSubject subject, Adresse adresse,
             String genreFichier) throws DAOException {
@@ -166,17 +167,17 @@ public class AdresseDAO {
     }
 
     /**
-     * Appel de la méthode editAdresse pour la mise à jour d'une adresse.
-     * Date de création : (2002-02-28)
+     * Appel de la mï¿½thode editAdresse pour la mise ï¿½ jour d'une adresse.
+     * Date de crï¿½ation : (2002-02-28)
      * @author Philippe Caron
-     * @param subject CardexAuthenticationSubject : Données nominatives sur
+     * @param subject CardexAuthenticationSubject : Donnï¿½es nominatives sur
      * l'utilisateur.
-     * @param adresse Adresse : Adresse saisie à l'écran.
+     * @param adresse Adresse : Adresse saisie ï¿½ l'ï¿½cran.
      * @param genreFichier String : Code identifiant la table source qui lie une
-     * adresse à un Sujet (SU) ou Societe (SO).
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * adresse ï¿½ un Sujet (SU) ou Societe (SO).
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
      */
     public void update(CardexAuthenticationSubject subject, Adresse adresse,
@@ -185,23 +186,23 @@ public class AdresseDAO {
     }
 
     /**
-     * Appel de la méthode editAdresse pour l'approbation ou la modification
+     * Appel de la mï¿½thode editAdresse pour l'approbation ou la modification
      * d'une adresse.
-     * L'approbation consiste à bloquer toute modification à une adresse.
-     * La modification consiste à permettre de nouveau les modifications à une
-     * adresse approuvée.
-     * Date de création : (2002-02-28)
+     * L'approbation consiste ï¿½ bloquer toute modification ï¿½ une adresse.
+     * La modification consiste ï¿½ permettre de nouveau les modifications ï¿½ une
+     * adresse approuvï¿½e.
+     * Date de crï¿½ation : (2002-02-28)
      * @author Philippe Caron
-     * @param subject CardexAuthenticationSubject : Données nominatives sur
+     * @param subject CardexAuthenticationSubject : Donnï¿½es nominatives sur
      * l'utilisateur.
-     * @param adresse Adresse : Adresse saisie à l'écran.
+     * @param adresse Adresse : Adresse saisie ï¿½ l'ï¿½cran.
      * @param genreFichier String : Code identifiant la table source qui lie une
-     * adresse à un Dossier.
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * adresse ï¿½ un Dossier.
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
-     * @return Adresse Une adresse correspondant à celle modifiée.
+     * @return Adresse Une adresse correspondant ï¿½ celle modifiï¿½e.
      */
     public Adresse approbation(CardexAuthenticationSubject subject,
             Adresse adresse, String genreFichier) throws DAOException {
@@ -209,17 +210,17 @@ public class AdresseDAO {
     }
 
     /**
-     * Appel de la méthode editAdresse pour la suppression d'une adresse.
-     * Date de création : (2002-02-28)
+     * Appel de la mï¿½thode editAdresse pour la suppression d'une adresse.
+     * Date de crï¿½ation : (2002-02-28)
      * @author Philippe Caron
-     * @param subject CardexAuthenticationSubject : Données nominatives sur
+     * @param subject CardexAuthenticationSubject : Donnï¿½es nominatives sur
      * l'utilisateur.
-     * @param adresse Adresse : Adresse saisie à l'écran.
+     * @param adresse Adresse : Adresse saisie ï¿½ l'ï¿½cran.
      * @param genreFichier String : Code identifiant la table source qui lie une
-     * adresse à un Sujet (SU) ou Societe (SO).
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * adresse ï¿½ un Sujet (SU) ou Societe (SO).
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
      */
     public void delete(CardexAuthenticationSubject subject, Adresse adresse,
@@ -228,25 +229,25 @@ public class AdresseDAO {
     }
 
     /**
-     * Retourne les adresses historiques associées à une entité Sujet ou Societe.
-     * Procédure appelée : CARDEX_LIEN.SPW_L3_AD_ADRESSE
-     * Date de création : (2002-02-28)
+     * Retourne les adresses historiques associï¿½es ï¿½ une entitï¿½ Sujet ou Societe.
+     * Procï¿½dure appelï¿½e : CARDEX_LIEN.SPW_L3_AD_ADRESSE
+     * Date de crï¿½ation : (2002-02-28)
      * @author Philippe Caron
-     * @param subject  CardexAuthenticationSubject : Données nominatives sur
+     * @param subject  CardexAuthenticationSubject : Donnï¿½es nominatives sur
      * l'utilisateur.
-     * @param cle long : Clé de référence de l'entité
-     * @param site long : Site de référence de l'entité
+     * @param cle long : Clï¿½ de rï¿½fï¿½rence de l'entitï¿½
+     * @param site long : Site de rï¿½fï¿½rence de l'entitï¿½
      * @param genreFichier String : Code identifiant la table source qui lie une
-     * adresse à un Sujet (SU) ou Societe (SO).
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * adresse ï¿½ un Sujet (SU) ou Societe (SO).
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
-     * @return Collection : Liste des adresses associées.
+     * @return Collection : Liste des adresses associï¿½es.
      */
     public Collection findLiensAdresseAudit(CardexAuthenticationSubject subject,
             long cle, long site, Timestamp dateLiaison, String genreFichier) throws DAOException {
-        log.fine("findLiensAdresse()");
+        log.debug("findLiensAdresse()");
         Connection connection =
         	DAOConnection.getInstance().getConnection(subject);
 		CallableStatement callableStatement = null;
@@ -305,25 +306,25 @@ public class AdresseDAO {
     }
 
     /**
-     * Retourne les adresses associées à une entité Societe.
-     * Procédure appelée : CARDEX_LIEN.SPW_L3_AD_ADRESSE
-     * Date de création : (2002-02-28)
+     * Retourne les adresses associï¿½es ï¿½ une entitï¿½ Societe.
+     * Procï¿½dure appelï¿½e : CARDEX_LIEN.SPW_L3_AD_ADRESSE
+     * Date de crï¿½ation : (2002-02-28)
      * @author Philippe Caron
-     * @param subject  CardexAuthenticationSubject : Données nominatives sur
+     * @param subject  CardexAuthenticationSubject : Donnï¿½es nominatives sur
      * l'utilisateur.
-     * @param cle long : Clé de référence de l'entité
-     * @param site long : Site de référence de l'entité
+     * @param cle long : Clï¿½ de rï¿½fï¿½rence de l'entitï¿½
+     * @param site long : Site de rï¿½fï¿½rence de l'entitï¿½
      * @param genreFichier String : Code identifiant la table source qui lie une
-     * adresse à une Societe (SO).
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * adresse ï¿½ une Societe (SO).
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
-     * @return Collection : Liste des adresses associées.
+     * @return Collection : Liste des adresses associï¿½es.
      */
     public Collection findLiensAdresse(CardexAuthenticationSubject subject,
             long cle, long site, Timestamp dateLiaison, String genreFichier) throws DAOException {
-        log.fine("findLiensAdresse()");
+        log.debug("findLiensAdresse()");
         Connection connection =
         	DAOConnection.getInstance().getConnection(subject);
 		CallableStatement callableStatement = null;
@@ -340,20 +341,20 @@ public class AdresseDAO {
             ArrayList results = new ArrayList();
             while (resultSet.next()) {
                 AdresseVO linkedAdresse = obtenirAdresseVOde(resultSet);
-                //Avant d'ajouter l'adresse, on vérifie les points suivants :
+                //Avant d'ajouter l'adresse, on vï¿½rifie les points suivants :
                 //Il s'agit d'une adresse de sujet
-                //Il s'agit d'une adresse d'employé (site 11 ou 30)
-                //Le rôle ad-hoc est accordé à l'utilisateur
+                //Il s'agit d'une adresse d'employï¿½ (site 11 ou 30)
+                //Le rï¿½le ad-hoc est accordï¿½ ï¿½ l'utilisateur
                 if (genreFichier == GlobalConstants.GenreFichier.SUJET){
                 	if(linkedAdresse.getSite() == Long.valueOf(GlobalConstants.Sites.INVESTIGATION) || linkedAdresse.getSite() == Long.valueOf(GlobalConstants.Sites.INVESTIGATION_FACTUREE)){
                 		if(GestionnaireSecuriteCardex.isRoleAdhoc(subject, GlobalConstants.SecuriteRoleAdhoc.SUJET_ADRESSE_EMPLOYE)){
-                			//Rôle accordé, on ajoute l'adresse de l'employé.
+                			//Rï¿½le accordï¿½, on ajoute l'adresse de l'employï¿½.
                 			results.add(linkedAdresse);
                 		}
-                	}else{//Pas un employé, on ajoute
+                	}else{//Pas un employï¿½, on ajoute
                 		results.add(linkedAdresse);
                 	}
-                }else{//Adresse de société, on ajoute
+                }else{//Adresse de sociï¿½tï¿½, on ajoute
                 	results.add(linkedAdresse);
                 }
             }//while
@@ -392,18 +393,18 @@ public class AdresseDAO {
     }
 
     /**
-     * Retourne directement une adresse par sa clé unique.
-     * Procédure appelée : SP_L2_AD_ADRESSE
-     * Date de création : (2002-02-28)
+     * Retourne directement une adresse par sa clï¿½ unique.
+     * Procï¿½dure appelï¿½e : SP_L2_AD_ADRESSE
+     * Date de crï¿½ation : (2002-02-28)
      * @author Philippe Caron
-     * @param subject  CardexAuthenticationSubject : Données nominatives sur
+     * @param subject  CardexAuthenticationSubject : Donnï¿½es nominatives sur
      * l'utilisateur.
-     * @param criteria Adresse : Adresse à rechercher.
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * @param criteria Adresse : Adresse ï¿½ rechercher.
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
-     * @return Adresse : Adresse associée.
+     * @return Adresse : Adresse associï¿½e.
      */
     public Adresse find(CardexAuthenticationSubject subject, Adresse criteria)
             throws DAOException {
@@ -420,7 +421,7 @@ public class AdresseDAO {
             callableStatement.registerOutParameter(3, OracleTypes.CURSOR);
             callableStatement.execute();
             resultSet = (ResultSet)callableStatement.getObject(3);
-            //Traitement du résultat retourné
+            //Traitement du rï¿½sultat retournï¿½
             if (resultSet.next()) {
             	adresseVo = obtenirAdresseVOde(resultSet);
             }
@@ -560,17 +561,17 @@ public class AdresseDAO {
 	/**
      * Recherche de l'audit des changements d'une adresse.
      * 
-     * Procédure appelée : CARDEX_AUDIT.SP_L_AUDIT_ADRESSE
-     * Date de création : (2011-03-08)
-     * @author François Guérin
-     * @param subject  CardexAuthenticationSubject : Données nominatives sur
+     * Procï¿½dure appelï¿½e : CARDEX_AUDIT.SP_L_AUDIT_ADRESSE
+     * Date de crï¿½ation : (2011-03-08)
+     * @author Franï¿½ois Guï¿½rin
+     * @param subject  CardexAuthenticationSubject : Donnï¿½es nominatives sur
      * l'utilisateur.
-     * @param criteria Adresse : Adresse à rechercher.
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * @param criteria Adresse : Adresse ï¿½ rechercher.
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
-     * @return Dossier : Instance de dossier associée.
+     * @return Dossier : Instance de dossier associï¿½e.
      */
     public List audit(CardexAuthenticationSubject subject,Adresse criteria)
             throws DAOException {
@@ -587,7 +588,7 @@ public class AdresseDAO {
             callableStatement.registerOutParameter(3, OracleTypes.CURSOR);
             callableStatement.execute();
             resultSet = (ResultSet)callableStatement.getObject(3);
-            //Traitement du résultat retourné
+            //Traitement du rï¿½sultat retournï¿½
             resultats = traitementResultSetAudit(resultSet);
 
 		}catch (SQLException se) {
@@ -626,15 +627,15 @@ public class AdresseDAO {
     }   
 
     /**
-     * Routine pour traiter les ResultSet retournés par l'audit des changements.
-     * Date de création : (2011-03-08)
-     * @author François Guérin
-     * @param resultSet  ResultSet : données retournées par une recherche
-     * @throws SQLException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée est
-     * non disponible, ou qu'un problème est survenu lors de l'exécution d'une
+     * Routine pour traiter les ResultSet retournï¿½s par l'audit des changements.
+     * Date de crï¿½ation : (2011-03-08)
+     * @author Franï¿½ois Guï¿½rin
+     * @param resultSet  ResultSet : donnï¿½es retournï¿½es par une recherche
+     * @throws SQLException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e est
+     * non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution d'une
      * "stored procedure".
-     * @return ArrayList : liste des sujets traités.
+     * @return ArrayList : liste des sujets traitï¿½s.
      */
       private ArrayList traitementResultSetAudit(ResultSet resultSet) throws DAOException {
           ArrayList results = new ArrayList();
@@ -684,23 +685,23 @@ public class AdresseDAO {
 		  	}
  
       /**
-       * Insertion d'une adresse du système RDD.
-       * Cette procédure séparée de la méthode d'ajout standard (edit) est
-       * nécessaire, car elle a lieu en différé avec un code associé au 
-       * Casino de Montréal. Le site Loto-Québec est requis ici.
-       * Procédure appelée : CARDEX_LIEN.SP_E_AD_ADRESSE_RDD
-       * Date de création : (2012-11-16)
+       * Insertion d'une adresse du systï¿½me RDD.
+       * Cette procï¿½dure sï¿½parï¿½e de la mï¿½thode d'ajout standard (edit) est
+       * nï¿½cessaire, car elle a lieu en diffï¿½rï¿½ avec un code associï¿½ au 
+       * Casino de Montrï¿½al. Le site Loto-Quï¿½bec est requis ici.
+       * Procï¿½dure appelï¿½e : CARDEX_LIEN.SP_E_AD_ADRESSE_RDD
+       * Date de crï¿½ation : (2012-11-16)
        * @author guerinf
-       * @param subject CardexAuthenticationSubject : Données nominatives sur
+       * @param subject CardexAuthenticationSubject : Donnï¿½es nominatives sur
        * l'utilisateur.
-       * @param adresse Adresse : Adresse saisie à l'écran.
-       * @param genreFichier String : Code à deux lettres de la table qui lie
+       * @param adresse Adresse : Adresse saisie ï¿½ l'ï¿½cran.
+       * @param genreFichier String : Code ï¿½ deux lettres de la table qui lie
        * l'adresse Sujet (SU) ou Societe (SO).
-       * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-       * rupture de connexion avec la base de données, ou que la table demandée
-       * est non disponible, ou qu'un problème est survenu lors de l'exécution
+       * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+       * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+       * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
        * d'une "stored procedure".
-       * @return Adresse Une adresse correspondant à celle éditée.
+       * @return Adresse Une adresse correspondant ï¿½ celle ï¿½ditï¿½e.
        */
       public Adresse insertAdresseRDD(CardexAuthenticationSubject subject,
               Adresse adresse, String genreFichier)
@@ -788,25 +789,25 @@ public class AdresseDAO {
       }
       
       /**
-       * Retourne les adresses associées à une entité Sujet.
-       * Procédure appelée : CARDEX_LIEN.SPW_L4_AD_ADRESSE
-       * Date de création : (2002-02-28)
+       * Retourne les adresses associï¿½es ï¿½ une entitï¿½ Sujet.
+       * Procï¿½dure appelï¿½e : CARDEX_LIEN.SPW_L4_AD_ADRESSE
+       * Date de crï¿½ation : (2002-02-28)
        * @author Philippe Caron
-       * @param subject  CardexAuthenticationSubject : Données nominatives sur
+       * @param subject  CardexAuthenticationSubject : Donnï¿½es nominatives sur
        * l'utilisateur.
-       * @param cle long : Clé de référence de l'entité
-       * @param site long : Site de référence de l'entité
+       * @param cle long : Clï¿½ de rï¿½fï¿½rence de l'entitï¿½
+       * @param site long : Site de rï¿½fï¿½rence de l'entitï¿½
        * @param genreFichier String : Code identifiant la table source qui lie une
-       * adresse à un Sujet (SU).
-       * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-       * rupture de connexion avec la base de données, ou que la table demandée
-       * est non disponible, ou qu'un problème est survenu lors de l'exécution
+       * adresse ï¿½ un Sujet (SU).
+       * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+       * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+       * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
        * d'une "stored procedure".
-       * @return Collection : Liste des adresses associées.
+       * @return Collection : Liste des adresses associï¿½es.
        */
       public Collection findLiensAdresseSujet(CardexAuthenticationSubject subject,
               long cle, long site, Timestamp dateLiaison, String genreFichier) throws DAOException {
-          log.fine("findLiensAdresseSujet()");
+          log.debug("findLiensAdresseSujet()");
           Connection connection =
           	DAOConnection.getInstance().getConnection(subject);
   		CallableStatement callableStatement = null;
@@ -821,28 +822,28 @@ public class AdresseDAO {
               callableStatement.execute();
               resultSet = (ResultSet)callableStatement.getObject(4);
               ArrayList results = new ArrayList();
-              long adresseLue = 0; //Comme la même adresse sera retournée autant de fois qu'il y a de sociétés reliées,
-              					   //cette variable sert à évaluer si l'adresse a déjà été ajoutée.
+              long adresseLue = 0; //Comme la mï¿½me adresse sera retournï¿½e autant de fois qu'il y a de sociï¿½tï¿½s reliï¿½es,
+              					   //cette variable sert ï¿½ ï¿½valuer si l'adresse a dï¿½jï¿½ ï¿½tï¿½ ajoutï¿½e.
               while (resultSet.next()) {
                   AdresseVO linkedAdresse = obtenirAdresseVOSujet(resultSet);
-                  //Avant d'ajouter l'adresse, on vérifie les points suivants :
+                  //Avant d'ajouter l'adresse, on vï¿½rifie les points suivants :
                   //Il s'agit d'une adresse de sujet
-                  //Il s'agit d'une adresse d'employé (site 11 ou 30 et relié à une société avec la classe "LQ et ses filiales")
-                  //Le rôle ad-hoc est accordé à l'utilisateur
+                  //Il s'agit d'une adresse d'employï¿½ (site 11 ou 30 et reliï¿½ ï¿½ une sociï¿½tï¿½ avec la classe "LQ et ses filiales")
+                  //Le rï¿½le ad-hoc est accordï¿½ ï¿½ l'utilisateur
                   if (genreFichier == GlobalConstants.GenreFichier.SUJET){
                   	if(linkedAdresse.getClasse() == GlobalConstants.Classes.EMPLOYE){
                   		if(GestionnaireSecuriteCardex.isRoleAdhoc(subject, GlobalConstants.SecuriteRoleAdhoc.SUJET_ADRESSE_EMPLOYE)){
-                  			//Rôle accordé, on ajoute l'adresse de l'employé si ce n'est pas déjà fait.
+                  			//Rï¿½le accordï¿½, on ajoute l'adresse de l'employï¿½ si ce n'est pas dï¿½jï¿½ fait.
                   			if(adresseLue != linkedAdresse.getCle()){
                   				results.add(linkedAdresse);
                   			}
                   		}
-                  	}else{//Pas un employé, on ajoute
+                  	}else{//Pas un employï¿½, on ajoute
               			if(adresseLue != linkedAdresse.getCle()){
               				results.add(linkedAdresse);
               			}
                   	}
-                  }else{//Adresse de société, on ajoute
+                  }else{//Adresse de sociï¿½tï¿½, on ajoute
                   	results.add(linkedAdresse);
                   }
                   adresseLue = linkedAdresse.getCle();

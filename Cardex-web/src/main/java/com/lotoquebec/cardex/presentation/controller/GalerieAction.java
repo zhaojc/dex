@@ -3,7 +3,6 @@ package com.lotoquebec.cardex.presentation.controller;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
-import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +12,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessages;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardex.business.Dossier;
 import com.lotoquebec.cardex.business.Photo;
@@ -30,7 +31,6 @@ import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
 import com.lotoquebec.cardexCommun.exception.BusinessException;
 import com.lotoquebec.cardexCommun.exception.BusinessResourceException;
 import com.lotoquebec.cardexCommun.exception.ValueObjectMapperException;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.presentation.util.AbstractAction;
 import com.lotoquebec.cardexCommun.presentation.util.ListeResultatAction;
 import com.lotoquebec.cardexCommun.user.CardexUser;
@@ -42,25 +42,25 @@ public class GalerieAction extends AbstractAction  {
      * L'instance du gestionnaire de journalisation.
      */
 	private final Logger      log =
-        (Logger)LoggerCardex.getLogger((this.getClass()));
+        LoggerFactory.getLogger((this.getClass()));
 
 
     /**
-     * Par défaut, l'application remplit automatiquement les champs suivants :
+     * Par dï¿½faut, l'application remplit automatiquement les champs suivants :
      * <li>
      * <ul>Entite (Entite de l'utilisateur)
      * <ul>Site d'origine (Site de l'utilisateur)
-     * <ul>Genre (selon la sélection de l'écran principal)
-     * <ul>Nature (selon la sélection de l'écran principal)
+     * <ul>Genre (selon la sï¿½lection de l'ï¿½cran principal)
+     * <ul>Nature (selon la sï¿½lection de l'ï¿½cran principal)
      * </li> 
      *
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortie survient
+     * @exception IOException si une erreur d'entrï¿½e/sortie survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward refreshRechercheGalerie(CardexAuthenticationSubject subject,
@@ -69,28 +69,28 @@ public class GalerieAction extends AbstractAction  {
                                        HttpServletRequest request,
                                        HttpServletResponse response) throws IOException,
                                        ServletException {
-        log.fine("Refresh de recherche photo");
+        log.debug("Refresh de recherche photo");
 
         return mapping.findForward("success");
     }
 
 
     /**
-     * Par défaut, l'application remplit automatiquement les champs suivants :
+     * Par dï¿½faut, l'application remplit automatiquement les champs suivants :
      * <li>
      * <ul>Entite (Entite de l'utilisateur)
      * <ul>Site d'origine (Site de l'utilisateur)
-     * <ul>Genre (selon la sélection de l'écran principal)
-     * <ul>Nature (selon la sélection de l'écran principal)
+     * <ul>Genre (selon la sï¿½lection de l'ï¿½cran principal)
+     * <ul>Nature (selon la sï¿½lection de l'ï¿½cran principal)
      * </li>
      *
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortie survient
+     * @exception IOException si une erreur d'entrï¿½e/sortie survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward searchDefault(CardexAuthenticationSubject subject,
@@ -99,7 +99,7 @@ public class GalerieAction extends AbstractAction  {
                                        HttpServletRequest request,
                                        HttpServletResponse response) throws IOException,
                                        ServletException {
-        log.fine("Recherche par défault de photo");
+        log.debug("Recherche par dï¿½fault de photo");
 
         ActionMessages errors = new ActionMessages();
         CriteresRecherchePhotoForm criteresRecherchePhotoForm = (CriteresRecherchePhotoForm) form;
@@ -139,21 +139,21 @@ public class GalerieAction extends AbstractAction  {
 
 
     /**
-     * Par défaut, l'application remplit automatiquement les champs suivants :
+     * Par dï¿½faut, l'application remplit automatiquement les champs suivants :
      * <li>
      * <ul>Entite (Entite de l'utilisateur)
      * <ul>Site d'origine (Site de l'utilisateur)
-     * <ul>Genre (selon la sélection de l'écran principal)
-     * <ul>Nature (selon la sélection de l'écran principal)
+     * <ul>Genre (selon la sï¿½lection de l'ï¿½cran principal)
+     * <ul>Nature (selon la sï¿½lection de l'ï¿½cran principal)
      * </li>
      *
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortie survient
+     * @exception IOException si une erreur d'entrï¿½e/sortie survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward resetSearchDefault(CardexAuthenticationSubject subject,
@@ -162,7 +162,7 @@ public class GalerieAction extends AbstractAction  {
                                        HttpServletRequest request,
                                        HttpServletResponse response) throws IOException,
                                        ServletException {
-        log.fine("Paramètres de recherche par défault de photo");
+        log.debug("Paramï¿½tres de recherche par dï¿½fault de photo");
 
         ActionMessages errors = new ActionMessages();
 
@@ -202,18 +202,18 @@ public class GalerieAction extends AbstractAction  {
 
     /**
      * <p>
-     * Cet événement surivient lorsque dans l'écran de recherche de photo, l'utilisateur a choisi
-     * de rechercher un photo selon des critères différents. L'application affiche alors le panneau de
-     * recherche des photos avec les résultats de la nouvelle recherche.
+     * Cet ï¿½vï¿½nement surivient lorsque dans l'ï¿½cran de recherche de photo, l'utilisateur a choisi
+     * de rechercher un photo selon des critï¿½res diffï¿½rents. L'application affiche alors le panneau de
+     * recherche des photos avec les rï¿½sultats de la nouvelle recherche.
      * <p>
      *
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortie survient
+     * @exception IOException si une erreur d'entrï¿½e/sortie survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward search(CardexAuthenticationSubject subject,
@@ -222,7 +222,7 @@ public class GalerieAction extends AbstractAction  {
                                 HttpServletRequest request,
                                 HttpServletResponse response) throws IOException,
                                 ServletException {
-        log.fine("Recherche de photo");
+        log.debug("Recherche de photo");
 
         ActionMessages errors = new ActionMessages();
 
@@ -231,12 +231,12 @@ public class GalerieAction extends AbstractAction  {
             CriteresRecherchePhotoForm criteresRecherchePhotoHtmlForm = (CriteresRecherchePhotoForm) form;
             CriteresRecherchePhotoVO criteresRecherchePhoto = new CriteresRecherchePhotoVO();
 
-            // Conversion du composant d'état(ActionForm) en composant d'affaire(Value Object)
+            // Conversion du composant d'ï¿½tat(ActionForm) en composant d'affaire(Value Object)
             ValueObjectMapper.convertCriteresRecherchePhotoHtmlForm(criteresRecherchePhotoHtmlForm, criteresRecherchePhoto,subject.getLocale());
 
-            // Exécution de la recherche via le service d'affaire(BusinessDelegate)
+            // Exï¿½cution de la recherche via le service d'affaire(BusinessDelegate)
             List<Photo> photoList = delegate.select(subject,criteresRecherchePhoto);
-            log.fine(photoList.size() + " photos trouvées ...");
+            log.debug(photoList.size() + " photos trouvï¿½es ...");
 
             criteresRecherchePhotoHtmlForm.assignerDateExecutionGalerie();
             
@@ -272,18 +272,18 @@ public class GalerieAction extends AbstractAction  {
     
     /**
      * <p>
-     * Popule les informations d'un dossier obtenu dans la base de donnée
-     * dans le DossierForm spécifiés.
+     * Popule les informations d'un dossier obtenu dans la base de donnï¿½e
+     * dans le DossierForm spï¿½cifiï¿½s.
      *
-     * @param Dossier Les critères du dossier a obtenir
-     * @param DossierForm L'ActionForm bean a populé à partir du dossier obtenu
+     * @param Dossier Les critï¿½res du dossier a obtenir
+     * @param DossierForm L'ActionForm bean a populï¿½ ï¿½ partir du dossier obtenu
      * @throws ValueObjectMapperException 
      *
-     * @exception BusinessResourceException si une erreur système survient
-     * @exception BusinessException si une règle d'affaire n'est pas respectée
+     * @exception BusinessResourceException si une erreur systï¿½me survient
+     * @exception BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
      */
     private void populateSearchResults(CardexAuthenticationSubject subject, CriteresRecherchePhotoForm criteresRecherchePhotoHtmlForm, List<Photo> photoList) throws ValueObjectMapperException {
-        log.fine("populateSearchResults()");
+        log.debug("populateSearchResults()");
         criteresRecherchePhotoHtmlForm.getListeResultat().vider();
         criteresRecherchePhotoHtmlForm.getListeResultat().setPlageResultats("6");
         

@@ -4,13 +4,14 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.JspException;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.struts.taglib.TagUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardex.business.Dossier;
 import com.lotoquebec.cardex.business.vo.DossierVO;
@@ -19,19 +20,18 @@ import com.lotoquebec.cardex.presentation.util.ValueObjectMapper;
 import com.lotoquebec.cardexCommun.authentication.AuthenticationSubject;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
 import com.lotoquebec.cardexCommun.exception.ValueObjectMapperException;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.presentation.taglib.html.LinkCardexTag;
 import com.lotoquebec.cardexCommun.presentation.taglib.html.TagLibUtils;
 
 
 /**
- * Genere un hyperlink URL-encoded au URI spécifié avec
- * les paramètres de query string correspondant aux
- * propriétés cle, site, et mot de passe du dossier
- * spécifié.
+ * Genere un hyperlink URL-encoded au URI spï¿½cifiï¿½ avec
+ * les paramï¿½tres de query string correspondant aux
+ * propriï¿½tï¿½s cle, site, et mot de passe du dossier
+ * spï¿½cifiï¿½.
  *
- * Ici il n'y a pas de sécurité, car tout ce qui s'affiche dans le partage
- * est sécurisé au départ.
+ * Ici il n'y a pas de sï¿½curitï¿½, car tout ce qui s'affiche dans le partage
+ * est sï¿½curisï¿½ au dï¿½part.
  *
  * @see org.apache.struts.taglib.html.LinkTag
  * @author $Author: mlibersan $
@@ -43,7 +43,7 @@ public class LinkDossierPartageTag extends LinkCardexTag {
      * L'instance du gestionnaire de journalisation.
      */
 	private final Logger      log =
-        (Logger)LoggerCardex.getLogger((this.getClass()));
+        LoggerFactory.getLogger((this.getClass()));
 
     private String dossier;
 
@@ -77,8 +77,8 @@ public class LinkDossierPartageTag extends LinkCardexTag {
     	CardexAuthenticationSubject subject = (CardexAuthenticationSubject)pageContext.findAttribute(AuthenticationSubject.class.getName());
 	  	DossierHtmlForm dossierBean = null;
 
-		log.fine("doStartTag()");
-		log.fine("   dossier '" + this.dossier + "'");
+		log.debug("doStartTag()");
+		log.debug("   dossier '" + this.dossier + "'");
 
 		// Insere le genre et la nature comme parametres de requete
 		if (dossier != null ) {
@@ -134,7 +134,7 @@ public class LinkDossierPartageTag extends LinkCardexTag {
 	        }
       }
 
-      // Cas spécial pour le nom anchors
+      // Cas spï¿½cial pour le nom anchors
       if (linkName != null) {
           StringBuffer results = new StringBuffer("<a name=\"");
           results.append(linkName);
@@ -156,7 +156,7 @@ public class LinkDossierPartageTag extends LinkCardexTag {
               (messages.getMessage("rewrite.url", e.toString()));
       }
 
-      // Generation de la balise ouvrante de l'élément anchor
+      // Generation de la balise ouvrante de l'ï¿½lï¿½ment anchor
       StringBuffer results = new StringBuffer("<a href=\"javascript:windowOpenLocation('"+url+"')\"");
       
       if (target != null) {
@@ -168,7 +168,7 @@ public class LinkDossierPartageTag extends LinkCardexTag {
       results.append(prepareEventHandlers());
       results.append(">");
 
-      // Affichage de l'élément dans le output writer
+      // Affichage de l'ï¿½lï¿½ment dans le output writer
       tagUtils.write(pageContext, results.toString());
 
       // Evalaution du  body pour ce tag

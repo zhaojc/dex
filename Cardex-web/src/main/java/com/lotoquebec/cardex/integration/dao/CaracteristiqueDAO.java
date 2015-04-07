@@ -6,9 +6,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.logging.Logger;
 
 import oracle.jdbc.OracleTypes;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardex.business.Caracteristiques;
 import com.lotoquebec.cardex.business.Sujet;
@@ -18,11 +20,10 @@ import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
 import com.lotoquebec.cardexCommun.exception.DAOException;
 import com.lotoquebec.cardexCommun.integration.dao.DAOConnection;
 import com.lotoquebec.cardexCommun.integration.dao.OracleDAOUtils;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 
 /**
- * Offre tout les services de récupération des informations d'une base de donnée
- * Oracle, relatives aux caractéristiques de sujets.
+ * Offre tout les services de rï¿½cupï¿½ration des informations d'une base de donnï¿½e
+ * Oracle, relatives aux caractï¿½ristiques de sujets.
  *
  * @author $Author: mlibersan $
  * @version $Revision: 1.8 $, $Date: 2002/03/11 19:13:14 $
@@ -31,28 +32,28 @@ import com.lotoquebec.cardexCommun.log.LoggerCardex;
 public class CaracteristiqueDAO {
 
 	private final Logger      log =
-        (Logger)LoggerCardex.getLogger((CaracteristiqueDAO.class));
+        LoggerFactory.getLogger((CaracteristiqueDAO.class));
 
 
     /**
-     * Modification des nouvelles caractéristiques associées à un sujet, appelée
-     * par la méthode "update" afin de faire une action "clear" et "insert".
-     * Selon le paramètre "action" il peut s'agir d'une insertion ("I")
+     * Modification des nouvelles caractï¿½ristiques associï¿½es ï¿½ un sujet, appelï¿½e
+     * par la mï¿½thode "update" afin de faire une action "clear" et "insert".
+     * Selon le paramï¿½tre "action" il peut s'agir d'une insertion ("I")
      * ou d'un nettoyage ("C").
-     * Procédure appelée : CARDEX_LIEN.SP_E_LSC_CARACTERISTIQUE
-     * Date de création : (2002-03-01)
+     * Procï¿½dure appelï¿½e : CARDEX_LIEN.SP_E_LSC_CARACTERISTIQUE
+     * Date de crï¿½ation : (2002-03-01)
      * @author Philippe Caron
-     * @param subject CardexAuthenticationSubject : Données nominatives sur
+     * @param subject CardexAuthenticationSubject : Donnï¿½es nominatives sur
      * l'utilisateur.
-     * @param caracteristiques Caracteristiques : Caractéristiques saisies à
-     * l'écran.
+     * @param caracteristiques Caracteristiques : Caractï¿½ristiques saisies ï¿½
+     * l'ï¿½cran.
      * @param action String : "I" ou "C".
-     * @param genreFichier String : Code à deux lettres de la table qui lie des
-     * caractéristiques à un Sujet (SU).  Pour l'instant, seuls les sujets
-     * possèdent des caractéristiques.
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * @param genreFichier String : Code ï¿½ deux lettres de la table qui lie des
+     * caractï¿½ristiques ï¿½ un Sujet (SU).  Pour l'instant, seuls les sujets
+     * possï¿½dent des caractï¿½ristiques.
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
      */
     private void editCaracteristiques(CardexAuthenticationSubject subject,
@@ -104,8 +105,8 @@ public class CaracteristiqueDAO {
                 }
             }
             else {
-                log.fine("Le code d'action '" + action
-                        + "', est invalide pour la méthode "
+                log.debug("Le code d'action '" + action
+                        + "', est invalide pour la mï¿½thode "
                         + "editCaracteristiques!");
             }
         }
@@ -135,53 +136,53 @@ public class CaracteristiqueDAO {
     }
 
     /**
-     * Met à jour les caractéristiques avec audit.
+     * Met ï¿½ jour les caractï¿½ristiques avec audit.
      * Cet audit est inscrit dans la table AUD_LSC_CARACTERISTIQUE.
-     * Il sert à retrouver l'historique des caractéristiques lors de l'impression d'un dossier.
-     * Date de création : (2012-01-05)
+     * Il sert ï¿½ retrouver l'historique des caractï¿½ristiques lors de l'impression d'un dossier.
+     * Date de crï¿½ation : (2012-01-05)
      * @author guerinf
-     * @param subject CardexAuthenticationSubject : Données nominatives sur
+     * @param subject CardexAuthenticationSubject : Donnï¿½es nominatives sur
      * l'utilisateur.
-     * @param caracteristiques Caracteristiques : Caractéristiques saisies à
-     * l'écran.
-     * @param genreFichier String : Code à deux lettres de la table qui lie une
-     * caractéristique à un Sujet (SU).  Pour l'instant, seuls les sujets
-     * possèdent des caractéristiques.
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * @param caracteristiques Caracteristiques : Caractï¿½ristiques saisies ï¿½
+     * l'ï¿½cran.
+     * @param genreFichier String : Code ï¿½ deux lettres de la table qui lie une
+     * caractï¿½ristique ï¿½ un Sujet (SU).  Pour l'instant, seuls les sujets
+     * possï¿½dent des caractï¿½ristiques.
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
      */
     public void update(CardexAuthenticationSubject subject,
             Caracteristiques caracteristiques, String genreFichier)
             throws DAOException {
-    	//On supprime toutes les entrées avant d'inscrire les choix. Les valeurs actuelles
-    	//sont sauvegardées dans l'audit des changements (action A).
+    	//On supprime toutes les entrï¿½es avant d'inscrire les choix. Les valeurs actuelles
+    	//sont sauvegardï¿½es dans l'audit des changements (action A).
         editCaracteristiques(subject, caracteristiques, "A", genreFichier);
         editCaracteristiques(subject, caracteristiques, "I", genreFichier);
     }
 
     /**
-     * Lecture des caractéristiques associées à un sujet.
-     * Procédure appelée : SP_L_LSC_CARACTERISTIQUE
-     * Date de création : (2002-03-01)
+     * Lecture des caractï¿½ristiques associï¿½es ï¿½ un sujet.
+     * Procï¿½dure appelï¿½e : SP_L_LSC_CARACTERISTIQUE
+     * Date de crï¿½ation : (2002-03-01)
      * @author Philippe Caron
-     * @param subject  CardexAuthenticationSubject : Données nominatives sur
+     * @param subject  CardexAuthenticationSubject : Donnï¿½es nominatives sur
      * l'utilisateur.
-     * @param cle long : Clé de référence du sujet.
-     * @param site long : Site de référence du sujet.
-     * @param genreFichier String : Code à deux lettres de la table qui lie une
-     * caractéristique à un Sujet (SU).  Pour l'instant, seuls les sujets
-     * possèdent des caractéristiques.
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * @param cle long : Clï¿½ de rï¿½fï¿½rence du sujet.
+     * @param site long : Site de rï¿½fï¿½rence du sujet.
+     * @param genreFichier String : Code ï¿½ deux lettres de la table qui lie une
+     * caractï¿½ristique ï¿½ un Sujet (SU).  Pour l'instant, seuls les sujets
+     * possï¿½dent des caractï¿½ristiques.
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
-     * @return Caracteristiques : Liste des caractéristiques associées.
+     * @return Caracteristiques : Liste des caractï¿½ristiques associï¿½es.
      */
     public Caracteristiques findLiensCaracteristique(
             CardexAuthenticationSubject subject, Sujet sujet) throws DAOException {
-        log.fine("findLiensCaracteristiques()");
+        log.debug("findLiensCaracteristiques()");
         Connection connection =
         	DAOConnection.getInstance().getConnection(subject);
 		CallableStatement callableStatement = null;
@@ -189,7 +190,7 @@ public class CaracteristiqueDAO {
         CaracteristiquesVO linkedCaracteristiques = null;
 
         try {
-        	//On vérifie d'abord si un historique des données existe en fonction de la date de liaison (utilisé lors de l'impression du dossier).
+        	//On vï¿½rifie d'abord si un historique des donnï¿½es existe en fonction de la date de liaison (utilisï¿½ lors de l'impression du dossier).
         	if(sujet.getLienDateCreation() != null){
 	        	callableStatement = connection.prepareCall(
 	            	"begin cardex_audit.SP_L_AUD_LSC_CARACTERISTIQUE (?,?,?,?); end;");
@@ -211,13 +212,13 @@ public class CaracteristiqueDAO {
                     }
                     linkedCaracteristiques.addCaracteristique( Long.toString(
                             resultSet.getLong("L_CR_CLE")) );
-                    log.fine("   [Caracteristiques id='"
+                    log.debug("   [Caracteristiques id='"
                             + resultSet.getLong("L_CR_CLE")
                             + "' Site='" + linkedCaracteristiques.getSite() + "']");
                 } // while
         	}
             if (linkedCaracteristiques == null) {
-               //Pas de données historiques ou pas de date de liaison. On retourne les données actuelles.
+               //Pas de donnï¿½es historiques ou pas de date de liaison. On retourne les donnï¿½es actuelles.
    	        	 callableStatement = connection.prepareCall(
                     "begin SP_L_LSC_CARACTERISTIQUE (?,?,?,?); end;");
 	            callableStatement.setLong(1,sujet.getCle());
@@ -238,7 +239,7 @@ public class CaracteristiqueDAO {
 	                }
 	                linkedCaracteristiques.addCaracteristique( Long.toString(
 	                        resultSet.getLong("L_CR_CLE")) );
-	                log.fine("   [Caracteristiques id='"
+	                log.debug("   [Caracteristiques id='"
 	                        + resultSet.getLong("L_CR_CLE")
 	                        + "' Site='" + linkedCaracteristiques.getSite() + "']");
 	            } // while

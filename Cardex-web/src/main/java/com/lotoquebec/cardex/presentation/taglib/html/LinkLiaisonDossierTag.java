@@ -4,12 +4,13 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import javax.servlet.jsp.JspException;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.struts.taglib.TagUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardex.presentation.model.DossierHtmlForm;
 import com.lotoquebec.cardex.presentation.model.SocieteHtmlForm;
@@ -18,7 +19,6 @@ import com.lotoquebec.cardex.presentation.model.VehiculeHtmlForm;
 import com.lotoquebec.cardex.securite.GestionnaireSecuriteCardex;
 import com.lotoquebec.cardexCommun.authentication.AuthenticationSubject;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.presentation.taglib.html.LinkCardexTag;
 import com.lotoquebec.cardexCommun.presentation.taglib.html.TagLibUtils;
 import com.lotoquebec.cardexCommun.securite.UIComponentState;
@@ -26,10 +26,10 @@ import com.lotoquebec.cardexCommun.util.StringUtils;
 
 
 /**
- * Genere un hyperlink URL-encoded au URI spécifié avec
- * les paramètres de query string correspondant aux
- * propriétés cle, site, et mot de passe du dossier
- * spécifié.
+ * Genere un hyperlink URL-encoded au URI spï¿½cifiï¿½ avec
+ * les paramï¿½tres de query string correspondant aux
+ * propriï¿½tï¿½s cle, site, et mot de passe du dossier
+ * spï¿½cifiï¿½.
  *
  * @see org.apache.struts.taglib.html.LinkTag
  * @author $Author: mlibersan $
@@ -41,7 +41,7 @@ public class LinkLiaisonDossierTag extends LinkCardexTag {
      * L'instance du gestionnaire de journalisation.
      */
 	private final Logger      log =
-        (Logger)LoggerCardex.getLogger((this.getClass()));
+        LoggerFactory.getLogger((this.getClass()));
 
     private String source;
     private String sourceProperty;
@@ -97,10 +97,10 @@ public class LinkLiaisonDossierTag extends LinkCardexTag {
         return super.doStartTag();
       }
 
-      log.fine("doStartTag()");
-      log.fine("   dossier '" + this.dossier + "'");
+      log.debug("doStartTag()");
+      log.debug("   dossier '" + this.dossier + "'");
 
-      // Cas spécial pour le nom anchors
+      // Cas spï¿½cial pour le nom anchors
       if (linkName != null) {
           StringBuffer results = new StringBuffer("<a name=\"");
           results.append(linkName);
@@ -201,7 +201,7 @@ public class LinkLiaisonDossierTag extends LinkCardexTag {
               (messages.getMessage("rewrite.url", e.toString()));
       }
 
-      // Generation de la balise ouvrante de l'élément anchor
+      // Generation de la balise ouvrante de l'ï¿½lï¿½ment anchor
       StringBuffer results = new StringBuffer("<a href=\"");
       results.append(url);
       results.append("\" ");
@@ -209,7 +209,7 @@ public class LinkLiaisonDossierTag extends LinkCardexTag {
       results.append(prepareEventHandlers());
       results.append(">");
 
-      // Affichage de l'élément dans le output writer
+      // Affichage de l'ï¿½lï¿½ment dans le output writer
       tagUtils.write(pageContext, results.toString());
 
       // Evalaution du  body pour ce tag

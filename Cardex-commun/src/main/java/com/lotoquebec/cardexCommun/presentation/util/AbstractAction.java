@@ -6,12 +6,10 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +23,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardexCommun.authentication.AutentificationCardex;
 import com.lotoquebec.cardexCommun.authentication.AuthenticationSubject;
@@ -37,20 +37,19 @@ import com.lotoquebec.cardexCommun.exception.ExceptionHandler;
 import com.lotoquebec.cardexCommun.exception.IteratorException;
 import com.lotoquebec.cardexCommun.exception.ValueObjectMapperException;
 import com.lotoquebec.cardexCommun.integration.dao.DAOConnection;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.securite.GestionnaireSecurite;
 import com.lotoquebec.cardexCommun.util.StringUtils;
 
 /**
- * <p>Une <strong>Action</strong> abstraite qui redirige les requêtes
- * vers une methode publique qui est specifiée par la propriété parameter
+ * <p>Une <strong>Action</strong> abstraite qui redirige les requï¿½tes
+ * vers une methode publique qui est specifiï¿½e par la propriï¿½tï¿½ parameter
  * d'un <strong>ActionMapping</strong>.  Cette Action est utilile pour combiner
  * plusieurs actions similaires dans une seule classe, et ainsi simplifier
- * le design de l'application.  Cette Action extrait également le profile
- * utilisateur de la base de donnée du cardex, si celui-ci n'est pas présent
- * dans la session utilisateur.  Le nom de l'utilisateur est déterminé à
- * l'aide de l'objet Principal présent dans l'objet HttpServletRequest.
- * L'Authentification est effectué par un serveur cleartrust.
+ * le design de l'application.  Cette Action extrait ï¿½galement le profile
+ * utilisateur de la base de donnï¿½e du cardex, si celui-ci n'est pas prï¿½sent
+ * dans la session utilisateur.  Le nom de l'utilisateur est dï¿½terminï¿½ ï¿½
+ * l'aide de l'objet Principal prï¿½sent dans l'objet HttpServletRequest.
+ * L'Authentification est effectuï¿½ par un serveur cleartrust.
  *
  * <p>Voici un exemple de configuration dans le fichier
  * <code>struts-config.xml</code>, pour une action typique:</p>
@@ -76,11 +75,11 @@ import com.lotoquebec.cardexCommun.util.StringUtils;
  *      parameter="update"/&gt;
  * </code>
  *
- * <p>L'action utilise la valeur de l'attribut parameter pour exécuter
- * la méthode "perform" appropriée , qui doit avoir la même signature
- * (autre que le nom de la méthode "perform") de la méthode standard
- * Action.perform().  Par exemple, on peut retrouver les trois méthodes
- * suivante dans la même action:</p>
+ * <p>L'action utilise la valeur de l'attribut parameter pour exï¿½cuter
+ * la mï¿½thode "perform" appropriï¿½e , qui doit avoir la mï¿½me signature
+ * (autre que le nom de la mï¿½thode "perform") de la mï¿½thode standard
+ * Action.perform().  Par exemple, on peut retrouver les trois mï¿½thodes
+ * suivante dans la mï¿½me action:</p>
  * <ul>
  * <li>public ActionForward delete(ActionMapping mapping, ActionForm form,
  *     HttpServletRequest request, HttpServletResponse response)
@@ -92,7 +91,7 @@ import com.lotoquebec.cardexCommun.util.StringUtils;
  *     HttpServletRequest request, HttpServletResponse response)
  *     throws IOException, ServletException</li>
  * </ul>
- * <p>et appelé l'une de ces méthohdes avec les URL's suivants::</p>
+ * <p>et appelï¿½ l'une de ces mï¿½thohdes avec les URL's suivants::</p>
  * <code>
  *   http://localhost:8080/myapp/deleteSubscription.do
  *   http://localhost:8080/myapp/insertSubscription.do
@@ -108,7 +107,7 @@ public abstract class AbstractAction extends Action {
      * L'instance du gestionnaire de journalisation.
      */
 	private final Logger      log =
-        (Logger)LoggerCardex.getLogger((this.getClass()));
+        LoggerFactory.getLogger((this.getClass()));
 
     /**
      * L'instance de Class pour cette classe de <code>AbstractAction</code>.
@@ -117,15 +116,15 @@ public abstract class AbstractAction extends Action {
 
     /**
      * L'ensemble des objets Method qui ont fait l'objet d'introspection pour
-     * cette classe, la clé étant le nom de la méthode. Cette collection est
-     * populée au fur et a mesure que les méthodes sont appelé , de cette façon
-     * l'introspection n'est exécuté qu'une seule fois par méthode.
+     * cette classe, la clï¿½ ï¿½tant le nom de la mï¿½thode. Cette collection est
+     * populï¿½e au fur et a mesure que les mï¿½thodes sont appelï¿½ , de cette faï¿½on
+     * l'introspection n'est exï¿½cutï¿½ qu'une seule fois par mï¿½thode.
      */
     private HashMap             methods = new HashMap();
 
     /**
-     * L'ensemble des types des arguments de la méthode a appelé par réflexion.
-     * Ils sont les mêmes pour tous les appels de méthode.
+     * L'ensemble des types des arguments de la mï¿½thode a appelï¿½ par rï¿½flexion.
+     * Ils sont les mï¿½mes pour tous les appels de mï¿½thode.
      */
     private Class               types[] = {
         CardexAuthenticationSubject.class, ActionMapping.class, ActionForm.class,
@@ -133,18 +132,18 @@ public abstract class AbstractAction extends Action {
     };
 
     /**
-     * Traite la requête HTTP spécifié, et crée la réponse HTTP correspondante
+     * Traite la requï¿½te HTTP spï¿½cifiï¿½, et crï¿½e la rï¿½ponse HTTP correspondante
      * (ou redirige le controle vers un autre composant web).
-     * Retourne une instance <code>ActionForward</code> qui décrit ou et comment
-     * le contrôle doit être aiguillé, ou <code>null</code> si la réponse à déja été
-     * complétée.
+     * Retourne une instance <code>ActionForward</code> qui dï¿½crit ou et comment
+     * le contrï¿½le doit ï¿½tre aiguillï¿½, ou <code>null</code> si la rï¿½ponse ï¿½ dï¿½ja ï¿½tï¿½
+     * complï¿½tï¿½e.
      *
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      *
-     * @exception IOException si une erreur d'entrée/sortieif an input/output survient
+     * @exception IOException si une erreur d'entrï¿½e/sortieif an input/output survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward execute(ActionMapping mapping,
@@ -158,14 +157,14 @@ public abstract class AbstractAction extends Action {
         //subject = (CardexAuthenticationSubject)request.getSession().getAttribute(AuthenticationSubject.class.getName());
         subject = (new AutentificationCardex()).obtenirSubjet(request);
         
-        //On doit vérifier si la connexion provient de la page de changement
-		//du mot de passe. Si c'est le cas, "subject" n'a pas encore été
-		//initialisé, ce qui provoque des erreurs.
+        //On doit vï¿½rifier si la connexion provient de la page de changement
+		//du mot de passe. Si c'est le cas, "subject" n'a pas encore ï¿½tï¿½
+		//initialisï¿½, ce qui provoque des erreurs.
         boolean isChangementMDP = "/changement".equals(mapping.getPath());
 
         if (isChangementMDP == false){
     		if (subject == null)
-            	throw new IllegalArgumentException("Le subject ne peut être null");
+            	throw new IllegalArgumentException("Le subject ne peut ï¿½tre null");
             else{
     			try{
     				GestionnaireSecurite.validerSecuriteURL((CardexAuthenticationSubject) subject, mapping.getPath());
@@ -176,38 +175,38 @@ public abstract class AbstractAction extends Action {
     	        }
             }
     		
-			log.fine("beanMotPasse est null");
-	          //Chargement des données de références en cache
+			log.debug("beanMotPasse est null");
+	          //Chargement des donnï¿½es de rï¿½fï¿½rences en cache
 	          try{
 	              String instance = DAOConnection.getInstance().getConnection((CardexAuthenticationSubject) subject).getMetaData().getURL();
 	              instance = instance.substring(18,instance.length());
 	              request.getSession().setAttribute("instance",instance);
 	          }catch (DAOException se) {
-	            String message = "Incapacité de charger les donnée de référence ";
-	            LoggerCardex.severe(log,message,se);
+	            String message = "Incapacitï¿½ de charger les donnï¿½e de rï¿½fï¿½rence ";
+	            log.error(message,se);
 	            return mapping.findForward("error");
 	          } catch (SQLException e) {
-		            LoggerCardex.severe(log,e);
+		            log.error("SQLException",e);
 		            return mapping.findForward("error");
 			}
 
-	          // Assigner de l'activité à l'utilisateur
+	          // Assigner de l'activitï¿½ ï¿½ l'utilisateur
 	  		((CardexAuthenticationSubject)subject).assignerActivite();
         }
 
 		//afficherRequete(request);
 		
 
-          // Identification du nom de la méthode vers laquelle redirige la requête
-          log.fine("Identification de la méthode vers laquelle redirige la requête");
+          // Identification du nom de la mï¿½thode vers laquelle redirige la requï¿½te
+          log.debug("Identification de la mï¿½thode vers laquelle redirige la requï¿½te");
           String methodName = mapping.getParameter();
 
           if (methodName == null) {
               String message =
-                  "La propriété 'parameter' de l'ActionMapping '"
-                  + mapping.getName() + "' n'est pas définie.";
+                  "La propriï¿½tï¿½ 'parameter' de l'ActionMapping '"
+                  + mapping.getName() + "' n'est pas dï¿½finie.";
 
-              log.severe(message);
+              log.warn(message);
               return mapping.findForward("error");
           }
           
@@ -222,24 +221,24 @@ public abstract class AbstractAction extends Action {
               method = getMethod(methodName);
           } catch (NoSuchMethodException e) {
               String message =
-                  "La méthode '" + methodName
+                  "La mï¿½thode '" + methodName
                   + "' n'est pas implanter dans la classe '"
                   + this.getClass().getName() + "'.";
 
-              log.severe(message);
+              log.warn(message);
               return mapping.findForward("error");
           }
 
           AideController.retraitXSS(form);
           
-          // Redirection vers la méthode approprié
+          // Redirection vers la mï¿½thode appropriï¿½
 		ActionForward forward = forward((CardexAuthenticationSubject) subject,
 				mapping, form, request, response, method);
 		
 		// Le Nested Diagnostic Contexts de log4j est effacer pour ce thread
 		//NDC.remove();
 
-		// L'instance ActionForward est retourné
+		// L'instance ActionForward est retournï¿½
 		return (forward);				
 	}
     
@@ -265,15 +264,15 @@ public abstract class AbstractAction extends Action {
 	}
 
 	/**
-     * Redirige les requêtes vers la methode qui est specifiée.
+     * Redirige les requï¿½tes vers la methode qui est specifiï¿½e.
      *
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
-     * @param method La méthode a invoquée
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
+     * @param method La mï¿½thode a invoquï¿½e
      *
-     * @exception IOException si une erreur d'entrée/sortieif an input/output survient
+     * @exception IOException si une erreur d'entrï¿½e/sortieif an input/output survient
      * @exception ServletException si une exception servlet survient
      */
     private ActionForward forward(CardexAuthenticationSubject subject, ActionMapping mapping,
@@ -292,19 +291,19 @@ public abstract class AbstractAction extends Action {
             forward = (ActionForward) method.invoke(this, args);
         } catch (ClassCastException e) {
             String message =
-                "Une ClassCastException est survenue lors de l'invocation de la méthode '"
+                "Une ClassCastException est survenue lors de l'invocation de la mï¿½thode '"
                 + method.getName() + "' de la classe '"
                 + this.getClass().getName() + "'.";
 
-            log.severe(message);
+            log.error(message);
             return mapping.findForward("error");
         } catch (IllegalAccessException e) {
             String message =
-                "Une IllegalAccessException est survenue lors de l'invocation de la méthode '"
+                "Une IllegalAccessException est survenue lors de l'invocation de la mï¿½thode '"
                 + method.getName() + "' de la classe '"
                 + this.getClass().getName() + "'.";
 
-            LoggerCardex.severe(log,message, e);
+            log.error("IllegalAccessException",message, e);
             return mapping.findForward("error");
         } catch (InvocationTargetException e) {
 			
@@ -315,7 +314,7 @@ public abstract class AbstractAction extends Action {
 			}
 			
             String message =
-                "Une InvocationTargetException est survenue lors de l'invocation de la méthode '"
+                "Une InvocationTargetException est survenue lors de l'invocation de la mï¿½thode '"
                 + method.getName() + "' de la classe '"
                 + this.getClass().getName() + "'.";
 
@@ -327,12 +326,12 @@ public abstract class AbstractAction extends Action {
     }
 
     /**
-     * Introspection de la classe courante pour identifier la méthode spécifiée
-     * qui accepte les même types de paramètres que la méthode <code>perform()</code>.
+     * Introspection de la classe courante pour identifier la mï¿½thode spï¿½cifiï¿½e
+     * qui accepte les mï¿½me types de paramï¿½tres que la mï¿½thode <code>perform()</code>.
      *
-     * @param methodName Nom de la méthode faisant l'onjet d'introspection
+     * @param methodName Nom de la mï¿½thode faisant l'onjet d'introspection
      *
-     * @exception NoSuchMethodException si la méthode ne peut être trouvé
+     * @exception NoSuchMethodException si la mï¿½thode ne peut ï¿½tre trouvï¿½
      */
     private Method getMethod(String methodName)
             throws NoSuchMethodException {
@@ -350,7 +349,7 @@ public abstract class AbstractAction extends Action {
     }
 
     /**
-     * Stocke les messages d'erreurs concernant les règles d'affaires.
+     * Stocke les messages d'erreurs concernant les rï¿½gles d'affaires.
      */
     protected void handleBusinessException(BusinessException be,ActionMessages errors, HttpServletRequest request) {
             BusinessMessageResult messageResult =
@@ -380,7 +379,7 @@ public abstract class AbstractAction extends Action {
     	return new ActionMessage(businessMessage.getKey(), businessMessage.getArguments().toArray());
     }
     
-    // à retirer lorsque la version de struts changera.
+    // ï¿½ retirer lorsque la version de struts changera.
     private ActionMessage createActionError(String key, Object[] args){
     	
     	if (args.length == 1)
@@ -399,7 +398,7 @@ public abstract class AbstractAction extends Action {
     }    
     
     /**
-     * Stocke les messages d'erreurs concernant les erreurs systèmes.
+     * Stocke les messages d'erreurs concernant les erreurs systï¿½mes.
      */
     protected void handleBusinessResourceException(BusinessException be,ActionMessages errors, HttpServletRequest request) {
             ExceptionHandler.getInstance().traiterException(request, "BusinessResourceException", be);
@@ -411,7 +410,7 @@ public abstract class AbstractAction extends Action {
     }
 
     /**
-     * Stocke les messages d'erreurs concernant les erreurs systèmes.
+     * Stocke les messages d'erreurs concernant les erreurs systï¿½mes.
      */
     protected void handleIteratorException(IteratorException ie,ActionMessages errors, HttpServletRequest request) {
             errors.add(ActionMessages.GLOBAL_MESSAGE,
@@ -424,7 +423,7 @@ public abstract class AbstractAction extends Action {
 
 
     /**
-     * Stocke les messages d'erreurs concernant les erreurs systèmes.
+     * Stocke les messages d'erreurs concernant les erreurs systï¿½mes.
      */
     protected void handleValueObjectMapperException(ValueObjectMapperException voe, HttpServletRequest request) {
     	ActionMessages errors = new ActionMessages();
@@ -466,7 +465,7 @@ public abstract class AbstractAction extends Action {
             ActionForm form,
             HttpServletRequest request,
             HttpServletResponse response) {
-		log.fine("rafraichir");
+		log.debug("rafraichir");
 		return mapping.findForward("success");
 	}
     

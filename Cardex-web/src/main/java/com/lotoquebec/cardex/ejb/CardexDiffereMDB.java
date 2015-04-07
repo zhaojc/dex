@@ -1,7 +1,5 @@
 package com.lotoquebec.cardex.ejb;
 
-import java.util.logging.Logger;
-
 import javax.ejb.ActivationConfigProperty;
 import javax.ejb.MessageDriven;
 import javax.ejb.MessageDrivenContext;
@@ -9,9 +7,10 @@ import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.ObjectMessage;
 
-import com.lotoquebec.cardex.ejb.flux.Flux;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.lotoquebec.cardexCommun.exception.ExceptionHandler;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.iris.infrastructure.services.messaging.MessageAsync;
 /**
  * Bean implementation class for Enterprise Bean: CardexDiffereMDB
@@ -26,7 +25,7 @@ import com.lotoquebec.iris.infrastructure.services.messaging.MessageAsync;
 		})
 public class CardexDiffereMDB implements MessageListener {
 
-	private final static Logger log = (Logger)LoggerCardex.getLogger(CardexDiffereMDB.class);
+	private final static Logger log = LoggerFactory.getLogger(CardexDiffereMDB.class);
 	
 	private MessageDrivenContext fMessageDrivenCtx;
 
@@ -56,7 +55,7 @@ public class CardexDiffereMDB implements MessageListener {
 	 */
 	public void onMessage(Message msg) {
 		String jetonStatut = null;
-		log.fine("Message reçu");
+		log.debug("Message reçu");
 		
         try {
             //on récupère la structure MessageAsync du message JMS
@@ -70,16 +69,16 @@ public class CardexDiffereMDB implements MessageListener {
 
             if (className == null)
                throw new RuntimeException("Le flux " + message.getType() +" n'est pas défini dans le fichier de configuration actionsAsync.properties");
-            log.fine("Préparation de la class");
+            log.info("Préparation de la class");
             Flux flux = (Flux) Class.forName("com.cardex.ejb.flux."+msgEAI.getNomFlux()).newInstance();
-            log.fine("Début de l'exécution");
+            log.info("Début de l'exécution");
             flux.execute();*/
-            log.fine("Fin de l'exécution");
+            log.debug("Fin de l'exécution");
             
         }catch (Throwable throwable){
         	ExceptionHandler.getInstance().handle(new Exception("Erreur lors de l'envoi du statut du traitement", throwable));
         }
-        log.fine("Fin du flux");
+        log.debug("Fin du flux");
 	}
 
 	/**

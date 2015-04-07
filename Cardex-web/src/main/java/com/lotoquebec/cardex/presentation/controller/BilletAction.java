@@ -2,7 +2,6 @@ package com.lotoquebec.cardex.presentation.controller;
 
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +11,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessages;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardex.business.delegate.BilletBusinessDelegate;
 import com.lotoquebec.cardex.business.vo.BilletVO;
@@ -25,14 +26,13 @@ import com.lotoquebec.cardexCommun.exception.BusinessException;
 import com.lotoquebec.cardexCommun.exception.BusinessResourceException;
 import com.lotoquebec.cardexCommun.exception.BusinessRuleExceptionHandle;
 import com.lotoquebec.cardexCommun.exception.ValueObjectMapperException;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.presentation.util.AbstractAction;
 import com.lotoquebec.cardexCommun.util.StringUtils;
 
 public class BilletAction extends AbstractAction {
 
 	private final Logger      log =
-        (Logger)LoggerCardex.getLogger((this.getClass()));
+        LoggerFactory.getLogger((this.getClass()));
 	private BilletBusinessDelegate delegate = null;
 	
 	public BilletAction() throws BusinessResourceException {
@@ -46,7 +46,7 @@ public class BilletAction extends AbstractAction {
     HttpServletRequest request,
     HttpServletResponse response) throws IOException,
     ServletException {
-        log.fine("Accès à un billet");
+        log.debug("Accï¿½s ï¿½ un billet");
         ActionMessages errors = new ActionMessages();
         BilletForm billetForm = (BilletForm)form;    	
         BilletVO billetVO = new BilletVO();
@@ -78,7 +78,7 @@ public class BilletAction extends AbstractAction {
     HttpServletRequest request,
     HttpServletResponse response) throws IOException,
     ServletException {
-        log.fine("Créer un billet");
+        log.debug("Crï¿½er un billet");
         BilletForm billetForm = (BilletForm)form;    	
         billetForm.init();
         
@@ -100,7 +100,7 @@ public class BilletAction extends AbstractAction {
     HttpServletRequest request,
     HttpServletResponse response) throws IOException,
     ServletException {
-    	log.fine("Ajouter un billet");
+    	log.debug("Ajouter un billet");
         ActionMessages errors = new ActionMessages();
         BilletForm billetForm = (BilletForm)form;
         BilletVO billetVO = new BilletVO();
@@ -115,7 +115,7 @@ public class BilletAction extends AbstractAction {
         try {
         	ValueObjectMapper.convert(billetForm, billetVO, request.getLocale());
         	businessRuleExceptionHandle = delegate.ajouter(subject, billetVO);
-	         //On vérifie le message d'avertissement retourné s'il y a lieu pour pouvoir l'afficher à l'utilisateur
+	         //On vï¿½rifie le message d'avertissement retournï¿½ s'il y a lieu pour pouvoir l'afficher ï¿½ l'utilisateur
             if(StringUtils.isNotEmpty(businessRuleExceptionHandle.getBusinessException().getBusinessMessageResult().toString())){
                 handleBusinessException(businessRuleExceptionHandle.getBusinessException(), errors, request);
              }
@@ -145,7 +145,7 @@ public class BilletAction extends AbstractAction {
     HttpServletRequest request,
     HttpServletResponse response) throws IOException,
     ServletException {
-    	log.fine("Modifier un billet");
+    	log.debug("Modifier un billet");
         ActionMessages errors = new ActionMessages();
         BilletForm billetForm = (BilletForm)form;    	
         BilletVO billetVO = new BilletVO();
@@ -183,7 +183,7 @@ public class BilletAction extends AbstractAction {
     ActionForm form,
     HttpServletRequest request,
     HttpServletResponse response) throws IOException, ServletException {
-    	log.fine("Recherche provenance d'un billet");
+    	log.debug("Recherche provenance d'un billet");
         ActionMessages errors = new ActionMessages();
         BilletForm billetForm = (BilletForm)form;
         BilletVO billetVO = new BilletVO();
@@ -221,7 +221,7 @@ public class BilletAction extends AbstractAction {
     	    ActionForm form,
     	    HttpServletRequest request,
     	    HttpServletResponse response) throws IOException, ServletException {
-    	    	log.fine("Recherche vérification d'un billet");
+    	    	log.debug("Recherche vï¿½rification d'un billet");
     	        ActionMessages errors = new ActionMessages();
     	        BilletForm billetForm = (BilletForm)form;
     	        BilletVO billetVO = new BilletVO();
@@ -259,7 +259,7 @@ public class BilletAction extends AbstractAction {
     	    ActionForm form,
     	    HttpServletRequest request,
     	    HttpServletResponse response) throws IOException, ServletException {
-    	    	log.fine("Recherche détaillant fautif");
+    	    	log.debug("Recherche dï¿½taillant fautif");
     	        ActionMessages errors = new ActionMessages();
     	        BilletForm billetForm = (BilletForm)form;
     	        BilletVO billetVO = new BilletVO();
@@ -305,7 +305,7 @@ public class BilletAction extends AbstractAction {
     HttpServletRequest request,
     HttpServletResponse response) throws IOException,
     ServletException {
-    	log.fine("Recherche validation d'un billet");
+    	log.debug("Recherche validation d'un billet");
         ActionMessages errors = new ActionMessages();
         BilletForm billetForm = (BilletForm)form;
         BilletVO billetVO = new BilletVO();
@@ -344,7 +344,7 @@ public class BilletAction extends AbstractAction {
     HttpServletRequest request,
     HttpServletResponse response) throws IOException,
     ServletException {
-    	log.fine("Retour d'un billet");
+    	log.debug("Retour d'un billet");
     	BilletForm billetForm = (BilletForm)form;
     	remettreDossier(billetForm, request);
     	

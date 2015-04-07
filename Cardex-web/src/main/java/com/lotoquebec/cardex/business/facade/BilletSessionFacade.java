@@ -20,15 +20,15 @@ import com.lotoquebec.cardexCommun.exception.DAOException;
 
 /**
  * Le BilletSessionFacade offre les
- * services d'affaires, gère les intéractions
- * et les validations de règles d'affaires applicable
+ * services d'affaires, gï¿½re les intï¿½ractions
+ * et les validations de rï¿½gles d'affaires applicable
  * aux billets.
  * @author levassc
  *
  */
 public class BilletSessionFacade {
 	
-	//private final Logger log = (Logger)LoggerCardex.getLogger((this.getClass()));
+	//private final Logger log = LoggerFactory.getLogger((this.getClass()));
 
 	public void ajouter(CardexAuthenticationSubject subject, 
 	        BilletVO billetVO) throws BusinessRuleException, BusinessResourceException, BusinessException {
@@ -89,7 +89,7 @@ public class BilletSessionFacade {
 			}
 		} catch (DAOException e) {
 			e.printStackTrace();
-			throw new BusinessException("Problème avec checkNombreEnregistrementRechercheBillet");
+			throw new BusinessException("Problï¿½me avec checkNombreEnregistrementRechercheBillet");
 		}
 	}
 	

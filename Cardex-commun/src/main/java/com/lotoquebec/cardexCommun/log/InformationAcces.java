@@ -4,10 +4,11 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
 import com.lotoquebec.cardexCommun.user.CardexUser;
@@ -15,7 +16,7 @@ import com.lotoquebec.cardexCommun.util.StringUtils;
 
 public class InformationAcces {
 
-	private static final Logger log = (Logger)LoggerCardex.getLogger(InformationAcces.class);
+	private static final Logger log = LoggerFactory.getLogger(InformationAcces.class);
 	private static InformationAcces informationLogon = null;
 	private static SimpleDateFormat simpleDateFormat = null;
 	
@@ -26,7 +27,7 @@ public class InformationAcces {
 		
 		if (informationLogon == null){
 			informationLogon = new InformationAcces();
-			log.getHandlers()[0].setFormatter( new SimpleFormatter() );
+			//log.getHandlers()[0].setFormatter( new SimpleFormatter() );
 			simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS z");
 		}
 		return informationLogon;
@@ -86,7 +87,7 @@ public class InformationAcces {
 		
 		msg.append("RC=succes;");
 		
-		log.fine(msg.toString());
+		log.info(msg.toString());
 	}
 	
 	/*
@@ -182,7 +183,7 @@ public class InformationAcces {
 		
 		msg.append("RC=succes;");
 		
-		log.fine(msg.toString());
+		log.info(msg.toString());
 	}
 
 }

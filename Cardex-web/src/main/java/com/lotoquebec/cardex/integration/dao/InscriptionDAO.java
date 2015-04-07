@@ -8,9 +8,11 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.logging.Logger;
 
 import oracle.jdbc.OracleTypes;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardex.business.Inscription;
 import com.lotoquebec.cardex.business.vo.DossierVO;
@@ -22,11 +24,10 @@ import com.lotoquebec.cardexCommun.integration.dao.DAOConnection;
 import com.lotoquebec.cardexCommun.integration.dao.OracleDAOUtils;
 import com.lotoquebec.cardexCommun.integration.dao.jdbc.PreparerCallableStatement;
 import com.lotoquebec.cardexCommun.integration.dao.jdbc.StoreProcTemplate;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 
 /**
- * Liste des appels à la base de données pour différents accès aux dossiers.
- * L'inscription sont liés aux dossiers.  Implémente l'interface InscriptionDAO.
+ * Liste des appels ï¿½ la base de donnï¿½es pour diffï¿½rents accï¿½s aux dossiers.
+ * L'inscription sont liï¿½s aux dossiers.  Implï¿½mente l'interface InscriptionDAO.
  *
  * @author $Author: mlibersan $
  * @version $Revision: 1.3 $, $Date: 2002/03/13 17:49:34 $
@@ -35,26 +36,26 @@ import com.lotoquebec.cardexCommun.log.LoggerCardex;
 public class InscriptionDAO {
 
 	private final Logger      log =
-        (Logger)LoggerCardex.getLogger(InscriptionDAO.class);
+        LoggerFactory.getLogger(InscriptionDAO.class);
 
     /**
-     * Mise à jour d'une nouvelle inscription associé à un dossier, appelée
+     * Mise ï¿½ jour d'une nouvelle inscription associï¿½ ï¿½ un dossier, appelï¿½e
      * par update afin de faire une action "clear" et "insert".
-     * Selon le paramètre "action" il peut s'agir d'une insertion ("I")
+     * Selon le paramï¿½tre "action" il peut s'agir d'une insertion ("I")
      * ou d'un nettoyage ("C").
-     * Procédure appelée : CARDEX_LIEN.SP_E_IS_INSCRIPTION
-     * Date de création : (2002-03-04)
+     * Procï¿½dure appelï¿½e : CARDEX_LIEN.SP_E_IS_INSCRIPTION
+     * Date de crï¿½ation : (2002-03-04)
      * @author Philippe Caron
-     * @param subject CardexAuthenticationSubject : Données nominatives sur
+     * @param subject CardexAuthenticationSubject : Donnï¿½es nominatives sur
      * l'utilisateur.
-     * @param inscription Inscription : Inscription saisie à l'écran.
+     * @param inscription Inscription : Inscription saisie ï¿½ l'ï¿½cran.
      * @param action String : "I" ou "C"
-     * @param genreFichier String : Code à deux lettres de la table qui lie une
-     * inscription à un Dossier (DO).  Pour l'instant, seuls les dossiers
-     * possèdent une inscription.
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * @param genreFichier String : Code ï¿½ deux lettres de la table qui lie une
+     * inscription ï¿½ un Dossier (DO).  Pour l'instant, seuls les dossiers
+     * possï¿½dent une inscription.
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
      */
     private void editInscription(CardexAuthenticationSubject subject, Inscription inscription, String action, String genreFichier) throws DAOException {
@@ -132,18 +133,18 @@ public class InscriptionDAO {
     }
 
     /**
-     * Crée l'inscription.
-     * Date de création : (2002-03-04)
+     * Crï¿½e l'inscription.
+     * Date de crï¿½ation : (2002-03-04)
      * @author Philippe Caron
-     * @param subject CardexAuthenticationSubject : Données nominatives sur
+     * @param subject CardexAuthenticationSubject : Donnï¿½es nominatives sur
      * l'utilisateur.
-     * @param inscription Inscription : Inscription saisies à l'écran.
-     * @param genreFichier String : Code à deux lettres de la table qui lie un
-     * jeu à un Dossier (DO).  Pour l'instant, seuls les sujets possèdent des
+     * @param inscription Inscription : Inscription saisies ï¿½ l'ï¿½cran.
+     * @param genreFichier String : Code ï¿½ deux lettres de la table qui lie un
+     * jeu ï¿½ un Dossier (DO).  Pour l'instant, seuls les sujets possï¿½dent des
      * jeux.
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
      */
     public void insert(CardexAuthenticationSubject subject, Inscription inscription, String genreFichier) throws DAOException {
@@ -151,18 +152,18 @@ public class InscriptionDAO {
     }
 
     /**
-     * Détruit l'inscription.
-     * Date de création : (2002-03-04)
+     * Dï¿½truit l'inscription.
+     * Date de crï¿½ation : (2002-03-04)
      * @author Philippe Caron
-     * @param subject CardexAuthenticationSubject : Données nominatives sur
+     * @param subject CardexAuthenticationSubject : Donnï¿½es nominatives sur
      * l'utilisateur.
-     * @param inscription Inscription : Inscription saisies à l'écran.
-     * @param genreFichier String : Code à deux lettres de la table qui lie un
-     * jeu à un Dossier (DO).  Pour l'instant, seuls les sujets possèdent des
+     * @param inscription Inscription : Inscription saisies ï¿½ l'ï¿½cran.
+     * @param genreFichier String : Code ï¿½ deux lettres de la table qui lie un
+     * jeu ï¿½ un Dossier (DO).  Pour l'instant, seuls les sujets possï¿½dent des
      * jeux.
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
      */
     public void delete(CardexAuthenticationSubject subject, Inscription inscription, String genreFichier) throws DAOException {
@@ -170,18 +171,18 @@ public class InscriptionDAO {
     }
 
     /**
-     * Mise à jour de l'inscription.
-     * Date de création : (2002-03-04)
+     * Mise ï¿½ jour de l'inscription.
+     * Date de crï¿½ation : (2002-03-04)
      * @author Philippe Caron
-     * @param subject CardexAuthenticationSubject : Données nominatives sur
+     * @param subject CardexAuthenticationSubject : Donnï¿½es nominatives sur
      * l'utilisateur.
-     * @param inscription Inscription : Inscription saisies à l'écran.
-     * @param genreFichier String : Code à deux lettres de la table qui lie un
-     * jeu à un Dossier (DO).  Pour l'instant, seuls les sujets possèdent des
+     * @param inscription Inscription : Inscription saisies ï¿½ l'ï¿½cran.
+     * @param genreFichier String : Code ï¿½ deux lettres de la table qui lie un
+     * jeu ï¿½ un Dossier (DO).  Pour l'instant, seuls les sujets possï¿½dent des
      * jeux.
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
      */
     public void updateInscription(CardexAuthenticationSubject subject, Inscription inscription) throws DAOException {
@@ -189,23 +190,23 @@ public class InscriptionDAO {
     }
 
     /**
-     * Lecture des inscriptions associées à un dossier.
-     * Procédure appelée : CARDEX_WEB_LIRE_DOC_TRI.SPW_L_IS_INSCRIPTION
-     * Date de création : (2002-03-04)
+     * Lecture des inscriptions associï¿½es ï¿½ un dossier.
+     * Procï¿½dure appelï¿½e : CARDEX_WEB_LIRE_DOC_TRI.SPW_L_IS_INSCRIPTION
+     * Date de crï¿½ation : (2002-03-04)
      * @author Philippe Caron
-     * @param subject  CardexAuthenticationSubject : Données nominatives sur
+     * @param subject  CardexAuthenticationSubject : Donnï¿½es nominatives sur
      * l'utilisateur.
-     * @param cle long : Clé de référence du sujet.
-     * @param site long : Site de référence du sujet.
+     * @param cle long : Clï¿½ de rï¿½fï¿½rence du sujet.
+     * @param site long : Site de rï¿½fï¿½rence du sujet.
      * @param genreFichier String : ("DO").
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
      * @return Inscription : Inscription comportant une liste des sites admis.
      */
     public Collection findLiensInscription(CardexAuthenticationSubject subject, long cle, long site, String genreFichier) throws DAOException {
-      log.fine("findLiensInscription()");
+      log.debug("findLiensInscription()");
       Connection connection = DAOConnection.getInstance().getConnection(subject);
 	  CallableStatement callableStatement = null;
 	  ResultSet resultSet = null;
@@ -244,10 +245,10 @@ public class InscriptionDAO {
                 linkedInscription.setDateRencontreFinale(resultSet.getTimestamp("D_IS_RENCONTRE_FINALE"));
                 linkedInscription.setDateRencontreInitiale(resultSet.getTimestamp("D_IS_RENCONTRE_INITIALE"));
                 linkedInscription.setTousSitesApplicables(OracleDAOUtils.convertirStringABoolean(resultSet.getString("B_IS_TOUS_SITE_APPLICABLE")));
-                log.fine("   Retrieving [Inscription cle='" + linkedInscription.getCle()+"', site='" + linkedInscription.getSite() + "']");
+                log.debug("   Retrieving [Inscription cle='" + linkedInscription.getCle()+"', site='" + linkedInscription.getSite() + "']");
                 list.add(linkedInscription);
               }
-              log.fine("      Adding site '" + resultSet.getLong("L_IS_SITE") + "'");
+              log.debug("      Adding site '" + resultSet.getLong("L_IS_SITE") + "'");
               linkedInscription.addSite( Long.toString(resultSet.getLong("L_IS_SITE")) ); // I_SI_SITE
               previousCle = resultSet.getLong("L_IS_CLE");
          }//while
@@ -285,22 +286,22 @@ public class InscriptionDAO {
 
     /**
      * Lecture d'une inscription.
-     * Procédure appelée : CARDEX_WEB_LIRE_DOC_TRI.SPW_L2_IS_INSCRIPTION
-     * Date de création : (2002-03-04)
+     * Procï¿½dure appelï¿½e : CARDEX_WEB_LIRE_DOC_TRI.SPW_L2_IS_INSCRIPTION
+     * Date de crï¿½ation : (2002-03-04)
      * @author Philippe Caron
-     * @param subject  CardexAuthenticationSubject : Données nominatives sur
+     * @param subject  CardexAuthenticationSubject : Donnï¿½es nominatives sur
      * l'utilisateur.
-     * @param cle long : Clé de référence du sujet.
-     * @param site long : Site de référence du sujet.
+     * @param cle long : Clï¿½ de rï¿½fï¿½rence du sujet.
+     * @param site long : Site de rï¿½fï¿½rence du sujet.
      * @param genreFichier String : ("DO").
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
      * @return Inscription : Inscription comportant une liste des sites admis.
      */
     public Inscription findInscription(CardexAuthenticationSubject subject, Inscription inscription) throws DAOException {
-      log.fine("findInscription()");
+      log.debug("findInscription()");
       Connection connection = DAOConnection.getInstance().getConnection(subject);
 	  CallableStatement callableStatement = null;
 	  ResultSet resultSet = null;
@@ -338,9 +339,9 @@ public class InscriptionDAO {
                 linkedInscription.setDateRencontreInitiale(resultSet.getTimestamp("D_IS_RENCONTRE_INITIALE"));
                 linkedInscription.setTousSitesApplicables(OracleDAOUtils.convertirStringABoolean(resultSet.getString("B_IS_TOUS_SITE_APPLICABLE")));
                 linkedInscription.setEntite(resultSet.getLong("I_EN_CLE"));
-                log.fine("   Retrieving [Inscription cle='" + linkedInscription.getCle()+"', site='" + linkedInscription.getSite() + "']");
+                log.debug("   Retrieving [Inscription cle='" + linkedInscription.getCle()+"', site='" + linkedInscription.getSite() + "']");
               }
-              log.fine("      Adding site '" + resultSet.getLong("L_IS_SITE") + "'");
+              log.debug("      Adding site '" + resultSet.getLong("L_IS_SITE") + "'");
               linkedInscription.addSite( Long.toString(resultSet.getLong("L_IS_SITE")) ); // I_SI_SITE
               previousCle = resultSet.getLong("L_IS_CLE");
          }//while

@@ -9,7 +9,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -26,6 +25,8 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardex.business.delegate.RapportBusinessDelegate;
 import com.lotoquebec.cardex.business.vo.CriteresRechercheDossierVO;
@@ -33,16 +34,13 @@ import com.lotoquebec.cardex.presentation.model.form.CriteresRechercheDossierFor
 import com.lotoquebec.cardex.presentation.util.ValueObjectMapper;
 import com.lotoquebec.cardexCommun.GlobalConstants;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
-import com.lotoquebec.cardexCommun.exception.BusinessException;
-import com.lotoquebec.cardexCommun.exception.BusinessResourceException;
 import com.lotoquebec.cardexCommun.exception.DAOException;
 import com.lotoquebec.cardexCommun.exception.ValueObjectMapperException;
 import com.lotoquebec.cardexCommun.integration.dao.DAOConnection;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.presentation.util.AbstractAction;
 
 /**
- * Module de test uniquement. L'affichage ne fonctionne qu'en mode local. Sinon, ça prend un servlet.
+ * Module de test uniquement. L'affichage ne fonctionne qu'en mode local. Sinon, ï¿½a prend un servlet.
  *
  * @author $Author: fguerin $
  * @version $Revision: 1.1 $, $Date: 2006/08/20 22:06:38 $
@@ -53,19 +51,19 @@ public class RapportsJasperAction extends AbstractAction {
      * L'instance du gestionnaire de journalisation.
      */
 	private final Logger      log =
-        (Logger)LoggerCardex.getLogger((this.getClass()));
+        LoggerFactory.getLogger((this.getClass()));
 
     /**
      * Test des rapports Jasper (rapport tabulaire sur les contrats
-     * d'autoexclusion avec deux paramètres de date).
+     * d'autoexclusion avec deux paramï¿½tres de date).
      *
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortieif an input/output survient
+     * @exception IOException si une erreur d'entrï¿½e/sortieif an input/output survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward rapport(CardexAuthenticationSubject subject,
@@ -73,7 +71,7 @@ public class RapportsJasperAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws DAOException,IOException,
                               ServletException {
-        log.fine("Module des rapports Jasper");
+        log.debug("Module des rapports Jasper");
 
         ActionErrors errors = new ActionErrors();
         CriteresRechercheDossierForm criteresRechercheDossierForm = (CriteresRechercheDossierForm) form;
@@ -117,7 +115,7 @@ public class RapportsJasperAction extends AbstractAction {
 //				criteresRechercheDossierForm.setDateDebutAu(sdf.format(dateFin.getTime()));
 //			}
 			ValueObjectMapper.convertCriteresRechercheDossierHtmlForm(criteresRechercheDossierForm, criteresRechercheDossier,subject.getLocale());
-			//Utilisation d'un resultSet comme source de données
+			//Utilisation d'un resultSet comme source de donnï¿½es
 	         //resultSet = delegate.rapportReperage(criteresRechercheDossier, procedure);
 	         JRResultSetDataSource resultSetDataSource = new JRResultSetDataSource(resultSet);
 	         ServletContext context = request.getSession().getServletContext();  
@@ -127,7 +125,7 @@ public class RapportsJasperAction extends AbstractAction {
 	         //parameters.put("UTILISATEUR",user.getCode());
 	         parameters.put("UTILISATEUR"," ");
 	         JasperPrint print = JasperFillManager.fillReport(gabarit, parameters, resultSetDataSource);
-		    //Affichage à l'écran
+		    //Affichage ï¿½ l'ï¿½cran
 		    JasperViewer.viewReport(print,false);
 		    //JasperViewer.viewReport(print);
 		    return mapping.findForward("success");

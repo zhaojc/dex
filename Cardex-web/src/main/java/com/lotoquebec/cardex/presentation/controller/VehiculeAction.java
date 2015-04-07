@@ -15,7 +15,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -33,6 +32,8 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.upload.FormFile;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardex.business.Dossier;
 import com.lotoquebec.cardex.business.Narration;
@@ -88,7 +89,6 @@ import com.lotoquebec.cardexCommun.exception.ValueObjectMapperException;
 import com.lotoquebec.cardexCommun.integration.dao.DAOConnection;
 import com.lotoquebec.cardexCommun.integration.dao.OracleDAOUtils;
 import com.lotoquebec.cardexCommun.integration.dao.cleListe.cleSQLListeCache.TableValeurCleSQLListeCache;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.model.EntiteCardexForm;
 import com.lotoquebec.cardexCommun.presentation.util.AbstractAction;
 import com.lotoquebec.cardexCommun.presentation.util.AideController;
@@ -112,7 +112,7 @@ public class VehiculeAction extends AbstractAction {
      * L'instance du gestionnaire de journalisation.
      */
 	private final Logger      log =
-        (Logger)LoggerCardex.getLogger((this.getClass()));
+        LoggerFactory.getLogger((this.getClass()));
 
 
     /**
@@ -139,7 +139,7 @@ public class VehiculeAction extends AbstractAction {
                                 HttpServletResponse response) throws IOException,
                                 ServletException {
 
-        log.fine("Cr�ation d'un nouveau v�hicule");
+        log.debug("Cr�ation d'un nouveau v�hicule");
 
         VehiculeForm vehiculeForm = (VehiculeForm)form;
 
@@ -185,7 +185,7 @@ public class VehiculeAction extends AbstractAction {
             HttpServletResponse response) throws IOException,
             ServletException {
 
-		log.fine("Cr�ation d'un nouveau v�hicule par un agent de s�curit�");
+		log.debug("Cr�ation d'un nouveau v�hicule par un agent de s�curit�");
 
         VehiculeForm vehiculeForm = new VehiculeForm();
         vehiculeForm.init(subject);
@@ -229,7 +229,7 @@ public class VehiculeAction extends AbstractAction {
             HttpServletResponse response) throws IOException,
             ServletException {
 
-		log.fine("Cr�ation d'un nouveau v�hicule par un agent de s�curit�");
+		log.debug("Cr�ation d'un nouveau v�hicule par un agent de s�curit�");
 
         VehiculeForm vehiculeForm = new VehiculeForm();
         vehiculeForm.init(subject);
@@ -266,7 +266,7 @@ public class VehiculeAction extends AbstractAction {
                               HttpServletResponse response) throws IOException,
                               ServletException {
 
-        log.fine("Sauvegarde de la cr�ation d'un nouveau v�hicule");
+        log.debug("Sauvegarde de la cr�ation d'un nouveau v�hicule");
 
         ActionMessages errors = new ActionMessages();
         VehiculeHtmlForm vehiculeForm = (VehiculeHtmlForm)form;
@@ -280,11 +280,11 @@ public class VehiculeAction extends AbstractAction {
 
             ValueObjectMapper.convertVehiculeHtmlForm(newVehiculeForm, newVehicule, subject.getLocale());
 
-            log.fine("V�hicule � cr�er : " + newVehicule);
+            log.debug("V�hicule � cr�er : " + newVehicule);
             Vehicule criteria = vehiculeDelegate.create(subject, newVehicule);
-            log.fine("# Cl� de v�hicule retourn� : " + newVehicule.getCle());
+            log.debug("# Cl� de v�hicule retourn� : " + newVehicule.getCle());
             Vehicule vehiculeCreated = vehiculeDelegate.find(subject, criteria);
-            log.fine("V�hicule cr�� : " + vehiculeCreated );
+            log.debug("V�hicule cr�� : " + vehiculeCreated );
 
 			//V�rification d'un mandat PSU associ� � l'ajout d'un v�hicule
 			PSUMandatForm psuMandat = new PSUMandatForm();
@@ -355,7 +355,7 @@ public class VehiculeAction extends AbstractAction {
                               HttpServletResponse response) throws IOException,
                               ServletException {
 
-        log.fine("Acc�s � un v�hicule");
+        log.debug("Acc�s � un v�hicule");
         ActionMessages errors = new ActionMessages();
         try {
             VehiculeBusinessDelegate vehiculeDelegate = new VehiculeBusinessDelegate();
@@ -365,7 +365,7 @@ public class VehiculeAction extends AbstractAction {
             if (AideController.isNullOrEquals(vehiculeForm.getMotPasse(), vehiculeForm.getConfirmationMotPasse())) {
               ValueObjectMapper.convertVehiculeHtmlForm(vehiculeForm, vehicule,subject.getLocale());
               vehicule = vehiculeDelegate.find(subject, vehicule);
-              log.fine("V�hicule trouv�: " + vehicule.toString());
+              log.debug("V�hicule trouv�: " + vehicule.toString());
               ValueObjectMapper.convertVehicule(vehicule, vehiculeForm,subject.getLocale());
               //vehiculeForm.setNew(false);
               populateVehiculeForm(subject, vehicule, vehiculeForm);
@@ -383,7 +383,7 @@ public class VehiculeAction extends AbstractAction {
               if (nbOfAttemps < GlobalConstants.MotDePasse.MAX_ATTEMPS) {
                 ValueObjectMapper.convertVehiculeHtmlForm(vehiculeForm, vehicule,subject.getLocale());
                 vehicule = vehiculeDelegate.find(subject, vehicule);
-                log.fine("V�hicule prot�g�: " + vehicule.toString());
+                log.debug("V�hicule prot�g�: " + vehicule.toString());
                 ValueObjectMapper.convertVehicule(vehicule, vehiculeForm,subject.getLocale());
                 populateVehiculeForm(subject, vehicule, vehiculeForm);
                 vehiculeForm.setConfirmationMotPasse("");
@@ -424,7 +424,7 @@ public class VehiculeAction extends AbstractAction {
 			ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException {
 
-		log.fine("Acc�s � un v�hicule");
+		log.debug("Acc�s � un v�hicule");
 		ActionMessages errors = new ActionMessages();
 		try {
 			VehiculeBusinessDelegate vehiculeDelegate = new VehiculeBusinessDelegate();
@@ -434,7 +434,7 @@ public class VehiculeAction extends AbstractAction {
 			ValueObjectMapper.convertVehiculeHtmlForm(vehiculeForm,
 					vehicule, subject.getLocale());
 			vehicule = vehiculeDelegate.find(subject, vehicule);
-			log.fine("V�hicule trouv�: " + vehicule.toString());
+			log.debug("V�hicule trouv�: " + vehicule.toString());
 			ValueObjectMapper.convertVehicule(vehicule, vehiculeForm,
 					subject.getLocale());
 			vehiculeForm.setNew(false);
@@ -480,7 +480,7 @@ public class VehiculeAction extends AbstractAction {
                               HttpServletResponse response) throws IOException,
                               ServletException {
 
-        log.fine("Acc�s � un v�hicule");
+        log.debug("Acc�s � un v�hicule");
         ActionMessages errors = new ActionMessages();
         try {
             VehiculeBusinessDelegate vehiculeDelegate = new VehiculeBusinessDelegate();
@@ -489,7 +489,7 @@ public class VehiculeAction extends AbstractAction {
             if (AideController.isNullOrEquals(vehiculeForm.getMotPasse(), vehiculeForm.getConfirmationMotPasse())) {
               ValueObjectMapper.convertVehiculeHtmlForm(vehiculeForm, vehicule,subject.getLocale());
               vehicule = vehiculeDelegate.findAcces(subject, vehicule);
-              log.fine("V�hicule trouv�: " + vehicule.toString());
+              log.debug("V�hicule trouv�: " + vehicule.toString());
               vehiculeForm.init(subject);
               ValueObjectMapper.convertVehicule(vehicule, vehiculeForm,subject.getLocale());
               vehiculeForm.setNew(false);
@@ -513,7 +513,7 @@ public class VehiculeAction extends AbstractAction {
               if (nbOfAttemps < GlobalConstants.MotDePasse.MAX_ATTEMPS) {
                 ValueObjectMapper.convertVehiculeHtmlForm(vehiculeForm, vehicule,subject.getLocale());
                 vehicule = vehiculeDelegate.findAcces(subject, vehicule);
-                log.fine("V�hicule prot�g�: " + vehicule.toString());
+                log.debug("V�hicule prot�g�: " + vehicule.toString());
                 vehiculeForm.init(subject);
                 ValueObjectMapper.convertVehicule(vehicule, vehiculeForm,subject.getLocale());
                 populateVehiculeForm(subject, vehicule, vehiculeForm);
@@ -567,7 +567,7 @@ public class VehiculeAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException, CloneNotSupportedException {
-        log.fine("Acc�s � l'ecran de recherche vehicule liaison.");
+        log.debug("Acc�s � l'ecran de recherche vehicule liaison.");
 
         ActionMessages errors = new ActionMessages();
         CriteresRechercheVehiculeForm rechercheVehiculeForm = new CriteresRechercheVehiculeForm();
@@ -595,7 +595,7 @@ public class VehiculeAction extends AbstractAction {
             rechercheVehiculeForm.setSociete(societeForm);
             rechercheVehiculeForm.setEntiteCardexLiaison((EntiteCardexForm) ((SocieteForm) form).clone() );
         }else {
-            log.severe("L'objet source de la liaison dossier n'est pas de type valide(sujet,societe,dossier,vehicule)");
+            log.error("L'objet source de la liaison dossier n'est pas de type valide(sujet,societe,dossier,vehicule)");
             return mapping.findForward("error");
         }
 
@@ -660,7 +660,7 @@ public class VehiculeAction extends AbstractAction {
                                 HttpServletResponse response) throws IOException,
                                 ServletException {
 
-        log.fine("Mise � jour d'un v�hicule");
+        log.debug("Mise � jour d'un v�hicule");
         ActionMessages errors = new ActionMessages();
         try {
         	verifierToken(request);
@@ -681,10 +681,10 @@ public class VehiculeAction extends AbstractAction {
                 vehiculeForm.getAjoutPhoto().setExtension(vehiculeForm.getAjoutPhoto().getExtensionDeFilePath());                
                 //Est ce que la taille du fichier exc�de 4MB
                 if (vehiculeForm.getAjoutPhoto().isTailleAccepte() == false) {
-                    log.severe("La taille du fichier est sup�rieure � 7MB.");
+                    log.error("La taille du fichier est sup�rieure � 7MB.");
                     throw (new BusinessRuleExceptionHandle("erreur_fichier")).getBusinessException();
                 }else if(vehiculeForm.getAjoutPhoto().isPhoto() == false){
-                    log.severe("Ce fichier n'est pas une photo");
+                    log.error("Ce fichier n'est pas une photo");
                     throw (new BusinessRuleExceptionHandle("erreur.ajout.type.photo")).getBusinessException();
                 }else{
 	            	vehiculeForm.getAjoutPhoto().setLien(vehiculeForm.getCle());
@@ -693,13 +693,13 @@ public class VehiculeAction extends AbstractAction {
 	            	addLienPhotoAjout(subject, mapping, vehiculeForm.getAjoutPhoto(), request, response);
                 }
             }else{ //Sinon, on fait la mise � jour de la fiche v�hicule.
-	            log.fine("Mise � jour du v�hicule: " + vehicule.toString());
+	            log.debug("Mise � jour du v�hicule: " + vehicule.toString());
 	            vehiculeDelegate.update(subject, vehicule);
 	            vehicule = vehiculeDelegate.find(subject, vehicule);
 	            if (vehicule != null) {
 	              ValueObjectMapper.convertVehicule(vehicule, vehiculeForm,
 	                    subject.getLocale());
-	              log.fine("Modification effective du v�hicule: " + vehicule.toString());
+	              log.debug("Modification effective du v�hicule: " + vehicule.toString());
 	            }
 	
 				//V�rification d'un mandat PSU associ� � la mise � jour d'un v�hicule
@@ -767,7 +767,7 @@ public class VehiculeAction extends AbstractAction {
                                 HttpServletRequest request,
                                 HttpServletResponse response) throws IOException,
                                 ServletException {
-        log.fine("Recherche par d�fault de v�hicules");
+        log.debug("Recherche par d�fault de v�hicules");
         ActionMessages errors = new ActionMessages();
         try {
 
@@ -831,7 +831,7 @@ public class VehiculeAction extends AbstractAction {
                                 HttpServletResponse response) throws IOException,
                                 ServletException {
 
-        log.fine("Recherche de v�hicules");
+        log.debug("Recherche de v�hicules");
         ActionMessages errors = new ActionMessages();
         try {
             VehiculeBusinessDelegate delegate = new VehiculeBusinessDelegate();
@@ -886,7 +886,7 @@ public class VehiculeAction extends AbstractAction {
 		Iterator it = list.iterator();
 		while (it.hasNext()){
 		  Vehicule vehicule = (Vehicule)it.next();
-		  log.fine(vehicule.toString());
+		  log.debug(vehicule.toString());
 		  VehiculeHtmlForm vehiculeForm = new  VehiculeForm();
 		  ValueObjectMapper.convertVehicule(vehicule, vehiculeForm,
 		        subject.getLocale());
@@ -913,7 +913,7 @@ public class VehiculeAction extends AbstractAction {
 		Iterator it = list.iterator();
 		while (it.hasNext()){
 		  Vehicule vehicule = (Vehicule)it.next();
-		  log.fine(vehicule.toString());
+		  log.debug(vehicule.toString());
 		  VehiculeHtmlForm vehiculeForm = new  VehiculeForm();
 		  ValueObjectMapper.convertVehicule(vehicule, vehiculeForm,
 		        subject.getLocale());
@@ -946,7 +946,7 @@ public class VehiculeAction extends AbstractAction {
                                        HttpServletRequest request,
                                        HttpServletResponse response) throws IOException,
                                        ServletException {
-        log.fine("Recherche de vehicule en mode liaison");
+        log.debug("Recherche de vehicule en mode liaison");
 
         ActionMessages errors = new ActionMessages();
 
@@ -1004,7 +1004,7 @@ public class VehiculeAction extends AbstractAction {
                                   HttpServletRequest request,
                                   HttpServletResponse response) throws IOException,
                                   ServletException {
-        log.fine("Choix du type de lien avec un vehicule");
+        log.debug("Choix du type de lien avec un vehicule");
 
         return mapping.findForward("success");
     }
@@ -1029,7 +1029,7 @@ public class VehiculeAction extends AbstractAction {
             new VehiculeBusinessDelegate();
         Vehicule vehicule = delegate.find(subject,criteria);
         vehiculeForm.resetOnglets();
-        //log.fine("V�hicule trouv�: " + vehicule.toString());
+        //log.debug("V�hicule trouv�: " + vehicule.toString());
         ValueObjectMapper.convertVehicule(vehicule, vehiculeForm, subject.getLocale());
         vehiculeForm.setConfirmationMotPasse(vehiculeForm.getMotPasse());
 		rechercheLiensVehicule(subject, vehicule, vehiculeForm, delegate);
@@ -1057,7 +1057,7 @@ public class VehiculeAction extends AbstractAction {
         Collection liensDossier = delegate.findLiensDossier(subject,vehicule);
         Iterator it = liensDossier.iterator();
 
-        log.fine("Dossiers li�s (" + liensDossier.size() + ") :");
+        log.debug("Dossiers li�s (" + liensDossier.size() + ") :");
 
         while (it.hasNext()) {
             Dossier     linkDossier = (Dossier) it.next();
@@ -1067,7 +1067,7 @@ public class VehiculeAction extends AbstractAction {
                     subject.getLocale());
             linkDossierForm.assignerValeurDeListe( subject );
             vehiculeForm.addDossier(linkDossierForm);
-            log.fine(linkDossier.toString());
+            log.debug(linkDossier.toString());
         }
         vehiculeForm.getListeDossiers().assignerTrierDefault(DossierOngletTrieListe.CLE_DATE_DEBUT, true, new DossierOngletTrieListe());
         
@@ -1076,7 +1076,7 @@ public class VehiculeAction extends AbstractAction {
                 vehicule);
         it = liensNarration.iterator();
 
-        log.fine("Narrations li�es (" + liensNarration.size() + ") :");
+        log.debug("Narrations li�es (" + liensNarration.size() + ") :");
 
         while (it.hasNext()) {
             Narration     linkNarration = (Narration) it.next();
@@ -1088,7 +1088,7 @@ public class VehiculeAction extends AbstractAction {
                     subject.getLocale());
             linkNarrationForm.assignerValeurDeListe( subject );
             vehiculeForm.addNarration(linkNarrationForm);
-            log.fine(linkNarration.toString());
+            log.debug(linkNarration.toString());
         }
         vehiculeForm.getListeNarrations().assignerTrierDefault(NarrationOngletTrieListe.CLE_DATE_CREATION, true, new NarrationOngletTrieListe());
 
@@ -1096,7 +1096,7 @@ public class VehiculeAction extends AbstractAction {
         Collection liensPhoto = delegate.findLiensPhoto(subject,
                 vehicule);
         it = liensPhoto.iterator();
-        log.fine("Photos li�es (" + liensPhoto.size() + ") :");
+        log.debug("Photos li�es (" + liensPhoto.size() + ") :");
 
         while (it.hasNext()) {
             Collection sublist = new ArrayList();
@@ -1107,7 +1107,7 @@ public class VehiculeAction extends AbstractAction {
                 ValueObjectMapper.convertPhoto(linkPhoto, linkPhotoForm,
                         subject.getLocale());
                 sublist.add(linkPhotoForm);
-                log.fine(linkPhoto.toString());
+                log.debug(linkPhoto.toString());
               }//if
             }//for
             vehiculeForm.addPhoto(sublist);
@@ -1116,7 +1116,7 @@ public class VehiculeAction extends AbstractAction {
         // Recherche des liens particularit�s
         Particularites liensParticularites = delegate.findLiensParticularite(subject,
                 vehicule);
-        log.fine("Particularites li�s (" + liensParticularites.getParticularitesChoisis().size() + ") :");
+        log.debug("Particularites li�s (" + liensParticularites.getParticularitesChoisis().size() + ") :");
         ParticularitesForm linkParticularitesForm = new ParticularitesForm();
         ValueObjectMapper.convertParticularites(subject, liensParticularites,linkParticularitesForm,subject.getLocale());
         vehiculeForm.setParticularites(linkParticularitesForm);
@@ -1126,7 +1126,7 @@ public class VehiculeAction extends AbstractAction {
                 vehicule);
         it = liensSujet.iterator();
 
-        log.fine("Sujets li�s (" + liensSujet.size() + ") :");
+        log.debug("Sujets li�s (" + liensSujet.size() + ") :");
 
         while (it.hasNext()) {
             Sujet     linkSujet = (Sujet) it.next();
@@ -1136,7 +1136,7 @@ public class VehiculeAction extends AbstractAction {
                     subject.getLocale());
             linkSujetForm.assignerValeurDeListe( subject );
             vehiculeForm.addSujet(linkSujetForm);
-            log.fine(linkSujet.toString());
+            log.debug(linkSujet.toString());
         }
         vehiculeForm.getListeSujets().assignerTrierDefault(SujetOngletTrieListe.CLE_NOM, false, new SujetOngletTrieListe());
 
@@ -1145,7 +1145,7 @@ public class VehiculeAction extends AbstractAction {
                 vehicule);
         it = liensSociete.iterator();
 
-        log.fine("Soci�t�s li�es (" + liensSociete.size() + ") :");
+        log.debug("Soci�t�s li�es (" + liensSociete.size() + ") :");
 
         while (it.hasNext()) {
             Societe     linkSociete = (Societe) it.next();
@@ -1155,7 +1155,7 @@ public class VehiculeAction extends AbstractAction {
                     subject.getLocale());
             linkSocieteForm.assignerValeurDeListe( subject );
             vehiculeForm.addSociete(linkSocieteForm);
-            log.fine(linkSociete.toString());
+            log.debug(linkSociete.toString());
         }
         vehiculeForm.getListeSocietes().assignerTrierDefault(SocieteOngletTrieListe.CLE_NOM, false, new SocieteOngletTrieListe());
 
@@ -1217,7 +1217,7 @@ public class VehiculeAction extends AbstractAction {
                                  HttpServletRequest request,
                                  HttpServletResponse response) throws IOException,
                                  ServletException, SecurityException, IllegalArgumentException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
-        log.fine("Refresh �cran de recherche de v�hicule");
+        log.debug("Refresh �cran de recherche de v�hicule");
 
         return mapping.findForward("success");
     }
@@ -1246,7 +1246,7 @@ public class VehiculeAction extends AbstractAction {
                                  HttpServletRequest request,
                                  HttpServletResponse response) throws IOException,
                                  ServletException, SecurityException, IllegalArgumentException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
-        log.fine("Refresh �cran du v�hicule");
+        log.debug("Refresh �cran du v�hicule");
         
         return mapping.findForward("success");
     }
@@ -1268,7 +1268,7 @@ public class VehiculeAction extends AbstractAction {
                                        HttpServletRequest request,
                                        HttpServletResponse response) throws IOException,
                                        ServletException {
-        log.fine("Param�tres de recherche par d�fault de v�hicules");
+        log.debug("Param�tres de recherche par d�fault de v�hicules");
 
         ActionMessages errors = new ActionMessages();
 
@@ -1305,7 +1305,7 @@ public class VehiculeAction extends AbstractAction {
                                        HttpServletRequest request,
                                        HttpServletResponse response) throws IOException,
                                        ServletException {
-        log.fine("Param�tres de recherche par d�fault de v�hicules en mode liaison");
+        log.debug("Param�tres de recherche par d�fault de v�hicules en mode liaison");
 
         ActionMessages errors = new ActionMessages();
 
@@ -1354,7 +1354,7 @@ public class VehiculeAction extends AbstractAction {
                                         HttpServletRequest request,
                                         HttpServletResponse response) throws IOException,
                                         ServletException {
-        log.fine("Liaison d'un dossier");
+        log.debug("Liaison d'un dossier");
 
         ActionMessages errors = new ActionMessages();
 
@@ -1378,7 +1378,7 @@ public class VehiculeAction extends AbstractAction {
             dossier.setTypeLien(lienForm.getTypeLien());
             dossier.setRole(GlobalConstants.Role.SANS_OBJET);
 
-            log.fine(lienForm.toString());
+            log.debug(lienForm.toString());
             delegate.addLienDossier(subject, vehicule,
                                     dossier);
             populateVehiculeForm(subject, vehicule, vehiculeForm);
@@ -1438,7 +1438,7 @@ public class VehiculeAction extends AbstractAction {
                                         HttpServletRequest request,
                                         HttpServletResponse response) throws IOException,
                                         ServletException {
-        log.fine("Liaison d'un sujet");
+        log.debug("Liaison d'un sujet");
 
         ActionMessages errors = new ActionMessages();
 
@@ -1461,7 +1461,7 @@ public class VehiculeAction extends AbstractAction {
             sujet.setRole(GlobalConstants.Role.SANS_OBJET);
 
             delegate.addLienSujet(subject, vehicule, sujet);
-            log.fine(lienForm.toString());
+            log.debug(lienForm.toString());
             populateVehiculeForm(subject, vehicule, vehiculeForm);
             assignerNouveauVehicule(request, vehiculeForm);
 
@@ -1520,7 +1520,7 @@ public class VehiculeAction extends AbstractAction {
                                         HttpServletRequest request,
                                         HttpServletResponse response) throws IOException,
                                         ServletException {
-        log.fine("Liaison d'une soci�t�");
+        log.debug("Liaison d'une soci�t�");
 
         ActionMessages errors = new ActionMessages();
 
@@ -1544,7 +1544,7 @@ public class VehiculeAction extends AbstractAction {
             societe.setRole(GlobalConstants.Role.SANS_OBJET);
 
             delegate.addLienSociete(subject, vehicule, societe);
-            log.fine(lienForm.toString());
+            log.debug(lienForm.toString());
             populateVehiculeForm(subject, vehicule, vehiculeForm);
             assignerNouveauVehicule(request, vehiculeForm);
             
@@ -1603,7 +1603,7 @@ public class VehiculeAction extends AbstractAction {
                                            HttpServletRequest request,
                                            HttpServletResponse response) throws IOException,
                                            ServletException {
-        log.fine("Destruction d'un lien dossier");
+        log.debug("Destruction d'un lien dossier");
 
         ActionMessages errors = new ActionMessages();
 
@@ -1630,7 +1630,7 @@ public class VehiculeAction extends AbstractAction {
             dossier.setLien(lienForm.getCle());
             dossier.setLienSite(lienForm.getSite());
 
-            log.fine(lienForm.toString());
+            log.debug(lienForm.toString());
             delegate.deleteLienDossier(subject,vehicule,dossier);
             populateVehiculeForm(subject, vehicule, vehiculeForm);
             assignerNouveauVehicule(request, vehiculeForm);
@@ -1682,7 +1682,7 @@ public class VehiculeAction extends AbstractAction {
                                 HttpServletRequest request,
                                 HttpServletResponse response) throws IOException, DAOException,
                                 ServletException {
-        log.fine("�puration des v�hicules");
+        log.debug("�puration des v�hicules");
 
         ActionMessages errors = new ActionMessages();
 
@@ -1703,18 +1703,18 @@ public class VehiculeAction extends AbstractAction {
 			String siteDescription = cache.obtenirLabel(subject, String.valueOf(utilisateur.getSite()), new TableValeurCleSQLListeCache(subject, GlobalConstants.TableValeur.SITE, utilisateur.getEntite(), GlobalConstants.ActionSecurite.SELECTION));
     		String nomRapport = chemin+"V�hicules � �purer "+ siteDescription + " (" + dateRapport+").pdf";
     		InputStream gabarit = getClass().getClassLoader().getResourceAsStream("rapports/" + RapportsConfiguration.RAPPORT_EPURATION_VEHICULES);
-			log.fine("Sauvegarder v�hicules � �purer");
+			log.debug("Sauvegarder v�hicules � �purer");
 			long site = utilisateur.getSite();
 			resultSet = rapportDelegate.rapportEpuration(site, connection, "CARDEX_RAPPORT.SP_RAP_VE_EPURATION");
 			JRResultSetDataSource resultSetDataSource = new JRResultSetDataSource(resultSet);
-			// log.fine(context.getRealPath("/rapports/"));
+			// log.debug(context.getRealPath("/rapports/"));
 			ServletContext context = request.getSession().getServletContext();  
 	        parameters.put("SUBREPORT_DIR",context.getRealPath("/rapports/"));
             parameters.put("REPORT_CONNECTION",connection);
 			parameters.put("UTILISATEUR", utilisateur.getCode());
 			JasperPrint print = JasperFillManager.fillReport(gabarit, parameters, resultSetDataSource);
 			// Sauvegarde dans un fichier
-			log.fine("�puration des v�hicules (Sauvegarde dans un fichier)");
+			log.debug("�puration des v�hicules (Sauvegarde dans un fichier)");
 			(new PDFImpressionRapport()).impression(nomRapport, print);
 			//On proc�de ensuite � l'�puration
             VehiculeBusinessDelegate vehiculeDelegate =
@@ -1759,7 +1759,7 @@ public class VehiculeAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Suppression d'un lien entre une narration et un v�hicule.");
+        log.debug("Suppression d'un lien entre une narration et un v�hicule.");
         ActionMessages errors = new ActionMessages();
 
         try {
@@ -1776,8 +1776,8 @@ public class VehiculeAction extends AbstractAction {
                     subject.getLocale());
             ValueObjectMapper.convertNarrationHtmlForm(narrationForm, narration,
                     subject.getLocale());
-            log.fine("Vehicule: " + vehicule);
-            log.fine("Narration: " + narration);
+            log.debug("Vehicule: " + vehicule);
+            log.debug("Narration: " + narration);
             delegate.deleteLienNarration(subject,vehicule,narration);
             populateVehiculeForm(subject, vehicule, vehiculeForm);
             assignerNouveauVehicule(request, vehiculeForm);
@@ -1822,7 +1822,7 @@ public class VehiculeAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Suppression d'un lien entre une photo et un v�hicule.");
+        log.debug("Suppression d'un lien entre une photo et un v�hicule.");
         ActionMessages errors = new ActionMessages();
 
         try {
@@ -1839,8 +1839,8 @@ public class VehiculeAction extends AbstractAction {
                     subject.getLocale());
             ValueObjectMapper.convertPhotoHtmlForm(photoForm, photo,
                     subject.getLocale());
-            log.fine("Vehicule: " + vehicule);
-            log.fine("Photo: " + photo);
+            log.debug("Vehicule: " + vehicule);
+            log.debug("Photo: " + photo);
             delegate.deleteLienPhoto(subject,vehicule,photo);
             populateVehiculeForm(subject, vehicule, vehiculeForm);
             assignerNouveauVehicule(request, vehiculeForm);
@@ -1883,7 +1883,7 @@ public class VehiculeAction extends AbstractAction {
                                         HttpServletRequest request,
                                         HttpServletResponse response) throws IOException,
                                         ServletException {
-        log.fine("Destruction d'un lien sujet");
+        log.debug("Destruction d'un lien sujet");
 
         ActionMessages errors = new ActionMessages();
 
@@ -1911,7 +1911,7 @@ public class VehiculeAction extends AbstractAction {
             sujet.setLien(lienForm.getCle());
             sujet.setLienSite(lienForm.getSite());
 
-            log.fine(lienForm.toString());
+            log.debug(lienForm.toString());
             delegate.deleteLienSujet(subject, vehicule,
                                     sujet);
             populateVehiculeForm(subject, vehicule, vehiculeForm);
@@ -1958,7 +1958,7 @@ public class VehiculeAction extends AbstractAction {
                                         HttpServletRequest request,
                                         HttpServletResponse response) throws IOException,
                                         ServletException {
-        log.fine("Destruction d'un lien societe");
+        log.debug("Destruction d'un lien societe");
 
         ActionMessages errors = new ActionMessages();
 
@@ -1985,7 +1985,7 @@ public class VehiculeAction extends AbstractAction {
             societe.setLien(lienForm.getCle());
             societe.setLienSite(lienForm.getSite());
 
-            log.fine(lienForm.toString());
+            log.debug(lienForm.toString());
             delegate.deleteLienSociete(subject, vehicule,
                                     societe);
             populateVehiculeForm(subject, vehicule, vehiculeForm);
@@ -2032,7 +2032,7 @@ public class VehiculeAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Permettre la modification d'une narration li�e � un vehicule.");
+        log.debug("Permettre la modification d'une narration li�e � un vehicule.");
         ActionMessages errors = new ActionMessages();
 
         try {
@@ -2054,8 +2054,8 @@ public class VehiculeAction extends AbstractAction {
                     subject.getLocale());
             ValueObjectMapper.convertNarrationHtmlForm(narrationForm, narration,
                     subject.getLocale());
-            log.fine("Vehicule: " + vehicule);
-            log.fine("Narration: " + narration);
+            log.debug("Vehicule: " + vehicule);
+            log.debug("Narration: " + narration);
             delegate.approuveLienNarration(subject,narration);
             populateVehiculeForm(subject, vehicule, vehiculeForm);
             assignerNouveauVehicule(request, vehiculeForm);
@@ -2093,7 +2093,7 @@ public class VehiculeAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Liasion d'une narration � un v�hicule.");
+        log.debug("Liasion d'une narration � un v�hicule.");
         ActionMessages errors = new ActionMessages();
         ActionMessages messages = new ActionMessages();
         
@@ -2108,8 +2108,8 @@ public class VehiculeAction extends AbstractAction {
                     subject.getLocale());
             ValueObjectMapper.convertNarrationHtmlForm(narrationForm, narration,
                     subject.getLocale());
-            log.fine("Vehicule : " + vehicule);
-            log.fine("Narration: " + narration);
+            log.debug("Vehicule : " + vehicule);
+            log.debug("Narration: " + narration);
             NarrationBaliseUtil.assignerMessageSiNarrationANettoyer(messages, narrationForm.getNarrationAvecFormat());
             delegate.addLienNarration(subject,vehicule,narration);
             populateVehiculeForm(subject, vehicule, vehiculeForm);
@@ -2169,7 +2169,7 @@ public class VehiculeAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Approbation d'une narration li�e � un v�hicule.");
+        log.debug("Approbation d'une narration li�e � un v�hicule.");
         ActionMessages errors = new ActionMessages();
         CardexUser user = (CardexUser)subject.getUser();
         CardexPrivilege privilege = (CardexPrivilege)subject.getPrivilege();
@@ -2193,8 +2193,8 @@ public class VehiculeAction extends AbstractAction {
                     subject.getLocale());
             ValueObjectMapper.convertNarrationHtmlForm(narrationForm, narration,
                     subject.getLocale());
-            log.fine("V�hicule : " + vehicule);
-            log.fine("Narration: " + narration);
+            log.debug("V�hicule : " + vehicule);
+            log.debug("Narration: " + narration);
             delegate.approuveLienNarration(subject,narration);
             populateVehiculeForm(subject, vehicule, vehiculeForm);
             assignerNouveauVehicule(request, vehiculeForm);
@@ -2241,7 +2241,7 @@ public class VehiculeAction extends AbstractAction {
             VehiculeForm vehiculeForm = new VehiculeForm();
             Photo photo = new PhotoVO();
             Vehicule vehicule = new VehiculeVO();
-            log.fine("PhotoForm a li�e : " + photoForm);
+            log.debug("PhotoForm a li�e : " + photoForm);
             vehiculeForm.init(subject);
             
             vehiculeForm.setCle(photoForm.getLien());
@@ -2254,18 +2254,18 @@ public class VehiculeAction extends AbstractAction {
 
             //Est ce que la taille du fichier exc�de 4MB
             if (photoForm.isTailleAccepte() == false) {
-                log.severe("La taille du fichier est sup�rieure � 4MB.");
+                log.error("La taille du fichier est sup�rieure � 4MB.");
                 return mapping.findForward("error");
             }else if(photoForm.isPhoto() == false){
-                log.severe("Ce fichier n'est pas une photo");
+                log.error("Ce fichier n'est pas une photo");
                 throw (new BusinessRuleExceptionHandle("erreur.ajout.type.photo")).getBusinessException();
             }else{
             	byte[] data = file.getFileData();
             	photo.setImage( data );
             	
-	            log.fine("Photo a li�e : " + photo);
+	            log.debug("Photo a li�e : " + photo);
 	            photo= delegate.addLienPhoto(subject,vehicule,photo);
-	            log.fine("Photo li�e : " + photo);
+	            log.debug("Photo li�e : " + photo);
 	            file.destroy();
 	            
 				populateVehiculeForm(subject, vehicule, vehiculeForm);
@@ -2309,7 +2309,7 @@ public class VehiculeAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Mise � jour d'un lien entre une narration et un vehicule.");
+        log.debug("Mise � jour d'un lien entre une narration et un vehicule.");
         ActionMessages errors = new ActionMessages();
 
         try {
@@ -2326,8 +2326,8 @@ public class VehiculeAction extends AbstractAction {
                     subject.getLocale());
             ValueObjectMapper.convertNarrationHtmlForm(narrationForm, narration,
                     subject.getLocale());
-            log.fine("Vehicule: " + vehicule);
-            log.fine("Narration: " + narration);
+            log.debug("Vehicule: " + vehicule);
+            log.debug("Narration: " + narration);
             delegate.updateLienNarration(subject,narration);
             populateVehiculeForm(subject, vehicule, vehiculeForm);
             assignerNouveauVehicule(request, vehiculeForm);
@@ -2363,7 +2363,7 @@ public class VehiculeAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Mise � jour des liens particularit�s en conservant un audit.");
+        log.debug("Mise � jour des liens particularit�s en conservant un audit.");
 
         ActionMessages errors = new ActionMessages();
 
@@ -2417,7 +2417,7 @@ public class VehiculeAction extends AbstractAction {
                                         HttpServletRequest request,
                                         HttpServletResponse response) throws IOException,
                                         ServletException {
-        log.fine("Mise � jour de la liaison dans un v�hicule");
+        log.debug("Mise � jour de la liaison dans un v�hicule");
 
         ActionMessages errors = new ActionMessages();
 
@@ -2501,7 +2501,7 @@ public class VehiculeAction extends AbstractAction {
             VehiculeForm vehiculeForm = new VehiculeForm();
             Photo photo = new PhotoVO();
             Vehicule vehicule = new VehiculeVO();
-            log.fine("PhotoForm a li�e : " + photoForm);
+            log.debug("PhotoForm a li�e : " + photoForm);
 
             vehiculeForm.init(subject);
             vehiculeForm.setCle(photoForm.getLien());
@@ -2512,7 +2512,7 @@ public class VehiculeAction extends AbstractAction {
             FormFile   file = photoForm.getUploadImage();
         	byte[] data = file.getFileData();
         	photo.setImage( data );
-            log.fine("Photo a li�e : " + photo);
+            log.debug("Photo a li�e : " + photo);
             photo = delegate.addLienPhoto(subject,vehicule,photo);
             //file.destroy();
 
@@ -2551,7 +2551,7 @@ public class VehiculeAction extends AbstractAction {
                                 ServletException {
 
 
-        log.fine("Retour de la consultation d'un v�hicule");
+        log.debug("Retour de la consultation d'un v�hicule");
 
         //ActionMessages errors = new ActionMessages();
 
@@ -2592,7 +2592,7 @@ public class VehiculeAction extends AbstractAction {
                                         HttpServletRequest request,
                                         HttpServletResponse response) throws IOException,
                                         ServletException {
-        log.fine("Recherche directe de v�hicules");
+        log.debug("Recherche directe de v�hicules");
 
         ActionMessages errors = new ActionMessages();
 

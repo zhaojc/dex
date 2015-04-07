@@ -3,7 +3,9 @@
 package com.lotoquebec.cardex.businessRules;
 
 import java.util.HashMap;
-import java.util.logging.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardex.business.rule.AdresseBusinessRuleSet;
 import com.lotoquebec.cardex.business.rule.BilletBusinessRuleSet;
@@ -26,7 +28,6 @@ import com.lotoquebec.cardexCommun.business.BusinessRuleSet;
 import com.lotoquebec.cardexCommun.exception.BusinessException;
 import com.lotoquebec.cardexCommun.exception.BusinessResourceException;
 import com.lotoquebec.cardexCommun.exception.BusinessRuleException;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 
 /**
  * The BusinessRulesValidator is use to validate business rule that are constrains
@@ -44,7 +45,7 @@ public class BusinessRulesValidator {
      * Logger instance.
      */
 	private final Logger      log =
-        (Logger)LoggerCardex.getLogger((this.getClass()));
+        LoggerFactory.getLogger((this.getClass()));
 
     /**
      * Business rules
@@ -89,7 +90,7 @@ public class BusinessRulesValidator {
      */
     private void loadBusinessRules()
             throws BusinessResourceException {
-        log.fine("loadBusinessRules()");
+        log.debug("loadBusinessRules()");
 
         rules.put("com.lotoquebec.cardex.business.rule.CriteresRechercheDossierBusinessRuleSet", new CriteresRechercheDossierBusinessRuleSet());
         rules.put("com.lotoquebec.cardex.business.rule.CriteresRechercheNarrationBusinessRuleSet", new CriteresRechercheNarrationBusinessRuleSet());
@@ -119,7 +120,7 @@ public class BusinessRulesValidator {
      */
     public void checkBusinessRules(CardexAuthenticationSubject subject, Object businessObject)
             throws BusinessRuleException, BusinessException {
-        log.fine("checkBusinessRules('"
+        log.debug("checkBusinessRules('"
                   + businessObject.getClass().getName() + "')");
 
         Class[] interfaces =

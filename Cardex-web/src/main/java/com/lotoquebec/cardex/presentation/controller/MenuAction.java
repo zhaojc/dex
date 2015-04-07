@@ -1,15 +1,12 @@
 package com.lotoquebec.cardex.presentation.controller;
 
 import java.io.IOException;
-import java.net.InetAddress;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.logging.Logger;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -21,6 +18,8 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.util.MessageResources;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardex.presentation.model.form.IntervenantForm;
 import com.lotoquebec.cardex.presentation.model.form.ProfilsForm;
@@ -38,7 +37,6 @@ import com.lotoquebec.cardexCommun.exception.ValueObjectMapperException;
 import com.lotoquebec.cardexCommun.integration.dao.DAOConnection;
 import com.lotoquebec.cardexCommun.integration.dao.FabriqueDAO;
 import com.lotoquebec.cardexCommun.integration.dao.SecuriteDAO;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.user.CardexUser;
 
 public class MenuAction extends Action {
@@ -47,7 +45,7 @@ public class MenuAction extends Action {
      * L'instance du gestionnaire de journalisation.
      */
     private Logger      log =
-        (Logger)LoggerCardex.getLogger((this.getClass()));
+        LoggerFactory.getLogger((this.getClass()));
 
     /**
      * Traite la requ�te HTTP sp�cifi�, et cr�e la r�ponse HTTP correspondante
@@ -73,7 +71,7 @@ public class MenuAction extends Action {
 
         // Le profil utilisateur est extrait de la base de donn�es cardex
         // et la locale est initialis�e
-        log.fine("Authentification de l'utilisateur");
+        log.debug("Authentification de l'utilisateur");
         
         try {
         		saveToken(request);
@@ -85,10 +83,10 @@ public class MenuAction extends Action {
         		//On lit d'abord le poste de travail d'o� provient la requ�te.
 				/*InetAddress ia = java.net.InetAddress.getLocalHost();
 				String host = ia.getHostName();
-				log.fine("Host identifi� : " + ia.getHostName());
+				log.debug("Host identifi� : " + ia.getHostName());
 				
 				if(host.equals("Z500W19696") || host.equals("Z500W20037") || host.equals("Z500W19935")){ //Poste de d�veloppement
-	                log.fine("Environnement de d�veloppement");
+	                log.debug("Environnement de d�veloppement");
 					//Dans ce cas, on cr�e un jeton pour le contr�le de la s�curit� avec ClearTrust.
 					//token = SecurityManager.getInstance().getToken();
 					//userName = "GUERINF"; //On initalise le code d'utilisateur pour aller chercher
@@ -98,17 +96,17 @@ public class MenuAction extends Action {
 					//par ClearTrust. Ce jeton est plac� dans la liste des "cookies" et identifi�
 					//par CTSESSION. 
 	                Cookie[] cookies = request.getCookies();
-	                log.fine("Environnement de production");
+	                log.debug("Environnement de production");
 				    if (cookies != null) {
 				        for (int i=0; i < cookies.length; i++) { 
 				            Cookie cookie = cookies[i];
-				            log.fine("Cookie : " + cookie.getName() + " - Valeur : " + cookie.getValue());
+				            log.debug("Cookie : " + cookie.getName() + " - Valeur : " + cookie.getValue());
 				            if (cookie.getName().equals("CTSESSION")) {
 				            	token = cookie.getValue();
 				            	//On d�code ensuite le jeton, pour �liminer les caract�res
 				            	//de contr�le et obtenir un jeton valide, reconnaissable par ClearTrust.
 			                    token = java.net.URLDecoder.decode(token, "UTF-8");
-			                    log.fine("Jeton : " + token);
+			                    log.debug("Jeton : " + token);
 				            }
 				        }
 				    }
@@ -124,20 +122,20 @@ public class MenuAction extends Action {
 			    	
 	                if (request.getHeader("ct-remote-user") != null ) {
 	                    userName = request.getHeader("ct-remote-user");
-	                    log.fine("Utilisation de la variable CT_REMOTE_USER pour s'authentifier au cardex : " + userName);
+	                    log.debug("Utilisation de la variable CT_REMOTE_USER pour s'authentifier au cardex : " + userName);
 	                  }else if (request.getRemoteUser() != null ) {
 	                    userName = request.getRemoteUser();
-	                    log.fine("Utilisation de la variable REMOTE_USER pour s'authentifier au cardex : " + userName);
+	                    log.debug("Utilisation de la variable REMOTE_USER pour s'authentifier au cardex : " + userName);
 	                  }else if (request.getUserPrincipal() != null){
 	                    userName = request.getUserPrincipal().getName();
-	                    log.fine("Utilisation de la variable USER_PRINCIPAL pour s'authentifier au cardex : " + userName);
+	                    log.debug("Utilisation de la variable USER_PRINCIPAL pour s'authentifier au cardex : " + userName);
 	                  }else {
 	                    String message = "Aucune variable n'a �t� trouv�e. Authentification impossible...";
-	                    log.severe(message);
+	                    log.error(message);
 	                    return mapping.findForward("authentication");
 	                }			    	
 			    	
-			    	log.fine("Aucun token userName:"+userName);
+			    	log.debug("Aucun token userName:"+userName);
 			    	subject = AuthenticationServiceFactory.authenticate(createAuthenticationSubject(userName, ""));
 			    }else{
 					//Une fois assur� d'un jeton valide, il faut �galement un code autoris�. 
@@ -149,11 +147,11 @@ public class MenuAction extends Action {
         		subject = AuthenticationServiceFactory.authenticate(createAuthenticationSubject("AMAITRE", ""));
         		
 			    if (subject == null){
-			    	log.severe("Aucun usager Cardex userName:"+userName+" token:"+token);
+			    	log.error("Aucun usager Cardex userName:"+userName+" token:"+token);
 			    	throw new AssertionError("Aucun usager Cardex userName:"+userName+" token:"+token);
 			    }
 			    
-                log.fine("Est-ce que l'utilisateur '"+userName+"' est  authentifi�: " + subject.isAuthenticated());
+                log.debug("Est-ce que l'utilisateur '"+userName+"' est  authentifi�: " + subject.isAuthenticated());
                 
                 if ( subject.isAuthenticated() ) {
                         // On �tablit de la session de l'application
@@ -182,18 +180,18 @@ public class MenuAction extends Action {
         			// couldn't get authenticated...
         			// prepare error
         			String message = "L'utilisateur n'est pas authentifi� ...";
-        			log.severe(message);
+        			log.error(message);
         			return mapping.findForward("authentication");
         		}
         } catch ( AuthenticationException ae ) {
         		ae.printStackTrace();
                 String message = "Le serveur d'authentification est hors service ...";
-                log.severe(message+" "+ae);
+                log.error(message+" "+ae);
                 return mapping.findForward("authentication");
                 // something happend, let's handle it...
         } catch (DAOException e) {
             String message = "Probl�me pour charger le role "+((CardexUser)subject.getUser()).getCode();
-            LoggerCardex.severe(log,message,e);
+            log.error(message,e);
 			return mapping.findForward("error");
 		} catch (ValueObjectMapperException e) {
 			e.printStackTrace();
@@ -272,7 +270,7 @@ public class MenuAction extends Action {
      * Stocke les messages d'erreurs concernant les erreurs syst�mes.
      */
     protected void handleBusinessResourceException(BusinessResourceException be,ActionMessages errors, HttpServletRequest request) {
-    	LoggerCardex.severe(log,"BusinessResourceException",be);
+    	log.error("BusinessResourceException",be);
             errors.add(ActionMessages.GLOBAL_MESSAGE,
                        new ActionMessage("cardex_erreur_registre",be));
             saveErrors(request, errors);

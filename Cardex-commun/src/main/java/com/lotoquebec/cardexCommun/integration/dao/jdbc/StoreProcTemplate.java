@@ -8,12 +8,13 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLWarning;
-import java.util.logging.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
 import com.lotoquebec.cardexCommun.exception.DAOException;
 import com.lotoquebec.cardexCommun.integration.dao.DAOConnection;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.util.StringUtils;
 
 /**
@@ -23,7 +24,7 @@ public class StoreProcTemplate {
 
 	private CardexAuthenticationSubject subject = null;
 	private Connection connection = null;
-	private final Logger      log = (Logger)LoggerCardex.getLogger((this.getClass()));
+	private final Logger      log = LoggerFactory.getLogger((this.getClass()));
 	private boolean ignoreWarnings = true;
     private String nom = "";
 	private CallableStatement callableStatement = null;
@@ -80,7 +81,7 @@ public class StoreProcTemplate {
 		try {
 			callableStatement.execute();
 		} catch (SQLException e) {
-			log.severe("Probl�me avec la StoreProc : "+nom);
+			log.error("Probl�me avec la StoreProc : "+nom);
 			try {
 				connection.rollback();
 			} catch (SQLException e1) {
@@ -130,7 +131,7 @@ public class StoreProcTemplate {
 			throwExceptionOnWarningIfNotIgnoringWarnings(warning);
 			
 		} catch (SQLException e) {
-			log.severe("Probl�me avec la StoreProc : "+nom);
+			log.error("Probl�me avec la StoreProc : "+nom);
 			try {
 				connection.rollback();
 			} catch (SQLException e1) {
@@ -150,7 +151,7 @@ public class StoreProcTemplate {
 			return (ResultSet)callableStatement.getObject( indexResultSetParameter );
 			
 		} catch (SQLException e) {
-			log.severe("Probl�me avec la StoreProc : "+nom);
+			log.error("Probl�me avec la StoreProc : "+nom);
 			try {
 				connection.rollback();
 			} catch (SQLException e1) {
@@ -176,7 +177,7 @@ public class StoreProcTemplate {
 		if (warning != null){
 			
 			if(this.ignoreWarnings){
-				//log.fine("SQLWarning ignored: "+ warning);
+				//log.debug("SQLWarning ignored: "+ warning);
 			} else {
 				throw new SQLWarning("Warning not ignored : "+warning);
 			}

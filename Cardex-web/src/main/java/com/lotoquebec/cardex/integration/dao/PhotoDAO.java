@@ -17,17 +17,17 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 
 import oracle.jdbc.OracleTypes;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardex.business.CriteresRecherchePhoto;
 import com.lotoquebec.cardex.business.Dossier;
@@ -64,7 +64,6 @@ import com.lotoquebec.cardexCommun.integration.dao.jdbc.PreparerSQL;
 import com.lotoquebec.cardexCommun.integration.dao.jdbc.RowCallbackHandler;
 import com.lotoquebec.cardexCommun.integration.dao.jdbc.StoreProcTemplate;
 import com.lotoquebec.cardexCommun.integration.dao.jdbc.UnEnregistrementPresent;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.util.GererTacheUtilisateur;
 import com.lotoquebec.cardexCommun.util.StringUtils;
 
@@ -86,7 +85,7 @@ public class PhotoDAO {
 	public static final String CONFIDENTIALITE_DOSSIER = "confidentialiteDossier";
 
    private final Logger      log =
-       (Logger)LoggerCardex.getLogger(PhotoDAO.class);
+       LoggerFactory.getLogger(PhotoDAO.class);
    
    
 //Classe pour permettre le tri des r�sultats de la recherche des photos
@@ -232,10 +231,10 @@ private Photo editPhoto(CardexAuthenticationSubject subject,
   try {
 	  	connection.setAutoCommit(false);
         callableStatement = connection.prepareCall("begin CARDEX_LIEN.SP_E_LMM_LIEN_MULTIMEDIA (?,?,?,?,?,?,?,?,?,?,?,?,?,?); end;");
-        log.fine("CARDEX_LIEN.SP_E_LMM_LIEN_MULTIMEDIA");
-        log.fine("Action: " + action);
-        log.fine("Photo: " + photo);
-        log.fine("genreFichier: " + genreFichier);
+        log.debug("CARDEX_LIEN.SP_E_LMM_LIEN_MULTIMEDIA");
+        log.debug("Action: " + action);
+        log.debug("Photo: " + photo);
+        log.debug("genreFichier: " + genreFichier);
 
         if (photo.getImage() != null && photo.getImage().length == 0)
         	throw new DAOException("Image de taille � 0");
@@ -259,7 +258,7 @@ private Photo editPhoto(CardexAuthenticationSubject subject,
         callableStatement.setString(10, genreFichier);
         OracleDAOUtils.setLong(callableStatement,11, photo.getLienElement());
         OracleDAOUtils.setLong(callableStatement,12, photo.getLienSiteElement());
-        log.fine("extension : " + photo.getExtension());
+        log.debug("extension : " + photo.getExtension());
         String extension = "";
         if(StringUtils.isNotEmpty(photo.getExtension())){
         	extension = photo.getExtension().toUpperCase();
@@ -541,7 +540,7 @@ private Photo editPhoto(CardexAuthenticationSubject subject,
  * @return Collection : liste des photos associ�es
  */
     public Collection findLiensPhoto(CardexAuthenticationSubject subject, long cle, long site, Timestamp dateLiaison, String genreFichier) throws DAOException {
-      log.fine("findLiensPhoto()");
+      log.debug("findLiensPhoto()");
 	  //return findLiensPhotoBLOB(subject, cle, site, genreFichier);
       Connection connection = DAOConnection.getInstance().getConnection(subject);
 	  CallableStatement callableStatement = null;
@@ -574,7 +573,7 @@ private Photo editPhoto(CardexAuthenticationSubject subject,
               linkedPhoto.setSelectionner(OracleDAOUtils.convertirStringABoolean(resultSet.getString("B_MM_SELECTIONNER")));
               //linkedPhoto.setUrl(ServeurFichier.getURLLocalisationServeurDeFichier(user.getSite()) + linkedPhoto.getLienElement() + linkedPhoto.getLienSiteElement()+"."+linkedPhoto.getExtension());
               linkedPhoto.setUrl("");
-              log.fine("   [Photo id='"+linkedPhoto.getCle()+"' Site='"+linkedPhoto.getSite()+"']");
+              log.debug("   [Photo id='"+linkedPhoto.getCle()+"' Site='"+linkedPhoto.getSite()+"']");
               results.add(linkedPhoto);
          }//while
          return results;
@@ -628,7 +627,7 @@ private Photo editPhoto(CardexAuthenticationSubject subject,
      * @return Collection : liste des photos associ�es
      */
         public Collection findLiensPhotoAudit(CardexAuthenticationSubject subject, long cle, long site, Timestamp dateLiaison, String genreFichier) throws DAOException {
-          log.fine("findLiensPhoto()");
+          log.debug("findLiensPhoto()");
     	  //return findLiensPhotoBLOB(subject, cle, site, genreFichier);
           Connection connection = DAOConnection.getInstance().getConnection(subject);
     	  CallableStatement callableStatement = null;
@@ -665,7 +664,7 @@ private Photo editPhoto(CardexAuthenticationSubject subject,
                   linkedPhoto.setSelectionner(OracleDAOUtils.convertirStringABoolean(resultSet.getString("B_MM_SELECTIONNER")));
                   //linkedPhoto.setUrl(ServeurFichier.getURLLocalisationServeurDeFichier(user.getSite()) + linkedPhoto.getLienElement() + linkedPhoto.getLienSiteElement()+"."+linkedPhoto.getExtension());
                   linkedPhoto.setUrl("");
-                  log.fine("   [Photo id='"+linkedPhoto.getCle()+"' Site='"+linkedPhoto.getSite()+"']");
+                  log.debug("   [Photo id='"+linkedPhoto.getCle()+"' Site='"+linkedPhoto.getSite()+"']");
                   results.add(linkedPhoto);
              }//while
              return results;
@@ -820,7 +819,7 @@ private Photo editPhoto(CardexAuthenticationSubject subject,
  * @return Collection : liste des photos associ�es
  */
     public Collection findLiensPieceJointe(CardexAuthenticationSubject subject, long cle, long site, String genreFichier) throws DAOException {
-      log.fine("findLiensPieceJointe()");
+      log.debug("findLiensPieceJointe()");
 	  //return findLiensPieceJointeBLOB(subject, cle, site, genreFichier);
       Connection connection = DAOConnection.getInstance().getConnection(subject);
 	  CallableStatement callableStatement = null;
@@ -853,7 +852,7 @@ private Photo editPhoto(CardexAuthenticationSubject subject,
 //              linkedPhoto.setUrl(ServeurFichier.getURLLocalisationServeurDeFichier(user.getSite()) + linkedPhoto.getLienElement() + linkedPhoto.getLienSiteElement()+"."+linkedPhoto.getExtension());
               linkedPhoto.setUrl("");
               linkedPhoto.setConfidentialite(resultSet.getLong("I_CC_CLE"));
-              log.fine("   [Photo id='"+linkedPhoto.getCle()+"' Site='"+linkedPhoto.getSite()+"']");
+              log.debug("   [Photo id='"+linkedPhoto.getCle()+"' Site='"+linkedPhoto.getSite()+"']");
               results.add(linkedPhoto);
          }//while
          return results;

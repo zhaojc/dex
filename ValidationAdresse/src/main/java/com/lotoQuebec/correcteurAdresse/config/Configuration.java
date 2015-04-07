@@ -8,7 +8,9 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-import java.util.logging.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author levassc
@@ -17,7 +19,7 @@ public class Configuration {
 	
 	private static Configuration configuration = null;
     private static final String CONFIG_PROPERTIES = "config.properties";
-    private Logger logger = Logger.getLogger("com.agentLog.Cardex.config.Configuration");
+    private Logger logger = LoggerFactory.getLogger(Configuration.class);
 	private Properties props = null;
 
 	private Configuration() {
@@ -48,7 +50,7 @@ public class Configuration {
                 is.close();
             }
             else {
-            	logger.config("is = null!");
+            	logger.debug("is = null!");
             }
         }
         catch (IOException ie) {

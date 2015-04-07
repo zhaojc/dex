@@ -6,7 +6,9 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardexCommun.GlobalConstants;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
@@ -17,13 +19,12 @@ import com.lotoquebec.cardexCommun.integration.dao.cleListeAutoCompleter.CleList
 import com.lotoquebec.cardexCommun.integration.dao.jdbc.JDBCTemplate;
 import com.lotoquebec.cardexCommun.integration.dao.jdbc.PreparerSQL;
 import com.lotoquebec.cardexCommun.integration.dao.jdbc.RowCallbackHandler;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.presentation.util.LabelValueBean;
 import com.lotoquebec.cardexCommun.util.TableValeur;
 
 /**
- * Obtiens de la base de donnée Oracle, des collections de valeurs pour chaque
- * type de liste déroulante contenues dans une page JSP.
+ * Obtiens de la base de donnï¿½e Oracle, des collections de valeurs pour chaque
+ * type de liste dï¿½roulante contenues dans une page JSP.
  *
  * @author $Author: mlibersan $
  * @version $Revision: 1.46 $, $Date: 2002/04/25 19:49:44 $
@@ -34,13 +35,13 @@ public class ItemListDAO {
     /**
      * L'instance du gestionnaire de journalisation.
      */
-    private static Logger      log = (Logger)LoggerCardex.getLogger((ItemListDAO.class));
+    private static Logger      log = LoggerFactory.getLogger((ItemListDAO.class));
 
 	/* (non-Javadoc)
 	 * @see com.lotoquebec.cardex.integration.dao.ItemListDAO#getMapListValeur(com.lotoquebec.cardex.authentication.CardexAuthenticationSubject, com.lotoquebec.cardex.integration.dao.cleListe.CleListe)
 	 */
 	public Map getMapListValeur(CardexAuthenticationSubject subject, CleListe cleListe) throws DAOException {
-		log.fine("getMapListValeur(CardexAuthenticationSubject, CleMultiListeCache)");
+		log.debug("getMapListValeur(CardexAuthenticationSubject, CleMultiListeCache)");
     	final Map map = new LinkedHashMap();
     	JDBCTemplate template = new JDBCTemplate(subject);
     	PreparerSQL preparerSQL = ListeCacheSQL.obtenirPreparerSQL( cleListe );
@@ -51,7 +52,7 @@ public class ItemListDAO {
 			public void processRow(ResultSet rs) throws SQLException {
                 String label = rs.getString(ListeCacheSQL.DESCRIPTION);
                 String value = rs.getString(ListeCacheSQL.CLE);
-                log.fine("   [LabelValueBean label='" + label
+                log.debug("   [LabelValueBean label='" + label
                           + "' value='" + value + "']");
                 LabelValueBean valueBean = new LabelValueBean(label, value);
                 map.put(value, valueBean);
@@ -63,7 +64,7 @@ public class ItemListDAO {
 	}
 	
 	public Map getMapListTableValeur(CardexAuthenticationSubject subject, final TableValeurCleSQLListeCache cleListe) throws DAOException {
-		log.fine("getMapListValeur(CardexAuthenticationSubject, CleMultiListeCache)");
+		log.debug("getMapListValeur(CardexAuthenticationSubject, CleMultiListeCache)");
     	final Map map = new LinkedHashMap();
     	JDBCTemplate template = new JDBCTemplate(subject);
     	PreparerSQL preparerSQL = ListeCacheSQL.obtenirPreparerSQL( cleListe );
@@ -78,7 +79,7 @@ public class ItemListDAO {
                 boolean administrer = OracleDAOUtils.convertirStringABoolean(rs.getString(TableValeurCleSQLListeCache.ADMINISTRER));
                 boolean obligatoire = OracleDAOUtils.convertirStringABoolean(rs.getString(TableValeurCleSQLListeCache.OBLIGATOIRE));
                 
-                log.fine("   [TableValeur cle='" + cle + "' description='" + description + "']");
+                log.debug("   [TableValeur cle='" + cle + "' description='" + description + "']");
                 
                 map.put(cle, new TableValeur(cle, description, isActif, role, action, obligatoire, administrer));
 			}
@@ -92,7 +93,7 @@ public class ItemListDAO {
 	 * @see com.lotoquebec.cardex.integration.dao.ItemListDAO#getListeAutoCompleter(com.lotoquebec.cardex.authentication.CardexAuthenticationSubject, com.lotoquebec.cardex.integration.dao.cleListeAutoCompleter.CleListeAutoCompleter)
 	 */
 	public List getListeAutoCompleter(CardexAuthenticationSubject subject, String valeurDepart, CleListeAutoCompleter cleListeAutoCompleter) throws DAOException {
-		log.fine("getListeAutoCompleter(CardexAuthenticationSubject, CleListeAutoCompleter)");
+		log.debug("getListeAutoCompleter(CardexAuthenticationSubject, CleListeAutoCompleter)");
     	final List liste = new ArrayList();
     	JDBCTemplate template = new JDBCTemplate(subject);
     	
@@ -108,9 +109,9 @@ public class ItemListDAO {
     	return liste;
 	}
     
-	//Retourne une liste statique de mois ou d'année. Utilisé dans le formulaire d'évaluation du comité de vigilance.
+	//Retourne une liste statique de mois ou d'annï¿½e. Utilisï¿½ dans le formulaire d'ï¿½valuation du comitï¿½ de vigilance.
 	public Map getMapListValeurStatique(CardexAuthenticationSubject subject, String liste) throws DAOException {
-		log.fine("getMapListValeurStatique");
+		log.debug("getMapListValeurStatique");
     	final Map map = new LinkedHashMap();
     	map.put("", new LabelValueBean("", ""));
     	String label = "";
@@ -119,7 +120,7 @@ public class ItemListDAO {
     		for(int i=2011;i<2025;i++){
     			label = String.valueOf(i);
     			value = String.valueOf(i);
-    			log.fine("   [LabelValueBean label='" + label
+    			log.debug("   [LabelValueBean label='" + label
 	                  + "' value='" + value + "']");
     			LabelValueBean valueBean = new LabelValueBean(label, value);
     			map.put(value, valueBean);

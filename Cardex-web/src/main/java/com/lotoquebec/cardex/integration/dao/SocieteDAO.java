@@ -12,9 +12,11 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import oracle.jdbc.OracleTypes;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoQuebec.correcteurAdresse.AdresseSortie;
 import com.lotoquebec.cardex.business.Adresse;
@@ -48,13 +50,12 @@ import com.lotoquebec.cardexCommun.integration.dao.jdbc.PreparerSQL;
 import com.lotoquebec.cardexCommun.integration.dao.jdbc.RowCallbackHandler;
 import com.lotoquebec.cardexCommun.integration.dao.jdbc.StoreProcTemplate;
 import com.lotoquebec.cardexCommun.integration.dao.jdbc.UnEnregistrementPresent;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.user.CardexUser;
 import com.lotoquebec.cardexCommun.util.StringUtils;
 
 /**
- * Liste des appels à la base de données pour tout ce qui concerne
- * les sociétés.  Implémente l'interface SocieteDAO.
+ * Liste des appels ï¿½ la base de donnï¿½es pour tout ce qui concerne
+ * les sociï¿½tï¿½s.  Implï¿½mente l'interface SocieteDAO.
  *
  * @author $Author: mlibersan $
  * @version $Revision: 1.18 $, $Date: 2002/04/25 15:42:36 $
@@ -64,21 +65,21 @@ import com.lotoquebec.cardexCommun.util.StringUtils;
 public class SocieteDAO {
 
 	private final Logger      log =
-        (Logger)LoggerCardex.getLogger(SocieteDAO.class);
-	private Logger courantLog = (Logger)LoggerCardex.getLogger(SujetDAO.class);
+        LoggerFactory.getLogger(SocieteDAO.class);
+	private Logger courantLog = LoggerFactory.getLogger(SujetDAO.class);
 /**
- * Écriture d'une société, appelé par la méthode "insert" ou "update".
- * Selon le paramètre "action" il peut s'agir d'une insertion ("I")
- * ou d'une mise à jour ("U").
- * Procédure appelée : CARDEX_DOC.SP_E_SO_SOCIETE
- * Date de création : (2002-02-11)
- * @author François Guérin
- * @param subject CardexAuthenticationSubject : données nominatives sur l'utilisateur
- * @param societe Societe : société saisi à l'écran
+ * ï¿½criture d'une sociï¿½tï¿½, appelï¿½ par la mï¿½thode "insert" ou "update".
+ * Selon le paramï¿½tre "action" il peut s'agir d'une insertion ("I")
+ * ou d'une mise ï¿½ jour ("U").
+ * Procï¿½dure appelï¿½e : CARDEX_DOC.SP_E_SO_SOCIETE
+ * Date de crï¿½ation : (2002-02-11)
+ * @author Franï¿½ois Guï¿½rin
+ * @param subject CardexAuthenticationSubject : donnï¿½es nominatives sur l'utilisateur
+ * @param societe Societe : sociï¿½tï¿½ saisi ï¿½ l'ï¿½cran
  * @param action  java.lang.String : U ou I
- * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
- * rupture de connexion avec la base de données, ou que la table demandée est
- * non disponible, ou qu'un problème est survenu lors de l'exécution d'une
+ * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+ * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e est
+ * non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution d'une
  * "stored procedure".
  * @return Societe
  */
@@ -147,16 +148,16 @@ public class SocieteDAO {
     }
 
    /**
-    * Écriture d'une société qui est un nouveau détaillant de RDD (Réseau des détaillants).
-    * Procédure appelée : CARDEX_DOC.SP_E_SO_DETAILLANTS
-    * Date de création : (2012-09-10)
-    * @author François Guérin
-    * @param subject CardexAuthenticationSubject : données nominatives sur l'utilisateur
-    * @param societe Societe : société saisi à l'écran
+    * ï¿½criture d'une sociï¿½tï¿½ qui est un nouveau dï¿½taillant de RDD (Rï¿½seau des dï¿½taillants).
+    * Procï¿½dure appelï¿½e : CARDEX_DOC.SP_E_SO_DETAILLANTS
+    * Date de crï¿½ation : (2012-09-10)
+    * @author Franï¿½ois Guï¿½rin
+    * @param subject CardexAuthenticationSubject : donnï¿½es nominatives sur l'utilisateur
+    * @param societe Societe : sociï¿½tï¿½ saisi ï¿½ l'ï¿½cran
     * @param action  java.lang.String : U ou I
-    * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-    * rupture de connexion avec la base de données, ou que la table demandée est
-    * non disponible, ou qu'un problème est survenu lors de l'exécution d'une
+    * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+    * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e est
+    * non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution d'une
     * "stored procedure".
     * @return Societe
     */
@@ -219,14 +220,14 @@ public class SocieteDAO {
        }
 
       /**
- * Appel de la méthode editSociete pour la création d'un société.
- * Date de création : (2002-01-28)
- * @author François Guérin
- * @param subject CardexAuthenticationSubject : données nominatives sur l'utilisateur
- * @param societe Societe : société saisi à l'écran
- * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
- * rupture de connexion avec la base de données, ou que la table demandée est
- * non disponible, ou qu'un problème est survenu lors de l'exécution d'une
+ * Appel de la mï¿½thode editSociete pour la crï¿½ation d'un sociï¿½tï¿½.
+ * Date de crï¿½ation : (2002-01-28)
+ * @author Franï¿½ois Guï¿½rin
+ * @param subject CardexAuthenticationSubject : donnï¿½es nominatives sur l'utilisateur
+ * @param societe Societe : sociï¿½tï¿½ saisi ï¿½ l'ï¿½cran
+ * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+ * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e est
+ * non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution d'une
  * "stored procedure".
  * @return Societe
  */
@@ -235,14 +236,14 @@ public class SocieteDAO {
     }
 
 /**
- * Appel de la méthode editSociete pour la mise à jour d'un societe.
- * Date de création : (2002-01-28)
- * @author François Guérin
- * @param subject CardexAuthenticationSubject : données nominatives sur l'utilisateur
- * @param societe Societe : société saisi à l'écran
- * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
- * rupture de connexion avec la base de données, ou que la table demandée est
- * non disponible, ou qu'un problème est survenu lors de l'exécution d'une
+ * Appel de la mï¿½thode editSociete pour la mise ï¿½ jour d'un societe.
+ * Date de crï¿½ation : (2002-01-28)
+ * @author Franï¿½ois Guï¿½rin
+ * @param subject CardexAuthenticationSubject : donnï¿½es nominatives sur l'utilisateur
+ * @param societe Societe : sociï¿½tï¿½ saisi ï¿½ l'ï¿½cran
+ * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+ * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e est
+ * non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution d'une
  * "stored procedure".
  */
     public void update(CardexAuthenticationSubject subject, Societe societe) throws DAOException {
@@ -250,18 +251,18 @@ public class SocieteDAO {
     }
 
 /**
- * Recherche des sociétés créés dans les deux derniers jours lors de l'affichage
- * de l'écran de recherche de sociétés
- * Procédure appelée : CARDEX_WEB_LIRE_DOC_TRI.SPW_L_SO_SOCIETE
- * Date de création : (2002-02-12)
- * @author François Guérin
- * @param subject  CardexAuthenticationSubject : données nominatives sur l'utilisateur
- * @param criteria CriteresRechercheSociete : critères de recherche
- * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
- * rupture de connexion avec la base de données, ou que la table demandée est
- * non disponible, ou qu'un problème est survenu lors de l'exécution d'une
+ * Recherche des sociï¿½tï¿½s crï¿½ï¿½s dans les deux derniers jours lors de l'affichage
+ * de l'ï¿½cran de recherche de sociï¿½tï¿½s
+ * Procï¿½dure appelï¿½e : CARDEX_WEB_LIRE_DOC_TRI.SPW_L_SO_SOCIETE
+ * Date de crï¿½ation : (2002-02-12)
+ * @author Franï¿½ois Guï¿½rin
+ * @param subject  CardexAuthenticationSubject : donnï¿½es nominatives sur l'utilisateur
+ * @param criteria CriteresRechercheSociete : critï¿½res de recherche
+ * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+ * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e est
+ * non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution d'une
  * "stored procedure".
- * @return ValueListIterator : une liste de sociétés retournés par la recherche.
+ * @return ValueListIterator : une liste de sociï¿½tï¿½s retournï¿½s par la recherche.
  */
 
     public List<Societe> selectDefault(CardexAuthenticationSubject subject,CriteresRechercheSociete criteria) throws DAOException{
@@ -274,7 +275,7 @@ public class SocieteDAO {
          callableStatement.registerOutParameter(1, OracleTypes.CURSOR);
          callableStatement.execute();
          resultSet = (ResultSet)callableStatement.getObject(1);
-         //Traitement des données retournées
+         //Traitement des donnï¿½es retournï¿½es
          while(resultSet.next()){
             results.add(traitementResultSet(resultSet));
          }
@@ -311,28 +312,28 @@ public class SocieteDAO {
     }
 
 /**
- * Recherche directe d'un dossier par sa clé unique sans écriture d'un audit.
- * Cette procédure est nécessaire en raison du mode web de l'application.  Dans ce 
- * mode, chaque fois qu'on revient au dossier (par exemple, après une nouvelle narration),
- * une relecture du dossier est effectuée, ce qui génère une entrée inutile dans la
- * table AC_ACCES et fausse les données d'historique du dossier.
- * Procédure appelée : CARDEX_WEB_LIRE_DOC_TRI.SPW_L2_SO_SOCIETE
- * Date de création : (2002-02-12)
- * @author François Guérin
- * @param subject  CardexAuthenticationSubject : données nominatives sur l'utilisateur
- * @param criteria Societe : société à rechercher
- * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
- * rupture de connexion avec la base de données, ou que la table demandée est
- * non disponible, ou qu'un problème est survenu lors de l'exécution d'une
+ * Recherche directe d'un dossier par sa clï¿½ unique sans ï¿½criture d'un audit.
+ * Cette procï¿½dure est nï¿½cessaire en raison du mode web de l'application.  Dans ce 
+ * mode, chaque fois qu'on revient au dossier (par exemple, aprï¿½s une nouvelle narration),
+ * une relecture du dossier est effectuï¿½e, ce qui gï¿½nï¿½re une entrï¿½e inutile dans la
+ * table AC_ACCES et fausse les donnï¿½es d'historique du dossier.
+ * Procï¿½dure appelï¿½e : CARDEX_WEB_LIRE_DOC_TRI.SPW_L2_SO_SOCIETE
+ * Date de crï¿½ation : (2002-02-12)
+ * @author Franï¿½ois Guï¿½rin
+ * @param subject  CardexAuthenticationSubject : donnï¿½es nominatives sur l'utilisateur
+ * @param criteria Societe : sociï¿½tï¿½ ï¿½ rechercher
+ * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+ * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e est
+ * non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution d'une
  * "stored procedure".
- * @return Societe : données d'une société trouvée.
+ * @return Societe : donnï¿½es d'une sociï¿½tï¿½ trouvï¿½e.
  */
     public Societe find(CardexAuthenticationSubject subject, Societe criteria) throws DAOException{
       Connection connection = DAOConnection.getInstance().getConnection(subject);
 	  CallableStatement callableStatement = null;
 	  ResultSet resultSet = null;
       Societe societe = new SocieteVO();
-      log.fine("société cherchée: " + criteria.toString());
+      log.debug("sociï¿½tï¿½ cherchï¿½e: " + criteria.toString());
       try {
          callableStatement = connection.prepareCall("begin Cardex_Web_Lire_Doc_Tri.SPW_L2_SO_SOCIETE (?,?,?); end;");
          callableStatement.setLong(1,criteria.getCle());
@@ -340,13 +341,13 @@ public class SocieteDAO {
          callableStatement.registerOutParameter(3, OracleTypes.CURSOR);
          callableStatement.execute();
          resultSet = (ResultSet)callableStatement.getObject(3);
-         //Traitement d'une société retournée (s'il y a lieu)
+         //Traitement d'une sociï¿½tï¿½ retournï¿½e (s'il y a lieu)
          if (resultSet.next()){
-            log.fine("société trouvée");
+            log.debug("sociï¿½tï¿½ trouvï¿½e");
             societe = traitementResultSet(resultSet);
          }
          else {
-            log.fine("pas de résultats!");
+            log.debug("pas de rï¿½sultats!");
          }
          return societe;
        } catch (SQLException se) {
@@ -381,26 +382,26 @@ public class SocieteDAO {
     }
     
     /**
-	 * Recherche directe d'une société par sa clé unique dans la table des audits de changements.
-	 * Sert à retrouver les informations en date de la liaison d'une société à un dossier.
-	 * Si des informations sont retrouvées, elles sont imprimées sur le dossier au lieu des informations actuelles
-	 * Procédure appelée : CARDEX_AUDIT.SP_L_FIND_AUDIT_SOCIETE
-	 * Date de création : (2012-01-07)
-	 * @author François Guérin
-     * @param subject  CardexAuthenticationSubject : données nominatives sur l'utilisateur
-     * @param criteria Societe : société à rechercher
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée est
-     * non disponible, ou qu'un problème est survenu lors de l'exécution d'une
+	 * Recherche directe d'une sociï¿½tï¿½ par sa clï¿½ unique dans la table des audits de changements.
+	 * Sert ï¿½ retrouver les informations en date de la liaison d'une sociï¿½tï¿½ ï¿½ un dossier.
+	 * Si des informations sont retrouvï¿½es, elles sont imprimï¿½es sur le dossier au lieu des informations actuelles
+	 * Procï¿½dure appelï¿½e : CARDEX_AUDIT.SP_L_FIND_AUDIT_SOCIETE
+	 * Date de crï¿½ation : (2012-01-07)
+	 * @author Franï¿½ois Guï¿½rin
+     * @param subject  CardexAuthenticationSubject : donnï¿½es nominatives sur l'utilisateur
+     * @param criteria Societe : sociï¿½tï¿½ ï¿½ rechercher
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e est
+     * non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution d'une
      * "stored procedure".
-     * @return Societe : données d'une société trouvée.
+     * @return Societe : donnï¿½es d'une sociï¿½tï¿½ trouvï¿½e.
      */
         public Societe findAudit(CardexAuthenticationSubject subject, Societe criteria) throws DAOException{
           Connection connection = DAOConnection.getInstance().getConnection(subject);
     	  CallableStatement callableStatement = null;
     	  ResultSet resultSet = null;
           Societe societe = new SocieteVO();
-          log.fine("société cherchée: " + criteria.toString());
+          log.debug("sociï¿½tï¿½ cherchï¿½e: " + criteria.toString());
           try {
              callableStatement = connection.prepareCall("begin CARDEX_AUDIT.SP_L_FIND_AUDIT_SOCIETE (?,?,?,?); end;");
              callableStatement.setLong(1,criteria.getCle());
@@ -413,13 +414,13 @@ public class SocieteDAO {
              callableStatement.registerOutParameter(4, OracleTypes.CURSOR);
              callableStatement.execute();
              resultSet = (ResultSet)callableStatement.getObject(4);
-             //Traitement d'une société retournée (s'il y a lieu)
+             //Traitement d'une sociï¿½tï¿½ retournï¿½e (s'il y a lieu)
              if (resultSet.next()){
-                log.fine("société trouvée");
+                log.debug("sociï¿½tï¿½ trouvï¿½e");
                 societe = traitementResultSetFindAudit(resultSet);
              }
              else {
-                log.fine("pas de résultats!");
+                log.debug("pas de rï¿½sultats!");
              }
              return societe;
            } catch (SQLException se) {
@@ -454,24 +455,24 @@ public class SocieteDAO {
         }
 
 /**
- * Recherche directe d'une société par sa clé unique avec écriture d'un audit.
- * Procédure appelée : CARDEX_LIRE_DOC.SP_L_SO_SOCIETE
- * Date de création : (2002-02-12)
- * @author François Guérin
- * @param subject  CardexAuthenticationSubject : données nominatives sur l'utilisateur
- * @param criteria Societe : société à rechercher
- * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
- * rupture de connexion avec la base de données, ou que la table demandée est
- * non disponible, ou qu'un problème est survenu lors de l'exécution d'une
+ * Recherche directe d'une sociï¿½tï¿½ par sa clï¿½ unique avec ï¿½criture d'un audit.
+ * Procï¿½dure appelï¿½e : CARDEX_LIRE_DOC.SP_L_SO_SOCIETE
+ * Date de crï¿½ation : (2002-02-12)
+ * @author Franï¿½ois Guï¿½rin
+ * @param subject  CardexAuthenticationSubject : donnï¿½es nominatives sur l'utilisateur
+ * @param criteria Societe : sociï¿½tï¿½ ï¿½ rechercher
+ * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+ * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e est
+ * non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution d'une
  * "stored procedure".
- * @return Societe : données d'une société trouvée.
+ * @return Societe : donnï¿½es d'une sociï¿½tï¿½ trouvï¿½e.
  */
     public Societe findAcces(CardexAuthenticationSubject subject, Societe criteria) throws DAOException{
       Connection connection = DAOConnection.getInstance().getConnection(subject);
 	  CallableStatement callableStatement = null;
 	  ResultSet resultSet = null;
       Societe societe = new SocieteVO();
-      log.fine("société cherchée: " + criteria.toString());
+      log.debug("sociï¿½tï¿½ cherchï¿½e: " + criteria.toString());
       try {
          callableStatement = connection.prepareCall("begin CARDEX_LIRE_DOC.SP_L_SO_SOCIETE (?,?,?); end;");
          callableStatement.setLong(1,criteria.getCle());
@@ -479,13 +480,13 @@ public class SocieteDAO {
          callableStatement.registerOutParameter(3, OracleTypes.CURSOR);
          callableStatement.execute();
          resultSet = (ResultSet)callableStatement.getObject(3);
-         //Traitement d'une société retournée (s'il y a lieu)
+         //Traitement d'une sociï¿½tï¿½ retournï¿½e (s'il y a lieu)
          if (resultSet.next()){
-            log.fine("société trouvée");
+            log.debug("sociï¿½tï¿½ trouvï¿½e");
             societe = traitementResultSet(resultSet);
          }
          else {
-            log.fine("pas de résultats!");
+            log.debug("pas de rï¿½sultats!");
          }
          return societe;
        } catch (SQLException se) {
@@ -520,17 +521,17 @@ public class SocieteDAO {
     }    
 
 /**
- * Recherche directe d'une société par sa clé unique et protégé par mot de passe.
- * Procédure appelée : CARDEX_LIRE_DOC.SP_L_SO_SOCIETE
- * Date de création : (2002-02-12)
- * @author François Guérin
- * @param subject  CardexAuthenticationSubject : données nominatives sur l'utilisateur
- * @param criteria Societe : société à rechercher
- * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
- * rupture de connexion avec la base de données, ou que la table demandée est
- * non disponible, ou qu'un problème est survenu lors de l'exécution d'une
+ * Recherche directe d'une sociï¿½tï¿½ par sa clï¿½ unique et protï¿½gï¿½ par mot de passe.
+ * Procï¿½dure appelï¿½e : CARDEX_LIRE_DOC.SP_L_SO_SOCIETE
+ * Date de crï¿½ation : (2002-02-12)
+ * @author Franï¿½ois Guï¿½rin
+ * @param subject  CardexAuthenticationSubject : donnï¿½es nominatives sur l'utilisateur
+ * @param criteria Societe : sociï¿½tï¿½ ï¿½ rechercher
+ * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+ * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e est
+ * non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution d'une
  * "stored procedure".
- * @return Societe : données d'une société trouvée.
+ * @return Societe : donnï¿½es d'une sociï¿½tï¿½ trouvï¿½e.
  */
     public Societe findMotPasse(CardexAuthenticationSubject subject, Societe criteria) throws DAOException{
       Connection connection = DAOConnection.getInstance().getConnection(subject);
@@ -545,7 +546,7 @@ public class SocieteDAO {
          callableStatement.registerOutParameter(4, OracleTypes.CURSOR);
          callableStatement.execute();
          resultSet = (ResultSet)callableStatement.getObject(4);
-         //Traitement d'une société retourné (s'il y a lieu)
+         //Traitement d'une sociï¿½tï¿½ retournï¿½ (s'il y a lieu)
          if (resultSet.next()){
             societe = traitementResultSet(resultSet);
          }
@@ -582,15 +583,15 @@ public class SocieteDAO {
     }
 
 /**
- * Routine pour traiter les ResultSet retournés par les recherches des sociétés.
- * Date de création : (2002-01-28)
- * @author François Guérin
- * @param resultSet  ResultSet : données retournées par une recherche
- * @throws SQLException lancée lorsqu'une SQLException est reçue lors d'une
- * rupture de connexion avec la base de données, ou que la table demandée est
- * non disponible, ou qu'un problème est survenu lors de l'exécution d'une
+ * Routine pour traiter les ResultSet retournï¿½s par les recherches des sociï¿½tï¿½s.
+ * Date de crï¿½ation : (2002-01-28)
+ * @author Franï¿½ois Guï¿½rin
+ * @param resultSet  ResultSet : donnï¿½es retournï¿½es par une recherche
+ * @throws SQLException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+ * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e est
+ * non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution d'une
  * "stored procedure".
- * @return ArrayList : liste des sociétés traités.
+ * @return ArrayList : liste des sociï¿½tï¿½s traitï¿½s.
  */
     public RowCallbackHandler constuireRowCallBackHandler(final List<Societe> listDossier){
   	   return new RowCallbackHandler(){
@@ -636,7 +637,7 @@ public class SocieteDAO {
               societe.setCentreRegionalDescription(OracleDAOUtils.getString(resultSet,"NOM_CENTREREG"));
               societe.setDistrictDescription(OracleDAOUtils.getString(resultSet,"NOM_DISTRICT"));
               societe.setEchantillonnage(resultSet.getLong("I_SO_ECHANTILLONAGE"));
-              log.fine("   [SOCIETE id='" + societe.getNumeroFiche() + "' Nom='" + societe.getNom()+"']");
+              log.debug("   [SOCIETE id='" + societe.getNumeroFiche() + "' Nom='" + societe.getNom()+"']");
          return societe;
     }
 
@@ -669,20 +670,20 @@ public class SocieteDAO {
       societe.setDateInactif(resultSet.getTimestamp("D_SO_DATE_INACTIVATION"));
       societe.setCommentaire(OracleDAOUtils.getString(resultSet,"V_SO_COMMENTAIRE"));
       societe.setRaisonDesactivation(OracleDAOUtils.getString(resultSet,"V_SO_RAISON_INACTIVATION"));
-      log.fine("   [SOCIETE id='" + societe.getNumeroFiche() + "' Nom='" + societe.getNom()+"']");
+      log.debug("   [SOCIETE id='" + societe.getNumeroFiche() + "' Nom='" + societe.getNom()+"']");
  return societe;
 }
 
   /**
- * Routine pour traiter les ResultSet retournés par les recherches des sociétés.
- * Date de création : (2002-01-28)
- * @author François Guérin
- * @param resultSet  ResultSet : données retournées par une recherche
- * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
- * rupture de connexion avec la base de données, ou que la table demandée est
- * non disponible, ou qu'un problème est survenu lors de l'exécution d'une
+ * Routine pour traiter les ResultSet retournï¿½s par les recherches des sociï¿½tï¿½s.
+ * Date de crï¿½ation : (2002-01-28)
+ * @author Franï¿½ois Guï¿½rin
+ * @param resultSet  ResultSet : donnï¿½es retournï¿½es par une recherche
+ * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+ * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e est
+ * non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution d'une
  * "stored procedure".
- * @return ArrayList : liste des sociétés traités.
+ * @return ArrayList : liste des sociï¿½tï¿½s traitï¿½s.
  */
   private Societe traitementResultSetLink(ResultSet resultSet) throws DAOException {
        try {
@@ -718,7 +719,7 @@ public class SocieteDAO {
               societe.setDateInactif(resultSet.getTimestamp("D_SO_DATE_INACTIVATION"));
               societe.setCommentaire(OracleDAOUtils.getString(resultSet,"V_SO_COMMENTAIRE"));
               societe.setRaisonDesactivation(OracleDAOUtils.getString(resultSet,"V_SO_RAISON_INACTIVATION"));
-              log.fine("   [SOCIETE id='" + societe.getNumeroFiche() + "' Nom='" + societe.getNom()+"']");
+              log.debug("   [SOCIETE id='" + societe.getNumeroFiche() + "' Nom='" + societe.getNom()+"']");
          return societe;
       } catch (SQLException se) {
           throw new DAOException(se);
@@ -726,16 +727,16 @@ public class SocieteDAO {
     }
 
   /**
-   * Routine pour traiter les ResultSet retournés par les recherches des sociétés qui ont
-   * été liées à un module et qui sont conservées dans l'audit des liaisons (AUD_LI_LIAISON).
-   * Date de création : (2012-01-12)
-   * @author François Guérin
-   * @param resultSet  ResultSet : données retournées par une recherche
-   * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-   * rupture de connexion avec la base de données, ou que la table demandée est
-   * non disponible, ou qu'un problème est survenu lors de l'exécution d'une
+   * Routine pour traiter les ResultSet retournï¿½s par les recherches des sociï¿½tï¿½s qui ont
+   * ï¿½tï¿½ liï¿½es ï¿½ un module et qui sont conservï¿½es dans l'audit des liaisons (AUD_LI_LIAISON).
+   * Date de crï¿½ation : (2012-01-12)
+   * @author Franï¿½ois Guï¿½rin
+   * @param resultSet  ResultSet : donnï¿½es retournï¿½es par une recherche
+   * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+   * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e est
+   * non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution d'une
    * "stored procedure".
-   * @return ArrayList : liste des sociétés traités.
+   * @return ArrayList : liste des sociï¿½tï¿½s traitï¿½s.
    */
     private Societe traitementResultSetLinkAudit(ResultSet resultSet) throws DAOException {
          try {
@@ -757,7 +758,7 @@ public class SocieteDAO {
                 societe.setNumeroFiche(OracleDAOUtils.getString(resultSet,"V_SO_REFERENCE_3"));
                 societe.setSeverite(resultSet.getLong("I_SE_CLE"));
                 societe.setSeveriteCasino(resultSet.getLong("I_SE_CLE_CASINO"));
-                societe.setAudit(GlobalConstants.BooleanString.TRUE); //On indique que la société provient de l'audit des liaisons.
+                societe.setAudit(GlobalConstants.BooleanString.TRUE); //On indique que la sociï¿½tï¿½ provient de l'audit des liaisons.
                 societe.setCentreRegional(OracleDAOUtils.getString(resultSet,"L_SO_CENTRE_REGIONAL"));
                 societe.setDistrict(OracleDAOUtils.getString(resultSet,"V_SO_DISTRICT"));
                 societe.setCodeCompte(OracleDAOUtils.getString(resultSet,"V_SO_CODE_COMPTE"));
@@ -766,7 +767,7 @@ public class SocieteDAO {
                 societe.setDateInactif(resultSet.getTimestamp("D_SO_DATE_INACTIVATION"));
                 societe.setCommentaire(OracleDAOUtils.getString(resultSet,"V_SO_COMMENTAIRE"));
                 societe.setRaisonDesactivation(OracleDAOUtils.getString(resultSet,"V_SO_RAISON_INACTIVATION"));
-                log.fine("   [SOCIETE id='" + societe.getNumeroFiche() + "' Nom='" + societe.getNom()+"']");
+                log.debug("   [SOCIETE id='" + societe.getNumeroFiche() + "' Nom='" + societe.getNom()+"']");
            return societe;
         } catch (SQLException se) {
             throw new DAOException(se);
@@ -774,22 +775,22 @@ public class SocieteDAO {
       }
 
     /**
- * Recherche de sociétés à l'aide de critères de recherche.
- * La procédure appelée autrefois est de type DBMS (SQL dynamique)
- * (SP_L4_so_societe PACKAGE CARDEX_LIRE_DOC).  Avec Java, il ne semble pas possible de récupérer les
- * données retournées par ce genre de procédure.  C'est pourquoi la requête SQL est générée plutôt
- * dans le code Java avant d'être envoyée à Oracle.
- * Le resultSet retourné par les recherches est traité dans la routine traitementResultSet.
- * Procédure appelée : générée ici.
- * Date de création : (2002-02-12)
- * @author François Guérin
- * @param subject  CardexAuthenticationSubject : données nominatives sur l'utilisateur
- * @param criteria CriteresRechercheSociete : critères de recherche
- * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
- * rupture de connexion avec la base de données, ou que la table demandée est
- * non disponible, ou qu'un problème est survenu lors de l'exécution d'une
+ * Recherche de sociï¿½tï¿½s ï¿½ l'aide de critï¿½res de recherche.
+ * La procï¿½dure appelï¿½e autrefois est de type DBMS (SQL dynamique)
+ * (SP_L4_so_societe PACKAGE CARDEX_LIRE_DOC).  Avec Java, il ne semble pas possible de rï¿½cupï¿½rer les
+ * donnï¿½es retournï¿½es par ce genre de procï¿½dure.  C'est pourquoi la requï¿½te SQL est gï¿½nï¿½rï¿½e plutï¿½t
+ * dans le code Java avant d'ï¿½tre envoyï¿½e ï¿½ Oracle.
+ * Le resultSet retournï¿½ par les recherches est traitï¿½ dans la routine traitementResultSet.
+ * Procï¿½dure appelï¿½e : gï¿½nï¿½rï¿½e ici.
+ * Date de crï¿½ation : (2002-02-12)
+ * @author Franï¿½ois Guï¿½rin
+ * @param subject  CardexAuthenticationSubject : donnï¿½es nominatives sur l'utilisateur
+ * @param criteria CriteresRechercheSociete : critï¿½res de recherche
+ * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+ * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e est
+ * non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution d'une
  * "stored procedure".
- * @return ValueListIterator : liste des sociétés retournées par la recherche.
+ * @return ValueListIterator : liste des sociï¿½tï¿½s retournï¿½es par la recherche.
  */
   public List<Societe> select(CardexAuthenticationSubject subject, CriteresRechercheSociete criteria) throws DAOException {
 		JDBCTemplate template = new JDBCTemplate(subject);
@@ -817,19 +818,19 @@ public class SocieteDAO {
   }  
   
     /**
-     * Écriture ou suppression d'un lien (association d'une société à une autre
-     * société).
-     * Procédure appelée : CARDEX_LIEN.SP_E_LDD_LIEN_DOSSIER
-     * Date de création : (2002-01-28)
+     * ï¿½criture ou suppression d'un lien (association d'une sociï¿½tï¿½ ï¿½ une autre
+     * sociï¿½tï¿½).
+     * Procï¿½dure appelï¿½e : CARDEX_LIEN.SP_E_LDD_LIEN_DOSSIER
+     * Date de crï¿½ation : (2002-01-28)
      * @author Philippe Caron
-     * @param subject  CardexAuthenticationSubject : Données nominatives sur
+     * @param subject  CardexAuthenticationSubject : Donnï¿½es nominatives sur
      * l'utilisateur.
-     * @param societe Societe : Société source.
-     * @param addedSociete Societe : Société associée.
+     * @param societe Societe : Sociï¿½tï¿½ source.
+     * @param addedSociete Societe : Sociï¿½tï¿½ associï¿½e.
      * @param action String : "I" : ajout d'un lien; "D" : suppression d'un lien.
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée est
-     * non disponible, ou qu'un problème est survenu lors de l'exécution d'une
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e est
+     * non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution d'une
      * "stored procedure".
      */
     public void editLienSociete(CardexAuthenticationSubject subject, Societe societe, Societe addedSociete, String action) throws DAOException {
@@ -877,7 +878,7 @@ public class SocieteDAO {
     }
 
 
-    // Méthode addLien
+    // Mï¿½thode addLien
 
 
     public Adresse addLienAdresse(CardexAuthenticationSubject subject, Societe societe, Adresse adresse) throws DAOException {
@@ -915,7 +916,7 @@ public class SocieteDAO {
     }
 
 
-    // Méthode deleteLien
+    // Mï¿½thode deleteLien
 
 
     public void deleteLienAdresse(CardexAuthenticationSubject subject, Societe societe, Adresse adresse) throws DAOException {
@@ -923,16 +924,16 @@ public class SocieteDAO {
     }
     
     /**
-     * Suppression de toutes les sociétés placées en confidentialité 8.
-     * Cette méthode est appelée à partir de la recherche de dossiers.
-     * Procédure appelée : SP_EPURATION_SOCIETES_SITE
-     * Date de création : (2002-10-17)
-     * @author François Guérin
-     * @param subject  CardexAuthenticationSubject : Données nominatives sur
+     * Suppression de toutes les sociï¿½tï¿½s placï¿½es en confidentialitï¿½ 8.
+     * Cette mï¿½thode est appelï¿½e ï¿½ partir de la recherche de dossiers.
+     * Procï¿½dure appelï¿½e : SP_EPURATION_SOCIETES_SITE
+     * Date de crï¿½ation : (2002-10-17)
+     * @author Franï¿½ois Guï¿½rin
+     * @param subject  CardexAuthenticationSubject : Donnï¿½es nominatives sur
      * l'utilisateur.
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
      */
     public void delete(CardexAuthenticationSubject subject)
@@ -986,8 +987,8 @@ public class SocieteDAO {
     }
 
     public void deleteLienSujet(CardexAuthenticationSubject subject, Societe societe,Sujet sujet) throws DAOException {
-        log.fine("deleteLienSujet: société: " + societe);
-        log.fine("deleteLienSujet: sujet: " + sujet);
+        log.debug("deleteLienSujet: sociï¿½tï¿½: " + societe);
+        log.debug("deleteLienSujet: sujet: " + sujet);
         FabriqueCardexDAO.getInstance().getSujetDAO().editLienSujet(subject, sujet, societe, "D");
     }
 
@@ -1000,7 +1001,7 @@ public class SocieteDAO {
     }
 
 
-    // Méthode updateLien
+    // Mï¿½thode updateLien
 
 
     public void updateLienAdresse(CardexAuthenticationSubject subject, Societe societe, Adresse adresse) throws DAOException {
@@ -1037,25 +1038,25 @@ public class SocieteDAO {
 
 
     /**
-     * Retourne les données associées à une société.
-     * Procédure appelée : CARDEX_WEB_LIRE_DOC_TRI.SPW_L5_SO_SOCIETE
-     * Date de création : (2002-01-28)
-     * @author François Guérin
-     * @param subject  CardexAuthenticationSubject : Données nominatives sur
+     * Retourne les donnï¿½es associï¿½es ï¿½ une sociï¿½tï¿½.
+     * Procï¿½dure appelï¿½e : CARDEX_WEB_LIRE_DOC_TRI.SPW_L5_SO_SOCIETE
+     * Date de crï¿½ation : (2002-01-28)
+     * @author Franï¿½ois Guï¿½rin
+     * @param subject  CardexAuthenticationSubject : Donnï¿½es nominatives sur
      * l'utilisateur.
      * @param cle : cle de l'object avec lequel on cherche l'association.
      * @param site : site de l'object avec lequel on cherche l'association.
      * @param genreFichier : genre de l'object avec lequel on cherche
      * l'association.
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
-     * @return Collection : Liste des dossiers associés.
+     * @return Collection : Liste des dossiers associï¿½s.
      */
     public Collection findLiensSociete(CardexAuthenticationSubject subject,
             long cle, long site, String genreFichier) throws DAOException {
-        log.fine("findLiensSociete()");
+        log.debug("findLiensSociete()");
         Connection connection =
         	DAOConnection.getInstance().getConnection(subject);
 		CallableStatement callableStatement = null;
@@ -1074,7 +1075,7 @@ public class SocieteDAO {
             while ( resultSet.next() ) {
                 results.add(traitementResultSetLink(resultSet));
             }
-            //Pour les sujets, on cherche ensuite les audits de liaison pour afficher toutes les sociétés auxquelles 
+            //Pour les sujets, on cherche ensuite les audits de liaison pour afficher toutes les sociï¿½tï¿½s auxquelles 
             //le sujet a appartenu.
             if(genreFichier.equals(GlobalConstants.GenreFichier.SUJET)){
             	callableStatement = connection.prepareCall(
@@ -1125,40 +1126,40 @@ public class SocieteDAO {
     }
 
 /**
- * Lecture des dossiers associés à une société
- * Procédure appelée : CARDEX_WEB_LIRE_DOC_TRI.SPW_L5_DO_DOSSIER
- * Date de création : (2002-02-12)
- * @author François Guérin
- * @param subject  CardexAuthenticationSubject : données nominatives sur l'utilisateur
- * @param societe Societe : société de base
- * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
- * rupture de connexion avec la base de données, ou que la table demandée est
- * non disponible, ou qu'un problème est survenu lors de l'exécution d'une
+ * Lecture des dossiers associï¿½s ï¿½ une sociï¿½tï¿½
+ * Procï¿½dure appelï¿½e : CARDEX_WEB_LIRE_DOC_TRI.SPW_L5_DO_DOSSIER
+ * Date de crï¿½ation : (2002-02-12)
+ * @author Franï¿½ois Guï¿½rin
+ * @param subject  CardexAuthenticationSubject : donnï¿½es nominatives sur l'utilisateur
+ * @param societe Societe : sociï¿½tï¿½ de base
+ * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+ * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e est
+ * non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution d'une
  * "stored procedure".
- * @return Collection : liste des dossiers associés
+ * @return Collection : liste des dossiers associï¿½s
  */
     public Collection findLiensDossier(CardexAuthenticationSubject subject, Societe societe) throws DAOException{
     	
     	if (societe == null)
-    		throw new IllegalArgumentException("Le champ société ne peut pas être null ");
+    		throw new IllegalArgumentException("Le champ sociï¿½tï¿½ ne peut pas ï¿½tre null ");
     	
         return FabriqueCardexDAO.getInstance().getDossierDAO().findLiensDossier(subject, societe.getCle(),
                 societe.getSite(), GlobalConstants.GenreFichier.SOCIETE);
    }
 
     /**
-     * Retourne les sociétés associés à un dossier.  La procédure appelée est
+     * Retourne les sociï¿½tï¿½s associï¿½s ï¿½ un dossier.  La procï¿½dure appelï¿½e est
      * dans OracleSocieteDAO.
-     * Date de création : (2002-03-05)
+     * Date de crï¿½ation : (2002-03-05)
      * @author Philippe Caron
-     * @param subject  CardexAuthenticationSubject : Données nominatives sur
+     * @param subject  CardexAuthenticationSubject : Donnï¿½es nominatives sur
      * l'utilisateur.
      * @param dossier Dossier : Dossier de base.
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
-     * @return Collection : Liste des véhicules associés.
+     * @return Collection : Liste des vï¿½hicules associï¿½s.
      */
     public Collection findLiensSociete(CardexAuthenticationSubject subject,
             Societe societe) throws DAOException {
@@ -1178,18 +1179,18 @@ public class SocieteDAO {
     }
 
     /**
-     * Retourne les narrations associées à une société.  La procédure appelée est
+     * Retourne les narrations associï¿½es ï¿½ une sociï¿½tï¿½.  La procï¿½dure appelï¿½e est
      * dans OracleNarrationDAO.
-     * Date de création : (2002-01-28)
-     * @author François Guérin
-     * @param subject  CardexAuthenticationSubject : Données nominatives sur
+     * Date de crï¿½ation : (2002-01-28)
+     * @author Franï¿½ois Guï¿½rin
+     * @param subject  CardexAuthenticationSubject : Donnï¿½es nominatives sur
      * l'utilisateur.
      * @param dossier Societe : Societe de base.
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
-     * @return Collection : Liste des narrations associées.
+     * @return Collection : Liste des narrations associï¿½es.
      */
     public Collection findLiensNarration(CardexAuthenticationSubject subject,
             Societe societe) throws DAOException {
@@ -1198,18 +1199,18 @@ public class SocieteDAO {
     }
 
     /**
-     * Retourne les véhicule associés à un dossier.  La procédure appelée est
+     * Retourne les vï¿½hicule associï¿½s ï¿½ un dossier.  La procï¿½dure appelï¿½e est
      * dans OracleVehiculeDAO.
-     * Date de création : (2002-03-05)
+     * Date de crï¿½ation : (2002-03-05)
      * @author Philippe Caron
-     * @param subject  CardexAuthenticationSubject : Données nominatives sur
+     * @param subject  CardexAuthenticationSubject : Donnï¿½es nominatives sur
      * l'utilisateur.
      * @param dossier Dossier : Dossier de base.
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
-     * @return Collection : Liste des véhicules associés.
+     * @return Collection : Liste des vï¿½hicules associï¿½s.
      */
     public Collection findLiensVehicule(CardexAuthenticationSubject subject,
             Societe societe) throws DAOException {
@@ -1346,19 +1347,19 @@ public class SocieteDAO {
 	}
 
     /**
-     * Recherche de l'audit des changements d'une société.
+     * Recherche de l'audit des changements d'une sociï¿½tï¿½.
      * 
-     * Procédure appelée : CARDEX_AUDIT.SP_L_AUDIT_SOCIETE
-     * Date de création : (2011-03-08)
-     * @author François Guérin
-     * @param subject  CardexAuthenticationSubject : Données nominatives sur
+     * Procï¿½dure appelï¿½e : CARDEX_AUDIT.SP_L_AUDIT_SOCIETE
+     * Date de crï¿½ation : (2011-03-08)
+     * @author Franï¿½ois Guï¿½rin
+     * @param subject  CardexAuthenticationSubject : Donnï¿½es nominatives sur
      * l'utilisateur.
-     * @param criteria Sujet : Sujet à rechercher.
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * @param criteria Sujet : Sujet ï¿½ rechercher.
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
-     * @return Dossier : Instance de dossier associée.
+     * @return Dossier : Instance de dossier associï¿½e.
      */
     public List audit(CardexAuthenticationSubject subject,Societe criteria)
             throws DAOException {
@@ -1375,7 +1376,7 @@ public class SocieteDAO {
             callableStatement.registerOutParameter(3, OracleTypes.CURSOR);
             callableStatement.execute();
             resultSet = (ResultSet)callableStatement.getObject(3);
-            //Traitement du résultat retourné
+            //Traitement du rï¿½sultat retournï¿½
 			resultats = traitementResultSetAudit(resultSet);
 
 		}catch (SQLException se) {
@@ -1414,15 +1415,15 @@ public class SocieteDAO {
     }   
 
     /**
-     * Routine pour traiter les ResultSet retournés par l'audit des changements.
-     * Date de création : (2002-01-28)
-     * @author François Guérin
-     * @param resultSet  ResultSet : données retournées par une recherche
-     * @throws SQLException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée est
-     * non disponible, ou qu'un problème est survenu lors de l'exécution d'une
+     * Routine pour traiter les ResultSet retournï¿½s par l'audit des changements.
+     * Date de crï¿½ation : (2002-01-28)
+     * @author Franï¿½ois Guï¿½rin
+     * @param resultSet  ResultSet : donnï¿½es retournï¿½es par une recherche
+     * @throws SQLException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e est
+     * non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution d'une
      * "stored procedure".
-     * @return ArrayList : liste des sociétés traités.
+     * @return ArrayList : liste des sociï¿½tï¿½s traitï¿½s.
      */
       private ArrayList traitementResultSetAudit(ResultSet resultSet) throws DAOException {
           ArrayList results = new ArrayList();
@@ -1458,7 +1459,7 @@ public class SocieteDAO {
                   societe.setDateInactif(resultSet.getTimestamp("D_SO_DATE_INACTIVATION"));
                   societe.setCommentaire(OracleDAOUtils.getString(resultSet,"V_SO_COMMENTAIRE"));
                   societe.setRaisonDesactivation(OracleDAOUtils.getString(resultSet,"V_SO_RAISON_INACTIVATION"));
-                  log.fine("   [SOCIETE id='" + societe.getNumeroFiche() + "' Nom='" + societe.getNom()+"']");
+                  log.debug("   [SOCIETE id='" + societe.getNumeroFiche() + "' Nom='" + societe.getNom()+"']");
                   results.add(societe);
               }
           }catch (SQLException se) {
@@ -1518,17 +1519,17 @@ public class SocieteDAO {
 	}	
  
     /**
-     * Mise à jour d'un lien (association d'une société à un sujet, à un dossier ou à une société).
+     * Mise ï¿½ jour d'un lien (association d'une sociï¿½tï¿½ ï¿½ un sujet, ï¿½ un dossier ou ï¿½ une sociï¿½tï¿½).
      * Utilisant la stored procedure SP_E_LDD_LIEN_DOSSIER PACKAGE CARDEX_LIEN.
-     * Date de création : (2002-03-05)
+     * Date de crï¿½ation : (2002-03-05)
      * @author Philippe Caron
-     * @param subject CardexAuthenticationSubject : Données nominatives sur
+     * @param subject CardexAuthenticationSubject : Donnï¿½es nominatives sur
      * l'utilisateur.
      * @param dossier Dossier : Dossier de base.
-     * @param societe Societe : Société associée.
-     * @throws DAOException lancéeé lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * @param societe Societe : Sociï¿½tï¿½ associï¿½e.
+     * @throws DAOException lancï¿½eï¿½ lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
      */
     public void updateLien(CardexAuthenticationSubject subject,
@@ -1553,7 +1554,7 @@ public class SocieteDAO {
                 callableStatement.setLong(7, societe.getTypeLien());
                 callableStatement.setLong(8, societe.getSite());
                 callableStatement.setString(9,
-                        GlobalConstants.GenreFichier.DOSSIER); //valeur non prise en compte dans la procédure
+                        GlobalConstants.GenreFichier.DOSSIER); //valeur non prise en compte dans la procï¿½dure
                 callableStatement.setLong(10, 0);
                 callableStatement.setString(11,
                         GlobalConstants.GenreFichier.SOCIETE);
@@ -1585,19 +1586,19 @@ public class SocieteDAO {
     }
 	
     /**
-     * Copie des données d'une société à une autre.
-     * Cette procédure ne devrait être que temporaire, le temps de permettre à l'entité Loto-Québec
+     * Copie des donnï¿½es d'une sociï¿½tï¿½ ï¿½ une autre.
+     * Cette procï¿½dure ne devrait ï¿½tre que temporaire, le temps de permettre ï¿½ l'entitï¿½ Loto-Quï¿½bec
      * de supprimer les doublons.
      * Utilisant la stored procedure SP_E_COPIER_SOCIETE
-     * Date de création : (2012-01-10)
+     * Date de crï¿½ation : (2012-01-10)
      * @author GUERINF
-     * @param subject CardexAuthenticationSubject : Données nominatives sur
+     * @param subject CardexAuthenticationSubject : Donnï¿½es nominatives sur
      * l'utilisateur.
      * @param dossier Dossier : Dossier de base.
-     * @param societe Societe : Société associée.
-     * @throws DAOException lancéeé lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * @param societe Societe : Sociï¿½tï¿½ associï¿½e.
+     * @throws DAOException lancï¿½eï¿½ lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
      */
     public void copier(CardexAuthenticationSubject subject,
@@ -1640,7 +1641,7 @@ public class SocieteDAO {
         }
     }
 
-    //Mise-à-jour de la sévérité des sociétés d'invesigation qui ont un dossier actif et dont la sévérité n'est pas à 3
+    //Mise-ï¿½-jour de la sï¿½vï¿½ritï¿½ des sociï¿½tï¿½s d'invesigation qui ont un dossier actif et dont la sï¿½vï¿½ritï¿½ n'est pas ï¿½ 3
 	  public void severite3SocieteInvestigationDossierActif(Connection connection) throws DAOException {
 			StoreProcTemplate storeProcTemplate = new StoreProcTemplate(connection);
 
@@ -1654,7 +1655,7 @@ public class SocieteDAO {
 	    	storeProcTemplate.query( false );		
 	   }
     
-    //Mise-à-jour de la sévérité à 2 pour les sujets d'invesigation dont le dossier est arrivé à expiration et dont la sévérité n'est pas à 2.
+    //Mise-ï¿½-jour de la sï¿½vï¿½ritï¿½ ï¿½ 2 pour les sujets d'invesigation dont le dossier est arrivï¿½ ï¿½ expiration et dont la sï¿½vï¿½ritï¿½ n'est pas ï¿½ 2.
 	  public void severite2SocieteInvestigationExpiration(Connection connection) throws DAOException {
 			StoreProcTemplate storeProcTemplate = new StoreProcTemplate(connection);
 
@@ -1668,7 +1669,7 @@ public class SocieteDAO {
 	    	storeProcTemplate.query( false );		
 	   }
 
-    //Mise-à-jour de la sévérité à 4 pour les sujets d'invesigation dont le dossier actif arrive à expiration dans 90 jours.
+    //Mise-ï¿½-jour de la sï¿½vï¿½ritï¿½ ï¿½ 4 pour les sujets d'invesigation dont le dossier actif arrive ï¿½ expiration dans 90 jours.
 	  public void severite4SocieteInvestigationExpiration90Jours(Connection connection) throws DAOException {
 			StoreProcTemplate storeProcTemplate = new StoreProcTemplate(connection);
 
@@ -1683,8 +1684,8 @@ public class SocieteDAO {
 	   }
 
 		/**
-		 * Ajout des audits pour les sociétés (détaillants) qui seront mises à jour
-		 * dans la tâche CDX00_00013.
+		 * Ajout des audits pour les sociï¿½tï¿½s (dï¿½taillants) qui seront mises ï¿½ jour
+		 * dans la tï¿½che CDX00_00013.
 		 */
 
 		public void creerAuditSocietes(Connection connection) {
@@ -1711,8 +1712,8 @@ public class SocieteDAO {
 	}
 
 		/**
-		 * Ajout des audits pour les sociétés (détaillants) qui seront mises à jour
-		 * dans la tâche CDX00_00013 pour les personnes morales.
+		 * Ajout des audits pour les sociï¿½tï¿½s (dï¿½taillants) qui seront mises ï¿½ jour
+		 * dans la tï¿½che CDX00_00013 pour les personnes morales.
 		 */
 
 		public void creerAuditPersonnesMorales(Connection connection) {
@@ -1739,8 +1740,8 @@ public class SocieteDAO {
 	}
 
 		/**
-		 * Ajout des audits pour les sociétés (détaillants) qui seront mises à jour
-		 * dans la tâche CDX00_00013 pour les personnes morales.
+		 * Ajout des audits pour les sociï¿½tï¿½s (dï¿½taillants) qui seront mises ï¿½ jour
+		 * dans la tï¿½che CDX00_00013 pour les personnes morales.
 		 */
 
 		public void creerAuditAdresses(Connection connection) {
@@ -1766,8 +1767,8 @@ public class SocieteDAO {
 		}
 	}
 		/**
-		 * Mise à jour des sociétés à partir de RDD
-		 * dans la tâche CDX00_00013.
+		 * Mise ï¿½ jour des sociï¿½tï¿½s ï¿½ partir de RDD
+		 * dans la tï¿½che CDX00_00013.
 		 */
 
 		public void miseAJourDetaillants(Connection connection) {
@@ -1794,8 +1795,8 @@ public class SocieteDAO {
 	}
 
 		/**
-		 * Mise à jour des adresses des sociétés à partir de RDD
-		 * dans la tâche CDX00_00013.
+		 * Mise ï¿½ jour des adresses des sociï¿½tï¿½s ï¿½ partir de RDD
+		 * dans la tï¿½che CDX00_00013.
 		 */
 
 		public void miseAJourAdressesDetaillant(Connection connection) {
@@ -1822,8 +1823,8 @@ public class SocieteDAO {
 	}
 
 		/**
-		 * Mise à jour des personnes morales à partir de RDD
-		 * dans la tâche CDX00_00013.
+		 * Mise ï¿½ jour des personnes morales ï¿½ partir de RDD
+		 * dans la tï¿½che CDX00_00013.
 		 */
 
 		public void miseAJourPersonneMorale(Connection connection) {
@@ -1849,15 +1850,15 @@ public class SocieteDAO {
 		}
 	}
 		/**
-		 * Ajout dans Cardex des nouveaux détaillants RDD
-		 * dans la tâche CDX00_00013.
+		 * Ajout dans Cardex des nouveaux dï¿½taillants RDD
+		 * dans la tï¿½che CDX00_00013.
 		 */
 
 		public void ajoutNouveauxDetaillants(CardexAuthenticationSubject subject, Connection connection) throws DAOException  {
 			CallableStatement callableStatement = null;
 			ResultSet resultSet = null;
 	        try {
-	        	//On lit d'abord la liste des nouveaux détaillants de RDD qu'on ne retrouve pas dans Cardex.
+	        	//On lit d'abord la liste des nouveaux dï¿½taillants de RDD qu'on ne retrouve pas dans Cardex.
 	            callableStatement = connection.prepareCall(
 	                    "begin CARDEX_LIRE_DOC.SP_L_SO_RDD(?) ; end;");
 	            callableStatement.registerOutParameter(1, OracleTypes.CURSOR);
@@ -1874,7 +1875,7 @@ public class SocieteDAO {
 	                ajoutDetaillant(subject, detaillant);
 	            }
 
-	            //On fait la même chose pour les adresses
+	            //On fait la mï¿½me chose pour les adresses
 	            callableStatement = null;
 	            resultSet = null;
 	            callableStatement = connection.prepareCall("begin CARDEX_LIRE_LIEN.SP_L_ADRESSE_RDD(?) ; end;");
@@ -1940,8 +1941,8 @@ public class SocieteDAO {
 	}
 
         /**
-         * Ajout dans Cardex des adresses manquantes des détaillants RDD
-         * dans la tâche CDX00_00013.
+         * Ajout dans Cardex des adresses manquantes des dï¿½taillants RDD
+         * dans la tï¿½che CDX00_00013.
          */
 
         public void ajoutAdressesManquantes(CardexAuthenticationSubject subject, Connection connection) throws DAOException  {
@@ -2011,10 +2012,10 @@ public class SocieteDAO {
     }
 
 		/**
-		 * Traitement des personnes physiques de RDD dans la tâche CDX00_00013.
-		 * Les personnes physiques sont les responsables attitrés des détaillants.
-		 * On vérifie si une telle personne est reliée au détaillant.
-		 * Si ce n'est pas le cas, on crée une fiche sujet et on relie ce sujet à la société avec un rôle Responsable
+		 * Traitement des personnes physiques de RDD dans la tï¿½che CDX00_00013.
+		 * Les personnes physiques sont les responsables attitrï¿½s des dï¿½taillants.
+		 * On vï¿½rifie si une telle personne est reliï¿½e au dï¿½taillant.
+		 * Si ce n'est pas le cas, on crï¿½e une fiche sujet et on relie ce sujet ï¿½ la sociï¿½tï¿½ avec un rï¿½le Responsable
 		 * 
 		 */
 
@@ -2022,8 +2023,8 @@ public class SocieteDAO {
 			CallableStatement callableStatement = null;
 			ResultSet resultSet = null;
 	        try {
-	        	//On lit d'abord la liste des détaillants de Cardex dont le sujet responsable ou propriétaire lié
-	        	//n'est pas le même que la personne physique de RDD.
+	        	//On lit d'abord la liste des dï¿½taillants de Cardex dont le sujet responsable ou propriï¿½taire liï¿½
+	        	//n'est pas le mï¿½me que la personne physique de RDD.
 	            callableStatement = connection.prepareCall(
 	                    "begin CARDEX_LIRE_DOC.SP_L_SO_PERSONNE_PHYSIQUE(?) ; end;");
 	            callableStatement.registerOutParameter(1, OracleTypes.CURSOR);
@@ -2031,13 +2032,13 @@ public class SocieteDAO {
 	            resultSet = (ResultSet)callableStatement.getObject(1);
 	            ArrayList results = new ArrayList();
 	            while ( resultSet.next() ) {
-	            	//On ajoute d'abord les personnes physiques retrouvées dans RDD
+	            	//On ajoute d'abord les personnes physiques retrouvï¿½es dans RDD
 	            	Sujet nouveauSujet = new SujetVO();
 	            	nouveauSujet.setSite(Long.valueOf(GlobalConstants.Sites.LOTO_QUEBEC));
 	                nouveauSujet.setNom(resultSet.getString("V_SO_REFERENCE_NOM"));
 	                nouveauSujet.setPrenom(resultSet.getString("V_SO_REFERENCE_PRENOM"));
 	                
-	                //La date de naissance n'étant pas connue, on met le sujet à type d'âge inconnu et son âge à null.
+	                //La date de naissance n'ï¿½tant pas connue, on met le sujet ï¿½ type d'ï¿½ge inconnu et son ï¿½ge ï¿½ null.
 	                nouveauSujet.setDateNaissance(null);
 	                nouveauSujet.setTypeAge(GlobalConstants.TypeAge.INCONNU);
 	                
@@ -2046,7 +2047,7 @@ public class SocieteDAO {
 	                //nouveauSujet.setSeverite(GlobalConstants.Severite.SEVERITE_2);
 	                //nouveauSujet.setSeveriteAutres(GlobalConstants.Severite.SEVERITE_2);
 	                nouveauSujet.setIndicateurRdd(true);
-	                //Avant d'ajouter, on s'assure que le sujet n'existe pas déjà. Si c'est le cas, on récupère ses clés. Sinon, on l'ajoute.
+	                //Avant d'ajouter, on s'assure que le sujet n'existe pas dï¿½jï¿½. Si c'est le cas, on rï¿½cupï¿½re ses clï¿½s. Sinon, on l'ajoute.
 	                Sujet sujetTrouve = null;
 	                sujetTrouve = FabriqueCardexDAO.getInstance().getSujetDAO().findSujetRDD(subject, nouveauSujet);
 	                if(sujetTrouve.getCle() != 0){
@@ -2054,12 +2055,12 @@ public class SocieteDAO {
 	                }else{
 	                	nouveauSujet = FabriqueCardexDAO.getInstance().getSujetDAO().insertSujetDetaillant(nouveauSujet, connection);
 	                }
-	                //On récupére ensuite les clés pour l'insertion du lien
+	                //On rï¿½cupï¿½re ensuite les clï¿½s pour l'insertion du lien
 	                Societe detaillant = new SocieteVO();
 	                detaillant.setCle(resultSet.getLong("L_SO_CLE"));
 	                detaillant.setSite(resultSet.getLong("L_SI_CLE"));
 	                detaillant.setRole(GlobalConstants.Role.RESPONSABLE);
-	                //On traite d'abord les responsables associés (pas pour l'instant)
+	                //On traite d'abord les responsables associï¿½s (pas pour l'instant)
 	                //addLienSujetDetaillant(subject, detaillant, nouveauSujet);
 	                //Puis on ajoute le nouveau responsable
 	                addLienSujet(subject, detaillant, nouveauSujet);
@@ -2088,12 +2089,12 @@ public class SocieteDAO {
 	}
 
 		/**
-		 * Traitement des personnes morales de RDD dans la tâche CDX00_00013.
-		 * Les personnes morales sont les références nom et prénom d'une fiche de détaillant.
-		 * On corrige au besoin les champs références.
-		 * On vérifie si la société morale existe. Sinon, on la crée.
-		 * On doit également vérifier si la société morale est reliée au détaillant.
-		 * Si ce n'est pas le cas, on relie la société au détaillant avec un rôle Responsable
+		 * Traitement des personnes morales de RDD dans la tï¿½che CDX00_00013.
+		 * Les personnes morales sont les rï¿½fï¿½rences nom et prï¿½nom d'une fiche de dï¿½taillant.
+		 * On corrige au besoin les champs rï¿½fï¿½rences.
+		 * On vï¿½rifie si la sociï¿½tï¿½ morale existe. Sinon, on la crï¿½e.
+		 * On doit ï¿½galement vï¿½rifier si la sociï¿½tï¿½ morale est reliï¿½e au dï¿½taillant.
+		 * Si ce n'est pas le cas, on relie la sociï¿½tï¿½ au dï¿½taillant avec un rï¿½le Responsable
 		 * 
 		 */
 
@@ -2101,19 +2102,19 @@ public class SocieteDAO {
 			CallableStatement callableStatement = null;
 			ResultSet resultSet = null;
 	        try {
-	        	//On lit d'abord la liste des sociétés morales qui n'existent pas dans Cardex.
+	        	//On lit d'abord la liste des sociï¿½tï¿½s morales qui n'existent pas dans Cardex.
 	            callableStatement = connection.prepareCall(
 	                    "begin CARDEX_LIRE_DOC.SP_L_SO_SOCIETE_MORALE(?) ; end;");
 	            callableStatement.registerOutParameter(1, OracleTypes.CURSOR);
 	            callableStatement.execute();
 	            resultSet = (ResultSet)callableStatement.getObject(1);
 	            while ( resultSet.next() ) {
-	            	//On ajoute d'abord les sociétés morales retrouvées dans RDD et qui n'existent pas dans Cardex.
+	            	//On ajoute d'abord les sociï¿½tï¿½s morales retrouvï¿½es dans RDD et qui n'existent pas dans Cardex.
 	                Societe detaillant = new SocieteVO();
-	                //On limite le nom à 50 caractères pour respecter la longueur du champ dans Cardex.
+	                //On limite le nom ï¿½ 50 caractï¿½res pour respecter la longueur du champ dans Cardex.
 	                String nom = StringUtils.substring(resultSet.getString("NOM_PM"),0,49);
 	                detaillant.setNom(nom);
-	                //On ne met rien dans les champs de référence.
+	                //On ne met rien dans les champs de rï¿½fï¿½rence.
 	                //detaillant.setReferenceNom(resultSet.getString("NOM_REPRESENTANT_PM"));
 	                //detaillant.setReferencePrenom(resultSet.getString("PRENOM_REPRESENTANT_PM"));
 	                detaillant.setSite(Long.valueOf(GlobalConstants.Sites.LOTO_QUEBEC));
@@ -2121,10 +2122,10 @@ public class SocieteDAO {
 	                //detaillant.setSeverite(GlobalConstants.Severite.SEVERITE_2);
 	                detaillant.setStatut(Long.valueOf(GlobalConstants.Statut.SOCIETE_REGULIER));
 	                detaillant.setIndicateurRdd(true);
-	                detaillant.setReference2("Société morale");
+	                detaillant.setReference2("Sociï¿½tï¿½ morale");
 	                ajoutDetaillant(subject, detaillant);
                 }
-                //On cherche ensuite les détaillants qui n'ont pas de sociétés morales ou dont la société morale est différente.
+                //On cherche ensuite les dï¿½taillants qui n'ont pas de sociï¿½tï¿½s morales ou dont la sociï¿½tï¿½ morale est diffï¿½rente.
 	            //On ajoute la relation au besoin
                 callableStatement = null;
                 resultSet = null;
@@ -2143,7 +2144,7 @@ public class SocieteDAO {
 		        	detaillantResponsable.setRole(GlobalConstants.Role.RESPONSABLE);
 		        	addLienSociete(subject, detaillantSource, detaillantResponsable);
 		        }
-                //On met finalement à jour les champs références nom et prénom des détaillants qui diffèrent des personnes morales de RDD.
+                //On met finalement ï¿½ jour les champs rï¿½fï¿½rences nom et prï¿½nom des dï¿½taillants qui diffï¿½rent des personnes morales de RDD.
                 miseAJourPersonneMorale(connection);
 	        }
 	        catch (SQLException se) {
@@ -2170,16 +2171,16 @@ public class SocieteDAO {
 
  
 		   /**
-		    * Écriture d'une société qui est un nouveau détaillant de RDD (Réseau des détaillants).
-		    * Procédure appelée : CARDEX_DOC.SP_E_SO_DETAILLANTS
-		    * Date de création : (2012-09-10)
-		    * @author François Guérin
-		    * @param subject CardexAuthenticationSubject : données nominatives sur l'utilisateur
-		    * @param societe Societe : société saisi à l'écran
+		    * ï¿½criture d'une sociï¿½tï¿½ qui est un nouveau dï¿½taillant de RDD (Rï¿½seau des dï¿½taillants).
+		    * Procï¿½dure appelï¿½e : CARDEX_DOC.SP_E_SO_DETAILLANTS
+		    * Date de crï¿½ation : (2012-09-10)
+		    * @author Franï¿½ois Guï¿½rin
+		    * @param subject CardexAuthenticationSubject : donnï¿½es nominatives sur l'utilisateur
+		    * @param societe Societe : sociï¿½tï¿½ saisi ï¿½ l'ï¿½cran
 		    * @param action  java.lang.String : U ou I
-		    * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-		    * rupture de connexion avec la base de données, ou que la table demandée est
-		    * non disponible, ou qu'un problème est survenu lors de l'exécution d'une
+		    * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+		    * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e est
+		    * non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution d'une
 		    * "stored procedure".
 		    * @return Societe
 		    */
@@ -2191,7 +2192,7 @@ public class SocieteDAO {
 				        nouveauSujet.setNom(societe.getReferenceNom());
 				        nouveauSujet.setPrenom(societe.getReferencePrenom());
 				        
-				        //La date de naissance n'étant pas connue, on met le sujet à type d'âge inconnu et son âge à null.
+				        //La date de naissance n'ï¿½tant pas connue, on met le sujet ï¿½ type d'ï¿½ge inconnu et son ï¿½ge ï¿½ null.
 	                    nouveauSujet.setDateNaissance(null);
 	                    nouveauSujet.setTypeAge(GlobalConstants.TypeAge.INCONNU);
 				        
@@ -2219,7 +2220,7 @@ public class SocieteDAO {
 		         }
 		      }
 
-			    //Mise-à-jour de la sévérité Casino des sociétés d'invesigation
+			    //Mise-ï¿½-jour de la sï¿½vï¿½ritï¿½ Casino des sociï¿½tï¿½s d'invesigation
 			  public void severiteSocieteInvestigationCasino(Connection connection) throws DAOException {
 				  CallableStatement callableStatement = null;
 				  ResultSet resultSet = null;
@@ -2229,7 +2230,7 @@ public class SocieteDAO {
 					 callableStatement.registerOutParameter(1, OracleTypes.CURSOR);
 					 callableStatement.execute();
 					 resultSet = (ResultSet)callableStatement.getObject(1);
-					 //Traitement des données retournées pour mettre à jour la sévérité
+					 //Traitement des donnï¿½es retournï¿½es pour mettre ï¿½ jour la sï¿½vï¿½ritï¿½
 					 while(resultSet.next()){
 						long cle = resultSet.getLong("L_SO_CLE");
 						long site = resultSet.getLong("L_SI_CLE");
@@ -2237,7 +2238,7 @@ public class SocieteDAO {
 						long severiteSujet = resultSet.getLong("SEVERITE");
 						String NumeroCardex = resultSet.getString("NumeroCardex");						
 						long severite = resultSet.getLong("SEVERITE_DOSSIER");
-						courantLog.info("Assignation sévérité "+severiteSujet+" du dossier "+NumeroCardex+" au sujet "+numeroFiche+" ayant la sévérité "+severiteSujet);
+						courantLog.info("Assignation sï¿½vï¿½ritï¿½ "+severiteSujet+" du dossier "+NumeroCardex+" au sujet "+numeroFiche+" ayant la sï¿½vï¿½ritï¿½ "+severiteSujet);
 						try{
 							callableStatement2 = connection.prepareCall("begin CARDEX_DOC.SP_E_SO_SEVERITE_CASINO (?,?,?); end;");
 							OracleDAOUtils.setLong(callableStatement2,1, cle);
@@ -2278,7 +2279,7 @@ public class SocieteDAO {
 					   } //finally
 			   }
 
-	    //Mise-à-jour de la sévérité Autre des sociétés d'invesigation
+	    //Mise-ï¿½-jour de la sï¿½vï¿½ritï¿½ Autre des sociï¿½tï¿½s d'invesigation
 	  public void severiteSocieteInvestigationAutre(Connection connection) throws DAOException {
 		  CallableStatement callableStatement = null;
 		  ResultSet resultSet = null;
@@ -2288,7 +2289,7 @@ public class SocieteDAO {
 			 callableStatement.registerOutParameter(1, OracleTypes.CURSOR);
 			 callableStatement.execute();
 			 resultSet = (ResultSet)callableStatement.getObject(1);
-			 //Traitement des données retournées pour mettre à jour la sévérité
+			 //Traitement des donnï¿½es retournï¿½es pour mettre ï¿½ jour la sï¿½vï¿½ritï¿½
 			 while(resultSet.next()){
 				long cle = resultSet.getLong("L_SO_CLE");
 				long site = resultSet.getLong("L_SI_CLE");
@@ -2296,7 +2297,7 @@ public class SocieteDAO {
 				long severiteSujet = resultSet.getLong("SEVERITE");
 				String NumeroCardex = resultSet.getString("NumeroCardex");
 				long severite = resultSet.getLong("SEVERITE_DOSSIER");
-				courantLog.info("Assignation sévérité "+severiteSujet+" du dossier "+NumeroCardex+" au sujet "+numeroFiche+" ayant la sévérité "+severiteSujet);
+				courantLog.info("Assignation sï¿½vï¿½ritï¿½ "+severiteSujet+" du dossier "+NumeroCardex+" au sujet "+numeroFiche+" ayant la sï¿½vï¿½ritï¿½ "+severiteSujet);
 				try{
 					callableStatement2 = connection.prepareCall("begin CARDEX_DOC.SP_E_SO_SEVERITE_AUTRE (?,?,?); end;");
 					OracleDAOUtils.setLong(callableStatement2,1, cle);

@@ -1,17 +1,17 @@
 package com.lotoquebec.cardex.business.rule;
 
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardex.business.CriteresRechercheDossier;
 import com.lotoquebec.cardex.business.exception.CriteresRechercheDossierBusinessRuleException;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
 import com.lotoquebec.cardexCommun.business.BusinessRuleSet;
 import com.lotoquebec.cardexCommun.exception.BusinessRuleException;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 
 /**
- * Cette classe valide l'ensemble des règles d'affaire applicable
- * aux critères de recherche pour les dossiers.
+ * Cette classe valide l'ensemble des rï¿½gles d'affaire applicable
+ * aux critï¿½res de recherche pour les dossiers.
  *
  * @see com.lotoquebec.cardexCommun.business.BusinessRuleSet
  * @author $Author: mlibersan $
@@ -23,7 +23,7 @@ public class CriteresRechercheDossierBusinessRuleSet implements BusinessRuleSet 
    * L'instance du gestionnaire de journalisation.
    */
 	private final Logger      log =
-        (Logger)LoggerCardex.getLogger((this.getClass()));
+        LoggerFactory.getLogger((this.getClass()));
 
   /**
    * Construit une instance de DossierBusinessRuleSet
@@ -32,38 +32,38 @@ public class CriteresRechercheDossierBusinessRuleSet implements BusinessRuleSet 
   }
 
     /**
-     * Valide les règles d'affaires applicable
-     * aux critères de recherche pour les dossiers.
+     * Valide les rï¿½gles d'affaires applicable
+     * aux critï¿½res de recherche pour les dossiers.
      *
-     * @param businessObject Les critères de recherche
+     * @param businessObject Les critï¿½res de recherche
      *
-     * @throws BusinessRuleException si les règles d'affaire
-     * d'un objet critère de recherche dossier ne sont pas respectées.
+     * @throws BusinessRuleException si les rï¿½gles d'affaire
+     * d'un objet critï¿½re de recherche dossier ne sont pas respectï¿½es.
      * @throws IllegalArgumentException si l'objet d'affaire n'est pas
      * une instance de  com.lotoquebec.cardex.business.Dossier
      */
   public void checkRules(CardexAuthenticationSubject subject, Object businessObject) throws BusinessRuleException {
-        log.fine("checkRules()");
+        log.debug("checkRules()");
         if (businessObject instanceof CriteresRechercheDossier) {
           CriteresRechercheDossier criteria = (CriteresRechercheDossier)businessObject;
           checkDateDebutSuperieurDateFinRule(criteria);
           checkAuMoinsUnCritereSaisiEnPlusDesValeursParDefault(criteria);
         }else {
-          throw new IllegalArgumentException("L'objet d'affaire doit être une instance de '"+CriteresRechercheDossier.class.getName()+"'");
+          throw new IllegalArgumentException("L'objet d'affaire doit ï¿½tre une instance de '"+CriteresRechercheDossier.class.getName()+"'");
         }
   }
 
     /**
-     * Dates de début inférieures ou égales aux dates de fin.
+     * Dates de dï¿½but infï¿½rieures ou ï¿½gales aux dates de fin.
      *
-     * @param businessObject Les critères de recherche
+     * @param businessObject Les critï¿½res de recherche
      *
-     * @throws BusinessRuleException si les dates de début sont
-     * inférieures ou égales aux dates de fin.
+     * @throws BusinessRuleException si les dates de dï¿½but sont
+     * infï¿½rieures ou ï¿½gales aux dates de fin.
      */
     private void checkDateDebutSuperieurDateFinRule(CriteresRechercheDossier businessObject)
             throws BusinessRuleException {
-        log.fine("checkDateDebutSuperieurDateFinRule()");
+        log.debug("checkDateDebutSuperieurDateFinRule()");
 
         if ((businessObject.getDateDebutAu() != null && businessObject.getDateFinAu() != null)) {
           if (businessObject.getDateFinAu().before(businessObject.getDateDebutAu())) {
@@ -111,16 +111,16 @@ public class CriteresRechercheDossierBusinessRuleSet implements BusinessRuleSet 
     }
 
     /**
-     * Dates de début inférieures ou égales aux dates de fin.
+     * Dates de dï¿½but infï¿½rieures ou ï¿½gales aux dates de fin.
      *
-     * @param businessObject Les critères de recherche
+     * @param businessObject Les critï¿½res de recherche
      *
-     * @throws BusinessRuleException si les dates de début sont
-     * inférieures ou égales aux dates de fin.
+     * @throws BusinessRuleException si les dates de dï¿½but sont
+     * infï¿½rieures ou ï¿½gales aux dates de fin.
      */
     private void checkAuMoinsUnCritereSaisiEnPlusDesValeursParDefault(CriteresRechercheDossier businessObject)
             throws BusinessRuleException {
-        log.fine("checkAuMoinsUnCritereSaisiEnPlusDesValeursParDefault()");
+        log.debug("checkAuMoinsUnCritereSaisiEnPlusDesValeursParDefault()");
         int count = 0;
 
         /*

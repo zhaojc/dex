@@ -6,9 +6,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 import oracle.jdbc.OracleTypes;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoQuebec.correcteurAdresse.util.StringUtils;
 import com.lotoquebec.cardex.business.CriteresRechercheUrgence;
@@ -32,10 +34,9 @@ import com.lotoquebec.cardexCommun.integration.dao.jdbc.RowCallbackHandler;
 import com.lotoquebec.cardexCommun.integration.dao.jdbc.StoreProcTemplate;
 import com.lotoquebec.cardexCommun.integration.dao.jdbc.TransCallBackHandler;
 import com.lotoquebec.cardexCommun.integration.dao.jdbc.UnEnregistrementPresent;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 
 /**
- * Offre tout les services de récupération des informations d'une base de donnée
+ * Offre tout les services de rï¿½cupï¿½ration des informations d'une base de donnï¿½e
  * Oracle, relatives aux services d'urgence. 
  * @author levassc
  *
@@ -43,7 +44,7 @@ import com.lotoquebec.cardexCommun.log.LoggerCardex;
 public class UrgenceDAO {
 
     private final static Logger      log =
-        (Logger)LoggerCardex.getLogger(UrgenceDAO.class);
+        LoggerFactory.getLogger(UrgenceDAO.class);
 
 	public void ajouter(CardexAuthenticationSubject subject, Urgence urgenceVO) throws DAOException{
 		editUrgence(subject, GlobalConstants.Action.INSERER, urgenceVO);
@@ -232,12 +233,12 @@ public class UrgenceDAO {
         urgence.setDateCreation(resultSet.getTimestamp("D_UR_DATE_CREATION")); 
         urgence.setCreateur(resultSet.getString("V_UR_CREE_PAR"));
         urgence.setNumeroDossier(resultSet.getString("V_DO_NUMERO_DOSSIER"));
-        //Inscription des valeurs sur les dossiers associés aux recherches de suivis
+        //Inscription des valeurs sur les dossiers associï¿½s aux recherches de suivis
         dossier.setCle(resultSet.getLong("L_DO_CLE"));
         dossier.setSite(resultSet.getLong("L_SI_CLE"));
         dossier.setNumeroCardex(resultSet.getString("V_DO_NUMERO_DOSSIER"));
         urgence.setDossier(dossier);
-        log.fine("   [URGENCE id='"+urgence.getCle()+"']");
+        log.debug("   [URGENCE id='"+urgence.getCle()+"']");
        return urgence;
   }	
 	
@@ -276,15 +277,15 @@ public class UrgenceDAO {
 	}
 	
 	/**
-	 * Routine pour traiter les ResultSet retournés par les recherches de service d'urgence.
-	 * Date de création : (2002-02-21)
-	 * @author François Guérin
-	 * @param resultSet  ResultSet : données retournées par une recherche
-	 * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-	 * rupture de connexion avec la base de données, ou que la table demandée est
-	 * non disponible, ou qu'un problème est survenu lors de l'exécution d'une
+	 * Routine pour traiter les ResultSet retournï¿½s par les recherches de service d'urgence.
+	 * Date de crï¿½ation : (2002-02-21)
+	 * @author Franï¿½ois Guï¿½rin
+	 * @param resultSet  ResultSet : donnï¿½es retournï¿½es par une recherche
+	 * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+	 * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e est
+	 * non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution d'une
 	 * "stored procedure".
-	 * @return ArrayList : liste des services d'urgence traités.
+	 * @return ArrayList : liste des services d'urgence traitï¿½s.
 	 */
 	    public static RowCallbackHandler constuireRowCallBackHandler(final List<Urgence> listUrgence){
 	       return new RowCallbackHandler(){
@@ -296,18 +297,18 @@ public class UrgenceDAO {
 	    }    
 	
     /**
-	 * Recherche des services d'urgence à l'aide de critères de recherche.
-	 * La procédure appelée autrefois est de type DBMS (SQL dynamique)
-	 * Le resultSet retourné par les recherches est traité dans la routine traitementResultSet.
-	 * Procédure appelée : générée ici.
+	 * Recherche des services d'urgence ï¿½ l'aide de critï¿½res de recherche.
+	 * La procï¿½dure appelï¿½e autrefois est de type DBMS (SQL dynamique)
+	 * Le resultSet retournï¿½ par les recherches est traitï¿½ dans la routine traitementResultSet.
+	 * Procï¿½dure appelï¿½e : gï¿½nï¿½rï¿½e ici.
 	 * @author mazzucr
-	 * @param subject  CardexAuthenticationSubject : données nominatives sur l'utilisateur
-	 * @param criteria CriteresRechercheVehicule : critères de recherche
-	 * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-	 * rupture de connexion avec la base de données, ou que la table demandée est
-	 * non disponible, ou qu'un problème est survenu lors de l'exécution d'une
+	 * @param subject  CardexAuthenticationSubject : donnï¿½es nominatives sur l'utilisateur
+	 * @param criteria CriteresRechercheVehicule : critï¿½res de recherche
+	 * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+	 * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e est
+	 * non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution d'une
 	 * "stored procedure".
-	 * @return ValueListIterator : liste des servces d'urgence retournés par la recherche.
+	 * @return ValueListIterator : liste des servces d'urgence retournï¿½s par la recherche.
 	 */
 	    public static List<Urgence> select(CardexAuthenticationSubject subject, CriteresRechercheUrgence criteria) throws DAOException {
 	        JDBCTemplate template = new JDBCTemplate(subject);
@@ -319,17 +320,17 @@ public class UrgenceDAO {
 	    }
 	    
 	/**
-	 * Appel de la méthode editUrgence pour la création d'un service d'urgence
-	 * Date de création : (2002-02-27)
+	 * Appel de la mï¿½thode editUrgence pour la crï¿½ation d'un service d'urgence
+	 * Date de crï¿½ation : (2002-02-27)
 	 * @author Philippe Caron
-	 * @param subject CardexAuthenticationSubject : Données nominatives sur
+	 * @param subject CardexAuthenticationSubject : Donnï¿½es nominatives sur
 	 * l'utilisateur.
-	 * @param urgence Urgence : Consignation saisie à l'écran.
+	 * @param urgence Urgence : Consignation saisie ï¿½ l'ï¿½cran.
 	 * @param genreFichier String : Code identifiant la table source qui lie un
-	 * consignation à un Dossier.
-	 * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-	 * rupture de connexion avec la base de données, ou que la table demandée est
-	 * non disponible, ou qu'un problème est survenu lors de l'exécution d'une
+	 * consignation ï¿½ un Dossier.
+	 * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+	 * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e est
+	 * non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution d'une
 	 * "stored procedure".
 	 * @return Consignation
 	 */
@@ -338,17 +339,17 @@ public class UrgenceDAO {
 		}
 
 		/**
-		 * Appel de la méthode editUrgence pour la suppression d'un service d'urgence
-		 * Date de création : (2002-02-27)
+		 * Appel de la mï¿½thode editUrgence pour la suppression d'un service d'urgence
+		 * Date de crï¿½ation : (2002-02-27)
 		 * @author Philippe Caron
-		 * @param subject CardexAuthenticationSubject : Données nominatives sur
+		 * @param subject CardexAuthenticationSubject : Donnï¿½es nominatives sur
 		 * l'utilisateur.
-		 * @param consignation Consignation : Consignation saisie à l'écran.
+		 * @param consignation Consignation : Consignation saisie ï¿½ l'ï¿½cran.
 		 * @param genreFichier String : Code identifiant la table source qui lie un
-		 * consignation à un Dossier.
-		 * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-		 * rupture de connexion avec la base de données, ou que la table demandée est
-		 * non disponible, ou qu'un problème est survenu lors de l'exécution d'une
+		 * consignation ï¿½ un Dossier.
+		 * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+		 * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e est
+		 * non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution d'une
 		 * "stored procedure".
 		 * @return Urgence
 		 */
@@ -357,17 +358,17 @@ public class UrgenceDAO {
 			}
 		
 	    /**
-	     * Appel de la méthode editUrgence pour la mise à jour d'un service d'urgence
-	     * Date de création : (2002-02-27)
+	     * Appel de la mï¿½thode editUrgence pour la mise ï¿½ jour d'un service d'urgence
+	     * Date de crï¿½ation : (2002-02-27)
 	     * @author Philippe Caron
-	     * @param subject CardexAuthenticationSubject : Données nominatives sur
+	     * @param subject CardexAuthenticationSubject : Donnï¿½es nominatives sur
 	     * l'utilisateur.
-	     * @param consignation Consignation : Consignation saisie à l'écran.
+	     * @param consignation Consignation : Consignation saisie ï¿½ l'ï¿½cran.
 	     * @param genreFichier String : Code identifiant la table source qui lie un
-	     * consignation à un Dossier.
-	     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-	     * rupture de connexion avec la base de données, ou que la table demandée est
-	     * non disponible, ou qu'un problème est survenu lors de l'exécution d'une
+	     * consignation ï¿½ un Dossier.
+	     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+	     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e est
+	     * non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution d'une
 	     * "stored procedure".
 	     */
 	    	public void update(CardexAuthenticationSubject subject, Urgence urgence) throws DAOException {
@@ -375,22 +376,22 @@ public class UrgenceDAO {
 	    	}
 
     	/**
-         * Recherche des services d'urgence créés dans les deux derniers jours lors de
-         * l'affichage de l'écran de recherche des services d'urgence Procédure appelée :
-         * CARDEX_WEB_LIRE_DOC_TRI.SPW_L_UR_URGENCE Date de création : (2014-03-17)
+         * Recherche des services d'urgence crï¿½ï¿½s dans les deux derniers jours lors de
+         * l'affichage de l'ï¿½cran de recherche des services d'urgence Procï¿½dure appelï¿½e :
+         * CARDEX_WEB_LIRE_DOC_TRI.SPW_L_UR_URGENCE Date de crï¿½ation : (2014-03-17)
          * 
          * @author mazzucr
          * @param subject
-         *            CardexAuthenticationSubject : données nominatives sur
+         *            CardexAuthenticationSubject : donnï¿½es nominatives sur
          *            l'utilisateur
          * @param criteria
-         *            CriteresRechercheUrgence : critères de recherche
+         *            CriteresRechercheUrgence : critï¿½res de recherche
          * @throws DAOException
-         *             lancée lorsqu'une SQLException est reçue lors d'une rupture
-         *             de connexion avec la base de données, ou que la table
-         *             demandée est non disponible, ou qu'un problème est survenu
-         *             lors de l'exécution d'une "stored procedure".
-         * @return ValueListIterator : une liste de services d'urgence retournés par la
+         *             lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une rupture
+         *             de connexion avec la base de donnï¿½es, ou que la table
+         *             demandï¿½e est non disponible, ou qu'un problï¿½me est survenu
+         *             lors de l'exï¿½cution d'une "stored procedure".
+         * @return ValueListIterator : une liste de services d'urgence retournï¿½s par la
          *         recherche.
          */
     
@@ -407,7 +408,7 @@ public class UrgenceDAO {
                 callableStatement.execute();
                 resultSet = (ResultSet) callableStatement.getObject(1);
                 ValueListHandler listIterator = new ValueListHandler();
-                // Traitement des données retournées
+                // Traitement des donnï¿½es retournï¿½es
                 while (resultSet.next())
                 {
                     results.add(traitementResultSetDefault(resultSet));

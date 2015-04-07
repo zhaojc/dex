@@ -3,7 +3,6 @@
 package com.lotoquebec.cardex.presentation.controller.rapport;
 
 import java.io.IOException;
-import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +12,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessages;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardex.business.delegate.RegroupementBusinessDelegate;
 import com.lotoquebec.cardex.business.vo.rapport.regroupement.RegroupementRapportVO;
@@ -22,10 +23,9 @@ import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
 import com.lotoquebec.cardexCommun.exception.BusinessException;
 import com.lotoquebec.cardexCommun.exception.BusinessResourceException;
 import com.lotoquebec.cardexCommun.exception.ValueObjectMapperException;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 
 /**
- * Cette classe gère les événements en rapport
+ * Cette classe gï¿½re les ï¿½vï¿½nements en rapport
  * avec le cas d'utilisation gestion des journaux.
  *
  * @author $Author: mlibersan $
@@ -37,7 +37,7 @@ public class RegroupementAction extends RapportAction {
      * L'instance du gestionnaire de journalisation.
      */
 	private final Logger      log =
-        (Logger)LoggerCardex.getLogger((this.getClass()));
+        LoggerFactory.getLogger((this.getClass()));
 
     public ActionForward imprimer(CardexAuthenticationSubject subject,
     ActionMapping mapping,
@@ -45,14 +45,14 @@ public class RegroupementAction extends RapportAction {
     HttpServletRequest request,
     HttpServletResponse response) throws IOException,
     ServletException {
-		log.fine("Imprimer");
+		log.debug("Imprimer");
 		ActionMessages errors = new ActionMessages();
 		
 		RegroupementRapportForm criteresRechercheRegroupementForm = (RegroupementRapportForm) form;
         RegroupementRapportVO criteresRechercheRegroupement = (RegroupementRapportVO) criteresRechercheRegroupementForm.getGenererRapport().construireNouveauRapportVO();
 
         try {
-            // Conversion du composant d'état(ActionForm) en composant d'affaire(Value Object)
+            // Conversion du composant d'ï¿½tat(ActionForm) en composant d'affaire(Value Object)
 			ValueObjectMapper.convert(criteresRechercheRegroupementForm,criteresRechercheRegroupement);
 			
 			RegroupementBusinessDelegate delegate = new RegroupementBusinessDelegate();
@@ -78,14 +78,14 @@ public class RegroupementAction extends RapportAction {
     HttpServletRequest request,
     HttpServletResponse response) throws IOException,
     ServletException {
-		log.fine("imprimerExcel");
+		log.debug("imprimerExcel");
 		ActionMessages errors = new ActionMessages();
 		
 		RegroupementRapportForm criteresRechercheRegroupementForm = (RegroupementRapportForm) form;
 		RegroupementRapportVO criteresRechercheRegroupement = (RegroupementRapportVO) criteresRechercheRegroupementForm.getGenererRapport().construireNouveauRapportVO();
 
         try {
-            // Conversion du composant d'état(ActionForm) en composant d'affaire(Value Object)
+            // Conversion du composant d'ï¿½tat(ActionForm) en composant d'affaire(Value Object)
 			ValueObjectMapper.convert(criteresRechercheRegroupementForm,criteresRechercheRegroupement);
 			
 			RegroupementBusinessDelegate delegate = new RegroupementBusinessDelegate();

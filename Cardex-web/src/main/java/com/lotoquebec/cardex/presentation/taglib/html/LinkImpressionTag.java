@@ -5,13 +5,14 @@ import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Logger;
 
 import javax.servlet.jsp.JspException;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.struts.taglib.TagUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardex.presentation.model.form.CriteresRechercheDossierForm;
 import com.lotoquebec.cardex.presentation.model.form.CriteresRechercheSocieteForm;
@@ -20,7 +21,6 @@ import com.lotoquebec.cardex.presentation.model.form.CriteresRechercheVehiculeFo
 import com.lotoquebec.cardex.securite.GestionnaireSecuriteCardex;
 import com.lotoquebec.cardexCommun.authentication.AuthenticationSubject;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.presentation.taglib.html.LinkCardexTag;
 import com.lotoquebec.cardexCommun.presentation.taglib.html.TagLibUtils;
 import com.lotoquebec.cardexCommun.securite.UIComponentState;
@@ -28,10 +28,10 @@ import com.lotoquebec.cardexCommun.util.StringUtils;
 
 
 /**
- * Genere un hyperlink URL-encoded au URI spécifié avec
- * les paramètres de query string correspondant aux
- * propriétés cle, site, et mot de passe du dossier
- * spécifié.
+ * Genere un hyperlink URL-encoded au URI spï¿½cifiï¿½ avec
+ * les paramï¿½tres de query string correspondant aux
+ * propriï¿½tï¿½s cle, site, et mot de passe du dossier
+ * spï¿½cifiï¿½.
  *
  * @see org.apache.struts.taglib.html.LinkTag
  * @author $Author: mlibersan $
@@ -43,7 +43,7 @@ public class LinkImpressionTag extends LinkCardexTag {
      * L'instance du gestionnaire de journalisation.
      */
 	private final Logger      log =
-        (Logger)LoggerCardex.getLogger((this.getClass()));
+        LoggerFactory.getLogger((this.getClass()));
 
     private String object;
 
@@ -90,10 +90,10 @@ public class LinkImpressionTag extends LinkCardexTag {
         return super.doStartTag();
       }
 
-      log.fine("doStartTag()");
-      log.fine("   object '" + this.object + "'");
+      log.debug("doStartTag()");
+      log.debug("   object '" + this.object + "'");
 
-      // Cas spécial pour le nom anchors
+      // Cas spï¿½cial pour le nom anchors
       if (linkName != null) {
           StringBuffer results = new StringBuffer("<a name=\"");
           results.append(linkName);
@@ -148,7 +148,7 @@ public class LinkImpressionTag extends LinkCardexTag {
               (messages.getMessage("rewrite.url", e.toString()));
       }
 
-      // Generation de la balise ouvrante de l'élément anchor
+      // Generation de la balise ouvrante de l'ï¿½lï¿½ment anchor
       StringBuffer results = new StringBuffer("<a href=\"javascript:windowOpenLocation('"+url+"')\"");
       
       if (target != null) {
@@ -160,7 +160,7 @@ public class LinkImpressionTag extends LinkCardexTag {
       results.append(prepareEventHandlers());
       results.append(">");
 
-      // Affichage de l'élément dans le output writer
+      // Affichage de l'ï¿½lï¿½ment dans le output writer
       tagUtils.write(pageContext, results.toString());
 
       // Evalaution du  body pour ce tag
@@ -190,7 +190,7 @@ public class LinkImpressionTag extends LinkCardexTag {
                   Object value = entry.getValue();
                   if (value != null && value.toString().length() < 50) {
 
-                    log.fine("Adding parameter '"+name+"' with value '"+value+"'.");
+                    log.debug("Adding parameter '"+name+"' with value '"+value+"'.");
                     queryParameters.put(name,value);
                   }//if
               }//if
@@ -238,7 +238,7 @@ public class LinkImpressionTag extends LinkCardexTag {
             queryParameters.put("vehicule.site",criteresRechercheSocieteForm.getVehicule().getSite());
           }
         }catch (Throwable e) {
-          LoggerCardex.severe(log,"Unable to retrieve property '"+name+"' of the bean specified in LinkImpressionTag.",e);
+          log.error("Unable to retrieve property '"+name+"' of the bean specified in LinkImpressionTag.",e);
         }
         return queryParameters;
     }

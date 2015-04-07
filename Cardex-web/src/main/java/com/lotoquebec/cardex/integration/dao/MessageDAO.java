@@ -7,13 +7,14 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import oracle.jdbc.OracleTypes;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.lotoquebec.cardexCommun.exception.DAOException;
 import com.lotoquebec.cardexCommun.integration.dao.DAOConnection;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.util.CodeLangue;
 
 /**
@@ -29,23 +30,23 @@ public class MessageDAO {
      * L'instance du gestionnaire de journalisation.
      */
 	private final Logger      log =
-        (Logger)LoggerCardex.getLogger(MessageDAO.class);
+        LoggerFactory.getLogger(MessageDAO.class);
 
     /**
      * Ajoute les messages obtenus dans le HashMap.
      *
-     * @param results Structure resultantes de toute les messages collectés
-     * dans la table de la base de donnée Oracle.
-     * @param locale Locale indiquant quelle est la langue des messages à
+     * @param results Structure resultantes de toute les messages collectï¿½s
+     * dans la table de la base de donnï¿½e Oracle.
+     * @param locale Locale indiquant quelle est la langue des messages ï¿½
      * obtenir.
-     * @param storeProcedureName Nom de la "store procedure" à utiliser pour
+     * @param storeProcedureName Nom de la "store procedure" ï¿½ utiliser pour
      * obtenir la bonne collection de valeurs.
-     * @param labelColumnName Nom de la colonne de la valeur à afficher.
+     * @param labelColumnName Nom de la colonne de la valeur ï¿½ afficher.
      * @param keyColumnName Nom de la colonne dans la table Oracle
-     * correspondant à la clé.
-     * @throws DAOException lancée lorsqu'une SQLException est reçu lors d'une
-     * rupture de connexion avec la base de donnée, ou que la table demandée est
-     * non disponible, ou qu'un problème est survenu lors de l'exécution d'une
+     * correspondant ï¿½ la clï¿½.
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½u lors d'une
+     * rupture de connexion avec la base de donnï¿½e, ou que la table demandï¿½e est
+     * non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution d'une
      * "store procedure".
      */
     private void retrieveMessages(HashMap results, Locale locale,
@@ -70,7 +71,7 @@ public class MessageDAO {
                 if (retrievedLanguageId.equals(Integer.toString(languageId))) {
                     String key = resultSet.getString(keyColumnName);
                     String value = resultSet.getString(valueColumnName);
-                    log.fine("  "  + storeProcedureName
+                    log.debug("  "  + storeProcedureName
                                     + ": [Message key='" + key
                                     + "' value='" + value + "']");
                     results.put(key, value);
@@ -109,24 +110,24 @@ public class MessageDAO {
     }
 
     /**
-     * Retourne un Map de tous les messsages cardex.  La clé est
+     * Retourne un Map de tous les messsages cardex.  La clï¿½ est
      * l'identifiant du message et la valeur la description du message
-     * dans la locale spécifiée.
+     * dans la locale spï¿½cifiï¿½e.
      *
-     * @param locale Locale indiquant quelle est la langue des messages à
+     * @param locale Locale indiquant quelle est la langue des messages ï¿½
      * obtenir.
-     * @throws DAOException lancée lorsqu'une SQLException est reçu lors d'une
-     * rupture de connexion avec la base de donnée, ou que la table demandée est
-     * non disponible, ou qu'un problème est survenu lors de l'exécution d'une
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½u lors d'une
+     * rupture de connexion avec la base de donnï¿½e, ou que la table demandï¿½e est
+     * non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution d'une
      * "store procedure".
      */
     public Map getMessages(Locale locale) throws DAOException {
-        log.fine("getMessages()");
+        log.debug("getMessages()");
         HashMap results = new HashMap();
         CodeLangue codeLangue = CodeLangue.valueOf(locale);
         retrieveMessages(   results, locale, "CARDEX_SPECIAL.SP_L_MESSAGES",
                             "MSGTEXT", "MSGID", codeLangue.intValue());
-        log.fine("getMessages()");
+        log.debug("getMessages()");
         retrieveMessages(   results, locale, "SPW_L_DICTIONNAIRE", "V_TEXTE",
                             "V_NOM_OBJET", codeLangue.intValue());
         return (Map) results;

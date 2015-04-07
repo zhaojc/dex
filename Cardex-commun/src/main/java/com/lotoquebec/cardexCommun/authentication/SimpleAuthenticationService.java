@@ -2,10 +2,10 @@
 
 package com.lotoquebec.cardexCommun.authentication;
 
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardexCommun.exception.AuthenticationException;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 
 /**
  * A simple version of the authentication service, authenticates
@@ -18,7 +18,7 @@ import com.lotoquebec.cardexCommun.log.LoggerCardex;
 public class SimpleAuthenticationService
     implements AuthenticationService {
 	private final Logger      log =
-        (Logger)LoggerCardex.getLogger((this.getClass()));
+        LoggerFactory.getLogger((this.getClass()));
 
     /**
      * main method to provide the authentication service
@@ -28,8 +28,8 @@ public class SimpleAuthenticationService
         if (subject != null) {
 
             // make sure principal == credential
-            log.fine("principal : " + subject.getPrincipal());
-            log.fine("credential: " + subject.getCredential());
+            log.debug("principal : " + subject.getPrincipal());
+            log.debug("credential: " + subject.getCredential());
 
             if (subject.getPrincipal().toString().equals(subject.getCredential().toString())) {
 

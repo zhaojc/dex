@@ -8,7 +8,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +17,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessages;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardex.business.delegate.BilletBusinessDelegate;
 import com.lotoquebec.cardex.business.vo.BilletVO;
@@ -31,7 +32,6 @@ import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
 import com.lotoquebec.cardexCommun.exception.BusinessException;
 import com.lotoquebec.cardexCommun.exception.BusinessResourceException;
 import com.lotoquebec.cardexCommun.exception.ValueObjectMapperException;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.presentation.util.AbstractAction;
 import com.lotoquebec.cardexCommun.user.CardexUser;
 
@@ -43,7 +43,7 @@ public class RechercheBilletsAction extends AbstractAction {
     /**
      * L'instance du gestionnaire de journalisation.
      */
-	private final Logger log = (Logger)LoggerCardex.getLogger((this.getClass()));
+	private final Logger log = LoggerFactory.getLogger((this.getClass()));
     
     public ActionForward rechercheDefaut(CardexAuthenticationSubject subject,
     ActionMapping mapping,
@@ -51,7 +51,7 @@ public class RechercheBilletsAction extends AbstractAction {
     HttpServletRequest request,
     HttpServletResponse response) throws IOException,
     ServletException {
-		log.fine("Recherche de billets");
+		log.debug("Recherche de billets");
         CardexUser user = (CardexUser) subject.getUser();
 
 		CriteresRechercheBilletForm criteresRechercheBilletForm = (CriteresRechercheBilletForm) form;
@@ -67,7 +67,7 @@ public class RechercheBilletsAction extends AbstractAction {
     HttpServletRequest request,
     HttpServletResponse response) throws IOException,
     ServletException, SecurityException, IllegalArgumentException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
-		log.fine("Rafraichir recherche de billets");
+		log.debug("Rafraichir recherche de billets");
 
 		CriteresRechercheBilletForm criteresRechercheBilletForm = (CriteresRechercheBilletForm) form;
 		
@@ -80,7 +80,7 @@ public class RechercheBilletsAction extends AbstractAction {
     HttpServletRequest request,
     HttpServletResponse response) throws IOException,
     ServletException {
-		log.fine("Soumettre la recherche de billets");
+		log.debug("Soumettre la recherche de billets");
 		ActionMessages errors = new ActionMessages();
 		CriteresRechercheBilletForm criteresRechercheBilletForm = (CriteresRechercheBilletForm) form;
 		CriteresRechercheBilletVO criteresRechercheBilletVO = new CriteresRechercheBilletVO();

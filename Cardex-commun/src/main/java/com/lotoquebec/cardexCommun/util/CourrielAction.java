@@ -5,7 +5,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.Properties;
-import java.util.logging.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
@@ -33,15 +35,15 @@ import com.lotoquebec.cardexCommun.integration.dao.jdbc.RowCallbackHandler;
 import com.lotoquebec.cardexCommun.text.DateFormat;
 
 /**
- * Cette classe traite l'envoi automatique des courriers électroniques
- * aux intervenants concernés par un mouvement de personnel.
+ * Cette classe traite l'envoi automatique des courriers ï¿½lectroniques
+ * aux intervenants concernï¿½s par un mouvement de personnel.
  *
  * @author $Author: fguerin $
  * @version $Revision: 1.1 $, $Date: 2004/06/15 22:06:38 $
  */
 public class CourrielAction{
 
-	private static Logger log = Logger.getLogger(CourrielAction.class.getName());
+	private static Logger log = LoggerFactory.getLogger(CourrielAction.class);
 
 	public static void envoiCourriel(CardexAuthenticationSubject subject, String texte, String destinataire, String objet){
 		envoiCourriel(subject, GlobalConstants.ListeCache.EXPEDITEUR_COURRIEL, texte, destinataire, objet);
@@ -55,7 +57,7 @@ public class CourrielAction{
 	       try {
 	    	   String from = listeCache.obtenirLabel(subject, codeExpediteur, new InterventionCodeCourrielCle());
 	    	   
-	    	   log.fine("Envoi du courrier à : " + to);
+	    	   log.debug("Envoi du courrier ï¿½ : " + to);
 
 	           // set the SMTP host property value
 	           Properties properties = System.getProperties();
@@ -87,14 +89,14 @@ public class CourrielAction{
 	       	   Transport.send(message);
 	       }
 	       catch (AddressException e) {
-	    	  log.warning(e.toString());
+	    	  log.warn(e.toString());
 	       }
 	       catch (SendFailedException e) {
-	    	  log.warning(e.toString());
+	    	  log.warn(e.toString());
 		   }catch (MessagingException e) {
-	          log.warning(e.toString());
+	          log.warn(e.toString());
 	       } catch (BusinessResourceException e) {
-	    	   log.warning(e.toString());
+	    	   log.warn(e.toString());
 		   }
 	   }
 	
@@ -106,7 +108,7 @@ public class CourrielAction{
 	       try {
 	    	   String from = listeCache.obtenirLabel(subject, GlobalConstants.ListeCache.EXPEDITEUR_COURRIEL, new InterventionCodeCourrielCle());
 	    	   
-	    	   log.fine("Envoi du courrier à : " + to);
+	    	   log.debug("Envoi du courrier ï¿½ : " + to);
 
 	           // set the SMTP host property value
 	           Properties properties = System.getProperties();
@@ -152,13 +154,13 @@ public class CourrielAction{
 	           
 	       	   Transport.send(message);
 	       }catch (AddressException e) {
-	    	  log.warning(e.toString());
+	    	  log.warn(e.toString());
 	       }catch (SendFailedException e) {
-	    	  log.warning(e.toString());
+	    	  log.warn(e.toString());
 		   }catch (MessagingException e) {
-	          log.warning(e.toString());
+	          log.warn(e.toString());
 	       } catch (BusinessResourceException e) {
-	    	   log.warning(e.toString());
+	    	   log.warn(e.toString());
 		   }
 	   }
 	
@@ -334,10 +336,10 @@ public class CourrielAction{
 		return sql.toString();
     }
     
-	// On recherche tous les intervenants qui doivent être avisés
-	// en fonction du site d'où origine le mouvement.
+	// On recherche tous les intervenants qui doivent ï¿½tre avisï¿½s
+	// en fonction du site d'oï¿½ origine le mouvement.
 	// La table GI_GROUPE_INTERVENTION contient les appariements
-	// entre les sites d'origine (concerné) et les intervenants (site
+	// entre les sites d'origine (concernï¿½) et les intervenants (site
 	// d'intervention).
     private static String obtenirSQLRechercheGroupeDestinataires(String type, String siteConcerne){
 		StringBuffer sql = new StringBuffer();

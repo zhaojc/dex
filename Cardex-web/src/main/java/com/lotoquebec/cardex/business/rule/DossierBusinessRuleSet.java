@@ -7,9 +7,10 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
-import java.util.logging.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardex.business.Dossier;
 import com.lotoquebec.cardex.business.Inscription;
@@ -28,12 +29,10 @@ import com.lotoquebec.cardexCommun.exception.BusinessException;
 import com.lotoquebec.cardexCommun.exception.BusinessRuleException;
 import com.lotoquebec.cardexCommun.exception.BusinessRuleExceptionHandle;
 import com.lotoquebec.cardexCommun.exception.DAOException;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.util.StringHelper;
-import com.lotoquebec.cardexCommun.util.StringUtils;
 
 /**
- * Cette classe valide l'ensemble des règles d'affaire applicable
+ * Cette classe valide l'ensemble des rï¿½gles d'affaire applicable
  * aux dossiers.
  *
  * @see com.lotoquebec.cardexCommun.business.BusinessRuleSet
@@ -46,12 +45,12 @@ public class DossierBusinessRuleSet implements BusinessRuleSet {
      * L'instance du gestionnaire de journalisation.
      */
 	private final Logger      log =
-        (Logger)LoggerCardex.getLogger((this.getClass()));
+        LoggerFactory.getLogger((this.getClass()));
 
     
     /**
-     * Retourne un DossierBusinessRuleException initialisé avec
-     * l'identificateur de règle.
+     * Retourne un DossierBusinessRuleException initialisï¿½ avec
+     * l'identificateur de rï¿½gle.
      *
      *
      * @param ruleId
@@ -70,7 +69,7 @@ public class DossierBusinessRuleSet implements BusinessRuleSet {
     }
 
     /**
-     * Valide les règles d'affaires applicable à un dossier.
+     * Valide les rï¿½gles d'affaires applicable ï¿½ un dossier.
      *
      * @param businessObject Le dossier
      * @throws BusinessRuleException
@@ -82,7 +81,7 @@ public class DossierBusinessRuleSet implements BusinessRuleSet {
      */
     public void checkRules(CardexAuthenticationSubject subject, Object businessObject)
             throws BusinessRuleException, BusinessException {
-        log.fine("checkRules()");
+        log.debug("checkRules()");
 
         if (businessObject instanceof Dossier) {
             Dossier dossier = (Dossier) businessObject;
@@ -93,7 +92,7 @@ public class DossierBusinessRuleSet implements BusinessRuleSet {
             	
                 checkDateDebutRule(dossier);
                 checkDateDebutSuperieurDateFinRule(dossier);
-                //Inutile de valider les dossiers en confidentialité 8 qui vont être épurés
+                //Inutile de valider les dossiers en confidentialitï¿½ 8 qui vont ï¿½tre ï¿½purï¿½s
                 if(dossier.getConfidentialite() != GlobalConstants.Confidentialite.HUIT){
 	                checkNarrationsNonApprouveeDossierInactifRule(dossier);
 	            	checkSuivisNonApprouveeDossierInactifRule(dossier);
@@ -110,11 +109,11 @@ public class DossierBusinessRuleSet implements BusinessRuleSet {
                 }
             } catch (DAOException e) {
 				e.printStackTrace();
-				throw new AssertionError("Problème DAO dans DossierBusinessRuleSet");
+				throw new AssertionError("Problï¿½me DAO dans DossierBusinessRuleSet");
 			}
             
         } else {
-            throw new IllegalArgumentException("L'objet d'affaire doit être une instance de '"
+            throw new IllegalArgumentException("L'objet d'affaire doit ï¿½tre une instance de '"
                                                + Dossier.class.getName()
                                                + "'");
         }
@@ -147,16 +146,16 @@ public class DossierBusinessRuleSet implements BusinessRuleSet {
     }
     
     /**
-     * Dates de début supérieure ou égale à 1993-01-01.
+     * Dates de dï¿½but supï¿½rieure ou ï¿½gale ï¿½ 1993-01-01.
      *
      * @param dossier Le dossier
      *
-     * @throws BusinessRuleException si la date de début est trop petite.
+     * @throws BusinessRuleException si la date de dï¿½but est trop petite.
      *
      */
     private void checkMotDePasseRule(Dossier dossier)
             throws BusinessRuleException {
-        log.fine("checkMotDePasseRule()");
+        log.debug("checkMotDePasseRule()");
 
         if (dossier.getMotPasse().trim().equals(dossier.getConfirmationMotPasse().trim())) {
         }else {
@@ -165,16 +164,16 @@ public class DossierBusinessRuleSet implements BusinessRuleSet {
     }
 
     /**
-     * Dates de début supérieure ou égale à 1993-01-01.
-     * et non supérieur à la date du jour, sauf pour les autoexclusions.
+     * Dates de dï¿½but supï¿½rieure ou ï¿½gale ï¿½ 1993-01-01.
+     * et non supï¿½rieur ï¿½ la date du jour, sauf pour les autoexclusions.
      * @param dossier Le dossier
      *
-     * @throws BusinessRuleException si la date de début est trop petite.
+     * @throws BusinessRuleException si la date de dï¿½but est trop petite.
      *
      */
     private void checkDateDebutRule(Dossier dossier)
             throws BusinessRuleException {
-        log.fine("checkDateDebutRule()");
+        log.debug("checkDateDebutRule()");
 
         Date date = dossier.getDateDebut();
         if (date == null) {
@@ -194,16 +193,16 @@ public class DossierBusinessRuleSet implements BusinessRuleSet {
     }
 
     /**
-     * Dates de début inférieures ou égales aux dates de fin.
+     * Dates de dï¿½but infï¿½rieures ou ï¿½gales aux dates de fin.
      *
      * @param dossier Le dossier
      *
-     * @throws BusinessRuleException si les dates de début sont
-     * inférieures ou égales aux dates de fin.
+     * @throws BusinessRuleException si les dates de dï¿½but sont
+     * infï¿½rieures ou ï¿½gales aux dates de fin.
      */
     private void checkDateDebutSuperieurDateFinRule(Dossier dossier)
             throws BusinessRuleException {
-        log.fine("checkDateDebutSuperieurDateFinRule()");
+        log.debug("checkDateDebutSuperieurDateFinRule()");
 
         if (dossier.getDateDebut() != null && dossier.getDateFin() != null) {
             if (dossier.getDateFin().before(dossier.getDateDebut())) {
@@ -213,22 +212,22 @@ public class DossierBusinessRuleSet implements BusinessRuleSet {
     }
 
     /**
-     * Le statut ne peut être mis inactif si des narrations
-     * n'ont pas encore été approuvés.
+     * Le statut ne peut ï¿½tre mis inactif si des narrations
+     * n'ont pas encore ï¿½tï¿½ approuvï¿½s.
      *
      * @param dossier Le dossier
      *
      * @throws BusinessRuleException si des narrations
-     * n'ont pas encore été approuvés.
+     * n'ont pas encore ï¿½tï¿½ approuvï¿½s.
      */
     private void checkNarrationsNonApprouveeDossierInactifRule(Dossier dossier)
             throws BusinessRuleException {
-        log.fine("checkNarrationsNonApprouveeDossierInactifRule()");
+        log.debug("checkNarrationsNonApprouveeDossierInactifRule()");
 
         String statut = Long.toString(dossier.getStatut());
         
         if (statut.equals(GlobalConstants.Statut.DOSSIER_INACTIF)) {
-            // Dossier inactif, toutes les narrations doivent être approuvées.
+            // Dossier inactif, toutes les narrations doivent ï¿½tre approuvï¿½es.
 
             Collection linkedNarrations = dossier.getNarrations();
             Iterator   it = linkedNarrations.iterator();
@@ -236,7 +235,7 @@ public class DossierBusinessRuleSet implements BusinessRuleSet {
                 Narration linkedNarration = (Narration) it.next();
                 Timestamp dateApprobation = linkedNarration.getDateApprobation();
                 if (dateApprobation == null ) {
-                    // Narration non approuvée
+                    // Narration non approuvï¿½e
                     throw createException(DossierBusinessRuleException.NARRATIONS_NON_APPROUVE_DOSSIER_INACTIF);
                 }
             }
@@ -244,23 +243,23 @@ public class DossierBusinessRuleSet implements BusinessRuleSet {
     }
 
     /**
-     * Le statut ne peut être mis inactif si une narration
-     * de conclusion n'a pas été créée dans un dossier de vigilance.
+     * Le statut ne peut ï¿½tre mis inactif si une narration
+     * de conclusion n'a pas ï¿½tï¿½ crï¿½ï¿½e dans un dossier de vigilance.
      *
      * @param dossier Le dossier
      *
      * @throws BusinessRuleException si des narrations
-     * n'ont pas encore été approuvés.
+     * n'ont pas encore ï¿½tï¿½ approuvï¿½s.
      */
     private void checkNarrationConclusionDossierInactifRule(Dossier dossier)
             throws BusinessRuleException {
-        log.fine("checkNarrationConclusionDossierInactifRule()");
+        log.debug("checkNarrationConclusionDossierInactifRule()");
 
         String statut = Long.toString(dossier.getStatut());
         Boolean trouve = false;
         
         if (statut.equals(GlobalConstants.Statut.DOSSIER_INACTIF) && dossier.getCategorie() == GlobalConstants.Categorie.COMITE_VIGILANCE) {
-            // Dossier de vigilance inactif, une conclusion doit être présente.
+            // Dossier de vigilance inactif, une conclusion doit ï¿½tre prï¿½sente.
             Collection linkedNarrations = dossier.getNarrations();
             Iterator   it = linkedNarrations.iterator();
             while (it.hasNext()) {
@@ -279,17 +278,17 @@ public class DossierBusinessRuleSet implements BusinessRuleSet {
     }
 
     /**
-     * Le statut ne peut être mis inactif si une date
-     * de fin n'a pas été inscrite dans un dossier de vigilance.
+     * Le statut ne peut ï¿½tre mis inactif si une date
+     * de fin n'a pas ï¿½tï¿½ inscrite dans un dossier de vigilance.
      *
      * @param dossier Le dossier
      *
      * @throws BusinessRuleException si des narrations
-     * n'ont pas encore été approuvés.
+     * n'ont pas encore ï¿½tï¿½ approuvï¿½s.
      */
     private void checkDateFinDossierVigilanceInactifRule(Dossier dossier)
             throws BusinessRuleException {
-        log.fine("checkDateFinDossierVigilanceInactifRule()");
+        log.debug("checkDateFinDossierVigilanceInactifRule()");
 
         String statut = Long.toString(dossier.getStatut());
         Boolean trouve = false;
@@ -302,30 +301,30 @@ public class DossierBusinessRuleSet implements BusinessRuleSet {
     }
 
     /**
-     * Le statut ne peut être mis inactif si des suivis
-     * n'ont pas encore été approuvés.
+     * Le statut ne peut ï¿½tre mis inactif si des suivis
+     * n'ont pas encore ï¿½tï¿½ approuvï¿½s.
      *
      * @param dossier Le dossier
      *
      * @throws BusinessRuleException si des suivis
-     * n'ont pas encore été approuvés.
+     * n'ont pas encore ï¿½tï¿½ approuvï¿½s.
      * @throws DAOException
      */
     private void checkSuivisNonApprouveeDossierInactifRule(Dossier dossier)
             throws BusinessRuleException {
-        log.fine("checkSuivisNonApprouveeDossierInactifRule()");
+        log.debug("checkSuivisNonApprouveeDossierInactifRule()");
 
         String statut = Long.toString(dossier.getStatut());
         if (statut.equals(GlobalConstants.Statut.DOSSIER_INACTIF)) {
 
-            // Dossier inactif, tous les suivis doivent être approuvés.
+            // Dossier inactif, tous les suivis doivent ï¿½tre approuvï¿½s.
         	Collection linkedSuivis = dossier.getSuivis();
             Iterator   it = linkedSuivis.iterator();
             while (it.hasNext()) {
                 Suivi linkedSuivi = (Suivi) it.next();
                 String approbateur = linkedSuivi.getApprobateur();
                 if (approbateur == null || approbateur.equals("")) {
-                    // Suivi non approuvé
+                    // Suivi non approuvï¿½
                     throw createException(DossierBusinessRuleException.SUIVIS_NON_APPROUVE_DOSSIER_INACTIF);
                 }
             }
@@ -333,7 +332,7 @@ public class DossierBusinessRuleSet implements BusinessRuleSet {
     }
     
     /**
-     * Un dossier inactif ne peut pas avoir de sous-catégories non approuvées.
+     * Un dossier inactif ne peut pas avoir de sous-catï¿½gories non approuvï¿½es.
      * @param dossier
      * @throws BusinessRuleException
      * @throws BusinessException 
@@ -341,11 +340,11 @@ public class DossierBusinessRuleSet implements BusinessRuleSet {
     private void checkSousCategorieNonApprouveeDossierInactifRule(Dossier dossier)
     throws BusinessException {
     	BusinessRuleExceptionHandle businessRuleExceptionHandle = new BusinessRuleExceptionHandle();
-		log.fine("checkSousCategorieNonApprouveeDossierInactifRule()");
+		log.debug("checkSousCategorieNonApprouveeDossierInactifRule()");
 		
 		String statut = Long.toString(dossier.getStatut());
 		if (statut.equals(GlobalConstants.Statut.DOSSIER_INACTIF)) {
-		    // Dossier inactif, toutes les sous-catégories doivent être approuvés.
+		    // Dossier inactif, toutes les sous-catï¿½gories doivent ï¿½tre approuvï¿½s.
 		    Set<SousCategorieVO> linkedSousCategorie = dossier.getSousCategories();
 		    Iterator it = linkedSousCategorie.iterator();
 		    
@@ -353,7 +352,7 @@ public class DossierBusinessRuleSet implements BusinessRuleSet {
 		    	SousCategorieVO linkedSousCategorieVO = (SousCategorieVO) it.next();
 		    	
 		        if (linkedSousCategorieVO.isApprouve() == false) {
-		            // Sous catégorie non approuvé
+		            // Sous catï¿½gorie non approuvï¿½
 	            	businessRuleExceptionHandle.add("cardex_non_approuve" );
 	            	throw businessRuleExceptionHandle.getBusinessException();					
 		        }
@@ -363,19 +362,19 @@ public class DossierBusinessRuleSet implements BusinessRuleSet {
 
     
     /**
-     * Un dossier avec inscription doit être lié
-     * à au moins une inscription.
+     * Un dossier avec inscription doit ï¿½tre liï¿½
+     * ï¿½ au moins une inscription.
      *
      * @param dossier Le dossier
      *
      * @throws BusinessRuleException si des suivis
-     * n'ont pas encore été approuvés.
+     * n'ont pas encore ï¿½tï¿½ approuvï¿½s.
      */
     private void checkDossierAvecInscriptionRule(Dossier dossier)
             throws BusinessRuleException {
-        log.fine("checkDossierAvecInscriptionRule()");
-        //Un dossier avec inscription doit être lié
-        //à au moins une inscription.
+        log.debug("checkDossierAvecInscriptionRule()");
+        //Un dossier avec inscription doit ï¿½tre liï¿½
+        //ï¿½ au moins une inscription.
         if (!dossier.isNouveau() && dossier.isInscription()) {
           if (dossier.getInscriptions().size() == 0){
             throw createException(DossierBusinessRuleException.DOSSIER_SANS_INSCRIPTIONS);
@@ -394,7 +393,7 @@ public class DossierBusinessRuleSet implements BusinessRuleSet {
      */
     private void checkDossierAvecSujetProvisoirInactif(Dossier dossier)
     throws BusinessRuleException, BusinessException {
-		log.fine("checkDossierAvecSujetProvisoirInactif()");
+		log.debug("checkDossierAvecSujetProvisoirInactif()");
 		
 		String statut = Long.toString(dossier.getStatut());
 		if (statut.equals(GlobalConstants.Statut.DOSSIER_INACTIF)) {
@@ -418,7 +417,7 @@ public class DossierBusinessRuleSet implements BusinessRuleSet {
      */
     private void checkDossierAvecInscriptionActive(Dossier dossier)
     throws BusinessRuleException, BusinessException {
-		log.fine("checkDossierAvecInscriptionActive()");
+		log.debug("checkDossierAvecInscriptionActive()");
 		
 		String statut = Long.toString(dossier.getStatut());
 		if (statut.equals(GlobalConstants.Statut.DOSSIER_INACTIF)) {
@@ -435,7 +434,7 @@ public class DossierBusinessRuleSet implements BusinessRuleSet {
 	}
     
     private void checkDossierAvecJeux(Dossier dossier) throws BusinessException {
-    	log.fine("checkDossierAvecJeux()");
+    	log.debug("checkDossierAvecJeux()");
 		//Un dossier d'autoexclusion doit avoir des jeux.
     	
 		if (!dossier.isNouveau() 
@@ -449,14 +448,14 @@ public class DossierBusinessRuleSet implements BusinessRuleSet {
     }    
     
     /**
-     * Un dossier d'autoexclusion d'Espacejeux doit être de la catégorie Jeux en ligne.
+     * Un dossier d'autoexclusion d'Espacejeux doit ï¿½tre de la catï¿½gorie Jeux en ligne.
      * @param dossier
      * @throws BusinessRuleException
      * @throws BusinessException 
      */
     private void checkAutoexclusionEspacejeux(Dossier dossier)
     throws BusinessRuleException, BusinessException {
-		log.fine("checkAutoexclusionEspacejeux()");
+		log.debug("checkAutoexclusionEspacejeux()");
 		
 		String site = Long.toString(dossier.getSiteOrigine());
 		String categorie = Long.toString(dossier.getCategorie());
@@ -469,22 +468,22 @@ public class DossierBusinessRuleSet implements BusinessRuleSet {
 	}
 
     /**
-     * Le statut ne peut être mis inactif si le champ Fondé est à
-     * Indéterminé ou À suivre
+     * Le statut ne peut ï¿½tre mis inactif si le champ Fondï¿½ est ï¿½
+     * Indï¿½terminï¿½ ou ï¿½ suivre
      *
      * @param dossier Le dossier
      *
      * @throws BusinessRuleException si des narrations
-     * n'ont pas encore été approuvés.
+     * n'ont pas encore ï¿½tï¿½ approuvï¿½s.
      */
     private void checkFondeDossierInactifRule(Dossier dossier)
             throws BusinessRuleException {
-        log.fine("checkFondeDossierInactifRule()");
+        log.debug("checkFondeDossierInactifRule()");
 
         String statut = Long.toString(dossier.getStatut());
         
         if (statut.equals(GlobalConstants.Statut.DOSSIER_INACTIF)) {
-            // Dossier inactif, le champ Fondé ne doit pas être Indéterminé ou À suivre.
+            // Dossier inactif, le champ Fondï¿½ ne doit pas ï¿½tre Indï¿½terminï¿½ ou ï¿½ suivre.
         	if(dossier.getFonde() == Long.valueOf(GlobalConstants.Fonde.INDETERMINE) || dossier.getFonde() == Long.valueOf(GlobalConstants.Fonde.A_SUIVRE)){
                throw createException(DossierBusinessRuleException.FONDE_DOSSIER_INACTIF);
             }

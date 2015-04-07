@@ -7,7 +7,6 @@ import java.sql.Timestamp;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +17,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessages;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardex.business.Evaluation;
 import com.lotoquebec.cardex.business.FrequenceVisites;
@@ -35,17 +36,14 @@ import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
 import com.lotoquebec.cardexCommun.exception.BusinessException;
 import com.lotoquebec.cardexCommun.exception.BusinessResourceException;
 import com.lotoquebec.cardexCommun.exception.ValueObjectMapperException;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.presentation.util.AbstractAction;
 import com.lotoquebec.cardexCommun.text.TimestampFormat;
-import com.lotoquebec.cardexCommun.user.CardexPrivilege;
 import com.lotoquebec.cardexCommun.user.CardexUser;
-import com.lotoquebec.cardexCommun.util.ListeCache;
 import com.lotoquebec.cardexCommun.util.StringUtils;
 
 /**
- * Cette classe gère les événements en rapport
- * avec le cas d'utilisation gestion des évaluations du comité de vigilance.
+ * Cette classe gï¿½re les ï¿½vï¿½nements en rapport
+ * avec le cas d'utilisation gestion des ï¿½valuations du comitï¿½ de vigilance.
  *
  * @author $Author: mlibersan $
  * @version $Revision: 1.6 $, $Date: 2002/04/30 12:18:08 $
@@ -56,20 +54,20 @@ public class EvaluationAction extends AbstractAction {
      * L'instance du gestionnaire de journalisation.
      */
 	private final Logger      log =
-        (Logger)LoggerCardex.getLogger((this.getClass()));
+        LoggerFactory.getLogger((this.getClass()));
 
     /**
      * <p>
      * <p>
-     * Par défaut, l'application remplit automatiquement les champs suivants :
+     * Par dï¿½faut, l'application remplit automatiquement les champs suivants :
      *
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortieif an input/output survient
+     * @exception IOException si une erreur d'entrï¿½e/sortieif an input/output survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward create(CardexAuthenticationSubject subject,
@@ -78,14 +76,14 @@ public class EvaluationAction extends AbstractAction {
                                 HttpServletRequest request,
                                 HttpServletResponse response) throws IOException,
                                 ServletException {
-        log.fine("Création d'une nouvelle évaluation");
+        log.debug("Crï¿½ation d'une nouvelle ï¿½valuation");
         ActionErrors errors = new ActionErrors();
         CardexUser user = (CardexUser)subject.getUser();
         String currentDate = TimestampFormat.format(new Timestamp(System.currentTimeMillis()),subject.getLocale(),true);
         EvaluationForm evaluationForm = new EvaluationForm();
         try{
 	        if (form instanceof DossierForm) {
-	          log.fine("Création d'une évaluation liée au dossier: " + form);
+	          log.debug("Crï¿½ation d'une ï¿½valuation liï¿½e au dossier: " + form);
 	          DossierForm dossierForm = (DossierForm)form;
 	          evaluationForm.setLien(dossierForm.getCle());
 	          evaluationForm.setLienSite(dossierForm.getSite());
@@ -96,12 +94,12 @@ public class EvaluationAction extends AbstractAction {
 	          evaluationForm.initDoubleListePropos(subject, null);
 	        }
 	
-	        //Valeur par défaut
+	        //Valeur par dï¿½faut
 	        evaluationForm.setCreateur(user.getCode());
 	        evaluationForm.setDateCreation(currentDate);
 	        evaluationForm.setModifiable(true);
 	
-	        log.fine("Évaluation : " + evaluationForm);
+	        log.debug("ï¿½valuation : " + evaluationForm);
 	        request.getSession().setAttribute("evaluation", evaluationForm);
 	
 	        return mapping.findForward("success");
@@ -117,13 +115,13 @@ public class EvaluationAction extends AbstractAction {
     /**
      * <p>
      *
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortieif an input/output survient
+     * @exception IOException si une erreur d'entrï¿½e/sortieif an input/output survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward show(CardexAuthenticationSubject subject,
@@ -131,7 +129,7 @@ public class EvaluationAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Accès à une évaluation");
+        log.debug("Accï¿½s ï¿½ une ï¿½valuation");
         ActionMessages errors = new ActionMessages();
 
         try {
@@ -185,15 +183,15 @@ public class EvaluationAction extends AbstractAction {
     }
 
     /**
-     * Ajout d'une fréquence de visites dans l'écran d'évaluation
+     * Ajout d'une frï¿½quence de visites dans l'ï¿½cran d'ï¿½valuation
      * 
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortieif an input/output survient
+     * @exception IOException si une erreur d'entrï¿½e/sortieif an input/output survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward ajouterFrequence(CardexAuthenticationSubject subject,
@@ -202,7 +200,7 @@ public class EvaluationAction extends AbstractAction {
     HttpServletRequest request,
     HttpServletResponse response) throws IOException,
     ServletException {
-        log.fine("Ajout d'une nouvelle fréquence de visite");
+        log.debug("Ajout d'une nouvelle frï¿½quence de visite");
         EvaluationForm evaluationForm = (EvaluationForm)form;
         FrequenceVisitesForm frequenceVisites = new FrequenceVisitesForm();
         int indexMise = Integer.valueOf(evaluationForm.getIndexMise());
@@ -211,15 +209,15 @@ public class EvaluationAction extends AbstractAction {
         return mapping.findForward("success");
     }
     /**
-     * Retrait d'une fréquence de visites dans l'écran d'évaluation
+     * Retrait d'une frï¿½quence de visites dans l'ï¿½cran d'ï¿½valuation
      * 
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortieif an input/output survient
+     * @exception IOException si une erreur d'entrï¿½e/sortieif an input/output survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward retirerFrequence(CardexAuthenticationSubject subject,
@@ -228,7 +226,7 @@ public class EvaluationAction extends AbstractAction {
     HttpServletRequest request,
     HttpServletResponse response) throws IOException,
     ServletException {
-        log.fine("Retrait d'une nouvelle fréquence de visite");
+        log.debug("Retrait d'une nouvelle frï¿½quence de visite");
         EvaluationForm evaluationForm = (EvaluationForm)form;
         int indexMise = Integer.valueOf(evaluationForm.getIndexMise());
         int indexFrequenceVisites =  Integer.valueOf(evaluationForm.getIndexFrequenceVisites());
@@ -243,13 +241,13 @@ public class EvaluationAction extends AbstractAction {
     HttpServletRequest request,
     HttpServletResponse response) throws IOException,
     ServletException, BusinessResourceException {
-		log.fine("Ajout d'une nouvelle mise");
+		log.debug("Ajout d'une nouvelle mise");
 		EvaluationForm evaluationForm = (EvaluationForm)form;
 		MiseEvaluationForm miseEvaluationForm = new MiseEvaluationForm();
 		miseEvaluationForm.getJeuxForm().setEntite(evaluationForm.getEntite());
 		miseEvaluationForm.getJeuxForm().setTypeJeu( evaluationForm.getTypeJeu() );
 		miseEvaluationForm.getJeuxForm().initDoubleListe(subject, new HashSet<String>());
-        //Création d'une liste vide pour les fréquences de visite
+        //Crï¿½ation d'une liste vide pour les frï¿½quences de visite
         miseEvaluationForm.getFrequencesVisites().add( new FrequenceVisitesForm() );
 		evaluationForm.getMisesEvaluation().add(miseEvaluationForm);
 		Collections.sort(evaluationForm.getMisesEvaluation(), new MiseEvaluationComparator());
@@ -263,7 +261,7 @@ public class EvaluationAction extends AbstractAction {
     HttpServletRequest request,
     HttpServletResponse response) throws IOException,
     ServletException {
-		log.fine("Retrait d'une nouvelle mise");
+		log.debug("Retrait d'une nouvelle mise");
 		EvaluationForm evaluationForm = (EvaluationForm) form;
 		int indexMise = Integer.valueOf(evaluationForm.getIndexMise());
 		evaluationForm.getMisesEvaluation().remove( indexMise );

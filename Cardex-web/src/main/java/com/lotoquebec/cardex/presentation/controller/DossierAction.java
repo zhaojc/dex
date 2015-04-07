@@ -22,7 +22,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
-import java.util.logging.Logger;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -42,6 +41,8 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.upload.FormFile;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardex.business.Consignation;
 import com.lotoquebec.cardex.business.Dossier;
@@ -140,7 +141,6 @@ import com.lotoquebec.cardexCommun.integration.dao.DAOConnection;
 import com.lotoquebec.cardexCommun.integration.dao.OracleDAOUtils;
 import com.lotoquebec.cardexCommun.integration.dao.cleListe.cleSQLListeCache.TableValeurCleAbreviationSQLListeCache;
 import com.lotoquebec.cardexCommun.integration.dao.cleListe.cleSQLListeCache.TableValeurCleSQLListeCache;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.presentation.util.AbstractAction;
 import com.lotoquebec.cardexCommun.presentation.util.AideController;
 import com.lotoquebec.cardexCommun.rapport.PDFImpressionRapport;
@@ -165,7 +165,7 @@ public class DossierAction extends AbstractAction {
      * L'instance du gestionnaire de journalisation.
      */
 	private final Logger      log =
-        (Logger)LoggerCardex.getLogger((this.getClass()));
+        LoggerFactory.getLogger((this.getClass()));
 
     /**
      * <p>
@@ -198,7 +198,7 @@ public class DossierAction extends AbstractAction {
                                 HttpServletRequest request,
                                 HttpServletResponse response) throws IOException,
                                 ServletException {
-        log.fine("Cr�ation d'un nouveau dossier");
+        log.debug("Cr�ation d'un nouveau dossier");
 
         ActionErrors    errors = new ActionErrors();
         DossierForm dossierForm = (DossierForm) form;
@@ -290,7 +290,7 @@ public class DossierAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Sauvegarde de la cr�ation d'un nouveau dossier");
+        log.debug("Sauvegarde de la cr�ation d'un nouveau dossier");
 
         ActionErrors    errors = new ActionErrors();
         DossierHtmlForm dossierForm = (DossierHtmlForm) form;
@@ -310,12 +310,12 @@ public class DossierAction extends AbstractAction {
             // Valeurs par d�faut
             newDossier.setHierarchie(privilege.getNiveauAuthorite());
             newDossier.setNumeroCardex(GlobalConstants.NumeroCardex.DEFAULT);
-            log.fine("Dossier � cr�er : " + newDossier);
+            log.debug("Dossier � cr�er : " + newDossier);
             newDossier.setNouveau(true);
             Dossier criteria = dossierDelegate.create(subject,
                                                       newDossier);
 
-            log.fine("# Cl� de dossier retourn� : "
+            log.debug("# Cl� de dossier retourn� : "
                       + newDossier.getCle());
 
 			//V�rification d'un mandat PSU associ� � la recherche d'un dossier
@@ -369,7 +369,7 @@ public class DossierAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Retour � un dossier");
+        log.debug("Retour � un dossier");
 
         ActionMessages errors = new ActionMessages();
 
@@ -378,15 +378,15 @@ public class DossierAction extends AbstractAction {
             DossierBusinessDelegate dossierDelegate = new DossierBusinessDelegate();
             DossierForm dossierForm = (DossierForm) form;
             Dossier     dossier     = new DossierVO();
-            log.fine("Dossier lu: " + dossierForm.toString());
+            log.debug("Dossier lu: " + dossierForm.toString());
 
             if (dossierForm.getMotPasse().equals(dossierForm.getConfirmationMotPasse()) ) {
               ValueObjectMapper.convertDossierHtmlForm(dossierForm, dossier,subject.getLocale());
               dossier = dossierDelegate.find(subject, dossier);
               ValueObjectMapper.convertDossier(dossier, dossierForm,subject.getLocale());
               populateDossierFormShow(subject, dossier, dossierForm);
-              log.fine("Dossier trouv�: " + dossier.toString());
-              log.fine("Onglet : " + dossierForm.getReference7());
+              log.debug("Dossier trouv�: " + dossier.toString());
+              log.debug("Onglet : " + dossierForm.getReference7());
               request.getSession().setAttribute(GlobalConstants.MotDePasse.DOSSIER_ATTEMPS,new Integer(0));
               request.getSession().setAttribute("dossier",dossierForm);
               return mapping.findForward("success");
@@ -401,7 +401,7 @@ public class DossierAction extends AbstractAction {
               if (nbOfAttemps < GlobalConstants.MotDePasse.MAX_ATTEMPS) {
                 ValueObjectMapper.convertDossierHtmlForm(dossierForm, dossier,subject.getLocale());
                 dossier = dossierDelegate.find(subject, dossier);
-                log.fine("Dossier prot�g�: " + dossier.toString());
+                log.debug("Dossier prot�g�: " + dossier.toString());
                 ValueObjectMapper.convertDossier(dossier, dossierForm,subject.getLocale());
                 populateDossierForm(subject, dossier, dossierForm);
                 dossierForm.setConfirmationMotPasse("");
@@ -462,7 +462,7 @@ public class DossierAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Acc�s � un dossier");
+        log.debug("Acc�s � un dossier");
 
         ActionMessages errors = new ActionMessages();
         
@@ -472,12 +472,12 @@ public class DossierAction extends AbstractAction {
             DossierForm dossierForm = (DossierForm) form;
             Dossier dossier = new DossierVO();
 
-            log.fine("Dossier recherch�: " + dossierForm.toString());
+            log.debug("Dossier recherch�: " + dossierForm.toString());
 
             if (AideController.isNullOrEquals(dossierForm.getMotPasse(),dossierForm.getConfirmationMotPasse()) ) {
               ValueObjectMapper.convertDossierHtmlForm(dossierForm, dossier,subject.getLocale());
               dossier = dossierDelegate.findAcces(subject, dossier);
-              log.fine("Dossier trouv�: " + dossier.toString());
+              log.debug("Dossier trouv�: " + dossier.toString());
               dossierForm.init(subject);
               ValueObjectMapper.convertDossier(dossier, dossierForm, subject.getLocale());
               populateDossierFormShow(subject, dossier, dossierForm);
@@ -501,7 +501,7 @@ public class DossierAction extends AbstractAction {
               if (nbOfAttemps < GlobalConstants.MotDePasse.MAX_ATTEMPS) {
                 ValueObjectMapper.convertDossierHtmlForm(dossierForm, dossier,subject.getLocale());
                 dossier = dossierDelegate.findAcces(subject, dossier);
-                log.fine("Dossier prot�g�: " + dossier.toString());
+                log.debug("Dossier prot�g�: " + dossier.toString());
                 ValueObjectMapper.convertDossier(dossier, dossierForm,subject.getLocale());
                 populateDossierForm(subject, dossier, dossierForm);
                 dossierForm.setConfirmationMotPasse("");
@@ -569,7 +569,7 @@ public class DossierAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Acc�s � l'ecran de recherche dossier liaison.");
+        log.debug("Acc�s � l'ecran de recherche dossier liaison.");
 
         ActionMessages errors = new ActionMessages();
         CriteresRechercheDossierForm rechercheDossierForm = new CriteresRechercheDossierForm();
@@ -598,7 +598,7 @@ public class DossierAction extends AbstractAction {
 	            SocieteHtmlForm societeForm = (SocieteHtmlForm)form;
 	            rechercheDossierForm.setSociete(societeForm);
 	        }else {
-	            log.severe("L'objet source de la liaison dossier n'est pas de type valide(sujet,societe,dossier,vehicule)");
+	            log.error("L'objet source de la liaison dossier n'est pas de type valide(sujet,societe,dossier,vehicule)");
 	            return mapping.findForward("error");
 	        }
 	
@@ -666,7 +666,7 @@ public class DossierAction extends AbstractAction {
                                  HttpServletRequest request,
                                  HttpServletResponse response) throws IOException,
                                  ServletException, SecurityException, IllegalArgumentException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
-        log.fine("Refresh ecran de recherche dossier");
+        log.debug("Refresh ecran de recherche dossier");
 
         return mapping.findForward("success");
     }
@@ -713,7 +713,7 @@ public class DossierAction extends AbstractAction {
                                  HttpServletRequest request,
                                  HttpServletResponse response) throws IOException,
                                  ServletException, SecurityException, IllegalArgumentException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
-        log.fine("Refresh ecran de recherche dossier");
+        log.debug("Refresh ecran de recherche dossier");
 		ActionMessages errors = new ActionMessages();
 
         try{
@@ -721,7 +721,7 @@ public class DossierAction extends AbstractAction {
 			Dossier                 dossier = new DossierVO();
 			ValueObjectMapper.convertDossierHtmlForm(dossierForm, dossier,
 					subject.getLocale());
-			log.fine("Dossier trouv�: " + dossier.toString());
+			log.debug("Dossier trouv�: " + dossier.toString());
 			populateDossierFormShow(subject, dossier, dossierForm);
 	        request.getSession().setAttribute("dossier", dossierForm);
 			return mapping.findForward("success");
@@ -743,7 +743,7 @@ public class DossierAction extends AbstractAction {
             HttpServletRequest request,
             HttpServletResponse response) throws IOException,
             ServletException, SecurityException, IllegalArgumentException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
-		log.fine("Refresh ecran de recherche dossier");
+		log.debug("Refresh ecran de recherche dossier");
 
 		ActionMessages errors = new ActionMessages();
 
@@ -754,7 +754,7 @@ public class DossierAction extends AbstractAction {
 			ValueObjectMapper.convertDossierHtmlForm(dossierForm, dossier,
 					subject.getLocale());
 			dossier = dossierDelegate.findAcces(subject, dossier);
-			log.fine("Dossier trouv�: " + dossier.toString());
+			log.debug("Dossier trouv�: " + dossier.toString());
 			ValueObjectMapper.convertDossier(dossier, dossierForm, subject
 					.getLocale());
 			populateDossierFormShow(subject, dossier, dossierForm);
@@ -797,7 +797,7 @@ public class DossierAction extends AbstractAction {
                                 HttpServletRequest request,
                                 HttpServletResponse response) throws IOException,
                                 ServletException {
-        log.fine("Mise � jour d'un dossier");
+        log.debug("Mise � jour d'un dossier");
 
         ActionMessages errors = new ActionMessages();
 
@@ -810,7 +810,7 @@ public class DossierAction extends AbstractAction {
             ValueObjectMapper.convertDossierHtmlForm(dossierForm,
                     dossier, subject.getLocale());
            	            	
-    	    log.fine("Mise � jour du dossier: "
+    	    log.debug("Mise � jour du dossier: "
                       + dossier.toString());
     	    List<BusinessMessage> businessMessages = dossierDelegate.preSauvegardeMessage(subject, dossier);
     	    ajouterActionMessage(businessMessages, errors, request);
@@ -862,7 +862,7 @@ public class DossierAction extends AbstractAction {
             HttpServletResponse response) throws IOException,
             ServletException {
         
-        log.fine("Ajour d'une pi�ce jointe");
+        log.debug("Ajour d'une pi�ce jointe");
 
         ActionMessages errors = new ActionMessages();
 
@@ -877,7 +877,7 @@ public class DossierAction extends AbstractAction {
             
             // Est ce que la taille du fichier exc�de 10 Mo pour les pi�ces jointes
             if (photoForm.isTaillePieceAccepte() == false) {
-                log.severe("La taille du fichier est sup�rieure � 10 Mo.");
+                log.error("La taille du fichier est sup�rieure � 10 Mo.");
                 throw (new BusinessRuleExceptionHandle("erreur_fichier_document")).getBusinessException();
             }
             Photo photo = obtenirPhoto(subject, dossierForm, photoForm);
@@ -924,7 +924,7 @@ public class DossierAction extends AbstractAction {
                                 HttpServletRequest request,
                                 HttpServletResponse response) throws IOException, DAOException,
                                 ServletException {
-        log.fine("�puration des dossiers");
+        log.debug("�puration des dossiers");
 
         ActionMessages errors = new ActionMessages();
         ResultSet resultSet = null;
@@ -943,18 +943,18 @@ public class DossierAction extends AbstractAction {
 			String siteDescription = cache.obtenirLabel(subject, String.valueOf(utilisateur.getSite()), new TableValeurCleSQLListeCache(subject, GlobalConstants.TableValeur.SITE, utilisateur.getEntite(), GlobalConstants.ActionSecurite.SELECTION));
     		String nomRapport = chemin+"Dossiers � �purer "+ siteDescription + " (" + dateRapport+").pdf";
     		InputStream gabarit = getClass().getClassLoader().getResourceAsStream("rapports/" + RapportsConfiguration.RAPPORT_EPURATION_DOSSIERS);
-			log.fine("Sauvegarder dossiers � �purer");
+			log.debug("Sauvegarder dossiers � �purer");
 			long site = utilisateur.getSite();
 			resultSet = rapportDelegate.rapportEpuration(site, connection, "CARDEX_RAPPORT.SP_RAP_DO_EPURATION");
 			JRResultSetDataSource resultSetDataSource = new JRResultSetDataSource(resultSet);
-			// log.fine(context.getRealPath("/rapports/"));
+			// log.debug(context.getRealPath("/rapports/"));
 			ServletContext context = request.getSession().getServletContext();  
             parameters.put("REPORT_CONNECTION",connection);
 	        parameters.put("SUBREPORT_DIR",context.getRealPath("/rapports/"));
 			parameters.put("UTILISATEUR", utilisateur.getCode());
 			JasperPrint print = JasperFillManager.fillReport(gabarit, parameters, resultSetDataSource);
 			// Sauvegarde dans un fichier
-			log.fine("�puration des dossiers (Sauvegarde dans un fichier)");
+			log.debug("�puration des dossiers (Sauvegarde dans un fichier)");
 			(new PDFImpressionRapport()).impression(nomRapport, print);
 			//On proc�de ensuite � l'�puration
         	DossierBusinessDelegate dossierDelegate =
@@ -1033,7 +1033,7 @@ public class DossierAction extends AbstractAction {
                                        HttpServletRequest request,
                                        HttpServletResponse response) throws IOException,
                                        ServletException {
-        log.fine("Param�tres de recherche par d�fault de dossier");
+        log.debug("Param�tres de recherche par d�fault de dossier");
 
         ActionMessages errors = new ActionMessages();
 
@@ -1097,7 +1097,7 @@ public class DossierAction extends AbstractAction {
                                        HttpServletRequest request,
                                        HttpServletResponse response) throws IOException,
                                        ServletException {
-        log.fine("Param�tres de recherche par d�fault de dossier en mode liaison");
+        log.debug("Param�tres de recherche par d�fault de dossier en mode liaison");
 
         ActionMessages errors = new ActionMessages();
 
@@ -1170,7 +1170,7 @@ public class DossierAction extends AbstractAction {
                                        HttpServletRequest request,
                                        HttpServletResponse response) throws IOException,
                                        ServletException {
-        log.fine("Recherche par d�fault de dossier");
+        log.debug("Recherche par d�fault de dossier");
 
         ActionMessages errors = new ActionMessages();
         try {
@@ -1238,7 +1238,7 @@ public class DossierAction extends AbstractAction {
                                 HttpServletRequest request,
                                 HttpServletResponse response) throws IOException,
                                 ServletException {
-        log.fine("Recherche de dossier");
+        log.debug("Recherche de dossier");
         ListeCache listeCache = ListeCache.getInstance();
         ActionMessages errors = new ActionMessages();
 
@@ -1289,7 +1289,7 @@ public class DossierAction extends AbstractAction {
 
 			// Conversion du composant d'�tat(ActionForm) en composant d'affaire(Value Object)
 			ValueObjectMapper.convertCriteresRechercheDossierHtmlForm(criteresRechercheDossierHtmlForm, criteresRechercheDossier,subject.getLocale());
-			log.fine(criteresRechercheDossier.toString());
+			log.debug(criteresRechercheDossier.toString());
 
 			// Ex�cution de la recherche via le service d'affaire(BusinessDelegate)
 			List<Dossier> results = delegate.select(subject,criteresRechercheDossier);
@@ -1394,7 +1394,7 @@ public class DossierAction extends AbstractAction {
                                        HttpServletRequest request,
                                        HttpServletResponse response) throws IOException,
                                        ServletException {
-        log.fine("Recherche de dossier en mode liaison");
+        log.debug("Recherche de dossier en mode liaison");
 
         ActionMessages errors = new ActionMessages();
 
@@ -1474,7 +1474,7 @@ public class DossierAction extends AbstractAction {
                                   HttpServletRequest request,
                                   HttpServletResponse response) throws IOException,
                                   ServletException {
-        log.fine("Choix du type de lien avec un dossier");
+        log.debug("Choix du type de lien avec un dossier");
 
         return mapping.findForward("success");
     }
@@ -1499,7 +1499,7 @@ public class DossierAction extends AbstractAction {
                                         HttpServletRequest request,
                                         HttpServletResponse response) throws IOException,
                                         ServletException {
-        log.fine("Liaison d'un dossier");
+        log.debug("Liaison d'un dossier");
 
         ActionMessages errors = new ActionMessages();
 
@@ -1526,7 +1526,7 @@ public class DossierAction extends AbstractAction {
             //R�le par d�faut pour ce lien
             dossierDestination.setRole(GlobalConstants.Role.SANS_OBJET);
 
-            log.fine(lienForm.toString());
+            log.debug(lienForm.toString());
             BusinessRuleExceptionHandle businessRuleExceptionHandle = delegate.addLienDossier(subject, dossierOrigine,
                                     dossierDestination);
             populateDossierForm(subject, dossierOrigine, dossierForm);
@@ -1573,7 +1573,7 @@ public class DossierAction extends AbstractAction {
     public ActionForward addLienDossierNumeroDossier(CardexAuthenticationSubject subject,
 			ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException {
-		log.fine("Liaison d'un dossier par le num�ro de dossier");
+		log.debug("Liaison d'un dossier par le num�ro de dossier");
 
 		ActionMessages errors = new ActionMessages();
 
@@ -1639,7 +1639,7 @@ public class DossierAction extends AbstractAction {
     public ActionForward addLienDossierNumeroCardex(CardexAuthenticationSubject subject,
 	ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	HttpServletResponse response) throws IOException, ServletException {
-		log.fine("Liaison d'un dossier par le num�ro de cardex");
+		log.debug("Liaison d'un dossier par le num�ro de cardex");
 
 		ActionMessages errors = new ActionMessages();
 
@@ -1694,7 +1694,7 @@ public class DossierAction extends AbstractAction {
 		//dossierDestination.setLien();
 		//dossierDestination.setLienSite();
 
-		log.fine(dossierALier.toString());
+		log.debug(dossierALier.toString());
 		delegate.addLienDossier(subject, dossierOrigine, dossierDestination);
 		return dossierALier;
 	}
@@ -1749,7 +1749,7 @@ public class DossierAction extends AbstractAction {
                                         HttpServletRequest request,
                                         HttpServletResponse response) throws IOException,
                                         ServletException {
-        log.fine("Liaison d'un sujet");
+        log.debug("Liaison d'un sujet");
 
         ActionMessages errors = new ActionMessages();
 
@@ -1773,7 +1773,7 @@ public class DossierAction extends AbstractAction {
             sujet.setTypeLien(lienForm.getTypeLien());
             sujet.setRole(Long.parseLong(lienForm.getRole()));
 
-            log.fine(lienForm.toString());
+            log.debug(lienForm.toString());
             delegate.addLienSujet(subject, dossier, sujet);
             populateDossierForm(subject, dossier, dossierForm);
             request.getSession().setAttribute("dossier", dossierForm);
@@ -1833,7 +1833,7 @@ public class DossierAction extends AbstractAction {
                                         HttpServletRequest request,
                                         HttpServletResponse response) throws IOException,
                                         ServletException {
-        log.fine("Liaison d'un v�hicule");
+        log.debug("Liaison d'un v�hicule");
 
         ActionMessages errors = new ActionMessages();
 
@@ -1855,7 +1855,7 @@ public class DossierAction extends AbstractAction {
             vehicule.setSite(Long.valueOf(lienForm.getSiteDestination()));
             vehicule.setRole(GlobalConstants.Role.SANS_OBJET);
 
-            log.fine(lienForm.toString());
+            log.debug(lienForm.toString());
             delegate.addLienVehicule(subject, dossier,
                                     vehicule);
             populateDossierForm(subject, dossier, dossierForm);
@@ -1916,7 +1916,7 @@ public class DossierAction extends AbstractAction {
                                         HttpServletRequest request,
                                         HttpServletResponse response) throws IOException,
                                         ServletException {
-        log.fine("Liaison d'un societe");
+        log.debug("Liaison d'un societe");
 
         ActionMessages errors = new ActionMessages();
 
@@ -1940,7 +1940,7 @@ public class DossierAction extends AbstractAction {
             societe.setTypeLien(lienForm.getTypeLien());
             societe.setRole(Long.parseLong(lienForm.getRole()));
 
-            log.fine(lienForm.toString());
+            log.debug(lienForm.toString());
             BusinessRuleExceptionHandle businessRuleExceptionHandle = delegate.addLienSociete(subject, dossier,
                                     societe);
             populateDossierForm(subject, dossier, dossierForm);
@@ -2004,7 +2004,7 @@ public class DossierAction extends AbstractAction {
                                         HttpServletRequest request,
                                         HttpServletResponse response) throws IOException,
                                         ServletException {
-        log.fine("Mise � jour de la liaison dans un dossier");
+        log.debug("Mise � jour de la liaison dans un dossier");
 
         ActionMessages errors = new ActionMessages();
 
@@ -2057,7 +2057,7 @@ public class DossierAction extends AbstractAction {
                                         HttpServletRequest request,
                                         HttpServletResponse response) throws IOException,
                                         ServletException {
-        log.fine("Liaison d'un inscription");
+        log.debug("Liaison d'un inscription");
 
         ActionMessages errors = new ActionMessages();
 
@@ -2075,7 +2075,7 @@ public class DossierAction extends AbstractAction {
             dossierForm.setSite(inscriptionForm.getLienSite());
             ValueObjectMapper.convertDossierHtmlForm(dossierForm,dossier,subject.getLocale());
             ValueObjectMapper.convertInscriptionHtmlForm(inscriptionForm,inscription,subject.getLocale());
-            log.fine(inscription.toString());
+            log.debug(inscription.toString());
             delegate.addLienInscription(subject, dossier,inscription);
             populateDossierForm(subject, dossier, dossierForm);
             request.getSession().setAttribute("dossier", dossierForm);
@@ -2125,7 +2125,7 @@ public class DossierAction extends AbstractAction {
                                         HttpServletRequest request,
                                         HttpServletResponse response) throws IOException,
                                         ServletException {
-        log.fine("Suppression d'un lien inscription");
+        log.debug("Suppression d'un lien inscription");
 
         ActionMessages errors = new ActionMessages();
 
@@ -2146,7 +2146,7 @@ public class DossierAction extends AbstractAction {
             inscription.setCle(Integer.parseInt(inscriptionForm.getCle()));
             inscription.setSite(Integer.parseInt(inscriptionForm.getSite()));
 			
-            log.fine(inscription.toString());
+            log.debug(inscription.toString());
             delegate.deleteLienInscription(subject, dossier,
                                     inscription);
             populateDossierForm(subject, dossier, dossierForm);
@@ -2196,7 +2196,7 @@ public class DossierAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Mise � jour des liens jeux");
+        log.debug("Mise � jour des liens jeux");
 
         ActionMessages errors = new ActionMessages();
 
@@ -2248,7 +2248,7 @@ public class DossierAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Mise � jour des liens partage");
+        log.debug("Mise � jour des liens partage");
 
         ActionMessages errors = new ActionMessages();
 
@@ -2297,7 +2297,7 @@ public class DossierAction extends AbstractAction {
     HttpServletRequest request,
     HttpServletResponse response) throws IOException,
     ServletException {
-		log.fine("Mise � jour des liens sous-cat�gories");
+		log.debug("Mise � jour des liens sous-cat�gories");
 		
 		ActionMessages errors = new ActionMessages();
 		
@@ -2350,7 +2350,7 @@ public class DossierAction extends AbstractAction {
                                         HttpServletRequest request,
                                         HttpServletResponse response) throws IOException,
                                         ServletException {
-        log.fine("Destruction d'un lien sujet");
+        log.debug("Destruction d'un lien sujet");
 
         ActionMessages errors = new ActionMessages();
 
@@ -2378,7 +2378,7 @@ public class DossierAction extends AbstractAction {
             sujet.setLien(lienForm.getCle());
             sujet.setLienSite(lienForm.getSite());
 
-            log.fine(lienForm.toString());
+            log.debug(lienForm.toString());
             delegate.deleteLienSujet(subject, dossier,
                                     sujet);
             populateDossierForm(subject, dossier, dossierForm);
@@ -2430,7 +2430,7 @@ public class DossierAction extends AbstractAction {
                                         HttpServletRequest request,
                                         HttpServletResponse response) throws IOException,
                                         ServletException {
-        log.fine("Destruction d'un lien vehicule");
+        log.debug("Destruction d'un lien vehicule");
 
         ActionMessages errors = new ActionMessages();
 
@@ -2458,7 +2458,7 @@ public class DossierAction extends AbstractAction {
             vehicule.setLien(lienForm.getCle());
             vehicule.setLienSite(lienForm.getSite());
 
-            log.fine(lienForm.toString());
+            log.debug(lienForm.toString());
             delegate.deleteLienVehicule(subject, dossier,
                                     vehicule);
             populateDossierForm(subject, dossier, dossierForm);
@@ -2510,7 +2510,7 @@ public class DossierAction extends AbstractAction {
                                         HttpServletRequest request,
                                         HttpServletResponse response) throws IOException,
                                         ServletException {
-        log.fine("Destruction d'un lien societe");
+        log.debug("Destruction d'un lien societe");
 
         ActionMessages errors = new ActionMessages();
 
@@ -2538,7 +2538,7 @@ public class DossierAction extends AbstractAction {
             societe.setLien(lienForm.getCle());
             societe.setLienSite(lienForm.getSite());
 
-            log.fine(lienForm.toString());
+            log.debug(lienForm.toString());
             delegate.deleteLienSociete(subject, dossier,
                                     societe);
             populateDossierForm(subject, dossier, dossierForm);
@@ -2589,7 +2589,7 @@ public class DossierAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Liasion d'une narration � un dossier.");
+        log.debug("Liasion d'une narration � un dossier.");
         ActionMessages errors = new ActionMessages();
         ActionMessages messages = new ActionMessages();
         
@@ -2605,8 +2605,8 @@ public class DossierAction extends AbstractAction {
             ValueObjectMapper.convertNarrationHtmlForm(narrationForm, narration,
                     subject.getLocale());
             narration.setDossier(dossier);
-            log.fine("Dossier: " + dossier);
-            log.fine("Narration: " + narration);
+            log.debug("Dossier: " + dossier);
+            log.debug("Narration: " + narration);
             
             NarrationBaliseUtil.assignerMessageSiNarrationANettoyer(messages, narrationForm.getNarrationAvecFormat());
            	delegate.addLienNarration(subject,dossier,narration);
@@ -2685,7 +2685,7 @@ public class DossierAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Liaison d'une suivi � un dossier.");
+        log.debug("Liaison d'une suivi � un dossier.");
         ActionMessages errors = new ActionMessages();
 
         try {
@@ -2706,8 +2706,8 @@ public class DossierAction extends AbstractAction {
             // Assigner la date de cr�ation de nouveau pour ne pas avoir une
             // date pr�vue avant la date de cr�ation.
             suivi.setDateCreation(new Timestamp(System.currentTimeMillis()));
-            log.fine("Dossier: " + dossier);
-            log.fine("Suivi: " + suivi);
+            log.debug("Dossier: " + dossier);
+            log.debug("Suivi: " + suivi);
             delegate.addLienSuivi(subject,dossier,suivi);
             populateDossierForm(subject, dossier, dossierForm);
             request.getSession().setAttribute("dossier", dossierForm);
@@ -2754,7 +2754,7 @@ public class DossierAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Liaison d'une consignation � un dossier.");
+        log.debug("Liaison d'une consignation � un dossier.");
         ActionMessages errors = new ActionMessages();
 
         try {
@@ -2771,8 +2771,8 @@ public class DossierAction extends AbstractAction {
                     subject.getLocale());
             ValueObjectMapper.convertConsignationHtmlForm(consignationForm, consignation,
                     subject.getLocale());
-            log.fine("Dossier: " + dossier);
-            log.fine("Consignation: " + consignation);
+            log.debug("Dossier: " + dossier);
+            log.debug("Consignation: " + consignation);
             delegate.addLienConsignation(subject,dossier,consignation);
             populateDossierForm(subject, dossier, dossierForm);
             request.getSession().setAttribute("dossier", dossierForm);
@@ -2819,7 +2819,7 @@ public class DossierAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Liaison d'un service d'urgence � un dossier.");
+        log.debug("Liaison d'un service d'urgence � un dossier.");
         ActionMessages errors = new ActionMessages();
 
         try {
@@ -2846,8 +2846,8 @@ public class DossierAction extends AbstractAction {
                     subject.getLocale());
             ValueObjectMapper.convertUrgenceHtmlForm(urgenceForm, urgence,
                     subject.getLocale());
-            log.fine("Dossier: " + dossier);
-            log.fine("Urgence: " + urgence);
+            log.debug("Dossier: " + dossier);
+            log.debug("Urgence: " + urgence);
             delegate.addLienUrgence(subject,dossier,urgence);
 
             //Rafra�chissement du dossier
@@ -2897,7 +2897,7 @@ public class DossierAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Sauvegarde et ajout d'un suivi � un dossier.");
+        log.debug("Sauvegarde et ajout d'un suivi � un dossier.");
         ActionMessages errors = new ActionMessages();
         CardexUser user = (CardexUser)subject.getUser();
         CardexPrivilege privilege = (CardexPrivilege)subject.getPrivilege();
@@ -2917,8 +2917,8 @@ public class DossierAction extends AbstractAction {
                     subject.getLocale());
             ValueObjectMapper.convertSuiviHtmlForm(suiviForm, suivi,
                     subject.getLocale());
-            log.fine("Dossier: " + dossier);
-            log.fine("Suivi: " + suivi);
+            log.debug("Dossier: " + dossier);
+            log.debug("Suivi: " + suivi);
             delegate.addLienSuivi(subject,dossier,suivi);
             //On conserve les valeurs pour les r�afficher, sauf le secteur et l'intervenant assign�
             suiviForm.setSecteurAssigne(user.getSecteur()+"");
@@ -2931,7 +2931,7 @@ public class DossierAction extends AbstractAction {
             suiviForm.setNiveauHierarchiqueCreateur(Long.toString(privilege.getNiveauAuthorite()));
             suiviForm.setConfidentialiteCreateur(Long.toString(privilege.getNiveauConfidentialite()));
 
-            log.fine("Suivi : " + suiviForm);
+            log.debug("Suivi : " + suiviForm);
             request.getSession().setAttribute("suivi",suiviForm);
 
             return mapping.findForward("success");
@@ -2979,7 +2979,7 @@ public class DossierAction extends AbstractAction {
             DossierForm dossierForm = new DossierForm();
             Photo photo = new PhotoVO();
             Dossier dossier = new DossierVO();
-            log.fine("PhotoForm a li�e : " + photoForm);
+            log.debug("PhotoForm a li�e : " + photoForm);
 
             dossierForm.init(subject);
             dossierForm.setCle(photoForm.getLien());
@@ -2991,21 +2991,21 @@ public class DossierAction extends AbstractAction {
             FormFile   file = photoForm.getUploadImage();
 
             if (photoForm.isTailleAccepte() == false) {
-                log.severe("La taille du fichier est sup�rieure � 4MB.");
+                log.error("La taille du fichier est sup�rieure � 4MB.");
                 return mapping.getInputForward();
             }else if(GlobalConstants.TypeMutliMedia.PHOTO.equals(photoForm.getTypeMultimedia())
             && photoForm.isPhoto() == false){
-                log.severe("Ce fichier n'est pas une photo");
+                log.error("Ce fichier n'est pas une photo");
                 throw (new BusinessRuleExceptionHandle("erreur.ajout.type.photo")).getBusinessException();
             }else{
             	byte[] data = file.getFileData();
             	photo.setImage( data );
             	photo.setExtension(photoForm.getExtensionDeFilePath());
 				
-	            log.fine("Photo a li�e : " + photo);
+	            log.debug("Photo a li�e : " + photo);
 	            photo= delegate.addLienPhoto(subject,dossier,photo);
 	            file.destroy();
-	            log.fine("Photo li�e : " + photo);
+	            log.debug("Photo li�e : " + photo);
 				populateDossierForm(subject, dossier, dossierForm);
 				request.getSession().setAttribute("dossier", dossierForm);
 
@@ -3054,7 +3054,7 @@ public class DossierAction extends AbstractAction {
                                            HttpServletRequest request,
                                            HttpServletResponse response) throws IOException,
                                            ServletException {
-        log.fine("Destruction d'un lien dossier");
+        log.debug("Destruction d'un lien dossier");
 
         ActionMessages errors = new ActionMessages();
 
@@ -3082,7 +3082,7 @@ public class DossierAction extends AbstractAction {
             dossierDestination.setRole(Long.parseLong(lienForm.getRole()));
             dossierDestination.setLien(lienForm.getCle());
             dossierDestination.setLienSite(lienForm.getSite());
-            log.fine(lienForm.toString());
+            log.debug(lienForm.toString());
             delegate.deleteLienDossier(subject, dossierOrigine,
                                        dossierDestination);
             populateDossierForm(subject, dossierOrigine, dossierForm);
@@ -3144,7 +3144,7 @@ public class DossierAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Suppression d'un lien entre une narration et un dossier.");
+        log.debug("Suppression d'un lien entre une narration et un dossier.");
         ActionMessages errors = new ActionMessages();
 
         try {
@@ -3162,8 +3162,8 @@ public class DossierAction extends AbstractAction {
             ValueObjectMapper.convertNarrationHtmlForm(narrationForm, narration,
                     subject.getLocale());
             narration.setDossier(dossier);
-            log.fine("Dossier: " + dossier);
-            log.fine("Narration: " + narration);
+            log.debug("Dossier: " + dossier);
+            log.debug("Narration: " + narration);
             delegate.deleteLienNarration(subject,dossier,narration);
             populateDossierForm(subject, dossier, dossierForm);
             request.getSession().setAttribute("dossier", dossierForm);
@@ -3194,7 +3194,7 @@ public class DossierAction extends AbstractAction {
             HttpServletRequest request,
             HttpServletResponse response) throws IOException,
             ServletException {
-		log.fine("Suppression d'un lien entre une narration et un dossier.");
+		log.debug("Suppression d'un lien entre une narration et un dossier.");
 		ActionMessages errors = new ActionMessages();
 		
 		try {
@@ -3248,7 +3248,7 @@ public class DossierAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Suppression d'un lien entre une suivi et un dossier.");
+        log.debug("Suppression d'un lien entre une suivi et un dossier.");
         ActionMessages errors = new ActionMessages();
 
         try {
@@ -3265,8 +3265,8 @@ public class DossierAction extends AbstractAction {
                     subject.getLocale());
             ValueObjectMapper.convertSuiviHtmlForm(suiviForm, suivi,
                     subject.getLocale());
-            log.fine("Dossier: " + dossier);
-            log.fine("Suivi: " + suivi);
+            log.debug("Dossier: " + dossier);
+            log.debug("Suivi: " + suivi);
             delegate.deleteLienSuivi(subject,dossier,suivi);
             populateDossierForm(subject, dossier, dossierForm);
             request.getSession().setAttribute("dossier", dossierForm);
@@ -3314,7 +3314,7 @@ public class DossierAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Suppression d'un lien entre une consignation et un dossier.");
+        log.debug("Suppression d'un lien entre une consignation et un dossier.");
         ActionMessages errors = new ActionMessages();
 
         try {
@@ -3331,8 +3331,8 @@ public class DossierAction extends AbstractAction {
                     subject.getLocale());
             ValueObjectMapper.convertConsignationHtmlForm(consignationForm, consignation,
                     subject.getLocale());
-            log.fine("Dossier: " + dossier);
-            log.fine("Consignation: " + consignation);
+            log.debug("Dossier: " + dossier);
+            log.debug("Consignation: " + consignation);
             delegate.deleteLienConsignation(subject,dossier,consignation);
             populateDossierForm(subject, dossier, dossierForm);
             request.getSession().setAttribute("dossier", dossierForm);
@@ -3380,7 +3380,7 @@ public class DossierAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Suppression d'un lien entre un service d'urgence et un dossier.");
+        log.debug("Suppression d'un lien entre un service d'urgence et un dossier.");
         ActionMessages errors = new ActionMessages();
 
         try {
@@ -3397,8 +3397,8 @@ public class DossierAction extends AbstractAction {
                     subject.getLocale());
             ValueObjectMapper.convertUrgenceHtmlForm(urgenceForm, urgence,
                     subject.getLocale());
-            log.fine("Dossier : " + dossier);
-            log.fine("Urgence : " + urgence);
+            log.debug("Dossier : " + dossier);
+            log.debug("Urgence : " + urgence);
             delegate.deleteLienUrgence(subject,dossier,urgence);
             populateDossierForm(subject, dossier, dossierForm);
             request.getSession().setAttribute("dossier", dossierForm);
@@ -3446,7 +3446,7 @@ public class DossierAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Suppression d'un lien entre une photo et un dossier.");
+        log.debug("Suppression d'un lien entre une photo et un dossier.");
         ActionMessages errors = new ActionMessages();
 
         try {
@@ -3463,8 +3463,8 @@ public class DossierAction extends AbstractAction {
                     subject.getLocale());
             ValueObjectMapper.convertPhotoHtmlForm(photoForm, photo,
                     subject.getLocale());
-            log.fine("Dossier: " + dossier);
-            log.fine("Photo: " + photo);
+            log.debug("Dossier: " + dossier);
+            log.debug("Photo: " + photo);
             delegate.deleteLienPhoto(subject,dossier,photo);
             populateDossierForm(subject, dossier, dossierForm);
             request.getSession().setAttribute("dossier", dossierForm);
@@ -3513,7 +3513,7 @@ public class DossierAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Mise � jour d'un lien entre une narration et un dossier.");
+        log.debug("Mise � jour d'un lien entre une narration et un dossier.");
         ActionMessages errors = new ActionMessages();
 
         try {
@@ -3531,8 +3531,8 @@ public class DossierAction extends AbstractAction {
             ValueObjectMapper.convertNarrationHtmlForm(narrationForm, narration,
                     subject.getLocale());
             narration.setDossier(dossier);
-            log.fine("Dossier: " + dossier);
-            log.fine("Narration: " + narration);
+            log.debug("Dossier: " + dossier);
+            log.debug("Narration: " + narration);
             delegate.updateLienNarration(subject,narration);
             populateDossierForm(subject, dossier, dossierForm);
             request.getSession().setAttribute("dossier", dossierForm);
@@ -3583,7 +3583,7 @@ public class DossierAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Mise � jour d'un lien entre un suivi et un dossier.");
+        log.debug("Mise � jour d'un lien entre un suivi et un dossier.");
         ActionMessages errors = new ActionMessages();
 
         try {
@@ -3604,8 +3604,8 @@ public class DossierAction extends AbstractAction {
                     subject.getLocale());
             ValueObjectMapper.convertSuiviHtmlForm(suiviForm, suivi,
                     subject.getLocale());
-            log.fine("Dossier: " + dossier);
-            log.fine("Suivi: " + suivi);
+            log.debug("Dossier: " + dossier);
+            log.debug("Suivi: " + suivi);
             delegate.updateLienSuivi(subject,suivi);
             populateDossierForm(subject, dossier, dossierForm);
             request.getSession().setAttribute("dossier", dossierForm);
@@ -3644,7 +3644,7 @@ public class DossierAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Mise � jour d'un lien entre une consignation et un dossier.");
+        log.debug("Mise � jour d'un lien entre une consignation et un dossier.");
         ActionMessages errors = new ActionMessages();
 
         try {
@@ -3661,8 +3661,8 @@ public class DossierAction extends AbstractAction {
                     subject.getLocale());
             ValueObjectMapper.convertConsignationHtmlForm(consignationForm, consignation,
                     subject.getLocale());
-            log.fine("Dossier: " + dossier);
-            log.fine("Consignation: " + consignation);
+            log.debug("Dossier: " + dossier);
+            log.debug("Consignation: " + consignation);
             delegate.updateLienConsignation(subject,consignation);
             populateDossierForm(subject, dossier, dossierForm);
             request.getSession().setAttribute("dossier", dossierForm);
@@ -3701,7 +3701,7 @@ public class DossierAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Mise � jour d'un lien entre un service d'urgence et un dossier.");
+        log.debug("Mise � jour d'un lien entre un service d'urgence et un dossier.");
         ActionMessages errors = new ActionMessages();
 
         try {
@@ -3728,8 +3728,8 @@ public class DossierAction extends AbstractAction {
                     subject.getLocale());
             ValueObjectMapper.convertUrgenceHtmlForm(urgenceForm, urgence,
                     subject.getLocale());
-            log.fine("Dossier: " + dossier);
-            log.fine("Urgence: " + urgence);
+            log.debug("Dossier: " + dossier);
+            log.debug("Urgence: " + urgence);
             delegate.updateLienUrgence(subject,dossier,urgence);
             populateDossierForm(subject, dossier, dossierForm);
             request.getSession().setAttribute("dossier", dossierForm);
@@ -3768,12 +3768,12 @@ public class DossierAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Approbation d'une narration li�e � un dossier.");
+        log.debug("Approbation d'une narration li�e � un dossier.");
         ActionMessages errors = new ActionMessages();
         CardexUser user = (CardexUser)subject.getUser();
         CardexPrivilege privilege = (CardexPrivilege)subject.getPrivilege();
         String currentDate = TimestampFormat.format(new Timestamp(System.currentTimeMillis()),subject.getLocale(),true);
-log.fine("Date du jour : " + currentDate);
+log.debug("Date du jour : " + currentDate);
         try {
         	verifierToken(request);
             DossierBusinessDelegate delegate = new DossierBusinessDelegate();
@@ -3794,8 +3794,8 @@ log.fine("Date du jour : " + currentDate);
             ValueObjectMapper.convertNarrationHtmlForm(narrationForm, narration,
                     subject.getLocale());
             narration.setDossier(dossier);
-            log.fine("Dossier: " + dossier);
-            log.fine("Narration: " + narration);
+            log.debug("Dossier: " + dossier);
+            log.debug("Narration: " + narration);
             delegate.approuveLienNarration(subject,narration);
             populateDossierForm(subject, dossier, dossierForm);
             request.getSession().setAttribute("dossier", dossierForm);
@@ -3846,7 +3846,7 @@ log.fine("Date du jour : " + currentDate);
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Approbation d'une suivi li�e � un dossier.");
+        log.debug("Approbation d'une suivi li�e � un dossier.");
         ActionMessages errors = new ActionMessages();
         CardexUser user = (CardexUser)subject.getUser();
         CardexPrivilege privilege = (CardexPrivilege)subject.getPrivilege();
@@ -3871,8 +3871,8 @@ log.fine("Date du jour : " + currentDate);
                     subject.getLocale());
             ValueObjectMapper.convertSuiviHtmlForm(suiviForm, suivi,
                     subject.getLocale());
-            log.fine("Dossier: " + dossier);
-            log.fine("Suivi: " + suivi);
+            log.debug("Dossier: " + dossier);
+            log.debug("Suivi: " + suivi);
             delegate.approuveLienSuivi(subject,suivi);
             populateDossierForm(subject, dossier, dossierForm);
             request.getSession().setAttribute("dossier", dossierForm);
@@ -3911,7 +3911,7 @@ log.fine("Date du jour : " + currentDate);
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Approbation d'une consignation li�e � un dossier.");
+        log.debug("Approbation d'une consignation li�e � un dossier.");
         ActionMessages errors = new ActionMessages();
         CardexUser user = (CardexUser)subject.getUser();
         String currentDate = TimestampFormat.format(new Timestamp(System.currentTimeMillis()),subject.getLocale(),true);
@@ -3932,8 +3932,8 @@ log.fine("Date du jour : " + currentDate);
                     subject.getLocale());
             ValueObjectMapper.convertConsignationHtmlForm(consignationForm, consignation,
                     subject.getLocale());
-            log.fine("Dossier: " + dossier);
-            log.fine("Suivi: " + consignation);
+            log.debug("Dossier: " + dossier);
+            log.debug("Suivi: " + consignation);
             delegate.approuveLienConsignation(subject,consignation);
             populateDossierForm(subject, dossier, dossierForm);
             request.getSession().setAttribute("dossier", dossierForm);
@@ -3972,7 +3972,7 @@ log.fine("Date du jour : " + currentDate);
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Permettre la modification d'une narration li�e � un dossier.");
+        log.debug("Permettre la modification d'une narration li�e � un dossier.");
         ActionMessages errors = new ActionMessages();
 
         try {
@@ -3996,8 +3996,8 @@ log.fine("Date du jour : " + currentDate);
             ValueObjectMapper.convertNarrationHtmlForm(narrationForm, narration,
                     subject.getLocale());
             narration.setDossier(dossier);
-            log.fine("Dossier: " + dossier);
-            log.fine("Narration: " + narration);
+            log.debug("Dossier: " + dossier);
+            log.debug("Narration: " + narration);
             delegate.approuveLienNarration(subject,narration);
             populateDossierForm(subject, dossier, dossierForm);
             request.getSession().setAttribute("dossier", dossierForm);
@@ -4048,7 +4048,7 @@ log.fine("Date du jour : " + currentDate);
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Permettre la modification d'une suivi li�e � un dossier.");
+        log.debug("Permettre la modification d'une suivi li�e � un dossier.");
         ActionMessages errors = new ActionMessages();
         String currentDate = TimestampFormat.format(new Timestamp(System.currentTimeMillis()),subject.getLocale(),true);
 
@@ -4068,8 +4068,8 @@ log.fine("Date du jour : " + currentDate);
                     subject.getLocale());
             ValueObjectMapper.convertSuiviHtmlForm(suiviForm, suivi,
                     subject.getLocale());
-            log.fine("Dossier: " + dossier);
-            log.fine("Suivi: " + suivi);
+            log.debug("Dossier: " + dossier);
+            log.debug("Suivi: " + suivi);
             delegate.updateLienSuivi(subject,suivi);
             populateDossierForm(subject, dossier, dossierForm);
             request.getSession().setAttribute("dossier", dossierForm);
@@ -4109,7 +4109,7 @@ log.fine("Date du jour : " + currentDate);
         Dossier  dossier = delegate.find(subject, criteria);
 
         dossierForm.resetOnglets();
-        //log.fine("Dossier trouv�: " + dossier.toString());
+        //log.debug("Dossier trouv�: " + dossier.toString());
         ValueObjectMapper.convertDossier(dossier, dossierForm,subject.getLocale());
         dossierForm.setConfirmationMotPasse(dossierForm.getMotPasse());
 		rechercheLiensDossier(subject, dossier, dossierForm, delegate);
@@ -4138,7 +4138,7 @@ log.fine("Date du jour : " + currentDate);
 //        Dossier  dossier = delegate.find(subject, criteria);
 
         dossierForm.resetOnglets();
-        //log.fine("Dossier trouv�: " + dossier.toString());
+        //log.debug("Dossier trouv�: " + dossier.toString());
 //        ValueObjectMapper.convertDossier(dossier, dossierForm,subject.getLocale());
         dossierForm.setConfirmationMotPasse(dossierForm.getMotPasse());
         //Recherche de tous les enregistrements li�s dans les onglets
@@ -4168,7 +4168,7 @@ log.fine("Date du jour : " + currentDate);
                 dossier);
         Iterator   it = liensDossier.iterator();
 
-        log.fine("Dossier li�s (" + liensDossier.size() + ") :");
+        log.debug("Dossier li�s (" + liensDossier.size() + ") :");
 
         while (it.hasNext()) {
             Dossier     linkDossier = (Dossier) it.next();
@@ -4179,7 +4179,7 @@ log.fine("Date du jour : " + currentDate);
                     subject.getLocale());
             linkDossierForm.assignerValeurDeListe( subject );
             dossierForm.addDossier(linkDossierForm);
-            log.fine(linkDossier.toString());
+            log.debug(linkDossier.toString());
         }
         dossierForm.getListeDossiers().assignerTrierDefault(DossierOngletTrieListe.CLE_DATE_DEBUT, true, new DossierOngletTrieListe());
         
@@ -4187,7 +4187,7 @@ log.fine("Date du jour : " + currentDate);
         Collection liensNarration = delegate.findLiensNarration(subject, dossier);
         it = liensNarration.iterator();
 
-        log.fine("Narration li�s (" + liensNarration.size() + ") :");
+        log.debug("Narration li�s (" + liensNarration.size() + ") :");
 
         while (it.hasNext()) {
             Narration     linkNarration = (Narration) it.next();
@@ -4202,19 +4202,19 @@ log.fine("Date du jour : " + currentDate);
                     subject.getLocale());
             linkNarrationForm.assignerValeurDeListe( subject );
             dossierForm.addNarration(linkNarrationForm);
-            log.fine(linkNarration.toString());
+            log.debug(linkNarration.toString());
         }
         dossierForm.getListeNarrations().assignerTrierDefault(NarrationOngletTrieListe.CLE_DATE_CREATION, true, new NarrationOngletTrieListe());
 
         // Recherche des liens billets
         Collection<BilletVO> liensBillet = delegate.trouverLiensBillet(subject, dossier);
-        log.fine("Billets li�s (" + liensBillet.size() + ") :");
+        log.debug("Billets li�s (" + liensBillet.size() + ") :");
         //DecimalFormat df = new DecimalFormat("#,##0.00", new DecimalFormatSymbols(subject.getLocale()));
         for (BilletVO billetVO:liensBillet){
         	BilletForm billetForm = new BilletForm();
             ValueObjectMapper.convert(billetVO, billetForm, subject.getLocale());
             dossierForm.addBillet(billetForm);
-            log.fine(billetForm.toString());
+            log.debug(billetForm.toString());
         }
         dossierForm.getListeBillets().assignerTrierDefault(BilletOngletTrieListe.CLE_NOM_BILLET, true, new BilletOngletTrieListe());
         
@@ -4223,7 +4223,7 @@ log.fine("Date du jour : " + currentDate);
                 dossier);
         it = liensSujet.iterator();
 
-        log.fine("Sujets li�s (" + liensSujet.size() + ") :");
+        log.debug("Sujets li�s (" + liensSujet.size() + ") :");
 
         while (it.hasNext()) {
             Sujet     linkSujet = (Sujet) it.next();
@@ -4233,7 +4233,7 @@ log.fine("Date du jour : " + currentDate);
                     subject.getLocale());
             linkSujetForm.assignerValeurDeListe(subject);
             dossierForm.addSujet(linkSujetForm);
-            log.fine(linkSujet.toString());
+            log.debug(linkSujet.toString());
         }
         dossierForm.getListeSujets().assignerTrierDefault(SujetOngletTrieListe.CLE_NOM, false, new SujetOngletTrieListe());
 
@@ -4242,7 +4242,7 @@ log.fine("Date du jour : " + currentDate);
                 dossier);
         it = liensPhoto.iterator();
 
-        log.fine("Photos li�s (" + liensPhoto.size() + ") :");
+        log.debug("Photos li�s (" + liensPhoto.size() + ") :");
 
         while (it.hasNext()) {
             Collection sublist = new ArrayList();
@@ -4253,7 +4253,7 @@ log.fine("Date du jour : " + currentDate);
                 ValueObjectMapper.convertPhoto(linkPhoto, linkPhotoForm,
                         subject.getLocale());
                 sublist.add(linkPhotoForm);
-                log.fine(linkPhoto.toString());
+                log.debug(linkPhoto.toString());
               }//if
             }//for
             dossierForm.addPhoto(sublist);
@@ -4264,7 +4264,7 @@ log.fine("Date du jour : " + currentDate);
                 dossier);
         it = liensPieceJointe.iterator();
 
-        log.fine("PieceJointes li�s (" + liensPieceJointe.size() + ") :");
+        log.debug("PieceJointes li�s (" + liensPieceJointe.size() + ") :");
 
         while (it.hasNext()) {
             Photo     linkPieceJointe = (Photo) it.next();
@@ -4277,10 +4277,10 @@ log.fine("Date du jour : " + currentDate);
         // Recherche des liens jeux
         Jeux liensJeux = delegate.findLiensJeux(subject,
                 dossier);
-        log.fine("Jeux li�s (" + liensJeux.getJeuxChoisis().size() + ") :");
+        log.debug("Jeux li�s (" + liensJeux.getJeuxChoisis().size() + ") :");
         JeuxForm linkJeuxForm = new JeuxForm();
         ValueObjectMapper.convertJeux(subject, liensJeux,linkJeuxForm,subject.getLocale());
-        log.fine(linkJeuxForm.toString());
+        log.debug(linkJeuxForm.toString());
         dossierForm.setJeux(linkJeuxForm);
 
         // Recherche des liens inscriptions
@@ -4288,14 +4288,14 @@ log.fine("Date du jour : " + currentDate);
                 dossier);
         it = liensInscription.iterator();
 
-        log.fine("Inscriptions li�s (" + liensInscription.size() + ") :");
+        log.debug("Inscriptions li�s (" + liensInscription.size() + ") :");
 
         while (it.hasNext()) {
             Inscription     linkInscription = (Inscription) it.next();
             InscriptionForm linkInscriptionForm = new InscriptionForm();
             ValueObjectMapper.convertInscription(linkInscription, linkInscriptionForm,
                     subject.getLocale());
-            log.fine(linkInscription.toString());
+            log.debug(linkInscription.toString());
             linkInscriptionForm.assignerValeurDeListe( subject );
             dossierForm.addInscription(linkInscriptionForm);
         }//while
@@ -4306,14 +4306,14 @@ log.fine("Date du jour : " + currentDate);
                 dossier);
         it = liensSuivi.iterator();
 
-        log.fine("Suivis li�s (" + liensSuivi.size() + ") :");
+        log.debug("Suivis li�s (" + liensSuivi.size() + ") :");
 
         while (it.hasNext()) {
             Suivi     linkSuivi = (Suivi) it.next();
             SuiviForm linkSuiviForm = new SuiviForm();
             ValueObjectMapper.convertSuivi(linkSuivi, linkSuiviForm,
                     subject.getLocale());
-            log.fine(linkSuivi.toString());
+            log.debug(linkSuivi.toString());
             linkSuiviForm.assignerValeurDeListe( subject );
             dossierForm.addSuivi(linkSuiviForm);
         }//while
@@ -4324,14 +4324,14 @@ log.fine("Date du jour : " + currentDate);
                 dossier);
         it = liensConsignation.iterator();
 
-        log.fine("Consignations li�es (" + liensConsignation.size() + ") :");
+        log.debug("Consignations li�es (" + liensConsignation.size() + ") :");
 
         while (it.hasNext()) {
             Consignation     linkConsignation = (Consignation) it.next();
             ConsignationForm linkConsignationForm = new ConsignationForm();
             ValueObjectMapper.convertConsignation(linkConsignation, linkConsignationForm,
                     subject.getLocale());
-            log.fine(linkConsignation.toString());
+            log.debug(linkConsignation.toString());
             linkConsignationForm.assignerValeurDeListe( subject );
             dossierForm.addConsignation(linkConsignationForm);
         }//while
@@ -4342,7 +4342,7 @@ log.fine("Date du jour : " + currentDate);
                 dossier);
         it = liensSociete.iterator();
 
-        log.fine("Societes li�s (" + liensSociete.size() + ") :");
+        log.debug("Societes li�s (" + liensSociete.size() + ") :");
 
         while (it.hasNext()) {
             Societe     linkSociete = (Societe) it.next();
@@ -4353,7 +4353,7 @@ log.fine("Date du jour : " + currentDate);
             linkSocieteForm.assignerValeurDeListe( subject );
             linkSocieteForm.assignerPermettreSuppressionLiaison(subject,dossierForm);
             dossierForm.addSociete(linkSocieteForm);
-            log.fine(linkSociete.toString());
+            log.debug(linkSociete.toString());
         }
         dossierForm.getListeSocietes().assignerTrierDefault(SocieteOngletTrieListe.CLE_NOM, false, new SocieteOngletTrieListe());
         
@@ -4362,7 +4362,7 @@ log.fine("Date du jour : " + currentDate);
                 dossier);
         it = liensVehicule.iterator();
 
-        log.fine("Vehicule li�s (" + liensVehicule.size() + ") :");
+        log.debug("Vehicule li�s (" + liensVehicule.size() + ") :");
 
         while (it.hasNext()) {
             Vehicule     linkVehicule = (Vehicule) it.next();
@@ -4372,14 +4372,14 @@ log.fine("Date du jour : " + currentDate);
                     subject.getLocale());
             linkVehiculeForm.assignerValeurDeListe( subject );
             dossierForm.addVehicule(linkVehiculeForm);
-            log.fine(linkVehicule.toString());
+            log.debug(linkVehicule.toString());
         }
         dossierForm.getListeVehicules().assignerTrierDefault(VehiculeOngletTrieListe.CLE_IMMATRICULATION, false, new VehiculeOngletTrieListe());
         
         // Recherche des liens SousCat�gories
         SousCategoriesVO sousCategoriesVO = delegate.findLiensSousCategories(subject, dossier);
         it = sousCategoriesVO.getSousCategories().iterator();
-        log.fine("SousCat�gories li�s (" + sousCategoriesVO.getSousCategories().size() + ") :");
+        log.debug("SousCat�gories li�s (" + sousCategoriesVO.getSousCategories().size() + ") :");
         List listeSousCategorie = new ArrayList();
         
         while (it.hasNext()) {
@@ -4394,12 +4394,12 @@ log.fine("Date du jour : " + currentDate);
         // Recherche des intervenants du partage
         Collection liensPartage = delegate.findLiensPartage(subject, dossier);
         it = liensPartage.iterator();
-        log.fine("Intervenants li�s (" + liensPartage.size() + ") :");
+        log.debug("Intervenants li�s (" + liensPartage.size() + ") :");
         while (it.hasNext()) {        
         	Partage partage = (Partage) it.next();
         	PartageForm partageForm = new PartageForm();
         	ValueObjectMapper.convertPartage(partage,partageForm,subject.getLocale());
-        	log.fine(partageForm.toString());
+        	log.debug(partageForm.toString());
         	partageForm.assignerValeurDeListe(subject);
         	dossierForm.addPartage(partageForm);        
         }
@@ -4409,13 +4409,13 @@ log.fine("Date du jour : " + currentDate);
         Collection liensEvaluation = delegate.findLiensEvaluation(subject, dossier);
         it = liensEvaluation.iterator();
 
-        log.fine("�valuations li�es (" + liensEvaluation.size() + ") :");
+        log.debug("�valuations li�es (" + liensEvaluation.size() + ") :");
 
         while (it.hasNext()) {
         	Evaluation     linkEvaluation = (Evaluation) it.next();
         	EvaluationForm linkEvaluationForm = new EvaluationForm();
         	ValueObjectMapper.convertEvaluation(subject, linkEvaluation, linkEvaluationForm, subject.getLocale());
-            log.fine(linkEvaluation.toString());
+            log.debug(linkEvaluation.toString());
             linkEvaluationForm.assignerValeurDeListe( subject );
             dossierForm.addEvaluation(linkEvaluationForm);
         }//while
@@ -4425,14 +4425,14 @@ log.fine("Date du jour : " + currentDate);
         Collection liensUrgence = delegate.findLiensUrgence(subject, dossier);
         it = liensUrgence.iterator();
 
-        log.fine("Service d'urgence li�s (" + liensUrgence.size() + ") :");
+        log.debug("Service d'urgence li�s (" + liensUrgence.size() + ") :");
 
         while (it.hasNext()) {
         	Urgence     linkUrgence = (Urgence) it.next();
         	UrgenceForm linkUrgenceForm = new UrgenceForm();
             ValueObjectMapper.convertUrgence(linkUrgence, linkUrgenceForm,
                     subject.getLocale());
-            log.fine(linkUrgence.toString());
+            log.debug(linkUrgence.toString());
             linkUrgenceForm.assignerValeurDeListe( subject );
             dossierForm.addUrgence(linkUrgenceForm);
         }//while
@@ -4486,7 +4486,7 @@ log.fine("Date du jour : " + currentDate);
                                  ActionForm form,
                                  HttpServletRequest request,
                                  HttpServletResponse response){
-        log.fine("Rafra�chissement des informations en m�moire cache");
+        log.debug("Rafra�chissement des informations en m�moire cache");
         ViderCacheUtil.getInstance().assignerViderCaches();
         SujetInteretGalerieCache.vider(); // vider la liste de sujet d'int�r�t actif/inactif
         
@@ -4518,7 +4518,7 @@ log.fine("Date du jour : " + currentDate);
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException, DAOException {
-        log.fine("Affichage d'une pi�ce jointe.");
+        log.debug("Affichage d'une pi�ce jointe.");
         PhotoForm photoForm = (PhotoForm)form;
 		photoForm.setUrl("");
         request.getSession().setAttribute("photo", photoForm);
@@ -4544,7 +4544,7 @@ log.fine("Date du jour : " + currentDate);
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException, DAOException {
-        log.fine("Modification d'un lien entre une pi�ce jointe et un dossier.");
+        log.debug("Modification d'un lien entre une pi�ce jointe et un dossier.");
         ActionMessages errors = new ActionMessages();
 
         try {
@@ -4554,7 +4554,7 @@ log.fine("Date du jour : " + currentDate);
             PhotoForm photoForm = (PhotoForm) form;
             Photo photo = new PhotoVO();
             ValueObjectMapper.convertPhotoHtmlForm(photoForm, photo, subject.getLocale());
-            log.fine("Pi�ce jointe: " + photo);
+            log.debug("Pi�ce jointe: " + photo);
 
             delegate.updateLienMultimedia(subject, photo);
             
@@ -4594,7 +4594,7 @@ log.fine("Date du jour : " + currentDate);
                                 HttpServletRequest request,
                                 HttpServletResponse response) throws IOException,
                                 ServletException {
-        log.fine("Logout du Cardex");
+        log.debug("Logout du Cardex");
        return mapping.findForward("success");
    }
     
@@ -4614,7 +4614,7 @@ log.fine("Date du jour : " + currentDate);
 	HttpServletRequest request,
 	HttpServletResponse response) throws IOException,
 	ServletException {
-		log.fine("Sauvegarde de la cr�ation d'un nouveau dossier");
+		log.debug("Sauvegarde de la cr�ation d'un nouveau dossier");
 
 		ActionErrors errors = new ActionErrors();
 		DossierForm dossierForm = (DossierForm) form;
@@ -4629,7 +4629,7 @@ log.fine("Date du jour : " + currentDate);
 
 			dossierDelegate.modifierApprouveLienSousCategorie(subject, dossier, true);
 
-			log.fine("# Cl� de dossier retourn� : " + dossier.getCle());
+			log.debug("# Cl� de dossier retourn� : " + dossier.getCle());
 
 			populateDossierForm(subject, dossier, dossierForm);
 
@@ -4664,7 +4664,7 @@ log.fine("Date du jour : " + currentDate);
 	HttpServletRequest request,
 	HttpServletResponse response) throws IOException,
 	ServletException {
-		log.fine("Sauvegarde de la cr�ation d'un nouveau dossier");
+		log.debug("Sauvegarde de la cr�ation d'un nouveau dossier");
 
 		ActionErrors errors = new ActionErrors();
 		DossierForm dossierForm = (DossierForm) form;
@@ -4679,7 +4679,7 @@ log.fine("Date du jour : " + currentDate);
 
 			dossierDelegate.modifierApprouveLienSousCategorie(subject, dossier, false);
 
-			log.fine("# Cl� de dossier retourn� : " + dossier.getCle());
+			log.debug("# Cl� de dossier retourn� : " + dossier.getCle());
 
 			populateDossierForm(subject, dossier, dossierForm);
 
@@ -4721,7 +4721,7 @@ log.fine("Date du jour : " + currentDate);
                                 HttpServletRequest request,
                                 HttpServletResponse response) throws IOException,
                                 ServletException {
-        log.fine("Recherche des dossiers partag�s");
+        log.debug("Recherche des dossiers partag�s");
 
         ActionMessages errors = new ActionMessages();
 
@@ -4733,7 +4733,7 @@ log.fine("Date du jour : " + currentDate);
 
 			// Conversion du composant d'�tat(ActionForm) en composant d'affaire(Value Object)
 			ValueObjectMapper.convertCriteresRechercheDossierHtmlForm(criteresRechercheDossierHtmlForm, criteresRechercheDossier,subject.getLocale());
-			log.fine(criteresRechercheDossier.toString());
+			log.debug(criteresRechercheDossier.toString());
 
 			// Ex�cution de la recherche via le service d'affaire(BusinessDelegate)
 			List<Dossier> dossierList = delegate.recherchePartage(subject,criteresRechercheDossier);
@@ -4767,7 +4767,7 @@ log.fine("Date du jour : " + currentDate);
 		    HttpServletRequest request,
 		    HttpServletResponse response) throws IOException,
 		    ServletException {
-		    	log.fine("Inscrire une date de paiement aux billets");
+		    	log.debug("Inscrire une date de paiement aux billets");
 		        ActionMessages errors = new ActionMessages();
 		        
 		        try {
@@ -4818,7 +4818,7 @@ log.fine("Date du jour : " + currentDate);
                                        HttpServletRequest request,
                                        HttpServletResponse response) throws IOException,
                                        ServletException {
-        log.fine("Validation de la recherche de dossiers pour les rapports");
+        log.debug("Validation de la recherche de dossiers pour les rapports");
 
         ActionMessages errors = new ActionMessages();
 
@@ -4883,11 +4883,11 @@ log.fine("Date du jour : " + currentDate);
             PhotoForm photoForm = dossierForm.getAjoutPhoto();
             //Est ce que la taille du fichier exc�de 7 Mo pour les images
             if (photoForm.isTailleAccepte() == false) {
-                  log.severe("La taille du fichier est sup�rieure � 7 Mo.");
+                  log.error("La taille du fichier est sup�rieure � 7 Mo.");
                   throw (new BusinessRuleExceptionHandle("erreur_fichier")).getBusinessException();
             }
             if(photoForm.isPhoto() == false) {
-               log.severe("Ce fichier n'est pas une photo");
+               log.error("Ce fichier n'est pas une photo");
                throw (new BusinessRuleExceptionHandle("erreur.ajout.type.photo")).getBusinessException();
             }
             
@@ -4918,14 +4918,14 @@ log.fine("Date du jour : " + currentDate);
         photoForm.setExtension(photoForm.getExtensionDeFilePath());
         
         Photo photo = new PhotoVO();
-        log.fine("PhotoForm a li�e : " + photoForm);
+        log.debug("PhotoForm a li�e : " + photoForm);
 
         ValueObjectMapper.convertPhotoHtmlForm(photoForm,photo,subject.getLocale());
         
         FormFile   file = photoForm.getUploadImage();
         byte[] data = file.getFileData();
         photo.setImage( data );
-        log.fine("Photo a li�e : " + photo);
+        log.debug("Photo a li�e : " + photo);
 
         return photo;
     }
@@ -4950,7 +4950,7 @@ log.fine("Date du jour : " + currentDate);
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Liaison d'une �valuation � un dossier.");
+        log.debug("Liaison d'une �valuation � un dossier.");
         ActionMessages errors = new ActionMessages();
 
         try {
@@ -5001,8 +5001,8 @@ log.fine("Date du jour : " + currentDate);
 		dossier.setSite(Long.valueOf(evaluationForm.getLienSite()));
 		ValueObjectMapper.convertEvaluationHtmlForm(evaluationForm, evaluation,
 		        subject.getLocale());
-		log.fine("Dossier: " + dossier);
-		log.fine("Evaluation: " + evaluation);
+		log.debug("Dossier: " + dossier);
+		log.debug("Evaluation: " + evaluation);
 		
 		for(MiseEvaluationForm miseEvaluationForm:evaluationForm.getMisesEvaluation()){
 			MiseEvaluationVO miseEvaluationVO = new MiseEvaluationVO();
@@ -5044,7 +5044,7 @@ log.fine("Date du jour : " + currentDate);
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Suppression d'un lien entre une �valuation et un dossier.");
+        log.debug("Suppression d'un lien entre une �valuation et un dossier.");
         ActionMessages errors = new ActionMessages();
 
         try {
@@ -5060,8 +5060,8 @@ log.fine("Date du jour : " + currentDate);
                     subject.getLocale());
             ValueObjectMapper.convertEvaluationHtmlForm(evaluationForm, evaluation,
                     subject.getLocale());
-            log.fine("Dossier: " + dossier);
-            log.fine("Evaluation : " + evaluation);
+            log.debug("Dossier: " + dossier);
+            log.debug("Evaluation : " + evaluation);
             delegate.deleteLienEvaluation(subject, dossier, evaluation);
             populateDossierForm(subject, dossier, dossierForm);
             request.getSession().setAttribute("dossier", dossierForm);
@@ -5104,7 +5104,7 @@ log.fine("Date du jour : " + currentDate);
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Mise � jour d'un lien entre une �valuation et un dossier.");
+        log.debug("Mise � jour d'un lien entre une �valuation et un dossier.");
         ActionMessages errors = new ActionMessages();
 
         try {
@@ -5151,7 +5151,7 @@ log.fine("Date du jour : " + currentDate);
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Sauvegarde imm�diate d'une �valuation");
+        log.debug("Sauvegarde imm�diate d'une �valuation");
         ActionMessages errors = new ActionMessages();
 
         try {
@@ -5203,7 +5203,7 @@ log.fine("Date du jour : " + currentDate);
                                         HttpServletRequest request,
                                         HttpServletResponse response) throws IOException,
                                         ServletException {
-        log.fine("Recherche directe de dossiers");
+        log.debug("Recherche directe de dossiers");
 
         ActionMessages errors = new ActionMessages();
 

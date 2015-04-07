@@ -9,7 +9,6 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
-import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +19,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessages;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardex.business.Adresse;
 import com.lotoquebec.cardex.business.Caracteristiques;
@@ -67,13 +68,12 @@ import com.lotoquebec.cardexCommun.exception.BusinessException;
 import com.lotoquebec.cardexCommun.exception.BusinessResourceException;
 import com.lotoquebec.cardexCommun.exception.ValueObjectMapperException;
 import com.lotoquebec.cardexCommun.integration.dao.cleListe.cleSQLListeCache.TableValeurCleSQLListeCache;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.presentation.util.AbstractAction;
 import com.lotoquebec.cardexCommun.securite.GestionnaireSecurite;
 import com.lotoquebec.cardexCommun.util.CodeLangue;
 
 /**
- * Cette classe gère les événements en rapport
+ * Cette classe gï¿½re les ï¿½vï¿½nements en rapport
  * avec le cas d'utilisation gestion des dossiers.
  *
  * @author $Author: mlibersan $
@@ -85,20 +85,20 @@ public class PrintAction extends AbstractAction {
      * L'instance du gestionnaire de journalisation.
      */
 	private final Logger      log =
-        (Logger)LoggerCardex.getLogger((this.getClass()));
+        LoggerFactory.getLogger((this.getClass()));
 
     /**
      * <p>
-     * Cet événement survient lorsque l'utilisateur clique sur le bouton Imprimer 
-     * de l'écran de consultation d'un dossier sans inscription. 
+     * Cet ï¿½vï¿½nement survient lorsque l'utilisateur clique sur le bouton Imprimer 
+     * de l'ï¿½cran de consultation d'un dossier sans inscription. 
      *
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortie survient
+     * @exception IOException si une erreur d'entrï¿½e/sortie survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward choosePrintDossier(CardexAuthenticationSubject subject,
@@ -107,7 +107,7 @@ public class PrintAction extends AbstractAction {
                                         HttpServletRequest request,
                                         HttpServletResponse response) throws IOException,
                                         ServletException {
-        log.fine("Choix d'impression d'un dossier");
+        log.debug("Choix d'impression d'un dossier");
         ActionErrors errors = new ActionErrors();
         DossierForm         dossierForm = (DossierForm) form;
         Dossier             dossier = new DossierVO();
@@ -115,7 +115,7 @@ public class PrintAction extends AbstractAction {
         GestionnaireSecurite.validerValeurAccessible(subject, new TableValeurCleSQLListeCache(subject, GlobalConstants.TableValeur.RAPPORT_DOSSIER, GlobalConstants.ActionSecurite.CONSULTER_DOSSIER), GlobalConstants.ChoixImpressionDossier.DOSSIER);
         
         try {
-	        log.fine("Dossier à imprimer  : " + dossierForm.toString());
+	        log.debug("Dossier ï¿½ imprimer  : " + dossierForm.toString());
 	        ValueObjectMapper.convertDossierHtmlForm(dossierForm, dossier, subject.getLocale());
 	        DossierBusinessDelegate delegate = new DossierBusinessDelegate();
 	        delegate.validerImpressionDossier(subject, dossier);
@@ -123,7 +123,7 @@ public class PrintAction extends AbstractAction {
 	        if (dossierForm.isInscription()) {
 	           	return mapping.findForward("choixFormulaire");
 	        }else {
-                log.fine("Impression d'un dossier sans inscription");
+                log.debug("Impression d'un dossier sans inscription");
                 request.getSession().removeAttribute(GlobalConstants.Impression.DOSSIER_KEY);
                 request.getSession().removeAttribute(GlobalConstants.Impression.SUJET_KEY);
                 request.getSession().removeAttribute(GlobalConstants.Impression.INSCRIPTION_KEY);
@@ -188,16 +188,16 @@ public class PrintAction extends AbstractAction {
 
     /**
      * <p>
-     * Cet événement survient lorsque l'utilisateur clique sur l'icône historique 
-     * de l'écran de consultation d'un dossier sans inscription. 
+     * Cet ï¿½vï¿½nement survient lorsque l'utilisateur clique sur l'icï¿½ne historique 
+     * de l'ï¿½cran de consultation d'un dossier sans inscription. 
      *
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortie survient
+     * @exception IOException si une erreur d'entrï¿½e/sortie survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward choosePrintDossierAudit(CardexAuthenticationSubject subject,
@@ -206,7 +206,7 @@ public class PrintAction extends AbstractAction {
                                         HttpServletRequest request,
                                         HttpServletResponse response) throws IOException,
                                         ServletException {
-        log.fine("Impression historique d'un dossier");
+        log.debug("Impression historique d'un dossier");
         ActionErrors errors = new ActionErrors();
         DossierForm         dossierForm = (DossierForm) form;
         Dossier             dossier = new DossierVO();
@@ -214,7 +214,7 @@ public class PrintAction extends AbstractAction {
         GestionnaireSecurite.validerValeurAccessible(subject, new TableValeurCleSQLListeCache(subject, GlobalConstants.TableValeur.RAPPORT_DOSSIER, GlobalConstants.ActionSecurite.CONSULTER_DOSSIER), GlobalConstants.ChoixImpressionDossier.DOSSIER_HISTORIQUE);
         
         try {
-	        log.fine("Dossier à imprimer  : " + dossierForm.toString());
+	        log.debug("Dossier ï¿½ imprimer  : " + dossierForm.toString());
 	        ValueObjectMapper.convertDossierHtmlForm(dossierForm, dossier, subject.getLocale());
 	        DossierBusinessDelegate delegate = new DossierBusinessDelegate();
 	        delegate.validerImpressionDossier(subject, dossier);
@@ -222,7 +222,7 @@ public class PrintAction extends AbstractAction {
 	        if (dossierForm.isInscription()) { 
 	           	return mapping.findForward("choixFormulaire");
 	        }else {
-                log.fine("Impression d'un dossier sans inscription");
+                log.debug("Impression d'un dossier sans inscription");
                 request.getSession().removeAttribute(GlobalConstants.Impression.DOSSIER_KEY);
                 request.getSession().removeAttribute(GlobalConstants.Impression.SUJET_KEY);
                 request.getSession().removeAttribute(GlobalConstants.Impression.INSCRIPTION_KEY);
@@ -321,16 +321,16 @@ public class PrintAction extends AbstractAction {
 
 	/**
      * <p>
-     * Cet événement survient lorsque l'utilisateur clique sur le bouton Imprimer 
-     * de l'écran de consultation d'un dossier avec inscription. 
+     * Cet ï¿½vï¿½nement survient lorsque l'utilisateur clique sur le bouton Imprimer 
+     * de l'ï¿½cran de consultation d'un dossier avec inscription. 
      *
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortie survient
+     * @exception IOException si une erreur d'entrï¿½e/sortie survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward printDossier(CardexAuthenticationSubject subject,
@@ -339,7 +339,7 @@ public class PrintAction extends AbstractAction {
                                         HttpServletRequest request,
                                         HttpServletResponse response) throws IOException,
                                         ServletException {
-        log.fine("Impression d'un dossier avec inscription");
+        log.debug("Impression d'un dossier avec inscription");
         ActionMessages errors = new ActionMessages();
         Locale localeImpression = null;
 
@@ -363,8 +363,8 @@ public class PrintAction extends AbstractAction {
 
             /// prendre le formulaire et la locale dans le PrintDossierForm
 
-            log.fine("Locale d'impression : " + localeImpression.toString());
-            log.fine("Dossier à imprimer  : " + dossierForm.toString());
+            log.debug("Locale d'impression : " + localeImpression.toString());
+            log.debug("Dossier ï¿½ imprimer  : " + dossierForm.toString());
             ValueObjectMapper.convertDossierHtmlForm(dossierForm, dossier,localeImpression);
             populatePrintDossierForm(localeImpression,subject, dossier, dossierForm);
             request.getSession().setAttribute(GlobalConstants.Impression.DOSSIER_KEY,dossierForm);
@@ -419,7 +419,7 @@ public class PrintAction extends AbstractAction {
     }
     
     /**
-     * Imprimer le dossier avec les photo (jpg, gif) en pièces jointes.
+     * Imprimer le dossier avec les photo (jpg, gif) en piï¿½ces jointes.
      * @param subject
      * @param mapping
      * @param form
@@ -433,14 +433,14 @@ public class PrintAction extends AbstractAction {
 	CardexAuthenticationSubject subject, ActionMapping mapping,
 	ActionForm form, HttpServletRequest request,
 	HttpServletResponse response) throws IOException, ServletException {
-        log.fine("Impression d'un dossier avec les photos des pièces jointes");
+        log.debug("Impression d'un dossier avec les photos des piï¿½ces jointes");
 		ActionErrors errors = new ActionErrors();
 		DossierForm dossierForm = (DossierForm) form;
 
 		GestionnaireSecurite.validerValeurAccessible(subject, new TableValeurCleSQLListeCache(subject, GlobalConstants.TableValeur.RAPPORT_DOSSIER, GlobalConstants.ActionSecurite.CONSULTER_DOSSIER), GlobalConstants.ChoixImpressionDossier.DOSSIER_PIECES_JOINTES);
 		
 		try {
-			log.fine("Impression d'un dossier sans inscription");
+			log.debug("Impression d'un dossier sans inscription");
 			request.getSession().removeAttribute(
 					GlobalConstants.Impression.DOSSIER_KEY);
 			request.getSession().removeAttribute(
@@ -463,7 +463,7 @@ public class PrintAction extends AbstractAction {
 
 			// / prendre le formulaire et la locale dans le PrintDossierForm
 
-			log.fine("Dossier à imprimer  : " + dossierForm.toString());
+			log.debug("Dossier ï¿½ imprimer  : " + dossierForm.toString());
 			ValueObjectMapper.convertDossierHtmlForm(dossierForm, dossier,
 					subject.getLocale());
 
@@ -531,7 +531,7 @@ public class PrintAction extends AbstractAction {
 	}    
     
     /**
-     * Imprimer le dossier historique avec les photo (jpg, gif) en pièces jointes.
+     * Imprimer le dossier historique avec les photo (jpg, gif) en piï¿½ces jointes.
      * @param subject
      * @param mapping
      * @param form
@@ -545,14 +545,14 @@ public class PrintAction extends AbstractAction {
 	CardexAuthenticationSubject subject, ActionMapping mapping,
 	ActionForm form, HttpServletRequest request,
 	HttpServletResponse response) throws IOException, ServletException {
-        log.fine("Impression historique d'un dossier avec les photos des pièces jointes");
+        log.debug("Impression historique d'un dossier avec les photos des piï¿½ces jointes");
 		ActionErrors errors = new ActionErrors();
 		DossierForm dossierForm = (DossierForm) form;
 
 		GestionnaireSecurite.validerValeurAccessible(subject, new TableValeurCleSQLListeCache(subject, GlobalConstants.TableValeur.RAPPORT_DOSSIER, GlobalConstants.ActionSecurite.CONSULTER_DOSSIER), GlobalConstants.ChoixImpressionDossier.DOSSIER_PIECES_JOINTES_HISTORIQUE);
 		
 		try {
-			log.fine("Impression historique d'un dossier sans inscription");
+			log.debug("Impression historique d'un dossier sans inscription");
 			request.getSession().removeAttribute(
 					GlobalConstants.Impression.DOSSIER_KEY);
 			request.getSession().removeAttribute(
@@ -575,7 +575,7 @@ public class PrintAction extends AbstractAction {
 
 			// / prendre le formulaire et la locale dans le PrintDossierForm
 
-			log.fine("Dossier à imprimer  : " + dossierForm.toString());
+			log.debug("Dossier ï¿½ imprimer  : " + dossierForm.toString());
 			ValueObjectMapper.convertDossierHtmlForm(dossierForm, dossier,
 					subject.getLocale());
 
@@ -649,16 +649,16 @@ public class PrintAction extends AbstractAction {
     		
             if (!dossierForm.getInscriptions().isEmpty()) {
                 InscriptionForm inscriptionForm = (InscriptionForm)dossierForm.getInscriptions().iterator().next();
-                //Les contrats bonifiés ont un contrat différent.
+                //Les contrats bonifiï¿½s ont un contrat diffï¿½rent.
                 if (GlobalConstants.Periode.A_SUIVRE.equals( inscriptionForm.getPeriode() )
                 && (GlobalConstants.SiteMaisonJeux.MONTREAL.equals( dossierForm.getSite())
                 	|| GlobalConstants.SiteMaisonJeux.CENTRE_EVALUATION.equals( dossierForm.getSite())
                 	|| GlobalConstants.SiteMaisonJeux.MAISON_JEAN_LAPOINTE.equals( dossierForm.getSite()))){
-                    // A_SUIVRE => Contrat bonifié
-                	// SITE DOSSIER = MONTRÉAL ou Centre d'évaluation ou Maison Jean-Lapointe
+                    // A_SUIVRE => Contrat bonifiï¿½
+                	// SITE DOSSIER = MONTRï¿½AL ou Centre d'ï¿½valuation ou Maison Jean-Lapointe
                 	return GlobalConstants.ChoixImpressionContrat.CONTRAT_AUTOEXCLUSION_MONTREAL;
                 }
-                //Pour les jeux en ligne, le contrat est différent.
+                //Pour les jeux en ligne, le contrat est diffï¿½rent.
                 if(GlobalConstants.Categorie.AE_ESPACEJEUX.equals( dossierForm.getCategorie())){
                 	return GlobalConstants.ChoixImpressionContrat.CONTRAT_AUTOEXCLUSION_ESPACEJEUX;
                 }
@@ -671,13 +671,13 @@ public class PrintAction extends AbstractAction {
     /**
      * <p>
      * Popule les informations imprimables d'un dossier obtenu dans la base de
-     * donnée dans le DossierForm spécifiés.
+     * donnï¿½e dans le DossierForm spï¿½cifiï¿½s.
      *
-     * @param Dossier Les critères du dossier a obtenir
-     * @param DossierForm L'ActionForm bean a populé à partir du dossier obtenu
+     * @param Dossier Les critï¿½res du dossier a obtenir
+     * @param DossierForm L'ActionForm bean a populï¿½ ï¿½ partir du dossier obtenu
      *
-     * @exception BusinessResourceException si une erreur système survient
-     * @exception BusinessException si une règle d'affaire n'est pas respectée
+     * @exception BusinessResourceException si une erreur systï¿½me survient
+     * @exception BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
      */
     private void populatePrintDossierForm(Locale localeImpression,CardexAuthenticationSubject subject,
                                            Dossier criteria,
@@ -687,7 +687,7 @@ public class PrintAction extends AbstractAction {
         DossierBusinessDelegate delegate = new DossierBusinessDelegate();
         Dossier  dossier = delegate.find(subject, criteria);
 
-        log.fine("Dossier trouvé: " + dossier.toString());
+        log.debug("Dossier trouvï¿½: " + dossier.toString());
         dossierForm.resetOnglets();
         ValueObjectMapper.convertDossier(dossier, dossierForm, localeImpression);
 
@@ -697,34 +697,34 @@ public class PrintAction extends AbstractAction {
         // Recherche des liens jeux
         Jeux liensJeux = delegate.findLiensJeux(subject,
                 dossier);
-        log.fine("Jeux liés (" + liensJeux.getJeuxChoisis().size() + ") :");
+        log.debug("Jeux liï¿½s (" + liensJeux.getJeuxChoisis().size() + ") :");
         JeuxForm linkJeuxForm = new JeuxForm();
         ValueObjectMapper.convertJeux(subject, liensJeux,linkJeuxForm,localeImpression);
-        log.fine(linkJeuxForm.toString());
+        log.debug(linkJeuxForm.toString());
         dossierForm.setJeux(linkJeuxForm);
 
         // Recherche des Sujets:
         linked = delegate.findLiensSujet(subject, dossier);
-        log.fine("Sujets liés (" + linked.size() + ") :");
+        log.debug("Sujets liï¿½s (" + linked.size() + ") :");
         it = linked.iterator();
         while (it.hasNext()) {
             Sujet linkSujet = (Sujet) it.next();
-            log.fine(linkSujet.getNumeroFiche());
+            log.debug(linkSujet.getNumeroFiche());
             dossierForm.addSujet(getPrintSujetForm(localeImpression,subject, linkSujet));
         }
 
-        // Recherche des Sociétés:
+        // Recherche des Sociï¿½tï¿½s:
         linked = delegate.findLiensSociete(subject, dossier);
         it = linked.iterator();
-        log.fine("Societes liées (" + linked.size() + ") :");
+        log.debug("Societes liï¿½es (" + linked.size() + ") :");
         while (it.hasNext()) {
             Societe linkSociete = (Societe) it.next();
             dossierForm.addSociete(getPrintSocieteForm(localeImpression,subject, linkSociete));
         }
 
-        // Recherche des Véhicules:
+        // Recherche des Vï¿½hicules:
         linked = delegate.findLiensVehicule(subject, dossier);
-        log.fine("Véhicules liés (" + linked.size() + ") :");
+        log.debug("Vï¿½hicules liï¿½s (" + linked.size() + ") :");
         it = linked.iterator();
         while (it.hasNext()) {
             Vehicule linkVehicule = (Vehicule) it.next();
@@ -733,7 +733,7 @@ public class PrintAction extends AbstractAction {
 
         // Recherche des photos:
         Collection liensPhoto = delegate.findLiensPhoto(subject, dossier);
-        log.fine("Photos liées (" + liensPhoto.size() + ") :");
+        log.debug("Photos liï¿½es (" + liensPhoto.size() + ") :");
         it = liensPhoto.iterator();
         while (it.hasNext()) {
             Collection sublist = new ArrayList();
@@ -744,7 +744,7 @@ public class PrintAction extends AbstractAction {
                 ValueObjectMapper.convertPhoto(linkPhoto, linkPhotoForm,
                         localeImpression);
                 sublist.add(linkPhotoForm);
-                log.fine(linkPhoto.toString());
+                log.debug(linkPhoto.toString());
               }
             }
             dossierForm.addPhoto(sublist);
@@ -754,7 +754,7 @@ public class PrintAction extends AbstractAction {
         Collection liensNarration = delegate.findLiensNarrationRapport(subject,
                 dossier);
         it = liensNarration.iterator();
-        log.fine("Narration liés (" + liensNarration.size() + ") :");
+        log.debug("Narration liï¿½s (" + liensNarration.size() + ") :");
         while (it.hasNext()) {
             Narration     linkNarration = (Narration) it.next();
             NarrationForm linkNarrationForm = new NarrationForm();
@@ -762,14 +762,14 @@ public class PrintAction extends AbstractAction {
             ValueObjectMapper.convertNarration(linkNarration, linkNarrationForm,
                     localeImpression);
             dossierForm.addNarration(linkNarrationForm);
-            log.fine(linkNarration.toString());
+            log.debug(linkNarration.toString());
         }
 
         // Recherche des liens suivis
         Collection liensSuivi = delegate.findLiensSuivi(subject,
                 dossier);
         it = liensSuivi.iterator();
-        log.fine("Suivis liés (" + liensSuivi.size() + ") :");
+        log.debug("Suivis liï¿½s (" + liensSuivi.size() + ") :");
         while (it.hasNext()) {
             Suivi     linkSuivi = (Suivi) it.next();
             SuiviForm linkSuiviForm = new SuiviForm();
@@ -777,14 +777,14 @@ public class PrintAction extends AbstractAction {
             ValueObjectMapper.convertSuivi(linkSuivi, linkSuiviForm,
                     localeImpression);
             dossierForm.addSuivi(linkSuiviForm);
-            log.fine(linkSuivi.toString());
+            log.debug(linkSuivi.toString());
         }
 
 		// Recherche des liens consignation
 		Collection liensConsignation = delegate.findLiensConsignation(subject,
 				dossier);
 		it = liensConsignation.iterator();
-		log.fine("Consignations liées (" + liensConsignation.size() + ") :");
+		log.debug("Consignations liï¿½es (" + liensConsignation.size() + ") :");
 		while (it.hasNext()) {
 			Consignation     linkConsignation = (Consignation) it.next();
 			ConsignationForm linkConsignationForm = new ConsignationForm();
@@ -792,46 +792,46 @@ public class PrintAction extends AbstractAction {
 			ValueObjectMapper.convertConsignation(linkConsignation, linkConsignationForm,
 					localeImpression);
 			dossierForm.addConsignation(linkConsignationForm);
-			log.fine(linkConsignation.toString());
+			log.debug(linkConsignation.toString());
 		}
 
 		// Recherche des liens billet
 		Collection liensBillet = delegate.trouverLiensBillet(subject,dossier);
 		it = liensBillet.iterator();
-		log.fine("billets liés (" + liensBillet.size() + ") :");
+		log.debug("billets liï¿½s (" + liensBillet.size() + ") :");
 		while (it.hasNext()) {
 			BilletVO     linkBillet = (BilletVO) it.next();
 			BilletForm linkBilletForm = new BilletForm();
 
 			ValueObjectMapper.convert(linkBillet, linkBilletForm, subject.getLocale());
 			dossierForm.addBillet(linkBilletForm);
-			log.fine(linkBillet.toString());
+			log.debug(linkBillet.toString());
 		}
 
 		// Recherche des liens urgence
 		Collection liensUrgence = delegate.findLiensUrgence(subject,dossier);
 		it = liensUrgence.iterator();
-		log.fine("urgences liées (" + liensUrgence.size() + ") :");
+		log.debug("urgences liï¿½es (" + liensUrgence.size() + ") :");
 		while (it.hasNext()) {
 			UrgenceVO     linkUrgence = (UrgenceVO) it.next();
 			UrgenceForm linkUrgenceForm = new UrgenceForm();
 
 			ValueObjectMapper.convertUrgence(linkUrgence, linkUrgenceForm, subject.getLocale());
 			dossierForm.addUrgence(linkUrgenceForm);
-			log.fine(linkUrgence.toString());
+			log.debug(linkUrgence.toString());
 		}
 
 		// Recherche des inscriptions:
         Collection liensInscription = delegate.findLiensInscription(subject,
                 dossier);
         it = liensInscription.iterator();
-        log.fine("Inscriptions liées (" + liensInscription.size() + ") :");
+        log.debug("Inscriptions liï¿½es (" + liensInscription.size() + ") :");
         while (it.hasNext()) {
             Inscription     linkInscription = (Inscription) it.next();
             InscriptionForm linkInscriptionForm = new InscriptionForm();
             ValueObjectMapper.convertInscription(linkInscription, linkInscriptionForm,
                     localeImpression);
-            log.fine(linkInscription.toString());
+            log.debug(linkInscription.toString());
             dossierForm.addInscription(linkInscriptionForm);
         }
 
@@ -840,7 +840,7 @@ public class PrintAction extends AbstractAction {
                 dossier);
         it = liensPieceJointe.iterator();
 
-        log.fine("PieceJointes liés (" + liensPieceJointe.size() + ") :");
+        log.debug("PieceJointes liï¿½s (" + liensPieceJointe.size() + ") :");
 
         while (it.hasNext()) {
             Photo     linkPieceJointe = (Photo) it.next();
@@ -851,11 +851,11 @@ public class PrintAction extends AbstractAction {
         	dossierForm.addPieceJointe(linkPieceJointeForm);
         }//while
         
-        // Recherche des liens SousCatégories
+        // Recherche des liens SousCatï¿½gories
         SousCategoriesVO sousCategoriesVO = delegate.findLiensSousCategories(subject,
                 dossier);
         it = sousCategoriesVO.getSousCategories().iterator();
-        log.fine("SousCatégories liés (" + sousCategoriesVO.getSousCategories().size() + ") :");
+        log.debug("SousCatï¿½gories liï¿½s (" + sousCategoriesVO.getSousCategories().size() + ") :");
         List listeSousCategorie = new ArrayList();
         
         while (it.hasNext()) {
@@ -869,7 +869,7 @@ public class PrintAction extends AbstractAction {
         
 /*
  *         Collection liensPhoto = delegate.findLiensPhoto(subject, dossier);
-        log.fine("Photos liées (" + liensPhoto.size() + ") :");
+        log.debug("Photos liï¿½es (" + liensPhoto.size() + ") :");
         it = liensPhoto.iterator();
         while (it.hasNext()) {
             Collection sublist = new ArrayList();
@@ -880,7 +880,7 @@ public class PrintAction extends AbstractAction {
                 ValueObjectMapper.convertPhoto(linkPhoto, linkPhotoForm,
                         localeImpression);
                 sublist.add(linkPhotoForm);
-                log.fine(linkPhoto.toString());
+                log.debug(linkPhoto.toString());
               }
             }
             dossierForm.addPhoto(sublist);
@@ -892,20 +892,20 @@ public class PrintAction extends AbstractAction {
 
     /**
      * Popule les informations imprimables d'un sujet pour l'impression d'un
-     * dossier, incluant les adresses et les caractéristiques.
+     * dossier, incluant les adresses et les caractï¿½ristiques.
      *
-     * @param Dossier Les critères du dossier a obtenir
-     * @param DossierForm L'ActionForm bean a populé à partir du dossier obtenu
+     * @param Dossier Les critï¿½res du dossier a obtenir
+     * @param DossierForm L'ActionForm bean a populï¿½ ï¿½ partir du dossier obtenu
      *
-     * @exception BusinessResourceException si une erreur système survient
-     * @exception BusinessException si une règle d'affaire n'est pas respectée
+     * @exception BusinessResourceException si une erreur systï¿½me survient
+     * @exception BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
      */
     SujetForm getPrintSujetForm(Locale localeImpression, CardexAuthenticationSubject subject, Sujet linked) throws BusinessResourceException,
                                          BusinessException,
                                          ValueObjectMapperException
     {
         SujetBusinessDelegate delegate = new SujetBusinessDelegate();
-        //On commence d'abord par vérifier s'il y a des données historiques dans l'audit des changements
+        //On commence d'abord par vï¿½rifier s'il y a des donnï¿½es historiques dans l'audit des changements
         //en fonction de la date de liaison au dossier.
         Sujet sujet = delegate.find(subject, linked);
         SujetForm sujetForm = new SujetForm();
@@ -918,7 +918,7 @@ public class PrintAction extends AbstractAction {
         Collection liensPhoto = delegate.findLiensPhoto(subject,
                 sujet);
         it = liensPhoto.iterator();
-        log.fine("Photos liés (" + liensPhoto.size() + ") :");
+        log.debug("Photos liï¿½s (" + liensPhoto.size() + ") :");
 
         while (it.hasNext()) {
             Collection sublist = new ArrayList();
@@ -927,19 +927,19 @@ public class PrintAction extends AbstractAction {
                 Photo     linkPhoto = (Photo) it.next();
                 PhotoForm linkPhotoForm = new PhotoForm();
                 ValueObjectMapper.convertPhoto(linkPhoto, linkPhotoForm, localeImpression);
-                //Pour l'impression de la photo des sujets sur les rapports, on doit prendre celle qui est sélectionnée.
+                //Pour l'impression de la photo des sujets sur les rapports, on doit prendre celle qui est sï¿½lectionnï¿½e.
                 if(linkPhotoForm.isSelectionner() || sujet.getLienDateCreation() != null){
                 	sublist.add(linkPhotoForm);
                 }
-                log.fine(linkPhoto.toString());
+                log.debug(linkPhoto.toString());
               }//if
             }//for
             	sujetForm.addPhoto(sublist);
         }//while
 
-        // Recherche des sociétés du sujet:
+        // Recherche des sociï¿½tï¿½s du sujet:
         Collection societes = delegate.findLiensSociete(subject, sujet);
-        log.fine("Societes liées (" + societes.size() + ") :");
+        log.debug("Societes liï¿½es (" + societes.size() + ") :");
 		if (societes.size() > 0){
         	it = societes.iterator();
         	while (it.hasNext()) { 
@@ -947,7 +947,7 @@ public class PrintAction extends AbstractAction {
 	            SocieteForm linkSocieteForm = new SocieteForm();
 	            ValueObjectMapper.convertSociete(linkSociete, linkSocieteForm,
 	                    localeImpression);
-	            log.fine(linkSociete.toString());
+	            log.debug(linkSociete.toString());
 	            linkSocieteForm.assignerValeurDeListe(subject);
 	            sujetForm.addSociete(linkSocieteForm);
         	}
@@ -955,22 +955,22 @@ public class PrintAction extends AbstractAction {
         
 		// Recherche des adresses du sujet:
         Collection adresses = delegate.findLiensAdresse(subject, sujet);
-        log.fine("Adresses liées (" + adresses.size() + ") :");
+        log.debug("Adresses liï¿½es (" + adresses.size() + ") :");
 		if (adresses.size() > 0){
         	it = adresses.iterator();
-        //while (it.hasNext()) { //On ne prend que la première adresse retournée
+        //while (it.hasNext()) { //On ne prend que la premiï¿½re adresse retournï¿½e
             Adresse     linkAdresse = (Adresse) it.next();
             AdresseForm linkAdresseForm = new AdresseForm();
             ValueObjectMapper.convertAdresse(linkAdresse, linkAdresseForm,
                     localeImpression);
-            log.fine(linkAdresse.toString());
+            log.debug(linkAdresse.toString());
             sujetForm.addAdresse(linkAdresseForm);
         //}
 		}
-        // Recherche des caractéristiques du sujet:
+        // Recherche des caractï¿½ristiques du sujet:
         Caracteristiques liensCaracteristiques =
             delegate.findLiensCaracteristique(subject, sujet);
-        log.fine("Caracteristiques liées (" + liensCaracteristiques.getCaracteristiquesChoisis().size() + ") :");
+        log.debug("Caracteristiques liï¿½es (" + liensCaracteristiques.getCaracteristiquesChoisis().size() + ") :");
         CaracteristiquesForm linkCaracteristiquesForm = new CaracteristiquesForm();
         ValueObjectMapper.convertCaracteristiques(subject, liensCaracteristiques,linkCaracteristiquesForm,localeImpression);
         sujetForm.setCaracteristiques(linkCaracteristiquesForm);
@@ -979,14 +979,14 @@ public class PrintAction extends AbstractAction {
     }
 
     /**
-     * Popule les informations imprimables d'une société pour l'impression d'un
+     * Popule les informations imprimables d'une sociï¿½tï¿½ pour l'impression d'un
      * dossier.
      *
-     * @param Dossier Les critères du dossier a obtenir
-     * @param DossierForm L'ActionForm bean a populé à partir du dossier obtenu
+     * @param Dossier Les critï¿½res du dossier a obtenir
+     * @param DossierForm L'ActionForm bean a populï¿½ ï¿½ partir du dossier obtenu
      *
-     * @exception BusinessResourceException si une erreur système survient
-     * @exception BusinessException si une règle d'affaire n'est pas respectée
+     * @exception BusinessResourceException si une erreur systï¿½me survient
+     * @exception BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
      */
     SocieteForm getPrintSocieteForm(Locale localeImpression, CardexAuthenticationSubject subject, Societe linked) throws BusinessResourceException,
                                          BusinessException,
@@ -997,19 +997,19 @@ public class PrintAction extends AbstractAction {
         SocieteForm societeForm = new SocieteForm();
         //societe.setLienDateCreation(linked.getLienDateCreation());
         ValueObjectMapper.convertSociete(linked, societeForm, localeImpression);
-        log.fine(societeForm.toString());
-       // Recherche des adresses de la société:
+        log.debug(societeForm.toString());
+       // Recherche des adresses de la sociï¿½tï¿½:
         Iterator it;
         Collection adresses = delegate.findLiensAdresse(subject, linked);
-        log.fine("Adresses liées (" + adresses.size() + ") :");
+        log.debug("Adresses liï¿½es (" + adresses.size() + ") :");
 		if (adresses.size() > 0){
         	it = adresses.iterator();
-        //while (it.hasNext()) { //On ne prend que la première adresse retournée
+        //while (it.hasNext()) { //On ne prend que la premiï¿½re adresse retournï¿½e
             Adresse     linkAdresse = (Adresse) it.next();
             AdresseForm linkAdresseForm = new AdresseForm();
             ValueObjectMapper.convertAdresse(linkAdresse, linkAdresseForm,
                     localeImpression);
-            log.fine(linkAdresse.toString());
+            log.debug(linkAdresse.toString());
             societeForm.addAdresse(linkAdresseForm);
         //}
 		}
@@ -1025,10 +1025,10 @@ public class PrintAction extends AbstractAction {
         Vehicule vehicule = delegate.find(subject, linked);
         VehiculeForm vehiculeForm = new VehiculeForm();
         ValueObjectMapper.convertVehicule(vehicule, vehiculeForm, localeImpression);
-        log.fine(vehiculeForm.toString());
-        //Recherche des particularités
+        log.debug(vehiculeForm.toString());
+        //Recherche des particularitï¿½s
         Particularites liensParticularites = delegate.findLiensParticularite(subject, vehicule);
-        log.fine("Caracteristiques liées (" + liensParticularites.getParticularitesChoisis().size() + ") :");
+        log.debug("Caracteristiques liï¿½es (" + liensParticularites.getParticularitesChoisis().size() + ") :");
         ParticularitesForm linkParticularitesForm = new ParticularitesForm();
         ValueObjectMapper.convertParticularites(subject, liensParticularites,linkParticularitesForm,localeImpression);
         vehiculeForm.setParticularites(linkParticularitesForm);
@@ -1038,18 +1038,18 @@ public class PrintAction extends AbstractAction {
 
     /**
      * <p>
-     * Cet événement surivient lorsque l'utilisateur clique sur le bouton 
-     * Rapport uniformisé dans la consultation de dossiers. Ce rapport est
-     * un format normalisé pour les enquêtes majeures et repose sur des gabarits 
-     * pré-définis dans les narrations.
+     * Cet ï¿½vï¿½nement surivient lorsque l'utilisateur clique sur le bouton 
+     * Rapport uniformisï¿½ dans la consultation de dossiers. Ce rapport est
+     * un format normalisï¿½ pour les enquï¿½tes majeures et repose sur des gabarits 
+     * prï¿½-dï¿½finis dans les narrations.
      *
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortie survient
+     * @exception IOException si une erreur d'entrï¿½e/sortie survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward imprimerRapport(CardexAuthenticationSubject subject,
@@ -1058,14 +1058,14 @@ public class PrintAction extends AbstractAction {
                                         HttpServletRequest request,
                                         HttpServletResponse response) throws IOException,
                                         ServletException {
-        log.fine("Impression du dossier normalisé pour les enquêtes majeures");
+        log.debug("Impression du dossier normalisï¿½ pour les enquï¿½tes majeures");
         ActionMessages errors = new ActionMessages();
         DossierForm         dossierForm = (DossierForm) form;
         
         GestionnaireSecurite.validerValeurAccessible(subject, new TableValeurCleSQLListeCache(subject, GlobalConstants.TableValeur.RAPPORT_DOSSIER, GlobalConstants.ActionSecurite.CONSULTER_DOSSIER), GlobalConstants.ChoixImpressionDossier.DOSSIER_UNIFORMISE);
 
             try {
-                log.fine("Impression d'un dossier d'enquête majeure");
+                log.debug("Impression d'un dossier d'enquï¿½te majeure");
                 request.getSession().removeAttribute(GlobalConstants.Impression.DOSSIER_KEY);
                 request.getSession().removeAttribute(GlobalConstants.Impression.SUJET_KEY);
                 request.getSession().removeAttribute(GlobalConstants.Impression.INSCRIPTION_KEY);
@@ -1080,7 +1080,7 @@ public class PrintAction extends AbstractAction {
 
                 /// prendre le formulaire et la locale dans le PrintDossierForm
 
-                log.fine("Dossier à imprimer  : " + dossierForm.toString());
+                log.debug("Dossier ï¿½ imprimer  : " + dossierForm.toString());
                 ValueObjectMapper.convertDossierHtmlForm(dossierForm, dossier,subject.getLocale());
 
                 populatePrintDossierForm(subject.getLocale(),subject, dossier, dossierForm);
@@ -1130,18 +1130,18 @@ public class PrintAction extends AbstractAction {
 
     /**
      * <p>
-     * Cet événement surivient lorsque l'utilisateur clique sur l'icone historique pour le rapport
-     * uniformisé dans la consultation de dossiers. Ce rapport est
-     * un format normalisé pour les enquêtes majeures et repose sur des gabarits 
-     * pré-définis dans les narrations.
+     * Cet ï¿½vï¿½nement surivient lorsque l'utilisateur clique sur l'icone historique pour le rapport
+     * uniformisï¿½ dans la consultation de dossiers. Ce rapport est
+     * un format normalisï¿½ pour les enquï¿½tes majeures et repose sur des gabarits 
+     * prï¿½-dï¿½finis dans les narrations.
      *
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortie survient
+     * @exception IOException si une erreur d'entrï¿½e/sortie survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward imprimerRapportAudit(CardexAuthenticationSubject subject,
@@ -1150,14 +1150,14 @@ public class PrintAction extends AbstractAction {
                                         HttpServletRequest request,
                                         HttpServletResponse response) throws IOException,
                                         ServletException {
-        log.fine("Impression du dossier normalisé et historique pour les enquêtes majeures");
+        log.debug("Impression du dossier normalisï¿½ et historique pour les enquï¿½tes majeures");
         ActionMessages errors = new ActionMessages();
         DossierForm         dossierForm = (DossierForm) form;
 
         GestionnaireSecurite.validerValeurAccessible(subject, new TableValeurCleSQLListeCache(subject, GlobalConstants.TableValeur.RAPPORT_DOSSIER, GlobalConstants.ActionSecurite.CONSULTER_DOSSIER), GlobalConstants.ChoixImpressionDossier.DOSSIER_UNIFORMISE_HISTORIQUE);
         
             try {
-                log.fine("Impression d'un dossier historique d'enquête majeure");
+                log.debug("Impression d'un dossier historique d'enquï¿½te majeure");
                 request.getSession().removeAttribute(GlobalConstants.Impression.DOSSIER_KEY);
                 request.getSession().removeAttribute(GlobalConstants.Impression.SUJET_KEY);
                 request.getSession().removeAttribute(GlobalConstants.Impression.INSCRIPTION_KEY);
@@ -1172,7 +1172,7 @@ public class PrintAction extends AbstractAction {
 
                 /// prendre le formulaire et la locale dans le PrintDossierForm
 
-                log.fine("Dossier à imprimer  : " + dossierForm.toString());
+                log.debug("Dossier ï¿½ imprimer  : " + dossierForm.toString());
                 ValueObjectMapper.convertDossierHtmlForm(dossierForm, dossier,subject.getLocale());
 
                 populatePrintDossierFormAudit(subject.getLocale(),subject, dossier, dossierForm);
@@ -1223,13 +1223,13 @@ public class PrintAction extends AbstractAction {
     /**
      * <p>
      * Popule les informations historiques imprimables d'un dossier obtenu dans la base de
-     * donnée dans le DossierForm spécifiés.
+     * donnï¿½e dans le DossierForm spï¿½cifiï¿½s.
      *
-     * @param Dossier Les critères du dossier a obtenir
-     * @param DossierForm L'ActionForm bean a populé à partir du dossier obtenu
+     * @param Dossier Les critï¿½res du dossier a obtenir
+     * @param DossierForm L'ActionForm bean a populï¿½ ï¿½ partir du dossier obtenu
      *
-     * @exception BusinessResourceException si une erreur système survient
-     * @exception BusinessException si une règle d'affaire n'est pas respectée
+     * @exception BusinessResourceException si une erreur systï¿½me survient
+     * @exception BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
      */
     private void populatePrintDossierFormAudit(Locale localeImpression,CardexAuthenticationSubject subject,
                                            Dossier criteria,
@@ -1239,7 +1239,7 @@ public class PrintAction extends AbstractAction {
         DossierBusinessDelegate delegate = new DossierBusinessDelegate();
         Dossier  dossier = delegate.find(subject, criteria);
 
-        log.fine("Dossier trouvé: " + dossier.toString());
+        log.debug("Dossier trouvï¿½: " + dossier.toString());
         dossierForm.resetOnglets();
         ValueObjectMapper.convertDossier(dossier, dossierForm, localeImpression);
 
@@ -1249,34 +1249,34 @@ public class PrintAction extends AbstractAction {
         // Recherche des liens jeux
         Jeux liensJeux = delegate.findLiensJeux(subject,
                 dossier);
-        log.fine("Jeux liés (" + liensJeux.getJeuxChoisis().size() + ") :");
+        log.debug("Jeux liï¿½s (" + liensJeux.getJeuxChoisis().size() + ") :");
         JeuxForm linkJeuxForm = new JeuxForm();
         ValueObjectMapper.convertJeux(subject, liensJeux,linkJeuxForm,localeImpression);
-        log.fine(linkJeuxForm.toString());
+        log.debug(linkJeuxForm.toString());
         dossierForm.setJeux(linkJeuxForm);
 
         // Recherche des Sujets:
         linked = delegate.findLiensSujet(subject, dossier);
-        log.fine("Sujets liés (" + linked.size() + ") :");
+        log.debug("Sujets liï¿½s (" + linked.size() + ") :");
         it = linked.iterator();
         while (it.hasNext()) {
             Sujet linkSujet = (Sujet) it.next();
-            log.fine(linkSujet.getNumeroFiche());
+            log.debug(linkSujet.getNumeroFiche());
             dossierForm.addSujet(getPrintSujetFormAudit(localeImpression,subject, linkSujet));
         }
 
-        // Recherche des Sociétés:
+        // Recherche des Sociï¿½tï¿½s:
         linked = delegate.findLiensSociete(subject, dossier);
         it = linked.iterator();
-        log.fine("Societes liées (" + linked.size() + ") :");
+        log.debug("Societes liï¿½es (" + linked.size() + ") :");
         while (it.hasNext()) {
             Societe linkSociete = (Societe) it.next();
             dossierForm.addSociete(getPrintSocieteFormAudit(localeImpression,subject, linkSociete));
         }
 
-        // Recherche des Véhicules:
+        // Recherche des Vï¿½hicules:
         linked = delegate.findLiensVehicule(subject, dossier);
-        log.fine("Véhicules liés (" + linked.size() + ") :");
+        log.debug("Vï¿½hicules liï¿½s (" + linked.size() + ") :");
         it = linked.iterator();
         while (it.hasNext()) {
             Vehicule linkVehicule = (Vehicule) it.next();
@@ -1285,7 +1285,7 @@ public class PrintAction extends AbstractAction {
 
         // Recherche des photos:
         Collection liensPhoto = delegate.findLiensPhoto(subject, dossier);
-        log.fine("Photos liées (" + liensPhoto.size() + ") :");
+        log.debug("Photos liï¿½es (" + liensPhoto.size() + ") :");
         it = liensPhoto.iterator();
         while (it.hasNext()) {
             Collection sublist = new ArrayList();
@@ -1296,7 +1296,7 @@ public class PrintAction extends AbstractAction {
                 ValueObjectMapper.convertPhoto(linkPhoto, linkPhotoForm,
                         localeImpression);
                 sublist.add(linkPhotoForm);
-                log.fine(linkPhoto.toString());
+                log.debug(linkPhoto.toString());
               }
             }
             dossierForm.addPhoto(sublist);
@@ -1306,7 +1306,7 @@ public class PrintAction extends AbstractAction {
         Collection liensNarration = delegate.findLiensNarrationRapport(subject,
                 dossier);
         it = liensNarration.iterator();
-        log.fine("Narration liés (" + liensNarration.size() + ") :");
+        log.debug("Narration liï¿½s (" + liensNarration.size() + ") :");
         while (it.hasNext()) {
             Narration     linkNarration = (Narration) it.next();
             NarrationForm linkNarrationForm = new NarrationForm();
@@ -1314,14 +1314,14 @@ public class PrintAction extends AbstractAction {
             ValueObjectMapper.convertNarration(linkNarration, linkNarrationForm,
                     localeImpression);
             dossierForm.addNarration(linkNarrationForm);
-            log.fine(linkNarration.toString());
+            log.debug(linkNarration.toString());
         }
 
         // Recherche des liens suivis
         Collection liensSuivi = delegate.findLiensSuivi(subject,
                 dossier);
         it = liensSuivi.iterator();
-        log.fine("Suivis liés (" + liensSuivi.size() + ") :");
+        log.debug("Suivis liï¿½s (" + liensSuivi.size() + ") :");
         while (it.hasNext()) {
             Suivi     linkSuivi = (Suivi) it.next();
             SuiviForm linkSuiviForm = new SuiviForm();
@@ -1329,14 +1329,14 @@ public class PrintAction extends AbstractAction {
             ValueObjectMapper.convertSuivi(linkSuivi, linkSuiviForm,
                     localeImpression);
             dossierForm.addSuivi(linkSuiviForm);
-            log.fine(linkSuivi.toString());
+            log.debug(linkSuivi.toString());
         }
 
 		// Recherche des liens consignation
 		Collection liensConsignation = delegate.findLiensConsignation(subject,
 				dossier);
 		it = liensConsignation.iterator();
-		log.fine("Consignations liées (" + liensConsignation.size() + ") :");
+		log.debug("Consignations liï¿½es (" + liensConsignation.size() + ") :");
 		while (it.hasNext()) {
 			Consignation     linkConsignation = (Consignation) it.next();
 			ConsignationForm linkConsignationForm = new ConsignationForm();
@@ -1344,33 +1344,33 @@ public class PrintAction extends AbstractAction {
 			ValueObjectMapper.convertConsignation(linkConsignation, linkConsignationForm,
 					localeImpression);
 			dossierForm.addConsignation(linkConsignationForm);
-			log.fine(linkConsignation.toString());
+			log.debug(linkConsignation.toString());
 		}
 
 		// Recherche des liens billet
 		Collection liensBillet = delegate.trouverLiensBillet(subject,dossier);
 		it = liensBillet.iterator();
-		log.fine("billets liés (" + liensBillet.size() + ") :");
+		log.debug("billets liï¿½s (" + liensBillet.size() + ") :");
 		while (it.hasNext()) {
 			BilletVO     linkBillet = (BilletVO) it.next();
 			BilletForm linkBilletForm = new BilletForm();
 
 			ValueObjectMapper.convert(linkBillet, linkBilletForm, subject.getLocale());
 			dossierForm.addBillet(linkBilletForm);
-			log.fine(linkBillet.toString());
+			log.debug(linkBillet.toString());
 		}
 
         // Recherche des inscriptions:
         Collection liensInscription = delegate.findLiensInscription(subject,
                 dossier);
         it = liensInscription.iterator();
-        log.fine("Inscriptions liées (" + liensInscription.size() + ") :");
+        log.debug("Inscriptions liï¿½es (" + liensInscription.size() + ") :");
         while (it.hasNext()) {
             Inscription     linkInscription = (Inscription) it.next();
             InscriptionForm linkInscriptionForm = new InscriptionForm();
             ValueObjectMapper.convertInscription(linkInscription, linkInscriptionForm,
                     localeImpression);
-            log.fine(linkInscription.toString());
+            log.debug(linkInscription.toString());
             dossierForm.addInscription(linkInscriptionForm);
         }
 
@@ -1379,7 +1379,7 @@ public class PrintAction extends AbstractAction {
                 dossier);
         it = liensPieceJointe.iterator();
 
-        log.fine("PieceJointes liés (" + liensPieceJointe.size() + ") :");
+        log.debug("PieceJointes liï¿½s (" + liensPieceJointe.size() + ") :");
 
         while (it.hasNext()) {
             Photo     linkPieceJointe = (Photo) it.next();
@@ -1390,11 +1390,11 @@ public class PrintAction extends AbstractAction {
         	dossierForm.addPieceJointe(linkPieceJointeForm);
         }//while
         
-        // Recherche des liens SousCatégories
+        // Recherche des liens SousCatï¿½gories
         SousCategoriesVO sousCategoriesVO = delegate.findLiensSousCategories(subject,
                 dossier);
         it = sousCategoriesVO.getSousCategories().iterator();
-        log.fine("SousCatégories liés (" + sousCategoriesVO.getSousCategories().size() + ") :");
+        log.debug("SousCatï¿½gories liï¿½s (" + sousCategoriesVO.getSousCategories().size() + ") :");
         List listeSousCategorie = new ArrayList();
         
         while (it.hasNext()) {
@@ -1411,23 +1411,23 @@ public class PrintAction extends AbstractAction {
     }
     /**
      * Popule les informations historiques imprimables d'un sujet pour l'impression d'un
-     * dossier, incluant les adresses et les caractéristiques.
+     * dossier, incluant les adresses et les caractï¿½ristiques.
      *
-     * @param Dossier Les critères du dossier a obtenir
-     * @param DossierForm L'ActionForm bean a populé à partir du dossier obtenu
+     * @param Dossier Les critï¿½res du dossier a obtenir
+     * @param DossierForm L'ActionForm bean a populï¿½ ï¿½ partir du dossier obtenu
      *
-     * @exception BusinessResourceException si une erreur système survient
-     * @exception BusinessException si une règle d'affaire n'est pas respectée
+     * @exception BusinessResourceException si une erreur systï¿½me survient
+     * @exception BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
      */
     SujetForm getPrintSujetFormAudit(Locale localeImpression, CardexAuthenticationSubject subject, Sujet linked) throws BusinessResourceException,
                                          BusinessException,
                                          ValueObjectMapperException
     {
         SujetBusinessDelegate delegate = new SujetBusinessDelegate();
-        //On commence d'abord par vérifier s'il y a des données historiques dans l'audit des changements
+        //On commence d'abord par vï¿½rifier s'il y a des donnï¿½es historiques dans l'audit des changements
         //en fonction de la date de liaison au dossier.
         Sujet sujet = delegate.findAudit(subject, linked);
-        if(sujet.getCle() == 0){//S'il n'y a pas de données historiques, on prend les données actuelles.
+        if(sujet.getCle() == 0){//S'il n'y a pas de donnï¿½es historiques, on prend les donnï¿½es actuelles.
         	sujet = delegate.find(subject, linked);
         }
         SujetForm sujetForm = new SujetForm();
@@ -1440,7 +1440,7 @@ public class PrintAction extends AbstractAction {
         // Recherche des liens photos
         Collection liensPhoto = delegate.findLiensPhotoAudit(subject, sujet);
         it = liensPhoto.iterator();
-        log.fine("Photos liés (" + liensPhoto.size() + ") :");
+        log.debug("Photos liï¿½s (" + liensPhoto.size() + ") :");
         Collection sublist = new ArrayList();
 
               if (it.hasNext()) {
@@ -1448,12 +1448,12 @@ public class PrintAction extends AbstractAction {
                 PhotoForm linkPhotoForm = new PhotoForm();
                 ValueObjectMapper.convertPhoto(linkPhoto, linkPhotoForm, localeImpression);
                 	sublist.add(linkPhotoForm);
-                log.fine(linkPhoto.toString());
+                log.debug(linkPhoto.toString());
               }else{
             	  //S'il n'y a pas de photo historique, on prend l'actuelle
             	  liensPhoto = delegate.findLiensPhoto(subject, sujet);
                   it = liensPhoto.iterator();
-                  log.fine("Photos liés (" + liensPhoto.size() + ") :");
+                  log.debug("Photos liï¿½s (" + liensPhoto.size() + ") :");
 
                   while (it.hasNext()) {
                       for (int i=0; i<3;i++) {
@@ -1461,11 +1461,11 @@ public class PrintAction extends AbstractAction {
                           Photo     linkPhoto = (Photo) it.next();
                           PhotoForm linkPhotoForm = new PhotoForm();
                           ValueObjectMapper.convertPhoto(linkPhoto, linkPhotoForm, localeImpression);
-                          //Pour l'impression de la photo des sujets sur les rapports, on doit prendre celle qui est sélectionnée.
+                          //Pour l'impression de la photo des sujets sur les rapports, on doit prendre celle qui est sï¿½lectionnï¿½e.
                           if(linkPhotoForm.isSelectionner() || sujet.getLienDateCreation() != null){
                           	sublist.add(linkPhotoForm);
                           }
-                          log.fine(linkPhoto.toString());
+                          log.debug(linkPhoto.toString());
                         }//if
                       }//for
                       	sujetForm.addPhoto(sublist);
@@ -1476,34 +1476,34 @@ public class PrintAction extends AbstractAction {
 
             	// Recherche des adresses du sujet:
         Collection adresses = delegate.findLiensAdresseAudit(subject, sujet);
-        log.fine("Adresses liées (" + adresses.size() + ") :");
+        log.debug("Adresses liï¿½es (" + adresses.size() + ") :");
 		if (adresses.size() > 0){
         	it = adresses.iterator();
-        //On ne prend que la première adresse retournée
+        //On ne prend que la premiï¿½re adresse retournï¿½e
             Adresse     linkAdresse = (Adresse) it.next();
             AdresseForm linkAdresseForm = new AdresseForm();
             ValueObjectMapper.convertAdresse(linkAdresse, linkAdresseForm,
                     localeImpression);
-            log.fine(linkAdresse.toString());
+            log.debug(linkAdresse.toString());
             sujetForm.addAdresse(linkAdresseForm);
 		}else{
-			//S'il n'y a pas d'adresses antérieures, on prend l'adresse actuelle.
+			//S'il n'y a pas d'adresses antï¿½rieures, on prend l'adresse actuelle.
 			adresses = delegate.findLiensAdresse(subject, sujet);
 			if (adresses.size() > 0){
 	        	it = adresses.iterator();
-	        //On ne prend que la première adresse retournée
+	        //On ne prend que la premiï¿½re adresse retournï¿½e
 	            Adresse     linkAdresse = (Adresse) it.next();
 	            AdresseForm linkAdresseForm = new AdresseForm();
 	            ValueObjectMapper.convertAdresse(linkAdresse, linkAdresseForm,
 	                    localeImpression);
-	            log.fine(linkAdresse.toString());
+	            log.debug(linkAdresse.toString());
 	            sujetForm.addAdresse(linkAdresseForm);
 			}
 		}
-        // Recherche des caractéristiques du sujet:
+        // Recherche des caractï¿½ristiques du sujet:
         Caracteristiques liensCaracteristiques =
             delegate.findLiensCaracteristique(subject, sujet);
-        log.fine("Caracteristiques liées (" + liensCaracteristiques.getCaracteristiquesChoisis().size() + ") :");
+        log.debug("Caracteristiques liï¿½es (" + liensCaracteristiques.getCaracteristiquesChoisis().size() + ") :");
         CaracteristiquesForm linkCaracteristiquesForm = new CaracteristiquesForm();
         ValueObjectMapper.convertCaracteristiques(subject, liensCaracteristiques,linkCaracteristiquesForm,localeImpression);
         sujetForm.setCaracteristiques(linkCaracteristiquesForm);
@@ -1512,14 +1512,14 @@ public class PrintAction extends AbstractAction {
     }
 
     /**
-     * Popule les informations historiques imprimables d'une société pour l'impression d'un
+     * Popule les informations historiques imprimables d'une sociï¿½tï¿½ pour l'impression d'un
      * dossier.
      *
-     * @param Dossier Les critères du dossier a obtenir
-     * @param DossierForm L'ActionForm bean a populé à partir du dossier obtenu
+     * @param Dossier Les critï¿½res du dossier a obtenir
+     * @param DossierForm L'ActionForm bean a populï¿½ ï¿½ partir du dossier obtenu
      *
-     * @exception BusinessResourceException si une erreur système survient
-     * @exception BusinessException si une règle d'affaire n'est pas respectée
+     * @exception BusinessResourceException si une erreur systï¿½me survient
+     * @exception BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
      */
     SocieteForm getPrintSocieteFormAudit(Locale localeImpression, CardexAuthenticationSubject subject, Societe linked) throws BusinessResourceException,
                                          BusinessException,
@@ -1527,7 +1527,7 @@ public class PrintAction extends AbstractAction {
     {
         SocieteBusinessDelegate delegate = new SocieteBusinessDelegate();
         Societe societe = delegate.findAudit(subject, linked);
-        if(societe.getCle() == 0){//S'il n'y a pas de données historiques, on prend les données actuelles.
+        if(societe.getCle() == 0){//S'il n'y a pas de donnï¿½es historiques, on prend les donnï¿½es actuelles.
         	societe = delegate.find(subject, linked);
         }
         SocieteForm societeForm = new SocieteForm();
@@ -1535,31 +1535,31 @@ public class PrintAction extends AbstractAction {
         ValueObjectMapper.convertSociete(societe, societeForm, localeImpression);
         societeForm.setRole(String.valueOf(linked.getRole()));
 
-        log.fine(societeForm.toString());
-       // Recherche des adresses de la société:
+        log.debug(societeForm.toString());
+       // Recherche des adresses de la sociï¿½tï¿½:
         Iterator it;
         Collection adresses = delegate.findLiensAdresseAudit(subject, societe);
-        log.fine("Adresses liées (" + adresses.size() + ") :");
+        log.debug("Adresses liï¿½es (" + adresses.size() + ") :");
 		if (adresses.size() > 0){
         	it = adresses.iterator();
-        //On ne prend que la première adresse retournée
+        //On ne prend que la premiï¿½re adresse retournï¿½e
             Adresse     linkAdresse = (Adresse) it.next();
             AdresseForm linkAdresseForm = new AdresseForm();
             ValueObjectMapper.convertAdresse(linkAdresse, linkAdresseForm,
                     localeImpression);
-            log.fine(linkAdresse.toString());
+            log.debug(linkAdresse.toString());
             societeForm.addAdresse(linkAdresseForm);
 		}else{
-			//S'il n'y a pas d'adresses antérieures, on prend l'adresse actuelle.
+			//S'il n'y a pas d'adresses antï¿½rieures, on prend l'adresse actuelle.
 			adresses = delegate.findLiensAdresse(subject, societe);
 			if (adresses.size() > 0){
 	        	it = adresses.iterator();
-	        //On ne prend que la première adresse retournée
+	        //On ne prend que la premiï¿½re adresse retournï¿½e
 	            Adresse     linkAdresse = (Adresse) it.next();
 	            AdresseForm linkAdresseForm = new AdresseForm();
 	            ValueObjectMapper.convertAdresse(linkAdresse, linkAdresseForm,
 	                    localeImpression);
-	            log.fine(linkAdresse.toString());
+	            log.debug(linkAdresse.toString());
 	            societeForm.addAdresse(linkAdresseForm);
 			}
 		}
@@ -1573,16 +1573,16 @@ public class PrintAction extends AbstractAction {
     {
         VehiculeBusinessDelegate delegate = new VehiculeBusinessDelegate();
         Vehicule vehicule = delegate.findAudit(subject, linked);
-        if(vehicule.getCle() == 0){//S'il n'y a pas de données historiques, on prend les données actuelles.
+        if(vehicule.getCle() == 0){//S'il n'y a pas de donnï¿½es historiques, on prend les donnï¿½es actuelles.
         	vehicule = delegate.find(subject, linked);
         }
         VehiculeForm vehiculeForm = new VehiculeForm();
         ValueObjectMapper.convertVehicule(vehicule, vehiculeForm, localeImpression);
         vehicule.setLienDateCreation(linked.getLienDateCreation());
-        log.fine(vehiculeForm.toString());
-        //Recherche des particularités
+        log.debug(vehiculeForm.toString());
+        //Recherche des particularitï¿½s
         Particularites liensParticularites = delegate.findLiensParticularite(subject, vehicule);
-        log.fine("Caracteristiques liées (" + liensParticularites.getParticularitesChoisis().size() + ") :");
+        log.debug("Caracteristiques liï¿½es (" + liensParticularites.getParticularitesChoisis().size() + ") :");
         ParticularitesForm linkParticularitesForm = new ParticularitesForm();
         ValueObjectMapper.convertParticularites(subject, liensParticularites,linkParticularitesForm,localeImpression);
         vehiculeForm.setParticularites(linkParticularitesForm);
@@ -1592,14 +1592,14 @@ public class PrintAction extends AbstractAction {
 
     /**
      * <p>
-     * Recherche les narrations retenues pour l'impression du rapport uniformisé
-     * ainsi que les pièces jointes.
+     * Recherche les narrations retenues pour l'impression du rapport uniformisï¿½
+     * ainsi que les piï¿½ces jointes.
      *
-     * @param Dossier Les critères du dossier a obtenir
-     * @param DossierForm L'ActionForm bean a populé à partir du dossier obtenu
+     * @param Dossier Les critï¿½res du dossier a obtenir
+     * @param DossierForm L'ActionForm bean a populï¿½ ï¿½ partir du dossier obtenu
      *
-     * @exception BusinessResourceException si une erreur système survient
-     * @exception BusinessException si une règle d'affaire n'est pas respectée
+     * @exception BusinessResourceException si une erreur systï¿½me survient
+     * @exception BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
      */
     private void populatePrintDossierUniformeForm(Locale localeImpression,CardexAuthenticationSubject subject,
                                            Dossier dossier,
@@ -1608,7 +1608,7 @@ public class PrintAction extends AbstractAction {
                                          ValueObjectMapperException {
 
         DossierBusinessDelegate delegate = new DossierBusinessDelegate();
-        log.fine("Dossier uniforme: " + dossier.toString());
+        log.debug("Dossier uniforme: " + dossier.toString());
         //dossierForm.resetOnglets();
         //ValueObjectMapper.convertDossier(dossier, dossierForm, localeImpression);
 
@@ -1619,7 +1619,7 @@ public class PrintAction extends AbstractAction {
         Collection liensNarration = delegate.findLiensNarrationRapportUniforme(subject,
                 dossier, "%titre%");
         it = liensNarration.iterator();
-        log.fine("Narration Titre (" + liensNarration.size() + ") :");
+        log.debug("Narration Titre (" + liensNarration.size() + ") :");
         while (it.hasNext()) {
             Narration     linkNarration = (Narration) it.next();
             NarrationForm linkNarrationForm = new NarrationForm();
@@ -1627,13 +1627,13 @@ public class PrintAction extends AbstractAction {
             ValueObjectMapper.convertNarration(linkNarration, linkNarrationForm,
                     localeImpression);
             dossierForm.addNarrationTitre(linkNarrationForm);
-            log.fine(linkNarration.toString());
+            log.debug(linkNarration.toString());
         }
 
         liensNarration = delegate.findLiensNarrationRapportUniforme(subject,
                 dossier, "Identification%");
         it = liensNarration.iterator();
-        log.fine("Narration Identification (" + liensNarration.size() + ") :");
+        log.debug("Narration Identification (" + liensNarration.size() + ") :");
         while (it.hasNext()) {
             Narration     linkNarration = (Narration) it.next();
             NarrationForm linkNarrationForm = new NarrationForm();
@@ -1641,12 +1641,12 @@ public class PrintAction extends AbstractAction {
             ValueObjectMapper.convertNarration(linkNarration, linkNarrationForm,
                     localeImpression);
             dossierForm.addNarrationIdentification(linkNarrationForm);
-            log.fine(linkNarration.toString());
+            log.debug(linkNarration.toString());
         }
         liensNarration = delegate.findLiensNarrationRapportUniforme(subject,
                 dossier, "Table%");
         it = liensNarration.iterator();
-        log.fine("Narration Table (" + liensNarration.size() + ") :");
+        log.debug("Narration Table (" + liensNarration.size() + ") :");
         while (it.hasNext()) {
             Narration     linkNarration = (Narration) it.next();
             NarrationForm linkNarrationForm = new NarrationForm();
@@ -1654,12 +1654,12 @@ public class PrintAction extends AbstractAction {
             ValueObjectMapper.convertNarration(linkNarration, linkNarrationForm,
                     localeImpression);
             dossierForm.addNarrationTable(linkNarrationForm);
-            log.fine(linkNarration.toString());
+            log.debug(linkNarration.toString());
         }
         liensNarration = delegate.findLiensNarrationRapportUniforme(subject,
                 dossier, "Introduction%");
         it = liensNarration.iterator();
-        log.fine("Narration Introduction (" + liensNarration.size() + ") :");
+        log.debug("Narration Introduction (" + liensNarration.size() + ") :");
         while (it.hasNext()) {
             Narration     linkNarration = (Narration) it.next();
             NarrationForm linkNarrationForm = new NarrationForm();
@@ -1667,13 +1667,13 @@ public class PrintAction extends AbstractAction {
             ValueObjectMapper.convertNarration(linkNarration, linkNarrationForm,
                     localeImpression);
             dossierForm.addNarrationIntroduction(linkNarrationForm);
-            log.fine(linkNarration.toString());
+            log.debug(linkNarration.toString());
         }
 
         liensNarration = delegate.findLiensNarrationRapportUniforme(subject,
-                dossier, "Enquête%");
+                dossier, "Enquï¿½te%");
         it = liensNarration.iterator();
-        log.fine("Narration Enquete (" + liensNarration.size() + ") :");
+        log.debug("Narration Enquete (" + liensNarration.size() + ") :");
         while (it.hasNext()) {
             Narration     linkNarration = (Narration) it.next();
             NarrationForm linkNarrationForm = new NarrationForm();
@@ -1681,13 +1681,13 @@ public class PrintAction extends AbstractAction {
             ValueObjectMapper.convertNarration(linkNarration, linkNarrationForm,
                     localeImpression);
             dossierForm.addNarrationEnquete(linkNarrationForm);
-            log.fine(linkNarration.toString());
+            log.debug(linkNarration.toString());
         }
         
         liensNarration = delegate.findLiensNarrationRapportUniforme(subject,
                 dossier, "Constat%");
         it = liensNarration.iterator();
-        log.fine("Narration Constat (" + liensNarration.size() + ") :");
+        log.debug("Narration Constat (" + liensNarration.size() + ") :");
         while (it.hasNext()) {
             Narration     linkNarration = (Narration) it.next();
             NarrationForm linkNarrationForm = new NarrationForm();
@@ -1695,13 +1695,13 @@ public class PrintAction extends AbstractAction {
             ValueObjectMapper.convertNarration(linkNarration, linkNarrationForm,
                     localeImpression);
             dossierForm.addNarrationConstats(linkNarrationForm);
-            log.fine(linkNarration.toString());
+            log.debug(linkNarration.toString());
         }
 
         liensNarration = delegate.findLiensNarrationRapportUniforme(subject,
                 dossier, "Conclusion%");
         it = liensNarration.iterator();
-        log.fine("Narration Conclusion (" + liensNarration.size() + ") :");
+        log.debug("Narration Conclusion (" + liensNarration.size() + ") :");
         while (it.hasNext()) {
             Narration     linkNarration = (Narration) it.next();
             NarrationForm linkNarrationForm = new NarrationForm();
@@ -1709,13 +1709,13 @@ public class PrintAction extends AbstractAction {
             ValueObjectMapper.convertNarration(linkNarration, linkNarrationForm,
                     localeImpression);
             dossierForm.addNarrationConclusion(linkNarrationForm);
-            log.fine(linkNarration.toString());
+            log.debug(linkNarration.toString());
         }
 
         liensNarration = delegate.findLiensNarrationRapportUniforme(subject,
                 dossier, "Recommandations%");
         it = liensNarration.iterator();
-        log.fine("Narration Recommandation (" + liensNarration.size() + ") :");
+        log.debug("Narration Recommandation (" + liensNarration.size() + ") :");
         while (it.hasNext()) {
             Narration     linkNarration = (Narration) it.next();
             NarrationForm linkNarrationForm = new NarrationForm();
@@ -1723,13 +1723,13 @@ public class PrintAction extends AbstractAction {
             ValueObjectMapper.convertNarration(linkNarration, linkNarrationForm,
                     localeImpression);
             dossierForm.addNarrationRecommandations(linkNarrationForm);
-            log.fine(linkNarration.toString());
+            log.debug(linkNarration.toString());
         }
 
         liensNarration = delegate.findLiensNarrationRapportUniforme(subject,
                 dossier, "Autres%");
         it = liensNarration.iterator();
-        log.fine("Narration Autres (" + liensNarration.size() + ") :");
+        log.debug("Narration Autres (" + liensNarration.size() + ") :");
         while (it.hasNext()) {
             Narration     linkNarration = (Narration) it.next();
             NarrationForm linkNarrationForm = new NarrationForm();
@@ -1737,15 +1737,15 @@ public class PrintAction extends AbstractAction {
             ValueObjectMapper.convertNarration(linkNarration, linkNarrationForm,
                     localeImpression);
             dossierForm.addNarrationAutres1(linkNarrationForm);
-            log.fine(linkNarration.toString());
+            log.debug(linkNarration.toString());
         }
 
-        // Recherche des pièces jointes:
+        // Recherche des piï¿½ces jointes:
         /*Collection liensPieceJointe = delegate.findLiensPieceJointe(subject,
                 dossier);
         it = liensPieceJointe.iterator();
 
-        log.fine("PieceJointes liées (" + liensPieceJointe.size() + ") :");
+        log.debug("PieceJointes liï¿½es (" + liensPieceJointe.size() + ") :");
 
         while (it.hasNext()) {
             Photo     linkPieceJointe = (Photo) it.next();
@@ -1759,7 +1759,7 @@ public class PrintAction extends AbstractAction {
 /*		Collection liensConsignation = delegate.findLiensConsignation(subject,
 				dossier);
 		it = liensConsignation.iterator();
-		log.fine("Consignations liées (" + liensConsignation.size() + ") :");
+		log.debug("Consignations liï¿½es (" + liensConsignation.size() + ") :");
 		while (it.hasNext()) {
 			Consignation     linkConsignation = (Consignation) it.next();
 			ConsignationForm linkConsignationForm = new ConsignationForm();
@@ -1767,7 +1767,7 @@ public class PrintAction extends AbstractAction {
 			ValueObjectMapper.convertConsignation(linkConsignation, linkConsignationForm,
 					localeImpression);
 			dossierForm.addConsignation(linkConsignationForm);
-			log.fine(linkConsignation.toString());
+			log.debug(linkConsignation.toString());
 		}
 */	}
 }

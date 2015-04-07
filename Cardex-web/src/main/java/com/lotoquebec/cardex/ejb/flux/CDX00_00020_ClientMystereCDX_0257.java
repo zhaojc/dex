@@ -4,16 +4,17 @@ import java.io.FileNotFoundException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.logging.Logger;
 
 import net.sf.jasperreports.engine.JasperPrint;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardex.business.facade.FabriqueFacade;
 import com.lotoquebec.cardexCommun.GlobalConstants;
 import com.lotoquebec.cardexCommun.authentication.AutentificationCardex;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
 import com.lotoquebec.cardexCommun.exception.BusinessResourceException;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.rapport.ExcelImpressionRapport;
 import com.lq.std.conf.impl.AppConfig;
 
@@ -22,24 +23,24 @@ import com.lq.std.conf.impl.AppConfig;
  */
 public class CDX00_00020_ClientMystereCDX_0257 implements Flux {
 
-	private final static Logger log = (Logger)LoggerCardex.getLogger(CDX00_00020_ClientMystereCDX_0257.class);
+	private final static Logger log = LoggerFactory.getLogger(CDX00_00020_ClientMystereCDX_0257.class);
 	
     public void execute() throws Exception {
-        log.fine("Entr�e flux CDX00_00020");
+        log.info("Entr�e flux CDX00_00020");
         CardexAuthenticationSubject subject = AutentificationCardex.construireCardexAuthenticationSubjectSystem();
         
 		produireRapportCDX_0257(subject);
 		
-        log.fine("Fin flux CDX00_00020");
+        log.info("Fin flux CDX00_00020");
     }
     
 	private void produireRapportCDX_0257(CardexAuthenticationSubject subject) throws BusinessResourceException, FileNotFoundException {
-		log.fine("produireRapportCDX_0257");
+		log.info("produireRapportCDX_0257");
 		JasperPrint[] prints = FabriqueFacade.getRapportSessionFacade().clientMystereRapportCDX_0257(subject);
 		
 		for (int i=0;i<5;i++){
 			String nomRapport = obtenirNomRapportCDX_0257(i);
-			log.fine("Choix nom rapport : '"+nomRapport+"'");
+			log.info("Choix nom rapport : '"+nomRapport+"'");
 	        (new ExcelImpressionRapport()).impression(nomRapport, prints[i]);
 		}
 	}

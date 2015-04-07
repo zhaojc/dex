@@ -3,9 +3,6 @@ package com.lotoquebec.cardex.integration.dao;
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
 
 import oracle.jdbc.OracleTypes;
 
@@ -19,8 +16,8 @@ import com.lotoquebec.cardexCommun.integration.dao.jdbc.RowCallbackHandler;
 import com.lotoquebec.cardexCommun.integration.dao.jdbc.StoreProcTemplate;
 
 /**
- * Liste des appels à la base de données pour différents accès aux dossiers. Les
- * sous-catégorie sont liés aux dossiers.
+ * Liste des appels ï¿½ la base de donnï¿½es pour diffï¿½rents accï¿½s aux dossiers. Les
+ * sous-catï¿½gorie sont liï¿½s aux dossiers.
  */
 public class SousCategorieDAO {
 
@@ -70,7 +67,7 @@ public class SousCategorieDAO {
 	}
 
 	/**
-	 * Efface 1 catégorie/sous-catégories du dossier.
+	 * Efface 1 catï¿½gorie/sous-catï¿½gories du dossier.
 	 * @param subject
 	 * @param sousCategoriesVO
 	 * @throws DAOException
@@ -92,7 +89,7 @@ public class SousCategorieDAO {
 	}
 	
 	/**
-	 * Ajouter 1 catégorie/sous-catégorie pour un dossier.
+	 * Ajouter 1 catï¿½gorie/sous-catï¿½gorie pour un dossier.
 	 * @param subject
 	 * @param cle
 	 * @param site

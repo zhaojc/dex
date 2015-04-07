@@ -8,7 +8,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +17,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessages;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardex.business.CriteresRechercheAdresses;
 import com.lotoquebec.cardex.business.Societe;
@@ -36,7 +37,6 @@ import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
 import com.lotoquebec.cardexCommun.exception.BusinessException;
 import com.lotoquebec.cardexCommun.exception.BusinessResourceException;
 import com.lotoquebec.cardexCommun.exception.ValueObjectMapperException;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.presentation.util.AbstractAction;
 import com.lotoquebec.cardexCommun.user.CardexUser;
 
@@ -49,7 +49,7 @@ public class RechercheAdressesAction extends AbstractAction {
      * L'instance du gestionnaire de journalisation.
      */
 	private final Logger      log =
-        (Logger)LoggerCardex.getLogger((this.getClass()));
+        LoggerFactory.getLogger((this.getClass()));
     
     public ActionForward rechercheDefault(CardexAuthenticationSubject subject,
     ActionMapping mapping,
@@ -57,7 +57,7 @@ public class RechercheAdressesAction extends AbstractAction {
     HttpServletRequest request,
     HttpServletResponse response) throws IOException,
     ServletException {
-		log.fine("Recherche d'une adresses");
+		log.debug("Recherche d'une adresses");
 
 		CriteresRechercheAdressesForm adressesForm = (CriteresRechercheAdressesForm) form;
 		CardexUser user = (CardexUser) subject.getUser();
@@ -72,7 +72,7 @@ public class RechercheAdressesAction extends AbstractAction {
     HttpServletRequest request,
     HttpServletResponse response) throws IOException,
     ServletException, SecurityException, IllegalArgumentException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
-		log.fine("Rafraichir recherche d'une adresses");
+		log.debug("Rafraichir recherche d'une adresses");
 
         return mapping.findForward("success");
     }
@@ -83,7 +83,7 @@ public class RechercheAdressesAction extends AbstractAction {
     HttpServletRequest request,
     HttpServletResponse response) throws IOException,
     ServletException, ValueObjectMapperException {
-		log.fine("Soumettre la recherche d'une adresses");
+		log.debug("Soumettre la recherche d'une adresses");
 		CriteresRechercheAdressesForm adressesForm = (CriteresRechercheAdressesForm) form;
 		CriteresRechercheAdresses rechercheAdressesVO = new CriteresRechercheAdressesVO();
 		

@@ -7,7 +7,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardex.business.Dossier;
 import com.lotoquebec.cardex.business.vo.rapport.ClientMystereVO_CDX_0255;
@@ -17,13 +19,12 @@ import com.lotoquebec.cardex.generateurRapport.rapports.RapportsConfiguration;
 import com.lotoquebec.cardex.integration.dao.FabriqueCardexDAO;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
 import com.lotoquebec.cardexCommun.exception.DAOException;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.util.DateUtils;
 import com.lotoquebec.cardexCommun.util.StringUtils;
 
 public class ClientMystereCDX_0255RapportCardex extends RapportCardex{
 
-	private final static Logger log = (Logger)LoggerCardex.getLogger(ClientMystereCDX_0255RapportCardex.class);
+	private final static Logger log = LoggerFactory.getLogger(ClientMystereCDX_0255RapportCardex.class);
 	protected Map<ClientMystereVO_CDX_0255, ClientMystereVO_CDX_0255> societeClientMystereMap = new HashMap<ClientMystereVO_CDX_0255, ClientMystereVO_CDX_0255>();
 	private Set<Dossier> echantillonDossierClientMystereActif;
 	
@@ -115,7 +116,7 @@ public class ClientMystereCDX_0255RapportCardex extends RapportCardex{
 				if (sectionSocieteCDX0255VO.getVisites()[2].isCarte() == false){
 					rapportClientMystereVO_CDX_0255.setEnvoieAvisDate3(StringUtils.defaultString(sectionSocieteCDX0255VO.getVisites()[2].getEnvoieAvisDate()));
 					rapportClientMystereVO_CDX_0255.setReceptionAvisDate3(sectionSocieteCDX0255VO.getVisites()[2].getReceptionAvisDate());
-					rapportClientMystereVO_CDX_0255.setSuspensionDate3(DateUtils.defaultString(sectionSocieteCDX0255VO.getVisites()[2].getReceptionAvisDate())); // oui, c'est la même date...
+					rapportClientMystereVO_CDX_0255.setSuspensionDate3(DateUtils.defaultString(sectionSocieteCDX0255VO.getVisites()[2].getReceptionAvisDate())); // oui, c'est la mï¿½me date...
 				}
 				rapportClientMystereVO_CDX_0255.setVisiteConfirme3(StringUtils.defaultString(sectionSocieteCDX0255VO.getVisites()[2].getVisiteConfirme()));				
 				
@@ -128,7 +129,7 @@ public class ClientMystereCDX_0255RapportCardex extends RapportCardex{
 				if (sectionSocieteCDX0255VO.getVisites()[3].isCarte() == false){
 					rapportClientMystereVO_CDX_0255.setEnvoieAvisDate4(StringUtils.defaultString(sectionSocieteCDX0255VO.getVisites()[3].getEnvoieAvisDate()));
 					rapportClientMystereVO_CDX_0255.setReceptionAvisDate4(sectionSocieteCDX0255VO.getVisites()[3].getReceptionAvisDate());
-					rapportClientMystereVO_CDX_0255.setSuspensionDate4(DateUtils.defaultString(sectionSocieteCDX0255VO.getVisites()[3].getReceptionAvisDate())); // oui, c'est la même date...
+					rapportClientMystereVO_CDX_0255.setSuspensionDate4(DateUtils.defaultString(sectionSocieteCDX0255VO.getVisites()[3].getReceptionAvisDate())); // oui, c'est la mï¿½me date...
 				}
 				rapportClientMystereVO_CDX_0255.setVisiteConfirme4(StringUtils.defaultString(sectionSocieteCDX0255VO.getVisites()[3].getVisiteConfirme()));				
 				
@@ -141,7 +142,7 @@ public class ClientMystereCDX_0255RapportCardex extends RapportCardex{
 				if (sectionSocieteCDX0255VO.getVisites()[4].isCarte() == false){
 					rapportClientMystereVO_CDX_0255.setEnvoieAvisDate5(StringUtils.defaultString(sectionSocieteCDX0255VO.getVisites()[4].getEnvoieAvisDate()));
 					rapportClientMystereVO_CDX_0255.setReceptionAvisDate5(sectionSocieteCDX0255VO.getVisites()[4].getReceptionAvisDate());
-					rapportClientMystereVO_CDX_0255.setSuspensionDate5(DateUtils.defaultString(sectionSocieteCDX0255VO.getVisites()[4].getReceptionAvisDate())); // oui, c'est la même date...
+					rapportClientMystereVO_CDX_0255.setSuspensionDate5(DateUtils.defaultString(sectionSocieteCDX0255VO.getVisites()[4].getReceptionAvisDate())); // oui, c'est la mï¿½me date...
 				}
 				
 				rapportClientMystereVO_CDX_0255.setAnnulation(sectionSocieteCDX0255VO.getAnnulation());

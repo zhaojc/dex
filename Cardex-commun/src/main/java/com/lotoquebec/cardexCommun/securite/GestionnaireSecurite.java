@@ -13,9 +13,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Logger;
 
 import javax.servlet.http.HttpSession;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardexCommun.GlobalConstants;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
@@ -26,7 +28,6 @@ import com.lotoquebec.cardexCommun.exception.BusinessResourceException;
 import com.lotoquebec.cardexCommun.exception.DAOException;
 import com.lotoquebec.cardexCommun.exception.IteratorException;
 import com.lotoquebec.cardexCommun.integration.dao.cleListe.cleSQLListeCache.TableValeurCleSQLListeCache;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.presentation.util.LabelValueBean;
 import com.lotoquebec.cardexCommun.user.CardexPrivilege;
 import com.lotoquebec.cardexCommun.user.CardexUser;
@@ -37,7 +38,7 @@ import com.lotoquebec.cardexCommun.util.StringUtils;
 
 
 public class GestionnaireSecurite {
-    private static final Logger log = (Logger)LoggerCardex.getLogger(GestionnaireSecurite.class);
+    private static final Logger log = LoggerFactory.getLogger(GestionnaireSecurite.class);
     private static final List<String> actionsSecuriteList = new ArrayList<String>();
     
     static{
@@ -62,12 +63,12 @@ public class GestionnaireSecurite {
     }
     
     /**
-     * La methode obtenirURLUIComponentState est responsable de gérer
-     * les accès aux composants visuels (authorisation)
-     * des interfaces utilisateur du cardex.  Dépendemment des
-     * rôles contenu dans les tables de pilotage du cardex,
-     * un compossant peut être présenté à un utilisateur sous
-     * trois état :
+     * La methode obtenirURLUIComponentState est responsable de gï¿½rer
+     * les accï¿½s aux composants visuels (authorisation)
+     * des interfaces utilisateur du cardex.  Dï¿½pendemment des
+     * rï¿½les contenu dans les tables de pilotage du cardex,
+     * un compossant peut ï¿½tre prï¿½sentï¿½ ï¿½ un utilisateur sous
+     * trois ï¿½tat :
      * <lu>
      * <li>Actif (Enabled) </li>
      * <li>Desactif (Disabled) </li>
@@ -79,13 +80,13 @@ public class GestionnaireSecurite {
     	
     	if (".do".equals(StringUtils.right(url, 3)))
     		url = StringUtils.replace(url, ".do", "");
-    	log.fine("Valider accès du url '" + url + "'");
+    	log.debug("Valider accï¿½s du url '" + url + "'");
     	RolesCacheSecuriteCache rolesCacheSecuriteCache = RolesCacheSecuriteCache.getInstance();
 
     	RoleCache roleCache = rolesCacheSecuriteCache.obtenirRoleDeURL(url);
     	
     	if (roleCache == null){
-    		log.warning("Rôle de l'url : \""+url+"\" n'a pas été créé.");
+    		log.warn("Rï¿½le de l'url : \""+url+"\" n'a pas ï¿½tï¿½ crï¿½ï¿½.");
     		//rolesCacheSecuriteCache.statut();
     		return UIComponentState.ENABLED;
     	}
@@ -93,7 +94,7 @@ public class GestionnaireSecurite {
     	if (roleCache.isAdministrer()){
 	    	String role = roleCache.getRole();
 	        
-	    	// Aucun rôle signifie que cet URL n'est pas administré
+	    	// Aucun rï¿½le signifie que cet URL n'est pas administrï¿½
 	        if (role == null || role.trim().length() == 0 )
 	        	return UIComponentState.ENABLED;
 	
@@ -107,8 +108,8 @@ public class GestionnaireSecurite {
 
     /*
 	 * Le but de cette methode est d'avoir en session de l'utilisateur un object 
-	 * raccourcitGestionSecurit pour s'assurer qu'il a accès a consulter une
-	 * entité Cardex (ex: dossier, sujet, ..) sans avoir à le reconstruire. 
+	 * raccourcitGestionSecurit pour s'assurer qu'il a accï¿½s a consulter une
+	 * entitï¿½ Cardex (ex: dossier, sujet, ..) sans avoir ï¿½ le reconstruire. 
      */
     public static UIComponentState obtenirURLUIComponentState(CardexAuthenticationSubject subject, HttpSession session, Object vo, List<SecuritePredicate> securitePredicates, String... actionsSecurite) {
     	Map<Class, Map<String, RaccourcitGestionAccesSecurite>> raccourcitGestionAccesSecuriteClassMap = (Map<Class, Map<String, RaccourcitGestionAccesSecurite>>) session.getAttribute(GlobalConstants.Securite.SESSION_RACCOURCIT_GESTION_ACCES_SECURITE);
@@ -133,14 +134,14 @@ public class GestionnaireSecurite {
     public static void validerSecuriteURL(CardexAuthenticationSubject subject, String url) {
     	
     	CardexPrivilege userPrivilege = (CardexPrivilege)subject.getPrivilege();
-    	log.fine("Valider accès du url '" + url + "'");
+    	log.debug("Valider accï¿½s du url '" + url + "'");
     	RolesCacheSecuriteCache rolesCacheSecuriteCache = RolesCacheSecuriteCache.getInstance();
 
     	RoleCache roleCache = rolesCacheSecuriteCache.obtenirRoleDeURL(url);
     	
     	if (roleCache == null){
-    		log.warning("Rôle de l'url : \""+url+"\" n'a pas été créé.");
-    		System.err.println("Rôle de l'url : \""+url+"\" n'a pas été créé.");
+    		log.warn("Rï¿½le de l'url : \""+url+"\" n'a pas ï¿½tï¿½ crï¿½ï¿½.");
+    		System.err.println("Rï¿½le de l'url : \""+url+"\" n'a pas ï¿½tï¿½ crï¿½ï¿½.");
     		//rolesCacheSecuriteCache.statut();
     		return;
     	}
@@ -148,7 +149,7 @@ public class GestionnaireSecurite {
     	if (roleCache.isAdministrer()){
 	    	String role = roleCache.getRole();
 	        
-	    	// Aucun rôle signifie que cet URL n'est pas administré
+	    	// Aucun rï¿½le signifie que cet URL n'est pas administrï¿½
 	        if (StringUtils.isNotEmpty(role)
 	        && userPrivilege.hasRole(role) == false){
 	        	String message = "URL "+url;
@@ -162,9 +163,9 @@ public class GestionnaireSecurite {
     	CardexPrivilege userPrivilege = (CardexPrivilege)subject.getPrivilege();
     	
     	if (userPrivilege.isRolesEmpty())
-    		throw new SecurityException("L'usager "+cardexUser.getCode()+" n'a aucun rôle "); 
+    		throw new SecurityException("L'usager "+cardexUser.getCode()+" n'a aucun rï¿½le "); 
     	
-    	String message = "L'usager "+cardexUser.getCode()+" n'a pas le rôle '"+role+"' qui lui permet d'accéder à "+finMessage;
+    	String message = "L'usager "+cardexUser.getCode()+" n'a pas le rï¿½le '"+role+"' qui lui permet d'accï¿½der ï¿½ "+finMessage;
     	
 		try {
 			CourrielAction.envoyerCourrielDestinataire(subject, GlobalConstants.Securite.ERREUR_COURRIEL, message, GlobalConstants.TypesIntervention.ERREUR_SECURITE, "");
@@ -175,8 +176,8 @@ public class GestionnaireSecurite {
 	}
 
     /**
-     * Valide si un rôle Adhoc a été créer.
-     * Si, le rôle n'a pas été créer, on laisse passer, mais on fait un message.
+     * Valide si un rï¿½le Adhoc a ï¿½tï¿½ crï¿½er.
+     * Si, le rï¿½le n'a pas ï¿½tï¿½ crï¿½er, on laisse passer, mais on fait un message.
      * @param subject
      * @param role
      * @return
@@ -184,9 +185,9 @@ public class GestionnaireSecurite {
     public static UIComponentState obtenirAdhocUIComponentState(CardexAuthenticationSubject subject, String role) {
     	RolesCacheSecuriteCache rolesCacheSecuriteCache = RolesCacheSecuriteCache.getInstance();
     	CardexPrivilege userPrivilege = (CardexPrivilege)subject.getPrivilege();
-        log.fine("Valider accès au bouton. role : '" + role + "'");
+        log.debug("Valider accï¿½s au bouton. role : '" + role + "'");
     	
-    	// Aucun rôle signifie que ce bouton n'est pas administré
+    	// Aucun rï¿½le signifie que ce bouton n'est pas administrï¿½
         if (role == null || role.trim().length() == 0 )
         	return UIComponentState.ENABLED;
 
@@ -197,24 +198,24 @@ public class GestionnaireSecurite {
         	if (roleCache.isAdministrer())
         		return userPrivilege.hasUIRole(role);
         }else{
-        	log.warning("Rôle : \""+role+"\" n'a pas été créé.");
+        	log.warn("Rï¿½le : \""+role+"\" n'a pas ï¿½tï¿½ crï¿½ï¿½.");
         }
         return UIComponentState.ENABLED;
     }
 
     /**
-     * Valider que le rôle adhoc est bien géré
+     * Valider que le rï¿½le adhoc est bien gï¿½rï¿½
      * @param subject
      * @param role
      */
     public static void validerSecuriteAdhoc(CardexAuthenticationSubject subject, String role) {
     	RolesCacheSecuriteCache rolesCacheSecuriteCache = RolesCacheSecuriteCache.getInstance();
     	CardexPrivilege userPrivilege = (CardexPrivilege)subject.getPrivilege();
-        log.fine("Valider accès au bouton. role : '" + role + "'");
+        log.debug("Valider accï¿½s au bouton. role : '" + role + "'");
     	
-        // Aucun rôle adhoc ne peut être vide
+        // Aucun rï¿½le adhoc ne peut ï¿½tre vide
         if (role == null || role.trim().length() == 0 )
-        	throw new RuntimeException("Rôle adhoc vide dans la sécurité");
+        	throw new RuntimeException("Rï¿½le adhoc vide dans la sï¿½curitï¿½");
         
         RoleCache roleCache = rolesCacheSecuriteCache.get(role);
         
@@ -222,23 +223,23 @@ public class GestionnaireSecurite {
         	
         	if (roleCache.isAdministrer()
         	&& userPrivilege.hasRole(role) == false){
-	        	String message = "rôle adhoc "+role;
+	        	String message = "rï¿½le adhoc "+role;
 				genererErreurSecurite(subject, role, message);
         	}
         }else{
-        	log.warning("Rôle : \""+role+"\" n'a pas été créé.");
+        	log.warn("Rï¿½le : \""+role+"\" n'a pas ï¿½tï¿½ crï¿½ï¿½.");
         }
     }
     
     /*
-     * Retourne true si le rôle est contenu dans la liste des rôles de l'utilisateur
+     * Retourne true si le rï¿½le est contenu dans la liste des rï¿½les de l'utilisateur
      */
     public static boolean isRoleAdhoc(CardexAuthenticationSubject subject, String role) {
     	RolesCacheSecuriteCache rolesCacheSecuriteCache = RolesCacheSecuriteCache.getInstance();
     	CardexPrivilege userPrivilege = (CardexPrivilege)subject.getPrivilege();
-        log.fine("Valider accès au bouton. role : '" + role + "'");
+        log.debug("Valider accï¿½s au bouton. role : '" + role + "'");
     	
-    	// Aucun rôle signifie que ce bouton n'est pas administré
+    	// Aucun rï¿½le signifie que ce bouton n'est pas administrï¿½
         if (role == null || role.trim().length() == 0 )
         	return true;
 
@@ -249,7 +250,7 @@ public class GestionnaireSecurite {
         	if (roleCache.isAdministrer())
         			return userPrivilege.hasRole(role);
         }else{
-        	log.warning("Rôle : \""+role+"\" n'a pas été créé.");
+        	log.warn("Rï¿½le : \""+role+"\" n'a pas ï¿½tï¿½ crï¿½ï¿½.");
         }
         return true;
     }
@@ -265,23 +266,23 @@ public class GestionnaireSecurite {
     	if (StringUtils.isEmpty(classFormulaire) || methode == null)
     		return UIComponentState.ENABLED;
     	String classeMethode = construireClasseMethode(classFormulaire, methode);
-        log.fine("Valider accès du formulaire classe et methode '" + classeMethode + "'");
+        log.debug("Valider accï¿½s du formulaire classe et methode '" + classeMethode + "'");
     	RolesCacheSecuriteCache rolesCacheSecuriteCache = RolesCacheSecuriteCache.getInstance();
 
     	RoleCache roleCache = rolesCacheSecuriteCache.obtenirRoleDeFormulaireMethode(classeMethode);
     	
     	if (roleCache == null){
-    		// Il est possible d'avoir des champs seulement présent en présentation.
-    		// Dans ce cas, pas de sécurité.  C'est normal de ne pas avoir ce sécurité
-    		// pour ce cas en présentation, car il n'y a pas de sécurité côté affaire.
-    		//log.warning("Rôle de la classe : \""+classeMethode+"\" n'a pas été créé.");
+    		// Il est possible d'avoir des champs seulement prï¿½sent en prï¿½sentation.
+    		// Dans ce cas, pas de sï¿½curitï¿½.  C'est normal de ne pas avoir ce sï¿½curitï¿½
+    		// pour ce cas en prï¿½sentation, car il n'y a pas de sï¿½curitï¿½ cï¿½tï¿½ affaire.
+    		//log.warn("Rï¿½le de la classe : \""+classeMethode+"\" n'a pas ï¿½tï¿½ crï¿½ï¿½.");
     		return UIComponentState.ENABLED;
     	}
     	
     	if (roleCache.isAdministrer()){
 	    	String role = roleCache.getRole();    	
 	    	
-	    	// Aucun rôle signifie que ce formulaire n'est pas administré
+	    	// Aucun rï¿½le signifie que ce formulaire n'est pas administrï¿½
 	        if (role == null || role.trim().length() == 0 )
 	        	return UIComponentState.ENABLED;
 	
@@ -291,7 +292,7 @@ public class GestionnaireSecurite {
     }
     
     public static void validerSecuriteEntreeUtilisateur(CardexAuthenticationSubject subject, Object vo, String... actionSecurite) {
-        log.fine("Valider accès du VO '" + vo.getClass().getName() + "'");
+        log.debug("Valider accï¿½s du VO '" + vo.getClass().getName() + "'");
 		Field[] fields = vo.getClass().getDeclaredFields();
 		
 		for (int i = 0; i < fields.length; i++) {
@@ -318,14 +319,14 @@ public class GestionnaireSecurite {
     }
     
     /*
-     * Les boolean sont un cas particulier, à l'écran si l'utilisateur ne met rien
-     * il va quand même avoir false dans la valeur.  Pour cela, il faut retirer les
+     * Les boolean sont un cas particulier, ï¿½ l'ï¿½cran si l'utilisateur ne met rien
+     * il va quand mï¿½me avoir false dans la valeur.  Pour cela, il faut retirer les
      * valeurs des booleans que l'utilisateur n'avait pas le droit de modfiier.
-     * Cependant, il ne faut pas appliquer cette méthode à la racine de la sécurité.
-     * Sinon, les cases à coché ne serait plus sécurisé.
+     * Cependant, il ne faut pas appliquer cette mï¿½thode ï¿½ la racine de la sï¿½curitï¿½.
+     * Sinon, les cases ï¿½ cochï¿½ ne serait plus sï¿½curisï¿½.
      */
     public static void assignerBooleanNull(CardexAuthenticationSubject subject, Object vo, String... actionSecurite) {
-        log.fine("Valider accès du VO '" + vo.getClass().getName() + "'");
+        log.debug("Valider accï¿½s du VO '" + vo.getClass().getName() + "'");
 		Field[] fields = vo.getClass().getDeclaredFields();
 
 		for (int i = 0; i < fields.length; i++) {
@@ -376,7 +377,7 @@ public class GestionnaireSecurite {
 				} 
 				return role.toString();
 			}else
-				throw new RuntimeException("Il devrait y avoir un code de liste pour le rôle "+roleCache.getRole());
+				throw new RuntimeException("Il devrait y avoir un code de liste pour le rï¿½le "+roleCache.getRole());
         }else
         	return roleCache.getRole();    	
     }
@@ -396,7 +397,7 @@ public class GestionnaireSecurite {
     }
     
     /**
-     * Return true, s'il y a eu modification à l'object cible
+     * Return true, s'il y a eu modification ï¿½ l'object cible
      * @param source
      * @param cible
      * @return
@@ -436,20 +437,20 @@ public class GestionnaireSecurite {
     
     /*
      * La modification est un cas particulier, car il faut :
-     * 1.	Valider que l’utilisateur peut consulter l’enregistrement qu’il modifie
-     * 2.	Valider la source des données 
-     * 3.	Valider les données de la cible de la modification.  
+     * 1.	Valider que lï¿½utilisateur peut consulter lï¿½enregistrement quï¿½il modifie
+     * 2.	Valider la source des donnï¿½es 
+     * 3.	Valider les donnï¿½es de la cible de la modification.  
      * 
-     * Par exemple, un utilisateur tente de modifier un dossier, mais ne possède 
-     * pas la confidentialité nécessaire.  Il connait l’URL envoie la modification 
-     * directement.  L’application valide les données fournies et constate qu’il ne 
-     * possède pas le rôle de confidentialité nécessaire.  L’utilisateur ressaye 
-     * de modifier le dossier en passant la bonne clé et site, mais pas les bons 
-     * renseignements dans les données.  Lors de la validation des données envoyées 
-     * par l’utilisateur, la validation constate que les données sources sont en règle.  
-     * Le système doit retrouver les données du dossier cible pour constater que 
-     * l’utilisateur n’a pas le droit de consulter ce dossier.  Car il ne possède pas 
-     * le rôle de confidentialité nécessaire.
+     * Par exemple, un utilisateur tente de modifier un dossier, mais ne possï¿½de 
+     * pas la confidentialitï¿½ nï¿½cessaire.  Il connait lï¿½URL envoie la modification 
+     * directement.  Lï¿½application valide les donnï¿½es fournies et constate quï¿½il ne 
+     * possï¿½de pas le rï¿½le de confidentialitï¿½ nï¿½cessaire.  Lï¿½utilisateur ressaye 
+     * de modifier le dossier en passant la bonne clï¿½ et site, mais pas les bons 
+     * renseignements dans les donnï¿½es.  Lors de la validation des donnï¿½es envoyï¿½es 
+     * par lï¿½utilisateur, la validation constate que les donnï¿½es sources sont en rï¿½gle.  
+     * Le systï¿½me doit retrouver les donnï¿½es du dossier cible pour constater que 
+     * lï¿½utilisateur nï¿½a pas le droit de consulter ce dossier.  Car il ne possï¿½de pas 
+     * le rï¿½le de confidentialitï¿½ nï¿½cessaire.
      */
     public static void validerSecuriteModificationSansSecuritePredicate(CardexAuthenticationSubject subject, Object source, Object cible) {
     	validerSecuriteModification(subject, source, cible, null);
@@ -460,7 +461,7 @@ public class GestionnaireSecurite {
     }
     
     protected static void validerSecuriteModification(CardexAuthenticationSubject subject, Object source, Object cible, List<SecuritePredicate> securitePredicates, String...actionsSecuriteConsultation) {
-        log.fine("Valider accès du VO '" + source.getClass().getName() + "'");
+        log.debug("Valider accï¿½s du VO '" + source.getClass().getName() + "'");
         ListeCache listeCache = ListeCache.getInstance();
         
         if (securitePredicates != null)
@@ -525,8 +526,8 @@ public class GestionnaireSecurite {
 					/*
 					 * Si la valeur de la source n'est pas vide, mais que la 
 					 * valeur de la cible l'est.  Il est possible que la valeur 
-					 * de la cible soit vide car elle a été retiré pour des raisons
-					 * de sécurité.  Il faut, dans ce cas remettre la valeur.
+					 * de la cible soit vide car elle a ï¿½tï¿½ retirï¿½ pour des raisons
+					 * de sï¿½curitï¿½.  Il faut, dans ce cas remettre la valeur.
 					 */
 					if (StringUtils.isNotEmpty(valeurSource) && StringUtils.isEmpty(valeurCible) 
 					&& validerAccesSecurite(subject, source, fieldSource.getName(), valeurSource, GlobalConstants.ActionSecurite.MODIFICATION) == false){
@@ -574,7 +575,7 @@ public class GestionnaireSecurite {
     }
 
     /**
-     * Si le champs ne répond pas à la sécurité, il faut vider le champ 
+     * Si le champs ne rï¿½pond pas ï¿½ la sï¿½curitï¿½, il faut vider le champ 
      * @param subject
      * @param vo
      */
@@ -583,7 +584,7 @@ public class GestionnaireSecurite {
     }
     
     /**
-     * Si le champs ne répond pas à la sécurité, il faut vider le champ 
+     * Si le champs ne rï¿½pond pas ï¿½ la sï¿½curitï¿½, il faut vider le champ 
      * @param subject
      * @param vo
      */
@@ -591,14 +592,14 @@ public class GestionnaireSecurite {
     	validerEtFiltrerSecurite(subject, vo, securitePredicates, GlobalConstants.ActionSecurite.SELECTION);
     }
     /**
-     * Il y a pluiseurs actions de consultation, il faut passer la bonne en paramètre
+     * Il y a pluiseurs actions de consultation, il faut passer la bonne en paramï¿½tre
      * @param subject
      * @param vo
      * @param securitePredicates
      * @param actionsSecurite
      */
     protected static void validerEtFiltrerSecurite(CardexAuthenticationSubject subject, Object vo, List<SecuritePredicate> securitePredicates,  String...actionsSecurite) {
-        log.fine("Valider accès du VO '" + vo.getClass().getName() + "'");
+        log.debug("Valider accï¿½s du VO '" + vo.getClass().getName() + "'");
         ListeCache listeCache = ListeCache.getInstance();
         
         if (securitePredicates != null)
@@ -690,7 +691,7 @@ public class GestionnaireSecurite {
     }
     
     private static boolean validerEtFiltrerSecuriteRechercher(CardexAuthenticationSubject subject, Map<String, RaccourcitGestionAccesSecurite> raccourcitGestionAccesSecuriteMap, Object vo, List<SecuritePredicate> securitePredicates, String... actionsSecurite) {
-        log.fine("Valider accès du VO '" + vo.getClass().getName() + "'");
+        log.debug("Valider accï¿½s du VO '" + vo.getClass().getName() + "'");
 		
         if (securitePredicates != null)
 	        for (SecuritePredicate securitePredicate:securitePredicates)
@@ -706,7 +707,7 @@ public class GestionnaireSecurite {
 			RaccourcitGestionAccesSecurite raccourcitGestionAccesSecurite = raccourcitGestionAccesSecuriteMap.get(construireClasseMethode(vo, field.getName()));
 						
 			try {
-				// On récupère le sous object pour assigner ça sécurité à l'object de raccourcit
+				// On rï¿½cupï¿½re le sous object pour assigner ï¿½a sï¿½curitï¿½ ï¿½ l'object de raccourcit
 				if (Business.class.isAssignableFrom( field.getType() )){
 					Business business = (Business) vo.getClass().getDeclaredMethod("get"+StringUtils.capitalise(field.getName())).invoke(vo);
 					boolean retourSousObjet = validerEtFiltrerSecuriteRechercher(subject, raccourcitGestionAccesSecuriteMap, business, securitePredicates, actionsSecurite);
@@ -740,7 +741,7 @@ public class GestionnaireSecurite {
 		        			if (accessibleEtObligatoire.isObligatoire())
 		        				isValeurObligatoire = true;
 			        		
-		        			// Si on peut accéder à la valeur, la notion d'obligatoire n'est pas importante
+		        			// Si on peut accï¿½der ï¿½ la valeur, la notion d'obligatoire n'est pas importante
 			        		if (cleAccessibleActifEtInactifSet.contains(valeur)){
 			        			isValeurAccessible = true;
 			        			break;
@@ -778,7 +779,7 @@ public class GestionnaireSecurite {
     /*
     public static boolean validerEtFiltrerSecuriteRechercher(CardexAuthenticationSubject subject, Object vo, String... actionsSecurite) {
     	ListeCache listeCache = ListeCache.getInstance();
-        log.fine("Valider accès du VO '" + vo.getClass().getName() + "'");
+        log.debug("Valider accï¿½s du VO '" + vo.getClass().getName() + "'");
 		
         if (intervenantCreateur.validerSecurite(subject, vo))
         	return true;
@@ -867,7 +868,7 @@ public class GestionnaireSecurite {
 			}
 			return o.toString();		
 			/*else
-				System.out.println("Type non validé"+o.getClass());*/
+				System.out.println("Type non validï¿½"+o.getClass());*/
 		}
 		return "";
 	}
@@ -913,13 +914,13 @@ public class GestionnaireSecurite {
 			raccourcitGestionAccesSecurite.setRoleCache(roleCache);
 			
 			try {
-				// On récupère le sous object pour assigner ça sécurité à l'object de raccourcit
+				// On rï¿½cupï¿½re le sous object pour assigner ï¿½a sï¿½curitï¿½ ï¿½ l'object de raccourcit
 				if (Business.class.isAssignableFrom( field.getType() )){
 					Business business = (Business) vo.getClass().getDeclaredMethod("get"+StringUtils.capitalise(field.getName())).invoke(vo);
 					construireRaccourcitGestionAccesSecurite(subject, raccourcitGestionAccesSecuriteMap, business);
 				}
 				
-				// Aucun rôle signifie que ce VO n'est pas administré
+				// Aucun rï¿½le signifie que ce VO n'est pas administrï¿½
 		        if (roleCache == null || roleCache.getRole().trim().length() == 0 ){
 		        	raccourcitGestionAccesSecurite.setAdministrer(false);
 		        	continue;
@@ -930,13 +931,13 @@ public class GestionnaireSecurite {
 		        
 	        	if (StringUtils.isNotEmpty(roleCache.getCodeListe())){
 	        		
-	        		// On construit la sécurité pour toutes les actionsSecurite
+	        		// On construit la sï¿½curitï¿½ pour toutes les actionsSecurite
 	        		// Il est possible d'en avoir plusieurs.  Dans ce cas c'est la plus avantageuse qui remporte.
 	        		for (String actionSecurite:actionsSecuriteList){
 	        			Map<String, LabelValueBean> labelValueActifEtInactifMap = listeCache.obtenirMapLabelValueActifEtInactif(subject, new TableValeurCleSQLListeCache(subject, roleCache.getCodeListe(), actionSecurite));
 	        			boolean obligatoire = listeCache.isObligatoire(subject, new TableValeurCleSQLListeCache(subject, roleCache.getCodeListe(), "", actionSecurite));
 
-	        			// Problème de Serial en Java... Contournement:
+	        			// Problï¿½me de Serial en Java... Contournement:
 	        			Set<String> valeurAccessible = new HashSet<String>(); 
 	        			for (String key:labelValueActifEtInactifMap.keySet())
 	        				valeurAccessible.add(key);
@@ -976,23 +977,23 @@ public class GestionnaireSecurite {
 			return new ValueListHandler(list);
 		} catch (IteratorException e) {
 			e.printStackTrace();
-			throw new RuntimeException("Erreur lors de la validation de la sécurité avec un ValueListIterator");
+			throw new RuntimeException("Erreur lors de la validation de la sï¿½curitï¿½ avec un ValueListIterator");
 		}
     }
     
     /*
-     * Valide si l'utilisateur possède le rôle et le droit pour accéder a cette valeur
+     * Valide si l'utilisateur possï¿½de le rï¿½le et le droit pour accï¿½der a cette valeur
      */
     public static boolean validerAccesSecurite(CardexAuthenticationSubject subject, Object vo, String methode, String valeur, String... actionsSecurite) {
     	
-    	// Aucune valeur, aucun rôle de sécurité
+    	// Aucune valeur, aucun rï¿½le de sï¿½curitï¿½
     	if (StringUtils.isEmpty(valeur))
     		return true;
     	
     	CardexPrivilege userPrivilege = (CardexPrivilege)subject.getPrivilege();
     	RoleCache roleCache = obtenirRoleCacheDeVO(vo, methode);
     	
-    	// Aucun rôle signifie que ce VO n'est pas administré
+    	// Aucun rï¿½le signifie que ce VO n'est pas administrï¿½
         if (roleCache == null || roleCache.getRole().trim().length() == 0 )
         	return true;
         
@@ -1021,14 +1022,14 @@ public class GestionnaireSecurite {
 
 	private static RoleCache obtenirRoleCacheDeVO(Object vo, String methode) {
 		String classeMethode = construireClasseMethode(vo, methode);
-        log.fine("Valider accès du VO classe et methode '" + classeMethode + "'");
+        log.debug("Valider accï¿½s du VO classe et methode '" + classeMethode + "'");
     	RolesCacheSecuriteCache rolesCacheSecuriteCache = RolesCacheSecuriteCache.getInstance();
 
     	RoleCache roleCache = rolesCacheSecuriteCache.obtenirRoleCacheDeVOMethode(classeMethode);
     	
 		if (roleCache == null){
-			// Il y a trop de cas où c'est normal de ne pas avoir de rôle pour une variable
-			//log.warning("Rôle : \""+classeMethode+"\" n'a pas été créé.");
+			// Il y a trop de cas oï¿½ c'est normal de ne pas avoir de rï¿½le pour une variable
+			//log.warn("Rï¿½le : \""+classeMethode+"\" n'a pas ï¿½tï¿½ crï¿½ï¿½.");
 			return null;
 		}
     	

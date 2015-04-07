@@ -3,16 +3,15 @@
  */
 package com.lotoquebec.cardexCommun.authentication;
 
-import java.util.logging.Logger;
-
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts.Globals;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardexCommun.exception.DAOException;
 import com.lotoquebec.cardexCommun.integration.dao.FabriqueDAO;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 
 /**
  * @author levassc
@@ -23,7 +22,7 @@ public class AutentificationCardex {
      * L'instance du gestionnaire de journalisation.
      */
 	private final Logger      log =
-        (Logger)LoggerCardex.getLogger((this.getClass()));
+        LoggerFactory.getLogger((this.getClass()));
     
 	public AuthenticationSubject obtenirSubjet(HttpServletRequest request) {
 		// Le profile utilisateur est extrait de la base de donn�es cardex
@@ -50,7 +49,7 @@ public class AutentificationCardex {
 
 				for (int i = 0; i < cookies.length; i++) {
 					Cookie cookie = cookies[i];
-					log.fine("Cookie : " + cookie.getName()
+					log.debug("Cookie : " + cookie.getName()
 							+ " - Valeur : " + cookie.getValue());
 
 					if (cookie.getName().equals("CTSESSION")) {
@@ -60,7 +59,7 @@ public class AutentificationCardex {
 						//de contr�le et obtenir un jeton valide,
 						// reconnaissable par ClearTrust.
 						token = java.net.URLDecoder.decode(token, "UTF-8");
-						log.fine("Jeton : " + token);
+						log.debug("Jeton : " + token);
 					}
 				}
 			}
@@ -82,7 +81,7 @@ public class AutentificationCardex {
                     // couldn't get authenticated...
                     // prepare error
                     String message = "L'utilisateur n'est pas authentifi� ...";
-                    log.severe(message);
+                    log.error(message);
                 }				
 			}*/
 		} catch (Exception e) {

@@ -7,9 +7,11 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.logging.Logger;
 
 import oracle.jdbc.OracleTypes;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardexCommun.authentication.AuthenticationSubject;
 import com.lotoquebec.cardexCommun.business.vo.IntervenantVO;
@@ -19,7 +21,6 @@ import com.lotoquebec.cardexCommun.integration.dao.jdbc.PreparerCallableStatemen
 import com.lotoquebec.cardexCommun.integration.dao.jdbc.RowCallbackHandler;
 import com.lotoquebec.cardexCommun.integration.dao.jdbc.StoreProcTemplate;
 import com.lotoquebec.cardexCommun.integration.dao.sql.SecuriteSQL;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.securite.RoleCache;
 import com.lotoquebec.cardexCommun.user.CardexPrivilege;
 import com.lotoquebec.cardexCommun.user.CardexUser;
@@ -29,7 +30,7 @@ public class SecuriteDAO {
     /**
      * L'instance du gestionnaire de journalisation.
      */
-    private final Logger log = (Logger)LoggerCardex.getLogger((this.getClass()));
+    private final Logger log = LoggerFactory.getLogger((this.getClass()));
     
 	/**
 	 * Obtenir la liste des r�les autoris�s pour un code d'usager
@@ -63,7 +64,7 @@ public class SecuriteDAO {
 	 */
 	public List<IntervenantVO> obtenirListeProfils(final String codeUsager) throws DAOException{
 		final List<IntervenantVO> listeIntervenant = new ArrayList<IntervenantVO>();
-		log.fine("obtenirListeProfils");
+		log.debug("obtenirListeProfils");
 		StoreProcTemplate storeProcTemplate = new StoreProcTemplate();
 		
 		PreparerCallableStatement rch = new PreparerCallableStatement(){
@@ -100,7 +101,7 @@ public class SecuriteDAO {
 	 */
 	public Set<Integer> obtenirListeGroupeSecurite(final String codeUsager) throws DAOException{
 		final Set<Integer> setGroupes = new HashSet<Integer>();
-		log.fine("obtenirListeProfils");
+		log.debug("obtenirListeProfils");
 		StoreProcTemplate storeProcTemplate = new StoreProcTemplate();
 		
 		PreparerCallableStatement rch = new PreparerCallableStatement(){
@@ -131,7 +132,7 @@ public class SecuriteDAO {
 		if (setGroupes.isEmpty())
 			return listeGroupesEnfants;
 		
-		log.fine("obtenirListeGroupeEnfantSecurite");
+		log.debug("obtenirListeGroupeEnfantSecurite");
 		JDBCTemplate template = new JDBCTemplate();
     	
     	String sql = SecuriteSQL.obtenirSQLSousGroupeSecurite(setGroupes);
@@ -155,7 +156,7 @@ public class SecuriteDAO {
 		if (setGroupes.isEmpty())
 			return listeRoles;
 		
-		log.fine("obtenirListeGroupeRoles");
+		log.debug("obtenirListeGroupeRoles");
     	JDBCTemplate template = new JDBCTemplate();
     	
     	String sql = SecuriteSQL.obtenirSQLGroupeRoles(setGroupes);
@@ -177,7 +178,7 @@ public class SecuriteDAO {
 	 * 		rc1 OUT DTS_IR_INTERVENANT_ROLE);
 	 */
 	private Set<String> obtenirListeIntevenantRoles(final String codeUsager) throws DAOException{
-		log.fine("obtenirListeIntevenantRoles");
+		log.debug("obtenirListeIntevenantRoles");
 		final Set<String> listeRoles = new HashSet<String>();
 		StoreProcTemplate storeProcTemplate = new StoreProcTemplate();
 		
@@ -229,7 +230,7 @@ public class SecuriteDAO {
 	 */
 	public Set<RoleCache> obtenirListeRoleCache(final String nomApplication) throws DAOException{
 		final Set<RoleCache> setRoles = new HashSet<RoleCache>();
-		log.fine("obtenirListeRoleCache");
+		log.debug("obtenirListeRoleCache");
     	
 		StoreProcTemplate storeProcTemplate = new StoreProcTemplate();
 		

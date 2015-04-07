@@ -5,28 +5,28 @@ import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Logger;
 
 import javax.servlet.jsp.JspException;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.struts.taglib.TagUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardex.presentation.model.form.CriteresRechercheDossierForm;
 import com.lotoquebec.cardex.presentation.model.form.CriteresRechercheSocieteForm;
 import com.lotoquebec.cardex.presentation.model.form.CriteresRechercheSujetForm;
 import com.lotoquebec.cardex.presentation.model.form.CriteresRechercheVehiculeForm;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.presentation.taglib.html.LinkCardexTag;
 import com.lotoquebec.cardexCommun.presentation.taglib.html.TagLibUtils;
 
 
 /**
- * Genere un hyperlink URL-encoded au URI spécifié avec
- * les paramètres de query string correspondant aux
- * propriétés cle, site, et mot de passe du dossier
- * spécifié.
+ * Genere un hyperlink URL-encoded au URI spï¿½cifiï¿½ avec
+ * les paramï¿½tres de query string correspondant aux
+ * propriï¿½tï¿½s cle, site, et mot de passe du dossier
+ * spï¿½cifiï¿½.
  *
  * @see org.apache.struts.taglib.html.LinkTag
  * @author $Author: mdemers $
@@ -38,7 +38,7 @@ public class WriteObjectURLTag extends LinkCardexTag {
      * L'instance du gestionnaire de journalisation.
      */
 	private final Logger      log =
-        (Logger)LoggerCardex.getLogger((this.getClass()));
+        LoggerFactory.getLogger((this.getClass()));
 
     private String object;
 
@@ -69,10 +69,10 @@ public class WriteObjectURLTag extends LinkCardexTag {
      */
     public int doStartTag() throws JspException {
     	TagUtils tagUtils = TagUtils.getInstance();
-      log.fine("doStartTag()");
-      log.fine("   object '" + this.object + "'");
+      log.debug("doStartTag()");
+      log.debug("   object '" + this.object + "'");
 
-      // Cas spécial pour le nom anchors
+      // Cas spï¿½cial pour le nom anchors
       if (linkName != null) {
       	tagUtils.write(pageContext, "");
 		return (EVAL_BODY_INCLUDE);
@@ -126,7 +126,7 @@ public class WriteObjectURLTag extends LinkCardexTag {
               (messages.getMessage("rewrite.url", e.toString()));
       }
 
-      // Affichage de l'élément dans le output writer
+      // Affichage de l'ï¿½lï¿½ment dans le output writer
       tagUtils.write(pageContext,url);
 
       // Evalaution du  body pour ce tag
@@ -149,7 +149,7 @@ public class WriteObjectURLTag extends LinkCardexTag {
                   Object value = entry.getValue();
                   if (value != null && value.toString().length() < 50) {
 
-                    log.fine("Adding parameter '"+name+"' with value '"+value+"'.");
+                    log.debug("Adding parameter '"+name+"' with value '"+value+"'.");
                     queryParameters.put(name,value);
                   }//if
               }//if
@@ -244,7 +244,7 @@ public class WriteObjectURLTag extends LinkCardexTag {
             }
           }
         }catch (Throwable e) {
-          LoggerCardex.severe(log,"Unable to retrieve property '"+name+"' of the bean specified in WriteObjectURLTag.",e);
+          log.error("Unable to retrieve property '"+name+"' of the bean specified in WriteObjectURLTag.",e);
         }
         return queryParameters;
     }

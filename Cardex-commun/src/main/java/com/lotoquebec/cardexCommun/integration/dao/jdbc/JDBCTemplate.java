@@ -9,14 +9,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLWarning;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
 import com.lotoquebec.cardexCommun.exception.DAOException;
 import com.lotoquebec.cardexCommun.integration.dao.DAOConnection;
-import com.lotoquebec.cardexCommun.integration.dao.OracleDAOUtils;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.util.GererTacheUtilisateur;
 import com.lotoquebec.cardexCommun.util.TacheUtilisateur;
 
@@ -28,7 +27,7 @@ public class JDBCTemplate {
 	private CardexAuthenticationSubject subject = null;
 	private Connection connection = null;
 	private final Logger      log =
-        (Logger)LoggerCardex.getLogger((this.getClass()));
+        LoggerFactory.getLogger((this.getClass()));
 	private boolean ignoreWarnings = true;
     
 	
@@ -97,8 +96,8 @@ public class JDBCTemplate {
 			PreparedStatement ps = connection.prepareStatement( sql );
 			ResultSet rs = ps.executeQuery();
 			
-			if (log.isLoggable(Level.FINE))
-				log.fine("Executer le SQL : '"+sql+"'");
+			if (log.isDebugEnabled())
+				log.debug("Executer le SQL : '"+sql+"'");
 
 			if (callbackHandler != null)
 				while(rs.next()){
@@ -112,7 +111,7 @@ public class JDBCTemplate {
 			throwExceptionOnWarningIfNotIgnoringWarnings(warning);
 			
 		} catch (SQLException e) {
-			log.severe("Probl�me avec le SQL :"+sql);
+			log.error("Probl�me avec le SQL :"+sql);
 			try {
 				connection.rollback();
 			} catch (SQLException e1) {
@@ -155,8 +154,8 @@ public class JDBCTemplate {
 			
 			ResultSet rs = ps.executeQuery();
 			
-			if (log.isLoggable(Level.FINE))
-				log.fine("Executer le SQL : '"+SQL+"'");
+			if (log.isDebugEnabled())
+				log.debug("Executer le SQL : '"+SQL+"'");
 			while(rs.next()){
 
 				GererTacheUtilisateur.verifierThreadCourrant();
@@ -169,7 +168,7 @@ public class JDBCTemplate {
 			throwExceptionOnWarningIfNotIgnoringWarnings(warning);
 			
 		} catch (SQLException e) {
-			log.severe("Probl�me avec le SQL :"+SQL);
+			log.error("Probl�me avec le SQL :"+SQL);
 			try {
 				connection.rollback();
 			} catch (SQLException e1) {
@@ -204,8 +203,8 @@ public class JDBCTemplate {
 			
 			ResultSet rs = ps.executeQuery();
 			
-			if (log.isLoggable(Level.FINE))
-				log.fine("Executer le SQL : '"+sql+"'");
+			if (log.isDebugEnabled())
+				log.debug("Executer le SQL : '"+sql+"'");
 				
 			while(rs.next()){
 				GererTacheUtilisateur.verifierThreadCourrant();
@@ -218,7 +217,7 @@ public class JDBCTemplate {
 			throwExceptionOnWarningIfNotIgnoringWarnings(warning);
 			
 		} catch (SQLException e) {
-			log.severe("Probl�me avec le SQL :"+sql);
+			log.error("Probl�me avec le SQL :"+sql);
 			try {
 				connection.rollback();
 			} catch (SQLException e1) {
@@ -239,7 +238,7 @@ public class JDBCTemplate {
 		if (warning != null){
 			
 			if(this.ignoreWarnings){
-				log.fine("SQLWarning ignored: "+ warning);
+				log.debug("SQLWarning ignored: "+ warning);
 			} else {
 				throw new SQLWarning("Warning not ignored : "+warning);
 			}

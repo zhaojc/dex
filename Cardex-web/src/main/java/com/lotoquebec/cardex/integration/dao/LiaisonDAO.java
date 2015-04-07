@@ -5,9 +5,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import oracle.jdbc.OracleTypes;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardex.business.Dossier;
 import com.lotoquebec.cardex.business.Societe;
@@ -26,11 +28,10 @@ import com.lotoquebec.cardexCommun.exception.DAOException;
 import com.lotoquebec.cardexCommun.integration.dao.jdbc.PreparerCallableStatement;
 import com.lotoquebec.cardexCommun.integration.dao.jdbc.RowCallbackHandler;
 import com.lotoquebec.cardexCommun.integration.dao.jdbc.StoreProcTemplate;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 
 public class LiaisonDAO {
 
-	private final Logger log = (Logger)LoggerCardex.getLogger(LiaisonDAO.class);
+	private final Logger log = LoggerFactory.getLogger(LiaisonDAO.class);
 	
     public void supprimerLiaison(CardexAuthenticationSubject subject, final LiaisonEntiteVO liaisonEntiteVO) throws DAOException {
     	StoreProcTemplate template = new StoreProcTemplate(subject);
@@ -79,7 +80,7 @@ public class LiaisonDAO {
 			 *     LIAISON1_C_DO_GENRE           LDD_LIEN_DOSSIER.C_DO_GENRE%TYPE,
 			 *     LIAISON1_L_DO_CLE             LDD_LIEN_DOSSIER.L_DO_CLE%TYPE,
 			 *     LIAISON1_L_SI_CLE             LDD_LIEN_DOSSIER.L_SI_CLE%TYPE,
-			 *     -- Deuxième liaison
+			 *     -- Deuxiï¿½me liaison
 			 *     LIAISON2_L_LDD_CLE            LDD_LIEN_DOSSIER.L_LDD_CLE%TYPE,
 			 *     LIAISON2_L_LDD_SI_CLE         LDD_LIEN_DOSSIER.L_SI_CLE%TYPE,
 			 *     LIAISON2_C_DO_GENRE           LDD_LIEN_DOSSIER.C_DO_GENRE%TYPE,

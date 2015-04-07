@@ -4,13 +4,14 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 import oracle.jdbc.OracleTypes;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardex.business.ConsignationActionPSU;
 import com.lotoquebec.cardex.business.CriteresRecherchePSUMandat;
@@ -32,12 +33,11 @@ import com.lotoquebec.cardexCommun.integration.dao.jdbc.JDBCTemplate;
 import com.lotoquebec.cardexCommun.integration.dao.jdbc.PreparerSQL;
 import com.lotoquebec.cardexCommun.integration.dao.jdbc.RowCallbackHandler;
 import com.lotoquebec.cardexCommun.integration.dao.jdbc.UnEnregistrementPresent;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.util.GererTacheUtilisateur;
 
 /**
- * Liste des appels à la base de données pour différents accès aux
- * mandats PSU.  Implémente l'interface PSUMandatDAO.
+ * Liste des appels ï¿½ la base de donnï¿½es pour diffï¿½rents accï¿½s aux
+ * mandats PSU.  Implï¿½mente l'interface PSUMandatDAO.
  *
  * @author $Author: fguerin $
  * @version $Revision: 1.11 $, $Date: 2002/05/02 13:06:09 $
@@ -47,26 +47,26 @@ import com.lotoquebec.cardexCommun.util.GererTacheUtilisateur;
 public class PSUMandatDAO {
 
    private final Logger      log =
-       (Logger)LoggerCardex.getLogger(PSUMandatDAO.class);
+       LoggerFactory.getLogger(PSUMandatDAO.class);
    
 /**
- * Écriture d'un mandat PSU, appelée par la méthode "insert", "update",
+ * ï¿½criture d'un mandat PSU, appelï¿½e par la mï¿½thode "insert", "update",
  * "approbation" ou "delete".
- * Selon le paramètre "action" il peut s'agir d'une insertion ("I")
- * d'une mise à jour ("U"), d'une approbation et modification ("M") ou
+ * Selon le paramï¿½tre "action" il peut s'agir d'une insertion ("I")
+ * d'une mise ï¿½ jour ("U"), d'une approbation et modification ("M") ou
  * d'une suppression ("D").
- * Procédure appelée : CARDEX_LIEN.SP_E_PSU_MANDAT
- * Date de création : (2006-05-29)
- * @author François Guérin
- * @param subject CardexAuthenticationSubject : Données nominatives sur
+ * Procï¿½dure appelï¿½e : CARDEX_LIEN.SP_E_PSU_MANDAT
+ * Date de crï¿½ation : (2006-05-29)
+ * @author Franï¿½ois Guï¿½rin
+ * @param subject CardexAuthenticationSubject : Donnï¿½es nominatives sur
  * l'utilisateur.
- * @param consignation Consignation : consignation saisie à l'écran.
+ * @param consignation Consignation : consignation saisie ï¿½ l'ï¿½cran.
  * @param action  java.lang.String : U ou I
- * @param genreFichier String : code à deux lettres de la table qui lie laconsignation
+ * @param genreFichier String : code ï¿½ deux lettres de la table qui lie laconsignation
  * (Dossier (DO).
- * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
- * rupture de connexion avec la base de données, ou que la table demandée est
- * non disponible, ou qu'un problème est survenu lors de l'exécution d'une
+ * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+ * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e est
+ * non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution d'une
  * "stored procedure".
  * @return Consignation
  */
@@ -158,17 +158,17 @@ public class PSUMandatDAO {
 	}
 
 /**
- * Appel de la méthode editPSUMandat pour la création d'un mandat PSU.
- * Date de création : (2002-02-27)
+ * Appel de la mï¿½thode editPSUMandat pour la crï¿½ation d'un mandat PSU.
+ * Date de crï¿½ation : (2002-02-27)
  * @author Philippe Caron
- * @param subject CardexAuthenticationSubject : Données nominatives sur
+ * @param subject CardexAuthenticationSubject : Donnï¿½es nominatives sur
  * l'utilisateur.
- * @param consignation Consignation : Consignation saisie à l'écran.
+ * @param consignation Consignation : Consignation saisie ï¿½ l'ï¿½cran.
  * @param genreFichier String : Code identifiant la table source qui lie un
- * consignation à un Dossier.
- * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
- * rupture de connexion avec la base de données, ou que la table demandée est
- * non disponible, ou qu'un problème est survenu lors de l'exécution d'une
+ * consignation ï¿½ un Dossier.
+ * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+ * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e est
+ * non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution d'une
  * "stored procedure".
  * @return Consignation
  */
@@ -177,17 +177,17 @@ public class PSUMandatDAO {
 	}
 
 /**
- * Appel de la méthode editPSUMandat pour la mise à jour d'un mandat.
- * Date de création : (2002-02-27)
+ * Appel de la mï¿½thode editPSUMandat pour la mise ï¿½ jour d'un mandat.
+ * Date de crï¿½ation : (2002-02-27)
  * @author Philippe Caron
- * @param subject CardexAuthenticationSubject : Données nominatives sur
+ * @param subject CardexAuthenticationSubject : Donnï¿½es nominatives sur
  * l'utilisateur.
- * @param consignation Consignation : Consignation saisie à l'écran.
+ * @param consignation Consignation : Consignation saisie ï¿½ l'ï¿½cran.
  * @param genreFichier String : Code identifiant la table source qui lie un
- * consignation à un Dossier.
- * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
- * rupture de connexion avec la base de données, ou que la table demandée est
- * non disponible, ou qu'un problème est survenu lors de l'exécution d'une
+ * consignation ï¿½ un Dossier.
+ * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+ * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e est
+ * non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution d'une
  * "stored procedure".
  */
 	public void update(CardexAuthenticationSubject subject, PSUMandat psuMandat) throws DAOException {
@@ -195,21 +195,21 @@ public class PSUMandatDAO {
 	}
 
 /**
- * Appel de la méthode editPSUMandat pour l'approbation ou la modification d'un
+ * Appel de la mï¿½thode editPSUMandat pour l'approbation ou la modification d'un
  * mandat.
  * L'approbation active un mandat.
- * La modification consiste à permettre de nouveau les modifications à un mandat
- * approuvé.
- * Date de création : (2002-02-27)
+ * La modification consiste ï¿½ permettre de nouveau les modifications ï¿½ un mandat
+ * approuvï¿½.
+ * Date de crï¿½ation : (2002-02-27)
  * @author Philippe Caron
- * @param subject CardexAuthenticationSubject : Données nominatives sur
+ * @param subject CardexAuthenticationSubject : Donnï¿½es nominatives sur
  * l'utilisateur.
- * @param consignation Consignation : Consignation saisie à l'écran.
+ * @param consignation Consignation : Consignation saisie ï¿½ l'ï¿½cran.
  * @param genreFichier String : Code identifiant la table source qui lie un
- * consignation à un Dossier.
- * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
- * rupture de connexion avec la base de données, ou que la table demandée est
- * non disponible, ou qu'un problème est survenu lors de l'exécution d'une
+ * consignation ï¿½ un Dossier.
+ * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+ * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e est
+ * non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution d'une
  * "stored procedure".
  * @return Consignation
  */
@@ -218,19 +218,19 @@ public class PSUMandatDAO {
 	}
 
 /**
- * Appel de la méthode editPSUMandat pour la suppression d'un consignation.
- * Un mandat ne peut être supprimé s'il n'a pas été approuvé ou si aucune consignation
- * d'action n'a été enregistré.  Autrement, le mandat est simplement désactivé.
- * Date de création : (2002-02-27)
+ * Appel de la mï¿½thode editPSUMandat pour la suppression d'un consignation.
+ * Un mandat ne peut ï¿½tre supprimï¿½ s'il n'a pas ï¿½tï¿½ approuvï¿½ ou si aucune consignation
+ * d'action n'a ï¿½tï¿½ enregistrï¿½.  Autrement, le mandat est simplement dï¿½sactivï¿½.
+ * Date de crï¿½ation : (2002-02-27)
  * @author Philippe Caron
- * @param subject CardexAuthenticationSubject : Données nominatives sur
+ * @param subject CardexAuthenticationSubject : Donnï¿½es nominatives sur
  * l'utilisateur.
- * @param consignation Consignation : Consignation saisie à l'écran.
+ * @param consignation Consignation : Consignation saisie ï¿½ l'ï¿½cran.
  * @param genreFichier String : Code identifiant la table source qui lie un
- * consignation à un Dossier.
- * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
- * rupture de connexion avec la base de données, ou que la table demandée est
- * non disponible, ou qu'un problème est survenu lors de l'exécution d'une
+ * consignation ï¿½ un Dossier.
+ * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+ * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e est
+ * non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution d'une
  * "stored procedure".
  * @return Consignation
  */
@@ -239,24 +239,24 @@ public class PSUMandatDAO {
 	}
 
 /**
- * Lecture des consignations associés à une entité Dossier.
- * Procédure appelée : CARDEX_WEB_LIRE_DOC_TRI.SPW_L_CN_CONSIGNATION
- * Date de création : (2002-02-27)
+ * Lecture des consignations associï¿½s ï¿½ une entitï¿½ Dossier.
+ * Procï¿½dure appelï¿½e : CARDEX_WEB_LIRE_DOC_TRI.SPW_L_CN_CONSIGNATION
+ * Date de crï¿½ation : (2002-02-27)
  * @author Philippe Caron
- * @param subject  CardexAuthenticationSubject : Données nominatives sur
+ * @param subject  CardexAuthenticationSubject : Donnï¿½es nominatives sur
  * l'utilisateur.
- * @param cle long : clé de référence de l'entité
- * @param site long : site de référence de l'entité
- * @param genreFichier String : identification de l'entité.
- * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
- * rupture de connexion avec la base de données, ou que la table demandée est
- * non disponible, ou qu'un problème est survenu lors de l'exécution d'une
+ * @param cle long : clï¿½ de rï¿½fï¿½rence de l'entitï¿½
+ * @param site long : site de rï¿½fï¿½rence de l'entitï¿½
+ * @param genreFichier String : identification de l'entitï¿½.
+ * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+ * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e est
+ * non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution d'une
  * "stored procedure".
- * @return Collection : liste des consignations associées
+ * @return Collection : liste des consignations associï¿½es
  */
 	public ValueListIterator findLiensConsignationAction(CardexAuthenticationSubject subject,
 			String mandat) throws DAOException {
-	  log.fine("findLiensConsignationAction()");
+	  log.debug("findLiensConsignationAction()");
 	  Connection connection
 			= DAOConnection.getInstance().getConnection(subject);
 	  CallableStatement callableStatement = null;
@@ -319,15 +319,15 @@ public class PSUMandatDAO {
    }
 
 /**
- * Routine pour traiter les ResultSet retournés par les recherches de mandas PSU.
- * Date de création : (2002-02-27)
+ * Routine pour traiter les ResultSet retournï¿½s par les recherches de mandas PSU.
+ * Date de crï¿½ation : (2002-02-27)
  * @author Philippe Caron
- * @param resultSet  ResultSet : Données retournées par une recherche.
- * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
- * rupture de connexion avec la base de données, ou que la table demandée est
- * non disponible, ou qu'un problème est survenu lors de l'exécution d'une
+ * @param resultSet  ResultSet : Donnï¿½es retournï¿½es par une recherche.
+ * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+ * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e est
+ * non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution d'une
  * "stored procedure".
- * @return ArrayList : liste des résultats traités.
+ * @return ArrayList : liste des rï¿½sultats traitï¿½s.
  */
     public RowCallbackHandler constuireRowCallBackHandler(final List<PSUMandat> psuMandatList){
   	   return new RowCallbackHandler(){
@@ -341,7 +341,7 @@ public class PSUMandatDAO {
   private ArrayList traitementResultSet(ResultSet resultSet, String source)
 		throws DAOException {
 	   ArrayList results = new ArrayList();
-	   try { //On limite le nombre d'enregistrements retournés à 3000.
+	   try { //On limite le nombre d'enregistrements retournï¿½s ï¿½ 3000.
 			while (resultSet.next() && results.size() < GlobalConstants.NombreEnregistrementRetourneRecherche.RECHERCHE_MANDAT_PSU){
 				GererTacheUtilisateur.verifierThreadCourrant();
 			  PSUMandatVO psuMandatVo = construirePSUMandat(resultSet, source);			  
@@ -397,8 +397,8 @@ private PSUMandatVO construirePSUMandat(ResultSet resultSet, String source)
 	  psuMandatVo.setModificateur(resultSet.getString("V_PSU_MODIFIE_PAR"));
 	  psuMandatVo.setDateModification(resultSet.getTimestamp("D_PSU_DATE_MODIFICATION"));    
 	  psuMandatVo.setApprobateur(resultSet.getString("V_PSU_APPROUVE_PAR"));
-	  //On met un blanc si l'approbateur est vide pour déterminer le statut d'approbation
-	  //dans l'affichage des résultats.
+	  //On met un blanc si l'approbateur est vide pour dï¿½terminer le statut d'approbation
+	  //dans l'affichage des rï¿½sultats.
 	  if(psuMandatVo.getApprobateur() == null){
 		 psuMandatVo.setApprobateur(" ");
 	  }
@@ -409,14 +409,14 @@ private PSUMandatVO construirePSUMandat(ResultSet resultSet, String source)
 	return psuMandatVo;
 }
 	/**
-	 * Routine pour traiter les ResultSet retournés par les recherches de consignation
+	 * Routine pour traiter les ResultSet retournï¿½s par les recherches de consignation
 	 * pour l'impression du rapport.
-	 * @param resultSet  ResultSet : Données retournées par une recherche.
-	 * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-	 * rupture de connexion avec la base de données, ou que la table demandée est
-	 * non disponible, ou qu'un problème est survenu lors de l'exécution d'une
+	 * @param resultSet  ResultSet : Donnï¿½es retournï¿½es par une recherche.
+	 * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+	 * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e est
+	 * non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution d'une
 	 * "stored procedure".
-	 * @return ArrayList : liste des résultats traités.
+	 * @return ArrayList : liste des rï¿½sultats traitï¿½s.
 	 */
 /*	  private ArrayList traitementResultSetRapport(ResultSet resultSet)
 			throws DAOException {
@@ -472,18 +472,18 @@ private PSUMandatVO construirePSUMandat(ResultSet resultSet, String source)
 		}
 */
 /**
- * Recherche directe d'un mandat PSU par sa clé unique.
- * Procédure appelée : SP_L2_PSU_MANDAT
- * Date de création : (2002-02-27)
+ * Recherche directe d'un mandat PSU par sa clï¿½ unique.
+ * Procï¿½dure appelï¿½e : SP_L2_PSU_MANDAT
+ * Date de crï¿½ation : (2002-02-27)
  * @author Philippe Caron
- * @param subject  CardexAuthenticationSubject : Données nominatives sur
+ * @param subject  CardexAuthenticationSubject : Donnï¿½es nominatives sur
  * l'utilisateur.
- * @param criteria Consignation : Consignation à rechercher.
- * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
- * rupture de connexion avec la base de données, ou que la table demandée est
- * non disponible, ou qu'un problème est survenu lors de l'exécution d'une
+ * @param criteria Consignation : Consignation ï¿½ rechercher.
+ * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+ * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e est
+ * non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution d'une
  * "stored procedure".
- * @return Consignation : Données du dossier trouvé.
+ * @return Consignation : Donnï¿½es du dossier trouvï¿½.
  */
 	public PSUMandat find(CardexAuthenticationSubject subject, PSUMandat criteria)
 			throws DAOException {
@@ -501,7 +501,7 @@ private PSUMandatVO construirePSUMandat(ResultSet resultSet, String source)
 		 callableStatement.registerOutParameter(3, OracleTypes.CURSOR);
 		 callableStatement.execute();
 		 resultSet = (ResultSet)callableStatement.getObject(3);
-		 //Traitement du résultat retourné
+		 //Traitement du rï¿½sultat retournï¿½
 		 if (resultSet.next()) {
 			psuMandatVo.setCle(resultSet.getLong("L_PSU_CLE"));
 			psuMandatVo.setSite(resultSet.getLong("L_SI_CLE"));
@@ -545,8 +545,8 @@ private PSUMandatVO construirePSUMandat(ResultSet resultSet, String source)
 			psuMandatVo.setDateModification(resultSet.getTimestamp("D_PSU_DATE_MODIFICATION"));    
 			psuMandatVo.setApprobateur(resultSet.getString("V_PSU_APPROUVE_PAR"));
 			psuMandatVo.setDateApprobation(resultSet.getTimestamp("D_PSU_DATE_APPROBATION"));
-			//On met un blanc si l'approbateur est vide pour déterminer le statut d'approbation
-			//dans l'affichage du mandat. Si un mandat est approuvé, il ne peut pas être modifié.
+			//On met un blanc si l'approbateur est vide pour dï¿½terminer le statut d'approbation
+			//dans l'affichage du mandat. Si un mandat est approuvï¿½, il ne peut pas ï¿½tre modifiï¿½.
 			if(psuMandatVo.getApprobateur() == null || psuMandatVo.getApprobateur().equals(" ")){
 			   psuMandatVo.setApprobateur(" ");
 			   psuMandatVo.setModifiable(true);
@@ -556,17 +556,17 @@ private PSUMandatVO construirePSUMandat(ResultSet resultSet, String source)
 		 }
 
 /*		 if (log.isDebugEnabled()){
-		   log.fine("  user.code = '"+user.getCode()+"'");
-		   log.fine("  user.site = '"+user.getSite()+"'");
-		   log.fine("  user.niveauAuthorite = '"+privilege.getNiveauAuthorite()+"'");
-		   log.fine("  consignation.createur = '"+consignationVo.getCreateur()+"'");
-		   log.fine("  consignation.site = '"+consignationVo.getSite()+"'");
-		   log.fine("  consignation.approbateur = '"+consignationVo.getApprobateur()+"'");
-		   log.fine("Détermine si le consignation est modifiable");
-		   log.fine("  consignation.isModifiable = '"+consignationVo.isModifiable()+"'");
-		   log.fine("Détermine si le consignation est approuvable");
-		   log.fine("  consignation.isApprouvable = '"+consignationVo.getApprouvable()+"'");
-		   log.fine("Détermine si on peut compléter le consignation");
+		   log.debug("  user.code = '"+user.getCode()+"'");
+		   log.debug("  user.site = '"+user.getSite()+"'");
+		   log.debug("  user.niveauAuthorite = '"+privilege.getNiveauAuthorite()+"'");
+		   log.debug("  consignation.createur = '"+consignationVo.getCreateur()+"'");
+		   log.debug("  consignation.site = '"+consignationVo.getSite()+"'");
+		   log.debug("  consignation.approbateur = '"+consignationVo.getApprobateur()+"'");
+		   log.debug("Dï¿½termine si le consignation est modifiable");
+		   log.debug("  consignation.isModifiable = '"+consignationVo.isModifiable()+"'");
+		   log.debug("Dï¿½termine si le consignation est approuvable");
+		   log.debug("  consignation.isApprouvable = '"+consignationVo.getApprouvable()+"'");
+		   log.debug("Dï¿½termine si on peut complï¿½ter le consignation");
 
 		 }
 */
@@ -603,21 +603,21 @@ private PSUMandatVO construirePSUMandat(ResultSet resultSet, String source)
 	}
 
 /**
- * Recherche de mandats PSU à l'aide de critères de recherche.
- * Cette recherche sert principalement à chercher des mandats.
- * La requête SQL est générée dans le code Java, avant d'être envoyée à Oracle,
- * en fonction des critères de recherche.
- * Le resultSet retourné par les recherches est traité dans la routine traitementResultSet.
- * Procédure appelée : générée ici.
- * Date de création : (2002-02-19)
- * @author François Guérin
- * @param subject  CardexAuthenticationSubject : données nominatives sur l'utilisateur
- * @param criteria CriteresRechercheConsignation : critères de recherche
- * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
- * rupture de connexion avec la base de données, ou que la table demandée est
- * non disponible, ou qu'un problème est survenu lors de l'exécution d'une
+ * Recherche de mandats PSU ï¿½ l'aide de critï¿½res de recherche.
+ * Cette recherche sert principalement ï¿½ chercher des mandats.
+ * La requï¿½te SQL est gï¿½nï¿½rï¿½e dans le code Java, avant d'ï¿½tre envoyï¿½e ï¿½ Oracle,
+ * en fonction des critï¿½res de recherche.
+ * Le resultSet retournï¿½ par les recherches est traitï¿½ dans la routine traitementResultSet.
+ * Procï¿½dure appelï¿½e : gï¿½nï¿½rï¿½e ici.
+ * Date de crï¿½ation : (2002-02-19)
+ * @author Franï¿½ois Guï¿½rin
+ * @param subject  CardexAuthenticationSubject : donnï¿½es nominatives sur l'utilisateur
+ * @param criteria CriteresRechercheConsignation : critï¿½res de recherche
+ * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+ * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e est
+ * non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution d'une
  * "stored procedure".
- * @return ValueListIterator : liste des dossiers retournés par la recherche.
+ * @return ValueListIterator : liste des dossiers retournï¿½s par la recherche.
  */
     public List<PSUMandat> select(CardexAuthenticationSubject subject, CriteresRecherchePSUMandat criteria) throws DAOException {
   		JDBCTemplate template = new JDBCTemplate(subject);
@@ -645,21 +645,21 @@ private PSUMandatVO construirePSUMandat(ResultSet resultSet, String source)
      }    
 
 /**
- * À chaque action dans l'application, une recherche est effectuée pour vérifier 
- * si un mandat de suivi des utilisateurs est associé aux données concernées.
- * Si un mandat est trouvé, les informations sont retournées pour qu'une consignation
- * d'action soit effectuée et que des messages soient envoyés aux destinataires inscrits
+ * ï¿½ chaque action dans l'application, une recherche est effectuï¿½e pour vï¿½rifier 
+ * si un mandat de suivi des utilisateurs est associï¿½ aux donnï¿½es concernï¿½es.
+ * Si un mandat est trouvï¿½, les informations sont retournï¿½es pour qu'une consignation
+ * d'action soit effectuï¿½e et que des messages soient envoyï¿½s aux destinataires inscrits
  * dans le mandat.
- * Procédure appelée : générée ici.
- * Date de création : (2006-12-19)
- * @author François Guérin
- * @param subject  CardexAuthenticationSubject : données nominatives sur l'utilisateur
- * @param criteria CriteresRechercheConsignation : critères de recherche
- * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
- * rupture de connexion avec la base de données, ou que la table demandée est
- * non disponible, ou qu'un problème est survenu lors de l'exécution d'une
+ * Procï¿½dure appelï¿½e : gï¿½nï¿½rï¿½e ici.
+ * Date de crï¿½ation : (2006-12-19)
+ * @author Franï¿½ois Guï¿½rin
+ * @param subject  CardexAuthenticationSubject : donnï¿½es nominatives sur l'utilisateur
+ * @param criteria CriteresRechercheConsignation : critï¿½res de recherche
+ * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+ * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e est
+ * non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution d'une
  * "stored procedure".
- * @return ValueListIterator : liste des dossiers retournés par la recherche.
+ * @return ValueListIterator : liste des dossiers retournï¿½s par la recherche.
  */
     public List<PSUMandat> verification(CardexAuthenticationSubject subject, PSUMandat criteria, String genreFichier, String action) throws DAOException {
 	   final List<PSUMandat> mandatList = new ArrayList<PSUMandat>();
@@ -677,17 +677,17 @@ private PSUMandatVO construirePSUMandat(ResultSet resultSet, String source)
     }//select
 
 /**
- * Écriture d'une consignation lorsqu'une action dans le système correspond
- * à une trace définie par un mandat PSU (Programme de Suivi des utilisateurs).
- * Procédure appelée : CARDEX_LIEN.SP_E_CS_CONSIGNATION_ACTION
- * Date de création : (2007-01-10)
- * @author François Guérin
- * @param subject CardexAuthenticationSubject : Données nominatives sur
+ * ï¿½criture d'une consignation lorsqu'une action dans le systï¿½me correspond
+ * ï¿½ une trace dï¿½finie par un mandat PSU (Programme de Suivi des utilisateurs).
+ * Procï¿½dure appelï¿½e : CARDEX_LIEN.SP_E_CS_CONSIGNATION_ACTION
+ * Date de crï¿½ation : (2007-01-10)
+ * @author Franï¿½ois Guï¿½rin
+ * @param subject CardexAuthenticationSubject : Donnï¿½es nominatives sur
  * l'utilisateur.
- * @param consignation Consignation : consignation générée par un mandat.
- * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
- * rupture de connexion avec la base de données, ou que la table demandée est
- * non disponible, ou qu'un problème est survenu lors de l'exécution d'une
+ * @param consignation Consignation : consignation gï¿½nï¿½rï¿½e par un mandat.
+ * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+ * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e est
+ * non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution d'une
  * "stored procedure".
  * @return Consignation
  */

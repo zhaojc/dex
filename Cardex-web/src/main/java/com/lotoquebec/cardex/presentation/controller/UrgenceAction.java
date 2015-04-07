@@ -5,7 +5,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +14,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessages;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardex.business.Urgence;
 import com.lotoquebec.cardex.business.delegate.UrgenceBusinessDelegate;
@@ -22,8 +23,8 @@ import com.lotoquebec.cardex.business.vo.CriteresRechercheUrgenceVO;
 import com.lotoquebec.cardex.business.vo.UrgenceVO;
 import com.lotoquebec.cardex.presentation.model.UrgenceHtmlForm;
 import com.lotoquebec.cardex.presentation.model.form.CriteresRechercheUrgenceForm;
-import com.lotoquebec.cardex.presentation.model.form.UrgenceForm;
 import com.lotoquebec.cardex.presentation.model.form.DossierForm;
+import com.lotoquebec.cardex.presentation.model.form.UrgenceForm;
 import com.lotoquebec.cardex.presentation.model.util.trierListeColumns.UrgenceTrieListe;
 import com.lotoquebec.cardex.presentation.util.ValueObjectMapper;
 import com.lotoquebec.cardexCommun.GlobalConstants;
@@ -32,14 +33,13 @@ import com.lotoquebec.cardexCommun.exception.BusinessException;
 import com.lotoquebec.cardexCommun.exception.BusinessResourceException;
 import com.lotoquebec.cardexCommun.exception.IteratorException;
 import com.lotoquebec.cardexCommun.exception.ValueObjectMapperException;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.presentation.util.AbstractAction;
 import com.lotoquebec.cardexCommun.util.StringUtils;
 
 public class UrgenceAction extends AbstractAction {
 
 	private final Logger      log =
-        (Logger)LoggerCardex.getLogger((this.getClass()));
+        LoggerFactory.getLogger((this.getClass()));
 	private UrgenceBusinessDelegate delegate = null;
 	
 	public UrgenceAction() throws BusinessResourceException {
@@ -53,7 +53,7 @@ public class UrgenceAction extends AbstractAction {
     HttpServletRequest request,
     HttpServletResponse response) throws IOException,
     ServletException {
-        log.fine("Accès à une intervention d'un service d'urgence");
+        log.debug("Accï¿½s ï¿½ une intervention d'un service d'urgence");
         ActionMessages errors = new ActionMessages();
         UrgenceForm urgenceForm = (UrgenceForm)form;    	
         Urgence urgenceVO = new UrgenceVO();
@@ -62,12 +62,12 @@ public class UrgenceAction extends AbstractAction {
         	ValueObjectMapper.convertUrgenceHtmlForm(urgenceForm, urgenceVO, request.getLocale());
         	urgenceVO = delegate.find(subject, urgenceVO);
 			ValueObjectMapper.convertUrgence(urgenceVO, urgenceForm, request.getLocale());
-			//On recompose la clé pour l'affichage de la société
+			//On recompose la clï¿½ pour l'affichage de la sociï¿½tï¿½
 				urgenceForm.setLienSociete(urgenceForm.getLienSociete()+"-"+urgenceForm.getLienSiteSociete());
-	        //Selon la classe sélectionnée, on affiche l'écran correspondant
+	        //Selon la classe sï¿½lectionnï¿½e, on affiche l'ï¿½cran correspondant
 			String classe = urgenceForm.getClasse();
 	        if(classe.equals(String.valueOf(GlobalConstants.Classes.AMBULANCE)) || classe.equals("0")){
-	        	//La classe peut être "0" dans le cas d'un statut Refus avant appel.
+	        	//La classe peut ï¿½tre "0" dans le cas d'un statut Refus avant appel.
 	        	return mapping.findForward("successAmbulance");
 	        }
 	        if(classe.equals(String.valueOf(GlobalConstants.Classes.POLICE))){
@@ -97,13 +97,13 @@ public class UrgenceAction extends AbstractAction {
     HttpServletRequest request,
     HttpServletResponse response) throws IOException,
     ServletException {
-        log.fine("Créer une entrée de service d'urgence");
+        log.debug("Crï¿½er une entrï¿½e de service d'urgence");
         UrgenceForm urgenceForm = (UrgenceForm)form;    	
         urgenceForm.init();
         ajouterLienDossier(request, urgenceForm);
         String classe = (String)request.getParameter("choixClasse");
         urgenceForm.setClasse(classe);
-        //Selon la classe sélectionnée, on affiche l'écran correspondant
+        //Selon la classe sï¿½lectionnï¿½e, on affiche l'ï¿½cran correspondant
         if(classe.equals(String.valueOf(GlobalConstants.Classes.AMBULANCE))){
         	return mapping.findForward("successAmbulance");
         }
@@ -135,7 +135,7 @@ public class UrgenceAction extends AbstractAction {
     HttpServletRequest request,
     HttpServletResponse response) throws IOException,
     ServletException {
-    	log.fine("Retour d'une intervention de service d'urgence");
+    	log.debug("Retour d'une intervention de service d'urgence");
     	UrgenceForm urgenceForm = (UrgenceForm)form;
     	remettreDossier(urgenceForm, request);
     	
@@ -144,18 +144,18 @@ public class UrgenceAction extends AbstractAction {
 
     /**
      * <p>
-     * Cet événement survient lorsque dans le menu principal, l'utilisateur
+     * Cet ï¿½vï¿½nement survient lorsque dans le menu principal, l'utilisateur
      * a choisi de rechercher un service d'urgence. L'application affiche alors 
      * le panneau de recherche des services d'urgence.
      * <p>
      *
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortie survient
+     * @exception IOException si une erreur d'entrï¿½e/sortie survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward searchDefault(CardexAuthenticationSubject subject,
@@ -164,7 +164,7 @@ public class UrgenceAction extends AbstractAction {
                                 HttpServletRequest request,
                                 HttpServletResponse response) throws IOException,
                                 ServletException {
-        log.fine("Recherche par défault du service d'urgence");
+        log.debug("Recherche par dï¿½fault du service d'urgence");
         ActionMessages errors = new ActionMessages();
         try {
 
@@ -172,23 +172,23 @@ public class UrgenceAction extends AbstractAction {
             CriteresRechercheUrgenceForm criteresRechercheUrgenceHtmlForm = (CriteresRechercheUrgenceForm) form;
             CriteresRechercheUrgenceVO criteresRechercheUrgence = new CriteresRechercheUrgenceVO();
 
-            //Valeur par défaut
+            //Valeur par dï¿½faut
             criteresRechercheUrgenceHtmlForm.init(subject);
-            //Initialiset l'écran avec la classe AMBULANCE par défaut
+            //Initialiset l'ï¿½cran avec la classe AMBULANCE par dï¿½faut
             criteresRechercheUrgenceHtmlForm.setClasse(String.valueOf(GlobalConstants.Classes.AMBULANCE));
             
-            //Conversion du composant d'état(ActionForm) en composant
+            //Conversion du composant d'ï¿½tat(ActionForm) en composant
             //d'affaire(Value Object).
             ValueObjectMapper.convertCriteresRechercheUrgenceHtmlForm(
                     criteresRechercheUrgenceHtmlForm, criteresRechercheUrgence,
                     subject.getLocale());
 
-            //Exécution de la recherche via le service d'affaire(BusinessDelegate)
+            //Exï¿½cution de la recherche via le service d'affaire(BusinessDelegate)
             List<Urgence> results = delegate.selectDefault(subject,criteresRechercheUrgence);
 
             ajouterResultatUrgence(subject, criteresRechercheUrgenceHtmlForm, results);
 
-            // Ajout des services d'urgence dans la composante d'état (ActionForm)
+            // Ajout des services d'urgence dans la composante d'ï¿½tat (ActionForm)
             List currentList = new ArrayList();
             Iterator   it = results.iterator();
 
@@ -225,19 +225,19 @@ public class UrgenceAction extends AbstractAction {
 
     /**
      * <p>
-     * Cet événement survient lorsque dans l'écran de recherche des services d'urgence,
-     * l'utilisateur a choisi de rechercher un service d'urgence selon des critères
-     * différents. L'application affiche alors le panneau de recherche
-     * des services d'urgence avec les résultats de la nouvelle recherche.
+     * Cet ï¿½vï¿½nement survient lorsque dans l'ï¿½cran de recherche des services d'urgence,
+     * l'utilisateur a choisi de rechercher un service d'urgence selon des critï¿½res
+     * diffï¿½rents. L'application affiche alors le panneau de recherche
+     * des services d'urgence avec les rï¿½sultats de la nouvelle recherche.
      * <p>
      *
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortie survient
+     * @exception IOException si une erreur d'entrï¿½e/sortie survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward search(CardexAuthenticationSubject subject,
@@ -247,7 +247,7 @@ public class UrgenceAction extends AbstractAction {
                                 HttpServletResponse response) throws IOException,
                                 ServletException {
 
-        log.fine("Recherche du service d'urgence");
+        log.debug("Recherche du service d'urgence");
         ActionMessages errors = new ActionMessages();
         try {
             UrgenceBusinessDelegate delegate = new UrgenceBusinessDelegate();
@@ -255,7 +255,7 @@ public class UrgenceAction extends AbstractAction {
             CriteresRechercheUrgenceVO criteresRechercheUrgence = new CriteresRechercheUrgenceVO();
             criteresRechercheUrgenceHtmlForm.getListeResultat().vider();
 
-            //On extrait la clé et le site de la société pour l'insertion
+            //On extrait la clï¿½ et le site de la sociï¿½tï¿½ pour l'insertion
             String cle ="";
             String site ="";
             if(StringUtils.isNotEmpty(criteresRechercheUrgenceHtmlForm.getLienSociete())) {
@@ -266,14 +266,14 @@ public class UrgenceAction extends AbstractAction {
             criteresRechercheUrgenceHtmlForm.setLienSociete(cle);
             criteresRechercheUrgenceHtmlForm.setLienSiteSociete(site);
 
-            //Conversion du composant d'état(ActionForm) en composant
+            //Conversion du composant d'ï¿½tat(ActionForm) en composant
             //d'affaire(Value Object).
             ValueObjectMapper.convertCriteresRechercheUrgenceHtmlForm(criteresRechercheUrgenceHtmlForm, criteresRechercheUrgence, subject.getLocale());
-            //Exécution de la recherche via le service d'affaire(BusinessDelegate)
+            //Exï¿½cution de la recherche via le service d'affaire(BusinessDelegate)
             List<Urgence> results = delegate.select(subject,criteresRechercheUrgence);
             ajouterResultatUrgence(subject, criteresRechercheUrgenceHtmlForm, results);
 
-            // Ajout des services d'urgence dans la composante d'état (ActionForm)
+            // Ajout des services d'urgence dans la composante d'ï¿½tat (ActionForm)
             List currentList = new ArrayList();
             Iterator   it = results.iterator();
 
@@ -309,16 +309,16 @@ public class UrgenceAction extends AbstractAction {
     }
 
     /**
-     * Rafraichissement de l'écran de service d'urgence lorsqu'une classe d'urgence est sélectionnée
-     * de manière à initialiser le form et la liste des résultats des services d'urgence.
+     * Rafraichissement de l'ï¿½cran de service d'urgence lorsqu'une classe d'urgence est sï¿½lectionnï¿½e
+     * de maniï¿½re ï¿½ initialiser le form et la liste des rï¿½sultats des services d'urgence.
      *
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortieif an input/output survient
+     * @exception IOException si une erreur d'entrï¿½e/sortieif an input/output survient
      * @exception ServletException si une exception servlet survient
      * @throws InvocationTargetException
      * @throws IllegalAccessException
@@ -333,7 +333,7 @@ public class UrgenceAction extends AbstractAction {
                                  HttpServletResponse response) throws IOException,
                                  ServletException, SecurityException, IllegalArgumentException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         
-        log.fine("Refresh écran du service d'urgence");
+        log.debug("Refresh ï¿½cran du service d'urgence");
         CriteresRechercheUrgenceForm urgenceForm = (CriteresRechercheUrgenceForm)form;       
         
         urgenceForm.getListeResultat().vider();
@@ -344,13 +344,13 @@ public class UrgenceAction extends AbstractAction {
 
     /**
      *
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortie survient
+     * @exception IOException si une erreur d'entrï¿½e/sortie survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward resetSearchDefault(CardexAuthenticationSubject subject,
@@ -359,7 +359,7 @@ public class UrgenceAction extends AbstractAction {
                                        HttpServletRequest request,
                                        HttpServletResponse response) throws IOException,
                                        ServletException {
-        log.fine("Paramètres de recherche par défault du service d'urgence");
+        log.debug("Paramï¿½tres de recherche par dï¿½fault du service d'urgence");
 
         ActionMessages errors = new ActionMessages();
 
@@ -369,7 +369,7 @@ public class UrgenceAction extends AbstractAction {
 
             criteresRechercheUrgenceHtmlForm.init( subject );
 
-            // Conversion du composant d'état(ActionForm) en composant d'affaire(Value Object)
+            // Conversion du composant d'ï¿½tat(ActionForm) en composant d'affaire(Value Object)
             ValueObjectMapper.convertCriteresRechercheUrgenceHtmlForm(criteresRechercheUrgenceHtmlForm,criteresRechercheUrgence,subject.getLocale());
 
             return mapping.findForward("success");
@@ -389,12 +389,12 @@ public class UrgenceAction extends AbstractAction {
      * @throws BusinessResourceException
      */
     private void ajouterResultatUrgence(CardexAuthenticationSubject subject, CriteresRechercheUrgenceForm criteresRechercheUrgenceHtmlForm, List<Urgence> list) throws IteratorException, ValueObjectMapperException, BusinessResourceException {
-        //Ajout des véhicules dans le composant d'état (ActionForm)
+        //Ajout des vï¿½hicules dans le composant d'ï¿½tat (ActionForm)
         List currentList = new ArrayList();
         Iterator it = list.iterator();
         while (it.hasNext()){
           Urgence urgence = (Urgence)it.next();
-          log.fine(urgence.toString());
+          log.debug(urgence.toString());
           UrgenceHtmlForm urgenceForm = new  UrgenceForm();
           ValueObjectMapper.convertUrgence(urgence, urgenceForm,
                 subject.getLocale());

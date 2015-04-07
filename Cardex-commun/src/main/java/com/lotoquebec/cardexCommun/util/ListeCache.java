@@ -13,10 +13,11 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Logger;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardexCommun.GlobalConstants;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
@@ -26,7 +27,6 @@ import com.lotoquebec.cardexCommun.integration.dao.FabriqueDAO;
 import com.lotoquebec.cardexCommun.integration.dao.cleListe.CleListe;
 import com.lotoquebec.cardexCommun.integration.dao.cleListe.cleHardListe.CleHardListe;
 import com.lotoquebec.cardexCommun.integration.dao.cleListe.cleSQLListeCache.TableValeurCleSQLListeCache;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.presentation.util.LabelValue;
 import com.lotoquebec.cardexCommun.presentation.util.LabelValueBean;
 import com.lotoquebec.cardexCommun.user.CardexPrivilege;
@@ -39,7 +39,7 @@ public class ListeCache {
 	private static ListeCache listeCache = null;
 	private static Map<Object, Map> CACHE = null;
 	private static Set<TableValeurCleSQLListeCache> tableValeurSansRoleEtActive = null;
-	private static final Logger log = (Logger)LoggerCardex.getLogger(ListeCache.class);
+	private static final Logger log = LoggerFactory.getLogger(ListeCache.class);
 	
 	private ListeCache() {
 		super();
@@ -102,7 +102,7 @@ public class ListeCache {
 	}	
 	
 	/**
-	 * Valide si on peut consulter cette donnée.
+	 * Valide si on peut consulter cette donnï¿½e.
 	 * Si la liste n'existe pas, c'est que c'est invalide.
 	 * Si la liste est vide avec un action autre que "toutes" il faut
 	 * refaire une recherche avec cette valeur.
@@ -152,7 +152,7 @@ public class ListeCache {
 			&& GlobalConstants.ActionSecurite.TOUTES_ACTIONS.equals(tableValeurCleSQLListeCache.getActionSecurite()) == false){
 				TableValeurCleSQLListeCache tableValeurCleSQLListeCacheNouveau = tableValeurCleSQLListeCache.nouveauTableValeurCleSQLListeCache(GlobalConstants.ActionSecurite.TOUTES_ACTIONS);
 				
-				// Si la liste de nouveau est dans SansRôleEtActive celle qui l'a appelé aussi.
+				// Si la liste de nouveau est dans SansRï¿½leEtActive celle qui l'a appelï¿½ aussi.
 				if (tableValeurSansRoleEtActive.contains(tableValeurCleSQLListeCacheNouveau))
 					tableValeurSansRoleEtActive.add(tableValeurCleSQLListeCache);
 				return obtenirMapBase(subject, tableValeurCleSQLListeCacheNouveau);
@@ -202,7 +202,7 @@ public class ListeCache {
 			
 			if (tableValeurSansRoleEtActive.contains(cleListe) == false)
 				return obtenirMapFiltre(subject, map, tableValeurCleSQLListeCache, valeur);
-			//else ne doit pas être requis
+			//else ne doit pas ï¿½tre requis
 				//return CACHE.get(cleListe);
 		}
 		
@@ -210,7 +210,7 @@ public class ListeCache {
 	}	
 	
 	/**
-	 * Obtenir la liste filtré avec la sécurité
+	 * Obtenir la liste filtrï¿½ avec la sï¿½curitï¿½
 	 * @param subject
 	 * @param mapTotal
 	 * @param cleListe
@@ -228,7 +228,7 @@ public class ListeCache {
 			
 			/*
 			 *  La valeur s'affiche dans la liste, si la valeur est actif
-			 *  ou si la valeur est déjà disponible dans les déjàs choisis
+			 *  ou si la valeur est dï¿½jï¿½ disponible dans les dï¿½jï¿½s choisis
 			 *  ou si c'est une action de recherche. 
 			 */
 			if (tableValeur.isActif() || Arrays.binarySearch(valeur, tableValeur.getCle()) > -1
@@ -240,7 +240,7 @@ public class ListeCache {
 				/*
 				 * Nous affichons la valeur si l'intervenant est 
 				 * - ou la ligne n'est pas administrer.
-				 * - ou si elle est administrer, l'utilisateur doit avoir le rôle
+				 * - ou si elle est administrer, l'utilisateur doit avoir le rï¿½le
 				 */
 				if (tableValeur.isAdministrer() == false
 				|| (tableValeur.isAdministrer() && userPrivilege.hasRole(tableValeur.getRole()))){
@@ -257,7 +257,7 @@ public class ListeCache {
 				isTousSansRoleEtActif = false;
 		}
 		
-		// La liste est accessible à tous et toute active.
+		// La liste est accessible ï¿½ tous et toute active.
 		if (isTousSansRoleEtActif){
 			tableValeurSansRoleEtActive.add(cleListe);
 			CACHE.put( cleListe, mapFiltre );	
@@ -266,7 +266,7 @@ public class ListeCache {
 	}
 	
 	/**
-	 * Attention: Ne doit être affiché à l'utilisateur.
+	 * Attention: Ne doit ï¿½tre affichï¿½ ï¿½ l'utilisateur.
 	 * Pour obtenir le map des valeurs que l'utilisateur a le droit d'afficher, actif et inactif.
 	 * @param subject
 	 * @param cleListe
@@ -287,7 +287,7 @@ public class ListeCache {
 	}	
 	
 	/**
-	 * Obtenir la liste filtré par la sécurité, que les valeurs soient actives ou non.
+	 * Obtenir la liste filtrï¿½ par la sï¿½curitï¿½, que les valeurs soient actives ou non.
 	 * @param subject
 	 * @param mapTotal
 	 * @param cleListe
@@ -303,7 +303,7 @@ public class ListeCache {
 				
 			/*
 			 * Nous affichons la valeur si la ligne n'est pas administrer.
-			 * Si elle est administrer, l'utilisateur doit avoir le rôle
+			 * Si elle est administrer, l'utilisateur doit avoir le rï¿½le
 			 */
 			if (tableValeur.isAdministrer() == false
 			|| (tableValeur.isAdministrer() && userPrivilege.hasRole(tableValeur.getRole()))){
@@ -370,7 +370,7 @@ public class ListeCache {
     	&& "0".equals(valeurLong) == false){
     		Map classeMap = obtenirMapLabelValue(subject, cleListe, valeurLong);
     		
-    		// valeur non trouvé
+    		// valeur non trouvï¿½
     		if (classeMap.get(valeurLong) == null)
     			return "";
     		
@@ -409,7 +409,7 @@ public class ListeCache {
 	
 	/**
 	 * On ne peut pas cibler la classe ou la liste exacte.
-	 * Ça ne fonctionne pas avec la DistributedCache.
+	 * ï¿½a ne fonctionne pas avec la DistributedCache.
 	 */
 	public synchronized void vider(){
 		log.info("Vider la ListeCache");
@@ -468,7 +468,7 @@ public class ListeCache {
 	}*/
 	
 	/**
-	 * Vider une liste de classe données
+	 * Vider une liste de classe donnï¿½es
 	 * @param classes
 	 */
 	public synchronized void vider(Class<? extends CleListe>...classes){

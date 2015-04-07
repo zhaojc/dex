@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +20,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardex.business.Narration;
 import com.lotoquebec.cardex.business.delegate.FabriqueBusinessDelegate;
@@ -45,7 +46,6 @@ import com.lotoquebec.cardexCommun.exception.BusinessException;
 import com.lotoquebec.cardexCommun.exception.BusinessResourceException;
 import com.lotoquebec.cardexCommun.exception.ExceptionHandler;
 import com.lotoquebec.cardexCommun.exception.ValueObjectMapperException;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.model.EntiteCardexForm;
 import com.lotoquebec.cardexCommun.presentation.util.AbstractAction;
 import com.lotoquebec.cardexCommun.text.TimestampFormat;
@@ -55,7 +55,7 @@ import com.lotoquebec.cardexCommun.util.StringHelper;
 import com.lotoquebec.cardexCommun.util.StringUtils;
 
 /**
- * Cette classe gère les événements en rapport
+ * Cette classe gï¿½re les ï¿½vï¿½nements en rapport
  * avec le cas d'utilisation gestion des dossiers.
  *
  * @author $Author: mlibersan $
@@ -67,20 +67,20 @@ public class NarrationAction extends AbstractAction {
      * L'instance du gestionnaire de journalisation.
      */
 	private final Logger      log =
-        (Logger)LoggerCardex.getLogger((this.getClass()));
+        LoggerFactory.getLogger((this.getClass()));
 
     /**
      * <p>
      * <p>
-     * Par défaut, l'application remplit automatiquement les champs suivants :
+     * Par dï¿½faut, l'application remplit automatiquement les champs suivants :
      *
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortieif an input/output survient
+     * @exception IOException si une erreur d'entrï¿½e/sortieif an input/output survient
      * @exception ServletException si une exception servlet survient
      * @throws ValueObjectMapperException 
      * @throws BusinessException 
@@ -92,7 +92,7 @@ public class NarrationAction extends AbstractAction {
                                 HttpServletRequest request,
                                 HttpServletResponse response) throws IOException,
                                 ServletException, ValueObjectMapperException, BusinessResourceException, BusinessException {
-        log.fine("Création d'une nouvelle narration");
+        log.debug("Crï¿½ation d'une nouvelle narration");
         NarrationBusinessDelegate narrationBusinessDelegate = new NarrationBusinessDelegate();
         CardexUser user = (CardexUser)subject.getUser();
         CardexPrivilege privilege = (CardexPrivilege)subject.getPrivilege();
@@ -106,22 +106,22 @@ public class NarrationAction extends AbstractAction {
         narrationForm.setDateCreation(currentDate);
         
         if (form instanceof DossierForm) {
-			log.fine("Création d'une narration liée au dossier: " + form);
+			log.debug("Crï¿½ation d'une narration liï¿½e au dossier: " + form);
 			DossierForm dossierForm = (DossierForm)form;
 			exclureGabarit = narrationBusinessDelegate.creerExclureGabaritNarration(subject, new DossierVO(Long.valueOf(dossierForm.getCle()), Long.valueOf(dossierForm.getSite())));
 			narrationForm.assignerFiltreGabarit(exclureGabarit);
 			narrationForm.setDossier((DossierForm)form);
 			narrationForm.setGenreLiaison( GlobalConstants.GenreFichier.DOSSIER );
         }else if (form instanceof SujetForm) {
-          log.fine("Création d'une narration liée au sujet: " + form);
+          log.debug("Crï¿½ation d'une narration liï¿½e au sujet: " + form);
           narrationForm.setSujet((SujetForm)form);
           narrationForm.setGenreLiaison( GlobalConstants.GenreFichier.SUJET );
         }else if (form instanceof VehiculeForm) {
-          log.fine("Création d'une narration liée au vehicule: " + form);
+          log.debug("Crï¿½ation d'une narration liï¿½e au vehicule: " + form);
           narrationForm.setVehicule((VehiculeForm)form);
           narrationForm.setGenreLiaison( GlobalConstants.GenreFichier.VEHICULE );
         }else if (form instanceof SocieteForm) {
-          log.fine("Création d'une narration liée a la societe: " + form);
+          log.debug("Crï¿½ation d'une narration liï¿½e a la societe: " + form);
           narrationForm.setSociete((SocieteForm)form);
           narrationForm.setGenreLiaison( GlobalConstants.GenreFichier.SOCIETE );
         }
@@ -140,14 +140,14 @@ public class NarrationAction extends AbstractAction {
     		narrationForm.setPremiereNarrationTemporaire(false);
     	}
         
-        //Valeur par défaut
+        //Valeur par dï¿½faut
         narrationForm.setAutoriteCreateur(Long.toString(privilege.getNiveauAuthorite()));
         narrationForm.setAutoriteNarration(Long.toString(privilege.getNiveauAuthorite()));
         narrationForm.setConfidentialiteCreateur(Long.toString(privilege.getNiveauConfidentialite()));
         narrationForm.setConfidentialiteNarration(Long.toString(privilege.getNiveauConfidentialite()));
         narrationForm.setRapporteur(user.getCode());
         narrationForm.setCreateur(user.getCode());
-        log.fine("Narration : " + narrationForm);
+        log.debug("Narration : " + narrationForm);
         request.getSession().setAttribute("narration",narrationForm);
         return mapping.findForward("success");
     }
@@ -156,13 +156,13 @@ public class NarrationAction extends AbstractAction {
     /**
      * <p>
      *
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortieif an input/output survient
+     * @exception IOException si une erreur d'entrï¿½e/sortieif an input/output survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward show(CardexAuthenticationSubject subject,
@@ -170,7 +170,7 @@ public class NarrationAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Accès à une narration");
+        log.debug("Accï¿½s ï¿½ une narration");
 
         ActionMessages errors = new ActionMessages();
 
@@ -184,7 +184,7 @@ public class NarrationAction extends AbstractAction {
             List<Long> exclureGabarit = delegate.modifierExclureGabaritNarration(subject, narration);
             narrationForm.init(exclureGabarit);
             
-            //On remet les valeurs de référence
+            //On remet les valeurs de rï¿½fï¿½rence
             narration.setReference1(narrationForm.getReference1());
             narration.setReference2(narrationForm.getReference2());
             narration.setReference3(narrationForm.getReference3());
@@ -231,21 +231,21 @@ public class NarrationAction extends AbstractAction {
     }
 
     /**
-     * Par défaut, l'application remplit automatiquement les champs suivants :
+     * Par dï¿½faut, l'application remplit automatiquement les champs suivants :
      * <li>
      * <ul>Entite (Entite de l'utilisateur)
      * <ul>Site d'origine (Site de l'utilisateur)
-     * <ul>Genre (selon la sélection de l'écran principal)
-     * <ul>Nature (selon la sélection de l'écran principal)
+     * <ul>Genre (selon la sï¿½lection de l'ï¿½cran principal)
+     * <ul>Nature (selon la sï¿½lection de l'ï¿½cran principal)
      * </li>
      *
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortie survient
+     * @exception IOException si une erreur d'entrï¿½e/sortie survient
      * @exception ServletException si une exception servlet survient
      * @throws InvocationTargetException
      * @throws IllegalAccessException
@@ -259,28 +259,28 @@ public class NarrationAction extends AbstractAction {
                                        HttpServletRequest request,
                                        HttpServletResponse response) throws IOException,
                                        ServletException, SecurityException, IllegalArgumentException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
-        log.fine("Refresh de recherche narration");
+        log.debug("Refresh de recherche narration");
 
         return mapping.findForward("success");
     }
 
 
     /**
-     * Par défaut, l'application remplit automatiquement les champs suivants :
+     * Par dï¿½faut, l'application remplit automatiquement les champs suivants :
      * <li>
      * <ul>Entite (Entite de l'utilisateur)
      * <ul>Site d'origine (Site de l'utilisateur)
-     * <ul>Genre (selon la sélection de l'écran principal)
-     * <ul>Nature (selon la sélection de l'écran principal)
+     * <ul>Genre (selon la sï¿½lection de l'ï¿½cran principal)
+     * <ul>Nature (selon la sï¿½lection de l'ï¿½cran principal)
      * </li>
      *
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortie survient
+     * @exception IOException si une erreur d'entrï¿½e/sortie survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward searchDefault(CardexAuthenticationSubject subject,
@@ -289,7 +289,7 @@ public class NarrationAction extends AbstractAction {
                                        HttpServletRequest request,
                                        HttpServletResponse response) throws IOException,
                                        ServletException {
-        log.fine("Recherche par défault de narration");
+        log.debug("Recherche par dï¿½fault de narration");
 
         CriteresRechercheNarrationForm criteresRechercheNarrationHtmlForm = (CriteresRechercheNarrationForm) form;
         criteresRechercheNarrationHtmlForm.init(subject);
@@ -298,19 +298,19 @@ public class NarrationAction extends AbstractAction {
     }
 
     /**
-     * Par défaut, l'application remplit automatiquement les champs suivants :
+     * Par dï¿½faut, l'application remplit automatiquement les champs suivants :
      * <li>
      * <ul>Entite (Entite de l'utilisateur)
      * <ul>Site d'origine (Site de l'utilisateur)
      * </li>
      *
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortie survient
+     * @exception IOException si une erreur d'entrï¿½e/sortie survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward searchDefaultApprobation(CardexAuthenticationSubject subject,
@@ -319,7 +319,7 @@ public class NarrationAction extends AbstractAction {
                                        HttpServletRequest request,
                                        HttpServletResponse response) throws IOException,
                                        ServletException {
-        log.fine("Recherche par défault de narration en mode liaison");
+        log.debug("Recherche par dï¿½fault de narration en mode liaison");
 
     	CriteresRechercheNarrationForm criteresRechercheNarrationHtmlForm = (CriteresRechercheNarrationForm) form;
         criteresRechercheNarrationHtmlForm.init(subject);
@@ -329,21 +329,21 @@ public class NarrationAction extends AbstractAction {
 
 
     /**
-     * Par défaut, l'application remplit automatiquement les champs suivants :
+     * Par dï¿½faut, l'application remplit automatiquement les champs suivants :
      * <li>
      * <ul>Entite (Entite de l'utilisateur)
      * <ul>Site d'origine (Site de l'utilisateur)
-     * <ul>Genre (selon la sélection de l'écran principal)
-     * <ul>Nature (selon la sélection de l'écran principal)
+     * <ul>Genre (selon la sï¿½lection de l'ï¿½cran principal)
+     * <ul>Nature (selon la sï¿½lection de l'ï¿½cran principal)
      * </li>
      *
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortie survient
+     * @exception IOException si une erreur d'entrï¿½e/sortie survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward resetSearchDefault(CardexAuthenticationSubject subject,
@@ -352,7 +352,7 @@ public class NarrationAction extends AbstractAction {
                                        HttpServletRequest request,
                                        HttpServletResponse response) throws IOException,
                                        ServletException {
-        log.fine("Paramètres de recherche par défault de narration");
+        log.debug("Paramï¿½tres de recherche par dï¿½fault de narration");
 
         CriteresRechercheNarrationForm criteresRechercheNarrationHtmlForm = (CriteresRechercheNarrationForm) form;
 
@@ -362,19 +362,19 @@ public class NarrationAction extends AbstractAction {
     }
 
     /**
-     * Par défaut, l'application remplit automatiquement les champs suivants :
+     * Par dï¿½faut, l'application remplit automatiquement les champs suivants :
      * <li>
      * <ul>Entite (Entite de l'utilisateur)
      * <ul>Site d'origine (Site de l'utilisateur)
      * </li>
      *
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortie survient
+     * @exception IOException si une erreur d'entrï¿½e/sortie survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward resetSearchDefaultApprobation(CardexAuthenticationSubject subject,
@@ -383,7 +383,7 @@ public class NarrationAction extends AbstractAction {
                                        HttpServletRequest request,
                                        HttpServletResponse response) throws IOException,
                                        ServletException {
-        log.fine("Paramètres de recherche par défault de narration en mode liaison");
+        log.debug("Paramï¿½tres de recherche par dï¿½fault de narration en mode liaison");
         CriteresRechercheNarrationForm criteresRechercheNarrationHtmlForm = (CriteresRechercheNarrationForm) form;
 
         criteresRechercheNarrationHtmlForm.init(subject);
@@ -392,18 +392,18 @@ public class NarrationAction extends AbstractAction {
 
     /**
      * <p>
-     * Cet événement surivient lorsque dans l'écran de recherche de narration, l'utilisateur a choisi
-     * de rechercher un narration selon des critères différents. L'application affiche alors le panneau de
-     * recherche des narrations avec les résultats de la nouvelle recherche.
+     * Cet ï¿½vï¿½nement surivient lorsque dans l'ï¿½cran de recherche de narration, l'utilisateur a choisi
+     * de rechercher un narration selon des critï¿½res diffï¿½rents. L'application affiche alors le panneau de
+     * recherche des narrations avec les rï¿½sultats de la nouvelle recherche.
      * <p>
      *
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortie survient
+     * @exception IOException si une erreur d'entrï¿½e/sortie survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward search(CardexAuthenticationSubject subject,
@@ -412,7 +412,7 @@ public class NarrationAction extends AbstractAction {
                                 HttpServletRequest request,
                                 HttpServletResponse response) throws IOException,
                                 ServletException {
-        log.fine("Recherche de narration");
+        log.debug("Recherche de narration");
 
         ActionMessages errors = new ActionMessages();
 
@@ -423,16 +423,16 @@ public class NarrationAction extends AbstractAction {
             CriteresRechercheNarrationVO criteresRechercheNarration = new CriteresRechercheNarrationVO();
             criteresRechercheNarrationHtmlForm.getListeResultat().vider();
             
-            // Conversion du composant d'état(ActionForm) en composant d'affaire(Value Object)
+            // Conversion du composant d'ï¿½tat(ActionForm) en composant d'affaire(Value Object)
             ValueObjectMapper.convertCriteresRechercheNarrationHtmlForm(criteresRechercheNarrationHtmlForm, criteresRechercheNarration,subject.getLocale());
 
-            // Exécution de la recherche via le service d'affaire(BusinessDelegate)
+            // Exï¿½cution de la recherche via le service d'affaire(BusinessDelegate)
             Collection list = delegate.selectNarration(subject,criteresRechercheNarration);
 
-            // Ajout des narrations dans le composant d'état (ActionForm)
+            // Ajout des narrations dans le composant d'ï¿½tat (ActionForm)
             List currentList = new ArrayList();
             Iterator   it = list.iterator();
-//Marquer les mots clés : <b style="color:black;background-color:#ff9999">mot-clé</b>
+//Marquer les mots clï¿½s : <b style="color:black;background-color:#ff9999">mot-clï¿½</b>
             while (it.hasNext()) {
                 Narration narration = (Narration)it.next();
                 NarrationForm narrationForm = new NarrationForm();
@@ -442,8 +442,8 @@ public class NarrationAction extends AbstractAction {
                 dossierForm.assignerValeurDeListe(subject);
                 narrationForm.setDossier(dossierForm);
                 narrationForm.assignerValeurDeListe(subject);
-                //On marque les mots clés dans le texte pour aider l'utilisateur dans sa recherche.
-                //Le 1er mot-cé est marqué en rouge, le 2e en bleu et le 3e en jaune.
+                //On marque les mots clï¿½s dans le texte pour aider l'utilisateur dans sa recherche.
+                //Le 1er mot-cï¿½ est marquï¿½ en rouge, le 2e en bleu et le 3e en jaune.
                 if(!criteresRechercheNarrationHtmlForm.getMotCle1().equals("")){
                 	narrationForm.setNarrationSansFormat(marquerMotCle(narrationForm.getNarrationSansFormat(), criteresRechercheNarrationHtmlForm.getMotCle1(), "#ff9999" ));
                 }
@@ -460,9 +460,9 @@ public class NarrationAction extends AbstractAction {
             criteresRechercheNarrationHtmlForm.getListeResultat().assignerTrierDefault(NarrationTrieListe.CLE_DATE_CREATION, true, new NarrationTrieListe());
 
 
-            // Stockage des données de référence concernant le contenu des liste déroulante
+            // Stockage des donnï¿½es de rï¿½fï¿½rence concernant le contenu des liste dï¿½roulante
 
-			//Vérification d'un mandat PSU associé à une recherche de narrations
+			//Vï¿½rification d'un mandat PSU associï¿½ ï¿½ une recherche de narrations
 			PSUMandatForm psuMandat = new PSUMandatForm();
 			psuMandat.setMotCle1(criteresRechercheNarrationHtmlForm.getMotCle1());
 			psuMandat.setMotCle2(criteresRechercheNarrationHtmlForm.getMotCle2());
@@ -473,11 +473,11 @@ public class NarrationAction extends AbstractAction {
         } catch (BusinessResourceException bre) {
 			String ancestor = bre.getAncestor().toString();
 			ExceptionHandler.getInstance().handle( bre.getAncestor() );
-			//Cas spécial d'erreur. Durant la tâche qui reconstruit l'index des narrations
-			//les sauvegardes échouent. Dans ce cas, un message d'erreur est retourné et la
-			//narration est perdue. Le test suivant permet de détecter si l'erreur survient
-			//lors de la reconstruction et, si oui, de retourner la narration à l'écran avec
-			//un message plus approprié, sans perte de données. 
+			//Cas spï¿½cial d'erreur. Durant la tï¿½che qui reconstruit l'index des narrations
+			//les sauvegardes ï¿½chouent. Dans ce cas, un message d'erreur est retournï¿½ et la
+			//narration est perdue. Le test suivant permet de dï¿½tecter si l'erreur survient
+			//lors de la reconstruction et, si oui, de retourner la narration ï¿½ l'ï¿½cran avec
+			//un message plus appropriï¿½, sans perte de donnï¿½es. 
 			if((ancestor.indexOf("ORA-29861") > -1) || (ancestor.indexOf("ORA-29875") > -1) || (ancestor.indexOf("ORA-29877") > -1) || (ancestor.indexOf("DRG-10599") > -1)){
 				errors.add(Globals.ERROR_KEY, new ActionMessage("cardex_erreur_narration"));
 				saveErrors(request, errors);
@@ -497,18 +497,18 @@ public class NarrationAction extends AbstractAction {
 
     /**
      * <p>
-     * Cet événement surivient lorsque dans l'écran de recherche de narration, l'utilisateur a choisi
-     * de rechercher un narration selon des critères différents. L'application affiche alors le panneau de
-     * recherche des narrations avec les résultats de la nouvelle recherche.
+     * Cet ï¿½vï¿½nement surivient lorsque dans l'ï¿½cran de recherche de narration, l'utilisateur a choisi
+     * de rechercher un narration selon des critï¿½res diffï¿½rents. L'application affiche alors le panneau de
+     * recherche des narrations avec les rï¿½sultats de la nouvelle recherche.
      * <p>
      *
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortie survient
+     * @exception IOException si une erreur d'entrï¿½e/sortie survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward searchApprobation(CardexAuthenticationSubject subject,
@@ -517,7 +517,7 @@ public class NarrationAction extends AbstractAction {
                                        HttpServletRequest request,
                                        HttpServletResponse response) throws IOException,
                                        ServletException {
-        log.fine("Recherche des approbations");
+        log.debug("Recherche des approbations");
 
         ActionMessages errors = new ActionMessages();
 
@@ -528,13 +528,13 @@ public class NarrationAction extends AbstractAction {
             ValueListIterator results;
             criteresRechercheNarrationHtmlForm.getListeResultat().vider();
 
-            // Conversion du composant d'état(ActionForm) en composant d'affaire(Value Object)
+            // Conversion du composant d'ï¿½tat(ActionForm) en composant d'affaire(Value Object)
             ValueObjectMapper.convertCriteresRechercheNarrationHtmlForm(criteresRechercheNarrationHtmlForm, criteresRechercheNarration,subject.getLocale());
 
-            // Exécution de la recherche via le service d'affaire(BusinessDelegate)
+            // Exï¿½cution de la recherche via le service d'affaire(BusinessDelegate)
             Collection listNarration = delegate.selectApprobation(subject,criteresRechercheNarration);
 
-            // Ajout des narrations dans le composant d'état (ActionForm)
+            // Ajout des narrations dans le composant d'ï¿½tat (ActionForm)
             List currentList = new ArrayList();
             Iterator   it = listNarration.iterator();
 
@@ -557,11 +557,11 @@ public class NarrationAction extends AbstractAction {
         } catch (BusinessResourceException bre) {
 			String ancestor = bre.getAncestor().toString();
 			ExceptionHandler.getInstance().handle( bre.getAncestor() );
-			//Cas spécial d'erreur. Durant la tâche qui reconstruit l'index des narrations
-			//les sauvegardes échouent. Dans ce cas, un message d'erreur est retourné et la
-			//narration est perdue. Le test suivant permet de détecter si l'erreur survient
-			//lors de la reconstruction et, si oui, de retourner la narration à l'écran avec
-			//un message plus approprié, sans perte de données. 
+			//Cas spï¿½cial d'erreur. Durant la tï¿½che qui reconstruit l'index des narrations
+			//les sauvegardes ï¿½chouent. Dans ce cas, un message d'erreur est retournï¿½ et la
+			//narration est perdue. Le test suivant permet de dï¿½tecter si l'erreur survient
+			//lors de la reconstruction et, si oui, de retourner la narration ï¿½ l'ï¿½cran avec
+			//un message plus appropriï¿½, sans perte de donnï¿½es. 
 			if((ancestor.indexOf("ORA-29861") > -1) || (ancestor.indexOf("ORA-29875") > -1) || (ancestor.indexOf("ORA-29877") > -1) || (ancestor.indexOf("DRG-10599") > -1)){
 				errors.add(Globals.ERROR_KEY, new ActionMessage("cardex_erreur_narration"));
 				saveErrors(request, errors);
@@ -582,10 +582,10 @@ public class NarrationAction extends AbstractAction {
     }
 
     /**
-     * Routine pour les mots-clés dans le texte pour faciliter le repérage de dossiers aux utilisateurs
-     * Date de création : (2007-12-13)
-     * @author François Guérin
-     * @return String : la narration modifiée.
+     * Routine pour les mots-clï¿½s dans le texte pour faciliter le repï¿½rage de dossiers aux utilisateurs
+     * Date de crï¿½ation : (2007-12-13)
+     * @author Franï¿½ois Guï¿½rin
+     * @return String : la narration modifiï¿½e.
      */
     private String marquerMotCle(String texte, String motCle, String couleur){
     	
@@ -598,7 +598,7 @@ public class NarrationAction extends AbstractAction {
             HttpServletRequest request,
             HttpServletResponse response) throws IOException,
             ServletException, ValueObjectMapperException, BusinessResourceException, BusinessException {
-    	log.fine("Sauvegarde narration temporaire");
+    	log.debug("Sauvegarde narration temporaire");
     	NarrationForm narrationForm = (NarrationForm) form;
     	NarrationVO narrationVO = new NarrationVO();
     	verifierToken(request);

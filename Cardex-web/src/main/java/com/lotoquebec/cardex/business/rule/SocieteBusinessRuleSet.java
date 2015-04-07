@@ -4,17 +4,18 @@ package com.lotoquebec.cardex.business.rule;
 
 import java.sql.Timestamp;
 import java.util.Date;
-import java.util.logging.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardex.business.Societe;
 import com.lotoquebec.cardex.business.exception.SocieteBusinessRuleException;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
 import com.lotoquebec.cardexCommun.business.BusinessRuleSet;
 import com.lotoquebec.cardexCommun.exception.BusinessRuleException;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 
 /**
- * Cette classe valide l'ensemble des règles d'affaire applicable aux societes.
+ * Cette classe valide l'ensemble des rï¿½gles d'affaire applicable aux societes.
  *
  * @see com.lotoquebec.cardexCommun.business.BusinessRuleSet
  * @author $Author: mlibersan $
@@ -26,7 +27,7 @@ public class SocieteBusinessRuleSet implements BusinessRuleSet {
      * L'instance du gestionnaire de journalisation.
      */
 	private final Logger      log =
-        (Logger)LoggerCardex.getLogger((this.getClass()));
+        LoggerFactory.getLogger((this.getClass()));
 
     /**
      * Construit une instance de SocieteBusinessRuleSet
@@ -34,18 +35,18 @@ public class SocieteBusinessRuleSet implements BusinessRuleSet {
     public SocieteBusinessRuleSet() {}
 
     /**
-     * Valide les règles d'affaires applicable à un societe.
+     * Valide les rï¿½gles d'affaires applicable ï¿½ un societe.
      *
-     * @param businessObject La société
+     * @param businessObject La sociï¿½tï¿½
      *
-     * @throws BusinessRuleException si les règles d'affaire
-     * d'un objet Societe ne sont pas respectées.
+     * @throws BusinessRuleException si les rï¿½gles d'affaire
+     * d'un objet Societe ne sont pas respectï¿½es.
      * @throws IllegalArgumentException si l'objet d'affaire n'est pas
      * une instance de  com.lotoquebec.cardex.business.Societe
      */
     public void checkRules(CardexAuthenticationSubject subject, Object businessObject)
             throws BusinessRuleException {
-        log.fine("checkRules()");
+        log.debug("checkRules()");
 
         if (businessObject instanceof Societe) {
 
@@ -54,7 +55,7 @@ public class SocieteBusinessRuleSet implements BusinessRuleSet {
             checkDateFondationRule(societe);
             checkMotDePasseRule(societe);
         } else {
-            throw new IllegalArgumentException("L'objet d'affaire doit être une instance de '"
+            throw new IllegalArgumentException("L'objet d'affaire doit ï¿½tre une instance de '"
                                                + Societe.class.getName()
                                                + "'");
         }
@@ -63,14 +64,14 @@ public class SocieteBusinessRuleSet implements BusinessRuleSet {
     /**
      * Validation de la date de fondation.
      *
-     * @param businessObject La société
+     * @param businessObject La sociï¿½tï¿½
      *
      * @throws BusinessRuleException si la date de fondation n'est pas
-     * inférieure à la date courante.
+     * infï¿½rieure ï¿½ la date courante.
      */
     private void checkDateFondationRule(Societe societe)
             throws BusinessRuleException {
-        log.fine("checkDateFondationRule()");
+        log.debug("checkDateFondationRule()");
 
         Timestamp dateNaissance = societe.getDateDeFondation();
         if (dateNaissance != null) {
@@ -84,16 +85,16 @@ public class SocieteBusinessRuleSet implements BusinessRuleSet {
     }
 
     /**
-     * Dates de début supérieure ou égale à 1993-01-01.
+     * Dates de dï¿½but supï¿½rieure ou ï¿½gale ï¿½ 1993-01-01.
      *
      * @param dossier Le dossier
      *
-     * @throws BusinessRuleException si la date de début est trop petite.
+     * @throws BusinessRuleException si la date de dï¿½but est trop petite.
      *
      */
     private void checkMotDePasseRule(Societe societe)
             throws BusinessRuleException {
-        log.fine("checkMotDePasseRule()");
+        log.debug("checkMotDePasseRule()");
 
         if (societe.getMotPasse().trim().equals(societe.getConfirmationMotPasse().trim())) {
         }else {
@@ -102,8 +103,8 @@ public class SocieteBusinessRuleSet implements BusinessRuleSet {
     }
 
     /**
-     * Retourne un DossierBusinessRuleException initialisé avec
-     * l'identificateur de règle.
+     * Retourne un DossierBusinessRuleException initialisï¿½ avec
+     * l'identificateur de rï¿½gle.
      *
      *
      * @param ruleId

@@ -22,15 +22,15 @@ import com.lotoquebec.cardexCommun.exception.DAOException;
 
 /**
  * Le UrgenceSessionFacade offre les
- * services d'affaires, gère les intéractions
- * et les validations de règles d'affaires applicable
+ * services d'affaires, gï¿½re les intï¿½ractions
+ * et les validations de rï¿½gles d'affaires applicable
  * aux urgences.
  * @author levassc
  *
  */
 public class UrgenceSessionFacade {
 	
-	//private final Logger log = (Logger)LoggerCardex.getLogger((this.getClass()));
+	//private final Logger log = LoggerFactory.getLogger((this.getClass()));
 
 	public void ajouter(CardexAuthenticationSubject subject, UrgenceVO urgenceVO) throws BusinessRuleException, BusinessResourceException {
 		try {
@@ -99,7 +99,7 @@ public class UrgenceSessionFacade {
             }
         } catch (DAOException e) {
             e.printStackTrace();
-            throw new BusinessException("Problème avec checkNombreEnregistrementRechercheDossier");
+            throw new BusinessException("Problï¿½me avec checkNombreEnregistrementRechercheDossier");
         }
     }    
     
@@ -107,9 +107,9 @@ public class UrgenceSessionFacade {
      * Recherche des services d'urgence
      *
      * @param subject L'utilisateur qui effectue la recherche
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return Les services d'urgence recherchés
+     * @return Les services d'urgence recherchï¿½s
      * @throws BusinessRuleException
      * @throws BusinessException
      */
@@ -127,12 +127,12 @@ public class UrgenceSessionFacade {
     }
     
     /**
-     * Recherche des services d'urgence créés dans les dernières 48 heures
+     * Recherche des services d'urgence crï¿½ï¿½s dans les derniï¿½res 48 heures
      *
      * @param subject L'utilisateur qui effectue la recherche
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return Les services d'urgence recherchés
+     * @return Les services d'urgence recherchï¿½s
      * @throws BusinessRuleException
      * @throws BusinessException
      */

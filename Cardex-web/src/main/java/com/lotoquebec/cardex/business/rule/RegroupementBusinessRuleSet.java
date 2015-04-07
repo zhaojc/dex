@@ -3,7 +3,8 @@
  */
 package com.lotoquebec.cardex.business.rule;
 
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardex.business.Societe;
 import com.lotoquebec.cardex.business.exception.SocieteBusinessRuleException;
@@ -16,7 +17,6 @@ import com.lotoquebec.cardexCommun.exception.BusinessException;
 import com.lotoquebec.cardexCommun.exception.BusinessRuleException;
 import com.lotoquebec.cardexCommun.exception.BusinessRuleExceptionHandle;
 import com.lotoquebec.cardexCommun.exception.DAOException;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.util.StringUtils;
 
 /**
@@ -25,20 +25,20 @@ import com.lotoquebec.cardexCommun.util.StringUtils;
 public class RegroupementBusinessRuleSet implements BusinessRuleSet {
 
 	private final Logger      log =
-        (Logger)LoggerCardex.getLogger((this.getClass()));
+        LoggerFactory.getLogger((this.getClass()));
 
 	/* (non-Javadoc)
 	 * @see com.myriap.business.BusinessRuleSet#checkRules(java.lang.Object)
 	 */
 	public void checkRules(CardexAuthenticationSubject subject, Object businessObject) throws BusinessRuleException, BusinessException {
-        log.fine("checkRules()");
+        log.debug("checkRules()");
 
         if (businessObject instanceof RegroupementRapportVO) {
         	RegroupementRapportVO criteresRechercheRegroupement = (RegroupementRapportVO) businessObject;
             checkNumeroMatriculeExiste(criteresRechercheRegroupement);
             checkDateDebutSuperieurDateFinRule(criteresRechercheRegroupement);
         } else {
-            throw new IllegalArgumentException("L'objet d'affaire doit être une instance de '"
+            throw new IllegalArgumentException("L'objet d'affaire doit ï¿½tre une instance de '"
                                                + Societe.class.getName()
                                                + "'");
         }
@@ -63,23 +63,23 @@ public class RegroupementBusinessRuleSet implements BusinessRuleSet {
 	    		}
 			} catch (DAOException e) {
 				e.printStackTrace();
-				throw new Error("Problème dans 'checkNumeroMatriculeExiste' ");
+				throw new Error("Problï¿½me dans 'checkNumeroMatriculeExiste' ");
 			}
     	}
 	}
 
     /**
-     * Dates de début inférieures ou égales aux dates de fin.
+     * Dates de dï¿½but infï¿½rieures ou ï¿½gales aux dates de fin.
      *
      * @param CriteresRechercheRegroupement
      *
-     * @throws BusinessRuleException si les dates de début sont
-     * inférieures ou égales aux dates de fin.
+     * @throws BusinessRuleException si les dates de dï¿½but sont
+     * infï¿½rieures ou ï¿½gales aux dates de fin.
      * @throws BusinessException 
      */
     private void checkDateDebutSuperieurDateFinRule(RegroupementRapportVO criteresRechercheRegroupement)
             throws BusinessException {
-        log.fine("checkDateDebutSuperieurDateFinRule()");
+        log.debug("checkDateDebutSuperieurDateFinRule()");
 
         if (criteresRechercheRegroupement.getDateDebutDu() != null && criteresRechercheRegroupement.getDateDebutAu() != null
         && criteresRechercheRegroupement.getDateDebutAu().before(criteresRechercheRegroupement.getDateDebutDu())) {

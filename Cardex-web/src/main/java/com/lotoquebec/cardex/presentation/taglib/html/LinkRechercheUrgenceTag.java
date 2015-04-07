@@ -3,26 +3,26 @@ package com.lotoquebec.cardex.presentation.taglib.html;
 import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import javax.servlet.jsp.JspException;
 
 import org.apache.struts.taglib.TagUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardex.presentation.model.CriteresRechercheUrgenceHtmlForm;
 import com.lotoquebec.cardex.securite.GestionnaireSecuriteCardex;
 import com.lotoquebec.cardexCommun.authentication.AuthenticationSubject;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.presentation.taglib.html.LinkCardexTag;
 import com.lotoquebec.cardexCommun.presentation.taglib.html.TagLibUtils;
 import com.lotoquebec.cardexCommun.securite.UIComponentState;
 import com.lotoquebec.cardexCommun.util.StringUtils;
 
 /**
- * Genere un hyperlink URL-encoded au URI spécifié avec
- * les paramètres de query string correspondant aux
- * critères spécifiés.
+ * Genere un hyperlink URL-encoded au URI spï¿½cifiï¿½ avec
+ * les paramï¿½tres de query string correspondant aux
+ * critï¿½res spï¿½cifiï¿½s.
  *
  * @see org.apache.struts.taglib.html.LinkTag
  * @author $Author: mazzucr $
@@ -35,7 +35,7 @@ public class LinkRechercheUrgenceTag extends LinkCardexTag {
      * L'instance du gestionnaire de journalisation.
      */
     private final Logger      log =
-        (Logger)LoggerCardex.getLogger((this.getClass()));
+        LoggerFactory.getLogger((this.getClass()));
 
     private String criteres;
 
@@ -76,11 +76,11 @@ public class LinkRechercheUrgenceTag extends LinkCardexTag {
             return super.doStartTag();
         }
 
-        log.fine("doStartTag()");
-        log.fine("   page '" + this.page + "'");
-        log.fine("   securityConstraint '" + this.securityConstraint + "'");
+        log.debug("doStartTag()");
+        log.debug("   page '" + this.page + "'");
+        log.debug("   securityConstraint '" + this.securityConstraint + "'");
 
-        // Cas spécial pour le nom anchors
+        // Cas spï¿½cial pour le nom anchors
         if (linkName != null)
         {
             StringBuffer results = new StringBuffer("<a name=\"");
@@ -144,7 +144,7 @@ public class LinkRechercheUrgenceTag extends LinkCardexTag {
             throw new JspException(messages.getMessage("rewrite.url", e.toString()));
         }
 
-        // Generation de la balise ouvrante de l'élément anchor
+        // Generation de la balise ouvrante de l'ï¿½lï¿½ment anchor
         StringBuffer results = new StringBuffer("<a href=\"javascript:windowOpenLocation('" + url + "')\"");
 
         if (target != null)
@@ -157,7 +157,7 @@ public class LinkRechercheUrgenceTag extends LinkCardexTag {
         results.append(prepareEventHandlers());
         results.append(">");
 
-        // Affichage de l'élément dans le output writer
+        // Affichage de l'ï¿½lï¿½ment dans le output writer
         tagUtils.write(pageContext, results.toString());
 
         // Evalaution du body pour ce tag

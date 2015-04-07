@@ -3,7 +3,9 @@
 package com.lotoquebec.cardex.business.rule;
 
 import java.util.Date;
-import java.util.logging.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardex.business.Dossier;
 import com.lotoquebec.cardex.business.Suivi;
@@ -11,10 +13,9 @@ import com.lotoquebec.cardex.business.exception.SuiviBusinessRuleException;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
 import com.lotoquebec.cardexCommun.business.BusinessRuleSet;
 import com.lotoquebec.cardexCommun.exception.BusinessRuleException;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 
 /**
- * Cette classe valide l'ensemble des règles d'affaire applicable
+ * Cette classe valide l'ensemble des rï¿½gles d'affaire applicable
  * aux dossiers.
  *
  * @see com.lotoquebec.cardexCommun.business.BusinessRuleSet
@@ -27,7 +28,7 @@ public class SuiviBusinessRuleSet implements BusinessRuleSet {
      * L'instance du gestionnaire de journalisation.
      */
 	private final Logger      log =
-        (Logger)LoggerCardex.getLogger((this.getClass()));
+        LoggerFactory.getLogger((this.getClass()));
 
     /**
      * Construit une instance de SuiviBusinessRuleSet
@@ -35,8 +36,8 @@ public class SuiviBusinessRuleSet implements BusinessRuleSet {
     public SuiviBusinessRuleSet() {}
 
     /**
-     * Retourne un SuiviBusinessRuleException initialisé avec
-     * l'identificateur de règle.
+     * Retourne un SuiviBusinessRuleException initialisï¿½ avec
+     * l'identificateur de rï¿½gle.
      *
      *
      * @param ruleId
@@ -55,18 +56,18 @@ public class SuiviBusinessRuleSet implements BusinessRuleSet {
     }
 
     /**
-     * Valide les règles d'affaires applicable à un dossier.
+     * Valide les rï¿½gles d'affaires applicable ï¿½ un dossier.
      *
      * @param businessObject Le dossier
      *
-     * @throws BusinessRuleException si les règles d'affaire
-     * d'un objet dossier ne sont pas respectées.
+     * @throws BusinessRuleException si les rï¿½gles d'affaire
+     * d'un objet dossier ne sont pas respectï¿½es.
      * @throws IllegalArgumentException si l'objet d'affaire n'est pas
      * une instance de  com.lotoquebec.cardex.business.Dossier
      */
     public void checkRules(CardexAuthenticationSubject subject, Object businessObject)
             throws BusinessRuleException {
-        log.fine("checkRules()");
+        log.debug("checkRules()");
 
         if (businessObject instanceof Suivi) {
             Suivi suivi = (Suivi) businessObject;
@@ -75,7 +76,7 @@ public class SuiviBusinessRuleSet implements BusinessRuleSet {
             checkDateCompleteDemandeeRule(suivi);
             checkDatePrevueDemandeeRule(suivi);
         } else {
-            throw new IllegalArgumentException("L'objet d'affaire doit être une instance de '"
+            throw new IllegalArgumentException("L'objet d'affaire doit ï¿½tre une instance de '"
                                                + Dossier.class.getName()
                                                + "'");
         }
@@ -83,16 +84,16 @@ public class SuiviBusinessRuleSet implements BusinessRuleSet {
 
 
     /**
-     * Dates de début supérieure ou égale à 1993-01-01.
+     * Dates de dï¿½but supï¿½rieure ou ï¿½gale ï¿½ 1993-01-01.
      *
      * @param dossier Le dossier
      *
-     * @throws BusinessRuleException si la date de début est trop petite.
+     * @throws BusinessRuleException si la date de dï¿½but est trop petite.
      *
      */
     private void checkDateCompleteRule(Suivi suivi)
             throws BusinessRuleException {
-        log.fine("checkDateCompleteRule()");
+        log.debug("checkDateCompleteRule()");
 
         Date date = suivi.getDateCompletee();
         if (date == null) {
@@ -107,16 +108,16 @@ public class SuiviBusinessRuleSet implements BusinessRuleSet {
     }
 
     /**
-     * Dates complétée supérieure à date demandée.
+     * Dates complï¿½tï¿½e supï¿½rieure ï¿½ date demandï¿½e.
      *
      * @param dossier Le dossier
      *
-     * @throws BusinessRuleException si la date de début est trop petite.
+     * @throws BusinessRuleException si la date de dï¿½but est trop petite.
      *
      */
     private void checkDateCompleteDemandeeRule(Suivi suivi)
             throws BusinessRuleException {
-        log.fine("checkDateCompleteDemandeeRule()");
+        log.debug("checkDateCompleteDemandeeRule()");
 
         if (suivi.getDateCompletee() != null && suivi.getDateCreation() != null) {
             if (suivi.getDateCompletee().before(suivi.getDateCreation())) {
@@ -125,16 +126,16 @@ public class SuiviBusinessRuleSet implements BusinessRuleSet {
         }
     }
     /**
-     * Dates prévue supérieure à date demandée.
+     * Dates prï¿½vue supï¿½rieure ï¿½ date demandï¿½e.
      *
      * @param dossier Le dossier
      *
-     * @throws BusinessRuleException si la date de début est trop petite.
+     * @throws BusinessRuleException si la date de dï¿½but est trop petite.
      *
      */
     private void checkDatePrevueDemandeeRule(Suivi suivi)
             throws BusinessRuleException {
-        log.fine("checkDatePrevueDemandeeRule()");
+        log.debug("checkDatePrevueDemandeeRule()");
 
         if (suivi.getDatePrevue() != null && suivi.getDateCreation() != null) {
             if (suivi.getDatePrevue().before(suivi.getDateCreation())) {

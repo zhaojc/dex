@@ -2,18 +2,17 @@
 
 package com.lotoquebec.cardex.business.rule;
 
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardex.business.CriteresRechercheSujet;
-import com.lotoquebec.cardex.business.exception.CriteresRechercheSujetBusinessRuleException;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
 import com.lotoquebec.cardexCommun.business.BusinessRuleSet;
 import com.lotoquebec.cardexCommun.exception.BusinessRuleException;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 
 /**
- * Cette classe valide l'ensemble des règles d'affaire applicable
- * aux critères de recherche pour les sujets.
+ * Cette classe valide l'ensemble des rï¿½gles d'affaire applicable
+ * aux critï¿½res de recherche pour les sujets.
  *
  * @see com.lotoquebec.cardexCommun.business.BusinessRuleSet
  * @author $Author: mdemers $
@@ -26,7 +25,7 @@ public class CriteresRechercheSujetBusinessRuleSet
      * L'instance du gestionnaire de journalisation.
      */
 	private final Logger      log =
-        (Logger)LoggerCardex.getLogger((this.getClass()));
+        LoggerFactory.getLogger((this.getClass()));
 
     /**
      * Construit une instance de SujetBusinessRuleSet
@@ -34,24 +33,24 @@ public class CriteresRechercheSujetBusinessRuleSet
     public CriteresRechercheSujetBusinessRuleSet() {}
 
     /**
-     * Valide les règles d'affaires applicable
-     * aux critères de recherche pour les sujets.
+     * Valide les rï¿½gles d'affaires applicable
+     * aux critï¿½res de recherche pour les sujets.
      *
-     * @param businessObject Les critères de recherche
+     * @param businessObject Les critï¿½res de recherche
      *
-     * @throws BusinessRuleException si les règles d'affaire
-     * d'un objet critère de recherche de sujets ne sont pas respectées.
+     * @throws BusinessRuleException si les rï¿½gles d'affaire
+     * d'un objet critï¿½re de recherche de sujets ne sont pas respectï¿½es.
      * @throws IllegalArgumentException si l'objet d'affaire n'est pas
      * une instance de  com.lotoquebec.cardex.business.CriteresRechercheSujet
      */
     public void checkRules(CardexAuthenticationSubject subject, Object businessObject)
             throws BusinessRuleException {
-        log.fine("checkRules()");
+        log.debug("checkRules()");
 
         if (businessObject instanceof CriteresRechercheSujet) {
-            // Pas de règles pour l'instant.
+            // Pas de rï¿½gles pour l'instant.
         } else {
-            throw new IllegalArgumentException("L'objet d'affaire doit être une instance de '"
+            throw new IllegalArgumentException("L'objet d'affaire doit ï¿½tre une instance de '"
                                                + CriteresRechercheSujet.class.getName()
                                                + "'");
         }

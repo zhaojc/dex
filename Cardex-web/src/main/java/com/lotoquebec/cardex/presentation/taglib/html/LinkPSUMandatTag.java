@@ -3,18 +3,18 @@ package com.lotoquebec.cardex.presentation.taglib.html;
 import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import javax.servlet.jsp.JspException;
 
 import org.apache.struts.taglib.TagUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardex.presentation.model.PSUMandatHtmlForm;
 import com.lotoquebec.cardex.presentation.model.SujetHtmlForm;
 import com.lotoquebec.cardex.securite.GestionnaireSecuriteCardex;
 import com.lotoquebec.cardexCommun.authentication.AuthenticationSubject;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.presentation.taglib.html.LinkCardexTag;
 import com.lotoquebec.cardexCommun.presentation.taglib.html.TagLibUtils;
 import com.lotoquebec.cardexCommun.securite.UIComponentState;
@@ -22,10 +22,10 @@ import com.lotoquebec.cardexCommun.util.StringUtils;
 
 
 /**
- * Genere un hyperlink URL-encoded au URI spécifié avec
- * les paramètres de query string correspondant aux
- * propriétés cle, site, et mot de passe du sujet
- * spécifié.
+ * Genere un hyperlink URL-encoded au URI spï¿½cifiï¿½ avec
+ * les paramï¿½tres de query string correspondant aux
+ * propriï¿½tï¿½s cle, site, et mot de passe du sujet
+ * spï¿½cifiï¿½.
  *
  * @see org.apache.struts.taglib.html.LinkTag
  * @author $Author: mlibersan $
@@ -37,7 +37,7 @@ public class LinkPSUMandatTag extends LinkCardexTag {
      * L'instance du gestionnaire de journalisation.
      */
 	private final Logger      log =
-        (Logger)LoggerCardex.getLogger((this.getClass()));
+        LoggerFactory.getLogger((this.getClass()));
 
     private String mandat;
 
@@ -75,10 +75,10 @@ public class LinkPSUMandatTag extends LinkCardexTag {
         return super.doStartTag();
       }
 
-      log.fine("doStartTag()");
-      log.fine("   mandat '" + this.mandat + "'");
+      log.debug("doStartTag()");
+      log.debug("   mandat '" + this.mandat + "'");
 
-      // Cas spécial pour le nom anchors
+      // Cas spï¿½cial pour le nom anchors
       if (linkName != null) {
           StringBuffer results = new StringBuffer("<a name=\"");
           results.append(linkName);
@@ -87,7 +87,7 @@ public class LinkPSUMandatTag extends LinkCardexTag {
           return (EVAL_BODY_INCLUDE);
       }
 
-      // Insere la clé et le site comme parametres de requete
+      // Insere la clï¿½ et le site comme parametres de requete
       if (mandat != null ) {
         Object bean = pageContext.findAttribute(mandat);
         if (bean == null) {
@@ -126,7 +126,7 @@ public class LinkPSUMandatTag extends LinkCardexTag {
               (messages.getMessage("rewrite.url", e.toString()));
       }
 
-      // Generation de la balise ouvrante de l'élément anchor
+      // Generation de la balise ouvrante de l'ï¿½lï¿½ment anchor
       StringBuffer results = new StringBuffer("<a href=\"javascript:windowOpenLocation('"+url+"')\"");
       
       if (target != null) {
@@ -138,7 +138,7 @@ public class LinkPSUMandatTag extends LinkCardexTag {
       results.append(prepareEventHandlers());
       results.append(">");
 
-      // Affichage de l'élément dans le output writer
+      // Affichage de l'ï¿½lï¿½ment dans le output writer
       tagUtils.write(pageContext, results.toString());
 
       // Evalaution du  body pour ce tag

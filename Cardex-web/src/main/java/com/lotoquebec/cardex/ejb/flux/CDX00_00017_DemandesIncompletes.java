@@ -7,7 +7,9 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.logging.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardex.integration.dao.FabriqueCardexDAO;
 import com.lotoquebec.cardexCommun.GlobalConstants;
@@ -16,7 +18,6 @@ import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
 import com.lotoquebec.cardexCommun.exception.BusinessResourceException;
 import com.lotoquebec.cardexCommun.exception.DAOException;
 import com.lotoquebec.cardexCommun.integration.dao.DAOConnection;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.util.CourrielAction;
 import com.lotoquebec.cardexCommun.util.JourneeOuvrable;
 
@@ -29,16 +30,16 @@ import com.lotoquebec.cardexCommun.util.JourneeOuvrable;
  */
 public class CDX00_00017_DemandesIncompletes implements Flux{
 
-	private final static Logger log = (Logger)LoggerCardex.getLogger(CDX00_00017_DemandesIncompletes.class);
+	private final static Logger log = LoggerFactory.getLogger(CDX00_00017_DemandesIncompletes.class);
 	private CardexAuthenticationSubject subject = null;
 
 	
 	public void execute() throws Exception {
-		log.fine("Entr�e flux CDX00_00017");
+		log.info("Entr�e flux CDX00_00017");
 		
 		subject = AutentificationCardex.construireCardexAuthenticationSubjectSystem();
 		
-		log.fine("Suivi des demandes incompl�tes");
+		log.info("Suivi des demandes incompl�tes");
 		Connection connection = null; 
 		try {
 			connection = DAOConnection.getInstance().getConnection(subject);
@@ -48,7 +49,7 @@ public class CDX00_00017_DemandesIncompletes implements Flux{
 			connection = null;
 		}		
 		
-		log.fine("Fin flux CDX00_00017");
+		log.info("Fin flux CDX00_00017");
 	}
 
 	private void envoyerAvis(CardexAuthenticationSubject subject, Connection connection) throws AssertionError, BusinessResourceException, DAOException {
@@ -76,7 +77,7 @@ public class CDX00_00017_DemandesIncompletes implements Flux{
 				//On compare les dates seulement, sans les heures.
 				dateSuiviJoursOuvrables = dateFormat.parse(dateFormat.format(dateSuiviJoursOuvrables));
 				if(dateSuiviJoursOuvrables.compareTo(dateDuJour) == 0){
-					log.fine("Envoi du premier avis");
+					log.info("Envoi du premier avis");
 					objectMessage = CourrielAction.constuireObjectMessage(subject, GlobalConstants.TypesIntervention.DemandesIncompletes1);
 					message = "<br>" + informationSuivi;
 					CourrielAction.envoyerCourrielDestinataire(subject, connection, objectMessage, message, GlobalConstants.TypesIntervention.DemandesIncompletes1, "A");
@@ -84,7 +85,7 @@ public class CDX00_00017_DemandesIncompletes implements Flux{
 					dateSuiviJoursOuvrables = JourneeOuvrable.ajouterJours(dateSuivi, 6);
 					dateSuiviJoursOuvrables = dateFormat.parse(dateFormat.format(dateSuiviJoursOuvrables));
 					if(dateSuiviJoursOuvrables.compareTo(dateDuJour) == 0){
-						log.fine("Envoi du deuxi�me avis");
+						log.info("Envoi du deuxi�me avis");
 						objectMessage = CourrielAction.constuireObjectMessage(subject, GlobalConstants.TypesIntervention.DemandesIncompletes2);
 						message = "<br>" + informationSuivi;
 						CourrielAction.envoyerCourrielDestinataire(subject, connection, objectMessage, message, GlobalConstants.TypesIntervention.DemandesIncompletes2, "A");
@@ -92,7 +93,7 @@ public class CDX00_00017_DemandesIncompletes implements Flux{
 						dateSuiviJoursOuvrables = JourneeOuvrable.ajouterJours(dateSuivi, 11);
 						dateSuiviJoursOuvrables = dateFormat.parse(dateFormat.format(dateSuiviJoursOuvrables));
 						if(dateSuiviJoursOuvrables.compareTo(dateDuJour) == 0){
-							log.fine("Envoi du troisi�me avis");
+							log.info("Envoi du troisi�me avis");
 							objectMessage = CourrielAction.constuireObjectMessage(subject, GlobalConstants.TypesIntervention.DemandesIncompletes3);
 							message = "<br>" + informationSuivi;
 							CourrielAction.envoyerCourrielDestinataire(subject, connection, objectMessage, message, GlobalConstants.TypesIntervention.DemandesIncompletes3, "A");
@@ -108,10 +109,10 @@ public class CDX00_00017_DemandesIncompletes implements Flux{
 	}
 
 	private ResultSet rechercheSuivis(Connection connection) throws AssertionError, DAOException {
-		log.fine("rechercheSuivis D�but ");
+		log.info("rechercheSuivis D�but ");
 		ResultSet resultSet = null;
 			resultSet = FabriqueCardexDAO.getInstance().getRapportDAO().listeDemandesIncompletes(connection);
-			log.fine("rechercheSuivis Fin");
+			log.info("rechercheSuivis Fin");
 		return resultSet;
 	}
 	

@@ -4,18 +4,18 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Locale;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.lotoquebec.cardexCommun.GlobalConstants;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
 import com.lotoquebec.cardexCommun.exception.DAOException;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.user.CardexPrivilege;
 import com.lotoquebec.cardexCommun.user.CardexUser;
 import com.lotoquebec.cardexCommun.util.CodeLangue;
@@ -27,7 +27,7 @@ public class DAOConnection {
      * L'instance du gestionnaire de journalisation.
      */
 	private final static Logger      log =
-        (Logger)LoggerCardex.getLogger(DAOConnection.class);
+        LoggerFactory.getLogger(DAOConnection.class);
 
     /**
      * Property file containing DAOFactory specific properties
@@ -68,9 +68,9 @@ public class DAOConnection {
      */
     public Connection getConnection()
             throws DAOException {
-        if (log.isLoggable(Level.FINE)) {
-            log.fine("Création d'un connection anonyme à la bd ..");
-            log.fine("   DATA_SOURCE_JNDI_NAME = '" + AppConfig.INSTANCE.get(GlobalConstants.Configuration.DATASOURCE) + "'");
+        if (log.isDebugEnabled()) {
+            log.debug("Création d'un connection anonyme à la bd ..");
+            log.debug("   DATA_SOURCE_JNDI_NAME = '" + AppConfig.INSTANCE.get(GlobalConstants.Configuration.DATASOURCE) + "'");
         }
 
         try {
@@ -124,15 +124,15 @@ public class DAOConnection {
         CardexPrivilege privilege =
             (CardexPrivilege) subject.getPrivilege();
 
-        if (log.isLoggable(Level.FINE)) {
-            log.fine("Initialisation des variables globales Oracle ..");
-            log.fine("   Langue du sujet = '"
+        if (log.isDebugEnabled()) {
+            log.debug("Initialisation des variables globales Oracle ..");
+            log.debug("   Langue du sujet = '"
                       + CodeLangue.valueOf(locale).intValue() + "'");
-            log.fine("   Code d'utilisateur = '" + user.getCode()
+            log.debug("   Code d'utilisateur = '" + user.getCode()
                       + "'");
-            log.fine("   Niveau de confidentialit� = '"
+            log.debug("   Niveau de confidentialit� = '"
                       + privilege.getNiveauConfidentialite() + "'");
-            log.fine("   Site = '" + user.getSite() + "'");
+            log.debug("   Site = '" + user.getSite() + "'");
         }
         CallableStatement callableStatement = null;
 

@@ -10,10 +10,11 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import oracle.jdbc.OracleTypes;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardex.business.CriteresRechercheNarration;
 import com.lotoquebec.cardex.business.Dossier;
@@ -38,7 +39,6 @@ import com.lotoquebec.cardexCommun.integration.dao.jdbc.PreparerSQL;
 import com.lotoquebec.cardexCommun.integration.dao.jdbc.RowCallbackHandler;
 import com.lotoquebec.cardexCommun.integration.dao.jdbc.StoreProcTemplate;
 import com.lotoquebec.cardexCommun.integration.dao.jdbc.UnEnregistrementPresent;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.user.CardexPrivilege;
 import com.lotoquebec.cardexCommun.user.CardexUser;
 import com.lotoquebec.cardexCommun.util.ListeCache;
@@ -55,7 +55,7 @@ import com.lotoquebec.cardexCommun.util.ListeCache;
 public class NarrationDAO {
 
    private final Logger      log =
-       (Logger)LoggerCardex.getLogger(NarrationDAO.class);
+       LoggerFactory.getLogger(NarrationDAO.class);
 
 /**
  * �criture d'une narration, appel�e par la m�thode "insert", "update",
@@ -146,10 +146,10 @@ public class NarrationDAO {
               narration.setSite(callableStatement.getLong(3));
               callableStatement.close();
               //Traitement sp�cifique au CLOB (Insertion ou Mise � jour seulement)
-			  log.fine("apr�s close");
+			  log.debug("apr�s close");
               if (action.equals("IA") || action.equals("I") || action.equals("U")){
                   connection.setAutoCommit(false);
-                  log.fine("Traitement des CLOBs");
+                  log.debug("Traitement des CLOBs");
                   stmt = connection.createStatement();
                   Clob clobNarrationAvecFormat = null;
                   Clob clobNarrationSansFormat = null;
@@ -306,7 +306,7 @@ public class NarrationDAO {
  * @return Collection : liste des narrations associ�es
  */
     public Collection findLiensNarration(CardexAuthenticationSubject subject, long cle, long site, String genreFichier) throws DAOException {
-      log.fine("findLiensNarration()");
+      log.debug("findLiensNarration()");
       Connection connection = DAOConnection.getInstance().getConnection(subject);
       ListeCache listeCache = ListeCache.getInstance();
 	  CallableStatement callableStatement = null;
@@ -347,7 +347,7 @@ public class NarrationDAO {
               //Conversion en String des valeurs CLOB retourn�es de la base de donn�es.
               linkedNarration.setNarrationAvecFormat(OracleDAOUtils.CLOBToString((java.sql.Clob)resultSet.getObject("CLOB_CO_TEXTE_FORMAT")));
               linkedNarration.setNarrationSansFormat(OracleDAOUtils.CLOBToString((java.sql.Clob)resultSet.getObject("CLOB_CO_TEXTE_NORMAL")));
-              log.fine("   [Narration id='"+linkedNarration.getCle()+"' Site='"+linkedNarration.getSite()+"']");
+              log.debug("   [Narration id='"+linkedNarration.getCle()+"' Site='"+linkedNarration.getSite()+"']");
               String secteur = listeCache.obtenirLabel(subject, linkedNarration.getCreateur(), new SecteurDeIntervenantCle());
               linkedNarration.setSecteur(secteur);
               linkedNarration.setGabaritUtilise(resultSet.getLong("L_CO_GABARIT"));
@@ -407,7 +407,7 @@ public class NarrationDAO {
  * @return Collection : liste des narrations associ�es
  */
     public Collection findLiensNarrationRapport(CardexAuthenticationSubject subject, long cle, long site, String genreFichier) throws DAOException {
-      log.fine("findLiensNarrationRapport()");
+      log.debug("findLiensNarrationRapport()");
       Connection connection = DAOConnection.getInstance().getConnection(subject);
       ListeCache listeCache = ListeCache.getInstance();
 	  CallableStatement callableStatement = null;
@@ -448,7 +448,7 @@ public class NarrationDAO {
               //Conversion en String des valeurs CLOB retourn�es de la base de donn�es.
               linkedNarration.setNarrationAvecFormat(OracleDAOUtils.CLOBToString((Clob)resultSet.getObject("CLOB_CO_TEXTE_FORMAT")));
               linkedNarration.setNarrationSansFormat(OracleDAOUtils.CLOBToString((Clob)resultSet.getObject("CLOB_CO_TEXTE_NORMAL")));
-              log.fine("   [Narration id='"+linkedNarration.getCle()+"' Site='"+linkedNarration.getSite()+"']");
+              log.debug("   [Narration id='"+linkedNarration.getCle()+"' Site='"+linkedNarration.getSite()+"']");
               String secteur = listeCache.obtenirLabel(subject, linkedNarration.getCreateur(), new SecteurDeIntervenantCle());
               linkedNarration.setSecteur(secteur);
 
@@ -506,7 +506,7 @@ public class NarrationDAO {
  * @return Collection : liste des narrations associ�es
  */
     public Collection findLiensNarrationRapportUniforme(CardexAuthenticationSubject subject, long cle, long site, String genreFichier, String section) throws DAOException {
-      log.fine("findLiensNarrationRapportUniforme()");
+      log.debug("findLiensNarrationRapportUniforme()");
       Connection connection = DAOConnection.getInstance().getConnection(subject);
       ListeCache listeCache = ListeCache.getInstance();
 	  CallableStatement callableStatement = null;
@@ -547,7 +547,7 @@ public class NarrationDAO {
               //Conversion en String des valeurs CLOB retourn�es de la base de donn�es.
               linkedNarration.setNarrationAvecFormat(OracleDAOUtils.CLOBToString((Clob)resultSet.getObject("CLOB_CO_TEXTE_FORMAT")));
               linkedNarration.setNarrationSansFormat(OracleDAOUtils.CLOBToString((Clob)resultSet.getObject("CLOB_CO_TEXTE_NORMAL")));
-              log.fine("   [Narration id='"+linkedNarration.getCle()+"' Site='"+linkedNarration.getSite()+"']");
+              log.debug("   [Narration id='"+linkedNarration.getCle()+"' Site='"+linkedNarration.getSite()+"']");
               String secteur = listeCache.obtenirLabel(subject, linkedNarration.getCreateur(), new SecteurDeIntervenantCle());
               linkedNarration.setSecteur(secteur);
 
@@ -803,7 +803,7 @@ public class NarrationDAO {
                 typeFichierAssocie = typeFichierAssocie.trim();
                 narration.setGenreLiaison(typeFichierAssocie);
               }
-              log.fine("C_CO_REF_GENRE is '"+typeFichierAssocie+"'");
+              log.debug("C_CO_REF_GENRE is '"+typeFichierAssocie+"'");
               if (GlobalConstants.GenreFichier.DOSSIER.equals(typeFichierAssocie)) {
                 //R�cup�ration du dossier associ� � la narration
                 dossier = FabriqueCardexDAO.getInstance().getDossierDAO().find(subject,dossier);
@@ -868,34 +868,34 @@ public class NarrationDAO {
             narration.setPermettreModification(true);
          }
 
-         if (log.isLoggable(Level.FINE)){
-           log.fine("D�termine si la narration est modifiable");
-           log.fine("  user.code = '"+user.getCode()+"'");
-           log.fine("  narration.createur = '"+narration.getCreateur()+"'");
-           log.fine("  user.niveauAuthorite = '"+privilege.getNiveauAuthorite()+"'");
-           log.fine("  narration.niveauAuthorite = '"+narration.getAutoriteNarration()+"'");
-           log.fine("  user.site = '"+user.getSite()+"'");
-           log.fine("  narration.site = '"+narration.getSite()+"'");
-           log.fine("  narration.dateApprobation = '"+narration.getDateApprobation()+"'");
+         if (log.isDebugEnabled()){
+           log.debug("Détermine si la narration est modifiable");
+           log.debug("  user.code = '"+user.getCode()+"'");
+           log.debug("  narration.createur = '"+narration.getCreateur()+"'");
+           log.debug("  user.niveauAuthorite = '"+privilege.getNiveauAuthorite()+"'");
+           log.debug("  narration.niveauAuthorite = '"+narration.getAutoriteNarration()+"'");
+           log.debug("  user.site = '"+user.getSite()+"'");
+           log.debug("  narration.site = '"+narration.getSite()+"'");
+           log.debug("  narration.dateApprobation = '"+narration.getDateApprobation()+"'");
            if (GlobalConstants.GenreFichier.DOSSIER.equals(typeFichierAssocie)) {
-              log.fine("  dossier.statut = '"+isInactif+"'");
+              log.debug("  dossier.statut = '"+isInactif+"'");
            }
-           log.fine("  narration.isModifiable = '"+narration.isModifiable()+"'");
-           log.fine("D�termine si la narration est approuvable");
-           log.fine("  user.site = '"+user.getSite()+"'");
-           log.fine("  narration.site = '"+narration.getSite()+"'");
-           log.fine("  user.niveauAuthorite = '"+privilege.getNiveauAuthorite()+"'");
-           log.fine("  narration.niveauAuthorite = '"+narration.getAutoriteNarration()+"'");
-           log.fine("  createur.niveauAuthorite = '"+narration.getAutoriteCreateur()+"'");
-           log.fine("  narration.isApprouvable = '"+narration.isApprouvable()+"'");
-           log.fine("D�termine si on peut permettre la modification d'une narration");
-           log.fine("  user.site = '"+user.getSite()+"'");
-           log.fine("  narration.site = '"+narration.getSite()+"'");
-           log.fine("  user.niveauAuthorite = '"+privilege.getNiveauAuthorite()+"'");
-           log.fine("  narration.niveauAuthorite = '"+narration.getAutoriteNarration()+"'");
-           log.fine("  narration.isPermettreModification = '"+narration.isPermettreModification()+"'");
+           log.debug("  narration.isModifiable = '"+narration.isModifiable()+"'");
+           log.debug("Détermine si la narration est approuvable");
+           log.debug("  user.site = '"+user.getSite()+"'");
+           log.debug("  narration.site = '"+narration.getSite()+"'");
+           log.debug("  user.niveauAuthorite = '"+privilege.getNiveauAuthorite()+"'");
+           log.debug("  narration.niveauAuthorite = '"+narration.getAutoriteNarration()+"'");
+           log.debug("  createur.niveauAuthorite = '"+narration.getAutoriteCreateur()+"'");
+           log.debug("  narration.isApprouvable = '"+narration.isApprouvable()+"'");
+           log.debug("Détermine si on peut permettre la modification d'une narration");
+           log.debug("  user.site = '"+user.getSite()+"'");
+           log.debug("  narration.site = '"+narration.getSite()+"'");
+           log.debug("  user.niveauAuthorite = '"+privilege.getNiveauAuthorite()+"'");
+           log.debug("  narration.niveauAuthorite = '"+narration.getAutoriteNarration()+"'");
+           log.debug("  narration.isPermettreModification = '"+narration.isPermettreModification()+"'");
            if (GlobalConstants.GenreFichier.DOSSIER.equals(typeFichierAssocie)) {
-              log.fine("  dossier.statut = '"+isInactif+"'");
+              log.debug("  dossier.statut = '"+isInactif+"'");
            }
 
          }
@@ -1078,7 +1078,7 @@ public class NarrationDAO {
        * @throws DAOException
        */
     public void insertionNarrationTemporaire(CardexAuthenticationSubject subject, final Narration narration) throws DAOException {
-		log.fine("obtenirListeProfils");
+		log.debug("obtenirListeProfils");
 		final Connection connection = DAOConnection.getInstance().getConnection(subject);
 		StoreProcTemplate storeProcTemplate = new StoreProcTemplate(connection);
 		
@@ -1113,7 +1113,7 @@ public class NarrationDAO {
 	 * @throws DAOException
 	 */
 	public void sauvegarderNarrationTemporaire(CardexAuthenticationSubject subject, final Narration narration) throws DAOException {
-		log.fine("obtenirListeProfils");
+		log.debug("obtenirListeProfils");
 		final Connection connection = DAOConnection.getInstance().getConnection(subject);
 		StoreProcTemplate storeProcTemplate = new StoreProcTemplate(connection);
 		
@@ -1143,7 +1143,7 @@ public class NarrationDAO {
 	 * @throws DAOException
 	 */
 	public void assignerCleNarrationTemporaire(Connection connection, final Narration narration) throws DAOException {
-		log.fine("assignerCleNarrationTemporaire");
+		log.debug("assignerCleNarrationTemporaire");
 		StoreProcTemplate storeProcTemplate = new StoreProcTemplate(connection);
 		
 		PreparerCallableStatement rch = new PreparerCallableStatement(){
@@ -1189,7 +1189,7 @@ public class NarrationDAO {
        * @throws DAOException
        */
       public Narration obtenirNarrationTemporaire(CardexAuthenticationSubject subject, final Narration narration) throws DAOException {
-  		log.fine("obtenirNarrationTemporaire");
+  		log.debug("obtenirNarrationTemporaire");
 		final Narration narrationTemporaire = new NarrationVO();
 		StoreProcTemplate storeProcTemplate = new StoreProcTemplate(subject);
 		
@@ -1220,7 +1220,7 @@ public class NarrationDAO {
       }      
       
       public void supprimerNarrationTemporaireDePlusDe7Jours(CardexAuthenticationSubject subject) throws DAOException {
-  		log.fine("supprimerNarrationTemporaireDePlusDe7Jours");
+  		log.debug("supprimerNarrationTemporaireDePlusDe7Jours");
 		StoreProcTemplate storeProcTemplate = new StoreProcTemplate(subject);
 		
 		storeProcTemplate.prepareCall("CARDEX_WEB_NARRATION.SPW_S_NR_NARRATION_TRANSITOIRE", 0, 0, null);
@@ -1283,7 +1283,7 @@ public class NarrationDAO {
        }
 
          public void approbationAutomatique(final java.util.Date dateDebut, final java.util.Date dateFin, Connection connection) throws DAOException {
-       		log.fine("approbationAutomatique");
+       		log.debug("approbationAutomatique");
       	   CallableStatement callableStatement = null;
 
       	   try {

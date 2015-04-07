@@ -5,7 +5,6 @@ package com.lotoquebec.cardex.presentation.controller;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
-import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +14,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessages;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoQuebec.correcteurAdresse.AdresseSortie;
 import com.lotoQuebec.correcteurAdresse.AdresseSortieRecherche;
@@ -33,12 +34,10 @@ import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
 import com.lotoquebec.cardexCommun.exception.BusinessException;
 import com.lotoquebec.cardexCommun.exception.BusinessResourceException;
 import com.lotoquebec.cardexCommun.exception.ValueObjectMapperException;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.presentation.util.AbstractAction;
-import com.lotoquebec.cardexCommun.util.StringUtils;
 
 /**
- * Cette classe gère les événements en rapport
+ * Cette classe gï¿½re les ï¿½vï¿½nements en rapport
  * avec le cas d'utilisation gestion des dossiers.
  *
  * @author $Author: mlibersan $
@@ -50,20 +49,20 @@ public class AdresseAction extends AbstractAction {
      * L'instance du gestionnaire de journalisation.
      */
 	private final Logger      log =
-        (Logger)LoggerCardex.getLogger((this.getClass()));
+        LoggerFactory.getLogger((this.getClass()));
 
     /**
      * <p>
      * <p>
-     * Par défaut, l'application remplit automatiquement les champs suivants :
+     * Par dï¿½faut, l'application remplit automatiquement les champs suivants :
      *
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortieif an input/output survient
+     * @exception IOException si une erreur d'entrï¿½e/sortieif an input/output survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward ajouter(CardexAuthenticationSubject subject,
@@ -72,23 +71,23 @@ public class AdresseAction extends AbstractAction {
                                 HttpServletRequest request,
                                 HttpServletResponse response) throws IOException,
                                 ServletException {
-        log.fine("Création d'une nouvelle adresse");
+        log.debug("Crï¿½ation d'une nouvelle adresse");
 
          AdresseForm adresseForm = new AdresseForm();
          
 		  if (form instanceof SujetForm) {
-		    log.fine("Création d'une adresse liée au sujet: " + form);
+		    log.debug("Crï¿½ation d'une adresse liï¿½e au sujet: " + form);
 		    SujetForm sujetForm = (SujetForm)form;
 		    adresseForm.setLien(sujetForm.getCle());
 		    adresseForm.setLienSite(sujetForm.getSite());
 		  }else if (form instanceof SocieteForm) {
-		    log.fine("Création d'une adresse liée a la societe: " + form);
+		    log.debug("Crï¿½ation d'une adresse liï¿½e a la societe: " + form);
 		    SocieteForm societeForm = (SocieteForm)form;
 		    adresseForm.setLien(societeForm.getCle());
 		    adresseForm.setLienSite(societeForm.getSite());
 		  }
 		
-		  log.fine("Adresse : " + adresseForm);
+		  log.debug("Adresse : " + adresseForm);
 		  request.getSession().setAttribute("adresse",adresseForm);
 		
 		  return mapping.findForward("success");
@@ -100,13 +99,13 @@ public class AdresseAction extends AbstractAction {
     /**
      * <p>
      *
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortieif an input/output survient
+     * @exception IOException si une erreur d'entrï¿½e/sortieif an input/output survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward consulter(CardexAuthenticationSubject subject,
@@ -114,7 +113,7 @@ public class AdresseAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.fine("Accès à une adresse");
+        log.debug("Accï¿½s ï¿½ une adresse");
 
         ActionMessages errors = new ActionMessages();
 
@@ -145,22 +144,22 @@ public class AdresseAction extends AbstractAction {
     /**
      * <p>
      * <p>
-     * Par défaut, l'application remplit automatiquement les champs suivants :
+     * Par dï¿½faut, l'application remplit automatiquement les champs suivants :
      *
-     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
-     * @param request La requête HTTP traitée
-     * @param response La réponse HTTP créée
+     * @param mapping L' ActionMapping utilsï¿½ pour sï¿½lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requï¿½te (optionnelle)
+     * @param request La requï¿½te HTTP traitï¿½e
+     * @param response La rï¿½ponse HTTP crï¿½ï¿½e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entrée/sortieif an input/output survient
+     * @exception IOException si une erreur d'entrï¿½e/sortieif an input/output survient
      * @exception ServletException si une exception servlet survient
      */
 
 
     
     /**
-     * Validation de l'adresse, cette méthode est appelé à l'entré de la validation
+     * Validation de l'adresse, cette mï¿½thode est appelï¿½ ï¿½ l'entrï¿½ de la validation
      * @param subject
      * @param mapping
      * @param form
@@ -173,7 +172,7 @@ public class AdresseAction extends AbstractAction {
     public ActionForward initialiserValider(CardexAuthenticationSubject subject,
 			ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException {
-		log.fine("Validation d'une adresse (Default).");
+		log.debug("Validation d'une adresse (Default).");
 		ActionMessages errors = new ActionMessages();
 
 		try {
@@ -183,7 +182,7 @@ public class AdresseAction extends AbstractAction {
 			
 			Adresse adresse = new AdresseVO();
 			ValueObjectMapper.convertAdresseHtmlForm(adresseForm, adresse, subject.getLocale());
-			log.fine("Adresse: " + adresse);
+			log.debug("Adresse: " + adresse);
 			
 			ValidationAdresseForm validationAdresseForm = new ValidationAdresseForm();
 			adresseForm.assignerValeurDeListe(subject);
@@ -215,7 +214,7 @@ public class AdresseAction extends AbstractAction {
 	}
     
     /**
-     * Valider l'adresse retourné par la validation de l'adresse
+     * Valider l'adresse retournï¿½ par la validation de l'adresse
      * @param subject
      * @param mapping
      * @param form
@@ -228,7 +227,7 @@ public class AdresseAction extends AbstractAction {
     public ActionForward valider(CardexAuthenticationSubject subject,
 			ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException {
-		log.fine("Validation d'une adresse.");
+		log.debug("Validation d'une adresse.");
 		ActionMessages errors = new ActionMessages();
 
 		try {
@@ -237,7 +236,7 @@ public class AdresseAction extends AbstractAction {
 			
 			Adresse adresse = new AdresseVO();
 			ValueObjectMapper.convertAdresseHtmlForm(validationAdresseForm.getAdresseValide(), adresse, subject.getLocale());
-			log.fine("Adresse: " + adresse);
+			log.debug("Adresse: " + adresse);
 			AdresseSortie adresseSortie = delegate.validationAdresse(subject, adresse);
 			
 			AdresseForm adresseValideForm = new AdresseForm();
@@ -256,7 +255,7 @@ public class AdresseAction extends AbstractAction {
 	}
     
     /**
-     * Transférer l'adresse à l'écran de confirmation de l'adresse
+     * Transfï¿½rer l'adresse ï¿½ l'ï¿½cran de confirmation de l'adresse
      * @param subject
      * @param mapping
      * @param form
@@ -269,7 +268,7 @@ public class AdresseAction extends AbstractAction {
     public ActionForward choisirValider(CardexAuthenticationSubject subject,
 			ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException {
-		log.fine("Choix d'une adresse.");
+		log.debug("Choix d'une adresse.");
 		ActionMessages errors = new ActionMessages();
 
 		try {
@@ -301,7 +300,7 @@ public class AdresseAction extends AbstractAction {
     public ActionForward initialiserRechercher(CardexAuthenticationSubject subject,
 			ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException {
-		log.fine("Recherche des adresses.");
+		log.debug("Recherche des adresses.");
 		ActionMessages errors = new ActionMessages();
 
 		try {
@@ -310,7 +309,7 @@ public class AdresseAction extends AbstractAction {
 			
 			Adresse adresse = new AdresseVO();
 			ValueObjectMapper.convertAdresseHtmlForm(adresseForm, adresse, subject.getLocale());
-			log.fine("Adresse: " + adresse);
+			log.debug("Adresse: " + adresse);
 			List listeAdresseRecherche = delegate.rechercheValidationAdresse(subject, adresse);
 
 			if (listeAdresseRecherche == null)
@@ -365,7 +364,7 @@ public class AdresseAction extends AbstractAction {
     public ActionForward rechercher(CardexAuthenticationSubject subject,
 			ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException {
-		log.fine("Recherche des adresses.");
+		log.debug("Recherche des adresses.");
 		ActionMessages errors = new ActionMessages();
 
 		try {
@@ -375,7 +374,7 @@ public class AdresseAction extends AbstractAction {
 			
 			Adresse adresse = new AdresseVO();
 			ValueObjectMapper.convertAdresseHtmlForm(rechercheValidationAdresseForm.getAdresseSaisie(), adresse, subject.getLocale());
-			log.fine("Adresse: " + adresse);
+			log.debug("Adresse: " + adresse);
 			List listeAdresseRecherche = delegate.rechercheValidationAdresse(subject, adresse);
 
 			rechercheValidationAdresseForm.getListeResultat().init();
@@ -400,7 +399,7 @@ public class AdresseAction extends AbstractAction {
 	}
     
     /**
-     * Choix d'une adresse retrouvé
+     * Choix d'une adresse retrouvï¿½
      * @param subject
      * @param mapping
      * @param form
@@ -413,7 +412,7 @@ public class AdresseAction extends AbstractAction {
     public ActionForward choisirRechercher(CardexAuthenticationSubject subject,
 			ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException {
-		log.fine("Choix d'une adresse touvée.");
+		log.debug("Choix d'une adresse touvï¿½e.");
 		ActionMessages errors = new ActionMessages();
 
 		try {

@@ -2,11 +2,9 @@
 
 package com.lotoquebec.cardex.business.rule;
 
-import java.util.Iterator;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import com.lotoquebec.cardex.business.Dossier;
-import com.lotoquebec.cardex.business.Inscription;
 import com.lotoquebec.cardex.business.vo.SousCategorieVO;
 import com.lotoquebec.cardex.business.vo.SousCategoriesVO;
 import com.lotoquebec.cardexCommun.GlobalConstants;
@@ -17,7 +15,6 @@ import com.lotoquebec.cardexCommun.exception.BusinessRuleException;
 import com.lotoquebec.cardexCommun.exception.BusinessRuleExceptionHandle;
 import com.lotoquebec.cardexCommun.exception.DAOException;
 import com.lotoquebec.cardexCommun.integration.dao.cleListe.cleSQLListeCache.CategorieTypeCle;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.util.ListeCache;
 
 /**
@@ -30,7 +27,7 @@ public class SousCategoriesBusinessRuleSet implements BusinessRuleSet {
      * L'instance du gestionnaire de journalisation.
      */
 	private final Logger      log =
-        (Logger)LoggerCardex.getLogger((this.getClass()));
+        LoggerFactory.getLogger((this.getClass()));
 	
     //private DAOFactory factory;
 	//private DossierDAO dossierDAO;
@@ -58,7 +55,7 @@ public class SousCategoriesBusinessRuleSet implements BusinessRuleSet {
      */
     public void checkRules(CardexAuthenticationSubject subject, Object businessObject)
             throws BusinessRuleException, BusinessException {
-        log.fine("checkRules()");
+        log.debug("checkRules()");
 
         if (businessObject instanceof SousCategoriesVO) {
         	SousCategoriesVO sousCategories = (SousCategoriesVO) businessObject;

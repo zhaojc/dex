@@ -6,13 +6,14 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
-import java.util.logging.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardex.business.Dossier;
 import com.lotoquebec.cardex.business.Inscription;
 import com.lotoquebec.cardex.business.exception.InscriptionBusinessRuleException;
 import com.lotoquebec.cardex.business.vo.DossierVO;
-import com.lotoquebec.cardex.integration.dao.DossierDAO;
 import com.lotoquebec.cardex.integration.dao.FabriqueCardexDAO;
 import com.lotoquebec.cardexCommun.GlobalConstants;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
@@ -22,17 +23,15 @@ import com.lotoquebec.cardexCommun.exception.BusinessResourceException;
 import com.lotoquebec.cardexCommun.exception.BusinessRuleException;
 import com.lotoquebec.cardexCommun.exception.BusinessRuleExceptionHandle;
 import com.lotoquebec.cardexCommun.exception.DAOException;
-import com.lotoquebec.cardexCommun.exception.ValueObjectMapperException;
 import com.lotoquebec.cardexCommun.integration.dao.cleListe.cleMultiListeCache.CategorieCleMultiListeCache;
 import com.lotoquebec.cardexCommun.integration.dao.cleListe.cleMultiListeCache.TypeCleMultiListeCache;
 import com.lotoquebec.cardexCommun.integration.dao.cleListe.cleSQLListeCache.SiteApplicableTableValeurCle;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.presentation.util.LabelValueBean;
 import com.lotoquebec.cardexCommun.util.ListeCache;
 import com.lotoquebec.cardexCommun.util.StringUtils;
 
 /**
- * Cette classe valide l'ensemble des règles d'affaire applicable
+ * Cette classe valide l'ensemble des rï¿½gles d'affaire applicable
  * aux dossiers.
  *
  * @see com.lotoquebec.cardexCommun.business.BusinessRuleSet
@@ -45,12 +44,12 @@ public class InscriptionBusinessRuleSet implements BusinessRuleSet {
      * L'instance du gestionnaire de journalisation.
      */
 	private final Logger      log =
-        (Logger)LoggerCardex.getLogger((this.getClass()));
+        LoggerFactory.getLogger((this.getClass()));
 	
 
     /**
-     * Retourne un InscriptionBusinessRuleException initialisé avec
-     * l'identificateur de règle.
+     * Retourne un InscriptionBusinessRuleException initialisï¿½ avec
+     * l'identificateur de rï¿½gle.
      *
      *
      * @param ruleId
@@ -69,12 +68,12 @@ public class InscriptionBusinessRuleSet implements BusinessRuleSet {
     }
 
     /**
-     * Valide les règles d'affaires applicable à un dossier.
+     * Valide les rï¿½gles d'affaires applicable ï¿½ un dossier.
      *
      * @param businessObject Le dossier
      *
-     * @throws BusinessRuleException si les règles d'affaire
-     * d'un objet dossier ne sont pas respectées.
+     * @throws BusinessRuleException si les rï¿½gles d'affaire
+     * d'un objet dossier ne sont pas respectï¿½es.
      * @throws BusinessException
      * @throws 
      * @throws IllegalArgumentException si l'objet d'affaire n'est pas
@@ -82,7 +81,7 @@ public class InscriptionBusinessRuleSet implements BusinessRuleSet {
      */
     public void checkRules(CardexAuthenticationSubject subject, Object businessObject)
             throws BusinessRuleException, BusinessException {
-        log.fine("checkRules()");
+        log.debug("checkRules()");
 
         if (businessObject instanceof Inscription) {
             Inscription inscription = (Inscription) businessObject;
@@ -100,10 +99,10 @@ public class InscriptionBusinessRuleSet implements BusinessRuleSet {
 				
 			} catch (DAOException e) {
 				e.printStackTrace();
-				throw new AssertionError("Problème dans validerPeriodeInscriptionAutoExclusion");
+				throw new AssertionError("Problï¿½me dans validerPeriodeInscriptionAutoExclusion");
 			}		
         } else {
-            throw new IllegalArgumentException("L'objet d'affaire doit être une instance de '"
+            throw new IllegalArgumentException("L'objet d'affaire doit ï¿½tre une instance de '"
                                                + Inscription.class.getName()
                                                + "'");
         }
@@ -111,8 +110,8 @@ public class InscriptionBusinessRuleSet implements BusinessRuleSet {
 
 
     /**
-     * On assigne "tous les sites applicables" si c'est un dossier d'"accès interdit"
-     * ou un "autoexclusion" avec tous les sites de sélectionnés.
+     * On assigne "tous les sites applicables" si c'est un dossier d'"accï¿½s interdit"
+     * ou un "autoexclusion" avec tous les sites de sï¿½lectionnï¿½s.
      * @param subject
      * @param inscription
      * @param dossier
@@ -135,7 +134,7 @@ public class InscriptionBusinessRuleSet implements BusinessRuleSet {
 	    			inscription.setTousSitesApplicables(true);
 			} catch (BusinessResourceException e) {
 				e.printStackTrace();
-				throw new AssertionError("Problème dans assignerTousSiteApplicable");
+				throw new AssertionError("Problï¿½me dans assignerTousSiteApplicable");
 			}
     	}
 	}
@@ -161,22 +160,22 @@ public class InscriptionBusinessRuleSet implements BusinessRuleSet {
 			
 		} catch (BusinessResourceException e) {
 			e.printStackTrace();
-			throw new AssertionError("Problème dans isCategorieDansAccesInterdit");
+			throw new AssertionError("Problï¿½me dans isCategorieDansAccesInterdit");
 		}
     	return false;
     }
 
 	/**
-     * Dates de début supérieure ou égale à 1993-01-01.
+     * Dates de dï¿½but supï¿½rieure ou ï¿½gale ï¿½ 1993-01-01.
      *
      * @param dossier Le dossier
      *
-     * @throws BusinessRuleException si la date de début est trop petite.
+     * @throws BusinessRuleException si la date de dï¿½but est trop petite.
      *
      */
     private void checkDateDebutRule(Inscription inscription)
             throws BusinessRuleException {
-        log.fine("checkDateDebutRule()");
+        log.debug("checkDateDebutRule()");
 
         Date date = inscription.getDateDebut();
         if (date == null) {
@@ -192,16 +191,16 @@ public class InscriptionBusinessRuleSet implements BusinessRuleSet {
     }
 
     /**
-     * Dates de début inférieures ou égales aux dates de fin.
+     * Dates de dï¿½but infï¿½rieures ou ï¿½gales aux dates de fin.
      *
      * @param dossier Le dossier
      *
-     * @throws BusinessRuleException si les dates de début sont
-     * inférieures ou égales aux dates de fin.
+     * @throws BusinessRuleException si les dates de dï¿½but sont
+     * infï¿½rieures ou ï¿½gales aux dates de fin.
      */
     private void checkDateDebutSuperieurDateFinRule(Inscription inscription)
             throws BusinessRuleException {
-        log.fine("checkDateDebutSuperieurDateFinRule()");
+        log.debug("checkDateDebutSuperieurDateFinRule()");
 
         if (inscription.getDateDebut() != null && inscription.getDateFin() != null) {
             if (inscription.getDateFin().before(inscription.getDateDebut())) {
@@ -211,8 +210,8 @@ public class InscriptionBusinessRuleSet implements BusinessRuleSet {
     }
 
     /**
-     * La période doit être à "fixe" ou "à suivre" dans le cas d'un dossier d'autoexclusion.
-     * 2008-10-17 : même chose pour les aides initiale et immédiate
+     * La pï¿½riode doit ï¿½tre ï¿½ "fixe" ou "ï¿½ suivre" dans le cas d'un dossier d'autoexclusion.
+     * 2008-10-17 : mï¿½me chose pour les aides initiale et immï¿½diate
      * @param subject
      * @param inscription
      * @param dossier 
@@ -220,7 +219,7 @@ public class InscriptionBusinessRuleSet implements BusinessRuleSet {
      */
     private void validerPeriodeInscriptionAutoExclusion(CardexAuthenticationSubject subject, Inscription inscription, Dossier dossier)
             throws BusinessException {
-        log.fine("validerPeriodeInscriptionAutoExclusion()");
+        log.debug("validerPeriodeInscriptionAutoExclusion()");
     	BusinessRuleExceptionHandle businessRuleExceptionHandle = new BusinessRuleExceptionHandle();
 
 		if (inscription.getLien() != 0  && inscription.getLienSite() != 0

@@ -11,9 +11,11 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import oracle.jdbc.OracleTypes;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardex.business.Evaluation;
 import com.lotoquebec.cardex.business.FrequenceVisites;
@@ -29,11 +31,10 @@ import com.lotoquebec.cardexCommun.integration.dao.jdbc.CallStatementHandler;
 import com.lotoquebec.cardexCommun.integration.dao.jdbc.PreparerCallableStatement;
 import com.lotoquebec.cardexCommun.integration.dao.jdbc.RowCallbackHandler;
 import com.lotoquebec.cardexCommun.integration.dao.jdbc.StoreProcTemplate;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 
 /**
- * Liste des appels à la base de données pour différents accès aux
- * évalulation.
+ * Liste des appels ï¿½ la base de donnï¿½es pour diffï¿½rents accï¿½s aux
+ * ï¿½valulation.
  *
  * @author $Author: fguerin $
  * @version $Revision: 1.11 $, $Date: 2002/05/02 13:06:09 $
@@ -47,28 +48,28 @@ public class EvaluationDAO {
    }
 
    private final Logger      log =
-       (Logger)LoggerCardex.getLogger((EvaluationDAO.class));
+       LoggerFactory.getLogger((EvaluationDAO.class));
    
    private Map TYPES_CONSIGNATION = null;
 
 /**
- * Écriture d'une évaluation, appelée par la méthode "insert", "update",
+ * ï¿½criture d'une ï¿½valuation, appelï¿½e par la mï¿½thode "insert", "update",
  * "approbation" ou "delete".
- * Selon le paramètre "action" il peut s'agir d'une insertion ("I")
- * d'une mise à jour ("U"), d'une approbation et modification ("M") ou
+ * Selon le paramï¿½tre "action" il peut s'agir d'une insertion ("I")
+ * d'une mise ï¿½ jour ("U"), d'une approbation et modification ("M") ou
  * d'une suppression ("D").
- * Procédure appelée : CARDEX_LIEN.SP_E_EV_EVALUATION
- * Date de création : (2012-05-31)
- * @author François Guérin
- * @param subject CardexAuthenticationSubject : Données nominatives sur
+ * Procï¿½dure appelï¿½e : CARDEX_LIEN.SP_E_EV_EVALUATION
+ * Date de crï¿½ation : (2012-05-31)
+ * @author Franï¿½ois Guï¿½rin
+ * @param subject CardexAuthenticationSubject : Donnï¿½es nominatives sur
  * l'utilisateur.
- * @param evaluation Evaluation : evaluation saisie à l'écran.
+ * @param evaluation Evaluation : evaluation saisie ï¿½ l'ï¿½cran.
  * @param action  java.lang.String : U ou I
- * @param genreFichier String : code à deux lettres de la table qui lie laconsignation
+ * @param genreFichier String : code ï¿½ deux lettres de la table qui lie laconsignation
  * (Dossier (DO).
- * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
- * rupture de connexion avec la base de données, ou que la table demandée est
- * non disponible, ou qu'un problème est survenu lors de l'exécution d'une
+ * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+ * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e est
+ * non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution d'une
  * "stored procedure".
  * @return Consignation
  */
@@ -115,7 +116,7 @@ public class EvaluationDAO {
 
 			  
 			  //Sauvegarde des mises
-			  // On supprime d'abbords les mises et les sous tables (jeux et fréquence visite)
+			  // On supprime d'abbords les mises et les sous tables (jeux et frï¿½quence visite)
 				StoreProcTemplate suppressionMisesSP = new StoreProcTemplate(subject);
 				PreparerCallableStatement suppressionMisesPCS = new PreparerCallableStatement(){
 					
@@ -193,7 +194,7 @@ public class EvaluationDAO {
 						ajoutJeuSP.query(true);
 					}
 					
-					// Ajout fréquences
+					// Ajout frï¿½quences
 					for (final FrequenceVisitesVO frequenceVisitesVO:miseEvaluationVO.getFrequenceVisites()){
 						StoreProcTemplate ajoutFrequencesSP = new StoreProcTemplate(subject);
 						PreparerCallableStatement ajoutFrequencesPCS = new PreparerCallableStatement(){
@@ -212,10 +213,10 @@ public class EvaluationDAO {
 						ajoutFrequencesSP.query(true);
 					}
 				}
-			  //Sauvegarde des états d'esprit associés
+			  //Sauvegarde des ï¿½tats d'esprit associï¿½s
               Collection etatsChoisis = evaluation.getEtats();
               Iterator itEtats = etatsChoisis.iterator();
-              //On supprime d'abord les états déjà associés
+              //On supprime d'abord les ï¿½tats dï¿½jï¿½ associï¿½s
               callableStatement = connection.prepareCall("begin CARDEX_LIEN.SP_E_LEE_ETAT_EVAL (?,?,?,?,?,?); end;");
               callableStatement.setString(1, "C");
               callableStatement.registerOutParameter(2, java.sql.Types.DECIMAL);
@@ -224,7 +225,7 @@ public class EvaluationDAO {
               OracleDAOUtils.setLong(callableStatement,5, newEvaluation.getSite());
               OracleDAOUtils.setLong(callableStatement,6, 0);
               callableStatement.execute();      
-              //On ajoute ensuite les états choisis si l'action n'est pas une suppression
+              //On ajoute ensuite les ï¿½tats choisis si l'action n'est pas une suppression
               if(!action.equals("D")){
 	              while (itEtats.hasNext()){
 	                  String etat = (String)itEtats.next();
@@ -238,10 +239,10 @@ public class EvaluationDAO {
 	                  callableStatement.execute();
 	              }
               }
-			  //Sauvegarde des propos du client associés
+			  //Sauvegarde des propos du client associï¿½s
               Collection proposChoisis = evaluation.getPropos();
               Iterator itPropos = proposChoisis.iterator();
-              //On supprime d'abord les propos déjà associés
+              //On supprime d'abord les propos dï¿½jï¿½ associï¿½s
               callableStatement = connection.prepareCall("begin CARDEX_LIEN.SP_E_LPE_PROPOS_EVAL (?,?,?,?,?,?); end;");
               callableStatement.setString(1, "C");
               callableStatement.registerOutParameter(2, java.sql.Types.DECIMAL);
@@ -291,15 +292,15 @@ public class EvaluationDAO {
 	}
 
 /**
- * Appel de la méthode editEvaluation pour la création d'une évaluation
- * Date de création : (2012-05-31)
+ * Appel de la mï¿½thode editEvaluation pour la crï¿½ation d'une ï¿½valuation
+ * Date de crï¿½ation : (2012-05-31)
  * @author guerinf
- * @param subject CardexAuthenticationSubject : Données nominatives sur
+ * @param subject CardexAuthenticationSubject : Donnï¿½es nominatives sur
  * l'utilisateur.
- * @param evaluation Evaluation : Evaluation saisie à l'écran.
- * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
- * rupture de connexion avec la base de données, ou que la table demandée est
- * non disponible, ou qu'un problème est survenu lors de l'exécution d'une
+ * @param evaluation Evaluation : Evaluation saisie ï¿½ l'ï¿½cran.
+ * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+ * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e est
+ * non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution d'une
  * "stored procedure".
  * @return Consignation
  */
@@ -308,17 +309,17 @@ public class EvaluationDAO {
 	}
 
 /**
- * Appel de la méthode editEvaluation pour la mise à jour d'une evaluation
- * Date de création : (2012-05-31)
+ * Appel de la mï¿½thode editEvaluation pour la mise ï¿½ jour d'une evaluation
+ * Date de crï¿½ation : (2012-05-31)
  * @author guerinf
- * @param subject CardexAuthenticationSubject : Données nominatives sur
+ * @param subject CardexAuthenticationSubject : Donnï¿½es nominatives sur
  * l'utilisateur.
- * @param consignation Consignation : Consignation saisie à l'écran.
+ * @param consignation Consignation : Consignation saisie ï¿½ l'ï¿½cran.
  * @param genreFichier String : Code identifiant la table source qui lie un
- * consignation à un Dossier.
- * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
- * rupture de connexion avec la base de données, ou que la table demandée est
- * non disponible, ou qu'un problème est survenu lors de l'exécution d'une
+ * consignation ï¿½ un Dossier.
+ * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+ * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e est
+ * non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution d'une
  * "stored procedure".
  */
 	public void update(CardexAuthenticationSubject subject, Evaluation evaluation) throws DAOException {
@@ -327,17 +328,17 @@ public class EvaluationDAO {
 
 
 /**
- * Appel de la méthode editEvaluation pour la suppression d'une evaluation
- * Date de création : (2012-05-31)
+ * Appel de la mï¿½thode editEvaluation pour la suppression d'une evaluation
+ * Date de crï¿½ation : (2012-05-31)
  * @author guerinf
- * @param subject CardexAuthenticationSubject : Données nominatives sur
+ * @param subject CardexAuthenticationSubject : Donnï¿½es nominatives sur
  * l'utilisateur.
- * @param consignation Consignation : Consignation saisie à l'écran.
+ * @param consignation Consignation : Consignation saisie ï¿½ l'ï¿½cran.
  * @param genreFichier String : Code identifiant la table source qui lie un
- * consignation à un Dossier.
- * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
- * rupture de connexion avec la base de données, ou que la table demandée est
- * non disponible, ou qu'un problème est survenu lors de l'exécution d'une
+ * consignation ï¿½ un Dossier.
+ * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+ * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e est
+ * non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution d'une
  * "stored procedure".
  * @return Consignation
  */
@@ -346,23 +347,23 @@ public class EvaluationDAO {
 	}
 
 /**
- * Lecture des consignations associés à une entité Dossier.
- * Procédure appelée : CARDEX_LIRE_LIEN.SP_L_EV_EVALUATION
- * Date de création : (2012-12-31)
+ * Lecture des consignations associï¿½s ï¿½ une entitï¿½ Dossier.
+ * Procï¿½dure appelï¿½e : CARDEX_LIRE_LIEN.SP_L_EV_EVALUATION
+ * Date de crï¿½ation : (2012-12-31)
  * @author guerinf
- * @param subject  CardexAuthenticationSubject : Données nominatives sur
+ * @param subject  CardexAuthenticationSubject : Donnï¿½es nominatives sur
  * l'utilisateur.
- * @param cle long : clé de référence de l'entité
- * @param site long : site de référence de l'entité
- * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
- * rupture de connexion avec la base de données, ou que la table demandée est
- * non disponible, ou qu'un problème est survenu lors de l'exécution d'une
+ * @param cle long : clï¿½ de rï¿½fï¿½rence de l'entitï¿½
+ * @param site long : site de rï¿½fï¿½rence de l'entitï¿½
+ * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+ * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e est
+ * non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution d'une
  * "stored procedure".
- * @return Collection : liste des évaluations associées
+ * @return Collection : liste des ï¿½valuations associï¿½es
  */
 	public Collection findLiensEvaluation(CardexAuthenticationSubject subject,
 			long cle, long site) throws DAOException {
-	  log.fine("findLiensEvaluation()");
+	  log.debug("findLiensEvaluation()");
 	  Connection connection
 			= DAOConnection.getInstance().getConnection(subject);
 	  CallableStatement callableStatement = null;
@@ -439,15 +440,15 @@ public class EvaluationDAO {
    }
 
 /**
- * Routine pour traiter les ResultSet retournés par les recherches de consignation.
- * Date de création : (2002-02-27)
+ * Routine pour traiter les ResultSet retournï¿½s par les recherches de consignation.
+ * Date de crï¿½ation : (2002-02-27)
  * @author Philippe Caron
- * @param resultSet  ResultSet : Données retournées par une recherche.
- * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
- * rupture de connexion avec la base de données, ou que la table demandée est
- * non disponible, ou qu'un problème est survenu lors de l'exécution d'une
+ * @param resultSet  ResultSet : Donnï¿½es retournï¿½es par une recherche.
+ * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+ * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e est
+ * non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution d'une
  * "stored procedure".
- * @return ArrayList : liste des résultats traités.
+ * @return ArrayList : liste des rï¿½sultats traitï¿½s.
  */
 /*    public RowCallbackHandler constuireRowCallBackHandler(final List<Consignation> listDossier){
   	   return new RowCallbackHandler(){
@@ -460,18 +461,18 @@ public class EvaluationDAO {
 */	
  
 /**
- * Recherche directe d'une évaluation par sa clé unique.
- * Procédure appelée : CARDEX_LIRE_LIEN.SP_L2_EV_EVALUATION
- * Date de création : (2012-05-31)
+ * Recherche directe d'une ï¿½valuation par sa clï¿½ unique.
+ * Procï¿½dure appelï¿½e : CARDEX_LIRE_LIEN.SP_L2_EV_EVALUATION
+ * Date de crï¿½ation : (2012-05-31)
  * @author GUERINF
- * @param subject  CardexAuthenticationSubject : Données nominatives sur
+ * @param subject  CardexAuthenticationSubject : Donnï¿½es nominatives sur
  * l'utilisateur.
- * @param criteria Evaluation : Evaluation à rechercher.
- * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
- * rupture de connexion avec la base de données, ou que la table demandée est
- * non disponible, ou qu'un problème est survenu lors de l'exécution d'une
+ * @param criteria Evaluation : Evaluation ï¿½ rechercher.
+ * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+ * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e est
+ * non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution d'une
  * "stored procedure".
- * @return Consignation : Données du dossier trouvé.
+ * @return Consignation : Donnï¿½es du dossier trouvï¿½.
  */
 	public Evaluation find(CardexAuthenticationSubject subject, Evaluation criteria)
 			throws DAOException {
@@ -489,7 +490,7 @@ public class EvaluationDAO {
 		 callableStatement.registerOutParameter(3, OracleTypes.CURSOR);
 		 callableStatement.execute();
 		 resultSet = (ResultSet)callableStatement.getObject(3);
-		 //Traitement du résultat retourné
+		 //Traitement du rï¿½sultat retournï¿½
 		 if (resultSet.next()) {
 			 evaluationVO.setCle(resultSet.getLong("L_EV_CLE"));
 			 evaluationVO.setSite(resultSet.getLong("L_SI_CLE"));
@@ -552,18 +553,18 @@ public class EvaluationDAO {
 	}
 
     /**
-     * Retourne les jeux associés à une évaluation.  La procédure appelée est dans
+     * Retourne les jeux associï¿½s ï¿½ une ï¿½valuation.  La procï¿½dure appelï¿½e est dans
      * OracleJeuDAO.
-     * Date de création : (2002-03-05)
+     * Date de crï¿½ation : (2002-03-05)
      * @author Philippe Caron
-     * @param subject  CardexAuthenticationSubject : Données nominatives sur
+     * @param subject  CardexAuthenticationSubject : Donnï¿½es nominatives sur
      * l'utilisateur.
      * @param dossier Dossier : Dossier de base.
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
-     * @return Collection : Liste des jeux associés.
+     * @return Collection : Liste des jeux associï¿½s.
      */
     public Jeux findLiensJeux(CardexAuthenticationSubject subject,
     		MiseEvaluationVO miseEvaluationVO) throws DAOException {
@@ -572,23 +573,23 @@ public class EvaluationDAO {
     }
 
     /**
-     * Lecture des états d'esprit associés à une évaluation.
-     * Procédure appelée : SPW_L2_LIEN_ETAT_EVAL
-     * Date de création : (2002-03-04)
+     * Lecture des ï¿½tats d'esprit associï¿½s ï¿½ une ï¿½valuation.
+     * Procï¿½dure appelï¿½e : SPW_L2_LIEN_ETAT_EVAL
+     * Date de crï¿½ation : (2002-03-04)
      * @author Philippe Caron
-     * @param subject  CardexAuthenticationSubject : Données nominatives sur
+     * @param subject  CardexAuthenticationSubject : Donnï¿½es nominatives sur
      * l'utilisateur.
-     * @param cle long : Clé de référence du sujet.
-     * @param site long : Site de référence du sujet.
+     * @param cle long : Clï¿½ de rï¿½fï¿½rence du sujet.
+     * @param site long : Site de rï¿½fï¿½rence du sujet.
      * @param genreFichier String : ("DO").
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
-     * @return Liste : Liste des états associés.
+     * @return Liste : Liste des ï¿½tats associï¿½s.
      */
     public List findLiensEtats(CardexAuthenticationSubject subject, Evaluation critere) throws DAOException {
-      log.fine("findLiensEtats()");
+      log.debug("findLiensEtats()");
       Connection connection = DAOConnection.getInstance().getConnection(subject);
 	  CallableStatement callableStatement = null;
 	  ResultSet resultSet = null;
@@ -604,7 +605,7 @@ public class EvaluationDAO {
          List etats = new ArrayList();
          while (resultSet.next()){
               etats.add(String.valueOf(resultSet.getLong("L_EE_CLE")));
-              log.fine("   [Etat ='" + resultSet.getLong("L_EE_CLE")+"']");
+              log.debug("   [Etat ='" + resultSet.getLong("L_EE_CLE")+"']");
          }//while
            return etats;
       }catch (SQLException se) {
@@ -639,23 +640,23 @@ public class EvaluationDAO {
    }
     
     /**
-     * Lecture des propos du client associés à une évaluation.
-     * Procédure appelée : SPW_L2_LIEN_PROPOS_EVAL
-     * Date de création : (2002-03-04)
+     * Lecture des propos du client associï¿½s ï¿½ une ï¿½valuation.
+     * Procï¿½dure appelï¿½e : SPW_L2_LIEN_PROPOS_EVAL
+     * Date de crï¿½ation : (2002-03-04)
      * @author Philippe Caron
-     * @param subject  CardexAuthenticationSubject : Données nominatives sur
+     * @param subject  CardexAuthenticationSubject : Donnï¿½es nominatives sur
      * l'utilisateur.
-     * @param cle long : Clé de référence du sujet.
-     * @param site long : Site de référence du sujet.
+     * @param cle long : Clï¿½ de rï¿½fï¿½rence du sujet.
+     * @param site long : Site de rï¿½fï¿½rence du sujet.
      * @param genreFichier String : ("DO").
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
-     * @return Liste : Liste des états associés.
+     * @return Liste : Liste des ï¿½tats associï¿½s.
      */
     public List findLiensPropos(CardexAuthenticationSubject subject, Evaluation critere) throws DAOException {
-      log.fine("findLiensPropos()");
+      log.debug("findLiensPropos()");
       Connection connection = DAOConnection.getInstance().getConnection(subject);
 	  CallableStatement callableStatement = null;
 	  ResultSet resultSet = null;
@@ -671,7 +672,7 @@ public class EvaluationDAO {
          List propos = new ArrayList();
          while (resultSet.next()){
         	 propos.add(String.valueOf(resultSet.getLong("L_PE_CLE")));
-              log.fine("   [Etat ='" + resultSet.getLong("L_PE_CLE")+"']");
+              log.debug("   [Etat ='" + resultSet.getLong("L_PE_CLE")+"']");
          }//while
            return propos;
       }catch (SQLException se) {
@@ -706,23 +707,23 @@ public class EvaluationDAO {
    }
 
     /**
-     * Lecture des fréquences de visites du client associés à une évaluation.
-     * Procédure appelée : SPW_L_LIEN_VISITE_EVAL
-     * Date de création : (2002-03-04)
+     * Lecture des frï¿½quences de visites du client associï¿½s ï¿½ une ï¿½valuation.
+     * Procï¿½dure appelï¿½e : SPW_L_LIEN_VISITE_EVAL
+     * Date de crï¿½ation : (2002-03-04)
      * @author Philippe Caron
-     * @param subject  CardexAuthenticationSubject : Données nominatives sur
+     * @param subject  CardexAuthenticationSubject : Donnï¿½es nominatives sur
      * l'utilisateur.
-     * @param cle long : Clé de référence du sujet.
-     * @param site long : Site de référence du sujet.
+     * @param cle long : Clï¿½ de rï¿½fï¿½rence du sujet.
+     * @param site long : Site de rï¿½fï¿½rence du sujet.
      * @param genreFichier String : ("DO").
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
-     * @return Liste : Liste des états associés.
+     * @return Liste : Liste des ï¿½tats associï¿½s.
      */
     public List<FrequenceVisites> findLiensFrequenceVisites(CardexAuthenticationSubject subject, MiseEvaluationVO miseEvaluationVO) throws DAOException {
-      log.fine("findLiensFrequenceVisites()");
+      log.debug("findLiensFrequenceVisites()");
       Connection connection = DAOConnection.getInstance().getConnection(subject);
 	  CallableStatement callableStatement = null;
 	  ResultSet resultSet = null;

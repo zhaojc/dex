@@ -3,12 +3,13 @@ package com.lotoquebec.cardexCommun.securite;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardexCommun.GlobalConstants;
 import com.lotoquebec.cardexCommun.exception.DAOException;
 import com.lotoquebec.cardexCommun.integration.dao.SecuriteDAO;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.util.ApplicationUtil;
 import com.lotoquebec.cardexCommun.util.StringUtils;
 import com.lotoquebec.cardexCommun.util.ViderCacheUtil;
@@ -24,7 +25,7 @@ public class RolesCacheSecuriteCache {
 	// Cle: classeVOMethode | Valeur: RoleCache
 	private static Map<String, RoleCache> voRole = null;
 	private static Map<String, RoleCache> mapRole = null;
-	private static final Logger log = (Logger)LoggerCardex.getLogger((RolesCacheSecuriteCache.class));
+	private static final Logger log = LoggerFactory.getLogger((RolesCacheSecuriteCache.class));
 	
 	private RolesCacheSecuriteCache() {
 	}

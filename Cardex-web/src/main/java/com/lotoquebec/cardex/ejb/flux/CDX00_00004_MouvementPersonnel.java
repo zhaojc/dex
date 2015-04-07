@@ -7,7 +7,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import java.util.logging.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardex.business.Dossier;
 import com.lotoquebec.cardex.business.Sujet;
@@ -27,7 +29,6 @@ import com.lotoquebec.cardexCommun.exception.BusinessException;
 import com.lotoquebec.cardexCommun.exception.BusinessResourceException;
 import com.lotoquebec.cardexCommun.exception.DAOException;
 import com.lotoquebec.cardexCommun.integration.dao.DAOConnection;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.util.CourrielAction;
 import com.lotoquebec.cardexCommun.util.MessageDuCourriel;
 import com.lotoquebec.cardexCommun.util.StringUtils;
@@ -39,7 +40,7 @@ import com.lotoquebec.cardexCommun.util.StringUtils;
  */
 public class CDX00_00004_MouvementPersonnel implements Flux{
 
-	private final static Logger log = (Logger)LoggerCardex.getLogger(CDX00_00004_MouvementPersonnel.class);
+	private final static Logger log = LoggerFactory.getLogger(CDX00_00004_MouvementPersonnel.class);
 	private CardexAuthenticationSubject subject = null;
 	private DossierDAO dossierDAO = null;
 	private MouvementsDAO mouvementsDAO = null;
@@ -52,19 +53,19 @@ public class CDX00_00004_MouvementPersonnel implements Flux{
 	}
 	
 	public void execute() throws Exception {
-		log.fine("Entr�e flux CDX00_00004");
+		log.info("Entr�e flux CDX00_00004");
 
 		init();
 		
 		subject = AutentificationCardex.construireCardexAuthenticationSubjectSystem();
 		
-		log.fine("Obtenir nouveau mouvement de personnel");
+		log.info("Obtenir nouveau mouvement de personnel");
 		List<MouvementVO> nouveauxMouvements = mouvementsDAO.obtenirListeMouvement60joursNonTraite(subject);
 		
-		log.fine("Traitement nouveaux mouvements");
+		log.info("Traitement nouveaux mouvements");
 		traitementNouveauxMouvements(nouveauxMouvements);
 		
-		log.fine("Envoie courriel de fin de traitement");
+		log.info("Envoie courriel de fin de traitement");
 		Connection connection = null; 
 		try {
 			connection = DAOConnection.getInstance().getConnection(subject);
@@ -75,7 +76,7 @@ public class CDX00_00004_MouvementPersonnel implements Flux{
 			connection = null;
 		}		
 		
-		log.fine("Fin flux CDX00_00004");
+		log.info("Fin flux CDX00_00004");
 	}
 
 	public void traitementNouveauxMouvements(List<MouvementVO> nouveauxMouvements) throws DAOException, BusinessResourceException, BusinessException, SQLException{
@@ -88,7 +89,7 @@ public class CDX00_00004_MouvementPersonnel implements Flux{
 				connection.setAutoCommit(false);
 
 				MouvementVO mouvementVO = iter.next();
-				log.fine("Traitement du sujet "+mouvementVO.getNumeroClientEmploye());
+				log.info("Traitement du sujet "+mouvementVO.getNumeroClientEmploye());
 				SujetMouvementVO sujetMouvementVO = obtenirSujet(mouvementVO, connection);
 				  
 				if(GlobalConstants.Mouvements.Embauche.equals(mouvementVO.getTypeMouvement())){
@@ -101,7 +102,7 @@ public class CDX00_00004_MouvementPersonnel implements Flux{
 					  conge(sujetMouvementVO, connection);
 				}
 				
-				log.fine("Ajouter nouveau mouvement trait�");
+				log.info("Ajouter nouveau mouvement trait�");
 				mouvementsDAO.insert(mouvementVO, connection);
 				
 				connection.commit();
@@ -131,13 +132,13 @@ public class CDX00_00004_MouvementPersonnel implements Flux{
 	 */
     private void conge(SujetMouvementVO sujetMouvementVO, Connection connection) throws DAOException {
 		MouvementVO mouvementVO = sujetMouvementVO.getMouvementVO();
-		log.fine("Cong� "+sujetMouvementVO.getMouvementVO().getNumeroClientEmploye());
+		log.info("Cong� "+sujetMouvementVO.getMouvementVO().getNumeroClientEmploye());
 		 
 		if (sujetMouvementVO.isRienTrouve() == false){
 			
 			//Si un seul sujet est trouv�, on inscrit le mouvement.
 			if (sujetMouvementVO.getListeSujetVO().size() == 1){
-				log.fine("Un seul sujet trouv�");
+				log.info("Un seul sujet trouv�");
 				Sujet sujet = sujetMouvementVO.getSujetConcerne();
 				//On modifie la fiche du sujet dans le cas des employ�s � temps complet (temporaire ou non)
 				
@@ -167,14 +168,14 @@ public class CDX00_00004_MouvementPersonnel implements Flux{
 			
 				if (sujetMouvementVO.isTrouveMatricule()){
 					//Plus d'un sujet trouv� avec un num�ro identique.
-				log.fine("Il existe plus d'un enregistrement pour le num�ro : "+sujetMouvementVO.getMouvementVO().getNumeroClientEmploye()+" - nombre trouv� "+sujetMouvementVO.getListeSujetVO().size());
+				log.info("Il existe plus d'un enregistrement pour le num�ro : "+sujetMouvementVO.getMouvementVO().getNumeroClientEmploye()+" - nombre trouv� "+sujetMouvementVO.getListeSujetVO().size());
 				//On demande une v�rification aux personnes concern�es
 					envoyerCourrielDestinataire(subject, connection, sujetMouvementVO, GlobalConstants.TypesIntervention.NoDoubleDepart, sujetMouvementVO.getMouvementVO().getCodeSite());
 					envoyerCourrielDestinataire(subject, connection, sujetMouvementVO, GlobalConstants.TypesIntervention.Conge, sujetMouvementVO.getMouvementVO().getCodeSite());
 				}else{
 					if (sujetMouvementVO.isTrouveNomPrenomDateNaissance()){
 						//Plus d'un sujet trouv�.
-						log.fine("Il existe plus d'un enregistrement pour : " + sujetMouvementVO.getMouvementVO().getNom() + ", " + sujetMouvementVO.getMouvementVO().getPrenom() + ",  " + sujetMouvementVO.getMouvementVO().getDateNaissance().toString().substring(0,11) + " : " + sujetMouvementVO.getListeSujetVO().size());
+						log.info("Il existe plus d'un enregistrement pour : " + sujetMouvementVO.getMouvementVO().getNom() + ", " + sujetMouvementVO.getMouvementVO().getPrenom() + ",  " + sujetMouvementVO.getMouvementVO().getDateNaissance().toString().substring(0,11) + " : " + sujetMouvementVO.getListeSujetVO().size());
 						//On demande une v�rification aux personnes concern�es
 		 	        	envoyerCourrielDestinataire(subject, connection, sujetMouvementVO, GlobalConstants.TypesIntervention.SujetDoubleDepart, sujetMouvementVO.getMouvementVO().getCodeSite());
 		 	        	envoyerCourrielDestinataire(subject, connection, sujetMouvementVO, GlobalConstants.TypesIntervention.Conge, sujetMouvementVO.getMouvementVO().getCodeSite());
@@ -182,7 +183,7 @@ public class CDX00_00004_MouvementPersonnel implements Flux{
 				}
 			}
 		}else{//Aucun r�sultat. On avise simplement qu'il y a eu d�part.
-			log.fine("Aucun sujet trouv�");
+			log.info("Aucun sujet trouv�");
 			envoyerCourrielDestinataire(subject, connection, sujetMouvementVO, GlobalConstants.TypesIntervention.Conge, sujetMouvementVO.getMouvementVO().getCodeSite());
 		}    	 
     }
@@ -206,13 +207,13 @@ public class CDX00_00004_MouvementPersonnel implements Flux{
      */
      public void depart(SujetMouvementVO sujetMouvementVO, Connection connection) throws DAOException, BusinessResourceException, BusinessException {
     	 MouvementVO mouvementVO = sujetMouvementVO.getMouvementVO();
-    	 log.fine("D�part "+sujetMouvementVO.getMouvementVO().getNumeroClientEmploye());
+    	 log.info("Départ "+sujetMouvementVO.getMouvementVO().getNumeroClientEmploye());
     	 
      	 if (sujetMouvementVO.isRienTrouve() == false){
      		
      		//Si un seul sujet est trouv�, on inscrit le mouvement.
      		if (sujetMouvementVO.getListeSujetVO().size() == 1){
-     			log.fine("Un seul sujet trouv�");
+     			log.info("Un seul sujet trouv�");
      			Sujet sujet = sujetMouvementVO.getSujetConcerne();
      			//On modifie la fiche du sujet dans le cas des employ�s � temps complet (temporaire ou non)
      			
@@ -242,14 +243,14 @@ public class CDX00_00004_MouvementPersonnel implements Flux{
      			
      			if (sujetMouvementVO.isTrouveMatricule()){
      				//Plus d'un sujet trouv� avec un num�ro identique.
-     	        	log.fine("Il existe plus d'un enregistrement pour le num�ro : "+sujetMouvementVO.getMouvementVO().getNumeroClientEmploye()+" - nombre trouv� "+sujetMouvementVO.getListeSujetVO().size());
+     	        	log.info("Il existe plus d'un enregistrement pour le num�ro : "+sujetMouvementVO.getMouvementVO().getNumeroClientEmploye()+" - nombre trouv� "+sujetMouvementVO.getListeSujetVO().size());
      	     		//On demande une v�rification aux personnes concern�es
      	        	envoyerCourrielDestinataire(subject, connection, sujetMouvementVO, GlobalConstants.TypesIntervention.NoDoubleDepart, sujetMouvementVO.getMouvementVO().getCodeSite());
      	        	envoyerCourrielDestinataire(subject, connection, sujetMouvementVO, GlobalConstants.TypesIntervention.Depart, sujetMouvementVO.getMouvementVO().getCodeSite());
      			}else{
      				if (sujetMouvementVO.isTrouveNomPrenomDateNaissance()){
      					//Plus d'un sujet trouv�.
-     		         	log.fine("Il existe plus d'un enregistrement pour : " + sujetMouvementVO.getMouvementVO().getNom() + ", " + sujetMouvementVO.getMouvementVO().getPrenom() + ",  " + sujetMouvementVO.getMouvementVO().getDateNaissance().toString().substring(0,11) + " : " + sujetMouvementVO.getListeSujetVO().size());
+     		         	log.info("Il existe plus d'un enregistrement pour : " + sujetMouvementVO.getMouvementVO().getNom() + ", " + sujetMouvementVO.getMouvementVO().getPrenom() + ",  " + sujetMouvementVO.getMouvementVO().getDateNaissance().toString().substring(0,11) + " : " + sujetMouvementVO.getListeSujetVO().size());
      	         		//On demande une v�rification aux personnes concern�es
          	        	envoyerCourrielDestinataire(subject, connection, sujetMouvementVO, GlobalConstants.TypesIntervention.SujetDoubleDepart, sujetMouvementVO.getMouvementVO().getCodeSite());
          	        	envoyerCourrielDestinataire(subject, connection, sujetMouvementVO, GlobalConstants.TypesIntervention.Depart, sujetMouvementVO.getMouvementVO().getCodeSite());
@@ -257,7 +258,7 @@ public class CDX00_00004_MouvementPersonnel implements Flux{
      			}
      		}
      	 }else{//Aucun r�sultat. On avise simplement qu'il y a eu d�part.
-     		 log.fine("Aucun sujet trouv�");
+     		 log.info("Aucun sujet trouv�");
      		 envoyerCourrielDestinataire(subject, connection, sujetMouvementVO, GlobalConstants.TypesIntervention.Depart, sujetMouvementVO.getMouvementVO().getCodeSite());
      	 }    	 
      }
@@ -307,13 +308,13 @@ public class CDX00_00004_MouvementPersonnel implements Flux{
 	 * @throws BusinessException
 	 */
 	private void embauche(SujetMouvementVO sujetMouvementVO, Connection connection) throws DAOException, BusinessResourceException, BusinessException {
-     	log.fine("Embauche "+sujetMouvementVO.getMouvementVO().getNumeroClientEmploye());
+     	log.info("Embauche "+sujetMouvementVO.getMouvementVO().getNumeroClientEmploye());
 	 	
      	if (sujetMouvementVO.isRienTrouve() == false){
      		
      		//Si un seul sujet est trouv�, on inscrit le mouvement.
      		if (sujetMouvementVO.getListeSujetVO().size() == 1){
-     			log.fine("Un seul sujet trouv�");
+     			log.info("Un seul sujet trouv�");
      			ecrireDossier(sujetMouvementVO, connection);
      			envoyerCourrielDestinataire(subject, connection, sujetMouvementVO, GlobalConstants.TypesIntervention.Embauche, sujetMouvementVO.getMouvementVO().getCodeSite());
 
@@ -324,14 +325,14 @@ public class CDX00_00004_MouvementPersonnel implements Flux{
      			
      			if (sujetMouvementVO.isTrouveMatricule()){
      				//Plus d'un sujet trouv� avec un num�ro identique.
-     	        	log.fine("Il existe plus d'un enregistrement pour le num�ro : "+sujetMouvementVO.getMouvementVO().getNumeroClientEmploye()+" - nombre trouv� "+sujetMouvementVO.getListeSujetVO().size());
+     	        	log.info("Il existe plus d'un enregistrement pour le num�ro : "+sujetMouvementVO.getMouvementVO().getNumeroClientEmploye()+" - nombre trouv� "+sujetMouvementVO.getListeSujetVO().size());
      	     		//On demande une v�rification aux personnes concern�es
      	        	envoyerCourrielDestinataire(subject, connection, sujetMouvementVO, GlobalConstants.TypesIntervention.NoDoubleDepart, sujetMouvementVO.getMouvementVO().getCodeSite());
      	        	envoyerCourrielDestinataire(subject, connection, sujetMouvementVO, GlobalConstants.TypesIntervention.Embauche, sujetMouvementVO.getMouvementVO().getCodeSite());
      			}else{
      				if (sujetMouvementVO.isTrouveNomPrenomDateNaissance()){
      					//Plus d'un sujet trouv�.
-     		         	log.fine("Il existe plus d'un enregistrement pour : " + sujetMouvementVO.getMouvementVO().getNom() + ", " + sujetMouvementVO.getMouvementVO().getPrenom() + ",  " + sujetMouvementVO.getMouvementVO().getDateNaissance().toString().substring(0,11) + " : " + sujetMouvementVO.getListeSujetVO().size());
+     		         	log.info("Il existe plus d'un enregistrement pour : " + sujetMouvementVO.getMouvementVO().getNom() + ", " + sujetMouvementVO.getMouvementVO().getPrenom() + ",  " + sujetMouvementVO.getMouvementVO().getDateNaissance().toString().substring(0,11) + " : " + sujetMouvementVO.getListeSujetVO().size());
      	         		//On demande une v�rification aux personnes concern�es
          	        	envoyerCourrielDestinataire(subject, connection, sujetMouvementVO, GlobalConstants.TypesIntervention.SujetDouble, sujetMouvementVO.getMouvementVO().getCodeSite());
          	        	envoyerCourrielDestinataire(subject, connection, sujetMouvementVO, GlobalConstants.TypesIntervention.Embauche, sujetMouvementVO.getMouvementVO().getCodeSite());
@@ -339,7 +340,7 @@ public class CDX00_00004_MouvementPersonnel implements Flux{
      			}
      		}
      	}else{
-     		log.fine("Aucun sujet trouv�");
+     		log.info("Aucun sujet trouv�");
      		Sujet sujet = new SujetVO();
      		sujet.setSite( 30 );
      		sujet.setPrenom(sujetMouvementVO.getMouvementVO().getPrenom());
@@ -361,7 +362,7 @@ public class CDX00_00004_MouvementPersonnel implements Flux{
 	}
 	
     private void creerSujet(Sujet sujetVO, Connection connection) throws DAOException{
- 		log.fine("Cr�ation d'un sujet pour " + sujetVO.getNom() + ", " + sujetVO.getPrenom() + ",  " + sujetVO.getDateNaissance().toString().substring(0,11) );
+ 		log.info("Cr�ation d'un sujet pour " + sujetVO.getNom() + ", " + sujetVO.getPrenom() + ",  " + sujetVO.getDateNaissance().toString().substring(0,11) );
 		Sujet sujetVONouveau = sujetDAO.insert(sujetVO, connection);
 		sujetVO.setCle(sujetVONouveau.getCle());
 		sujetVO.setSite(sujetVONouveau.getSite());
@@ -463,7 +464,7 @@ public class CDX00_00004_MouvementPersonnel implements Flux{
 	    //On commence la recherche par le num�ro d'employ� pour traiter les cas d'erreur
 		//de date d'embauche.		
 		if (StringUtils.isNotEmpty(mouvementVO.getNumeroClientEmploye())){
-			log.fine("Recherche sujet par num�ro : "+mouvementVO.getNumeroClientEmploye());
+			log.info("Recherche sujet par num�ro : "+mouvementVO.getNumeroClientEmploye());
 			listeSujetVO = sujetDAO.rechercheSujet(mouvementVO.getNumeroClientEmploye(), connection);
 			
 			if (listeSujetVO.size() > 0)
@@ -473,7 +474,7 @@ public class CDX00_00004_MouvementPersonnel implements Flux{
 		if (sujetMouvementVO.isTrouveMatricule() == false){
          	//Aucun r�sultat en recherchant avec le num�ro d'employ�. On essaie donc
          	//avec le nom, pr�nom et date de naissance.
-			log.fine("Num�ro sujet non trouv� par matricule, recherche par pr�nom, nom et date de naissance.");
+			log.info("Num�ro sujet non trouv� par matricule, recherche par pr�nom, nom et date de naissance.");
 			listeSujetVO = sujetDAO.rechercheSujet(mouvementVO.getPrenom(), mouvementVO.getNom(), mouvementVO.getDateNaissance(), connection);
         
 			if (listeSujetVO.size() > 0)

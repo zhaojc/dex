@@ -3,7 +3,6 @@
 package com.lotoquebec.cardex.presentation.controller.rapport;
 
 import java.io.IOException;
-import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -12,11 +11,12 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardex.presentation.model.form.rapport.CriteresRapportForm;
 import com.lotoquebec.cardexCommun.GlobalConstants;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
-import com.lotoquebec.cardexCommun.log.LoggerCardex;
 import com.lotoquebec.cardexCommun.presentation.util.AbstractAction;
 
 
@@ -26,7 +26,7 @@ public class RapportAction extends AbstractAction {
      * L'instance du gestionnaire de journalisation.
      */
 	private final Logger      log =
-        (Logger)LoggerCardex.getLogger((this.getClass()));
+        LoggerFactory.getLogger((this.getClass()));
 
    
     public ActionForward defaut(CardexAuthenticationSubject subject,
@@ -35,7 +35,7 @@ public class RapportAction extends AbstractAction {
     HttpServletRequest request,
     HttpServletResponse response) throws IOException,
     ServletException {
-        log.fine("Entré dans un choix de rapport");
+        log.debug("Entrï¿½ dans un choix de rapport");
         
         if (form != null){
 	        CriteresRapportForm rapportForm = (CriteresRapportForm) form;
@@ -50,7 +50,7 @@ public class RapportAction extends AbstractAction {
     HttpServletRequest request,
     HttpServletResponse response) throws IOException,
     ServletException {
-		log.fine("Imprimer");
+		log.debug("Imprimer");
 		CriteresRapportForm rapportForm = (CriteresRapportForm) form;
 		rapportForm.setLancerRapport(true);
 		rapportForm.setTypeSortieServlet(GlobalConstants.TypeSortieServlet.PDF);
@@ -64,7 +64,7 @@ public class RapportAction extends AbstractAction {
     HttpServletRequest request,
     HttpServletResponse response) throws IOException,
     ServletException {
-		log.fine("Imprimer Excel");
+		log.debug("Imprimer Excel");
 		CriteresRapportForm rapportForm = (CriteresRapportForm) form;
 		rapportForm.setLancerRapport(true);
 		rapportForm.setTypeSortieServlet(GlobalConstants.TypeSortieServlet.EXCEL);
