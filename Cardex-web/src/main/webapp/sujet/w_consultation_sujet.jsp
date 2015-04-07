@@ -166,7 +166,7 @@ function doAuditAcces() {
 //Impression de l'audit des accès
 	   var rapport = "<%= RapportsConfiguration.AUDIT_ACCES_SUJETS %>";
 	   var url = "<%=request.getContextPath()%>/AffichagePDFListes?RAPPORT=" + rapport; 
-	   alert(url);  
+	   //alert(url);  
 	   window.open(url, 'rapport', 'left=0,top=0,width=' + document.body.clientWidth + ',height=' + document.body.clientHeight + ',menubar=no,toolbar=no,resizable=yes');
 }
 
