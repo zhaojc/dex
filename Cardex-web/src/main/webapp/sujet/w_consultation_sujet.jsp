@@ -171,7 +171,7 @@ function doAuditAcces() {
 }
 
 function doAuditChangement() {
-	   var rapport = "<%= GlobalConstants.ChoixRapport.AUDIT_CHANGEMENTS_SUJETS %>";
+	   var rapport = "<%= RapportsConfiguration.AUDIT_CHANGEMENTS_SUJETS %>";
 	   var userCardex = '<bean:write name="<%= AuthenticationSubject.class.getName() %>" property="user.code" />';
 	   var url = "<%=request.getContextPath()%>/AffichagePDFAudits?RAPPORT=" + rapport + "&UTILISATEUR=" + userCardex; 
 	   //alert(url);  
@@ -186,7 +186,6 @@ function doConfidentialite8(){
 }
 
 </SCRIPT>
-
 
 <TITLE><bean:message key='gb_sujet'/></TITLE>
 

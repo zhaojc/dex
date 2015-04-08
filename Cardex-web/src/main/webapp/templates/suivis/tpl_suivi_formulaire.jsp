@@ -128,7 +128,7 @@ function doAfficherDatePrevue(JoursAjoute) {
 }
 
 function doAuditChangement() {
-	   var rapport = "<%= GlobalConstants.ChoixRapport.AUDIT_CHANGEMENTS_SUIVIS %>";
+	   var rapport = "<%= RapportsConfiguration.AUDIT_CHANGEMENTS_SUIVIS %>";
 	   var userCardex = '<bean:write name="<%= AuthenticationSubject.class.getName() %>" property="user.code" />';
 	   var url = "<%=request.getContextPath()%>/AffichagePDFAudits?RAPPORT=" + rapport + "&UTILISATEUR=" + userCardex; 
 	   //alert(url);  
