@@ -16,7 +16,7 @@
 	<!-- 3.Remplacer par le nom court de votre application -->
 	<name>Cardex</name>
 	<!-- 4. Remplacer par un descriptif court de votre application -->
-	<description>Application de reference Maven</description>
+	<description>Système de suivi de dossiers pour le personnel de la sécurité de Loto-Québec et de ses filiales. Ce système gère les autoexclusions des joueurs et les enquêtes de sécurité pour tout le personnel de la société.</description>
 	<organization>
 		<name>Loto Quebec</name>
 		<url>http://www.lotoquebec.com/</url>
