@@ -1915,7 +1915,7 @@ public class SocieteAction extends AbstractAction {
     		ListeCache cache = ListeCache.getInstance();
 			String siteDescription = cache.obtenirLabel(subject, String.valueOf(utilisateur.getSite()), new TableValeurCleSQLListeCache(subject, GlobalConstants.TableValeur.SITE, utilisateur.getEntite(), GlobalConstants.ActionSecurite.SELECTION));
     		String nomRapport = chemin+"Soci�t�s � �purer "+ siteDescription + " (" + dateRapport+").pdf";
-    		InputStream gabarit = getClass().getClassLoader().getResourceAsStream("rapports/" + RapportsConfiguration.RAPPORT_EPURATION_SOCIETES);
+    		InputStream gabarit = getClass().getClassLoader().getResourceAsStream(RapportsConfiguration.RAPPORT_EPURATION_SOCIETES);
 			log.fine("Sauvegarder soci�t�s � �purer");
 			long site = utilisateur.getSite();
 			resultSet = rapportDelegate.rapportEpuration(site, connection, "CARDEX_RAPPORT.SP_RAP_SO_EPURATION");

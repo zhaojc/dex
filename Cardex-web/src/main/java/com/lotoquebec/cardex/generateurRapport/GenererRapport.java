@@ -35,7 +35,7 @@ public abstract class GenererRapport {
 	protected abstract void validerSecurite(CardexAuthenticationSubject subject);
 	
 	/**
-	 * Cette m�thode retourne le stream du .jasper
+	 * Cette m�thode retourne le stream du .jrxml
 	 * @return
 	 */
 	protected abstract InputStream obtenirGabarit();

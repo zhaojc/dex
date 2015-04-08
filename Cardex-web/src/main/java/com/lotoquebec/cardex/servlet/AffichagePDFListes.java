@@ -1,6 +1,7 @@
 package com.lotoquebec.cardex.servlet;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
@@ -23,14 +24,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.jasperreports.engine.JRAbstractExporter;
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRExporter;
 import net.sf.jasperreports.engine.JRExporterParameter;
+import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRMapCollectionDataSource;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
+import net.sf.jasperreports.export.SimpleExporterInput;
+import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 import net.sf.jasperreports.j2ee.servlets.ImageServlet;
 
 import org.apache.commons.beanutils.BeanUtils;
@@ -39,11 +45,9 @@ import org.apache.struts.action.ActionErrors;
 import com.lotoquebec.cardex.business.Acces;
 import com.lotoquebec.cardex.business.ConsignationActionPSU;
 import com.lotoquebec.cardex.business.Photo;
-import com.lotoquebec.cardex.business.Sujet;
 import com.lotoquebec.cardex.business.delegate.AccesBusinessDelegate;
 import com.lotoquebec.cardex.business.delegate.PSUMandatBusinessDelegate;
 import com.lotoquebec.cardex.business.delegate.PhotoBusinessDelegate;
-import com.lotoquebec.cardex.business.delegate.SujetBusinessDelegate;
 import com.lotoquebec.cardex.business.vo.CriteresRechercheDossierVO;
 import com.lotoquebec.cardex.business.vo.DossierVO;
 import com.lotoquebec.cardex.business.vo.FichierMultimediaVO;
@@ -51,6 +55,7 @@ import com.lotoquebec.cardex.business.vo.PhotoVO;
 import com.lotoquebec.cardex.business.vo.SocieteVO;
 import com.lotoquebec.cardex.business.vo.SujetVO;
 import com.lotoquebec.cardex.business.vo.VehiculeVO;
+import com.lotoquebec.cardex.generateurRapport.rapports.RapportsConfiguration;
 import com.lotoquebec.cardex.presentation.model.form.AccesForm;
 import com.lotoquebec.cardex.presentation.model.form.ConsignationActionPSUForm;
 import com.lotoquebec.cardex.presentation.model.form.ConsignationForm;
@@ -75,6 +80,7 @@ import com.lotoquebec.cardex.presentation.model.form.VehiculeForm;
 import com.lotoquebec.cardex.presentation.rapport.RapportAssociation;
 import com.lotoquebec.cardex.presentation.util.ValueObjectMapper;
 import com.lotoquebec.cardex.securite.GestionnaireSecuriteCardex;
+import com.lotoquebec.cardex.util.RapportUtils;
 import com.lotoquebec.cardexCommun.GlobalConstants;
 import com.lotoquebec.cardexCommun.authentication.AuthenticationSubject;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
@@ -91,8 +97,8 @@ import com.lotoquebec.cardexCommun.util.ListeCache;
 import com.lotoquebec.cardexCommun.util.StringUtils;
 
 /**
- * Ce servlet sert à afficher les rapports Jasper en format PDF à l'écran.
- * Il sert aux listes de résultats de recherche ou dans les onglets.
+ * Ce servlet sert ï¿½ afficher les rapports Jasper en format PDF ï¿½ l'ï¿½cran.
+ * Il sert aux listes de rï¿½sultats de recherche ou dans les onglets.
  * Le code repose sur le concept AJAX (Asynchronous JavaScript and XML) et sur les librairies Jasper.
  * @date : mars 2012
  */
@@ -112,7 +118,7 @@ public class AffichagePDFListes extends HttpServlet {
         Map parameters = new HashMap();
         List liste = new ArrayList();
         ServletOutputStream servletOutputStream = response.getOutputStream();
-        JasperPrint print = new JasperPrint();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
         Connection connection = null;
         try {
             connection = DAOConnection.getInstance().getConnection();
@@ -121,38 +127,34 @@ public class AffichagePDFListes extends HttpServlet {
            	GestionnaireSecuriteCardex.validerSecuriteURL((CardexAuthenticationSubject) subject, request.getServletPath());
         	String choixRapport = (String)request.getParameter("RAPPORT");
            	String roleAdhoc = RapportAssociation.getRoleAdhoc(choixRapport);
-           	InputStream gabarit = null;
+           	
            	if (StringUtils.isNotEmpty(roleAdhoc)){
            		GestionnaireSecuriteCardex.validerSecuriteAdhoc(subject, roleAdhoc);
            	}
 
 	         ServletContext context = request.getSession().getServletContext();  
-	         //On inscrit les paramètres des rapports
+	         //On inscrit les paramï¿½tres des rapports
 	         parameters.put("UTILISATEUR",subject.getPrincipal().getName());
 	       //On utilise des listes pour ces rapports.
         	if (GlobalConstants.ChoixImpressionListe.IMPRIMER_PAGE_RESULTATS.equals( choixRapport )){
-               	choixRapport = "rapports/" + GlobalConstants.ChoixRapport.RESULTATS_RECHERCHE_DOSSIERS;
-    			gabarit = getClass().getClassLoader().getResourceAsStream(choixRapport);
      		    CriteresRechercheDossierForm criteresRechercheDossierForm = (CriteresRechercheDossierForm) request.getSession().getAttribute("rechercheDossier");
         	    
      		    ListeResultat listeResultat = criteresRechercheDossierForm.getListeResultat();
      			Iterator iter = listeResultat.getResultatAffichage().iterator();
     		    liste = remplirResultatDossiers(iter);
-    		    //Recherche de la nature pour l'afficher dans l'entête du rapport.
+    		    //Recherche de la nature pour l'afficher dans l'entï¿½te du rapport.
     		    if(StringUtils.isNotEmpty(criteresRechercheDossierForm.getNature())){
         		    ListeCache cache = ListeCache.getInstance();
         		    parameters.put("NATURE",cache.obtenirLabel(subject, criteresRechercheDossierForm.getNature(), new NatureCleMultiListeCache(subject, criteresRechercheDossierForm.getGenre())));	  
     		    }
         	}
         	if (GlobalConstants.ChoixImpressionListe.IMPRIMER_TOUTES_PAGES_RESULTATS.equals( choixRapport )){
-        		//On utilise le même rapport que pour l'impression de la page courante
-               	choixRapport = "rapports/" + GlobalConstants.ChoixRapport.RESULTATS_RECHERCHE_DOSSIERS;
-    			gabarit = getClass().getClassLoader().getResourceAsStream(choixRapport);
+        		//On utilise le mï¿½me rapport que pour l'impression de la page courante
      		    CriteresRechercheDossierForm criteresRechercheDossierForm = (CriteresRechercheDossierForm) request.getSession().getAttribute("rechercheDossier");
      		    ListeResultat listeResultat = criteresRechercheDossierForm.getListeResultat();
      			Iterator iter = listeResultat.getResultatComplet().iterator();
     		    liste = remplirResultatDossiers(iter);
-    		    //Recherche de la nature pour l'afficher dans l'entête du rapport.
+    		    //Recherche de la nature pour l'afficher dans l'entï¿½te du rapport.
     		    if(StringUtils.isNotEmpty(criteresRechercheDossierForm.getNature())){
         		    ListeCache cache = ListeCache.getInstance();
         		    parameters.put("NATURE",cache.obtenirLabel(subject, criteresRechercheDossierForm.getNature(), new NatureCleMultiListeCache(subject, criteresRechercheDossierForm.getGenre())));	  
@@ -160,8 +162,6 @@ public class AffichagePDFListes extends HttpServlet {
 
         	}
         	if (GlobalConstants.ChoixRapport.RESULTATS_RECHERCHE_SUJETS.equals( choixRapport )){
-               	choixRapport = "rapports/" + GlobalConstants.ChoixRapport.RESULTATS_RECHERCHE_SUJETS;
-    			gabarit = getClass().getClassLoader().getResourceAsStream(choixRapport);
      		    CriteresRechercheSujetForm criteresRechercheSujetForm = (CriteresRechercheSujetForm) request.getSession().getAttribute("rechercheSujet");
      		    ListeResultat listeResultat = criteresRechercheSujetForm.getListeResultat();
      			Iterator iter = listeResultat.getResultatAffichage().iterator();
@@ -172,9 +172,7 @@ public class AffichagePDFListes extends HttpServlet {
      			}
         	}
         	if (GlobalConstants.ChoixRapport.RESULTATS_RECHERCHE_SUJETS_COMPLET.equals( choixRapport )){
-        		//On utilise le même rapport que pour l'impression de la page courante
-               	choixRapport = "rapports/" + GlobalConstants.ChoixRapport.RESULTATS_RECHERCHE_SUJETS;
-    			gabarit = getClass().getClassLoader().getResourceAsStream(choixRapport);
+        		//On utilise le mï¿½me rapport que pour l'impression de la page courante
      		    CriteresRechercheSujetForm criteresRechercheSujetForm = (CriteresRechercheSujetForm) request.getSession().getAttribute("rechercheSujet");
      		    ListeResultat listeResultat = criteresRechercheSujetForm.getListeResultat();
      			Iterator iter = listeResultat.getResultatComplet().iterator();
@@ -186,8 +184,6 @@ public class AffichagePDFListes extends HttpServlet {
         	}
             
         	if (GlobalConstants.ChoixRapport.RESULTATS_RECHERCHE_SOCIETES.equals( choixRapport )){
-               	choixRapport = "rapports/" + GlobalConstants.ChoixRapport.RESULTATS_RECHERCHE_SOCIETES;
-    			gabarit = getClass().getClassLoader().getResourceAsStream(choixRapport);
      		    CriteresRechercheSocieteForm criteresRechercheSocieteForm = (CriteresRechercheSocieteForm) request.getSession().getAttribute("rechercheSociete");
      		    ListeResultat listeResultat = criteresRechercheSocieteForm.getListeResultat();
      			Iterator iter = listeResultat.getResultatAffichage().iterator();
@@ -198,9 +194,7 @@ public class AffichagePDFListes extends HttpServlet {
      			}
         	}
         	if (GlobalConstants.ChoixRapport.RESULTATS_RECHERCHE_SOCIETES_COMPLET.equals( choixRapport )){
-        		//On utilise le même rapport que pour l'impression de la page courante
-               	choixRapport = "rapports/" + GlobalConstants.ChoixRapport.RESULTATS_RECHERCHE_SOCIETES;
-    			gabarit = getClass().getClassLoader().getResourceAsStream(choixRapport);
+        		//On utilise le mï¿½me rapport que pour l'impression de la page courante
     			CriteresRechercheSocieteForm criteresRechercheSocieteForm = (CriteresRechercheSocieteForm) request.getSession().getAttribute("rechercheSociete");
      		    ListeResultat listeResultat = criteresRechercheSocieteForm.getListeResultat();
      			Iterator iter = listeResultat.getResultatComplet().iterator();
@@ -212,8 +206,6 @@ public class AffichagePDFListes extends HttpServlet {
         	}
 
         	if (GlobalConstants.ChoixRapport.RESULTATS_RECHERCHE_ADRESSE_SUJETS.equals( choixRapport )){
-               	choixRapport = "rapports/" + GlobalConstants.ChoixRapport.RESULTATS_RECHERCHE_SUJETS;
-    			gabarit = getClass().getClassLoader().getResourceAsStream(choixRapport);
      		    CriteresRechercheAdressesForm criteresRechercheAdressesForm = (CriteresRechercheAdressesForm) request.getSession().getAttribute("rechercheAdresses");
      		    ListeResultat listeResultat = criteresRechercheAdressesForm.getListeResultat();
      			Iterator iter = listeResultat.getResultatAffichage().iterator();
@@ -224,8 +216,6 @@ public class AffichagePDFListes extends HttpServlet {
      			}
         	}
         	if (GlobalConstants.ChoixRapport.RESULTATS_RECHERCHE_ADRESSE_SOCIETES.equals( choixRapport )){
-               	choixRapport = "rapports/" + GlobalConstants.ChoixRapport.RESULTATS_RECHERCHE_SOCIETES;
-    			gabarit = getClass().getClassLoader().getResourceAsStream(choixRapport);
      		    CriteresRechercheAdressesForm criteresRechercheAdressesForm = (CriteresRechercheAdressesForm) request.getSession().getAttribute("rechercheAdresses");
      		    ListeResultat listeResultat = criteresRechercheAdressesForm.getListeResultat();
      			Iterator iter = listeResultat.getResultatAffichage().iterator();
@@ -236,8 +226,6 @@ public class AffichagePDFListes extends HttpServlet {
      			}
         	}
         	if (GlobalConstants.ChoixRapport.RESULTATS_RECHERCHE_VEHICULES.equals( choixRapport )){
-               	choixRapport = "rapports/" + GlobalConstants.ChoixRapport.RESULTATS_RECHERCHE_VEHICULES;
-    			gabarit = getClass().getClassLoader().getResourceAsStream(choixRapport);
      		    CriteresRechercheVehiculeForm criteresRechercheVehiculeForm = (CriteresRechercheVehiculeForm) request.getSession().getAttribute("rechercheVehicule");
      		    ListeResultat listeResultat = criteresRechercheVehiculeForm.getListeResultat();
      			Iterator iter = listeResultat.getResultatAffichage().iterator();
@@ -248,9 +236,7 @@ public class AffichagePDFListes extends HttpServlet {
      			}
         	}
         	if (GlobalConstants.ChoixRapport.RESULTATS_RECHERCHE_VEHICULES_COMPLET.equals( choixRapport )){
-        		//On utilise le même rapport que pour l'impression de la page courante
-               	choixRapport = "rapports/" + GlobalConstants.ChoixRapport.RESULTATS_RECHERCHE_VEHICULES;
-    			gabarit = getClass().getClassLoader().getResourceAsStream(choixRapport);
+        		//On utilise le mï¿½me rapport que pour l'impression de la page courante
      		    CriteresRechercheVehiculeForm criteresRechercheVehiculeForm = (CriteresRechercheVehiculeForm) request.getSession().getAttribute("rechercheVehicule");
      		    ListeResultat listeResultat = criteresRechercheVehiculeForm.getListeResultat();
      			Iterator iter = listeResultat.getResultatAffichage().iterator();
@@ -261,8 +247,6 @@ public class AffichagePDFListes extends HttpServlet {
      			}
         	}
             if (GlobalConstants.ChoixRapport.RESULTATS_RECHERCHE_URGENCE.equals( choixRapport )){
-                choixRapport = "rapports/" + GlobalConstants.ChoixRapport.RESULTATS_RECHERCHE_URGENCE;
-                gabarit = getClass().getClassLoader().getResourceAsStream(choixRapport);
                 CriteresRechercheUrgenceForm criteresRechercheUrgenceForm = (CriteresRechercheUrgenceForm) request.getSession().getAttribute("rechercheUrgence");
                 ListeResultat listeResultat = criteresRechercheUrgenceForm.getListeResultat();
                 Iterator iter = listeResultat.getResultatAffichage().iterator();
@@ -273,9 +257,7 @@ public class AffichagePDFListes extends HttpServlet {
                 }
             }
             if (GlobalConstants.ChoixRapport.RESULTATS_RECHERCHE_URGENCE_COMPLET.equals( choixRapport )){
-                //On utilise le même rapport que pour l'impression de la page courante
-                choixRapport = "rapports/" + GlobalConstants.ChoixRapport.RESULTATS_RECHERCHE_URGENCE;
-                gabarit = getClass().getClassLoader().getResourceAsStream(choixRapport);
+                //On utilise le mï¿½me rapport que pour l'impression de la page courante
                 CriteresRechercheUrgenceForm criteresRechercheUrgenceForm = (CriteresRechercheUrgenceForm) request.getSession().getAttribute("rechercheUrgence");
                 ListeResultat listeResultat = criteresRechercheUrgenceForm.getListeResultat();
                 Iterator iter = listeResultat.getResultatAffichage().iterator();
@@ -286,8 +268,6 @@ public class AffichagePDFListes extends HttpServlet {
                 }
             }
         	if (GlobalConstants.ChoixRapport.RESULTATS_RECHERCHE_SUIVIS.equals( choixRapport )){
-               	choixRapport = "rapports/" + GlobalConstants.ChoixRapport.RESULTATS_RECHERCHE_SUIVIS;
-    			gabarit = getClass().getClassLoader().getResourceAsStream(choixRapport);
     			CriteresRechercheSuiviForm criteresRechercheSuiviForm = (CriteresRechercheSuiviForm) request.getSession().getAttribute("rechercheSuivi");
      		    ListeResultat listeResultat = criteresRechercheSuiviForm.getListeResultat();
      			Iterator iter = listeResultat.getResultatComplet().iterator();
@@ -299,8 +279,6 @@ public class AffichagePDFListes extends HttpServlet {
     			parameters.put("SUBREPORT_DIR",context.getRealPath("/images/"));
         	}
         	if (GlobalConstants.ChoixRapport.RESULTATS_RECHERCHE_CONSIGNATIONS.equals( choixRapport )){
-               	choixRapport = "rapports/" + GlobalConstants.ChoixRapport.RESULTATS_RECHERCHE_CONSIGNATIONS;
-    			gabarit = getClass().getClassLoader().getResourceAsStream(choixRapport);
     			CriteresRechercheConsignationForm criteresRechercheConsignationForm = (CriteresRechercheConsignationForm) request.getSession().getAttribute("rechercheConsignation");
      		    ListeResultat listeResultat = criteresRechercheConsignationForm.getListeResultat();
      			Iterator iter = listeResultat.getResultatComplet().iterator();
@@ -312,8 +290,6 @@ public class AffichagePDFListes extends HttpServlet {
     			parameters.put("SUBREPORT_DIR",context.getRealPath("/images/"));
         	}
         	if (GlobalConstants.ChoixRapport.RESULTATS_RECHERCHE_MANDATS.equals( choixRapport )){
-               	choixRapport = "rapports/" + GlobalConstants.ChoixRapport.RESULTATS_RECHERCHE_MANDATS;
-    			gabarit = getClass().getClassLoader().getResourceAsStream(choixRapport);
     			CriteresRecherchePSUMandatForm criteresRecherchePSUMandatForm = (CriteresRecherchePSUMandatForm) request.getSession().getAttribute("recherchePSUMandat");
     			ListeResultat listeResultat = criteresRecherchePSUMandatForm.getListeResultat();
      			Iterator iter = listeResultat.getResultatComplet().iterator();
@@ -325,15 +301,11 @@ public class AffichagePDFListes extends HttpServlet {
     			parameters.put("SUBREPORT_DIR",context.getRealPath("/images/"));
         	}
         	if (GlobalConstants.ChoixRapport.CONSIGNATION_ACTIONS_MANDATS.equals( choixRapport )){
-               	choixRapport = "rapports/" + GlobalConstants.ChoixRapport.CONSIGNATION_ACTIONS_MANDATS;
-    			gabarit = getClass().getClassLoader().getResourceAsStream(choixRapport);
             	String mandat = (String)request.getParameter("MANDAT");
     			liste = remplirConsignationActionsMandats(subject, mandat);
     			parameters.put("MANDAT", mandat);
         	}
         	if (GlobalConstants.ChoixRapport.ONGLET_DOSSIERS_DOSSIER.equals( choixRapport )){
-               	choixRapport = "rapports/" + GlobalConstants.ChoixRapport.ONGLET_DOSSIERS_DOSSIER;
-    			gabarit = getClass().getClassLoader().getResourceAsStream(choixRapport);
     			DossierForm dossierForm = (DossierForm) request.getSession().getAttribute("dossier");
      		    ListeResultat listeResultat = dossierForm.getListeDossiers();
      			Iterator iter = listeResultat.getResultatComplet().iterator();
@@ -342,8 +314,6 @@ public class AffichagePDFListes extends HttpServlet {
    				parameters.put("DOSSIER",dossierForm.getNumeroCardexTexte());
         	}
         	if (GlobalConstants.ChoixRapport.ONGLET_DOSSIERS_SUJET.equals( choixRapport )){
-               	choixRapport = "rapports/" + GlobalConstants.ChoixRapport.ONGLET_DOSSIERS_SUJET;
-    			gabarit = getClass().getClassLoader().getResourceAsStream(choixRapport);
     			SujetForm sujetForm = (SujetForm) request.getSession().getAttribute("sujet");
      		    ListeResultat listeResultat = sujetForm.getListeDossiers();
      			Iterator iter = listeResultat.getResultatComplet().iterator();
@@ -351,8 +321,6 @@ public class AffichagePDFListes extends HttpServlet {
    				parameters.put("SUJET",sujetForm.getNumeroFiche());
         	}
         	if (GlobalConstants.ChoixRapport.ONGLET_SUJET_SOCIETE.equals( choixRapport )){
-               	choixRapport = "rapports/" + GlobalConstants.ChoixRapport.ONGLET_SUJET_SOCIETE;
-    			gabarit = getClass().getClassLoader().getResourceAsStream(choixRapport);
     			SocieteForm societeForm = (SocieteForm) request.getSession().getAttribute("societe");
      		    ListeResultat listeResultat = societeForm.getListeSujets();
      			Iterator iter = listeResultat.getResultatComplet().iterator();
@@ -365,8 +333,6 @@ public class AffichagePDFListes extends HttpServlet {
         	}
         	if (GlobalConstants.ChoixRapport.RESULTATS_RECHERCHE_GALERIE.equals( choixRapport )){
         		CriteresRecherchePhotoForm photoForm = (CriteresRecherchePhotoForm) request.getSession().getAttribute("rechercheGalerie");
-               	choixRapport = "rapports/" + GlobalConstants.ChoixRapport.RESULTATS_RECHERCHE_GALERIE;
-    			gabarit = getClass().getClassLoader().getResourceAsStream(choixRapport);
     			Collection photos = (Collection) photoForm.getListeResultat().getResultatAffichage();
     			Iterator iter = photos.iterator();
      			try{
@@ -377,9 +343,7 @@ public class AffichagePDFListes extends HttpServlet {
    	            parameters.put("SUBREPORT_DIR",context.getRealPath("/rapports/"));
    	            parameters.put("REPORT_CONNECTION",connection);
         	}
-        	if (GlobalConstants.ChoixRapport.AUDIT_ACCES_DOSSIERS.equals( choixRapport )){
-               	choixRapport = "rapports/" + GlobalConstants.ChoixRapport.AUDIT_ACCES_DOSSIERS;
-    			gabarit = getClass().getClassLoader().getResourceAsStream(choixRapport);
+        	if (RapportsConfiguration.AUDIT_ACCES_DOSSIERS.equals( choixRapport )){
     			DossierForm dossierForm = (DossierForm) request.getSession().getAttribute("dossier");
     			dossierForm.assignerValeurDeListe(subject);
     			//parameters.put("NUMERO_DOSSIER",dossierForm.getNumeroCardex().toString());
@@ -388,9 +352,7 @@ public class AffichagePDFListes extends HttpServlet {
     			parameters.put("DATE_CREATION", dossierForm.getDateCreation());
      			liste = remplirResultatAccesDossier(subject, dossierForm);
         	}
-        	if (GlobalConstants.ChoixRapport.AUDIT_ACCES_SUJETS.equals( choixRapport )){
-               	choixRapport = "rapports/" + GlobalConstants.ChoixRapport.AUDIT_ACCES_SUJETS;
-    			gabarit = getClass().getClassLoader().getResourceAsStream(choixRapport);
+        	if (RapportsConfiguration.AUDIT_ACCES_SUJETS.equals( choixRapport )){
     			SujetForm sujetForm = (SujetForm) request.getSession().getAttribute("sujet");
     			sujetForm.assignerValeurDeListe(subject);
     			parameters.put("NUMERO_DOSSIER",sujetForm.getNumeroFiche());
@@ -398,9 +360,7 @@ public class AffichagePDFListes extends HttpServlet {
     			parameters.put("DATE_CREATION", sujetForm.getDateCreation());
      			liste = remplirResultatAccesSujet(subject, sujetForm);
         	}
-        	if (GlobalConstants.ChoixRapport.AUDIT_ACCES_SOCIETES.equals( choixRapport )){
-               	choixRapport = "rapports/" + GlobalConstants.ChoixRapport.AUDIT_ACCES_SOCIETES;
-    			gabarit = getClass().getClassLoader().getResourceAsStream(choixRapport);
+        	if (RapportsConfiguration.AUDIT_ACCES_SOCIETES.equals( choixRapport )){
     			SocieteForm societeForm = (SocieteForm) request.getSession().getAttribute("societe");
     			societeForm.assignerValeurDeListe(subject);
     			parameters.put("NUMERO_DOSSIER",societeForm.getNom());
@@ -408,9 +368,7 @@ public class AffichagePDFListes extends HttpServlet {
     			parameters.put("DATE_CREATION", societeForm.getDateCreation());
      			liste = remplirResultatAccesSociete(subject, societeForm);
         	}
-        	if (GlobalConstants.ChoixRapport.AUDIT_ACCES_VEHICULES.equals( choixRapport )){
-               	choixRapport = "rapports/" + GlobalConstants.ChoixRapport.AUDIT_ACCES_VEHICULES;
-    			gabarit = getClass().getClassLoader().getResourceAsStream(choixRapport);
+        	if (RapportsConfiguration.AUDIT_ACCES_VEHICULES.equals( choixRapport )){
     			VehiculeForm vehiculeForm = (VehiculeForm) request.getSession().getAttribute("vehicule");
     			vehiculeForm.assignerValeurDeListe(subject);
     			parameters.put("NUMERO_DOSSIER",vehiculeForm.getImmatriculation());
@@ -419,9 +377,7 @@ public class AffichagePDFListes extends HttpServlet {
      			liste = remplirResultatAccesVehicule(subject, vehiculeForm);
         	}
         	if (GlobalConstants.ChoixImpressionListe.IMPRIMER_DOSSIERS_AVEC_SUJETS.equals( choixRapport )){
-        		//Impression de tous les dossiers retournés par la recherche avec les sujets liés.
-               	choixRapport = "rapports/" + GlobalConstants.ChoixRapport.RESULTATS_RECHERCHE_DOSSIERS_AVEC_SUJETS;
-    			gabarit = getClass().getClassLoader().getResourceAsStream(choixRapport);
+        		//Impression de tous les dossiers retournï¿½s par la recherche avec les sujets liï¿½s.
      		    CriteresRechercheDossierForm criteresRechercheDossierForm = (CriteresRechercheDossierForm) request.getSession().getAttribute("rechercheDossier");
      		    ListeResultat listeResultat = criteresRechercheDossierForm.getListeResultat();
      			Iterator iter = listeResultat.getResultatComplet().iterator();
@@ -429,9 +385,7 @@ public class AffichagePDFListes extends HttpServlet {
     		    parameters.put("SUBREPORT_DIR",context.getRealPath("/rapports/"));
         	}
         	if (GlobalConstants.ChoixImpressionListe.IMPRIMER_DOSSIERS_SANS_SUJETS.equals( choixRapport )){
-        		//Impression de tous les dossiers retournés par la recherche sans les sujets liés.
-               	choixRapport = "rapports/" + GlobalConstants.ChoixRapport.RESULTATS_RECHERCHE_DOSSIERS_SANS_SUJETS;
-    			gabarit = getClass().getClassLoader().getResourceAsStream(choixRapport);
+        		//Impression de tous les dossiers retournï¿½s par la recherche sans les sujets liï¿½s.
      		    CriteresRechercheDossierForm criteresRechercheDossierForm = (CriteresRechercheDossierForm) request.getSession().getAttribute("rechercheDossier");
      		    ListeResultat listeResultat = criteresRechercheDossierForm.getListeResultat();
      			Iterator iter = listeResultat.getResultatComplet().iterator();
@@ -440,17 +394,25 @@ public class AffichagePDFListes extends HttpServlet {
         	}
         	parameters.put("REPORT_CONNECTION",connection);
       		JRDataSource dataSource = new JRMapCollectionDataSource(liste);
-    		print = JasperFillManager.fillReport(gabarit, parameters, dataSource);
+    		
+    		JasperReport jasperReport = RapportUtils.compiler(choixRapport);
+    		JasperPrint print = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
 
-        	//Affichage à l'écran
-	         response.setContentType("application/pdf");
-	         request.getSession().setAttribute(ImageServlet.DEFAULT_JASPER_PRINT_SESSION_ATTRIBUTE, print);	         
-	         JRExporter exporter = new JRPdfExporter();
-	         exporter.setParameter(JRExporterParameter.JASPER_PRINT, print);
-	         exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, servletOutputStream);
-	         exporter.exportReport();
-	         servletOutputStream.flush();
-	         servletOutputStream.close();
+        	//Affichage Ã  l'Ã©cran
+	        response.setContentType("application/pdf");
+			response.setHeader("Cache-Control", "max-age=0");
+			JasperExportManager.exportReportToPdfStream(print, baos);
+			JRAbstractExporter exporter = new JRPdfExporter();
+			exporter.setExporterInput(new SimpleExporterInput(print));
+			exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(baos));
+			exporter.exportReport();
+			servletOutputStream.write(baos.toByteArray());
+
+			baos.flush();
+			baos.close();
+
+	        servletOutputStream.flush();
+	        servletOutputStream.close();
 
       } catch (BusinessResourceException bre) {
           bre.printStackTrace();
@@ -525,8 +487,8 @@ public class AffichagePDFListes extends HttpServlet {
   private List remplirResultatSujets(Iterator iter)
   	throws ValueObjectMapperException {
 	  List list = new ArrayList();
-//On récupère les valeurs directement dans un Map avec la fonction BeanUtils.describe.
-//Cela évite de traiter les données champ par champ. Il faut cependant que les noms de champ utilisés dans
+//On rï¿½cupï¿½re les valeurs directement dans un Map avec la fonction BeanUtils.describe.
+//Cela ï¿½vite de traiter les donnï¿½es champ par champ. Il faut cependant que les noms de champ utilisï¿½s dans
 //le rapport soient identiques au "describe" des champs de la fonction.	  
    try{
 	  while (iter.hasNext()) {
@@ -547,8 +509,8 @@ public class AffichagePDFListes extends HttpServlet {
   private List remplirResultatSocietes(Iterator iter)
 	throws ValueObjectMapperException {
 	  List list = new ArrayList();
-//On récupère les valeurs directement dans un Map avec la fonction BeanUtils.describe.
-//Cela évite de traiter les données champ par champ. Il faut cependant que les noms de champ utilisés dans
+//On rï¿½cupï¿½re les valeurs directement dans un Map avec la fonction BeanUtils.describe.
+//Cela ï¿½vite de traiter les donnï¿½es champ par champ. Il faut cependant que les noms de champ utilisï¿½s dans
 //le rapport soient identiques au "describe" des champs de la fonction.	  
  try{
 	  while (iter.hasNext()) {
@@ -569,8 +531,8 @@ public class AffichagePDFListes extends HttpServlet {
   private List remplirResultatVehicules(Iterator iter)
 	throws ValueObjectMapperException {
 	  List list = new ArrayList();
-//On récupère les valeurs directement dans un Map avec la fonction BeanUtils.describe.
-//Cela évite de traiter les données champ par champ. Il faut cependant que les noms de champ utilisés dans
+//On rï¿½cupï¿½re les valeurs directement dans un Map avec la fonction BeanUtils.describe.
+//Cela ï¿½vite de traiter les donnï¿½es champ par champ. Il faut cependant que les noms de champ utilisï¿½s dans
 //le rapport soient identiques au "describe" des champs de la fonction.	  
 	try{
 	  while (iter.hasNext()) {
@@ -591,10 +553,10 @@ public class AffichagePDFListes extends HttpServlet {
 
   private List remplirResultatUrgences(Iterator iter) throws ValueObjectMapperException{
         List list = new ArrayList();
-        // On récupère les valeurs directement dans un Map avec la fonction
+        // On rï¿½cupï¿½re les valeurs directement dans un Map avec la fonction
         // BeanUtils.describe.
-        // Cela évite de traiter les données champ par champ. Il faut cependant
-        // que les noms de champ utilisés dans
+        // Cela ï¿½vite de traiter les donnï¿½es champ par champ. Il faut cependant
+        // que les noms de champ utilisï¿½s dans
         // le rapport soient identiques au "describe" des champs de la fonction.
         try{
             while (iter.hasNext()){
@@ -618,8 +580,8 @@ public class AffichagePDFListes extends HttpServlet {
   private List remplirResultatSuivis(Iterator iter)
 	throws ValueObjectMapperException {
 	  List list = new ArrayList();
-//On récupère les valeurs directement dans un Map avec la fonction BeanUtils.describe.
-//Cela évite de traiter les données champ par champ. Il faut cependant que les noms de champ utilisés dans
+//On rï¿½cupï¿½re les valeurs directement dans un Map avec la fonction BeanUtils.describe.
+//Cela ï¿½vite de traiter les donnï¿½es champ par champ. Il faut cependant que les noms de champ utilisï¿½s dans
 //le rapport soient identiques au "describe" des champs de la fonction.	  
 	try{
 	  while (iter.hasNext()) {
@@ -642,8 +604,8 @@ public class AffichagePDFListes extends HttpServlet {
   private List remplirResultatConsignations(Iterator iter)
 	throws ValueObjectMapperException {
 	  List list = new ArrayList();
-//On récupère les valeurs directement dans un Map avec la fonction BeanUtils.describe.
-//Cela évite de traiter les données champ par champ. Il faut cependant que les noms de champ utilisés dans
+//On rï¿½cupï¿½re les valeurs directement dans un Map avec la fonction BeanUtils.describe.
+//Cela ï¿½vite de traiter les donnï¿½es champ par champ. Il faut cependant que les noms de champ utilisï¿½s dans
 //le rapport soient identiques au "describe" des champs de la fonction.	  
 	try{
 	  while (iter.hasNext()) {
@@ -665,8 +627,8 @@ public class AffichagePDFListes extends HttpServlet {
   private List remplirResultatMandats(Iterator iter)
 	throws ValueObjectMapperException {
 	  List list = new ArrayList();
-//On récupère les valeurs directement dans un Map avec la fonction BeanUtils.describe.
-//Cela évite de traiter les données champ par champ. Il faut cependant que les noms de champ utilisés dans
+//On rï¿½cupï¿½re les valeurs directement dans un Map avec la fonction BeanUtils.describe.
+//Cela ï¿½vite de traiter les donnï¿½es champ par champ. Il faut cependant que les noms de champ utilisï¿½s dans
 //le rapport soient identiques au "describe" des champs de la fonction.	  
 	try{
 	  while (iter.hasNext()) {
@@ -805,8 +767,8 @@ public class AffichagePDFListes extends HttpServlet {
 	      ValueObjectMapper.convertAcces(acces, accesForm,subject.getLocale());
 	      currentList.add(accesForm);
 	  }
-		//On récupère les valeurs directement dans un Map avec la fonction BeanUtils.describe.
-		//Cela évite de traiter les données champ par champ. Il faut cependant que les noms de champ utilisés dans
+		//On rï¿½cupï¿½re les valeurs directement dans un Map avec la fonction BeanUtils.describe.
+		//Cela ï¿½vite de traiter les donnï¿½es champ par champ. Il faut cependant que les noms de champ utilisï¿½s dans
 		//le rapport soient identiques au "describe" des champs de la fonction.	  
 	  Iterator iter = currentList.iterator();
 	  while (iter.hasNext()) {
@@ -848,8 +810,8 @@ public class AffichagePDFListes extends HttpServlet {
 				consignationActionPSUForm.assignerValeurDeListe(subject);
 				currentList.add(consignationActionPSUForm);
 			}  
-			//On récupère les valeurs directement dans un Map avec la fonction BeanUtils.describe.
-			//Cela évite de traiter les données champ par champ. Il faut cependant que les noms de champ utilisés dans
+			//On rï¿½cupï¿½re les valeurs directement dans un Map avec la fonction BeanUtils.describe.
+			//Cela ï¿½vite de traiter les donnï¿½es champ par champ. Il faut cependant que les noms de champ utilisï¿½s dans
 			//le rapport soient identiques au "describe" des champs de la fonction.	  
 		  Iterator iter = currentList.iterator();
 		  while (iter.hasNext()) {

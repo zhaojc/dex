@@ -99,7 +99,7 @@ function doToggleDivisionVisibility(){
 }
 
 addEvent( window, 'load', doToggleDivisionVisibility );
-alert("dfa");
+
 </SCRIPT>
 
 	<tiles:insert page="/templates/sujet/tpl_sujet_formulaire.jsp" flush="true">

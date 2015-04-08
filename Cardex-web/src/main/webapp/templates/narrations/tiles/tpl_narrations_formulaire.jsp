@@ -120,7 +120,7 @@ function affichageExclamation(){
 }
 
 function doAuditChangement() {
-	   var rapport = "<%= GlobalConstants.ChoixRapport.AUDIT_CHANGEMENTS_NARRATIONS %>";
+	   var rapport = "<%= RapportsConfiguration.AUDIT_CHANGEMENTS_NARRATIONS %>";
 	   var userCardex = '<bean:write name="<%= AuthenticationSubject.class.getName() %>" property="user.code" />';
 	   var url = "<%=request.getContextPath()%>/AffichagePDFAudits?RAPPORT=" + rapport + "&UTILISATEUR=" + userCardex; 
 	   //alert(url);  
