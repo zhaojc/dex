@@ -40,16 +40,14 @@
   	newZoom= parseInt(image.style.zoom)+10+'%'
 	image.style.zoom =newZoom;
       }
-      alert("asasdfdf!");
    }
    function zoomOut(image) {
       newZoom= parseInt(image.style.zoom)-10+'%'
      image.style.zoom =newZoom;
    }
-alert("asdf!");
 </SCRIPT>
 
-<DIV id="DATA_PHOTOS">dfsgdsgfs
+<DIV id="DATA_PHOTOS">
     <TABLE width="772" cellPadding="2" cellSpacing="0" border="0" BGCOLOR="#ffffff" CLASS="tableOutline">
       <TR>
           <TD class="listDetailOdd">

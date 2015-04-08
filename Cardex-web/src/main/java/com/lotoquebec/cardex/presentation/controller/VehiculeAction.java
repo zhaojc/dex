@@ -101,8 +101,8 @@ import com.lotoquebec.cardexCommun.util.StringUtils;
 import com.lq.std.conf.impl.AppConfig;
 
 /**
- * Cette classe g�re les �v�nements en rapport
- * avec le cas d'utilisation gestion des v�hicules.
+ * Cette classe g?re les ?v?nements en rapport
+ * avec le cas d'utilisation gestion des v?hicules.
  *
  * @author $Author: mlibersan $
  * @version $Revision: 1.20 $, $Date: 2002/05/01 19:34:01 $
@@ -117,19 +117,19 @@ public class VehiculeAction extends AbstractAction {
 
     /**
      * <p>
-     * Cet �v�nement survient lorsque l'utilisateur clique sur le bouton ajouter dans
-     * le panneau de recherche des v�hicules.  L'application affiche le panneau de mise � jour.
-     * L'utilisateur a pr�alablement saisie les informations  les donn�es relatives � l'identification
-     * du v�hicule.
+     * Cet ?v?nement survient lorsque l'utilisateur clique sur le bouton ajouter dans
+     * le panneau de recherche des v?hicules.  L'application affiche le panneau de mise ? jour.
+     * L'utilisateur a pr?alablement saisie les informations  les donn?es relatives ? l'identification
+     * du v?hicule.
      * <p>
      *
-     * @param mapping L' ActionMapping utils� pour s�lectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requ�te (optionnelle)
-     * @param request La requ�te HTTP trait�e
-     * @param response La r�ponse HTTP cr��e
+     * @param mapping L' ActionMapping utils? pour s?lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requ?te (optionnelle)
+     * @param request La requ?te HTTP trait?e
+     * @param response La r?ponse HTTP cr??e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entr�e/sortieif an input/output survient
+     * @exception IOException si une erreur d'entr?e/sortieif an input/output survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward create(CardexAuthenticationSubject subject,
@@ -139,17 +139,17 @@ public class VehiculeAction extends AbstractAction {
                                 HttpServletResponse response) throws IOException,
                                 ServletException {
 
-        log.debug("Cr�ation d'un nouveau v�hicule");
+        log.debug("Cr?ation d'un nouveau v?hicule");
 
         VehiculeForm vehiculeForm = (VehiculeForm)form;
 
-        //Valeurs par d�faut
+        //Valeurs par d?faut
     	vehiculeForm.init(subject);
 		EntiteCardexForm entiteCardex = obtenirEntiteCardexLiaison(request, "rechercheVehicule");
 		vehiculeForm.setEntiteCardexLiaison( entiteCardex );
         vehiculeForm.resetOnglets();
         vehiculeForm.setNew(true);
-        //Sans objet, par d�faut
+        //Sans objet, par d?faut
         vehiculeForm.setRole(String.valueOf(GlobalConstants.Role.SANS_OBJET));
 
         return mapping.findForward("success");
@@ -157,25 +157,25 @@ public class VehiculeAction extends AbstractAction {
 
     /**
      * <p>
-     * Cet �v�nement survient lorsque l'utilisateur clique sur le bouton ajouter dans
-     * l'onglet V�hicules d'un dossier. Ce bouton est r�serv� aux agents de s�curit� pour leur permettre 
-     * d'ajouter des fiches v�hicules au lieu d'utiliser des gabarits. 
+     * Cet ?v?nement survient lorsque l'utilisateur clique sur le bouton ajouter dans
+     * l'onglet V?hicules d'un dossier. Ce bouton est r?serv? aux agents de s?curit? pour leur permettre
+     * d'ajouter des fiches v?hicules au lieu d'utiliser des gabarits.
      * <p>
-     * Par d�faut, l'application remplit automatiquement les champs suivants :
+     * Par d?faut, l'application remplit automatiquement les champs suivants :
      * <li>
      * <ul> site d'origine (site de l'utilisateur)
      * <ul> statut (actif)
-     * <ul> Fond� (ind�termin�)
+     * <ul> Fond? (ind?termin?)
      * <ul> Date de l'assignation (date du jour)
      * </li>
      *
-     * @param mapping L' ActionMapping utils� pour s�lectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requ�te (optionnelle)
-     * @param request La requ�te HTTP trait�e
-     * @param response La r�ponse HTTP cr��e
+     * @param mapping L' ActionMapping utils? pour s?lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requ?te (optionnelle)
+     * @param request La requ?te HTTP trait?e
+     * @param response La r?ponse HTTP cr??e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entr�e/sortieif an input/output survient
+     * @exception IOException si une erreur d'entr?e/sortieif an input/output survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward createLiaisonDossier(CardexAuthenticationSubject subject,
@@ -185,41 +185,41 @@ public class VehiculeAction extends AbstractAction {
             HttpServletResponse response) throws IOException,
             ServletException {
 
-		log.debug("Cr�ation d'un nouveau v�hicule par un agent de s�curit�");
+		log.debug("Cr?ation d'un nouveau v?hicule par un agent de s?curit?");
 
         VehiculeForm vehiculeForm = new VehiculeForm();
         vehiculeForm.init(subject);
 		vehiculeForm.setEntiteCardexLiaison((DossierForm) form );
 
-		//Valeurs par d�faut
+		//Valeurs par d?faut
         vehiculeForm.resetOnglets();
         vehiculeForm.setNew(true);
-        //Sans objet, par d�faut
+        //Sans objet, par d?faut
         vehiculeForm.setRole(String.valueOf(GlobalConstants.Role.SANS_OBJET));
 		request.getSession().setAttribute("vehicule",vehiculeForm);
 		return mapping.findForward("success");
 	}
     /**
      * <p>
-     * Cet �v�nement survient lorsque l'utilisateur clique sur le bouton ajouter dans
-     * l'onglet V�hicules d'un sujet. Ce bouton est r�serv� aux agents de s�curit� pour leur permettre 
-     * d'ajouter des fiches v�hicules au lieu d'utiliser des gabarits. 
+     * Cet ?v?nement survient lorsque l'utilisateur clique sur le bouton ajouter dans
+     * l'onglet V?hicules d'un sujet. Ce bouton est r?serv? aux agents de s?curit? pour leur permettre
+     * d'ajouter des fiches v?hicules au lieu d'utiliser des gabarits.
      * <p>
-     * Par d�faut, l'application remplit automatiquement les champs suivants :
+     * Par d?faut, l'application remplit automatiquement les champs suivants :
      * <li>
      * <ul> site d'origine (site de l'utilisateur)
      * <ul> statut (actif)
-     * <ul> Fond� (ind�termin�)
+     * <ul> Fond? (ind?termin?)
      * <ul> Date de l'assignation (date du jour)
      * </li>
      *
-     * @param mapping L' ActionMapping utils� pour s�lectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requ�te (optionnelle)
-     * @param request La requ�te HTTP trait�e
-     * @param response La r�ponse HTTP cr��e
+     * @param mapping L' ActionMapping utils? pour s?lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requ?te (optionnelle)
+     * @param request La requ?te HTTP trait?e
+     * @param response La r?ponse HTTP cr??e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entr�e/sortieif an input/output survient
+     * @exception IOException si une erreur d'entr?e/sortieif an input/output survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward createLiaisonSujet(CardexAuthenticationSubject subject,
@@ -229,35 +229,35 @@ public class VehiculeAction extends AbstractAction {
             HttpServletResponse response) throws IOException,
             ServletException {
 
-		log.debug("Cr�ation d'un nouveau v�hicule par un agent de s�curit�");
+		log.debug("Cr?ation d'un nouveau v?hicule par un agent de s?curit?");
 
         VehiculeForm vehiculeForm = new VehiculeForm();
         vehiculeForm.init(subject);
 		vehiculeForm.setEntiteCardexLiaison((SujetForm) form );
 
-		//Valeurs par d�faut
+		//Valeurs par d?faut
         vehiculeForm.resetOnglets();
         vehiculeForm.setNew(true);
-        //Sans objet, par d�faut
+        //Sans objet, par d?faut
         vehiculeForm.setRole(String.valueOf(GlobalConstants.Role.SANS_OBJET));
 		request.getSession().setAttribute("vehicule",vehiculeForm);
 		return mapping.findForward("success");
 	}
-    
+
     /**
      * <p>
-     * Cet �v�nement survient lorsque l'utilisateur clique sur le bouton sauvegarder dans
-     * le panneau de cr�ation d'un v�hicule.  Le nouveau v�hicule est enregistr� dans le
-     * cardex et l'�cran de mise � jour du v�hicule est affich�.
+     * Cet ?v?nement survient lorsque l'utilisateur clique sur le bouton sauvegarder dans
+     * le panneau de cr?ation d'un v?hicule.  Le nouveau v?hicule est enregistr? dans le
+     * cardex et l'?cran de mise ? jour du v?hicule est affich?.
      * <p>
      *
-     * @param mapping L' ActionMapping utils� pour s�lectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requ�te (optionnelle)
-     * @param request La requ�te HTTP trait�e
-     * @param response La r�ponse HTTP cr��e
+     * @param mapping L' ActionMapping utils? pour s?lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requ?te (optionnelle)
+     * @param request La requ?te HTTP trait?e
+     * @param response La r?ponse HTTP cr??e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entr�e/sortieif an input/output survient
+     * @exception IOException si une erreur d'entr?e/sortieif an input/output survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward save(CardexAuthenticationSubject subject,
@@ -266,7 +266,7 @@ public class VehiculeAction extends AbstractAction {
                               HttpServletResponse response) throws IOException,
                               ServletException {
 
-        log.debug("Sauvegarde de la cr�ation d'un nouveau v�hicule");
+        log.debug("Sauvegarde de la cr?ation d'un nouveau v?hicule");
 
         ActionMessages errors = new ActionMessages();
         VehiculeHtmlForm vehiculeForm = (VehiculeHtmlForm)form;
@@ -280,13 +280,13 @@ public class VehiculeAction extends AbstractAction {
 
             ValueObjectMapper.convertVehiculeHtmlForm(newVehiculeForm, newVehicule, subject.getLocale());
 
-            log.debug("V�hicule � cr�er : " + newVehicule);
+            log.debug("V?hicule ? cr?er : " + newVehicule);
             Vehicule criteria = vehiculeDelegate.create(subject, newVehicule);
-            log.debug("# Cl� de v�hicule retourn� : " + newVehicule.getCle());
+            log.debug("# Cl? de v?hicule retourn? : " + newVehicule.getCle());
             Vehicule vehiculeCreated = vehiculeDelegate.find(subject, criteria);
-            log.debug("V�hicule cr�� : " + vehiculeCreated );
+            log.debug("V?hicule cr?? : " + vehiculeCreated );
 
-			//V�rification d'un mandat PSU associ� � l'ajout d'un v�hicule
+			//V?rification d'un mandat PSU associ? ? l'ajout d'un v?hicule
 			PSUMandatForm psuMandat = new PSUMandatForm();
 			if(!OracleDAOUtils.isEmpty(vehiculeForm.getImmatriculation())){
 				psuMandat.setImmatriculation(vehiculeForm.getImmatriculation());
@@ -294,7 +294,7 @@ public class VehiculeAction extends AbstractAction {
 			}
 
 			if (newVehiculeForm.getEntiteCardexLiaison() != null){
-				//On fait la liaison automatique avec le module reli�
+				//On fait la liaison automatique avec le module reli?
             	if (newVehiculeForm.getEntiteCardexLiaison() instanceof SujetForm){
             		Sujet sujet = new SujetVO();
             		sujet.setCle(Long.parseLong(newVehiculeForm.getEntiteCardexLiaison().getCle()));
@@ -336,17 +336,17 @@ public class VehiculeAction extends AbstractAction {
 
     /**
      * <p>
-     * Cet �v�nement survient lorsque l'utilisateur clique sur l'icone de visualisation(loupe)  dans
-     * le panneau de recherche des v�hicules.  L'application affiche le panneau de mise � jour
-     * du v�hicule s�lectionn� dans la liste de r�sultats de l'�cran de recherche.
+     * Cet ?v?nement survient lorsque l'utilisateur clique sur l'icone de visualisation(loupe)  dans
+     * le panneau de recherche des v?hicules.  L'application affiche le panneau de mise ? jour
+     * du v?hicule s?lectionn? dans la liste de r?sultats de l'?cran de recherche.
      *
-     * @param mapping L' ActionMapping utils� pour s�lectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requ�te (optionnelle)
-     * @param request La requ�te HTTP trait�e
-     * @param response La r�ponse HTTP cr��e
+     * @param mapping L' ActionMapping utils? pour s?lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requ?te (optionnelle)
+     * @param request La requ?te HTTP trait?e
+     * @param response La r?ponse HTTP cr??e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entr�e/sortieif an input/output survient
+     * @exception IOException si une erreur d'entr?e/sortieif an input/output survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward show(CardexAuthenticationSubject subject,
@@ -355,17 +355,17 @@ public class VehiculeAction extends AbstractAction {
                               HttpServletResponse response) throws IOException,
                               ServletException {
 
-        log.debug("Acc�s � un v�hicule");
+        log.debug("Acc?s ? un v?hicule");
         ActionMessages errors = new ActionMessages();
         try {
             VehiculeBusinessDelegate vehiculeDelegate = new VehiculeBusinessDelegate();
             VehiculeForm vehiculeForm = (VehiculeForm) form;
             Vehicule vehicule = new VehiculeVO();
-            
+
             if (AideController.isNullOrEquals(vehiculeForm.getMotPasse(), vehiculeForm.getConfirmationMotPasse())) {
               ValueObjectMapper.convertVehiculeHtmlForm(vehiculeForm, vehicule,subject.getLocale());
               vehicule = vehiculeDelegate.find(subject, vehicule);
-              log.debug("V�hicule trouv�: " + vehicule.toString());
+              log.debug("V?hicule trouv?: " + vehicule.toString());
               ValueObjectMapper.convertVehicule(vehicule, vehiculeForm,subject.getLocale());
               //vehiculeForm.setNew(false);
               populateVehiculeForm(subject, vehicule, vehiculeForm);
@@ -383,7 +383,7 @@ public class VehiculeAction extends AbstractAction {
               if (nbOfAttemps < GlobalConstants.MotDePasse.MAX_ATTEMPS) {
                 ValueObjectMapper.convertVehiculeHtmlForm(vehiculeForm, vehicule,subject.getLocale());
                 vehicule = vehiculeDelegate.find(subject, vehicule);
-                log.debug("V�hicule prot�g�: " + vehicule.toString());
+                log.debug("V?hicule prot?g?: " + vehicule.toString());
                 ValueObjectMapper.convertVehicule(vehicule, vehiculeForm,subject.getLocale());
                 populateVehiculeForm(subject, vehicule, vehiculeForm);
                 vehiculeForm.setConfirmationMotPasse("");
@@ -393,7 +393,7 @@ public class VehiculeAction extends AbstractAction {
                   saveErrors(request, errors);
                 }
 
-                //Incr�mentation du nombre d'essais
+                //Incr?mentation du nombre d'essais
                 nbOfAttemps++;
                 nbOfAttempsInteger = new Integer(nbOfAttemps);
                 request.getSession().setAttribute(GlobalConstants.MotDePasse.VEHICULE_ATTEMPS,nbOfAttempsInteger);
@@ -418,13 +418,13 @@ public class VehiculeAction extends AbstractAction {
             return mapping.findForward("error");
         }
     }
-    
+
     public ActionForward rafraichirConsultation(
 			CardexAuthenticationSubject subject, ActionMapping mapping,
 			ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException {
 
-		log.debug("Acc�s � un v�hicule");
+		log.debug("Acc?s ? un v?hicule");
 		ActionMessages errors = new ActionMessages();
 		try {
 			VehiculeBusinessDelegate vehiculeDelegate = new VehiculeBusinessDelegate();
@@ -434,13 +434,13 @@ public class VehiculeAction extends AbstractAction {
 			ValueObjectMapper.convertVehiculeHtmlForm(vehiculeForm,
 					vehicule, subject.getLocale());
 			vehicule = vehiculeDelegate.find(subject, vehicule);
-			log.debug("V�hicule trouv�: " + vehicule.toString());
+			log.debug("V?hicule trouv?: " + vehicule.toString());
 			ValueObjectMapper.convertVehicule(vehicule, vehiculeForm,
 					subject.getLocale());
 			vehiculeForm.setNew(false);
 			populateVehiculeForm(subject, vehicule, vehiculeForm);
 			assignerNouveauVehicule(request, vehiculeForm);
-			
+
 			request.getSession().setAttribute(
 					GlobalConstants.MotDePasse.VEHICULE_ATTEMPS,
 					new Integer(0));
@@ -455,23 +455,23 @@ public class VehiculeAction extends AbstractAction {
 		} catch (ValueObjectMapperException vome) {
 			return mapping.findForward("error");
 		}
-	}    
-    
-    
-	
+	}
+
+
+
     /**
      * <p>
-     * Cet �v�nement survient lorsque l'utilisateur clique sur l'icone de visualisation(loupe)  dans
-     * le panneau de recherche des v�hicules.  L'application affiche le panneau de mise � jour
-     * du v�hicule s�lectionn� dans la liste de r�sultats de l'�cran de recherche.
+     * Cet ?v?nement survient lorsque l'utilisateur clique sur l'icone de visualisation(loupe)  dans
+     * le panneau de recherche des v?hicules.  L'application affiche le panneau de mise ? jour
+     * du v?hicule s?lectionn? dans la liste de r?sultats de l'?cran de recherche.
      *
-     * @param mapping L' ActionMapping utils� pour s�lectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requ�te (optionnelle)
-     * @param request La requ�te HTTP trait�e
-     * @param response La r�ponse HTTP cr��e
+     * @param mapping L' ActionMapping utils? pour s?lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requ?te (optionnelle)
+     * @param request La requ?te HTTP trait?e
+     * @param response La r?ponse HTTP cr??e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entr�e/sortieif an input/output survient
+     * @exception IOException si une erreur d'entr?e/sortieif an input/output survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward showAcces(CardexAuthenticationSubject subject,
@@ -480,7 +480,7 @@ public class VehiculeAction extends AbstractAction {
                               HttpServletResponse response) throws IOException,
                               ServletException {
 
-        log.debug("Acc�s � un v�hicule");
+        log.debug("Acc?s ? un v?hicule");
         ActionMessages errors = new ActionMessages();
         try {
             VehiculeBusinessDelegate vehiculeDelegate = new VehiculeBusinessDelegate();
@@ -489,13 +489,13 @@ public class VehiculeAction extends AbstractAction {
             if (AideController.isNullOrEquals(vehiculeForm.getMotPasse(), vehiculeForm.getConfirmationMotPasse())) {
               ValueObjectMapper.convertVehiculeHtmlForm(vehiculeForm, vehicule,subject.getLocale());
               vehicule = vehiculeDelegate.findAcces(subject, vehicule);
-              log.debug("V�hicule trouv�: " + vehicule.toString());
+              log.debug("V?hicule trouv?: " + vehicule.toString());
               vehiculeForm.init(subject);
               ValueObjectMapper.convertVehicule(vehicule, vehiculeForm,subject.getLocale());
               vehiculeForm.setNew(false);
               populateVehiculeForm(subject, vehicule, vehiculeForm);
               request.getSession().setAttribute(GlobalConstants.MotDePasse.VEHICULE_ATTEMPS,new Integer(0));
-			  //V�rification d'un mandat PSU associ� � la consultation d'un v�hicule (par immatriculation)
+			  //V?rification d'un mandat PSU associ? ? la consultation d'un v?hicule (par immatriculation)
 			  PSUMandatForm psuMandat = new PSUMandatForm();
 			  if(!OracleDAOUtils.isEmpty(vehiculeForm.getImmatriculation())){
 				  psuMandat.setImmatriculation(vehiculeForm.getImmatriculation());
@@ -513,7 +513,7 @@ public class VehiculeAction extends AbstractAction {
               if (nbOfAttemps < GlobalConstants.MotDePasse.MAX_ATTEMPS) {
                 ValueObjectMapper.convertVehiculeHtmlForm(vehiculeForm, vehicule,subject.getLocale());
                 vehicule = vehiculeDelegate.findAcces(subject, vehicule);
-                log.debug("V�hicule prot�g�: " + vehicule.toString());
+                log.debug("V?hicule prot?g?: " + vehicule.toString());
                 vehiculeForm.init(subject);
                 ValueObjectMapper.convertVehicule(vehicule, vehiculeForm,subject.getLocale());
                 populateVehiculeForm(subject, vehicule, vehiculeForm);
@@ -524,7 +524,7 @@ public class VehiculeAction extends AbstractAction {
                   saveErrors(request, errors);
                 }
 
-                //Incr�mentation du nombre d'essais
+                //Incr?mentation du nombre d'essais
                 nbOfAttemps++;
                 nbOfAttempsInteger = new Integer(nbOfAttemps);
                 request.getSession().setAttribute(GlobalConstants.MotDePasse.VEHICULE_ATTEMPS,nbOfAttempsInteger);
@@ -549,17 +549,17 @@ public class VehiculeAction extends AbstractAction {
             return mapping.findForward("error");
         }
     }
-        
+
 
     /**
      *
-     * @param mapping L' ActionMapping utils� pour s�lectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requ�te (optionnelle)
-     * @param request La requ�te HTTP trait�e
-     * @param response La r�ponse HTTP cr��e
+     * @param mapping L' ActionMapping utils? pour s?lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requ?te (optionnelle)
+     * @param request La requ?te HTTP trait?e
+     * @param response La r?ponse HTTP cr??e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entr�e/sortieif an input/output survient
+     * @exception IOException si une erreur d'entr?e/sortieif an input/output survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward showRechercheLiaisonVehicule(CardexAuthenticationSubject subject,
@@ -567,13 +567,13 @@ public class VehiculeAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException, CloneNotSupportedException {
-        log.debug("Acc�s � l'ecran de recherche vehicule liaison.");
+        log.debug("Acc?s ? l'ecran de recherche vehicule liaison.");
 
         ActionMessages errors = new ActionMessages();
         CriteresRechercheVehiculeForm rechercheVehiculeForm = new CriteresRechercheVehiculeForm();
         CriteresRechercheVehiculeVO criteresRechercheVehicule = new CriteresRechercheVehiculeVO();
-        
-        // Valeurs par d�faut
+
+        // Valeurs par d?faut
         rechercheVehiculeForm.init(subject);
 		CardexUser utilisateur = (CardexUser)subject.getUser();
 		rechercheVehiculeForm.setLienSite(String.valueOf(utilisateur.getSite()));
@@ -603,22 +603,22 @@ public class VehiculeAction extends AbstractAction {
 
         try {
         	VehiculeBusinessDelegate delegate = new VehiculeBusinessDelegate();
-        	
+
             ValueListHandler completeList = new ValueListHandler();
             completeList.setList(new ArrayList());
             rechercheVehiculeForm.getListeResultat().vider();
-            
-            //Conversion du composant d'�tat(ActionForm) en composant
+
+            //Conversion du composant d'?tat(ActionForm) en composant
             //d'affaire(Value Object).
             ValueObjectMapper.convertCriteresRechercheVehiculeHtmlForm(
             		rechercheVehiculeForm, criteresRechercheVehicule,
                     subject.getLocale());
 
-            //Ex�cution de la recherche via le service d'affaire(BusinessDelegate)
+            //Ex?cution de la recherche via le service d'affaire(BusinessDelegate)
             List<Vehicule> results = delegate.selectDefault(subject,criteresRechercheVehicule);
 
-            ajouterResultatVehicule(subject, rechercheVehiculeForm, results);        
-            
+            ajouterResultatVehicule(subject, rechercheVehiculeForm, results);
+
             return mapping.findForward("success");
         } catch (BusinessResourceException bre) {
             handleBusinessResourceException(bre, errors, request);
@@ -638,19 +638,19 @@ public class VehiculeAction extends AbstractAction {
 
     /**
      * <p>
-     * Cet �v�nement survient lorsque l'utilisateur clique sur le bouton modifier dans
-     * le panneau de mise � jour d'un v�hicule.  Les modifications aux donn�es
-     * sont enregistr�es dans le cardex, et l'�cran de mise � jour
-     * du v�hicule est affich�.
+     * Cet ?v?nement survient lorsque l'utilisateur clique sur le bouton modifier dans
+     * le panneau de mise ? jour d'un v?hicule.  Les modifications aux donn?es
+     * sont enregistr?es dans le cardex, et l'?cran de mise ? jour
+     * du v?hicule est affich?.
      * <p>
      *
-     * @param mapping L' ActionMapping utils� pour s�lectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requ�te (optionnelle)
-     * @param request La requ�te HTTP trait�e
-     * @param response La r�ponse HTTP cr��e
+     * @param mapping L' ActionMapping utils? pour s?lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requ?te (optionnelle)
+     * @param request La requ?te HTTP trait?e
+     * @param response La r?ponse HTTP cr??e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entr�e/sortie survient
+     * @exception IOException si une erreur d'entr?e/sortie survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward update(CardexAuthenticationSubject subject,
@@ -660,7 +660,7 @@ public class VehiculeAction extends AbstractAction {
                                 HttpServletResponse response) throws IOException,
                                 ServletException {
 
-        log.debug("Mise � jour d'un v�hicule");
+        log.debug("Mise ? jour d'un v?hicule");
         ActionMessages errors = new ActionMessages();
         try {
         	verifierToken(request);
@@ -673,15 +673,15 @@ public class VehiculeAction extends AbstractAction {
                     subject.getLocale());
             FormFile file = null;
             String nomFichier = "";
-            //On v�rifie s'il s'agit de l'ajout d'une photo
-            if(vehiculeForm.getAjoutPhoto().getSourceFile() != null 
+            //On v?rifie s'il s'agit de l'ajout d'une photo
+            if(vehiculeForm.getAjoutPhoto().getSourceFile() != null
                 && StringUtils.isNotEmpty(vehiculeForm.getAjoutPhoto().getSourceFile().getFileName())){
                 file = vehiculeForm.getAjoutPhoto().getUploadImage();
                 nomFichier = file.getFileName();
-                vehiculeForm.getAjoutPhoto().setExtension(vehiculeForm.getAjoutPhoto().getExtensionDeFilePath());                
-                //Est ce que la taille du fichier exc�de 4MB
+                vehiculeForm.getAjoutPhoto().setExtension(vehiculeForm.getAjoutPhoto().getExtensionDeFilePath());
+                //Est ce que la taille du fichier exc?de 4MB
                 if (vehiculeForm.getAjoutPhoto().isTailleAccepte() == false) {
-                    log.error("La taille du fichier est sup�rieure � 7MB.");
+                    log.error("La taille du fichier est sup?rieure ? 7MB.");
                     throw (new BusinessRuleExceptionHandle("erreur_fichier")).getBusinessException();
                 }else if(vehiculeForm.getAjoutPhoto().isPhoto() == false){
                     log.error("Ce fichier n'est pas une photo");
@@ -692,17 +692,17 @@ public class VehiculeAction extends AbstractAction {
 	            	vehiculeForm.getAjoutPhoto().setConfidentialite(vehiculeForm.getConfidentialite());
 	            	addLienPhotoAjout(subject, mapping, vehiculeForm.getAjoutPhoto(), request, response);
                 }
-            }else{ //Sinon, on fait la mise � jour de la fiche v�hicule.
-	            log.debug("Mise � jour du v�hicule: " + vehicule.toString());
+            }else{ //Sinon, on fait la mise ? jour de la fiche v?hicule.
+	            log.debug("Mise ? jour du v?hicule: " + vehicule.toString());
 	            vehiculeDelegate.update(subject, vehicule);
 	            vehicule = vehiculeDelegate.find(subject, vehicule);
 	            if (vehicule != null) {
 	              ValueObjectMapper.convertVehicule(vehicule, vehiculeForm,
 	                    subject.getLocale());
-	              log.debug("Modification effective du v�hicule: " + vehicule.toString());
+	              log.debug("Modification effective du v?hicule: " + vehicule.toString());
 	            }
-	
-				//V�rification d'un mandat PSU associ� � la mise � jour d'un v�hicule
+
+				//V?rification d'un mandat PSU associ? ? la mise ? jour d'un v?hicule
 				PSUMandatForm psuMandat = new PSUMandatForm();
 				if(StringUtils.isNotEmpty(vehiculeForm.getImmatriculation())){
 					psuMandat.setImmatriculation(vehiculeForm.getImmatriculation());
@@ -713,13 +713,13 @@ public class VehiculeAction extends AbstractAction {
 				PSUMandatAction.verificationMandat(subject, psuMandat, GlobalConstants.GenreFichier.VEHICULE, GlobalConstants.TypeAction.MISE_A_JOUR);
             }
             populateVehiculeForm(subject, vehicule, vehiculeForm);
-            
+
             if (vehiculeForm.getEntiteCardexLiaison() != null){
             	assignerLienRole(request, vehiculeForm);
-            	
+
 /*            	if(StringUtils.isNotEmpty(nomFichier)){
-            		//Dans le cas d'ajout d'une photo, on revient � l'�cran de consultation et non 
-            		//� celui du r�le.
+            		//Dans le cas d'ajout d'une photo, on revient ? l'?cran de consultation et non
+            		//? celui du r?le.
             		return mapping.findForward("success");
             	}
             	if (vehiculeForm.getEntiteCardexLiaison() instanceof SujetForm){
@@ -747,18 +747,18 @@ public class VehiculeAction extends AbstractAction {
 
     /**
      * <p>
-     * Cet �v�nement survient lorsque dans le menu principal, l'utilisateur
-     * a choisi de rechercher un v�hicule. L'application affiche alors le panneau de
-     * recherche des v�hicules.
+     * Cet ?v?nement survient lorsque dans le menu principal, l'utilisateur
+     * a choisi de rechercher un v?hicule. L'application affiche alors le panneau de
+     * recherche des v?hicules.
      * <p>
      *
-     * @param mapping L' ActionMapping utils� pour s�lectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requ�te (optionnelle)
-     * @param request La requ�te HTTP trait�e
-     * @param response La r�ponse HTTP cr��e
+     * @param mapping L' ActionMapping utils? pour s?lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requ?te (optionnelle)
+     * @param request La requ?te HTTP trait?e
+     * @param response La r?ponse HTTP cr??e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entr�e/sortie survient
+     * @exception IOException si une erreur d'entr?e/sortie survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward searchDefault(CardexAuthenticationSubject subject,
@@ -767,7 +767,7 @@ public class VehiculeAction extends AbstractAction {
                                 HttpServletRequest request,
                                 HttpServletResponse response) throws IOException,
                                 ServletException {
-        log.debug("Recherche par d�fault de v�hicules");
+        log.debug("Recherche par d?fault de v?hicules");
         ActionMessages errors = new ActionMessages();
         try {
 
@@ -775,17 +775,17 @@ public class VehiculeAction extends AbstractAction {
             CriteresRechercheVehiculeForm criteresRechercheVehiculeHtmlForm = (CriteresRechercheVehiculeForm) form;
             CriteresRechercheVehiculeVO criteresRechercheVehicule = new CriteresRechercheVehiculeVO();
 
-            //Valeur par d�faut
+            //Valeur par d?faut
             criteresRechercheVehiculeHtmlForm.init(subject);
 
-            //Conversion du composant d'�tat(ActionForm) en composant
+            //Conversion du composant d'?tat(ActionForm) en composant
             //d'affaire(Value Object).
             ValueObjectMapper.convertCriteresRechercheVehiculeHtmlForm(
                     criteresRechercheVehiculeHtmlForm, criteresRechercheVehicule,
                     subject.getLocale());
 
 
-            //Ex�cution de la recherche via le service d'affaire(BusinessDelegate)
+            //Ex?cution de la recherche via le service d'affaire(BusinessDelegate)
             List<Vehicule> results = delegate.selectDefault(subject,criteresRechercheVehicule);
 
             ajouterResultatVehicule(subject, criteresRechercheVehiculeHtmlForm, results);
@@ -809,19 +809,19 @@ public class VehiculeAction extends AbstractAction {
 
     /**
      * <p>
-     * Cet �v�nement survient lorsque dans l'�cran de recherche de v�hicules,
-     * l'utilisateur a choisi de rechercher un v�hicule selon des crit�res
-     * diff�rents. L'application affiche alors le panneau de
-     * recherche des v�hicules avec les r�sultats de la nouvelle recherche.
+     * Cet ?v?nement survient lorsque dans l'?cran de recherche de v?hicules,
+     * l'utilisateur a choisi de rechercher un v?hicule selon des crit?res
+     * diff?rents. L'application affiche alors le panneau de
+     * recherche des v?hicules avec les r?sultats de la nouvelle recherche.
      * <p>
      *
-     * @param mapping L' ActionMapping utils� pour s�lectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requ�te (optionnelle)
-     * @param request La requ�te HTTP trait�e
-     * @param response La r�ponse HTTP cr��e
+     * @param mapping L' ActionMapping utils? pour s?lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requ?te (optionnelle)
+     * @param request La requ?te HTTP trait?e
+     * @param response La r?ponse HTTP cr??e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entr�e/sortie survient
+     * @exception IOException si une erreur d'entr?e/sortie survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward search(CardexAuthenticationSubject subject,
@@ -831,22 +831,22 @@ public class VehiculeAction extends AbstractAction {
                                 HttpServletResponse response) throws IOException,
                                 ServletException {
 
-        log.debug("Recherche de v�hicules");
+        log.debug("Recherche de v?hicules");
         ActionMessages errors = new ActionMessages();
         try {
             VehiculeBusinessDelegate delegate = new VehiculeBusinessDelegate();
             CriteresRechercheVehiculeForm criteresRechercheVehiculeHtmlForm = (CriteresRechercheVehiculeForm) form;
             CriteresRechercheVehiculeVO criteresRechercheVehicule = new CriteresRechercheVehiculeVO();
             criteresRechercheVehiculeHtmlForm.getListeResultat().vider();
-            //Conversion du composant d'�tat(ActionForm) en composant
+            //Conversion du composant d'?tat(ActionForm) en composant
             //d'affaire(Value Object).
             ValueObjectMapper.convertCriteresRechercheVehiculeHtmlForm(
                     criteresRechercheVehiculeHtmlForm, criteresRechercheVehicule,
                     subject.getLocale());
-            //Ex�cution de la recherche via le service d'affaire(BusinessDelegate)
+            //Ex?cution de la recherche via le service d'affaire(BusinessDelegate)
             List<Vehicule> results = delegate.select(subject,criteresRechercheVehicule);
 
-			//V�rification d'un mandat PSU associ� � la recherche d'un v�hicule (par province)
+			//V?rification d'un mandat PSU associ? ? la recherche d'un v?hicule (par province)
 			PSUMandatForm psuMandat = new PSUMandatForm();
 			if(!OracleDAOUtils.isEmpty(criteresRechercheVehicule.getProvince())){
 				psuMandat.setProvince(criteresRechercheVehicule.getProvince());
@@ -881,7 +881,7 @@ public class VehiculeAction extends AbstractAction {
 	 * @throws BusinessResourceException
 	 */
 	private void ajouterResultatVehicule(CardexAuthenticationSubject subject, CriteresRechercheVehiculeForm criteresRechercheVehiculeHtmlForm, List<Vehicule> list) throws IteratorException, ValueObjectMapperException, BusinessResourceException {
-		//Ajout des v�hicules dans le composant d'�tat (ActionForm)
+		//Ajout des v?hicules dans le composant d'?tat (ActionForm)
 		List currentList = new ArrayList();
 		Iterator it = list.iterator();
 		while (it.hasNext()){
@@ -893,7 +893,7 @@ public class VehiculeAction extends AbstractAction {
 		  vehiculeForm.assignerValeurDeListe( subject );
 		  currentList.add(vehiculeForm);
 		}
-		
+
 		criteresRechercheVehiculeHtmlForm.setListeResultat( currentList );
 		criteresRechercheVehiculeHtmlForm.getListeResultat().assignerTrierDefault(VehiculeTrieListe.CLE_IMMATRICULATION, false, new VehiculeTrieListe());
 	}
@@ -907,7 +907,7 @@ public class VehiculeAction extends AbstractAction {
 	 * @throws BusinessResourceException
 	 */
 	private void ajouterResultatVehiculeAudit(CardexAuthenticationSubject subject, CriteresRechercheVehiculeForm criteresRechercheVehiculeHtmlForm, ValueListIterator results) throws IteratorException, ValueObjectMapperException, BusinessResourceException {
-		//Ajout des v�hicules dans le composant d'�tat (ActionForm)
+		//Ajout des v?hicules dans le composant d'?tat (ActionForm)
 		Collection list = results.getNextElements(results.getSize());
 		List currentList = new ArrayList();
 		Iterator it = list.iterator();
@@ -920,24 +920,24 @@ public class VehiculeAction extends AbstractAction {
 		  vehiculeForm.assignerValeurDeListe( subject );
 		  currentList.add(vehiculeForm);
 		}
-		
+
 		criteresRechercheVehiculeHtmlForm.setListeResultatAudit( currentList );
 	}
 
 	/**
      * <p>
-     * Cet �v�nement surivient lorsque dans l'�cran de recherche de v�hicule, l'utilisateur a choisi
-     * de rechercher un vehicule selon des crit�res diff�rents. L'application affiche alors le panneau de
-     * recherche des vehicules avec les r�sultats de la nouvelle recherche.
+     * Cet ?v?nement surivient lorsque dans l'?cran de recherche de v?hicule, l'utilisateur a choisi
+     * de rechercher un vehicule selon des crit?res diff?rents. L'application affiche alors le panneau de
+     * recherche des vehicules avec les r?sultats de la nouvelle recherche.
      * <p>
      *
-     * @param mapping L' ActionMapping utils� pour s�lectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requ�te (optionnelle)
-     * @param request La requ�te HTTP trait�e
-     * @param response La r�ponse HTTP cr��e
+     * @param mapping L' ActionMapping utils? pour s?lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requ?te (optionnelle)
+     * @param request La requ?te HTTP trait?e
+     * @param response La r?ponse HTTP cr??e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entr�e/sortie survient
+     * @exception IOException si une erreur d'entr?e/sortie survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward searchLiaison(CardexAuthenticationSubject subject,
@@ -955,11 +955,11 @@ public class VehiculeAction extends AbstractAction {
             CriteresRechercheVehiculeForm criteresRechercheVehiculeHtmlForm = (CriteresRechercheVehiculeForm) form;
             CriteresRechercheVehiculeVO criteresRechercheVehicule = new CriteresRechercheVehiculeVO();
             criteresRechercheVehiculeHtmlForm.getListeResultat().vider();
-            
-            // Conversion du composant d'�tat(ActionForm) en composant d'affaire(Value Object)
+
+            // Conversion du composant d'?tat(ActionForm) en composant d'affaire(Value Object)
             ValueObjectMapper.convertCriteresRechercheVehiculeHtmlForm(criteresRechercheVehiculeHtmlForm, criteresRechercheVehicule,subject.getLocale());
 
-            // Ex�cution de la recherche via le service d'affaire(BusinessDelegate)
+            // Ex?cution de la recherche via le service d'affaire(BusinessDelegate)
             List<Vehicule> results = delegate.select(subject,criteresRechercheVehicule);
 
             ajouterResultatVehicule(subject, criteresRechercheVehiculeHtmlForm, results);
@@ -986,16 +986,16 @@ public class VehiculeAction extends AbstractAction {
 
     /**
      * <p>
-     * Cet �v�nement surivient lorsque l'utilisateur clique sur le bouton de liaison
-     * d'un �l�ment de r�sultats de recherche des v�hicules en mode liaison.
+     * Cet ?v?nement surivient lorsque l'utilisateur clique sur le bouton de liaison
+     * d'un ?l?ment de r?sultats de recherche des v?hicules en mode liaison.
      *
-     * @param mapping L' ActionMapping utils� pour s�lectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requ�te (optionnelle)
-     * @param request La requ�te HTTP trait�e
-     * @param response La r�ponse HTTP cr��e
+     * @param mapping L' ActionMapping utils? pour s?lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requ?te (optionnelle)
+     * @param request La requ?te HTTP trait?e
+     * @param response La r?ponse HTTP cr??e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entr�e/sortie survient
+     * @exception IOException si une erreur d'entr?e/sortie survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward showRole(CardexAuthenticationSubject subject,
@@ -1011,14 +1011,14 @@ public class VehiculeAction extends AbstractAction {
 
     /**
      * <p>
-     * Popule les informations d'un v�hicule obtenu dans la base de donn�es
-     * dans le VehiculeForm sp�cifi�.
+     * Popule les informations d'un v?hicule obtenu dans la base de donn?es
+     * dans le VehiculeForm sp?cifi?.
      *
-     * @param Vehicule Les crit�res du v�hicule � obtenir
-     * @param VehiculeForm L'ActionForm bean � populer � partir du v�hicule obtenu
+     * @param Vehicule Les crit?res du v?hicule ? obtenir
+     * @param VehiculeForm L'ActionForm bean ? populer ? partir du v?hicule obtenu
      *
-     * @exception BusinessResourceException si une erreur syst�me survient
-     * @exception BusinessException si une r�gle d'affaire n'est pas respect�e
+     * @exception BusinessResourceException si une erreur syst?me survient
+     * @exception BusinessException si une r?gle d'affaire n'est pas respect?e
      */
     private void populateVehiculeForm(CardexAuthenticationSubject subject,
                                      Vehicule criteria,
@@ -1029,35 +1029,35 @@ public class VehiculeAction extends AbstractAction {
             new VehiculeBusinessDelegate();
         Vehicule vehicule = delegate.find(subject,criteria);
         vehiculeForm.resetOnglets();
-        //log.debug("V�hicule trouv�: " + vehicule.toString());
+        //log.debug("V?hicule trouv?: " + vehicule.toString());
         ValueObjectMapper.convertVehicule(vehicule, vehiculeForm, subject.getLocale());
         vehiculeForm.setConfirmationMotPasse(vehiculeForm.getMotPasse());
 		rechercheLiensVehicule(subject, vehicule, vehiculeForm, delegate);
   }
-  
+
     /**
-     * Effectue la recherche des enregistrements li�s � un v�hicule donn�, 
-     * affich�s dans les onglets du v�hicule.
+     * Effectue la recherche des enregistrements li?s ? un v?hicule donn?,
+     * affich?s dans les onglets du v?hicule.
      *
-     * @param subject Le sujet authentifi�
-     * @param Vehicule Les crit�res du vehicule a obtenir
-     * @param VehiculeForm L'ActionForm bean a popul� � partir du vehicule obtenu
-     * @param delegate Lien avec la base de donn�es.
+     * @param subject Le sujet authentifi?
+     * @param Vehicule Les crit?res du vehicule a obtenir
+     * @param VehiculeForm L'ActionForm bean a popul? ? partir du vehicule obtenu
+     * @param delegate Lien avec la base de donn?es.
      *
-     * @exception BusinessResourceException si une erreur syst�me survient
-     * @exception BusinessException si une r�gle d'affaire n'est pas respect�e
+     * @exception BusinessResourceException si une erreur syst?me survient
+     * @exception BusinessException si une r?gle d'affaire n'est pas respect?e
      */
     private void rechercheLiensVehicule(CardexAuthenticationSubject subject,
                                      Vehicule vehicule,
                                      VehiculeForm vehiculeForm,
                                      VehiculeBusinessDelegate delegate) throws BusinessResourceException,
                                      BusinessException,
-                                     ValueObjectMapperException {		
+                                     ValueObjectMapperException {
         // Recherche des liens dossier
         Collection liensDossier = delegate.findLiensDossier(subject,vehicule);
         Iterator it = liensDossier.iterator();
 
-        log.debug("Dossiers li�s (" + liensDossier.size() + ") :");
+        log.debug("Dossiers li?s (" + liensDossier.size() + ") :");
 
         while (it.hasNext()) {
             Dossier     linkDossier = (Dossier) it.next();
@@ -1070,18 +1070,18 @@ public class VehiculeAction extends AbstractAction {
             log.debug(linkDossier.toString());
         }
         vehiculeForm.getListeDossiers().assignerTrierDefault(DossierOngletTrieListe.CLE_DATE_DEBUT, true, new DossierOngletTrieListe());
-        
+
         // Recherche des liens narration
         Collection liensNarration = delegate.findLiensNarration(subject,
                 vehicule);
         it = liensNarration.iterator();
 
-        log.debug("Narrations li�es (" + liensNarration.size() + ") :");
+        log.debug("Narrations li?es (" + liensNarration.size() + ") :");
 
         while (it.hasNext()) {
             Narration     linkNarration = (Narration) it.next();
             NarrationForm linkNarrationForm = new NarrationForm();
-			//On inscrit les valeurs de r�f�rence pour l'impression de la narration.
+			//On inscrit les valeurs de r?f?rence pour l'impression de la narration.
 			linkNarration.setReference1(vehiculeForm.getImmatriculation());
 
             ValueObjectMapper.convertNarration(linkNarration, linkNarrationForm,
@@ -1096,7 +1096,7 @@ public class VehiculeAction extends AbstractAction {
         Collection liensPhoto = delegate.findLiensPhoto(subject,
                 vehicule);
         it = liensPhoto.iterator();
-        log.debug("Photos li�es (" + liensPhoto.size() + ") :");
+        log.debug("Photos li?es (" + liensPhoto.size() + ") :");
 
         while (it.hasNext()) {
             Collection sublist = new ArrayList();
@@ -1113,10 +1113,10 @@ public class VehiculeAction extends AbstractAction {
             vehiculeForm.addPhoto(sublist);
         }//while
 
-        // Recherche des liens particularit�s
+        // Recherche des liens particularit?s
         Particularites liensParticularites = delegate.findLiensParticularite(subject,
                 vehicule);
-        log.debug("Particularites li�s (" + liensParticularites.getParticularitesChoisis().size() + ") :");
+        log.debug("Particularites li?s (" + liensParticularites.getParticularitesChoisis().size() + ") :");
         ParticularitesForm linkParticularitesForm = new ParticularitesForm();
         ValueObjectMapper.convertParticularites(subject, liensParticularites,linkParticularitesForm,subject.getLocale());
         vehiculeForm.setParticularites(linkParticularitesForm);
@@ -1126,7 +1126,7 @@ public class VehiculeAction extends AbstractAction {
                 vehicule);
         it = liensSujet.iterator();
 
-        log.debug("Sujets li�s (" + liensSujet.size() + ") :");
+        log.debug("Sujets li?s (" + liensSujet.size() + ") :");
 
         while (it.hasNext()) {
             Sujet     linkSujet = (Sujet) it.next();
@@ -1140,12 +1140,12 @@ public class VehiculeAction extends AbstractAction {
         }
         vehiculeForm.getListeSujets().assignerTrierDefault(SujetOngletTrieListe.CLE_NOM, false, new SujetOngletTrieListe());
 
-        // Recherche des liens soci�t�s
+        // Recherche des liens soci?t?s
         Collection liensSociete = delegate.findLiensSociete(subject,
                 vehicule);
         it = liensSociete.iterator();
 
-        log.debug("Soci�t�s li�es (" + liensSociete.size() + ") :");
+        log.debug("Soci?t?s li?es (" + liensSociete.size() + ") :");
 
         while (it.hasNext()) {
             Societe     linkSociete = (Societe) it.next();
@@ -1159,7 +1159,7 @@ public class VehiculeAction extends AbstractAction {
         }
         vehiculeForm.getListeSocietes().assignerTrierDefault(SocieteOngletTrieListe.CLE_NOM, false, new SocieteOngletTrieListe());
 
-        //Valeurs par d�faut d'une nouvelle photo
+        //Valeurs par d?faut d'une nouvelle photo
         vehiculeForm.getAjoutPhoto().setTypeMultimedia(GlobalConstants.TypeMutliMedia.PHOTO);
         vehiculeForm.getAjoutPhoto().setCle("-1");
         vehiculeForm.getAjoutPhoto().setSite("-1");
@@ -1167,20 +1167,20 @@ public class VehiculeAction extends AbstractAction {
         vehiculeForm.getAjoutPhoto().setLienSiteMultimedia("-1");
         vehiculeForm.getAjoutPhoto().setLienElement("-1");
         vehiculeForm.getAjoutPhoto().setLienSiteElement("-1");
-        
-    }  
+
+    }
 
     /**
-     * Popule les informations d'un dossier obtenu dans la base de donn�e
-     * dans le VehiculeForm sp�cifi�.  Cette m�thode est appel�e par show et
-     * showAcces.  Le diff�rence avec populateVehiculeForm est que le dossier 
-     * n'est plus appel� puisqu'il l'est d�j� dans show et showAcces.
+     * Popule les informations d'un dossier obtenu dans la base de donn?e
+     * dans le VehiculeForm sp?cifi?.  Cette m?thode est appel?e par show et
+     * showAcces.  Le diff?rence avec populateVehiculeForm est que le dossier
+     * n'est plus appel? puisqu'il l'est d?j? dans show et showAcces.
      *
-     * @param Vehicule Les crit�res du v�hicule � obtenir
-     * @param VehiculeForm L'ActionForm bean � populer � partir du v�hicule obtenu
+     * @param Vehicule Les crit?res du v?hicule ? obtenir
+     * @param VehiculeForm L'ActionForm bean ? populer ? partir du v?hicule obtenu
      *
-     * @exception BusinessResourceException si une erreur syst�me survient
-     * @exception BusinessException si une r�gle d'affaire n'est pas respect�e
+     * @exception BusinessResourceException si une erreur syst?me survient
+     * @exception BusinessException si une r?gle d'affaire n'est pas respect?e
      */
     private void populateVehiculeFormShow(CardexAuthenticationSubject subject,
                                      Vehicule vehicule,
@@ -1195,15 +1195,15 @@ public class VehiculeAction extends AbstractAction {
 
 
     /**
-     * Rafraichissement de l'�cran de recherche lorsqu'une marque est s�lectionn�e
-     * de mani�re � filtrer la liste des mod�les.
-     * @param mapping L' ActionMapping utils� pour s�lectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requ�te (optionnelle)
-     * @param request La requ�te HTTP trait�e
-     * @param response La r�ponse HTTP cr��e
+     * Rafraichissement de l'?cran de recherche lorsqu'une marque est s?lectionn?e
+     * de mani?re ? filtrer la liste des mod?les.
+     * @param mapping L' ActionMapping utils? pour s?lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requ?te (optionnelle)
+     * @param request La requ?te HTTP trait?e
+     * @param response La r?ponse HTTP cr??e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entr�e/sortieif an input/output survient
+     * @exception IOException si une erreur d'entr?e/sortieif an input/output survient
      * @exception ServletException si une exception servlet survient
      * @throws InvocationTargetException
      * @throws IllegalAccessException
@@ -1217,22 +1217,22 @@ public class VehiculeAction extends AbstractAction {
                                  HttpServletRequest request,
                                  HttpServletResponse response) throws IOException,
                                  ServletException, SecurityException, IllegalArgumentException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
-        log.debug("Refresh �cran de recherche de v�hicule");
+        log.debug("Refresh ?cran de recherche de v?hicule");
 
         return mapping.findForward("success");
     }
 
     /**
-     * Rafraichissement de l'�cran de v�hicule lorsqu'une marque est s�lectionn�e
-     * de mani�re � filtrer la liste des mod�les.
+     * Rafraichissement de l'?cran de v?hicule lorsqu'une marque est s?lectionn?e
+     * de mani?re ? filtrer la liste des mod?les.
      *
-     * @param mapping L' ActionMapping utils� pour s�lectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requ�te (optionnelle)
-     * @param request La requ�te HTTP trait�e
-     * @param response La r�ponse HTTP cr��e
+     * @param mapping L' ActionMapping utils? pour s?lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requ?te (optionnelle)
+     * @param request La requ?te HTTP trait?e
+     * @param response La r?ponse HTTP cr??e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entr�e/sortieif an input/output survient
+     * @exception IOException si une erreur d'entr?e/sortieif an input/output survient
      * @exception ServletException si une exception servlet survient
      * @throws InvocationTargetException
      * @throws IllegalAccessException
@@ -1246,20 +1246,20 @@ public class VehiculeAction extends AbstractAction {
                                  HttpServletRequest request,
                                  HttpServletResponse response) throws IOException,
                                  ServletException, SecurityException, IllegalArgumentException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
-        log.debug("Refresh �cran du v�hicule");
-        
+        log.debug("Refresh ?cran du v?hicule");
+
         return mapping.findForward("success");
     }
 
     /**
      *
-     * @param mapping L' ActionMapping utils� pour s�lectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requ�te (optionnelle)
-     * @param request La requ�te HTTP trait�e
-     * @param response La r�ponse HTTP cr��e
+     * @param mapping L' ActionMapping utils? pour s?lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requ?te (optionnelle)
+     * @param request La requ?te HTTP trait?e
+     * @param response La r?ponse HTTP cr??e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entr�e/sortie survient
+     * @exception IOException si une erreur d'entr?e/sortie survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward resetSearchDefault(CardexAuthenticationSubject subject,
@@ -1268,7 +1268,7 @@ public class VehiculeAction extends AbstractAction {
                                        HttpServletRequest request,
                                        HttpServletResponse response) throws IOException,
                                        ServletException {
-        log.debug("Param�tres de recherche par d�fault de v�hicules");
+        log.debug("Param?tres de recherche par d?fault de v?hicules");
 
         ActionMessages errors = new ActionMessages();
 
@@ -1278,7 +1278,7 @@ public class VehiculeAction extends AbstractAction {
 
             criteresRechercheVehiculeHtmlForm.init( subject );
 
-            // Conversion du composant d'�tat(ActionForm) en composant d'affaire(Value Object)
+            // Conversion du composant d'?tat(ActionForm) en composant d'affaire(Value Object)
             ValueObjectMapper.convertCriteresRechercheVehiculeHtmlForm(criteresRechercheVehiculeHtmlForm,criteresRechercheVehicule,subject.getLocale());
 
             return mapping.findForward("success");
@@ -1290,13 +1290,13 @@ public class VehiculeAction extends AbstractAction {
     }
 
     /**
-     * @param mapping L' ActionMapping utils� pour s�lectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requ�te (optionnelle)
-     * @param request La requ�te HTTP trait�e
-     * @param response La r�ponse HTTP cr��e
+     * @param mapping L' ActionMapping utils? pour s?lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requ?te (optionnelle)
+     * @param request La requ?te HTTP trait?e
+     * @param response La r?ponse HTTP cr??e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entr�e/sortie survient
+     * @exception IOException si une erreur d'entr?e/sortie survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward resetSearchDefaultLiaison(CardexAuthenticationSubject subject,
@@ -1305,7 +1305,7 @@ public class VehiculeAction extends AbstractAction {
                                        HttpServletRequest request,
                                        HttpServletResponse response) throws IOException,
                                        ServletException {
-        log.debug("Param�tres de recherche par d�fault de v�hicules en mode liaison");
+        log.debug("Param?tres de recherche par d?fault de v?hicules en mode liaison");
 
         ActionMessages errors = new ActionMessages();
 
@@ -1323,7 +1323,7 @@ public class VehiculeAction extends AbstractAction {
             criteresRechercheVehiculeHtmlForm.setVehicule(vehiculeHtmlForm);
             criteresRechercheVehiculeHtmlForm.setSociete(societeHtmlForm);
 
-            // Conversion du composant d'�tat(ActionForm) en composant d'affaire(Value Object)
+            // Conversion du composant d'?tat(ActionForm) en composant d'affaire(Value Object)
             ValueObjectMapper.convertCriteresRechercheVehiculeHtmlForm(criteresRechercheVehiculeHtmlForm,criteresRechercheVehicule,subject.getLocale());
 
             return mapping.findForward("success");
@@ -1336,16 +1336,16 @@ public class VehiculeAction extends AbstractAction {
 
     /**
      * <p>
-     * Cet �v�nement surivient lorsque l'utilisateur clique sur le bouton de liaison
-     * d'un �l�ment de r�sultats de recherche des dossiers en mode liaison.
+     * Cet ?v?nement surivient lorsque l'utilisateur clique sur le bouton de liaison
+     * d'un ?l?ment de r?sultats de recherche des dossiers en mode liaison.
      *
-     * @param mapping L' ActionMapping utils� pour s�lectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requ�te (optionnelle)
-     * @param request La requ�te HTTP trait�e
-     * @param response La r�ponse HTTP cr��e
+     * @param mapping L' ActionMapping utils? pour s?lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requ?te (optionnelle)
+     * @param request La requ?te HTTP trait?e
+     * @param response La r?ponse HTTP cr??e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entr�e/sortie survient
+     * @exception IOException si une erreur d'entr?e/sortie survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward addLienDossier(CardexAuthenticationSubject subject,
@@ -1370,7 +1370,7 @@ public class VehiculeAction extends AbstractAction {
             vehicule.setCle(lienForm.getCleSource());
             vehicule.setSite(lienForm.getSiteSource());
             vehicule.setTypeLien(lienForm.getTypeLien());
-            //R�le par d�faut pour ce lien
+            //R?le par d?faut pour ce lien
             vehicule.setRole(GlobalConstants.Role.SANS_OBJET);
 
             dossier.setCle(lienForm.getCleDestination());
@@ -1384,7 +1384,7 @@ public class VehiculeAction extends AbstractAction {
             populateVehiculeForm(subject, vehicule, vehiculeForm);
             assignerNouveauVehicule(request, vehiculeForm);
 
-			//R�cup�ration du num�ro de dossier qui vient d'�tre associ�
+			//R?cup?ration du num?ro de dossier qui vient d'?tre associ?
 			Collection dossierListe = vehiculeForm.getDossiers();
 			Iterator it = dossierListe.iterator();
 			String numeroCardex = "";
@@ -1394,7 +1394,7 @@ public class VehiculeAction extends AbstractAction {
 					numeroCardex = dossierAssocie.getNumeroCardex().toString();
 				}
 			}
-			//V�rification d'un mandat PSU associ� � l'ajout d'une liaison � un v�hicule
+			//V?rification d'un mandat PSU associ? ? l'ajout d'une liaison ? un v?hicule
 			PSUMandatForm psuMandat = new PSUMandatForm();
 			psuMandat.setImmatriculation(vehiculeForm.getImmatriculation());
 			psuMandat.setGenreFichier(GlobalConstants.GenreFichier.DOSSIER);
@@ -1420,16 +1420,16 @@ public class VehiculeAction extends AbstractAction {
 
     /**
      * <p>
-     * Cet �v�nement surivient lorsque l'utilisateur clique sur le bouton de liaison
-     * d'un �l�ment de r�sultats de recherche des sujets en mode liaison.
+     * Cet ?v?nement surivient lorsque l'utilisateur clique sur le bouton de liaison
+     * d'un ?l?ment de r?sultats de recherche des sujets en mode liaison.
      *
-     * @param mapping L' ActionMapping utils� pour s�lectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requ�te (optionnelle)
-     * @param request La requ�te HTTP trait�e
-     * @param response La r�ponse HTTP cr��e
+     * @param mapping L' ActionMapping utils? pour s?lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requ?te (optionnelle)
+     * @param request La requ?te HTTP trait?e
+     * @param response La r?ponse HTTP cr??e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entr�e/sortie survient
+     * @exception IOException si une erreur d'entr?e/sortie survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward addLienSujet(CardexAuthenticationSubject subject,
@@ -1465,7 +1465,7 @@ public class VehiculeAction extends AbstractAction {
             populateVehiculeForm(subject, vehicule, vehiculeForm);
             assignerNouveauVehicule(request, vehiculeForm);
 
-			//R�cup�ration du nom du num�ro de fiche sujet qui vient d'�tre associ�
+			//R?cup?ration du nom du num?ro de fiche sujet qui vient d'?tre associ?
 			Collection sujetListe = vehiculeForm.getSujets();
 			Iterator it = sujetListe.iterator();
 			String numeroFiche = "";
@@ -1476,7 +1476,7 @@ public class VehiculeAction extends AbstractAction {
 				}
 			}
 
-			//V�rification d'un mandat PSU associ� � l'ajout d'une liaison � un v�hicule
+			//V?rification d'un mandat PSU associ? ? l'ajout d'une liaison ? un v?hicule
 			PSUMandatForm psuMandat = new PSUMandatForm();
 			psuMandat.setImmatriculation(vehiculeForm.getImmatriculation());
 			psuMandat.setGenreFichier(GlobalConstants.GenreFichier.SUJET);
@@ -1502,16 +1502,16 @@ public class VehiculeAction extends AbstractAction {
 
     /**
      * <p>
-     * Cet �v�nement surivient lorsque l'utilisateur clique sur le bouton de liaison
-     * d'un �l�ment de r�sultats de recherche des soci�t�s en mode liaison.
+     * Cet ?v?nement surivient lorsque l'utilisateur clique sur le bouton de liaison
+     * d'un ?l?ment de r?sultats de recherche des soci?t?s en mode liaison.
      *
-     * @param mapping L' ActionMapping utils� pour s�lectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requ�te (optionnelle)
-     * @param request La requ�te HTTP trait�e
-     * @param response La r�ponse HTTP cr��e
+     * @param mapping L' ActionMapping utils? pour s?lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requ?te (optionnelle)
+     * @param request La requ?te HTTP trait?e
+     * @param response La r?ponse HTTP cr??e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entr�e/sortie survient
+     * @exception IOException si une erreur d'entr?e/sortie survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward addLienSociete(CardexAuthenticationSubject subject,
@@ -1520,7 +1520,7 @@ public class VehiculeAction extends AbstractAction {
                                         HttpServletRequest request,
                                         HttpServletResponse response) throws IOException,
                                         ServletException {
-        log.debug("Liaison d'une soci�t�");
+        log.debug("Liaison d'une soci?t?");
 
         ActionMessages errors = new ActionMessages();
 
@@ -1532,7 +1532,7 @@ public class VehiculeAction extends AbstractAction {
             Vehicule          vehicule = new VehiculeVO();
             Societe           societe = new SocieteVO();
             vehiculeForm.init(subject);
-            
+
             vehicule.setCle(lienForm.getCleSource());
             vehicule.setSite(lienForm.getSiteSource());
             vehicule.setTypeLien(lienForm.getTypeLien());
@@ -1547,8 +1547,8 @@ public class VehiculeAction extends AbstractAction {
             log.debug(lienForm.toString());
             populateVehiculeForm(subject, vehicule, vehiculeForm);
             assignerNouveauVehicule(request, vehiculeForm);
-            
-			//R�cup�ration du nom de la soci�t� qui vient d'�tre associ�e
+
+			//R?cup?ration du nom de la soci?t? qui vient d'?tre associ?e
 			Collection dossierListe = vehiculeForm.getSocietes();
 			Iterator it = dossierListe.iterator();
 			String nom = "";
@@ -1558,7 +1558,7 @@ public class VehiculeAction extends AbstractAction {
 					nom = societeAssocie.getNom();
 				}
 			}
-			//V�rification d'un mandat PSU associ� � l'ajout d'une liaison � un v�hicule
+			//V?rification d'un mandat PSU associ? ? l'ajout d'une liaison ? un v?hicule
 			PSUMandatForm psuMandat = new PSUMandatForm();
 			psuMandat.setImmatriculation(vehiculeForm.getImmatriculation());
 			psuMandat.setGenreFichier(GlobalConstants.GenreFichier.SOCIETE);
@@ -1584,17 +1584,17 @@ public class VehiculeAction extends AbstractAction {
 
     /**
      * <p>
-     * Cet �v�nement surivient lorsque l'utilisateur clique sur le bouton de
-     * de destruction de lien d'un �l�ment de l'onglets dossiers dans l'�cran
-     * de consultation v�hicule.
+     * Cet ?v?nement surivient lorsque l'utilisateur clique sur le bouton de
+     * de destruction de lien d'un ?l?ment de l'onglets dossiers dans l'?cran
+     * de consultation v?hicule.
      *
-     * @param mapping L' ActionMapping utils� pour s�lectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requ�te (optionnelle)
-     * @param request La requ�te HTTP trait�e
-     * @param response La r�ponse HTTP cr��e
+     * @param mapping L' ActionMapping utils? pour s?lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requ?te (optionnelle)
+     * @param request La requ?te HTTP trait?e
+     * @param response La r?ponse HTTP cr??e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entr�e/sortie survient
+     * @exception IOException si une erreur d'entr?e/sortie survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward deleteLienDossier(CardexAuthenticationSubject subject,
@@ -1635,7 +1635,7 @@ public class VehiculeAction extends AbstractAction {
             populateVehiculeForm(subject, vehicule, vehiculeForm);
             assignerNouveauVehicule(request, vehiculeForm);
 
-			//V�rification d'un mandat PSU associ� � la suppression d'une liaison � un v�hicule
+			//V?rification d'un mandat PSU associ? ? la suppression d'une liaison ? un v?hicule
 			PSUMandatForm psuMandat = new PSUMandatForm();
 			psuMandat.setImmatriculation(vehiculeForm.getImmatriculation());
 			psuMandat.setGenreFichier(GlobalConstants.GenreFichier.DOSSIER);
@@ -1658,22 +1658,22 @@ public class VehiculeAction extends AbstractAction {
 
         return mapping.findForward("success");
     }
-    
+
     /**
      * <p>
-     * Cet �v�nement survient lorsque l'utilisateur clique sur le bouton �puration dans
-     * le panneau de recherche des v�hicules.  L'�puration consiste � supprimer tous les
-     * v�hicules donc le niveau de confidentialit� est 8.
+     * Cet ?v?nement survient lorsque l'utilisateur clique sur le bouton ?puration dans
+     * le panneau de recherche des v?hicules.  L'?puration consiste ? supprimer tous les
+     * v?hicules donc le niveau de confidentialit? est 8.
      * <p>
      *
-     * @param subject Le sujet authentifi�
-     * @param mapping L' ActionMapping utils� pour s�lectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requ�te (optionnelle)
-     * @param request La requ�te HTTP trait�e
-     * @param response La r�ponse HTTP cr��e
+     * @param subject Le sujet authentifi?
+     * @param mapping L' ActionMapping utils? pour s?lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requ?te (optionnelle)
+     * @param request La requ?te HTTP trait?e
+     * @param response La r?ponse HTTP cr??e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entr�e/sortie survient
+     * @exception IOException si une erreur d'entr?e/sortie survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward delete(CardexAuthenticationSubject subject,
@@ -1682,7 +1682,7 @@ public class VehiculeAction extends AbstractAction {
                                 HttpServletRequest request,
                                 HttpServletResponse response) throws IOException, DAOException,
                                 ServletException {
-        log.debug("�puration des v�hicules");
+        log.debug("?puration des v?hicules");
 
         ActionMessages errors = new ActionMessages();
 
@@ -1691,7 +1691,7 @@ public class VehiculeAction extends AbstractAction {
 
         try {
         	verifierToken(request);
-        	//Avant de proc�der � l'�puration, on sauvegardes les donn�es dans un rapport � la demande des v�rificateurs.
+        	//Avant de proc?der ? l'?puration, on sauvegardes les donn?es dans un rapport ? la demande des v?rificateurs.
         	RapportBusinessDelegate rapportDelegate = new RapportBusinessDelegate();
         	Map parameters = new HashMap();
         	connection = DAOConnection.getInstance().getConnection(subject);
@@ -1701,26 +1701,27 @@ public class VehiculeAction extends AbstractAction {
 			CardexUser utilisateur = (CardexUser)subject.getUser();
     		ListeCache cache = ListeCache.getInstance();
 			String siteDescription = cache.obtenirLabel(subject, String.valueOf(utilisateur.getSite()), new TableValeurCleSQLListeCache(subject, GlobalConstants.TableValeur.SITE, utilisateur.getEntite(), GlobalConstants.ActionSecurite.SELECTION));
-    		String nomRapport = chemin+"V�hicules � �purer "+ siteDescription + " (" + dateRapport+").pdf";
-    		InputStream gabarit = getClass().getClassLoader().getResourceAsStream("rapports/" + RapportsConfiguration.RAPPORT_EPURATION_VEHICULES);
-			log.debug("Sauvegarder v�hicules � �purer");
+    		String nomRapport = chemin+"V?hicules ? ?purer "+ siteDescription + " (" + dateRapport+").pdf";
+    		InputStream gabarit = getClass().getClassLoader().getResourceAsStream(RapportsConfiguration.RAPPORT_EPURATION_VEHICULES);
+			log.debug("Sauvegarder v?hicules ? ?purer");
+
 			long site = utilisateur.getSite();
 			resultSet = rapportDelegate.rapportEpuration(site, connection, "CARDEX_RAPPORT.SP_RAP_VE_EPURATION");
 			JRResultSetDataSource resultSetDataSource = new JRResultSetDataSource(resultSet);
 			// log.debug(context.getRealPath("/rapports/"));
-			ServletContext context = request.getSession().getServletContext();  
+			ServletContext context = request.getSession().getServletContext();
 	        parameters.put("SUBREPORT_DIR",context.getRealPath("/rapports/"));
             parameters.put("REPORT_CONNECTION",connection);
 			parameters.put("UTILISATEUR", utilisateur.getCode());
 			JasperPrint print = JasperFillManager.fillReport(gabarit, parameters, resultSetDataSource);
 			// Sauvegarde dans un fichier
-			log.debug("�puration des v�hicules (Sauvegarde dans un fichier)");
+			log.debug("?puration des v?hicules (Sauvegarde dans un fichier)");
 			(new PDFImpressionRapport()).impression(nomRapport, print);
-			//On proc�de ensuite � l'�puration
+			//On proc?de ensuite ? l'?puration
             VehiculeBusinessDelegate vehiculeDelegate =
                 new VehiculeBusinessDelegate();
             vehiculeDelegate.delete(subject);
-            //Apr�s la suppression, on vide la liste des r�sultats.
+            //Apr?s la suppression, on vide la liste des r?sultats.
             CriteresRechercheVehiculeForm criteresRechercheVehiculeForm = new CriteresRechercheVehiculeForm();
             criteresRechercheVehiculeForm.init( subject );
             criteresRechercheVehiculeForm.getListeResultat().vider();
@@ -1738,20 +1739,20 @@ public class VehiculeAction extends AbstractAction {
 			e.printStackTrace();
 	        return mapping.findForward("error");
 		}
-    }    
+    }
 
     /**
      * <p>
      * <p>
-     * Par d�faut, l'application remplit automatiquement les champs suivants :
+     * Par d?faut, l'application remplit automatiquement les champs suivants :
      *
-     * @param mapping L' ActionMapping utils� pour s�lectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requ�te (optionnelle)
-     * @param request La requ�te HTTP trait�e
-     * @param response La r�ponse HTTP cr��e
+     * @param mapping L' ActionMapping utils? pour s?lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requ?te (optionnelle)
+     * @param request La requ?te HTTP trait?e
+     * @param response La r?ponse HTTP cr??e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entr�e/sortieif an input/output survient
+     * @exception IOException si une erreur d'entr?e/sortieif an input/output survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward deleteLienNarration(CardexAuthenticationSubject subject,
@@ -1759,7 +1760,7 @@ public class VehiculeAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.debug("Suppression d'un lien entre une narration et un v�hicule.");
+        log.debug("Suppression d'un lien entre une narration et un v?hicule.");
         ActionMessages errors = new ActionMessages();
 
         try {
@@ -1782,7 +1783,7 @@ public class VehiculeAction extends AbstractAction {
             populateVehiculeForm(subject, vehicule, vehiculeForm);
             assignerNouveauVehicule(request, vehiculeForm);
 
-			//V�rification d'un mandat PSU associ� � la suppression d'une liaison � un v�hicule
+			//V?rification d'un mandat PSU associ? ? la suppression d'une liaison ? un v?hicule
 			PSUMandatForm psuMandat = new PSUMandatForm();
 			psuMandat.setImmatriculation(vehiculeForm.getImmatriculation());
 			psuMandat.setGenreFichier(GlobalConstants.GenreFichier.NARRATION);
@@ -1806,15 +1807,15 @@ public class VehiculeAction extends AbstractAction {
     /**
      * <p>
      * <p>
-     * Par d�faut, l'application remplit automatiquement les champs suivants :
+     * Par d?faut, l'application remplit automatiquement les champs suivants :
      *
-     * @param mapping L' ActionMapping utils� pour s�lectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requ�te (optionnelle)
-     * @param request La requ�te HTTP trait�e
-     * @param response La r�ponse HTTP cr��e
+     * @param mapping L' ActionMapping utils? pour s?lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requ?te (optionnelle)
+     * @param request La requ?te HTTP trait?e
+     * @param response La r?ponse HTTP cr??e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entr�e/sortieif an input/output survient
+     * @exception IOException si une erreur d'entr?e/sortieif an input/output survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward deleteLienPhoto(CardexAuthenticationSubject subject,
@@ -1822,7 +1823,7 @@ public class VehiculeAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.debug("Suppression d'un lien entre une photo et un v�hicule.");
+        log.debug("Suppression d'un lien entre une photo et un v?hicule.");
         ActionMessages errors = new ActionMessages();
 
         try {
@@ -1845,7 +1846,7 @@ public class VehiculeAction extends AbstractAction {
             populateVehiculeForm(subject, vehicule, vehiculeForm);
             assignerNouveauVehicule(request, vehiculeForm);
 
-			//V�rification d'un mandat PSU associ� � la suppression d'une liaison � un v�hicule
+			//V?rification d'un mandat PSU associ? ? la suppression d'une liaison ? un v?hicule
 			PSUMandatForm psuMandat = new PSUMandatForm();
 			psuMandat.setImmatriculation(vehiculeForm.getImmatriculation());
 			psuMandat.setGenreFichier(GlobalConstants.GenreFichier.PHOTOS);
@@ -1868,13 +1869,13 @@ public class VehiculeAction extends AbstractAction {
 
     /**
      *
-     * @param mapping L' ActionMapping utils� pour s�lectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requ�te (optionnelle)
-     * @param request La requ�te HTTP trait�e
-     * @param response La r�ponse HTTP cr��e
+     * @param mapping L' ActionMapping utils? pour s?lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requ?te (optionnelle)
+     * @param request La requ?te HTTP trait?e
+     * @param response La r?ponse HTTP cr??e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entr�e/sortie survient
+     * @exception IOException si une erreur d'entr?e/sortie survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward deleteLienSujet(CardexAuthenticationSubject subject,
@@ -1896,7 +1897,7 @@ public class VehiculeAction extends AbstractAction {
             Vehicule            vehicule = new VehiculeVO();
             Sujet               sujet = new SujetVO();
             vehiculeForm.init(subject);
-            
+
             vehicule.setCle(lienForm.getCleSource());
             vehicule.setSite(lienForm.getSiteSource());
             vehicule.setTypeLien(lienForm.getTypeLien());
@@ -1917,7 +1918,7 @@ public class VehiculeAction extends AbstractAction {
             populateVehiculeForm(subject, vehicule, vehiculeForm);
             assignerNouveauVehicule(request, vehiculeForm);
 
-			//V�rification d'un mandat PSU associ� � la suppression d'une liaison � un v�hicule
+			//V?rification d'un mandat PSU associ? ? la suppression d'une liaison ? un v?hicule
 			PSUMandatForm psuMandat = new PSUMandatForm();
 			psuMandat.setImmatriculation(vehiculeForm.getImmatriculation());
 			psuMandat.setGenreFichier(GlobalConstants.GenreFichier.SUJET);
@@ -1943,13 +1944,13 @@ public class VehiculeAction extends AbstractAction {
 
     /**
      *
-     * @param mapping L' ActionMapping utils� pour s�lectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requ�te (optionnelle)
-     * @param request La requ�te HTTP trait�e
-     * @param response La r�ponse HTTP cr��e
+     * @param mapping L' ActionMapping utils? pour s?lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requ?te (optionnelle)
+     * @param request La requ?te HTTP trait?e
+     * @param response La r?ponse HTTP cr??e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entr�e/sortie survient
+     * @exception IOException si une erreur d'entr?e/sortie survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward deleteLienSociete(CardexAuthenticationSubject subject,
@@ -1970,7 +1971,7 @@ public class VehiculeAction extends AbstractAction {
             Vehicule            vehicule = new VehiculeVO();
             Societe             societe = new SocieteVO();
             vehiculeForm.init(subject);
-            
+
             vehicule.setCle(lienForm.getCleSource());
             vehicule.setSite(lienForm.getSiteSource());
             vehicule.setTypeLien(lienForm.getTypeLien());
@@ -1991,7 +1992,7 @@ public class VehiculeAction extends AbstractAction {
             populateVehiculeForm(subject, vehicule, vehiculeForm);
             assignerNouveauVehicule(request, vehiculeForm);
 
-			//V�rification d'un mandat PSU associ� � la suppression d'une liaison � un v�hicule
+			//V?rification d'un mandat PSU associ? ? la suppression d'une liaison ? un v?hicule
 			PSUMandatForm psuMandat = new PSUMandatForm();
 			psuMandat.setImmatriculation(vehiculeForm.getImmatriculation());
 			psuMandat.setGenreFichier(GlobalConstants.GenreFichier.SOCIETE);
@@ -2018,13 +2019,13 @@ public class VehiculeAction extends AbstractAction {
     /**
      * <p>
      *
-     * @param mapping L' ActionMapping utils� pour s�lectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requ�te (optionnelle)
-     * @param request La requ�te HTTP trait�e
-     * @param response La r�ponse HTTP cr��e
+     * @param mapping L' ActionMapping utils? pour s?lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requ?te (optionnelle)
+     * @param request La requ?te HTTP trait?e
+     * @param response La r?ponse HTTP cr??e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entr�e/sortieif an input/output survient
+     * @exception IOException si une erreur d'entr?e/sortieif an input/output survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward permettreModificationLienNarration(CardexAuthenticationSubject subject,
@@ -2032,7 +2033,7 @@ public class VehiculeAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.debug("Permettre la modification d'une narration li�e � un vehicule.");
+        log.debug("Permettre la modification d'une narration li?e ? un vehicule.");
         ActionMessages errors = new ActionMessages();
 
         try {
@@ -2059,7 +2060,7 @@ public class VehiculeAction extends AbstractAction {
             delegate.approuveLienNarration(subject,narration);
             populateVehiculeForm(subject, vehicule, vehiculeForm);
             assignerNouveauVehicule(request, vehiculeForm);
-            
+
             return mapping.findForward("success");
         } catch (BusinessResourceException bre) {
             handleBusinessResourceException(bre, errors, request);
@@ -2077,15 +2078,15 @@ public class VehiculeAction extends AbstractAction {
     /**
      * <p>
      * <p>
-     * Par d�faut, l'application remplit automatiquement les champs suivants :
+     * Par d?faut, l'application remplit automatiquement les champs suivants :
      *
-     * @param mapping L' ActionMapping utils� pour s�lectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requ�te (optionnelle)
-     * @param request La requ�te HTTP trait�e
-     * @param response La r�ponse HTTP cr��e
+     * @param mapping L' ActionMapping utils? pour s?lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requ?te (optionnelle)
+     * @param request La requ?te HTTP trait?e
+     * @param response La r?ponse HTTP cr??e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entr�e/sortieif an input/output survient
+     * @exception IOException si une erreur d'entr?e/sortieif an input/output survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward addLienNarration(CardexAuthenticationSubject subject,
@@ -2093,10 +2094,10 @@ public class VehiculeAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.debug("Liasion d'une narration � un v�hicule.");
+        log.debug("Liasion d'une narration ? un v?hicule.");
         ActionMessages errors = new ActionMessages();
         ActionMessages messages = new ActionMessages();
-        
+
         try {
         	verifierToken(request);
             VehiculeBusinessDelegate delegate = new VehiculeBusinessDelegate();
@@ -2115,7 +2116,7 @@ public class VehiculeAction extends AbstractAction {
             populateVehiculeForm(subject, vehicule, vehiculeForm);
             assignerNouveauVehicule(request, vehiculeForm);
 
-			//R�cup�ration de la date de cr�ation de la narration qui vient d'�tre associ�e
+			//R?cup?ration de la date de cr?ation de la narration qui vient d'?tre associ?e
 			Collection narrationListe = vehiculeForm.getNarrations();
 			Iterator it = narrationListe.iterator();
 			String dateCreation = "";
@@ -2125,13 +2126,13 @@ public class VehiculeAction extends AbstractAction {
 					dateCreation = narrationAssocie.getDateCreation();
 				}
 			}
-			//V�rification d'un mandat PSU associ� � l'ajout d'une liaison � un v�hicule
+			//V?rification d'un mandat PSU associ? ? l'ajout d'une liaison ? un v?hicule
 			PSUMandatForm psuMandat = new PSUMandatForm();
 			psuMandat.setImmatriculation(vehiculeForm.getImmatriculation());
 			psuMandat.setGenreFichier(GlobalConstants.GenreFichier.NARRATION);
 			psuMandat.setReference1(dateCreation);
 			PSUMandatAction.verificationMandat(subject, psuMandat, GlobalConstants.GenreFichier.VEHICULE, GlobalConstants.TypeAction.LIAISON);
-			//Dans le cas des narratisons, on v�rifie �galement pour les mots-cl�s.
+			//Dans le cas des narratisons, on v?rifie ?galement pour les mots-cl?s.
 			psuMandat.setGenreFichier(GlobalConstants.GenreFichier.VEHICULE);
 			psuMandat.setReference1(narrationForm.getNarrationSansFormat());
 			PSUMandatAction.verificationMandat(subject, psuMandat, GlobalConstants.GenreFichier.NARRATION, GlobalConstants.TypeAction.AJOUT);
@@ -2155,13 +2156,13 @@ public class VehiculeAction extends AbstractAction {
     /**
      * <p>
      *
-     * @param mapping L' ActionMapping utils� pour s�lectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requ�te (optionnelle)
-     * @param request La requ�te HTTP trait�e
-     * @param response La r�ponse HTTP cr��e
+     * @param mapping L' ActionMapping utils? pour s?lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requ?te (optionnelle)
+     * @param request La requ?te HTTP trait?e
+     * @param response La r?ponse HTTP cr??e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entr�e/sortieif an input/output survient
+     * @exception IOException si une erreur d'entr?e/sortieif an input/output survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward approuveLienNarration(CardexAuthenticationSubject subject,
@@ -2169,7 +2170,7 @@ public class VehiculeAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.debug("Approbation d'une narration li�e � un v�hicule.");
+        log.debug("Approbation d'une narration li?e ? un v?hicule.");
         ActionMessages errors = new ActionMessages();
         CardexUser user = (CardexUser)subject.getUser();
         CardexPrivilege privilege = (CardexPrivilege)subject.getPrivilege();
@@ -2193,12 +2194,12 @@ public class VehiculeAction extends AbstractAction {
                     subject.getLocale());
             ValueObjectMapper.convertNarrationHtmlForm(narrationForm, narration,
                     subject.getLocale());
-            log.debug("V�hicule : " + vehicule);
+            log.debug("V?hicule : " + vehicule);
             log.debug("Narration: " + narration);
             delegate.approuveLienNarration(subject,narration);
             populateVehiculeForm(subject, vehicule, vehiculeForm);
             assignerNouveauVehicule(request, vehiculeForm);
-            
+
             return mapping.findForward("success");
         } catch (BusinessResourceException bre) {
             handleBusinessResourceException(bre, errors, request);
@@ -2216,13 +2217,13 @@ public class VehiculeAction extends AbstractAction {
     /**
      * <p>
      *
-     * @param mapping L' ActionMapping utils� pour s�lectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requ�te (optionnelle)
-     * @param request La requ�te HTTP trait�e
-     * @param response La r�ponse HTTP cr��e
+     * @param mapping L' ActionMapping utils? pour s?lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requ?te (optionnelle)
+     * @param request La requ?te HTTP trait?e
+     * @param response La r?ponse HTTP cr??e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entr�e/sortieif an input/output survient
+     * @exception IOException si une erreur d'entr?e/sortieif an input/output survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward addLienPhoto(CardexAuthenticationSubject subject,
@@ -2241,9 +2242,9 @@ public class VehiculeAction extends AbstractAction {
             VehiculeForm vehiculeForm = new VehiculeForm();
             Photo photo = new PhotoVO();
             Vehicule vehicule = new VehiculeVO();
-            log.debug("PhotoForm a li�e : " + photoForm);
+            log.debug("PhotoForm a li?e : " + photoForm);
             vehiculeForm.init(subject);
-            
+
             vehiculeForm.setCle(photoForm.getLien());
             vehiculeForm.setSite(photoForm.getLienSite());
             ValueObjectMapper.convertVehiculeHtmlForm(vehiculeForm,vehicule,subject.getLocale());
@@ -2252,9 +2253,9 @@ public class VehiculeAction extends AbstractAction {
 
             FormFile   file = photoForm.getUploadImage();
 
-            //Est ce que la taille du fichier exc�de 4MB
+            //Est ce que la taille du fichier exc?de 4MB
             if (photoForm.isTailleAccepte() == false) {
-                log.error("La taille du fichier est sup�rieure � 4MB.");
+                log.error("La taille du fichier est sup?rieure ? 4MB.");
                 return mapping.findForward("error");
             }else if(photoForm.isPhoto() == false){
                 log.error("Ce fichier n'est pas une photo");
@@ -2262,16 +2263,16 @@ public class VehiculeAction extends AbstractAction {
             }else{
             	byte[] data = file.getFileData();
             	photo.setImage( data );
-            	
-	            log.debug("Photo a li�e : " + photo);
+
+	            log.debug("Photo a li?e : " + photo);
 	            photo= delegate.addLienPhoto(subject,vehicule,photo);
-	            log.debug("Photo li�e : " + photo);
+	            log.debug("Photo li?e : " + photo);
 	            file.destroy();
-	            
+
 				populateVehiculeForm(subject, vehicule, vehiculeForm);
 				assignerNouveauVehicule(request, vehiculeForm);
 
-				//V�rification d'un mandat PSU associ� � l'ajout d'une liaison � un v�hicule
+				//V?rification d'un mandat PSU associ? ? l'ajout d'une liaison ? un v?hicule
 				PSUMandatForm psuMandat = new PSUMandatForm();
 				psuMandat.setImmatriculation(vehiculeForm.getImmatriculation());
 				psuMandat.setGenreFichier(GlobalConstants.GenreFichier.PHOTOS);
@@ -2280,7 +2281,7 @@ public class VehiculeAction extends AbstractAction {
 
 		        return mapping.findForward("success");
             }
-            
+
         } catch (BusinessResourceException bre) {
             handleBusinessResourceException(bre, errors, request);
             return mapping.findForward("error");
@@ -2295,13 +2296,13 @@ public class VehiculeAction extends AbstractAction {
     /**
      * <p>
      *
-     * @param mapping L' ActionMapping utils� pour s�lectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requ�te (optionnelle)
-     * @param request La requ�te HTTP trait�e
-     * @param response La r�ponse HTTP cr��e
+     * @param mapping L' ActionMapping utils? pour s?lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requ?te (optionnelle)
+     * @param request La requ?te HTTP trait?e
+     * @param response La r?ponse HTTP cr??e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entr�e/sortieif an input/output survient
+     * @exception IOException si une erreur d'entr?e/sortieif an input/output survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward updateLienNarration(CardexAuthenticationSubject subject,
@@ -2309,7 +2310,7 @@ public class VehiculeAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.debug("Mise � jour d'un lien entre une narration et un vehicule.");
+        log.debug("Mise ? jour d'un lien entre une narration et un vehicule.");
         ActionMessages errors = new ActionMessages();
 
         try {
@@ -2331,7 +2332,7 @@ public class VehiculeAction extends AbstractAction {
             delegate.updateLienNarration(subject,narration);
             populateVehiculeForm(subject, vehicule, vehiculeForm);
             assignerNouveauVehicule(request, vehiculeForm);
-            
+
             return mapping.findForward("success");
         } catch (BusinessResourceException bre) {
             handleBusinessResourceException(bre, errors, request);
@@ -2347,15 +2348,15 @@ public class VehiculeAction extends AbstractAction {
     }
 
    /**
-     * Mise � jour des liens particularit�s en conservant un audit.
+     * Mise ? jour des liens particularit?s en conservant un audit.
      *
-     * @param mapping L' ActionMapping utils� pour s�lectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requ�te (optionnelle)
-     * @param request La requ�te HTTP trait�e
-     * @param response La r�ponse HTTP cr��e
+     * @param mapping L' ActionMapping utils? pour s?lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requ?te (optionnelle)
+     * @param request La requ?te HTTP trait?e
+     * @param response La r?ponse HTTP cr??e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entr�e/sortieif an input/output survient
+     * @exception IOException si une erreur d'entr?e/sortieif an input/output survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward updateLienParticularite(CardexAuthenticationSubject subject,
@@ -2363,7 +2364,7 @@ public class VehiculeAction extends AbstractAction {
                               HttpServletRequest request,
                               HttpServletResponse response) throws IOException,
                               ServletException {
-        log.debug("Mise � jour des liens particularit�s en conservant un audit.");
+        log.debug("Mise ? jour des liens particularit?s en conservant un audit.");
 
         ActionMessages errors = new ActionMessages();
 
@@ -2384,7 +2385,7 @@ public class VehiculeAction extends AbstractAction {
             vehicule = delegate.find(subject,vehicule);
             populateVehiculeForm(subject,vehicule,vehiculeForm);
             assignerNouveauVehicule(request, vehiculeForm);
-            
+
             return mapping.findForward("success");
         } catch (BusinessResourceException bre) {
             handleBusinessResourceException(bre, errors, request);
@@ -2399,16 +2400,16 @@ public class VehiculeAction extends AbstractAction {
 
     /**
      * <p>
-     * Mise � jour du r�le dans les onglets d'un v�hicule.
-     * Les liens concernent les Sujets, les soci�t�s, les dossiers et les v�hicules.
-     * @param subject Le sujet authentifi�
-     * @param mapping L' ActionMapping utils� pour s�lectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requ�te (optionnelle)
-     * @param request La requ�te HTTP trait�e
-     * @param response La r�ponse HTTP cr��e
+     * Mise ? jour du r?le dans les onglets d'un v?hicule.
+     * Les liens concernent les Sujets, les soci?t?s, les dossiers et les v?hicules.
+     * @param subject Le sujet authentifi?
+     * @param mapping L' ActionMapping utils? pour s?lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requ?te (optionnelle)
+     * @param request La requ?te HTTP trait?e
+     * @param response La r?ponse HTTP cr??e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entr�e/sortie survient
+     * @exception IOException si une erreur d'entr?e/sortie survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward updateLien(CardexAuthenticationSubject subject,
@@ -2417,7 +2418,7 @@ public class VehiculeAction extends AbstractAction {
                                         HttpServletRequest request,
                                         HttpServletResponse response) throws IOException,
                                         ServletException {
-        log.debug("Mise � jour de la liaison dans un v�hicule");
+        log.debug("Mise ? jour de la liaison dans un v?hicule");
 
         ActionMessages errors = new ActionMessages();
 
@@ -2435,7 +2436,7 @@ public class VehiculeAction extends AbstractAction {
                     vehicule, subject.getLocale());
             delegate.updateLien(subject, vehicule);
             populateVehiculeForm(subject, vehicule, vehiculeForm);
-            
+
         } catch (BusinessResourceException bre) {
             handleBusinessResourceException(bre, errors, request);
 
@@ -2448,7 +2449,7 @@ public class VehiculeAction extends AbstractAction {
         }
         return mapping.findForward("success");
     }
-    
+
     /**
 	 * @param request
 	 * @param vehiculeForm
@@ -2458,7 +2459,7 @@ public class VehiculeAction extends AbstractAction {
 		vehiculeForm.setEntiteCardexLiaison( vehiculeFormOriginal.getEntiteCardexLiaison() );
 		vehiculeForm.setNew(vehiculeFormOriginal.isNew());
 		request.getSession().setAttribute("vehicule", vehiculeForm);
-	}    
+	}
 
     private void assignerLienRole(HttpServletRequest request, VehiculeForm vehiculeForm) {
 		LienForm lienForm = new LienForm();
@@ -2471,17 +2472,17 @@ public class VehiculeAction extends AbstractAction {
 		EntiteCardexLiaison entiteCardexLiaison = (EntiteCardexLiaison) request.getSession().getAttribute( formNameEntiteCardexLiaison );
 		return entiteCardexLiaison.getEntiteCardexLiaison();
 	}
-    
+
     /**
      * <p>
      *
-     * @param mapping L' ActionMapping utils� pour s�lectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requ�te (optionnelle)
-     * @param request La requ�te HTTP trait�e
-     * @param response La r�ponse HTTP cr��e
+     * @param mapping L' ActionMapping utils? pour s?lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requ?te (optionnelle)
+     * @param request La requ?te HTTP trait?e
+     * @param response La r?ponse HTTP cr??e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entr�e/sortieif an input/output survient
+     * @exception IOException si une erreur d'entr?e/sortieif an input/output survient
      * @exception ServletException si une exception servlet survient
      */
     private void addLienPhotoAjout(CardexAuthenticationSubject subject,
@@ -2501,7 +2502,7 @@ public class VehiculeAction extends AbstractAction {
             VehiculeForm vehiculeForm = new VehiculeForm();
             Photo photo = new PhotoVO();
             Vehicule vehicule = new VehiculeVO();
-            log.debug("PhotoForm a li�e : " + photoForm);
+            log.debug("PhotoForm a li?e : " + photoForm);
 
             vehiculeForm.init(subject);
             vehiculeForm.setCle(photoForm.getLien());
@@ -2512,7 +2513,7 @@ public class VehiculeAction extends AbstractAction {
             FormFile   file = photoForm.getUploadImage();
         	byte[] data = file.getFileData();
         	photo.setImage( data );
-            log.debug("Photo a li�e : " + photo);
+            log.debug("Photo a li?e : " + photo);
             photo = delegate.addLienPhoto(subject,vehicule,photo);
             //file.destroy();
 
@@ -2530,17 +2531,17 @@ public class VehiculeAction extends AbstractAction {
 
     /**
      * <p>
-     * Cet �v�nement survient lorsque l'utilisateur clique sur le bouton fermer dans
-     * le panneau de consultation d'un v�hicule.  
+     * Cet ?v?nement survient lorsque l'utilisateur clique sur le bouton fermer dans
+     * le panneau de consultation d'un v?hicule.
      * <p>
      *
-     * @param mapping L' ActionMapping utils� pour s�lectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requ�te (optionnelle)
-     * @param request La requ�te HTTP trait�e
-     * @param response La r�ponse HTTP cr��e
+     * @param mapping L' ActionMapping utils? pour s?lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requ?te (optionnelle)
+     * @param request La requ?te HTTP trait?e
+     * @param response La r?ponse HTTP cr??e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entr�e/sortie survient
+     * @exception IOException si une erreur d'entr?e/sortie survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward retour(CardexAuthenticationSubject subject,
@@ -2551,7 +2552,7 @@ public class VehiculeAction extends AbstractAction {
                                 ServletException {
 
 
-        log.debug("Retour de la consultation d'un v�hicule");
+        log.debug("Retour de la consultation d'un v?hicule");
 
         //ActionMessages errors = new ActionMessages();
 
@@ -2568,22 +2569,22 @@ public class VehiculeAction extends AbstractAction {
             		return mapping.findForward("successLiaisonSociete");
             	}
             }
-            
+
             return mapping.findForward("success");
     }
 
     /**
      * <p>
-     * Recherche directe d'un v�hicule � partir du menu principal.
-     * Ao�t 2013
-     * @param subject Le sujet authentifi�
-     * @param mapping L' ActionMapping utils� pour s�lectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requ�te (optionnelle)
-     * @param request La requ�te HTTP trait�e
-     * @param response La r�ponse HTTP cr��e
+     * Recherche directe d'un v?hicule ? partir du menu principal.
+     * Ao?t 2013
+     * @param subject Le sujet authentifi?
+     * @param mapping L' ActionMapping utils? pour s?lectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requ?te (optionnelle)
+     * @param request La requ?te HTTP trait?e
+     * @param response La r?ponse HTTP cr??e
      * @param delegate Le business delegate offrant les services d'affaires
      *
-     * @exception IOException si une erreur d'entr�e/sortie survient
+     * @exception IOException si une erreur d'entr?e/sortie survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward rechercheDirecteVehicule(CardexAuthenticationSubject subject,
@@ -2592,7 +2593,7 @@ public class VehiculeAction extends AbstractAction {
                                         HttpServletRequest request,
                                         HttpServletResponse response) throws IOException,
                                         ServletException {
-        log.debug("Recherche directe de v�hicules");
+        log.debug("Recherche directe de v?hicules");
 
         ActionMessages errors = new ActionMessages();
 
@@ -2603,13 +2604,13 @@ public class VehiculeAction extends AbstractAction {
             //vehicule = delegate.rechercheDirecte(subject, vehicule);
             List resultats = delegate.select(subject,criteresRechercheVehicule);
             if (resultats.size() == 0){
-            	//Aucun v�hicule trouv�
-            	return mapping.findForward("erreurRecherche"); 
+            	//Aucun v?hicule trouv?
+            	return mapping.findForward("erreurRecherche");
             }
             Iterator iter = resultats.iterator();
             if (resultats.size() == 1){
 				Vehicule vehiculeTrouve = (Vehicule) iter.next();
-            	//Un vehicule a �t� trouv�. On inscrit donc une entr�e dans la table des acc�s.
+            	//Un vehicule a ?t? trouv?. On inscrit donc une entr?e dans la table des acc?s.
             	delegate.ajoutAcces(subject, vehiculeTrouve);
             	VehiculeForm vehiculeForm = new VehiculeForm();
             	populateVehiculeForm(subject, vehiculeTrouve, vehiculeForm);
@@ -2617,8 +2618,8 @@ public class VehiculeAction extends AbstractAction {
                 return mapping.findForward("success");
             }
             if (resultats.size() > 1){
-            	//Plusieurs vehicules ont �t� trouv�s avec le m�me num�ro d'immatriculation. 
-				//On pr�pare la liste pour que l'utilisateur choisisse le bon v�hicule
+            	//Plusieurs vehicules ont ?t? trouv?s avec le m?me num?ro d'immatriculation.
+				//On pr?pare la liste pour que l'utilisateur choisisse le bon v?hicule
             	CriteresRechercheVehiculeForm criteresRechercheVehiculeHtmlForm = new CriteresRechercheVehiculeForm();
             	criteresRechercheVehiculeHtmlForm.getListeResultat().init();
             	ajouterResultatVehicule(subject, criteresRechercheVehiculeHtmlForm, resultats);
@@ -2627,7 +2628,7 @@ public class VehiculeAction extends AbstractAction {
             }
         } catch (BusinessResourceException bre) {
             handleBusinessResourceException(bre, errors, request);
-            return mapping.findForward("error"); 
+            return mapping.findForward("error");
         } catch (BusinessException be) {
             handleBusinessException(be, errors, request);
             return (new ActionForward(mapping.getInput()));

@@ -26,6 +26,7 @@ Derniers commentaires à jour.
 <%@ taglib uri='/WEB-INF/struts-html.tld'  prefix='html' %>
 <%@ taglib uri='/WEB-INF/struts-tiles.tld'  prefix='tiles' %>
 <%@ page import="com.lotoquebec.cardexCommun.GlobalConstants" %>
+<%@ page import="com.lotoquebec.cardex.generateurRapport.rapports.RapportsConfiguration" %>
 <%@ page import="java.util.Locale" %>
 <%@ page import="org.apache.struts.Globals" %>
 <%@ page import="com.lotoquebec.cardexCommun.authentication.AuthenticationSubject" %>
@@ -163,14 +164,14 @@ function doSelectionnerPhotoGalerie(cle, site){
 
 function doAuditAcces() {
 //Impression de l'audit des accès
-	   var rapport = "<%= GlobalConstants.ChoixRapport.AUDIT_ACCES_SUJETS %>";
+	   var rapport = "<%= RapportsConfiguration.AUDIT_ACCES_SUJETS %>";
 	   var url = "<%=request.getContextPath()%>/AffichagePDFListes?RAPPORT=" + rapport; 
-	   	   //alert(url);  
+	   //alert(url);  
 	   window.open(url, 'rapport', 'left=0,top=0,width=' + document.body.clientWidth + ',height=' + document.body.clientHeight + ',menubar=no,toolbar=no,resizable=yes');
 }
 
 function doAuditChangement() {
-	   var rapport = "<%= GlobalConstants.ChoixRapport.AUDIT_CHANGEMENTS_SUJETS %>";
+	   var rapport = "<%= RapportsConfiguration.AUDIT_CHANGEMENTS_SUJETS %>";
 	   var userCardex = '<bean:write name="<%= AuthenticationSubject.class.getName() %>" property="user.code" />';
 	   var url = "<%=request.getContextPath()%>/AffichagePDFAudits?RAPPORT=" + rapport + "&UTILISATEUR=" + userCardex; 
 	   //alert(url);  
@@ -185,7 +186,6 @@ function doConfidentialite8(){
 }
 
 </SCRIPT>
-
 
 <TITLE><bean:message key='gb_sujet'/></TITLE>
 

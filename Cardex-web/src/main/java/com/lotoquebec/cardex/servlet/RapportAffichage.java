@@ -66,8 +66,6 @@ public abstract class RapportAffichage extends HttpServlet {
 			JasperPrint print = genererRapport.executer(subject, rapportVO, bundle, locale);
 			
 			/*
-	        // Récupère le nom de l'attribut de session
-
 	        // On veut éviter toute concurrence lors de l'écriture de la réponse
 	        synchronized (RapportAffichage.MUTEX) {
 	        	String userAgent = request.getHeader("User-Agent");

@@ -52,13 +52,13 @@ public class RapportAssociation {
 		//listeRapportsAdhoc.put(GlobalConstants.ChoixRapport.IMPRESSION_DOSSIER, "cardex.dossier.base.imprimer");
 		listeRapportsAdhoc.put(GlobalConstants.ChoixRapport.IMPRESSION_GALERIE, "cardex.sujet.base.imprimer");			
 
-		listeRapportsAdhoc.put(GlobalConstants.ChoixRapport.AUDIT_CHANGEMENTS_DOSSIERS, "cardex.dossier.audit");			
-		listeRapportsAdhoc.put(GlobalConstants.ChoixRapport.AUDIT_CHANGEMENTS_SUJETS, "cardex.sujet.audit");			
-		listeRapportsAdhoc.put(GlobalConstants.ChoixRapport.AUDIT_CHANGEMENTS_SOCIETES, "cardex.societe.audit");			
-		listeRapportsAdhoc.put(GlobalConstants.ChoixRapport.AUDIT_CHANGEMENTS_VEHICULES, "cardex.vehicule.audit");			
-		listeRapportsAdhoc.put(GlobalConstants.ChoixRapport.AUDIT_CHANGEMENTS_NARRATIONS, "cardex.narration.audit");			
-		listeRapportsAdhoc.put(GlobalConstants.ChoixRapport.AUDIT_CHANGEMENTS_SUIVIS, "cardex.suivi.audit");			
-		listeRapportsAdhoc.put(GlobalConstants.ChoixRapport.AUDIT_CHANGEMENTS_ADRESSES, "cardex.adresse.audit");			
+		listeRapportsAdhoc.put(RapportsConfiguration.AUDIT_CHANGEMENTS_DOSSIERS, "cardex.dossier.audit");			
+		listeRapportsAdhoc.put(RapportsConfiguration.AUDIT_CHANGEMENTS_SUJETS, "cardex.sujet.audit");			
+		listeRapportsAdhoc.put(RapportsConfiguration.AUDIT_CHANGEMENTS_SOCIETES, "cardex.societe.audit");			
+		listeRapportsAdhoc.put(RapportsConfiguration.AUDIT_CHANGEMENTS_VEHICULES, "cardex.vehicule.audit");			
+		listeRapportsAdhoc.put(RapportsConfiguration.AUDIT_CHANGEMENTS_NARRATIONS, "cardex.narration.audit");			
+		listeRapportsAdhoc.put(RapportsConfiguration.AUDIT_CHANGEMENTS_SUIVIS, "cardex.suivi.audit");			
+		listeRapportsAdhoc.put(RapportsConfiguration.AUDIT_CHANGEMENTS_ADRESSES, "cardex.adresse.audit");			
 
 		listeRapportsAdhoc.put("com.lotoquebec.cardex.generateurRapport.adresse.AdresseInvalide", "cardex.cb_rapport.adresse.invalide");
 	}
@@ -75,11 +75,11 @@ public class RapportAssociation {
 			 */
 			case 169: //Global des regroupements
 				return new GlobalRegroupementGenerateurRapport_CDX_0080();
-			case 170: //Global des regroupements (heures travaillées)
+			case 170: //Global des regroupements (heures travaillï¿½es)
 				return new GlobalTotalHeuresRegroupementGenerateurRapport_CDX_0087();
 			case 171: //Regroupement par endroit
 				return new EndroitRegroupementGenerateurRapport_CDX_0081();
-			case 172: //Regroupement par intervenant trié par endroit
+			case 172: //Regroupement par intervenant triï¿½ par endroit
 				return new IntervenantEndroitRegroupementGenerateurRapport_CDX_0085();
 			case 173: //Regroupement par intervenant
 				return new IntervenantRegroupementGenerateurRapport_CDX_0086();
@@ -101,13 +101,13 @@ public class RapportAssociation {
 				return new DossierAutoexclusionEspacejeux();	
 			case 487: //Rapport avec suivis
 				return new DossierSuivis();	
-			case 493: //Rapport sur le nombre de dossiers retournés par une recherche
+			case 493: //Rapport sur le nombre de dossiers retournï¿½s par une recherche
 				return new NombreDossiers();
-			case 550: //Formulaire de réadmission
+			case 550: //Formulaire de rï¿½admission
 				return new DossierReadmission();
 				
 			default:
-				throw new RuntimeException("Aucun rapport trouvé pour la valeur "+choixRapport);		
+				throw new RuntimeException("Aucun rapport trouvï¿½ pour la valeur "+choixRapport);		
 		}
 	}
 
@@ -115,9 +115,9 @@ public class RapportAssociation {
 
 		switch(choixRapport){
 		
-			case 127: // Repérages des avis de guet
+			case 127: // Repï¿½rages des avis de guet
 				return GlobalConstants.ChoixRapport.REPERAGES_AVIS_DE_GUET;
-			case 128: // Statistique des dossiers et catégories
+			case 128: // Statistique des dossiers et catï¿½gories
 				return RapportsConfiguration.RAPPORT_STATISTIQUE_DOSSIER_CATEGORIE;
 			case 129: // Rapport statistique annuel
 				return RapportsConfiguration.RAPPORT_STATISTIQUE_DOSSIER_MOIS;
@@ -129,7 +129,7 @@ public class RapportAssociation {
 
 				
 			default:
-				throw new RuntimeException("Aucun rapport trouvé pour la valeur "+choixRapport);		
+				throw new RuntimeException("Aucun rapport trouvï¿½ pour la valeur "+choixRapport);		
 		}
 	}
 	
