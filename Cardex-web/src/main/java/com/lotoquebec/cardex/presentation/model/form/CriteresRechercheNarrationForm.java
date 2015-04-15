@@ -27,7 +27,8 @@ import com.lotoquebec.cardexCommun.util.GererTacheUtilisateur;
 public class CriteresRechercheNarrationForm extends RapportForm
         implements CriteresRechercheNarrationHtmlForm, RechercheListeResultat {
 
-    private String entite = "";
+	private static final long serialVersionUID = 5339392028941779037L;
+	private String entite = "";
     private String site = "";
     private String genre = "";
     private String nature = "";
