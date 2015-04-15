@@ -226,32 +226,6 @@ function doConsulterIntervenant(){
   }
 }
 
-function doPrintRapport() {
-//Impression d'un rapport personnalisé
-	//soumettre('<%= request.getContextPath() + "/dossier/printRapport.do"%>');
-	//On s'assure qu'il y a un site d'origine, sinon les résultats sont erronés.
-	if(document.forms(0).siteOrigine.value == ""){
-	   alert("<bean:message key='cardex_required_site'/>");
-	}else{
-	   var rapport = document.forms(0).choixRapport.value;
-	   var siteOrigine = document.forms(0).siteOrigine.value;
-	   var dateDebut = document.forms(0).dateDebutDu.value;
-	   var dateFin = document.forms(0).dateDebutAu.value;	
-	   var genre = document.forms(0).genre.value;
-	   var userCardex = document.forms(0).intervenant.value;
-	   var url = "<%=request.getContextPath()%>/AffichagePDF?RAPPORT=" + rapport + "&SITE=" + siteOrigine + "&GENRE=" + genre + "&UTILISATEUR=" + userCardex + "&DATE_DEBUT=" + dateDebut + "&DATE_FIN=" + dateFin;
-	   //alert(url);  
-	   //alert(rapport + " - " + url); 
-	   window.open(url, 'rapport', 'left=0,top=0,width=' + document.body.clientWidth + ',height=' + document.body.clientHeight + ',menubar=no,toolbar=no,resizable=yes');
-	}
-}
-
-function doPrintRapportDossier() {
-//-- Fonction pour un rapport demandé par le service du contentieux
-    //post('<cardex:writeObjectURL object="rechercheDossier" page="/rapportAmbulance.do" />;');
-	soumettre('<%= request.getContextPath() + "/rapportAmbulance.do"%>');
-}
-
 </SCRIPT>
 
 <TITLE></TITLE>

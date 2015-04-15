@@ -1,15 +1,16 @@
 /*--- formatted by Jindent 2.1, (www.c-lab.de/~jindent) ---*/
 package com.lotoquebec.cardex.business.facade;
 
+import java.util.List;
+
 import com.lotoquebec.cardex.business.Dossier;
 import com.lotoquebec.cardex.business.Societe;
-import com.lotoquebec.cardex.business.Sujet;
 import com.lotoquebec.cardex.business.Vehicule;
-import com.lotoquebec.cardex.integration.dao.AccesDAO;
+import com.lotoquebec.cardex.business.vo.AccesVO;
 import com.lotoquebec.cardex.integration.dao.FabriqueCardexDAO;
 import com.lotoquebec.cardexCommun.GlobalConstants;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
-import com.lotoquebec.cardexCommun.business.ValueListIterator;
+import com.lotoquebec.cardexCommun.business.EntiteCardex;
 import com.lotoquebec.cardexCommun.exception.BusinessException;
 import com.lotoquebec.cardexCommun.exception.BusinessResourceException;
 import com.lotoquebec.cardexCommun.exception.BusinessRuleException;
@@ -26,84 +27,84 @@ import com.lotoquebec.cardexCommun.exception.DAOException;
 public class AccesSessionFacade {
 
     /**
-     * Recherche des accès.
-     * @param subject Le sujet qui consulte les accès
-     * @param criteria Les critères de recherche
+     * Recherche des accï¿½s.
+     * @param subject Le sujet qui consulte les accï¿½s
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return La liste des accès.
+     * @return La liste des accï¿½s.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
-    public ValueListIterator findAccesDossier(CardexAuthenticationSubject subject,
+    public List<AccesVO> findAccesDossier(CardexAuthenticationSubject subject,
                         Dossier criteria) throws BusinessRuleException,
                         BusinessResourceException {
         try {
         	FabriqueFacade.getDossierSessionFacade().find(subject, criteria);
-            return FabriqueCardexDAO.getInstance().getAccesDAO().select(subject, criteria.getCle(), criteria.getSite(), GlobalConstants.GenreFichier.DOSSIER);
+            return FabriqueCardexDAO.getInstance().getAccesDAO().select(subject, criteria, GlobalConstants.GenreFichier.DOSSIER);
         } catch (DAOException dae) {
             throw new BusinessResourceException(dae);
         }
     }
 
     /**
-     * Recherche des accès.
-     * @param subject Le sujet qui consulte les accès
-     * @param criteria Les critères de recherche
+     * Recherche des accï¿½s.
+     * @param subject Le sujet qui consulte les accï¿½s
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return La liste des accès.
+     * @return La liste des accï¿½s.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
-    public ValueListIterator findAccesSujet(CardexAuthenticationSubject subject,
-                        Sujet criteria) throws BusinessRuleException,
+    public List<AccesVO> findAccesSujet(CardexAuthenticationSubject subject,
+    		EntiteCardex criteria) throws BusinessRuleException,
                         BusinessResourceException {
         try {
         	FabriqueFacade.getSujetSessionFacade().find(subject, criteria);
-    		return FabriqueCardexDAO.getInstance().getAccesDAO().select(subject, criteria.getCle(), criteria.getSite(), GlobalConstants.GenreFichier.SUJET);
+    		return FabriqueCardexDAO.getInstance().getAccesDAO().select(subject, criteria, GlobalConstants.GenreFichier.SUJET);
         } catch (DAOException dae) {
             throw new BusinessResourceException(dae);
         }
     }
     
     /**
-     * Recherche des accès.
-     * @param subject Le sujet qui consulte les accès
-     * @param criteria Les critères de recherche
+     * Recherche des accï¿½s.
+     * @param subject Le sujet qui consulte les accï¿½s
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return La liste des accès.
+     * @return La liste des accï¿½s.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
-    public ValueListIterator findAccesSociete(CardexAuthenticationSubject subject,
+    public List<AccesVO> findAccesSociete(CardexAuthenticationSubject subject,
                         Societe criteria) throws BusinessRuleException,
                         BusinessResourceException {
         try {
         	FabriqueFacade.getSocieteSessionFacade().find(subject, criteria);
-        	return FabriqueCardexDAO.getInstance().getAccesDAO().select(subject, criteria.getCle(), criteria.getSite(), GlobalConstants.GenreFichier.SOCIETE);
+        	return FabriqueCardexDAO.getInstance().getAccesDAO().select(subject, criteria, GlobalConstants.GenreFichier.SOCIETE);
         } catch (DAOException dae) {
             throw new BusinessResourceException(dae);
         }
     }
     
     /**
-     * Recherche des accès.
-     * @param subject Le sujet qui consulte les accès
-     * @param criteria Les critères de recherche
+     * Recherche des accï¿½s.
+     * @param subject Le sujet qui consulte les accï¿½s
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return La liste des accès.
+     * @return La liste des accï¿½s.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
-    public ValueListIterator findAccesVehicule(CardexAuthenticationSubject subject,
+    public List<AccesVO> findAccesVehicule(CardexAuthenticationSubject subject,
                         Vehicule criteria) throws BusinessRuleException,
                         BusinessResourceException {
         try {
         	FabriqueFacade.getVehiculeSessionFacade().find(subject, criteria);
-        	return FabriqueCardexDAO.getInstance().getAccesDAO().select(subject, criteria.getCle(), criteria.getSite(), GlobalConstants.GenreFichier.VEHICULE);
+        	return FabriqueCardexDAO.getInstance().getAccesDAO().select(subject, criteria, GlobalConstants.GenreFichier.VEHICULE);
         } catch (DAOException dae) {
             throw new BusinessResourceException(dae);
         } catch (BusinessException e) {

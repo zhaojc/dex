@@ -140,7 +140,7 @@ public class AffichagePDFAudits extends HttpServlet {
         		Iterator   it = liste.iterator();
                 results = remplirResultatDossiers(subject, dossierForm, it);
             }
-        	if (RapportsConfiguration.AUDIT_CHANGEMENTS_SUJETS.equals( choixRapport )){
+        	if (RapportsConfiguration.AUDIT_CHANGEMENTS_SUJETS_CDX_0185.equals( choixRapport )){
                	SujetBusinessDelegate sujetDelegate = new SujetBusinessDelegate();
                	SujetForm sujetForm = (SujetForm)request.getSession().getAttribute("sujet");
                	sujetForm.assignerValeurDeListe(subject);
@@ -154,7 +154,7 @@ public class AffichagePDFAudits extends HttpServlet {
         		Iterator   it = liste.iterator();
                 results = remplirResultatSujets(subject, sujetForm, it);
                 
-                JasperReport subJasperReport = RapportUtils.compiler(RapportsConfiguration.AUDIT_CHANGEMENTS_SUJETS);
+                JasperReport subJasperReport = RapportUtils.compiler(RapportsConfiguration.AUDIT_CHANGEMENTS_SUJETS_CDX_0185);
             }
         	if (RapportsConfiguration.AUDIT_CHANGEMENTS_SOCIETES.equals( choixRapport )){
                	SocieteBusinessDelegate societeDelegate = new SocieteBusinessDelegate();

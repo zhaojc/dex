@@ -539,7 +539,7 @@ private Photo editPhoto(CardexAuthenticationSubject subject,
  * "stored procedure".
  * @return Collection : liste des photos associ�es
  */
-    public Collection findLiensPhoto(CardexAuthenticationSubject subject, long cle, long site, Timestamp dateLiaison, String genreFichier) throws DAOException {
+    public List<PhotoVO> findLiensPhoto(CardexAuthenticationSubject subject, long cle, long site, Timestamp dateLiaison, String genreFichier) throws DAOException {
       log.debug("findLiensPhoto()");
 	  //return findLiensPhotoBLOB(subject, cle, site, genreFichier);
       Connection connection = DAOConnection.getInstance().getConnection(subject);
@@ -554,7 +554,7 @@ private Photo editPhoto(CardexAuthenticationSubject subject,
          callableStatement.registerOutParameter(4, OracleTypes.CURSOR);
          callableStatement.execute();
          resultSet = (ResultSet)callableStatement.getObject(4);
-         ArrayList results = new ArrayList();
+         List<PhotoVO> results = new ArrayList<PhotoVO>();
          while (resultSet.next()){
               PhotoVO linkedPhoto = new PhotoVO();
               linkedPhoto.setSite(resultSet.getLong("L_MM_REF_SITE"));

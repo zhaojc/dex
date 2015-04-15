@@ -6,22 +6,23 @@ import java.util.Map;
 
 import net.sf.jasperreports.engine.JRException;
 
-import com.lotoquebec.cardex.business.vo.rapport.RapportVO;
+import com.lotoquebec.cardex.business.vo.rapport.CritereRapportVO;
 import com.lotoquebec.cardex.business.vo.rapport.StatistiqueDossierRapportVO;
 import com.lotoquebec.cardex.generateurRapport.sql.GenererRapportSQL;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
+import com.lotoquebec.cardexCommun.business.vo.VO;
 
 
 public abstract class StatistiqueDossierGenererRapportSQL extends GenererRapportSQL {
 
 	@Override
-	public RapportVO construireNouveauRapportVO() {
+	public CritereRapportVO construireNouveauRapportVO() {
 		return new StatistiqueDossierRapportVO();
 	}
 	
 	@Override
-	protected Map construireParametres(CardexAuthenticationSubject subject, RapportVO rapportVO, Connection connection) throws JRException {
-		StatistiqueDossierRapportVO cumulatifDossierRapportVO = (StatistiqueDossierRapportVO) rapportVO;
+	protected Map construireParametres(CardexAuthenticationSubject subject, VO vo, Connection connection) throws JRException {
+		StatistiqueDossierRapportVO cumulatifDossierRapportVO = (StatistiqueDossierRapportVO) vo;
 		
 		Map parameters = new HashMap();
 		parameters.put("NATURE", cumulatifDossierRapportVO.getNature());

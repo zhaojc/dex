@@ -29,6 +29,7 @@ import com.lotoquebec.cardex.business.Societe;
 import com.lotoquebec.cardex.business.Sujet;
 import com.lotoquebec.cardex.business.Vehicule;
 import com.lotoquebec.cardex.business.delegate.AdresseBusinessDelegate;
+import com.lotoquebec.cardex.business.vo.PhotoVO;
 import com.lotoquebec.cardex.business.vo.SujetVO;
 import com.lotoquebec.cardex.integration.dao.sql.recherche.AdresseSujetCompletSQL;
 import com.lotoquebec.cardex.integration.dao.sql.recherche.AdresseSujetCountSQL;
@@ -37,6 +38,7 @@ import com.lotoquebec.cardex.integration.dao.sql.recherche.SujetCompletSQL;
 import com.lotoquebec.cardex.integration.dao.sql.recherche.SujetCountSQL;
 import com.lotoquebec.cardexCommun.GlobalConstants;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
+import com.lotoquebec.cardexCommun.business.EntiteCardex;
 import com.lotoquebec.cardexCommun.business.ValueListHandler;
 import com.lotoquebec.cardexCommun.exception.BusinessResourceException;
 import com.lotoquebec.cardexCommun.exception.DAOException;
@@ -280,7 +282,7 @@ public class SujetDAO {
  * "stored procedure".
  * @return Sujet : donn�es du sujet trouv�.
  */
-	public Sujet find(CardexAuthenticationSubject subject, Sujet criteria) throws DAOException{
+	public Sujet find(CardexAuthenticationSubject subject, EntiteCardex criteria) throws DAOException{
 	  Connection connection = DAOConnection.getInstance().getConnection(subject);
 	  CallableStatement callableStatement = null;
 	  ResultSet resultSet = null;
@@ -621,8 +623,8 @@ public class SujetDAO {
    * "stored procedure".
    * @return ArrayList : liste des sujets trait�s.
    */
-    private ArrayList traitementResultSetAudit(ResultSet resultSet) throws DAOException {
-        ArrayList results = new ArrayList();
+    private List<Sujet> traitementResultSetAudit(ResultSet resultSet) throws DAOException {
+        List<Sujet> results = new ArrayList<Sujet>();
         try { 
             while (resultSet.next()){
   			  SujetVO sujet = new SujetVO();
@@ -1590,7 +1592,7 @@ private Sujet traitementResultSetLiens(ResultSet resultSet) throws SQLException 
 	  return findLiensSujet(subject,sujet.getCle(),sujet.getSite(),GlobalConstants.GenreFichier.SUJET);
 	}
 
-	public Collection findLiensPhoto(CardexAuthenticationSubject subject, Sujet sujet) throws DAOException{
+	public List<PhotoVO> findLiensPhoto(CardexAuthenticationSubject subject, Sujet sujet) throws DAOException{
 	  return FabriqueCardexDAO.getInstance().getPhotoDAO().findLiensPhoto(subject,sujet.getCle(),sujet.getSite(), null, GlobalConstants.GenreFichier.SUJET);
 	}
 
@@ -1835,12 +1837,12 @@ private Sujet traitementResultSetLiens(ResultSet resultSet) throws SQLException 
      * d'une "stored procedure".
      * @return Dossier : Instance de dossier associ�e.
      */
-    public List audit(CardexAuthenticationSubject subject,Sujet criteria)
+    public List<Sujet> audit(CardexAuthenticationSubject subject,Sujet criteria)
             throws DAOException {
         Connection connection = null;            
 		CallableStatement callableStatement = null;
 		ResultSet resultSet = null;
-		List  resultats = new ArrayList();
+		List<Sujet>  resultats = new ArrayList<Sujet>();
           try {
         	connection = DAOConnection.getInstance().getConnection(subject);
             callableStatement = connection.prepareCall(

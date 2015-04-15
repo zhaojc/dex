@@ -3,17 +3,17 @@ package com.lotoquebec.cardex.business.vo.rapport;
 
 /**
  * Utiliser par 
- * CDX_0140	Rapport statistique par catégories avec graphique
+ * CDX_0140	Rapport statistique par catï¿½gories avec graphique
  * CDX_0141	Rapport statistique par mois avec graphique
  * CDX_0142	Rapport statistique par types avec graphique
- * CDX_0145	Rapport statistique sur le temps consacré
- * CDX_0149	Rapport statistique par endroits regroupés
- * CDX_0250 Rapport détail des visites de clients mystères
+ * CDX_0145	Rapport statistique sur le temps consacrï¿½
+ * CDX_0149	Rapport statistique par endroits regroupï¿½s
+ * CDX_0250 Rapport dï¿½tail des visites de clients mystï¿½res
  * 
  * @author levassc
  *
  */
-public class StatistiqueDossierRapportVO extends RapportVO{
+public class StatistiqueDossierRapportVO extends CritereRapportVO{
 
 	private long site = 0;
 	private long genre = 0;
@@ -21,10 +21,10 @@ public class StatistiqueDossierRapportVO extends RapportVO{
 	private long type = 0;
 	private long fonde = 0;
 	private long categorie = 0;
-	private String region = ""; //Utilisé dans les rapports de clients mystères
-	private String vague = ""; //Utilisé dans les rapports de clients mystères
-    private String district = ""; //Utilisé dans les rapports de clients mystères
-	private long regroupement = 0; //Utilisé dans le CDX_0149
+	private String region = ""; //Utilisï¿½ dans les rapports de clients mystï¿½res
+	private String vague = ""; //Utilisï¿½ dans les rapports de clients mystï¿½res
+    private String district = ""; //Utilisï¿½ dans les rapports de clients mystï¿½res
+	private long regroupement = 0; //Utilisï¿½ dans le CDX_0149
 	
 	public long getRegroupement() {
 		return regroupement;
@@ -42,7 +42,7 @@ public class StatistiqueDossierRapportVO extends RapportVO{
 	}
 
 	/**
-	 * @param vague vague à définir
+	 * @param vague vague ï¿½ dï¿½finir
 	 */
 	public void setVague(String vague) {
 		this.vague = vague;
@@ -96,7 +96,7 @@ public class StatistiqueDossierRapportVO extends RapportVO{
 	}
 
 	/**
-	 * @param categorie categorie à définir
+	 * @param categorie categorie ï¿½ dï¿½finir
 	 */
 	public void setCategorie(long categorie) {
 		this.categorie = categorie;
@@ -110,7 +110,7 @@ public class StatistiqueDossierRapportVO extends RapportVO{
 	}
 
 	/**
-	 * @param region region à définir
+	 * @param region region ï¿½ dï¿½finir
 	 */
 	public void setRegion(String region) {
 		this.region = region;

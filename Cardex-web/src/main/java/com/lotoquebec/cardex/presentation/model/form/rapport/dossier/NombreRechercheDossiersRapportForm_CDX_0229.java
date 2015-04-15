@@ -1,15 +1,14 @@
 package com.lotoquebec.cardex.presentation.model.form.rapport.dossier;
 
-import com.lotoquebec.cardex.generateurRapport.GenererRapport;
 import com.lotoquebec.cardex.generateurRapport.dossier.NombreRechercheDossiersGenerateurRapport_CDX_0229;
 import com.lotoquebec.cardex.presentation.model.form.rapport.CriteresRapportForm;
-import com.lotoquebec.cardex.presentation.model.form.rapport.RapportForm;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
 import com.lotoquebec.cardexCommun.user.CardexUser;
 
-public class NombreRechercheDossiersRapportForm_CDX_0229 extends CriteresRapportForm implements RapportForm{
+public class NombreRechercheDossiersRapportForm_CDX_0229 extends CriteresRapportForm{
 
-    private String entite = "";
+	private static final long serialVersionUID = 2384130048571278052L;
+	private String entite = "";
     private String siteOrigine = "";
     private String siteApplicable = "";
     private String genre = "";
@@ -53,11 +52,16 @@ public class NombreRechercheDossiersRapportForm_CDX_0229 extends CriteresRapport
 	private String dateNumeroCardex = "";
 	private String sequenceNumeroCardex = "";
     private String classe = "";
+    
+
+	public NombreRechercheDossiersRapportForm_CDX_0229() {
+		super( new NombreRechercheDossiersGenerateurRapport_CDX_0229() );
+	}
 	
 	public void init(CardexAuthenticationSubject subject){
 		super.init(subject);
         CardexUser user = (CardexUser) subject.getUser();
-        // Valeurs par défaut
+        // Valeurs par dï¿½faut
         setEntite(String.valueOf(user.getEntite()));
         setSiteOrigine(String.valueOf(user.getSite()));
 	}
@@ -396,10 +400,6 @@ public class NombreRechercheDossiersRapportForm_CDX_0229 extends CriteresRapport
 
 	public void setSequenceNumeroCardex(String sequenceNumeroCardex) {
 		this.sequenceNumeroCardex = sequenceNumeroCardex;
-	}
-
-	public GenererRapport getGenererRapport() {
-		return new NombreRechercheDossiersGenerateurRapport_CDX_0229();
 	}
 
 	public String getClasse() {

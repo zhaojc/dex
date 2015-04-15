@@ -1,6 +1,6 @@
 package com.lotoquebec.cardex.business.vo.rapport;
 
-public class EspaceJeuxTricherieFondeRapportVO_CDX_0262 extends RapportVO{
+public class EspaceJeuxTricherieFondeRapportVO_CDX_0262 extends CritereRapportVO{
 
 	private long categorie = 0;
 	private long site = 0;

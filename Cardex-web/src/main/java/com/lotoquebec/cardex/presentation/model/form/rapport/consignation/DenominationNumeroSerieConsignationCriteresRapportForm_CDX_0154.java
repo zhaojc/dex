@@ -1,13 +1,13 @@
 package com.lotoquebec.cardex.presentation.model.form.rapport.consignation;
 
-import com.lotoquebec.cardex.generateurRapport.GenererRapport;
 import com.lotoquebec.cardex.generateurRapport.consignation.DenominationNumeroSerieConsignationGenerateurRapport_CDX_0154;
 
 public class DenominationNumeroSerieConsignationCriteresRapportForm_CDX_0154 extends ConsignationCriteresRapportForm{
 
-	@Override
-	public GenererRapport getGenererRapport() {
-		return new DenominationNumeroSerieConsignationGenerateurRapport_CDX_0154();
+	private static final long serialVersionUID = 7463128504802071809L;
+
+	public DenominationNumeroSerieConsignationCriteresRapportForm_CDX_0154() {
+		super( new DenominationNumeroSerieConsignationGenerateurRapport_CDX_0154() );
 	}
 	
 }

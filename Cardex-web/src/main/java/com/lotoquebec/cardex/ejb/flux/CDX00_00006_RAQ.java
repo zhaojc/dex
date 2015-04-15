@@ -173,7 +173,7 @@ public class CDX00_00006_RAQ implements Flux{
 		
 		Map parameters = new HashMap();
 
-		InputStream gabarit = RapportsConfiguration.class.getResourceAsStream(RapportsConfiguration.RAPPORT_ACTIVITES);
+		InputStream gabarit = RapportsConfiguration.class.getResourceAsStream(RapportsConfiguration.RAPPORT_ACTIVITES_CDX_0070);
 
 		// Utilisation d'un resultSet comme source de donn�es
 		//ResultSet resultSet = delegate.rapportActivites(dateDebut, dateFin, procedure);

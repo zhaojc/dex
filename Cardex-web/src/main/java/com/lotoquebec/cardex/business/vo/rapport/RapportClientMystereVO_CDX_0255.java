@@ -2,7 +2,7 @@ package com.lotoquebec.cardex.business.vo.rapport;
 
 import java.util.Date;
 
-public class RapportClientMystereVO_CDX_0255 extends RapportVO{
+public class RapportClientMystereVO_CDX_0255 extends CritereRapportVO{
 
 	private String derniereMAJDate;
 	private String district;

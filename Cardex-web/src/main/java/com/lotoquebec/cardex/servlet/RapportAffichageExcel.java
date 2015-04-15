@@ -13,7 +13,7 @@ import com.lotoquebec.cardexCommun.GlobalConstants;
  * Cette classe est utilis� pour lancer une classe en r�flexion.
  * La classe lanc� est la classe qui pr�pare le rapport jasper.
  */
-public class RapportAffichageExcel extends RapportAffichagePDF {
+public class RapportAffichageExcel extends CritereRapportAffichagePDF {
 
 	private static final long serialVersionUID = 7411182369215382967L;
 /*

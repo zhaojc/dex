@@ -9,8 +9,9 @@ import net.sf.jasperreports.engine.JRResultSetDataSource;
 
 import com.lotoquebec.cardex.business.delegate.RapportBusinessDelegate;
 import com.lotoquebec.cardex.business.vo.rapport.EnqueteurJournalRapportVO_CDX_0053;
+import com.lotoquebec.cardex.business.vo.rapport.CritereRapportVO;
 import com.lotoquebec.cardex.business.vo.rapport.RapportVO;
-import com.lotoquebec.cardex.generateurRapport.GenererRapport;
+import com.lotoquebec.cardex.generateurRapport.CritereGenererRapport;
 import com.lotoquebec.cardex.generateurRapport.rapports.RapportsConfiguration;
 import com.lotoquebec.cardexCommun.GlobalConstants;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
@@ -18,7 +19,7 @@ import com.lotoquebec.cardexCommun.exception.BusinessException;
 import com.lotoquebec.cardexCommun.exception.BusinessResourceException;
 import com.lotoquebec.cardexCommun.securite.GestionnaireSecurite;
 
-public class EnqueteurJournalGenerateurRapport_CDX_0053 extends GenererRapport {
+public class EnqueteurJournalGenerateurRapport_CDX_0053 extends CritereGenererRapport {
 
 	@Override
 	protected void validerSecurite(CardexAuthenticationSubject subject) {
@@ -26,12 +27,12 @@ public class EnqueteurJournalGenerateurRapport_CDX_0053 extends GenererRapport {
 	}
 	
 	@Override
-	public RapportVO construireNouveauRapportVO() {
+	public CritereRapportVO construireNouveauRapportVO() {
 		return new EnqueteurJournalRapportVO_CDX_0053();
 	}
 	
 	@Override
-	protected JRDataSource construireDataSource(CardexAuthenticationSubject subject, RapportVO rapportVO, Connection connection) throws BusinessResourceException, BusinessException {
+	protected JRDataSource construireDataSource(CardexAuthenticationSubject subject, CritereRapportVO rapportVO, Connection connection) throws BusinessResourceException, BusinessException {
 		EnqueteurJournalRapportVO_CDX_0053 enqueteurJournalRapportVO_CDX_0053 = (EnqueteurJournalRapportVO_CDX_0053) rapportVO;
 		RapportBusinessDelegate delegate = new RapportBusinessDelegate();
        	

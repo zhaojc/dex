@@ -1,7 +1,7 @@
 package com.lotoquebec.cardex.business.vo.rapport;
 
 
-public class SiteIntervenantRapportVO extends RapportVO{
+public class SiteIntervenantRapportVO extends CritereRapportVO{
 
 	private String intervenant = "";
 	private long site = 0;

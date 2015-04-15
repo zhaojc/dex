@@ -898,10 +898,8 @@ public final class GlobalConstants {
     	public static final String DETAIL_ACCES_INTERVENANT ="CDX_0123_audit_detail_acces_intervenant.jrxml";
     	public static final String ECRAN = "ECRAN";
     	public static final String FICHIER = "FICHIER";
-    	public static final String IMPRESSION_SUJET = "CDX_0002_sujet.jrxml";
     	public static final String IMPRESSION_SOCIETE = "CDX_0003_societe.jrxml";
     	public static final String IMPRESSION_DOSSIER = "dossier.jrxml";
-    	public static final String IMPRESSION_GALERIE = "CDX_0004_sujet-galerie.jrxml";
     	public static final String JOURNAL_CATEGORIE = "rapport_journal_categorie.jrxml";
     	public static final String JOURNAL_CATEGORIE_INTERVENANT = "rapport_journal_categorie_intervenant.jrxml";
     	
@@ -1223,7 +1221,18 @@ public final class GlobalConstants {
     	public final static String REPERTOIRE_SAUVEGARDE_RAPPORT_VERIFICATION_CLIENT_MYSTERE = "repertoire.sauvegarde.rapport.verification.client.mystere";
     	public final static String REPERTOIRE_SAUVEGARDE_RAPPORT_CLIENT_MYSTERE = "repertoire.sauvegarde.rapport.client.mystere";
     }
-
+    
+    public static class RapportForm{
+    	
+    	public final static String SUJET_RAPPORT_FORM_CDX_0002 = "com.lotoquebec.cardex.presentation.model.form.rapport.sujet.SujetRapportForm_CDX_0002";
+    	public final static String GALERIE_SUJET_RAPPORT_FORM_CDX_0004 = "com.lotoquebec.cardex.presentation.model.form.rapport.sujet.GalerieSujetRapportForm_CDX_0004";
+    	
+    	public final static String SUJET_AUDIT_ACCES_RAPPORT_FORM_CDX_0211 = "com.lotoquebec.cardex.presentation.model.form.rapport.acces.SujetAuditAccesRapportForm_CDX_0211";
+    	public static final String SUJET_AUDIT_CHANGEMENTS_SUJETS_CDX_0185 = "com.lotoquebec.cardex.presentation.model.form.rapport.acces.SujetAuditChangementRapportForm_CDX_0185";
+    	
+    	public final static String SOCIETE_AUDIT_ACCES_RAPPORT_FORM_CDX_0212 = "com.lotoquebec.cardex.presentation.model.form.rapport.acces.SocieteAuditAccesRapportForm_CDX_0212";
+    }
+    
     /**
      * Inner Class qui contient les valeurs
      * par d�faut des types d'intervention

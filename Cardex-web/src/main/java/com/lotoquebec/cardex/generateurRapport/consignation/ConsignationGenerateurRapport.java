@@ -6,21 +6,22 @@ import java.util.Map;
 import net.sf.jasperreports.engine.JRException;
 
 import com.lotoquebec.cardex.business.vo.rapport.ConsignationRapportVO;
-import com.lotoquebec.cardex.business.vo.rapport.RapportVO;
+import com.lotoquebec.cardex.business.vo.rapport.CritereRapportVO;
 import com.lotoquebec.cardex.generateurRapport.sql.GenererRapportSQL;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
+import com.lotoquebec.cardexCommun.business.vo.VO;
 
 public abstract class ConsignationGenerateurRapport extends GenererRapportSQL {
 
 	@Override
-	public RapportVO construireNouveauRapportVO() {
+	public CritereRapportVO construireNouveauRapportVO() {
 		return new ConsignationRapportVO();
 	}
 
 	@Override
-	protected Map construireParametres(CardexAuthenticationSubject subject, RapportVO rapportVO, Connection connection) throws JRException {
-		ConsignationRapportVO consignationRapportVO = (ConsignationRapportVO) rapportVO; 
-		Map parameters = super.construireParametres(subject, rapportVO, connection);
+	protected Map construireParametres(CardexAuthenticationSubject subject, VO vo, Connection connection) throws JRException {
+		ConsignationRapportVO consignationRapportVO = (ConsignationRapportVO) vo; 
+		Map parameters = super.construireParametres(subject, vo, connection);
 		parameters.put("SITE", consignationRapportVO.getSite());
 		parameters.put("NATURE", consignationRapportVO.getNature());
 		parameters.put("TYPE", consignationRapportVO.getType());

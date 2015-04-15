@@ -11,9 +11,9 @@ import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.data.JRMapCollectionDataSource;
 
 import com.lotoquebec.cardex.business.delegate.DossierBusinessDelegate;
+import com.lotoquebec.cardex.business.vo.rapport.CritereRapportVO;
 import com.lotoquebec.cardex.business.vo.rapport.NombreRechercheDossierVO_CDX_0229;
-import com.lotoquebec.cardex.business.vo.rapport.RapportVO;
-import com.lotoquebec.cardex.generateurRapport.GenererRapport;
+import com.lotoquebec.cardex.generateurRapport.CritereGenererRapport;
 import com.lotoquebec.cardex.generateurRapport.rapports.RapportsConfiguration;
 import com.lotoquebec.cardexCommun.GlobalConstants;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
@@ -35,14 +35,14 @@ import com.lotoquebec.cardexCommun.text.DateFormat;
 import com.lotoquebec.cardexCommun.util.ListeCache;
 import com.lotoquebec.cardexCommun.util.StringUtils;
 
-public class NombreRechercheDossiersGenerateurRapport_CDX_0229 extends GenererRapport {
+public class NombreRechercheDossiersGenerateurRapport_CDX_0229 extends CritereGenererRapport {
  
 	
 	protected InputStream obtenirGabarit() {
 		return RapportsConfiguration.class.getResourceAsStream(RapportsConfiguration.RAPPORT_NOMBRE_DOSSIERS);
 	}
 	
-	public RapportVO construireNouveauRapportVO() {
+	public CritereRapportVO construireNouveauRapportVO() {
 		return new NombreRechercheDossierVO_CDX_0229();
 	}
 	
@@ -51,7 +51,7 @@ public class NombreRechercheDossiersGenerateurRapport_CDX_0229 extends GenererRa
 	}
 	
 	@Override
-	protected JRDataSource construireDataSource(CardexAuthenticationSubject subject, RapportVO rapportVO, Connection connection) throws BusinessResourceException, BusinessException {
+	protected JRDataSource construireDataSource(CardexAuthenticationSubject subject, CritereRapportVO rapportVO, Connection connection) throws BusinessResourceException, BusinessException {
 		List list = new ArrayList();
 		Map mapRapport = new HashMap();
 		NombreRechercheDossierVO_CDX_0229 criteresRechercheDossierVO = (NombreRechercheDossierVO_CDX_0229) rapportVO;

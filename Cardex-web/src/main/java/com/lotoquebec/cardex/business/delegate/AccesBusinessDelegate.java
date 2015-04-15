@@ -2,16 +2,19 @@
 
 package com.lotoquebec.cardex.business.delegate;
 
+import java.util.List;
+
 import com.lotoquebec.cardex.business.Dossier;
 import com.lotoquebec.cardex.business.Societe;
 import com.lotoquebec.cardex.business.Sujet;
 import com.lotoquebec.cardex.business.Vehicule;
 import com.lotoquebec.cardex.business.facade.AccesSessionFacade;
+import com.lotoquebec.cardex.business.vo.AccesVO;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
 import com.lotoquebec.cardexCommun.business.BusinessDelegate;
 import com.lotoquebec.cardexCommun.business.BusinessMessage;
 import com.lotoquebec.cardexCommun.business.BusinessMessageResult;
-import com.lotoquebec.cardexCommun.business.ValueListIterator;
+import com.lotoquebec.cardexCommun.business.EntiteCardex;
 import com.lotoquebec.cardexCommun.exception.BusinessException;
 import com.lotoquebec.cardexCommun.exception.BusinessResourceException;
 import com.lotoquebec.cardexCommun.exception.BusinessRuleException;
@@ -35,17 +38,17 @@ public class AccesBusinessDelegate extends BusinessDelegate {
     }
 
     /**
-     * Recherche des accès.
+     * Recherche des accï¿½s.
      *
      * @param subject Le sujet qui recherche un dossier
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return La liste des accès.
+     * @return La liste des accï¿½s.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
-    public ValueListIterator selectAccesDossier(CardexAuthenticationSubject subject,
+    public List<AccesVO> selectAccesDossier(CardexAuthenticationSubject subject,
                         Dossier criteria) throws BusinessException,
                         BusinessResourceException {
         try {
@@ -56,18 +59,17 @@ public class AccesBusinessDelegate extends BusinessDelegate {
     }
 
     /**
-     * Recherche des accès.
+     * Recherche des accï¿½s.
      *
      * @param subject Le sujet qui recherche un dossier
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return La liste des accès.
+     * @return La liste des accï¿½s.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
-    public ValueListIterator selectAccesSujet(CardexAuthenticationSubject subject,
-                        Sujet criteria) throws BusinessException,
+    public List<AccesVO> selectAccesSujet(CardexAuthenticationSubject subject, EntiteCardex criteria) throws BusinessException,
                         BusinessResourceException {
         try {
             return accesSessionFacade.findAccesSujet(subject, criteria);
@@ -77,17 +79,17 @@ public class AccesBusinessDelegate extends BusinessDelegate {
     }
     
     /**
-     * Recherche des accès.
+     * Recherche des accï¿½s.
      *
      * @param subject Le sujet qui recherche un dossier
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return La liste des accès.
+     * @return La liste des accï¿½s.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
-    public ValueListIterator selectAccesSociete(CardexAuthenticationSubject subject,
+    public List<AccesVO> selectAccesSociete(CardexAuthenticationSubject subject,
                         Societe criteria) throws BusinessException,
                         BusinessResourceException {
         try {
@@ -98,17 +100,17 @@ public class AccesBusinessDelegate extends BusinessDelegate {
     }
     
     /**
-     * Recherche des accès.
+     * Recherche des accï¿½s.
      *
      * @param subject Le sujet qui recherche un dossier
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return La liste des accès.
+     * @return La liste des accï¿½s.
      *
-     * @throws BusinessException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
-    public ValueListIterator selectAccesVehicule(CardexAuthenticationSubject subject,
+    public List<AccesVO> selectAccesVehicule(CardexAuthenticationSubject subject,
                         Vehicule criteria) throws BusinessException,
                         BusinessResourceException {
         try {
@@ -121,16 +123,16 @@ public class AccesBusinessDelegate extends BusinessDelegate {
 
     /**
      * Construit une BusinessException contenant les messages d'erreurs qui
-     * doivent être présenté à un utilisateur. Cette méthode fait la mise en
-     * correspondance entre les codes de règles d'affaires reçus d'une
-     * BusinessRuleException et les messsages qui doivent être affiché
-     * à un utilisateur.
+     * doivent ï¿½tre prï¿½sentï¿½ ï¿½ un utilisateur. Cette mï¿½thode fait la mise en
+     * correspondance entre les codes de rï¿½gles d'affaires reï¿½us d'une
+     * BusinessRuleException et les messsages qui doivent ï¿½tre affichï¿½
+     * ï¿½ un utilisateur.
      *
      * @param bre BusinessRuleException BusinessRuleException contenant
-     *            les codes de règles d'affaires
+     *            les codes de rï¿½gles d'affaires
      *
      * @return BusinessException BusinessException contenant les messages
-     * d'erreurs qui doivent être présenté à un utilisateur.
+     * d'erreurs qui doivent ï¿½tre prï¿½sentï¿½ ï¿½ un utilisateur.
      */
     private BusinessException handleAccesBusinessRuleException(BusinessRuleException bre)
             throws BusinessException {

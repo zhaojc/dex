@@ -8,11 +8,13 @@ import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
 
 import com.lotoquebec.cardex.business.vo.ResultatRegroupementVO;
+import com.lotoquebec.cardex.business.vo.rapport.CritereRapportVO;
 import com.lotoquebec.cardex.business.vo.rapport.RapportVO;
 import com.lotoquebec.cardex.business.vo.rapport.regroupement.RegroupementRapportVO;
-import com.lotoquebec.cardex.generateurRapport.GenererRapport;
+import com.lotoquebec.cardex.generateurRapport.CritereGenererRapport;
 import com.lotoquebec.cardexCommun.GlobalConstants;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
+import com.lotoquebec.cardexCommun.business.vo.VO;
 import com.lotoquebec.cardexCommun.exception.BusinessException;
 import com.lotoquebec.cardexCommun.exception.BusinessResourceException;
 import com.lotoquebec.cardexCommun.integration.dao.cleListe.cleListeCache.EndroitCleListeCache;
@@ -25,7 +27,7 @@ import com.lotoquebec.cardexCommun.util.ListeCache;
 import com.lotoquebec.cardexCommun.util.StringUtils;
 
 
-public abstract class RegroupementGenerateurRapport extends GenererRapport {
+public abstract class RegroupementGenerateurRapport extends CritereGenererRapport {
 
 	public final static String ENTITE = "entite";
 	public final static String SITE = "site";
@@ -84,23 +86,23 @@ public abstract class RegroupementGenerateurRapport extends GenererRapport {
 	// Trier les regroupements
 	protected abstract void trier(PresentationRegroupementRapport regroupementRapportVO);
 	
-	// Ajout des sous-éléments de la collection
+	// Ajout des sous-ï¿½lï¿½ments de la collection
 	protected abstract void ajouterSousCollection(PresentationRegroupementRapport regroupementRapportVO);
 	
 	// Construire le contenu du rapport
 	protected abstract JRDataSource construireDataSource(PresentationRegroupementRapport regroupementRapportVO);
 	
-	// Assigner la valeur de temps nom comptabilisé à la première colonne.
+	// Assigner la valeur de temps nom comptabilisï¿½ ï¿½ la premiï¿½re colonne.
 	protected abstract void assignerPremiereColonne(ResultatPresentationRegroupement resultatRegroupement, String strTempsNonComptabilise);
 	
-	// Converti les données du VO vers Regroupement
+	// Converti les donnï¿½es du VO vers Regroupement
 	protected abstract void convertirResultat(CardexAuthenticationSubject subject, PresentationRegroupementRapport regroupementRapportVO, ResultatRegroupementVO regroupement);
 	
-	// Ajouter le temps non comptabilisé
+	// Ajouter le temps non comptabilisï¿½
 	protected abstract void ajouterTempsNonComptabilise(CardexAuthenticationSubject subject, PresentationRegroupementRapport regroupementRapportVO);
 	
 	@Override
-	protected JRDataSource construireDataSource(CardexAuthenticationSubject subject, RapportVO rapportVO, Connection connection) throws BusinessResourceException, BusinessException{
+	protected JRDataSource construireDataSource(CardexAuthenticationSubject subject, CritereRapportVO rapportVO, Connection connection) throws BusinessResourceException, BusinessException{
 		RegroupementRapportVO criteresRechercheRegroupementVO = (RegroupementRapportVO) rapportVO;
 		ResultatRegroupementVO regroupement = produireRapport(subject, criteresRechercheRegroupementVO);
 		
@@ -116,7 +118,8 @@ public abstract class RegroupementGenerateurRapport extends GenererRapport {
 		return construireDataSource(presentationRegroupementRapport);
 	}
 
-	protected Map construireParametres(CardexAuthenticationSubject subject, RapportVO rapportVO, Connection connection) throws JRException {
+	@Override
+	protected Map construireParametres(CardexAuthenticationSubject subject, VO rapportVO, Connection connection) throws JRException {
 		RegroupementRapportVO criteresRechercheRegroupementVO = (RegroupementRapportVO) rapportVO;
 		Map parameters = super.construireParametres(subject, rapportVO, connection);
 		ListeCache listeCache = ListeCache.getInstance();

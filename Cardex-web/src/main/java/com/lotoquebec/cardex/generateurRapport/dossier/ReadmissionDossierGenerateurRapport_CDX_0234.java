@@ -16,9 +16,9 @@ import com.lotoquebec.cardex.business.Dossier;
 import com.lotoquebec.cardex.business.Sujet;
 import com.lotoquebec.cardex.business.delegate.DossierBusinessDelegate;
 import com.lotoquebec.cardex.business.vo.DossierVO;
+import com.lotoquebec.cardex.business.vo.rapport.CritereRapportVO;
 import com.lotoquebec.cardex.business.vo.rapport.EntiteRapportVO;
-import com.lotoquebec.cardex.business.vo.rapport.RapportVO;
-import com.lotoquebec.cardex.generateurRapport.GenererRapport;
+import com.lotoquebec.cardex.generateurRapport.CritereGenererRapport;
 import com.lotoquebec.cardex.generateurRapport.rapports.RapportsConfiguration;
 import com.lotoquebec.cardex.securite.GestionnaireSecuriteCardex;
 import com.lotoquebec.cardexCommun.GlobalConstants;
@@ -29,7 +29,7 @@ import com.lotoquebec.cardexCommun.integration.dao.cleListe.cleSQLListeCache.Tab
 import com.lotoquebec.cardexCommun.util.ListeCache;
 import com.lotoquebec.cardexCommun.util.StringUtils;
 
-public class ReadmissionDossierGenerateurRapport_CDX_0234 extends GenererRapport {
+public class ReadmissionDossierGenerateurRapport_CDX_0234 extends CritereGenererRapport {
  
 	private boolean tousCasinoEtLudoplex = false;
 	
@@ -37,7 +37,7 @@ public class ReadmissionDossierGenerateurRapport_CDX_0234 extends GenererRapport
 		return RapportsConfiguration.class.getResourceAsStream(RapportsConfiguration.READMISSION);
 	}
 
-	//Construction de la liste qui sera soumise au rapport. Les champs du map correspondent à ceux du rapport.
+	//Construction de la liste qui sera soumise au rapport. Les champs du map correspondent ï¿½ ceux du rapport.
 	private List construireListeDataSource(CardexAuthenticationSubject subject, Dossier dossier, Map mapRapportDossier)
 	 			throws BusinessException{
 		List list = new ArrayList();
@@ -50,14 +50,14 @@ public class ReadmissionDossierGenerateurRapport_CDX_0234 extends GenererRapport
         mapRapportDossier.put("dateDebut", StringUtils.substring(dossier.getDateDebut().toString(),0,10));
 
 		DossierBusinessDelegate delegate = new DossierBusinessDelegate();
-		//On va chercher le sujet relié
+		//On va chercher le sujet reliï¿½
         Collection liensSujets;
         Iterator it;
 	        liensSujets = delegate.findLiensSujet(subject, dossier);
 	        it = liensSujets.iterator();
 	        if(it.hasNext()) {
 	            Sujet linkSujet = (Sujet) it.next();
-	            //On passe la clé et le site du sujet pour le sous-rapport
+	            //On passe la clï¿½ et le site du sujet pour le sous-rapport
 				mapRapportDossier.put("nom", linkSujet.getNom());
 				mapRapportDossier.put("prenom", linkSujet.getPrenom());
 	        }
@@ -65,7 +65,7 @@ public class ReadmissionDossierGenerateurRapport_CDX_0234 extends GenererRapport
 		return list;
 	}
 	
-	public RapportVO construireNouveauRapportVO() {
+	public CritereRapportVO construireNouveauRapportVO() {
 		return new EntiteRapportVO();
 	}
 	
@@ -74,7 +74,7 @@ public class ReadmissionDossierGenerateurRapport_CDX_0234 extends GenererRapport
 	}
 	
 	@Override
-	protected JRDataSource construireDataSource(CardexAuthenticationSubject subject, RapportVO rapportVO, Connection connection) throws BusinessResourceException, BusinessException {
+	protected JRDataSource construireDataSource(CardexAuthenticationSubject subject, CritereRapportVO rapportVO, Connection connection) throws BusinessResourceException, BusinessException {
 		List list = new ArrayList();
 		EntiteRapportVO entiteRapportVO = (EntiteRapportVO) rapportVO;
 		DossierBusinessDelegate delegate = new DossierBusinessDelegate();
@@ -84,7 +84,7 @@ public class ReadmissionDossierGenerateurRapport_CDX_0234 extends GenererRapport
 		Dossier dossier = delegate.find(subject, dossierVO);
 
 		Map mapRapportDossier = new HashMap();
-		//On ajoute les champs qui seront imprimés sur le contrat
+		//On ajoute les champs qui seront imprimï¿½s sur le contrat
 		list.addAll(construireListeDataSource(subject, dossier, mapRapportDossier));
 
 		return new JRMapCollectionDataSource(list);

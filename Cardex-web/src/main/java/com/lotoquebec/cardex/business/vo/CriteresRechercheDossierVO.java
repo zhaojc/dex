@@ -3,20 +3,20 @@ package com.lotoquebec.cardex.business.vo;
 import java.sql.Timestamp;
 
 import com.lotoquebec.cardex.business.CriteresRechercheDossier;
-import com.lotoquebec.cardex.business.vo.rapport.RapportVO;
+import com.lotoquebec.cardex.business.vo.rapport.CritereRapportVO;
 import com.lotoquebec.cardexCommun.text.TimestampFormat;
 
 /**
  * La classe CriteresRechercheDossierVO est responsable de concerver les
- * informations relatives à la page "Recherche de Dossier".  Offrant les
- * différents "getter" et "setter" associés au attribut, afin de modifier leur
+ * informations relatives ï¿½ la page "Recherche de Dossier".  Offrant les
+ * diffï¿½rents "getter" et "setter" associï¿½s au attribut, afin de modifier leur
  * valeur.
  *
  * @author $Author: pcaron $
  * @version $Revision: 1.17 $, $Date: 2002/02/23 02:16:07 $
  * @see com.lotoquebec.cardex.business.CriteresRechercheDossier
  */
-public class CriteresRechercheDossierVO extends RapportVO implements CriteresRechercheDossier {
+public class CriteresRechercheDossierVO extends CritereRapportVO implements CriteresRechercheDossier {
 
     private long      entite = 0;
     private long      siteOrigine = 0;
@@ -115,9 +115,9 @@ public class CriteresRechercheDossierVO extends RapportVO implements CriteresRec
 
 
     /**
-     * Retourne l'entité.
+     * Retourne l'entitï¿½.
      *
-     * @return long Valeur numérique de l'entité.
+     * @return long Valeur numï¿½rique de l'entitï¿½.
      */
     public long getEntite() {
         return this.entite;
@@ -126,7 +126,7 @@ public class CriteresRechercheDossierVO extends RapportVO implements CriteresRec
     /**
      * Retourne le site d'origine.
      *
-     * @return long Valeur numérique du site d'origine.
+     * @return long Valeur numï¿½rique du site d'origine.
      */
     public long getSiteOrigine() {
         return this.siteOrigine;
@@ -135,7 +135,7 @@ public class CriteresRechercheDossierVO extends RapportVO implements CriteresRec
     /**
      * Retourne le site applicable.
      *
-     * @return long Valeur numérique du site applicable.
+     * @return long Valeur numï¿½rique du site applicable.
      */
     public long getSiteApplicable() {
         return this.siteApplicable;
@@ -144,7 +144,7 @@ public class CriteresRechercheDossierVO extends RapportVO implements CriteresRec
     /**
      * Retourne le genre.
      *
-     * @return long Valeur numérique du genre.
+     * @return long Valeur numï¿½rique du genre.
      */
     public long getGenre() {
         return this.genre;
@@ -153,7 +153,7 @@ public class CriteresRechercheDossierVO extends RapportVO implements CriteresRec
     /**
      * Retourne la nature.
      *
-     * @return long Valeur numérique de la nature.
+     * @return long Valeur numï¿½rique de la nature.
      */
     public long getNature() {
         return this.nature;
@@ -162,16 +162,16 @@ public class CriteresRechercheDossierVO extends RapportVO implements CriteresRec
     /**
      * Retourne le type.
      *
-     * @return long Valeur numérique du type.
+     * @return long Valeur numï¿½rique du type.
      */
     public long getType() {
         return this.type;
     }
 
     /**
-     * Retourne la catégorie.
+     * Retourne la catï¿½gorie.
      *
-     * @return long Valeur numérique de la catégorie.
+     * @return long Valeur numï¿½rique de la catï¿½gorie.
      */
     public long getCategorie() {
         return this.categorie;
@@ -180,7 +180,7 @@ public class CriteresRechercheDossierVO extends RapportVO implements CriteresRec
     /**
      * Retourne le statut.
      *
-     * @return long Valeur numérique du statut.
+     * @return long Valeur numï¿½rique du statut.
      */
     public long getStatut() {
         return this.statut;
@@ -189,7 +189,7 @@ public class CriteresRechercheDossierVO extends RapportVO implements CriteresRec
     /**
      * Retourne l'attribut fonde.
      *
-     * @return long Valeur numérique de l'attribut fonde.
+     * @return long Valeur numï¿½rique de l'attribut fonde.
      */
     public long getFonde() {
         return this.fonde;
@@ -198,79 +198,79 @@ public class CriteresRechercheDossierVO extends RapportVO implements CriteresRec
     /**
      * Retourne l'intervenant.
      *
-     * @return String Valeur de l'intervenant en caractère.
+     * @return String Valeur de l'intervenant en caractï¿½re.
      */
     public String getIntervenant() {
         return this.intervenant;
     }
 
     /**
-     * Retourne le numéro de cardex.
+     * Retourne le numï¿½ro de cardex.
      *
-     * @return String Valeur du numéro de cardex en caractère.
+     * @return String Valeur du numï¿½ro de cardex en caractï¿½re.
      */
     public String getNumeroCardex() {
         return this.numeroCardex;
     }
 
     /**
-     * Retourne le numéro de dossier.
+     * Retourne le numï¿½ro de dossier.
      *
-     * @return String Valeur du numéro de dossier en caractère.
+     * @return String Valeur du numï¿½ro de dossier en caractï¿½re.
      */
     public String getNumeroDossier() {
         return this.numeroDossier;
     }
 
     /**
-     * Retourne le numéro de fiche sujet.
+     * Retourne le numï¿½ro de fiche sujet.
      *
-     * @return String Valeur du numéro de fiche sujet en caractère.
+     * @return String Valeur du numï¿½ro de fiche sujet en caractï¿½re.
      */
     public String getNumeroFicheSujet() {
         return this.numeroFicheSujet;
     }
 
     /**
-     * Retourne la première référence.
+     * Retourne la premiï¿½re rï¿½fï¿½rence.
      *
-     * @return String Valeur de la première référence en caractères.
+     * @return String Valeur de la premiï¿½re rï¿½fï¿½rence en caractï¿½res.
      */
     public String getReference1() {
         return this.reference1;
     }
 
     /**
-     * Retourne la deuxième référence.
+     * Retourne la deuxiï¿½me rï¿½fï¿½rence.
      *
-     * @return String Valeur de la deuxième référence en caractères.
+     * @return String Valeur de la deuxiï¿½me rï¿½fï¿½rence en caractï¿½res.
      */
     public String getReference2() {
         return this.reference2;
     }
 
     /**
-     * Retourne la troisième référence.
+     * Retourne la troisiï¿½me rï¿½fï¿½rence.
      *
-     * @return String Valeur de la troisième référence en caractères.
+     * @return String Valeur de la troisiï¿½me rï¿½fï¿½rence en caractï¿½res.
      */
     public String getReference3() {
         return this.reference3;
     }
 
     /**
-     * Retourne la cinquième référence.
+     * Retourne la cinquiï¿½me rï¿½fï¿½rence.
      *
-     * @return String Valeur de la cinquième référence en caractère.
+     * @return String Valeur de la cinquiï¿½me rï¿½fï¿½rence en caractï¿½re.
      */
     public String getReference5() {
         return this.reference5;
     }
 
     /**
-     * Retourne la date de début.
+     * Retourne la date de dï¿½but.
      *
-     * @return Timestamp Valeur de la date de début (yyyy-MM-dd).
+     * @return Timestamp Valeur de la date de dï¿½but (yyyy-MM-dd).
      */
     public Timestamp getDateDebutDu() {
         return this.dateDebutDu;
@@ -286,9 +286,9 @@ public class CriteresRechercheDossierVO extends RapportVO implements CriteresRec
     }
 
     /**
-     * Retourne la date de début au.
+     * Retourne la date de dï¿½but au.
      *
-     * @return Timestamp Valeur de la date de début au (yyyy-MM-dd).
+     * @return Timestamp Valeur de la date de dï¿½but au (yyyy-MM-dd).
      */
     public Timestamp getDateDebutAu() {
         return this.dateDebutAu;
@@ -304,18 +304,18 @@ public class CriteresRechercheDossierVO extends RapportVO implements CriteresRec
     }
 
     /**
-     * Retourne la sévérité.
+     * Retourne la sï¿½vï¿½ritï¿½.
      *
-     * @return long Valeur numérique de la sévérité.
+     * @return long Valeur numï¿½rique de la sï¿½vï¿½ritï¿½.
      */
     public long getSeverite() {
         return this.severite;
     }
 
     /**
-     * Retourne la confidentialité.
+     * Retourne la confidentialitï¿½.
      *
-     * @return long Valeur numérique de la confidentialité.
+     * @return long Valeur numï¿½rique de la confidentialitï¿½.
      */
     public long getConfidentialite() {
         return this.confidentialite;
@@ -324,34 +324,34 @@ public class CriteresRechercheDossierVO extends RapportVO implements CriteresRec
     /**
      * Retourne l'origine.
      *
-     * @return String Valeur de l'origine en caractère.
+     * @return String Valeur de l'origine en caractï¿½re.
      */
     public long getOrigine() {
         return this.origine;
     }
 
     /**
-     * Retourne la référence vidéo.
+     * Retourne la rï¿½fï¿½rence vidï¿½o.
      *
-     * @return String Valeur de la référence vidéo en caractère.
+     * @return String Valeur de la rï¿½fï¿½rence vidï¿½o en caractï¿½re.
      */
     public String getReferenceVideo() {
         return this.referenceVideo;
     }
 
     /**
-     * Retourne la date de création du.
+     * Retourne la date de crï¿½ation du.
      *
-     * @return Timestamp Valeur de la date de création du (yyyy-MM-dd).
+     * @return Timestamp Valeur de la date de crï¿½ation du (yyyy-MM-dd).
      */
     public Timestamp getDateCreationDu() {
         return this.dateCreationDu;
     }
 
     /**
-     * Retourne la date de création au.
+     * Retourne la date de crï¿½ation au.
      *
-     * @return Timestamp Valeur de la date de création au (yyyy-MM-dd).
+     * @return Timestamp Valeur de la date de crï¿½ation au (yyyy-MM-dd).
      */
     public Timestamp getDateCreationAu() {
         return this.dateCreationAu;
@@ -360,7 +360,7 @@ public class CriteresRechercheDossierVO extends RapportVO implements CriteresRec
     /**
      * Retourne l'ordre de tri de recherche.
      *
-     * @return String Valeur de l'ordre de tri de recherche en caractère.
+     * @return String Valeur de l'ordre de tri de recherche en caractï¿½re.
      */
     public String getOrdreTriRecherche() {
         return this.ordreTriRecherche;
@@ -369,7 +369,7 @@ public class CriteresRechercheDossierVO extends RapportVO implements CriteresRec
     /**
      * Retourne si l'ordre de recherche est croissant.
      *
-     * @return boolean Valeur booléanne indiquant si l'ordre de recherche est
+     * @return boolean Valeur boolï¿½anne indiquant si l'ordre de recherche est
      * croissante.
      */
     public Boolean isOrdreCroissantRecherche() {
@@ -377,19 +377,19 @@ public class CriteresRechercheDossierVO extends RapportVO implements CriteresRec
     }
 
     /**
-     * Retourne la période.
+     * Retourne la pï¿½riode.
      *
-     * @return long Valeur numérique de la période.
+     * @return long Valeur numï¿½rique de la pï¿½riode.
      */
     public long getPeriode() {
         return this.periode;
     }
 
     /**
-     * Retourne le nombre maximum de résultats de recherche.
+     * Retourne le nombre maximum de rï¿½sultats de recherche.
      *
-     * @return String Valeur du nombre maximum de résultats de recherche en
-     * caractère.
+     * @return String Valeur du nombre maximum de rï¿½sultats de recherche en
+     * caractï¿½re.
      */
     public long getMaximumResultatsRecherche() {
         return this.maximumResultatsRecherche;
@@ -399,9 +399,9 @@ public class CriteresRechercheDossierVO extends RapportVO implements CriteresRec
 
 
     /**
-     * Affecte une entité.
+     * Affecte une entitï¿½.
      *
-     * @param entite Valeur numérique de l'entité.
+     * @param entite Valeur numï¿½rique de l'entitï¿½.
      */
     public void setEntite(long entite) {
         this.entite = entite;
@@ -410,7 +410,7 @@ public class CriteresRechercheDossierVO extends RapportVO implements CriteresRec
     /**
      * Affecte un site d'origine.
      *
-     * @param siteOrigine Valeur numérique du site d'origine.
+     * @param siteOrigine Valeur numï¿½rique du site d'origine.
      */
     public void setSiteOrigine(long siteOrigine) {
         this.siteOrigine = siteOrigine;
@@ -419,7 +419,7 @@ public class CriteresRechercheDossierVO extends RapportVO implements CriteresRec
     /**
      * Affecte un site applicable.
      *
-     * @param siteApplicable Valeur numérique du site applicable.
+     * @param siteApplicable Valeur numï¿½rique du site applicable.
      */
     public void setSiteApplicable(long siteApplicable) {
         this.siteApplicable = siteApplicable;
@@ -428,7 +428,7 @@ public class CriteresRechercheDossierVO extends RapportVO implements CriteresRec
     /**
      * Affecte un genre.
      *
-     * @param genre Valeur numérique du genre.
+     * @param genre Valeur numï¿½rique du genre.
      */
     public void setGenre(long genre) {
         this.genre = genre;
@@ -437,7 +437,7 @@ public class CriteresRechercheDossierVO extends RapportVO implements CriteresRec
     /**
      * Affecte une nature.
      *
-     * @param nature Valeur numérique de la nature.
+     * @param nature Valeur numï¿½rique de la nature.
      */
     public void setNature(long nature) {
         this.nature = nature;
@@ -446,16 +446,16 @@ public class CriteresRechercheDossierVO extends RapportVO implements CriteresRec
     /**
      * Affecte un type.
      *
-     * @param type Valeur numérique du type.
+     * @param type Valeur numï¿½rique du type.
      */
     public void setType(long type) {
         this.type = type;
     }
 
     /**
-     * Affecte une catégorie.
+     * Affecte une catï¿½gorie.
      *
-     * @param categorie Valeur numérique de la catégorie.
+     * @param categorie Valeur numï¿½rique de la catï¿½gorie.
      */
     public void setCategorie(long categorie) {
         this.categorie = categorie;
@@ -464,7 +464,7 @@ public class CriteresRechercheDossierVO extends RapportVO implements CriteresRec
     /**
      * Affecte un statut.
      *
-     * @param statut Valeur numérique du statut.
+     * @param statut Valeur numï¿½rique du statut.
      */
     public void setStatut(long statut) {
         this.statut = statut;
@@ -473,7 +473,7 @@ public class CriteresRechercheDossierVO extends RapportVO implements CriteresRec
     /**
      * Affecte l'attribut fonde.
      *
-     * @param fonde Valeur numérique de l'attribut fonde.
+     * @param fonde Valeur numï¿½rique de l'attribut fonde.
      */
     public void setFonde(long fonde) {
         this.fonde = fonde;
@@ -482,79 +482,79 @@ public class CriteresRechercheDossierVO extends RapportVO implements CriteresRec
     /**
      * Affecte un intervenant.
      *
-     * @param intervenant Valeur de l'intervenant en caractère.
+     * @param intervenant Valeur de l'intervenant en caractï¿½re.
      */
     public void setIntervenant(String intervenant) {
         this.intervenant = intervenant;
     }
 
     /**
-     * Affecte un numéro de cardex.
+     * Affecte un numï¿½ro de cardex.
      *
-     * @param numeroCardex Valeur du numéro de cardex en caractère.
+     * @param numeroCardex Valeur du numï¿½ro de cardex en caractï¿½re.
      */
     public void setNumeroCardex(String numeroCardex) {
         this.numeroCardex = numeroCardex;
     }
 
     /**
-     * Affecte un numéro de dossier.
+     * Affecte un numï¿½ro de dossier.
      *
-     * @param numeroDossier Valeur du numéro de dossier en caractère.
+     * @param numeroDossier Valeur du numï¿½ro de dossier en caractï¿½re.
      */
     public void setNumeroDossier(String numeroDossier) {
         this.numeroDossier = numeroDossier;
     }
 
     /**
-     * Affecte un numéro de fiche sujet.
+     * Affecte un numï¿½ro de fiche sujet.
      *
-     * @param numeroFicheSujet Valeur du numéro de fiche sujet en caractère.
+     * @param numeroFicheSujet Valeur du numï¿½ro de fiche sujet en caractï¿½re.
      */
     public void setNumeroFicheSujet(String numeroFicheSujet) {
         this.numeroFicheSujet = numeroFicheSujet;
     }
 
     /**
-     * Affecte la première référence.
+     * Affecte la premiï¿½re rï¿½fï¿½rence.
      *
-     * @param reference1 Valeur de la première référence en caractère.
+     * @param reference1 Valeur de la premiï¿½re rï¿½fï¿½rence en caractï¿½re.
      */
     public void setReference1(String reference) {
         this.reference1 = reference;
     }
 
     /**
-     * Affecte la deuxième référence.
+     * Affecte la deuxiï¿½me rï¿½fï¿½rence.
      *
-     * @param reference2 Valeur de la deuxième référence en caractère.
+     * @param reference2 Valeur de la deuxiï¿½me rï¿½fï¿½rence en caractï¿½re.
      */
     public void setReference2(String reference) {
         this.reference2 = reference;
     }
 
     /**
-     * Affecte la troisième référence.
+     * Affecte la troisiï¿½me rï¿½fï¿½rence.
      *
-     * @param reference3 Valeur de la troisième référence en caractère.
+     * @param reference3 Valeur de la troisiï¿½me rï¿½fï¿½rence en caractï¿½re.
      */
     public void setReference3(String reference) {
         this.reference3 = reference;
     }
 
     /**
-     * Affecte la cinquième référence.
+     * Affecte la cinquiï¿½me rï¿½fï¿½rence.
      *
-     * @param reference5 Valeur de la cinquième référence en caractère.
+     * @param reference5 Valeur de la cinquiï¿½me rï¿½fï¿½rence en caractï¿½re.
      */
     public void setReference5(String reference) {
         this.reference5 = reference;
     }
 
     /**
-     * Affecte la date de début du.
+     * Affecte la date de dï¿½but du.
      *
-     * @param dateDebutDu Valeur de la date de début du (yyyy-MM-dd).
+     * @param dateDebutDu Valeur de la date de dï¿½but du (yyyy-MM-dd).
      */
     public void setDateDebutDu(Timestamp dateDebutDu) {
         this.dateDebutDu = dateDebutDu;
@@ -570,9 +570,9 @@ public class CriteresRechercheDossierVO extends RapportVO implements CriteresRec
     }
 
     /**
-     * Affecte la date de début au.
+     * Affecte la date de dï¿½but au.
      *
-     * @param dateDebutAu Valeur de la date de début au (yyyy-MM-dd).
+     * @param dateDebutAu Valeur de la date de dï¿½but au (yyyy-MM-dd).
      */
     public void setDateDebutAu(Timestamp dateDebutAu) {
         this.dateDebutAu = dateDebutAu;
@@ -588,18 +588,18 @@ public class CriteresRechercheDossierVO extends RapportVO implements CriteresRec
     }
 
     /**
-     * Affecte la sévérité.
+     * Affecte la sï¿½vï¿½ritï¿½.
      *
-     * @param severite Valeur numérique de la sévérité.
+     * @param severite Valeur numï¿½rique de la sï¿½vï¿½ritï¿½.
      */
     public void setSeverite(long severite) {
         this.severite = severite;
     }
 
     /**
-     * Affecte la confidentialité.
+     * Affecte la confidentialitï¿½.
      *
-     * @param confidentialite Valeur numérique de la confidentialité.
+     * @param confidentialite Valeur numï¿½rique de la confidentialitï¿½.
      */
     public void setConfidentialite(long confidentialite) {
         this.confidentialite = confidentialite;
@@ -608,34 +608,34 @@ public class CriteresRechercheDossierVO extends RapportVO implements CriteresRec
     /**
      * Affecte de l'origine.
      *
-     * @param String Valeur de l'origine en caractère.
+     * @param String Valeur de l'origine en caractï¿½re.
      */
     public void setOrigine(long origine) {
         this.origine = origine;
     }
 
     /**
-     * Affecte la référence vidéo.
+     * Affecte la rï¿½fï¿½rence vidï¿½o.
      *
-     * @param referenceVideo Valeur numérique de la référence vidéo.
+     * @param referenceVideo Valeur numï¿½rique de la rï¿½fï¿½rence vidï¿½o.
      */
     public void setReferenceVideo(String reference) {
         this.referenceVideo = reference;
     }
 
     /**
-     * Affecte la date de création du.
+     * Affecte la date de crï¿½ation du.
      *
-     * @param dateCreationDu Valeur de la date de création du (yyyy-MM-dd).
+     * @param dateCreationDu Valeur de la date de crï¿½ation du (yyyy-MM-dd).
      */
     public void setDateCreationDu(Timestamp dateCreationDu) {
         this.dateCreationDu = dateCreationDu;
     }
 
     /**
-     * Affecte la date de création au.
+     * Affecte la date de crï¿½ation au.
      *
-     * @param dateCreationAu Valeur de la date de création au (yyyy-MM-dd).
+     * @param dateCreationAu Valeur de la date de crï¿½ation au (yyyy-MM-dd).
      */
     public void setDateCreationAu(Timestamp dateCreationAu) {
         this.dateCreationAu = dateCreationAu;
@@ -645,7 +645,7 @@ public class CriteresRechercheDossierVO extends RapportVO implements CriteresRec
      * Affecte l'ordre de tri de recherche.
      *
      * @param ordreTriRecherche Valeur de l'ordre de tri de recherche en
-     * caractère.
+     * caractï¿½re.
      */
     public void setOrdreTriRecherche(String ordreTriRecherche) {
         this.ordreTriRecherche = ordreTriRecherche;
@@ -654,7 +654,7 @@ public class CriteresRechercheDossierVO extends RapportVO implements CriteresRec
     /**
      * Affecte si l'ordre de recherche est croissant.
      *
-     * @param ordreCroissantRecherche Valeur booléanne indiquant si l'ordre de
+     * @param ordreCroissantRecherche Valeur boolï¿½anne indiquant si l'ordre de
      * recherche est croissante.
      */
     public void setOrdreCroissantRecherche(Boolean ordreCroissantRecherche) {
@@ -662,30 +662,30 @@ public class CriteresRechercheDossierVO extends RapportVO implements CriteresRec
     }
 
     /**
-     * Affecte la période.
+     * Affecte la pï¿½riode.
      *
-     * @param periode Valeur numérique de la période.
+     * @param periode Valeur numï¿½rique de la pï¿½riode.
      */
     public void setPeriode(long periode) {
         this.periode = periode;
     }
 
     /**
-     * Affecte le nombre maximum de résultats de recherche.
+     * Affecte le nombre maximum de rï¿½sultats de recherche.
      *
-     * @param maximumResultatsRecherche Valeur du nombre maximum de résultats
-     * de recherche caractère.
+     * @param maximumResultatsRecherche Valeur du nombre maximum de rï¿½sultats
+     * de recherche caractï¿½re.
      */
     public void setMaximumResultatsRecherche(long maximumResultatsRecherche) {
         this.maximumResultatsRecherche = maximumResultatsRecherche;
     }
 
     /**
-     * Retourne une chaîne de caractère reflétant la valeur de tout les
+     * Retourne une chaï¿½ne de caractï¿½re reflï¿½tant la valeur de tout les
      * attributs du CriteresRechercheDossierVO.
      *
      * @return String Valeur de tout les attributs du CriteresRechercheDossierVO
-     * en caractère.
+     * en caractï¿½re.
      */
     public String toString() {
         StringBuffer stringBuffer = new StringBuffer();
@@ -821,7 +821,7 @@ public class CriteresRechercheDossierVO extends RapportVO implements CriteresRec
 
 
 	/**
-	 * @param choixRapport choixRapport à définir
+	 * @param choixRapport choixRapport ï¿½ dï¿½finir
 	 */
 	public void setChoixRapport(String choixRapport) {
 		this.choixRapport = choixRapport;
@@ -837,7 +837,7 @@ public class CriteresRechercheDossierVO extends RapportVO implements CriteresRec
 
 
 	/**
-	 * @param enregistrementNumerique enregistrementNumerique à définir
+	 * @param enregistrementNumerique enregistrementNumerique ï¿½ dï¿½finir
 	 */
 	public void setEnregistrementNumerique(String enregistrementNumerique) {
 		this.enregistrementNumerique = enregistrementNumerique;
@@ -853,7 +853,7 @@ public class CriteresRechercheDossierVO extends RapportVO implements CriteresRec
 
 
 	/**
-	 * @param enregistrementConserve enregistrementConserve à définir
+	 * @param enregistrementConserve enregistrementConserve ï¿½ dï¿½finir
 	 */
 	public void setEnregistrementConserve(String enregistrementConserve) {
 		this.enregistrementConserve = enregistrementConserve;
@@ -869,7 +869,7 @@ public class CriteresRechercheDossierVO extends RapportVO implements CriteresRec
 
 
 	/**
-	 * @param service service à définir
+	 * @param service service ï¿½ dï¿½finir
 	 */
 	public void setService(long service) {
 		this.service = service;
@@ -885,7 +885,7 @@ public class CriteresRechercheDossierVO extends RapportVO implements CriteresRec
 
 
 	/**
-	 * @param jeu jeu à définir
+	 * @param jeu jeu ï¿½ dï¿½finir
 	 */
 	public void setJeu(long jeu) {
 		this.jeu = jeu;
@@ -901,7 +901,7 @@ public class CriteresRechercheDossierVO extends RapportVO implements CriteresRec
 
 
 	/**
-	 * @param rechercherSousCategorie rechercherSousCategorie à définir
+	 * @param rechercherSousCategorie rechercherSousCategorie ï¿½ dï¿½finir
 	 */
 	public void setRechercherSousCategorie(String rechercherSousCategorie) {
 		this.rechercherSousCategorie = rechercherSousCategorie;
@@ -917,7 +917,7 @@ public class CriteresRechercheDossierVO extends RapportVO implements CriteresRec
 
 
 	/**
-	 * @param rechercherTous rechercherTous à définir
+	 * @param rechercherTous rechercherTous ï¿½ dï¿½finir
 	 */
 	public void setRechercherTous(String rechercherTous) {
 		this.rechercherTous = rechercherTous;

@@ -86,7 +86,7 @@ public class GestionnaireSecurite {
     	RoleCache roleCache = rolesCacheSecuriteCache.obtenirRoleDeURL(url);
     	
     	if (roleCache == null){
-    		log.warn("R�le de l'url : \""+url+"\" n'a pas �t� cr��.");
+    		log.warn("Rôle de l'url : \""+url+"\" n'a pas été créé.");
     		//rolesCacheSecuriteCache.statut();
     		return UIComponentState.ENABLED;
     	}
@@ -94,7 +94,7 @@ public class GestionnaireSecurite {
     	if (roleCache.isAdministrer()){
 	    	String role = roleCache.getRole();
 	        
-	    	// Aucun r�le signifie que cet URL n'est pas administr�
+	    	// Aucun rôle signifie que cet URL n'est pas administré
 	        if (role == null || role.trim().length() == 0 )
 	        	return UIComponentState.ENABLED;
 	
@@ -873,7 +873,7 @@ public class GestionnaireSecurite {
 		return "";
 	}
 	
-    protected static Collection validerEtFiltrerSecurite(CardexAuthenticationSubject subject, Collection collection, List<SecuritePredicate> securitePredicates, String... actionsSecurite) {
+    protected static <T extends Collection> T validerEtFiltrerSecurite(CardexAuthenticationSubject subject, T collection, List<SecuritePredicate> securitePredicates, String... actionsSecurite) {
     	Iterator iter = collection.iterator();
     	
     	if (iter.hasNext()){

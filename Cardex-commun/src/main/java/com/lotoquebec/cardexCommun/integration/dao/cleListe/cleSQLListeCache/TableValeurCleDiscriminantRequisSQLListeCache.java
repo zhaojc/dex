@@ -10,8 +10,11 @@ import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
  */
 public class TableValeurCleDiscriminantRequisSQLListeCache extends TableValeurCleSQLListeCache{
 
+	private static final long serialVersionUID = 7385814642508129208L;
+
 	public TableValeurCleDiscriminantRequisSQLListeCache() {
 		super();
+		this.discriminantValeurRequis = true;
 	}
 
 	public TableValeurCleDiscriminantRequisSQLListeCache(String langue, String valeurTableValeur, long[] discriminantValeurs, String actionSecurite) {

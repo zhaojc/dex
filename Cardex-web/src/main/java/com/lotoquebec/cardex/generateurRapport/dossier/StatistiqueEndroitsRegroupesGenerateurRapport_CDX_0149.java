@@ -10,12 +10,13 @@ import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRResultSetDataSource;
 
 import com.lotoquebec.cardex.business.delegate.RapportBusinessDelegate;
-import com.lotoquebec.cardex.business.vo.rapport.RapportVO;
+import com.lotoquebec.cardex.business.vo.rapport.CritereRapportVO;
 import com.lotoquebec.cardex.business.vo.rapport.StatistiqueDossierRapportVO;
-import com.lotoquebec.cardex.generateurRapport.GenererRapport;
+import com.lotoquebec.cardex.generateurRapport.CritereGenererRapport;
 import com.lotoquebec.cardex.generateurRapport.rapports.RapportsConfiguration;
 import com.lotoquebec.cardexCommun.GlobalConstants;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
+import com.lotoquebec.cardexCommun.business.vo.VO;
 import com.lotoquebec.cardexCommun.exception.BusinessException;
 import com.lotoquebec.cardexCommun.exception.BusinessResourceException;
 import com.lotoquebec.cardexCommun.integration.dao.cleListe.cleMultiListeCache.CategorieCleMultiListeCache;
@@ -26,7 +27,7 @@ import com.lotoquebec.cardexCommun.user.CardexUser;
 import com.lotoquebec.cardexCommun.util.ListeCache;
 import com.lotoquebec.cardexCommun.util.StringUtils;
 
-public class StatistiqueEndroitsRegroupesGenerateurRapport_CDX_0149 extends GenererRapport {
+public class StatistiqueEndroitsRegroupesGenerateurRapport_CDX_0149 extends CritereGenererRapport {
  
 	protected InputStream obtenirGabarit() {
 		return RapportsConfiguration.class.getResourceAsStream(RapportsConfiguration.STATISTIQUE_ENDROITS_REGROUPES);
@@ -36,19 +37,20 @@ public class StatistiqueEndroitsRegroupesGenerateurRapport_CDX_0149 extends Gene
 		GestionnaireSecurite.validerSecuriteURL(subject, "/rapport/statistiqueEndroitsRegroupes");
 	}
 	
-	public RapportVO construireNouveauRapportVO() {
+	public CritereRapportVO construireNouveauRapportVO() {
 		return new StatistiqueDossierRapportVO();
 	}
 	
 	@Override
-	protected JRDataSource construireDataSource(CardexAuthenticationSubject subject, RapportVO rapportVO, Connection connection) throws BusinessResourceException,BusinessException {
+	protected JRDataSource construireDataSource(CardexAuthenticationSubject subject, CritereRapportVO rapportVO, Connection connection) throws BusinessResourceException,BusinessException {
 		RapportBusinessDelegate delegate = new RapportBusinessDelegate();
 		StatistiqueDossierRapportVO statistiqueDossierRapportVO = (StatistiqueDossierRapportVO) rapportVO;
 		ResultSet resultSet = delegate.rapportEndroitsRegroupes(statistiqueDossierRapportVO,connection);
 		return new JRResultSetDataSource(resultSet);
 	}
 
-	protected Map construireParametres(CardexAuthenticationSubject subject, RapportVO rapportVO, Connection connection) throws JRException {
+	@Override
+	protected Map construireParametres(CardexAuthenticationSubject subject, VO rapportVO, Connection connection) throws JRException {
 		Map parameters = super.construireParametres(subject, rapportVO, connection);
 		StatistiqueDossierRapportVO statistiqueDossierRapportVO = (StatistiqueDossierRapportVO) rapportVO;
 		CardexUser cardexUser = (CardexUser) subject.getUser();

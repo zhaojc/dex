@@ -8,15 +8,15 @@ import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRResultSetDataSource;
 
 import com.lotoquebec.cardex.business.delegate.RapportBusinessDelegate;
-import com.lotoquebec.cardex.business.vo.rapport.RapportVO;
-import com.lotoquebec.cardex.generateurRapport.GenererRapport;
+import com.lotoquebec.cardex.business.vo.rapport.CritereRapportVO;
+import com.lotoquebec.cardex.generateurRapport.CritereGenererRapport;
 import com.lotoquebec.cardex.generateurRapport.rapports.RapportsConfiguration;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
 import com.lotoquebec.cardexCommun.exception.BusinessException;
 import com.lotoquebec.cardexCommun.exception.BusinessResourceException;
 import com.lotoquebec.cardexCommun.securite.GestionnaireSecurite;
 
-public class PartageIntervenantDossierGenerateurRapport_CDX_0100 extends GenererRapport {
+public class PartageIntervenantDossierGenerateurRapport_CDX_0100 extends CritereGenererRapport {
 
 	@Override
 	public void validerSecurite(CardexAuthenticationSubject subject) {
@@ -24,12 +24,12 @@ public class PartageIntervenantDossierGenerateurRapport_CDX_0100 extends Generer
 	}
 	
 	@Override
-	public RapportVO construireNouveauRapportVO() {
-		return new RapportVO();
+	public CritereRapportVO construireNouveauRapportVO() {
+		return new CritereRapportVO();
 	}
 
 	@Override
-	public JRDataSource construireDataSource(CardexAuthenticationSubject subject, RapportVO rapportVO, Connection connection) throws BusinessResourceException, BusinessException {
+	public JRDataSource construireDataSource(CardexAuthenticationSubject subject, CritereRapportVO rapportVO, Connection connection) throws BusinessResourceException, BusinessException {
 		RapportBusinessDelegate delegate = new RapportBusinessDelegate();
 		ResultSet resultSet = delegate.listesPartage("CARDEX_RAPPORT.SP_LISTES_PARTAGE",connection);
        	return new JRResultSetDataSource(resultSet);

@@ -19,6 +19,18 @@
    </encoder>
  </appender>
  
+ <appender name="SECURITE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+      <file>${app.log.dir}/${app.name}.securite.log</file>
+      <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                  <fileNamePattern>${app.name}.securite.%d{yyyy-MM-dd}.log</fileNamePattern>
+                  <maxHistory>30</maxHistory>
+           </rollingPolicy>
+      <encoder>
+          <pattern>%d{HH:mm:ss.SSS} %-4relative [%thread] %-5level %logger{35} - %msg %n</pattern>
+      </encoder>
+  </appender>
+
+ 
   <root level="INFO">
     <appender-ref ref="${app.log.appender}" />
   </root>

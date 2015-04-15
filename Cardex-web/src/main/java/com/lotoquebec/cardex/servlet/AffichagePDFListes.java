@@ -350,23 +350,23 @@ public class AffichagePDFListes extends HttpServlet {
     			parameters.put("NUMERO_DOSSIER",dossierForm.getNumeroCardexTexte());
     			parameters.put("CREATEUR",dossierForm.getCreateurDescription());
     			parameters.put("DATE_CREATION", dossierForm.getDateCreation());
-     			liste = remplirResultatAccesDossier(subject, dossierForm);
+     			//liste = remplirResultatAccesDossier(subject, dossierForm);
         	}
-        	if (RapportsConfiguration.AUDIT_ACCES_SUJETS.equals( choixRapport )){
+        	if (RapportsConfiguration.AUDIT_ACCES_SUJETS_CDX_0211.equals( choixRapport )){
     			SujetForm sujetForm = (SujetForm) request.getSession().getAttribute("sujet");
     			sujetForm.assignerValeurDeListe(subject);
     			parameters.put("NUMERO_DOSSIER",sujetForm.getNumeroFiche());
     			parameters.put("CREATEUR",sujetForm.getCreateurDescription());
     			parameters.put("DATE_CREATION", sujetForm.getDateCreation());
-     			liste = remplirResultatAccesSujet(subject, sujetForm);
+     			//liste = remplirResultatAccesSujet(subject, sujetForm);
         	}
-        	if (RapportsConfiguration.AUDIT_ACCES_SOCIETES.equals( choixRapport )){
+        	if (RapportsConfiguration.AUDIT_ACCES_SOCIETES_CDX_212.equals( choixRapport )){
     			SocieteForm societeForm = (SocieteForm) request.getSession().getAttribute("societe");
     			societeForm.assignerValeurDeListe(subject);
     			parameters.put("NUMERO_DOSSIER",societeForm.getNom());
     			parameters.put("CREATEUR",societeForm.getCreateurDescription());
     			parameters.put("DATE_CREATION", societeForm.getDateCreation());
-     			liste = remplirResultatAccesSociete(subject, societeForm);
+     			//liste = remplirResultatAccesSociete(subject, societeForm);
         	}
         	if (RapportsConfiguration.AUDIT_ACCES_VEHICULES.equals( choixRapport )){
     			VehiculeForm vehiculeForm = (VehiculeForm) request.getSession().getAttribute("vehicule");
@@ -374,7 +374,7 @@ public class AffichagePDFListes extends HttpServlet {
     			parameters.put("NUMERO_DOSSIER",vehiculeForm.getImmatriculation());
     			parameters.put("CREATEUR",vehiculeForm.getCreateurDescription());
     			parameters.put("DATE_CREATION", vehiculeForm.getDateCreation());
-     			liste = remplirResultatAccesVehicule(subject, vehiculeForm);
+     			//liste = remplirResultatAccesVehicule(subject, vehiculeForm);
         	}
         	if (GlobalConstants.ChoixImpressionListe.IMPRIMER_DOSSIERS_AVEC_SUJETS.equals( choixRapport )){
         		//Impression de tous les dossiers retourn�s par la recherche avec les sujets li�s.
@@ -669,7 +669,7 @@ public class AffichagePDFListes extends HttpServlet {
 	      throw new ValueObjectMapperException(nsme);
 	  }
   }
-  
+  /*
   private List remplirResultatAccesDossier(CardexAuthenticationSubject subject, DossierForm dossierForm)
 	throws ValueObjectMapperException{
 	  List resultat = new ArrayList();
@@ -752,7 +752,7 @@ public class AffichagePDFListes extends HttpServlet {
 	    ie.printStackTrace();
 	}
 	return liste;
-}
+}*/
 
   private List traitementAcces(CardexAuthenticationSubject subject, ValueListIterator results)
   	throws ValueObjectMapperException, IteratorException{

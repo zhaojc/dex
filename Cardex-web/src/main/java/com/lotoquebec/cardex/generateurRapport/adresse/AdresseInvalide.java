@@ -23,8 +23,9 @@ import com.lotoquebec.cardex.business.delegate.SujetBusinessDelegate;
 import com.lotoquebec.cardex.business.vo.CriteresRechercheAdressesVO;
 import com.lotoquebec.cardex.business.vo.SocieteVO;
 import com.lotoquebec.cardex.business.vo.SujetVO;
+import com.lotoquebec.cardex.business.vo.rapport.CritereRapportVO;
 import com.lotoquebec.cardex.business.vo.rapport.RapportVO;
-import com.lotoquebec.cardex.generateurRapport.GenererRapport;
+import com.lotoquebec.cardex.generateurRapport.CritereGenererRapport;
 import com.lotoquebec.cardex.generateurRapport.rapports.RapportsConfiguration;
 import com.lotoquebec.cardexCommun.GlobalConstants;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
@@ -37,7 +38,7 @@ import com.lotoquebec.cardexCommun.util.ListeCache;
 import com.lotoquebec.cardexCommun.util.StringUtils;
 import com.lotoquebec.cardexCommun.util.ValueObjectMapper;
 
-public class AdresseInvalide extends GenererRapport {
+public class AdresseInvalide extends CritereGenererRapport {
 
 	public final static String ENTITE = "entite";
 	public final static String SITE_ORIGINE = "siteOrigine";
@@ -149,7 +150,7 @@ public class AdresseInvalide extends GenererRapport {
 		return arrayString[0];
 	}
 
-	public RapportVO construireNouveauRapportVO() {
+	public CritereRapportVO construireNouveauRapportVO() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -160,15 +161,16 @@ public class AdresseInvalide extends GenererRapport {
 	}
 
 	@Override
-	protected JRDataSource construireDataSource(CardexAuthenticationSubject subject,
-			RapportVO rapportVO, Connection connection) throws BusinessResourceException,
-			BusinessException {
+	protected InputStream obtenirGabarit() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	protected InputStream obtenirGabarit() {
+	protected JRDataSource construireDataSource(
+			CardexAuthenticationSubject subject, CritereRapportVO rapportVO,
+			Connection connection) throws BusinessResourceException,
+			BusinessException {
 		// TODO Auto-generated method stub
 		return null;
 	}

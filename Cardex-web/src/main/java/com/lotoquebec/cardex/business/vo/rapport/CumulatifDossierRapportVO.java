@@ -10,7 +10,7 @@ package com.lotoquebec.cardex.business.vo.rapport;
  * @author levassc
  *
  */
-public class CumulatifDossierRapportVO extends RapportVO{
+public class CumulatifDossierRapportVO extends CritereRapportVO{
 
 	private long genre = 0;
 	private long site = 0;

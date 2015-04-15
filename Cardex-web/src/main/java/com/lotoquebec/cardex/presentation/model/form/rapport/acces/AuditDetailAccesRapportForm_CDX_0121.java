@@ -1,6 +1,5 @@
 package com.lotoquebec.cardex.presentation.model.form.rapport.acces;
 
-import com.lotoquebec.cardex.generateurRapport.GenererRapport;
 import com.lotoquebec.cardex.generateurRapport.acces.AuditDetailAccesGenerateurRapport_CDX_0121;
 import com.lotoquebec.cardex.presentation.model.form.lienCascade.HierarchieEGNTC;
 import com.lotoquebec.cardex.presentation.model.form.rapport.CriteresRapportForm;
@@ -10,19 +9,20 @@ import com.lotoquebec.cardexCommun.user.CardexUser;
 
 public class AuditDetailAccesRapportForm_CDX_0121 extends CriteresRapportForm{
 
+	private static final long serialVersionUID = -3161219476003710390L;
 	private HierarchieEGNTC cascadeEGNTC = new HierarchieEGNTC();
 	private String site = "";
 	private String intervenant = "";
 	private String nombreAcces = "";
 	
 	public AuditDetailAccesRapportForm_CDX_0121() {
-		super();
+		super(new AuditDetailAccesGenerateurRapport_CDX_0121());
 	}
 
 	public void init(CardexAuthenticationSubject subject){
 		super.init(subject);
         CardexUser user = (CardexUser) subject.getUser();
-        // Valeurs par défaut
+        // Valeurs par dï¿½faut
         setEntite(String.valueOf(user.getEntite()));
         setSite(String.valueOf(user.getSite()));
 	}
@@ -59,7 +59,7 @@ public class AuditDetailAccesRapportForm_CDX_0121 extends CriteresRapportForm{
 		this.cascadeEGNTC.set(HierarchieEGNTC.ENTITE, entite);
 	}
 
-	//Paramètre pour filter le nombre d'accès
+	//Paramï¿½tre pour filter le nombre d'accï¿½s
 	public String getNombreAcces() {
 		return nombreAcces;
 	}
@@ -68,9 +68,4 @@ public class AuditDetailAccesRapportForm_CDX_0121 extends CriteresRapportForm{
 		this.nombreAcces = nombreAcces;
 	}
 
-	@Override
-	public GenererRapport getGenererRapport() {
-		return new AuditDetailAccesGenerateurRapport_CDX_0121();
-	}
-	
 }

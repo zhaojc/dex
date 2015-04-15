@@ -1,7 +1,7 @@
 package com.lotoquebec.cardex.business.vo.rapport;
 
 
-public class CumulatifHebdomadaireEnquetesDossierRapportVO_CDX_0041 extends RapportVO{
+public class CumulatifHebdomadaireEnquetesDossierRapportVO_CDX_0041 extends CritereRapportVO{
 
 	private long site = 0;
 	

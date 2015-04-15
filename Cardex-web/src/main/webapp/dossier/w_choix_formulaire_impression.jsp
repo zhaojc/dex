@@ -113,7 +113,7 @@ function doImprimer() {
 
     		<tr>
     		  <td width="200" align="right">
-          			<cardex:button urlSecurite="/RapportAffichagePDF" labelKey='cb_ok2' onclick='doImprimer();' style="width: 60px; text-align: center;" />
+          			<cardex:button urlSecurite="/CritereRapportAffichagePDF" labelKey='cb_ok2' onclick='doImprimer();' style="width: 60px; text-align: center;" />
                   </td>
 
           <td width="200">

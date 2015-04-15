@@ -3,18 +3,18 @@ package com.lotoquebec.cardex.business.vo;
 import java.sql.Timestamp;
 
 import com.lotoquebec.cardex.business.CriteresRechercheNarration;
+import com.lotoquebec.cardex.business.vo.rapport.CritereRapportVO;
 import com.lotoquebec.cardexCommun.text.TimestampFormat;
 
 /**
- * Permet de transiter les informations relatives à la recherche d'une
- * narration de la couche présentation à la couche d'affaire.
+ * Permet de transiter les informations relatives ï¿½ la recherche d'une
+ * narration de la couche prï¿½sentation ï¿½ la couche d'affaire.
  *
  * @author $Author: mlibersan $
  * @version $Revision: 1.13 $, $Date: 2002/04/22 18:01:06 $
  * @see com.lotoquebec.cardex.business.CriteresRechercheNarration
  */
-public class CriteresRechercheNarrationVO
-        implements CriteresRechercheNarration {
+public class CriteresRechercheNarrationVO extends CritereRapportVO implements CriteresRechercheNarration {
 
     private long entite = 0;
     private long site = 0;
@@ -44,7 +44,7 @@ public class CriteresRechercheNarrationVO
     private int sequence = 0;
 
     /**
-     * Constructeur de CriteresRechercheNarrationVO par défaut.
+     * Constructeur de CriteresRechercheNarrationVO par dï¿½faut.
      */
     public CriteresRechercheNarrationVO() {}
 
@@ -73,70 +73,70 @@ public class CriteresRechercheNarrationVO
     /**
      * Retourne l'intervenant.
      *
-     * @return String Valeur de l'intervenant en caractère.
+     * @return String Valeur de l'intervenant en caractï¿½re.
      */
     public String getIntervenant() {
         return this.intervenant;
     }
 
     /**
-     * Retourne la date de création au début.
+     * Retourne la date de crï¿½ation au dï¿½but.
      *
-     * @return Timestamp Valeur de la date de création au début (yyyy-MM-dd).
+     * @return Timestamp Valeur de la date de crï¿½ation au dï¿½but (yyyy-MM-dd).
      */
     public Timestamp getDateCreationDebut() {
         return this.dateCreationDebut;
     }
 
     /**
-     * Retourne la date d'approbation au début.
+     * Retourne la date d'approbation au dï¿½but.
      *
-     * @return Timestamp Valeur de la date d'approbation au début (yyyy-MM-dd).
+     * @return Timestamp Valeur de la date d'approbation au dï¿½but (yyyy-MM-dd).
      */
     public Timestamp getDateApprobationDebut() {
         return this.dateApprobationDebut;
     }
 
     /**
-     * Retourne la date de création à la fin.
+     * Retourne la date de crï¿½ation ï¿½ la fin.
      *
-     * @return Timestamp Valeur de la date de création à la fin (yyyy-MM-dd).
+     * @return Timestamp Valeur de la date de crï¿½ation ï¿½ la fin (yyyy-MM-dd).
      */
     public Timestamp getDateCreationFin() {
         return this.dateCreationFin;
     }
 
     /**
-     * Retourne la date d'approbation à la fin.
+     * Retourne la date d'approbation ï¿½ la fin.
      *
-     * @return Timestamp Valeur de la date d'approbation à la fin (yyyy-MM-dd).
+     * @return Timestamp Valeur de la date d'approbation ï¿½ la fin (yyyy-MM-dd).
      */
     public Timestamp getDateApprobationFin() {
         return this.dateApprobationFin;
     }
 
     /**
-     * Retourne le premier mot clé.
+     * Retourne le premier mot clï¿½.
      *
-     * @return String Valeur du premier mot clé en caractère.
+     * @return String Valeur du premier mot clï¿½ en caractï¿½re.
      */
     public String getMotCle1() {
         return this.motCle1;
     }
 
     /**
-     * Retourne le deuxième mot clé.
+     * Retourne le deuxiï¿½me mot clï¿½.
      *
-     * @return String Valeur du deuxième mot clé en caractère.
+     * @return String Valeur du deuxiï¿½me mot clï¿½ en caractï¿½re.
      */
     public String getMotCle2() {
         return this.motCle2;
     }
 
     /**
-     * Retourne le troisième mot clé.
+     * Retourne le troisiï¿½me mot clï¿½.
      *
-     * @return String Valeur du troisième mot clé en caractère.
+     * @return String Valeur du troisiï¿½me mot clï¿½ en caractï¿½re.
      */
     public String getMotCle3() {
         return this.motCle3;
@@ -161,10 +161,10 @@ public class CriteresRechercheNarrationVO
     }
 
     /**
-     * Retourne le critère d'approbation.
+     * Retourne le critï¿½re d'approbation.
      *
-     * @return String Valeur du critère d'approbation dans l'écran de recherche
-     * en caractère.
+     * @return String Valeur du critï¿½re d'approbation dans l'ï¿½cran de recherche
+     * en caractï¿½re.
      */
     public String getStatutApprobation() {
         return this.statutApprobation;
@@ -194,16 +194,16 @@ public class CriteresRechercheNarrationVO
     /**
      * Affecte un intervenant.
      *
-     * @param intervenant Valeur de l'intervenant en caractère.
+     * @param intervenant Valeur de l'intervenant en caractï¿½re.
      */
     public void setIntervenant(String intervenant) {
         this.intervenant = intervenant;
     }
 
     /**
-     * Affecte une date de création au début.
+     * Affecte une date de crï¿½ation au dï¿½but.
      *
-     * @param dateCreationDebut Valeur de la date de création au début
+     * @param dateCreationDebut Valeur de la date de crï¿½ation au dï¿½but
      * (yyyy-MM-dd).
      */
     public void setDateCreationDebut(Timestamp dateCreationDebut) {
@@ -211,9 +211,9 @@ public class CriteresRechercheNarrationVO
     }
 
     /**
-     * Affecte une date d'approbation au début.
+     * Affecte une date d'approbation au dï¿½but.
      *
-     * @param dateApprobationDebut Valeur de la date d'approbation au début
+     * @param dateApprobationDebut Valeur de la date d'approbation au dï¿½but
      * (yyyy-MM-dd).
      */
     public void setDateApprobationDebut(Timestamp dateApprobationDebut) {
@@ -221,9 +221,9 @@ public class CriteresRechercheNarrationVO
     }
 
     /**
-     * Affecte une date de création à la fin.
+     * Affecte une date de crï¿½ation ï¿½ la fin.
      *
-     * @param dateCreationFin Valeur de la date de création à la fin
+     * @param dateCreationFin Valeur de la date de crï¿½ation ï¿½ la fin
      * (yyyy-MM-dd).
      */
     public void setDateCreationFin(Timestamp dateCreationFin) {
@@ -231,9 +231,9 @@ public class CriteresRechercheNarrationVO
     }
 
     /**
-     * Affecte une date d'approbation à la fin.
+     * Affecte une date d'approbation ï¿½ la fin.
      *
-     * @param dateApprobationFin Valeur de la date d'approbation à la fin
+     * @param dateApprobationFin Valeur de la date d'approbation ï¿½ la fin
      * (yyyy-MM-dd).
      */
     public void setDateApprobationFin(Timestamp dateApprobationFin) {
@@ -241,27 +241,27 @@ public class CriteresRechercheNarrationVO
     }
 
     /**
-     * Affecte un premier mot clé.
+     * Affecte un premier mot clï¿½.
      *
-     * @param motCle1 Valeur du premier mot clé en caractère.
+     * @param motCle1 Valeur du premier mot clï¿½ en caractï¿½re.
      */
     public void setMotCle1(String motCle1) {
         this.motCle1 = motCle1;
     }
 
     /**
-     * Affecte un deuxième mot clé.
+     * Affecte un deuxiï¿½me mot clï¿½.
      *
-     * @param motCle2 Valeur du deuxième mot clé en caractère.
+     * @param motCle2 Valeur du deuxiï¿½me mot clï¿½ en caractï¿½re.
      */
     public void setMotCle2(String motCle2) {
         this.motCle2 = motCle2;
     }
 
     /**
-     * Affecte un troisième mot clé.
+     * Affecte un troisiï¿½me mot clï¿½.
      *
-     * @param motCle3 Valeur du troisième mot clé en caractère.
+     * @param motCle3 Valeur du troisiï¿½me mot clï¿½ en caractï¿½re.
      */
     public void setMotCle3(String motCle3) {
         this.motCle3 = motCle3;
@@ -286,21 +286,21 @@ public class CriteresRechercheNarrationVO
     }
 
     /**
-     * Affecte un critère d'approbation.
+     * Affecte un critï¿½re d'approbation.
      *
-     * @param statut Valeur du critère d'approbation dans l'écran de recherche
-     * en caractère.
+     * @param statut Valeur du critï¿½re d'approbation dans l'ï¿½cran de recherche
+     * en caractï¿½re.
      */
     public void setStatutApprobation(String statutApprobation) {
         this.statutApprobation = statutApprobation;
     }
 
     /**
-     * Retourne une chaîne de caractère reflétant la valeur de tout les
+     * Retourne une chaï¿½ne de caractï¿½re reflï¿½tant la valeur de tout les
      * attributs du CriteresRechercheNarrationVO.
      *
      * @return String Valeur de tout les attributs du
-     * CriteresRechercheNarrationVO en caractère.
+     * CriteresRechercheNarrationVO en caractï¿½re.
      */
     public String toString() {
         StringBuffer stringBuffer = new StringBuffer();
@@ -476,7 +476,7 @@ public class CriteresRechercheNarrationVO
 
 
 	/**
-	 * @param fonde fonde à définir
+	 * @param fonde fonde ï¿½ dï¿½finir
 	 */
 	public void setFonde(long fonde) {
 		this.fonde = fonde;

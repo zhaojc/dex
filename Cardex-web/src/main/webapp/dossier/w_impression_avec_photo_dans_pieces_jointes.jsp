@@ -438,7 +438,7 @@ Création.
 
                  <TR>
                     <TD width="27">&nbsp;</TD>
-                    <TD><b><bean:message  locale='<%=GlobalConstants.Impression.LOCALE_KEY%>' key='caractéristiques_t'/></b></TD>
+                    <TD><b><bean:message  locale='<%=GlobalConstants.Impression.LOCALE_KEY%>' key='caracteristiques_t'/></b></TD>
                  </TR>
                  <TR>
                     <TD width="27">&nbsp;</TD>

@@ -88,11 +88,10 @@ function doClose() {
 }
 
 function doPrint() {
-	   var fiche = "SU";
 	   var cle = document.forms(0).cle.value;
 	   var site = document.forms(0).site.value;
-	   var url = "<%=request.getContextPath()%>/AffichagePDFFiches?FICHE=" + fiche + "&SITE=" + site + "&CLE=" + cle;
-	   var rapport = "<%= GlobalConstants.ChoixRapport.IMPRESSION_SUJET %>";
+
+	   var url = "<%=request.getContextPath()+"/RapportAffichage?classRapportForm="+GlobalConstants.RapportForm.SUJET_RAPPORT_FORM_CDX_0002%>&cle="+cle+"&site="+site;
 	   //alert(url);  
 	   window.open(url, 'rapport', 'left=0,top=0,width=' + document.body.clientWidth + ',height=' + document.body.clientHeight + ',menubar=no,toolbar=no,resizable=yes');
 }
@@ -164,16 +163,17 @@ function doSelectionnerPhotoGalerie(cle, site){
 
 function doAuditAcces() {
 //Impression de l'audit des accès
-	   var rapport = "<%= RapportsConfiguration.AUDIT_ACCES_SUJETS %>";
-	   var url = "<%=request.getContextPath()%>/AffichagePDFListes?RAPPORT=" + rapport; 
+	   var cle = document.forms(0).cle.value;
+	   var site = document.forms(0).site.value;
+	   var url = "<%=request.getContextPath()+"/RapportAffichage?classRapportForm="+GlobalConstants.RapportForm.SUJET_AUDIT_ACCES_RAPPORT_FORM_CDX_0211%>&cle="+cle+"&site="+site;
 	   //alert(url);  
 	   window.open(url, 'rapport', 'left=0,top=0,width=' + document.body.clientWidth + ',height=' + document.body.clientHeight + ',menubar=no,toolbar=no,resizable=yes');
 }
 
 function doAuditChangement() {
-	   var rapport = "<%= RapportsConfiguration.AUDIT_CHANGEMENTS_SUJETS %>";
-	   var userCardex = '<bean:write name="<%= AuthenticationSubject.class.getName() %>" property="user.code" />';
-	   var url = "<%=request.getContextPath()%>/AffichagePDFAudits?RAPPORT=" + rapport + "&UTILISATEUR=" + userCardex; 
+	   var cle = document.forms(0).cle.value;
+	   var site = document.forms(0).site.value;
+	   var url = "<%=request.getContextPath()+"/RapportAffichage?classRapportForm="+GlobalConstants.RapportForm.SUJET_AUDIT_CHANGEMENTS_SUJETS_CDX_0185%>&cle="+cle+"&site="+site;	    
 	   //alert(url);  
 	   window.open(url, 'rapport', 'left=0,top=0,width=' + document.body.clientWidth + ',height=' + document.body.clientHeight + ',menubar=no,toolbar=no,resizable=yes');
 }

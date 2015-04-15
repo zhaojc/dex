@@ -12,7 +12,7 @@ import net.sf.jasperreports.engine.data.JRMapCollectionDataSource;
 
 import com.lotoquebec.cardex.business.delegate.RegroupementBusinessDelegate;
 import com.lotoquebec.cardex.business.vo.ResultatRegroupementVO;
-import com.lotoquebec.cardex.business.vo.rapport.RapportVO;
+import com.lotoquebec.cardex.business.vo.rapport.CritereRapportVO;
 import com.lotoquebec.cardex.business.vo.rapport.regroupement.IntervenantEndroitRegroupementRapportVO_CDX_0085;
 import com.lotoquebec.cardex.business.vo.rapport.regroupement.RegroupementRapportVO;
 import com.lotoquebec.cardex.generateurRapport.rapports.RapportsConfiguration;
@@ -45,7 +45,7 @@ public class IntervenantEndroitRegroupementGenerateurRapport_CDX_0085 extends Re
 	}
 	
 	@Override
-	public RapportVO construireNouveauRapportVO() {
+	public CritereRapportVO construireNouveauRapportVO() {
 		return new IntervenantEndroitRegroupementRapportVO_CDX_0085();
 	}
 	

@@ -14,7 +14,6 @@ import java.util.Map;
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.data.JRMapCollectionDataSource;
-import net.sf.jasperreports.engine.util.JRLoader;
 
 import com.lotoquebec.cardex.business.Adresse;
 import com.lotoquebec.cardex.business.Dossier;
@@ -28,14 +27,15 @@ import com.lotoquebec.cardex.business.delegate.SujetBusinessDelegate;
 import com.lotoquebec.cardex.business.vo.DossierVO;
 import com.lotoquebec.cardex.business.vo.FichierMultimediaVO;
 import com.lotoquebec.cardex.business.vo.InscriptionVO;
+import com.lotoquebec.cardex.business.vo.rapport.CritereRapportVO;
 import com.lotoquebec.cardex.business.vo.rapport.EntiteRapportVO;
-import com.lotoquebec.cardex.business.vo.rapport.RapportVO;
-import com.lotoquebec.cardex.generateurRapport.GenererRapport;
+import com.lotoquebec.cardex.generateurRapport.CritereGenererRapport;
 import com.lotoquebec.cardex.generateurRapport.rapports.RapportsConfiguration;
 import com.lotoquebec.cardex.securite.GestionnaireSecuriteCardex;
 import com.lotoquebec.cardex.util.RapportUtils;
 import com.lotoquebec.cardexCommun.GlobalConstants;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
+import com.lotoquebec.cardexCommun.business.vo.VO;
 import com.lotoquebec.cardexCommun.exception.BusinessException;
 import com.lotoquebec.cardexCommun.exception.BusinessResourceException;
 import com.lotoquebec.cardexCommun.integration.dao.cleListe.cleSQLListeCache.SiteApplicableTableValeurCle;
@@ -44,7 +44,7 @@ import com.lotoquebec.cardexCommun.presentation.util.LabelValueBean;
 import com.lotoquebec.cardexCommun.util.ListeCache;
 import com.lotoquebec.cardexCommun.util.StringUtils;
 
-public class AutoexclusionDossierGenerateurRapport_CDX_0220 extends GenererRapport {
+public class AutoexclusionDossierGenerateurRapport_CDX_0220 extends CritereGenererRapport {
  
 	private boolean tousCasinoEtLudoplex = false;
 	
@@ -214,7 +214,7 @@ public class AutoexclusionDossierGenerateurRapport_CDX_0220 extends GenererRappo
 		return mapLibelles;
 	}
 	
-	public RapportVO construireNouveauRapportVO() {
+	public CritereRapportVO construireNouveauRapportVO() {
 		return new EntiteRapportVO();
 	}
 	
@@ -223,8 +223,8 @@ public class AutoexclusionDossierGenerateurRapport_CDX_0220 extends GenererRappo
 	}
 	
 	@Override
-	protected Map construireParametres(CardexAuthenticationSubject subject, RapportVO rapportVO, Connection connection) throws JRException {
-		Map parameters = super.construireParametres(subject, rapportVO, connection);
+	protected Map construireParametres(CardexAuthenticationSubject subject, VO vo, Connection connection) throws JRException {
+		Map parameters = super.construireParametres(subject, vo, connection);
 		parameters.put("sujet_photo", RapportUtils.compiler(RapportsConfiguration.SOUS_RAPPORT_AUTOEXCLUSION_SUJET_PHOTO));
 		parameters.put("sous_rapport_sujet_autoexclusion", RapportUtils.compiler(RapportsConfiguration.SOUS_RAPPORT_AUTOEXCLUSION_SUJET_FRANCAIS));
 		parameters.put("sous_rapport_sujet_autoexclusion_anglais", RapportUtils.compiler(RapportsConfiguration.SOUS_RAPPORT_AUTOEXCLUSION_SUJET_ANGALAIS));
@@ -235,7 +235,7 @@ public class AutoexclusionDossierGenerateurRapport_CDX_0220 extends GenererRappo
 	}
 	
 	@Override
-	protected JRDataSource construireDataSource(CardexAuthenticationSubject subject, RapportVO rapportVO, Connection connection) throws BusinessResourceException, BusinessException {
+	protected JRDataSource construireDataSource(CardexAuthenticationSubject subject, CritereRapportVO rapportVO, Connection connection) throws BusinessResourceException, BusinessException {
 		List list = new ArrayList();
 		EntiteRapportVO entiteRapportVO = (EntiteRapportVO) rapportVO;
 		DossierBusinessDelegate delegate = new DossierBusinessDelegate();

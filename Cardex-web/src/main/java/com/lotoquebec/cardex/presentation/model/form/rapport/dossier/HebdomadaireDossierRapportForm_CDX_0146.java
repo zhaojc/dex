@@ -1,6 +1,5 @@
 package com.lotoquebec.cardex.presentation.model.form.rapport.dossier;
 
-import com.lotoquebec.cardex.generateurRapport.GenererRapport;
 import com.lotoquebec.cardex.generateurRapport.dossier.HebdomadaireDossierGenerateurRapport_CDX_0146;
 import com.lotoquebec.cardex.presentation.model.form.lienCascade.HierarchieEGNTC;
 import com.lotoquebec.cardex.presentation.model.form.lienCascade.HierarchieES;
@@ -11,26 +10,22 @@ import com.lotoquebec.cardexCommun.user.CardexUser;
 
 public class HebdomadaireDossierRapportForm_CDX_0146 extends CriteresRapportForm{
 
+	private static final long serialVersionUID = 5708449728729229845L;
 	private HierarchieES hierarchieES = new HierarchieES();
 	private HierarchieEGNTC hierarchieEGNTC = new HierarchieEGNTC();
 	
 	
 	public HebdomadaireDossierRapportForm_CDX_0146() {
-		super();
+		super(new HebdomadaireDossierGenerateurRapport_CDX_0146());
 	}
 	
 	@Override
 	public void init(CardexAuthenticationSubject subject){
 		super.init(subject);
         CardexUser user = (CardexUser) subject.getUser();
-        // Valeurs par défaut
+        // Valeurs par dï¿½faut
         setEntite(String.valueOf(user.getEntite()));
         setSite(String.valueOf(user.getSite()));
-	}
-	
-	@Override
-	public GenererRapport getGenererRapport() {
-		return new HebdomadaireDossierGenerateurRapport_CDX_0146();
 	}
 
 	public String getEntite() {

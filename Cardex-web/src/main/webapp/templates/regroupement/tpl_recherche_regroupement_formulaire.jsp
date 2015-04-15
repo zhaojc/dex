@@ -153,7 +153,7 @@ style="filter:progid:DXImageTransform.Microsoft.Gradient(endColorstr='#ACC8CC', 
 			           	<cardex:optionTag classe='<%=GlobalConstants.CleListe.TABLE_VALEUR %>' 
 			           		valeurTableValeur='<%=GlobalConstants.TableValeur.RAPPORT_REGROUPEMENT%>' />
                     </html:select>
-                	<cardex:button urlSecurite="/RapportAffichagePDF" labelKey='cb_imprimer'  onclick='doPrint();' />
+                	<cardex:button urlSecurite="/CritereRapportAffichagePDF" labelKey='cb_imprimer'  onclick='doPrint();' />
                 </td>
 		  	<td>&nbsp;              		
 		  	</td>

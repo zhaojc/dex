@@ -1,25 +1,17 @@
 package com.lotoquebec.cardex.servlet;
 
-import java.io.IOException;
-import java.util.Locale;
-
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts.util.RequestUtils;
 
 import com.lotoquebec.cardex.presentation.model.form.rapport.RapportForm;
 import com.lotoquebec.cardex.presentation.model.form.rapport.TableValeurRapportAssociation;
-import com.lotoquebec.cardexCommun.authentication.AuthenticationSubject;
-import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
-import com.lotoquebec.cardexCommun.integration.dao.OracleDAOUtils;
-import com.lotoquebec.cardexCommun.util.StringUtils;
 
 /**
- * Cette classe est utilisé pour lancer une classe en réflexion.
- * La classe lancé est la classe qui prépare le rapport jasper.
+ * Cette classe est utilisï¿½ pour lancer une classe en rï¿½flexion.
+ * La classe lancï¿½ est la classe qui prï¿½pare le rapport jasper.
  */
 public class TableValeurAffichageRapport extends RapportAffichage {
 
@@ -27,18 +19,6 @@ public class TableValeurAffichageRapport extends RapportAffichage {
 		super.init(config);
 	}
 	
-    public  void doGet(HttpServletRequest request, HttpServletResponse  response)
-        throws IOException, ServletException {
-    	CardexAuthenticationSubject subject = (CardexAuthenticationSubject) request.getSession().getAttribute(AuthenticationSubject.class.getName());
-    	String langue = (String)request.getParameter("langue");
-    	Locale locale = subject.getLocale();
-    	
-        if (StringUtils.isNotEmpty(langue))
-        	locale = OracleDAOUtils.getLocale(Integer.valueOf(langue));
-    	
-    	super.doGet(request, response, locale);
-    }
-
     /**
      * Cette classe permet d'obtenir la classe de rapport et de la populer avec les arguements
      * @param request
@@ -53,7 +33,7 @@ public class TableValeurAffichageRapport extends RapportAffichage {
 			return rapportForm;
 			
 		} catch (Exception e) {
-			throw new RuntimeException("Impossible de créer la classe "+choixRapport);
+			throw new RuntimeException("Impossible de crï¿½er la classe "+choixRapport);
 		}
     }
     

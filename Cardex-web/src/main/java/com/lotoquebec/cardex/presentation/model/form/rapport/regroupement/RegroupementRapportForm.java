@@ -2,6 +2,7 @@ package com.lotoquebec.cardex.presentation.model.form.rapport.regroupement;
 
 import java.io.Serializable;
 
+import com.lotoquebec.cardex.generateurRapport.GenererRapport;
 import com.lotoquebec.cardex.presentation.model.form.lienCascade.HierarchieEGNTC;
 import com.lotoquebec.cardex.presentation.model.form.rapport.CriteresRapportForm;
 import com.lotoquebec.cardexCommun.GlobalConstants;
@@ -9,25 +10,24 @@ import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
 import com.lotoquebec.cardexCommun.user.CardexUser;
 
 /**
- * Conserve les différentes valeurs relatives au formulaire pour la production
+ * Conserve les diffï¿½rentes valeurs relatives au formulaire pour la production
  * des rapports de regroupement.
  *
  * @see com.lotoquebec.cardex.presentation.model.CriteresRechercheJournalHtmlForm
  */
 public abstract class RegroupementRapportForm extends CriteresRapportForm implements Serializable {
 
-    private String site = "";
+	private static final long serialVersionUID = -285640418993503203L;
+	private String site = "";
     private HierarchieEGNTC cascadeEGNTC = new HierarchieEGNTC();
     private String intervenant = "";
     private String secteur = "";
     private String endroit = "";
     private String regroupement = "";
     
-    /**
-     * Constructeur de CriteresRechercheRegroupementForm par défaut.
-     */
-    public RegroupementRapportForm() {}
-
+	public RegroupementRapportForm(GenererRapport genererRapport) {
+		super(genererRapport);
+	}
 
 	/**
 	 * Returns the categorie.
@@ -112,7 +112,7 @@ public abstract class RegroupementRapportForm extends CriteresRapportForm implem
 	}
 
 	/**
-	 * Returns the groupe de sécurité.
+	 * Returns the groupe de sï¿½curitï¿½.
 	 * @return String
 	 */
 	public String getSecteur() {

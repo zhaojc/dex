@@ -18,6 +18,7 @@ import org.apache.struts.util.MessageResources;
 import com.lotoquebec.cardex.business.CriteresRechercheDossier;
 import com.lotoquebec.cardex.business.Dossier;
 import com.lotoquebec.cardex.business.delegate.DossierBusinessDelegate;
+import com.lotoquebec.cardex.business.vo.rapport.CritereRapportVO;
 import com.lotoquebec.cardex.business.vo.rapport.RapportVO;
 import com.lotoquebec.cardex.generateurRapport.rapports.RapportsConfiguration;
 import com.lotoquebec.cardex.presentation.model.form.CriteresRechercheDossierForm;
@@ -37,7 +38,7 @@ import com.lotoquebec.cardexCommun.integration.dao.cleListe.cleSQLListeCache.Int
 import com.lotoquebec.cardexCommun.integration.dao.cleListe.cleSQLListeCache.TableValeurCleSQLListeCache;
 import com.lotoquebec.cardexCommun.util.ListeCache;
 
-//Rapport CDX_0229 pour connaître le nombre de dossiers retournés par des critères de recherche
+//Rapport CDX_0229 pour connaï¿½tre le nombre de dossiers retournï¿½s par des critï¿½res de recherche
 /**
  * @Deprecated sera retirer dans la version 5.5 
  */
@@ -50,11 +51,11 @@ public class NombreDossiers extends RechercheDossierRapport {
 	protected int produireRapport(CardexAuthenticationSubject subject,
 			CriteresRechercheDossier criteres) throws BusinessException {
 		DossierBusinessDelegate delegate = new DossierBusinessDelegate();
-		//On calcule le nombre de dossiers retournés par les critères inscrits à l'écran.
+		//On calcule le nombre de dossiers retournï¿½s par les critï¿½res inscrits ï¿½ l'ï¿½cran.
 		return delegate.nombreDossiers(subject, criteres);
 	}
 
-	//Construction de la liste qui sera soumise au rapport. Les champs du map correspondent à ceux du rapport.
+	//Construction de la liste qui sera soumise au rapport. Les champs du map correspondent ï¿½ ceux du rapport.
 	protected JRDataSource construireDataSource(CardexAuthenticationSubject subject, CriteresRechercheDossierForm criteres, MessageResources mResources)
 	 			throws BusinessException{
 		List list = new ArrayList();
@@ -105,7 +106,7 @@ public class NombreDossiers extends RechercheDossierRapport {
 private Map construireListeLibelles(Dossier dossier, Locale langueImpression, MessageResources mResources)
 	throws BusinessException{
 	List list = new ArrayList();
-	//On remplit d'abord les libellés
+	//On remplit d'abord les libellï¿½s
 	Map mapLibelles = new HashMap(); 
 	
 	mapLibelles.put("confidentiel", mResources.getMessage(langueImpression, "confidentiel"));
@@ -121,13 +122,13 @@ private Map construireListeLibelles(Dossier dossier, Locale langueImpression, Me
 	return mapLibelles;
 	}
 
-public RapportVO construireNouveauRapportVO() {
+public CritereRapportVO construireNouveauRapportVO() {
 	// TODO Auto-generated method stub
 	return null;
 }
 
 public JasperPrint executer(CardexAuthenticationSubject subject,
-		RapportVO rapportVO) throws BusinessException, JRException {
+		CritereRapportVO rapportVO) throws BusinessException, JRException {
 	// TODO Auto-generated method stub
 	return null;
 }
@@ -138,7 +139,7 @@ public void validerSecurite(CardexAuthenticationSubject subject) {
 }
 
 @Override
-protected JRDataSource construireDataSource(CardexAuthenticationSubject subject, RapportVO rapportVO,
+protected JRDataSource construireDataSource(CardexAuthenticationSubject subject, CritereRapportVO rapportVO,
 		Connection connection) throws BusinessResourceException,
 		BusinessException {
 	// TODO Auto-generated method stub

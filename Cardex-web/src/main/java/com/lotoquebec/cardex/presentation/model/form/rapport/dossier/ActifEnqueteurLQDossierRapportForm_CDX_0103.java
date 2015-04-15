@@ -1,6 +1,5 @@
 package com.lotoquebec.cardex.presentation.model.form.rapport.dossier;
 
-import com.lotoquebec.cardex.generateurRapport.GenererRapport;
 import com.lotoquebec.cardex.generateurRapport.dossier.ActifEnqueteurLQDossierGenerateurRapport_CDX_0103;
 import com.lotoquebec.cardex.presentation.model.form.lienCascade.HierarchieEGNTC;
 import com.lotoquebec.cardex.presentation.model.form.rapport.CriteresRapportForm;
@@ -10,18 +9,19 @@ import com.lotoquebec.cardexCommun.user.CardexUser;
 
 public class ActifEnqueteurLQDossierRapportForm_CDX_0103 extends CriteresRapportForm{
 
+	private static final long serialVersionUID = 8530367079714433104L;
 	private HierarchieEGNTC cascadeEGNTC = new HierarchieEGNTC();
 	private String site = "";
 	private String intervenant = "";
 	
 	public ActifEnqueteurLQDossierRapportForm_CDX_0103() {
-		super();
+		super(new ActifEnqueteurLQDossierGenerateurRapport_CDX_0103());
 	}
 
 	public void init(CardexAuthenticationSubject subject){
 		super.init(subject);
         CardexUser user = (CardexUser) subject.getUser();
-        // Valeurs par défaut
+        // Valeurs par dï¿½faut
         setEntite(String.valueOf(user.getEntite()));
         setSite(String.valueOf(user.getSite()));
 	}
@@ -57,10 +57,6 @@ public class ActifEnqueteurLQDossierRapportForm_CDX_0103 extends CriteresRapport
 	public void setEntite(String entite) {
 		this.cascadeEGNTC.set(HierarchieEGNTC.ENTITE, entite);
 	}
-	 
-	@Override
-	public GenererRapport getGenererRapport() {
-		return new ActifEnqueteurLQDossierGenerateurRapport_CDX_0103();
-	}
+
 	
 }

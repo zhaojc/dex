@@ -27,7 +27,7 @@ public class RapportsConfiguration {
 	public final static String RAPPORT_VALIDATION_ADRESSES_SOCIETES = REPERTOIRE_RAPPORT+"CDX_0131_societe_adresse_invalide.jrxml";
 	
 	// RAQ
-	public static final String RAPPORT_ACTIVITES = REPERTOIRE_RAPPORT+"CDX_0070_gabarit_narration.jrxml";
+	public static final String RAPPORT_ACTIVITES_CDX_0070 = REPERTOIRE_RAPPORT+"CDX_0070_gabarit_narration.jrxml";
 	
 	// Rapport sur la coh�rence des donn�es
 	public static final String COHERENCE = REPERTOIRE_RAPPORT+"CDX_0071_rapport_coherence_donnees.jrxml";
@@ -85,7 +85,7 @@ public class RapportsConfiguration {
 	public final static String STATISTIQUE_ENDROITS_REGROUPES = REPERTOIRE_RAPPORT+"CDX_0149_rapport_endroits_regroupes.jrxml";
 	public final static String TABLEAU_ENDROITS_REGROUPES = REPERTOIRE_RAPPORT+"CDX_0280_statistiques_endroits_regroupes.jrxml";
 	
-	// Dossiers - Rep�rage
+	// Dossiers - Repérage
 	public static final String REPERAGES_ACCES_INTERDITS = REPERTOIRE_RAPPORT+"CDX_0012_reperages_acces_interdits.jrxml";
 	public static final String REPERAGES_ACCES_INTERDITS_NOMBRE = REPERTOIRE_RAPPORT+"CDX_0014_reperages_acces_interdits_nombre.jrxml";
 	public static final String REPERAGES_AUTOEXCLUSIONS_PAR_NOMBRE = REPERTOIRE_RAPPORT+"CDX_0011_reperages_AU_tri_nombre.jrxml";
@@ -171,7 +171,7 @@ public class RapportsConfiguration {
     public static final String RAPPORT_SOCIETES_INACTIVES = REPERTOIRE_RAPPORT+"CDX_0256_clients_mysteres_detaillants_inactifs.jrxml";
     public static final String RAPPORT_DETAILLANTS_INFRACTION = REPERTOIRE_RAPPORT+"CDX_0257_detaillants_en_infraction.jrxml";
 
-    //Rapports sur les acc�s
+    //Rapports sur les accès
     public static final String AUDIT_SOMMAIRE_ACCES = REPERTOIRE_RAPPORT+"CDX_0120_audit_sommaire_acces.jrxml";
     public static final String AUDIT_DETAIL_ACCES = REPERTOIRE_RAPPORT+"CDX_0121_audit_detail_acces.jrxml";
     public static final String AUDIT_INTERVENANT_ACCES = REPERTOIRE_RAPPORT+"CDX_0122_audit_acces_intervenant.jrxml";
@@ -183,8 +183,8 @@ public class RapportsConfiguration {
     
     //Audit
 	public static final String AUDIT_ACCES_DOSSIERS = REPERTOIRE_RAPPORT+"CDX_0210_impression_audit_acces_dossiers.jrxml";
-	public static final String AUDIT_ACCES_SUJETS = REPERTOIRE_RAPPORT+"CDX_0211_impression_audit_acces_sujets.jrxml";
-	public static final String AUDIT_ACCES_SOCIETES = REPERTOIRE_RAPPORT+"CDX_0212_impression_audit_acces_societes.jrxml";
+	public static final String AUDIT_ACCES_SUJETS_CDX_0211 = REPERTOIRE_RAPPORT+"CDX_0211_impression_audit_acces_sujets.jrxml";
+	public static final String AUDIT_ACCES_SOCIETES_CDX_212 = REPERTOIRE_RAPPORT+"CDX_0212_impression_audit_acces_societes.jrxml";
 	public static final String AUDIT_ACCES_VEHICULES = REPERTOIRE_RAPPORT+"CDX_0213_impression_audit_acces_vehicules.jrxml";
 	public static final String DETAIL_ACCES_DOSSIERS = REPERTOIRE_RAPPORT+"CDX_0121_audit_detail_acces.jrxml";
 	public static final String DETAIL_ACCES_INTERVENANT = REPERTOIRE_RAPPORT+"CDX_0123_audit_detail_acces_intervenant.jrxml";
@@ -195,11 +195,15 @@ public class RapportsConfiguration {
 	public static final String AUDIT_CHANGEMENTS_INTERVENANTS = REPERTOIRE_RAPPORT+"CDX_0183_audit_changements_intervenants.jrxml";
 	public static final String AUDIT_CHANGEMENTS_NARRATIONS = REPERTOIRE_RAPPORT+"CDX_0181_audit_changements_narrations.jrxml";
 	public static final String AUDIT_CHANGEMENTS_SOCIETES = REPERTOIRE_RAPPORT+"CDX_0184_audit_changements_societes.jrxml";
-	public static final String AUDIT_CHANGEMENTS_SUJETS = REPERTOIRE_RAPPORT+"CDX_0185_audit_changements_sujets.jrxml";
+	public static final String AUDIT_CHANGEMENTS_SUJETS_CDX_0185 = REPERTOIRE_RAPPORT+"CDX_0185_audit_changements_sujets.jrxml";
 	public static final String AVANT_CHANGEMENT_AUDIT_CHANGEMENTS_SUJETS = REPERTOIRE_RAPPORT+"CDX_0185_sous-rapport_audit_sujets.jrxml";
 	public static final String CREATEUR_AUDIT_CHANGEMENTS_SUJETS = REPERTOIRE_RAPPORT+"sous-rapport_audit_createur.jrxml";
 	
 	public static final String AUDIT_CHANGEMENTS_SUIVIS = REPERTOIRE_RAPPORT+"CDX_0186_audit_changements_suivis.jrxml";
 	public static final String AUDIT_CHANGEMENTS_VEHICULES = REPERTOIRE_RAPPORT+"CDX_0187_audit_changements_vehicules.jrxml";
+	
+	// Sujet
+	public static final String SUJET_CDX_0002 = REPERTOIRE_RAPPORT+"CDX_0002_sujet.jrxml";
+	public static final String SUJET_GALERIE_CDX_0004 = REPERTOIRE_RAPPORT+"CDX_0004_sujet-galerie.jrxml";
 
 }

@@ -293,43 +293,6 @@
   </servlet>
   <servlet>
     <description>
-		Servlet permettant d'afficher un rapport PDF pour les dossiers</description>
-    <display-name>
-		AffichagePDF</display-name>
-    <servlet-name>AffichagePDF</servlet-name>
-    <servlet-class>
-		com.lotoquebec.cardex.servlet.AffichagePDF</servlet-class>
-    <init-param>
-      <param-name>RAPPORT</param-name>
-      <param-value></param-value>
-    </init-param>
-    <init-param>
-      <param-name>SITE</param-name>
-      <param-value></param-value>
-    </init-param>
-    <init-param>
-      <param-name>DATE_DEBUT</param-name>
-      <param-value></param-value>
-    </init-param>
-    <init-param>
-      <param-name>DATE_FIN</param-name>
-      <param-value></param-value>
-    </init-param>
-    <init-param>
-      <param-name>UTILISATEUR</param-name>
-      <param-value></param-value>
-    </init-param>
-    <init-param>
-      <param-name>GENRE</param-name>
-      <param-value></param-value>
-    </init-param>
-    <init-param>
-      <param-name>CATEGORIE</param-name>
-      <param-value></param-value>
-    </init-param>
-  </servlet>
-  <servlet>
-    <description>
 		Servlet permettant d'imprimer les listes (resultats de recherche et onglets) en PDF</description>
     <display-name>
 		AffichagePDFListes</display-name>
@@ -342,117 +305,6 @@
     </init-param>
     <init-param>
       <param-name>MANDAT</param-name>
-      <param-value></param-value>
-    </init-param>
-  </servlet>
-  <servlet>
-    <description>
-		Servlet permettant d'afficher un rapport PDF pour le journal</description>
-    <display-name>
-		AffichagePDFJournal</display-name>
-    <servlet-name>AffichagePDFJournal</servlet-name>
-    <servlet-class>
-		com.lotoquebec.cardex.servlet.AffichagePDFJournal</servlet-class>
-    <init-param>
-      <param-name>RAPPORT</param-name>
-      <param-value></param-value>
-    </init-param>
-    <init-param>
-      <param-name>ENTITE</param-name>
-      <param-value></param-value>
-    </init-param>
-    <init-param>
-      <param-name>SITE</param-name>
-      <param-value></param-value>
-    </init-param>
-    <init-param>
-      <param-name>DATE_DEBUT</param-name>
-      <param-value></param-value>
-    </init-param>
-    <init-param>
-      <param-name>DATE_FIN</param-name>
-      <param-value></param-value>
-    </init-param>
-    <init-param>
-      <param-name>UTILISATEUR</param-name>
-      <param-value></param-value>
-    </init-param>
-    <init-param>
-      <param-name>INTERVENANT</param-name>
-      <param-value></param-value>
-    </init-param>
-    <init-param>
-      <param-name>ENDROIT</param-name>
-      <param-value></param-value>
-    </init-param>
-    <init-param>
-      <param-name>ORIGINE</param-name>
-      <param-value></param-value>
-    </init-param>
-    <init-param>
-      <param-name>LOCALISATION</param-name>
-      <param-value></param-value>
-    </init-param>
-    <init-param>
-      <param-name>DESCRIPTIF</param-name>
-      <param-value></param-value>
-    </init-param>
-    <init-param>
-      <param-name>FONDE</param-name>
-      <param-value></param-value>
-    </init-param>
-    <init-param>
-      <param-name>GENRE</param-name>
-      <param-value></param-value>
-    </init-param>
-    <init-param>
-      <param-name>NATURE</param-name>
-      <param-value></param-value>
-    </init-param>
-    <init-param>
-      <param-name>TYPE</param-name>
-      <param-value></param-value>
-    </init-param>
-    <init-param>
-      <param-name>CATEGORIE</param-name>
-      <param-value></param-value>
-    </init-param>
-    <init-param>
-      <param-name>GROUPE</param-name>
-      <param-value></param-value>
-    </init-param>
-  </servlet>
-  <servlet>
-    <description>
-		Servlet permettant d'afficher un rapport PDF pour les suivis
-		</description>
-    <display-name>
-		AffichagePDFSuivis</display-name>
-    <servlet-name>AffichagePDFSuivis</servlet-name>
-    <servlet-class>
-		com.lotoquebec.cardex.servlet.AffichagePDFSuivis</servlet-class>
-    <init-param>
-      <param-name>RAPPORT</param-name>
-      <param-value></param-value>
-    </init-param>
-    <init-param>
-      <param-name>SITE</param-name>
-      <param-value></param-value>
-    </init-param>
-    <init-param>
-      <param-name>DATE_DEBUT</param-name>
-      <param-value></param-value>
-    </init-param>
-    <init-param>
-      <param-name>DATE_FIN</param-name>
-      <param-value></param-value>
-    </init-param>
-    <init-param>
-      <param-name>UTILISATEUR</param-name>
-      <param-value></param-value>
-    </init-param>
-    <init-param>
-      <param-name>INTERVENANT</param-name>
       <param-value></param-value>
     </init-param>
   </servlet>
@@ -550,9 +402,19 @@
   </servlet>
   <servlet>
     <description>Servlet permettant d'afficher un rapport PDF</description>
-    <display-name>RapportAffichagePDF</display-name>
-    <servlet-name>RapportAffichagePDF</servlet-name>
-    <servlet-class>com.lotoquebec.cardex.servlet.RapportAffichagePDF</servlet-class>
+    <display-name>RapportAffichage</display-name>
+    <servlet-name>RapportAffichage</servlet-name>
+    <servlet-class>com.lotoquebec.cardex.servlet.RapportAffichage</servlet-class>
+    <init-param>
+      <param-name>CLASS</param-name>
+      <param-value></param-value>
+    </init-param>
+  </servlet>
+  <servlet>
+    <description>Servlet permettant d'afficher un rapport PDF</description>
+    <display-name>CritereRapportAffichagePDF</display-name>
+    <servlet-name>CritereRapportAffichagePDF</servlet-name>
+    <servlet-class>com.lotoquebec.cardex.servlet.CritereRapportAffichagePDF</servlet-class>
     <init-param>
       <param-name>CLASS</param-name>
       <param-value></param-value>
@@ -694,16 +556,8 @@
     <url-pattern>/TableValeurAffichageRapport</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
-    <servlet-name>AffichagePDF</servlet-name>
-    <url-pattern>/AffichagePDF</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
     <servlet-name>AfficherAide</servlet-name>
     <url-pattern>/AfficherAide</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-    <servlet-name>AffichagePDFJournal</servlet-name>
-    <url-pattern>/AffichagePDFJournal</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>AffichagePDFFiches</servlet-name>
@@ -718,8 +572,12 @@
     <url-pattern>/AffichageRapportActivites</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
-    <servlet-name>RapportAffichagePDF</servlet-name>
-    <url-pattern>/RapportAffichagePDF</url-pattern>
+    <servlet-name>RapportAffichage</servlet-name>
+    <url-pattern>/RapportAffichage</url-pattern>
+  </servlet-mapping>  
+  <servlet-mapping>
+    <servlet-name>CritereRapportAffichagePDF</servlet-name>
+    <url-pattern>/CritereRapportAffichagePDF</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>RapportAffichageExcel</servlet-name>
@@ -740,10 +598,6 @@
   <servlet-mapping>
     <servlet-name>SessionInvalidate</servlet-name>
     <url-pattern>/SessionInvalidate</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-    <servlet-name>AffichagePDFSuivis</servlet-name>
-    <url-pattern>/AffichagePDFSuivis</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>CalculerDateOuvrableServlet</servlet-name>

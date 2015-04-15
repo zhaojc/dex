@@ -3,30 +3,32 @@ package com.lotoquebec.cardex.business;
 import java.sql.Timestamp;
 import java.util.Collection;
 
+import com.lotoquebec.cardexCommun.business.vo.VO;
+
 /**
- * Les accès aux données du système sont compilés dans la table AC_ACCES.
- * Les données compilées peuvent être consultés avec le bouton Audit sur 
- * les écrans de consultation (Dossiers, Sujets, Sociétés et Véhicules).
+ * Les accï¿½s aux donnï¿½es du systï¿½me sont compilï¿½s dans la table AC_ACCES.
+ * Les donnï¿½es compilï¿½es peuvent ï¿½tre consultï¿½s avec le bouton Audit sur 
+ * les ï¿½crans de consultation (Dossiers, Sujets, Sociï¿½tï¿½s et Vï¿½hicules).
  *
- * @author $Author: François Guérin $
+ * @author $Author: Franï¿½ois Guï¿½rin $
  * @version $Revison: $, $Date: 2002/06/11 00:25:27 $
  */
-public interface Acces {
+public interface Acces extends VO{
 
 
     // Getters
 
     /**
-     * Retourne la clé (L_AC_CLE).
+     * Retourne la clï¿½ (L_AC_CLE).
      *
-     * @return long Valeur numérique de la clé
+     * @return long Valeur numï¿½rique de la clï¿½
      */
     public long getCle();
 
     /**
      * Retourne le site (L_SI_SITE).
      *
-     * @return long Valeur numérique du site d'où provient l'accès
+     * @return long Valeur numï¿½rique du site d'oï¿½ provient l'accï¿½s
      */
 
     public long getSite();
@@ -34,7 +36,7 @@ public interface Acces {
     /**
      * Retourne le site d'origine (L_ORI_SITE).
      *
-     * @return long Valeur numérique du site d'origine.
+     * @return long Valeur numï¿½rique du site d'origine.
      */
     public long getSiteOrigine();
 
@@ -46,80 +48,80 @@ public interface Acces {
     public String getGenreRef();
 
     /**
-     * Retourne la clé d'origine (L_ORI_CLE).
+     * Retourne la clï¿½ d'origine (L_ORI_CLE).
      *
-     * @return long Valeur numérique de la clé.
+     * @return long Valeur numï¿½rique de la clï¿½.
      */
     public long getCleOrigine();
 
     /**
-     * Retourne la clé de référence (L_REF_CLE).
+     * Retourne la clï¿½ de rï¿½fï¿½rence (L_REF_CLE).
      *
-     * @return long Valeur numérique dela clé.
+     * @return long Valeur numï¿½rique dela clï¿½.
      */
     public long getCleRef();
 
     /**
-     * Retourne la référence du fichier (C_GF_ORIGINE).
+     * Retourne la rï¿½fï¿½rence du fichier (C_GF_ORIGINE).
      * Correspond au fichier sur lequel on conserve un audit.
      *
-     * @return String Valeur du genre en caractère.
+     * @return String Valeur du genre en caractï¿½re.
      */
     public String getGenreOrigine();
 
     /**
-     * Retourne le site de référence (L_REF_SITE).
+     * Retourne le site de rï¿½fï¿½rence (L_REF_SITE).
      *
-     * @return long Valeur numérique du site.
+     * @return long Valeur numï¿½rique du site.
      */
     public long getSiteRef();
 
     /**
-     * Retourne le code de l'utilisateur qui fait l'accès (V_AC_NAME).
+     * Retourne le code de l'utilisateur qui fait l'accï¿½s (V_AC_NAME).
      *
      * @return String Valeur du code de l'utilisateur.
      */
     public String getUtilisateur();
 
     /**
-     * Retourne la date de l'accès (D_AC_DATE_ACCES).
+     * Retourne la date de l'accï¿½s (D_AC_DATE_ACCES).
      *
      * @return Timestamp Valeur de la date (yyyy-MM-dd).
      */
     public Timestamp getDateAcces();
 
      /**
-     * Retourne la clé de référence 2 (L_REF2_CLE).
+     * Retourne la clï¿½ de rï¿½fï¿½rence 2 (L_REF2_CLE).
      *
-     * @return long Valeur de la clé.
+     * @return long Valeur de la clï¿½.
      */
     public long getCleRef2();
 
     /**
      * Retourne le type d'action (C_AC_ACTION).
-     * S=Sélection, I=Insertion, D=Suppression, U=Modification
+     * S=Sï¿½lection, I=Insertion, D=Suppression, U=Modification
      *
      * @return String Valeur de l'action.
      */
     public String getAction();
 
     /**
-     * Retourne le genre de la référence 2 (C_GF_REF2).
+     * Retourne le genre de la rï¿½fï¿½rence 2 (C_GF_REF2).
      *
      * @return String Valeur du genre
      */
     public String getGenreRef2();
 
     /**
-     * Retourne le site de la référence 2 (L_REF2_SITE ).
+     * Retourne le site de la rï¿½fï¿½rence 2 (L_REF2_SITE ).
      *
      * @return long Valeur du site.
      */
     public long getSiteRef2();
 
     /**
-     * Retourne le créateur du dossier principal pour lequel on consulte
-     * les accès.
+     * Retourne le crï¿½ateur du dossier principal pour lequel on consulte
+     * les accï¿½s.
      *
      * @return String Valeur du code de l'intervenant.
      */
@@ -127,15 +129,15 @@ public interface Acces {
 
 
     /**
-     * Retourne la hiérarchie (applicable dans le cas des Dossiers).
+     * Retourne la hiï¿½rarchie (applicable dans le cas des Dossiers).
      *
-     * @return long Valeur numérique de la hiérarchie.
+     * @return long Valeur numï¿½rique de la hiï¿½rarchie.
      */
     public long getHierarchie();
 
 
     /**
-     * Retourne la date de création du dossier principal.
+     * Retourne la date de crï¿½ation du dossier principal.
      *
      * @return Timestamp Valeur de la date (yyyy-MM-dd).
      */
@@ -161,63 +163,63 @@ public interface Acces {
     /**
      * Affecte la cle.
      *
-     * @param cle Valeur numérique de la cle.
+     * @param cle Valeur numï¿½rique de la cle.
      */
     public void setCle(long cle);
 
     /**
      * Affecte le site.
      *
-     * @param site Valeur numérique le site.
+     * @param site Valeur numï¿½rique le site.
      */
     public void setSite(long site);
 
     /**
      * Affecte un site d'origine.
      *
-     * @param siteOrigine Valeur numérique du site d'origine.
+     * @param siteOrigine Valeur numï¿½rique du site d'origine.
      */
     public void setSiteOrigine(long siteOrigine);
 
 
 
     /**
-     * Affecte la clé de référence.
+     * Affecte la clï¿½ de rï¿½fï¿½rence.
      *
-     * @param cleRef Valeur numérique de la clé.
+     * @param cleRef Valeur numï¿½rique de la clï¿½.
      */
     public void setCleRef(long cleRef);
 
     /**
-     * Affecte la clé de référence 2.
+     * Affecte la clï¿½ de rï¿½fï¿½rence 2.
      *
-     * @param cleRef2 Valeur numérique de la clé.
+     * @param cleRef2 Valeur numï¿½rique de la clï¿½.
      */
     public void setCleRef2(long cleRef2);
 
     /**
-     * Affecte une clé d'origine.
+     * Affecte une clï¿½ d'origine.
      *
-     * @param cleOrigine Valeur numérique de la clé.
+     * @param cleOrigine Valeur numï¿½rique de la clï¿½.
      */
     public void setCleOrigine(long cleOrigine);
 
     /**
-     * Affecte un code de créateur.
+     * Affecte un code de crï¿½ateur.
      *
-     * @param createur Code du créateur du dossier.
+     * @param createur Code du crï¿½ateur du dossier.
      */
     public void setCreateur(String createur);
 
     /**
-     * Affecte la date d'accès.
+     * Affecte la date d'accï¿½s.
      *
-     * @param dateAcces Valeur de la date d'accès (yyyy-MM-dd).
+     * @param dateAcces Valeur de la date d'accï¿½s (yyyy-MM-dd).
      */
     public void setDateAcces(Timestamp dateAcces);
 
     /**
-     * Affecte la date de création.
+     * Affecte la date de crï¿½ation.
      *
      * @param dateCreation Valeur de la date (yyyy-MM-dd).
      */
@@ -231,23 +233,23 @@ public interface Acces {
     public void setGenreOrigine(String genreOrigine);
 
     /**
-     * Affecte le genre de la première référence.
+     * Affecte le genre de la premiï¿½re rï¿½fï¿½rence.
      *
-     * @param genreRef Valeur de la première référence en caractère.
+     * @param genreRef Valeur de la premiï¿½re rï¿½fï¿½rence en caractï¿½re.
      */
     public void setGenreRef(String genreRef);
 
     /**
-     * Affecte le genre de la deuxième référence.
+     * Affecte le genre de la deuxiï¿½me rï¿½fï¿½rence.
      *
-     * @param genreRef2 Valeur de la deuxième référence en caractère.
+     * @param genreRef2 Valeur de la deuxiï¿½me rï¿½fï¿½rence en caractï¿½re.
      */
     public void setGenreRef2(String genreRef2);
 
      /**
      * Affecte l'utilisateur.
      *
-     * @param utilisateur Valeur de l'utilisateur en caractère.
+     * @param utilisateur Valeur de l'utilisateur en caractï¿½re.
      */
     public void setUtilisateur(String utilisateur);
 
@@ -256,21 +258,21 @@ public interface Acces {
     /**
      * Affecte la hierarchie.
      *
-     * @param hierarchie Valeur numérique de la hierarchie.
+     * @param hierarchie Valeur numï¿½rique de la hierarchie.
      */
     public void setHierarchie(long hierarchie);
 
     /**
-     * Affecte le site de référence.
+     * Affecte le site de rï¿½fï¿½rence.
      *
-     * @param siteRef Valeur numérique du site.
+     * @param siteRef Valeur numï¿½rique du site.
      */
     public void setSiteRef(long siteRef);
 
     /**
-     * Affecte le site de référence 2.
+     * Affecte le site de rï¿½fï¿½rence 2.
      *
-     * @param siteRef2 Valeur numérique du site.
+     * @param siteRef2 Valeur numï¿½rique du site.
      */
     public void setSiteRef2(long siteRef2);
 

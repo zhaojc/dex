@@ -2,7 +2,6 @@ package com.lotoquebec.cardex.generateurRapport.dossier;
 
 import java.io.InputStream;
 import java.sql.Connection;
-import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -19,16 +18,15 @@ import net.sf.jasperreports.engine.data.JRMapCollectionDataSource;
 import com.lotoquebec.cardex.business.RapportDossier;
 import com.lotoquebec.cardex.business.delegate.RapportBusinessDelegate;
 import com.lotoquebec.cardex.business.vo.RapportDossierVO;
+import com.lotoquebec.cardex.business.vo.rapport.CritereRapportVO;
 import com.lotoquebec.cardex.business.vo.rapport.CumulatifDossierRapportVO;
-import com.lotoquebec.cardex.business.vo.rapport.RapportVO;
-import com.lotoquebec.cardex.generateurRapport.GenererRapport;
+import com.lotoquebec.cardex.generateurRapport.CritereGenererRapport;
 import com.lotoquebec.cardex.generateurRapport.rapports.RapportsConfiguration;
 import com.lotoquebec.cardexCommun.GlobalConstants;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
+import com.lotoquebec.cardexCommun.business.vo.VO;
 import com.lotoquebec.cardexCommun.exception.BusinessException;
 import com.lotoquebec.cardexCommun.exception.BusinessResourceException;
-import com.lotoquebec.cardexCommun.exception.BusinessRuleException;
-import com.lotoquebec.cardexCommun.integration.dao.OracleDAOUtils;
 import com.lotoquebec.cardexCommun.integration.dao.cleListe.cleSQLListeCache.TableValeurCleSQLListeCache;
 import com.lotoquebec.cardexCommun.securite.GestionnaireSecurite;
 import com.lotoquebec.cardexCommun.text.DateFormat;
@@ -36,7 +34,7 @@ import com.lotoquebec.cardexCommun.user.CardexUser;
 import com.lotoquebec.cardexCommun.util.ListeCache;
 import com.lotoquebec.cardexCommun.util.StringUtils;
 
-public class HebdomadaireDossierGenerateurRapport_CDX_0146 extends GenererRapport {
+public class HebdomadaireDossierGenerateurRapport_CDX_0146 extends CritereGenererRapport {
  
 	protected InputStream obtenirGabarit() {
 		return RapportsConfiguration.class.getResourceAsStream(RapportsConfiguration.RAPPORT_HEBDOMADAIRE);
@@ -46,17 +44,17 @@ public class HebdomadaireDossierGenerateurRapport_CDX_0146 extends GenererRappor
 		GestionnaireSecurite.validerSecuriteURL(subject, "/rapport/dossiersHebdomadaire");
 	}
 	
-	public RapportVO construireNouveauRapportVO() {
+	public CritereRapportVO construireNouveauRapportVO() {
 		return new CumulatifDossierRapportVO();
 	}
 
 	@Override
-	protected JRDataSource construireDataSource(CardexAuthenticationSubject subject, RapportVO rapportVO, Connection connection) throws BusinessResourceException,BusinessException {
+	protected JRDataSource construireDataSource(CardexAuthenticationSubject subject, CritereRapportVO rapportVO, Connection connection) throws BusinessResourceException,BusinessException {
 		RapportBusinessDelegate delegate = new RapportBusinessDelegate();
 		CumulatifDossierRapportVO cumulatifDossierRapportVO = (CumulatifDossierRapportVO) rapportVO;
-		//On conserve la date initiale pour la retourner en paramètre au rapport
+		//On conserve la date initiale pour la retourner en paramï¿½tre au rapport
 		Date dateDebut = cumulatifDossierRapportVO.getDateDebutDu();
-		//On commence d'abord par construire la liste des types et des catégories avec le total de dossiers.
+		//On commence d'abord par construire la liste des types et des catï¿½gories avec le total de dossiers.
 		RapportDossier rapportDossier = delegate.produireListeTypeCategorie(cumulatifDossierRapportVO);
 		List list = new ArrayList();
 		Iterator iter = rapportDossier.getListDossier().iterator();
@@ -67,8 +65,8 @@ public class HebdomadaireDossierGenerateurRapport_CDX_0146 extends GenererRappor
 				mapRapportDossier.put("Type", rapportDossierVO.getType());
 				mapRapportDossier.put("Categorie", rapportDossierVO.getCategorie());
 				mapRapportDossier.put("nombreDossier", rapportDossierVO.getNombreDossier());
-				//Pour chaque entrée, on calcule les valeurs cumulatives à partir du début de l'année
-				//et qui seront reportées sur le rapport.
+				//Pour chaque entrï¿½e, on calcule les valeurs cumulatives ï¿½ partir du dï¿½but de l'annï¿½e
+				//et qui seront reportï¿½es sur le rapport.
 			    SimpleDateFormat formater = null;
 			    formater = new SimpleDateFormat("yyyy");
 			    String date = formater.format(cumulatifDossierRapportVO.getDateDebutDu());
@@ -83,7 +81,8 @@ public class HebdomadaireDossierGenerateurRapport_CDX_0146 extends GenererRappor
 		return new JRMapCollectionDataSource(list);
 	}
 
-	protected Map construireParametres(CardexAuthenticationSubject subject, RapportVO rapportVO, Connection connection) throws JRException {
+	@Override
+	protected Map construireParametres(CardexAuthenticationSubject subject, VO rapportVO, Connection connection) throws JRException {
 		Map parameters = super.construireParametres(subject, rapportVO, connection);
 		CumulatifDossierRapportVO cumulatifDossierRapportVO = (CumulatifDossierRapportVO) rapportVO;
 		CardexUser cardexUser = (CardexUser) subject.getUser();

@@ -4,7 +4,7 @@ package com.lotoquebec.cardex.business.vo.rapport;
 /**
  * @author levassc
  */
-public class EnqueteurJournalRapportVO_CDX_0053 extends RapportVO{
+public class EnqueteurJournalRapportVO_CDX_0053 extends CritereRapportVO{
 
 	protected long entite = 0;
 	protected long genre = 0;

@@ -1,16 +1,16 @@
 package com.lotoquebec.cardex.business.vo.rapport.regroupement;
 
-import com.lotoquebec.cardex.business.vo.rapport.RapportVO;
+import com.lotoquebec.cardex.business.vo.rapport.CritereRapportVO;
 
 /**
- * Permet de transiter les informations relatives à la recherche d'un sujet de
- * la couche présentation à la couche d'affaire.
+ * Permet de transiter les informations relatives ï¿½ la recherche d'un sujet de
+ * la couche prï¿½sentation ï¿½ la couche d'affaire.
  *
  * @author $Author: pcaron $
  * @version $Revision: 1.12 $, $Date: 2002/02/22 21:34:48 $
  * @see com.lotoquebec.cardex.business.CriteresRechercheSujet
  */
-public abstract class RegroupementRapportVO extends RapportVO {
+public abstract class RegroupementRapportVO extends CritereRapportVO {
 
     private long entite = 0;
     private long site = 0;

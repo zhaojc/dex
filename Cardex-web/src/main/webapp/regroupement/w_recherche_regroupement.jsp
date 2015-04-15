@@ -91,7 +91,7 @@ function isPlusUnAn(){
 }
 
 function construireCriteresURL(choixRapport){
-	var url = "<%=request.getContextPath()%>/RapportAffichagePDF?";
+	var url = "<%=request.getContextPath()%>/CritereRapportAffichagePDF?";
 	url += "choixRapport="+choixRapport;
 	url += "&tableValeurRapport=<%=GlobalConstants.TableValeur.RAPPORT_REGROUPEMENT%>";
 	url += construireParametre("<%=RegroupementRapport.ENTITE%>");

@@ -80,15 +80,15 @@ public class AffichagePDFFiches extends HttpServlet {
         	String utilisateur = subject.getPrincipal().getName();
         	String procedure = "";
             RapportBusinessDelegate delegate = new RapportBusinessDelegate();
-        	if (GlobalConstants.GenreFichier.SUJET.equals( choixRapport )){
-               	choixRapport = "rapports/" + GlobalConstants.ChoixRapport.IMPRESSION_SUJET;
+        	/*if (GlobalConstants.GenreFichier.SUJET.equals( choixRapport )){
+               	//choixRapport = "rapports/" + GlobalConstants.ChoixRapport.IMPRESSION_SUJET;
                	procedure = "CARDEX_RAPPORT.SP_IMPRESSION_SUJET";
-            }
+            }*/
         	if (GlobalConstants.GenreFichier.SOCIETE.equals( choixRapport )){
                	choixRapport = "rapports/" + GlobalConstants.ChoixRapport.IMPRESSION_SOCIETE;
                	procedure = "CARDEX_RAPPORT.SP_IMPRESSION_SOCIETE";
             }
-        	if (GlobalConstants.GenreFichier.GALERIE.equals( choixRapport )){
+        	/*if (GlobalConstants.GenreFichier.GALERIE.equals( choixRapport )){
                	choixRapport = "rapports/" + GlobalConstants.ChoixRapport.IMPRESSION_GALERIE;
                	procedure = "CARDEX_RAPPORT.SP_IMPRESSION_SUJET";
 	   	         //On ajoute la photo pour les rapports qui en ont besoin
@@ -97,7 +97,7 @@ public class AffichagePDFFiches extends HttpServlet {
 	   	         sujet.setSite(Long.parseLong(site));
 	   	         InputStream photo = recherchePhoto(subject, sujet);
 	   	         parameters.put("PHOTO",photo);
-            }
+            }*/
         	if (GlobalConstants.GenreFichier.INSCRIPTION.equals( choixRapport )){
                	choixRapport = "rapports/" + GlobalConstants.ChoixRapport.IMPRESSION_INSCRIPTION;
                	procedure = "CARDEX_RAPPORT.SP_IMPRESSION_INSCRIPTION";

@@ -1,6 +1,5 @@
 package com.lotoquebec.cardex.presentation.model.form.rapport.acces;
 
-import com.lotoquebec.cardex.generateurRapport.GenererRapport;
 import com.lotoquebec.cardex.generateurRapport.acces.AuditNouveauxIntervenantsAccesGenerateurRapport_CDX_0122;
 import com.lotoquebec.cardex.presentation.model.form.lienCascade.HierarchieEGNTC;
 import com.lotoquebec.cardex.presentation.model.form.rapport.CriteresRapportForm;
@@ -11,19 +10,20 @@ import com.lotoquebec.cardexCommun.util.StringUtils;
 
 public class AuditNouveauxIntervenantsAccesRapportForm_CDX_0122 extends CriteresRapportForm{
 
+	private static final long serialVersionUID = 628094946848138470L;
 	private HierarchieEGNTC cascadeEGNTC = new HierarchieEGNTC();
 	private String site = "";
 	private String intervenant = "";
 	private String nombreAcces = "";
 	
 	public AuditNouveauxIntervenantsAccesRapportForm_CDX_0122() {
-		super();
+		super(new AuditNouveauxIntervenantsAccesGenerateurRapport_CDX_0122());
 	}
 
 	public void init(CardexAuthenticationSubject subject){
 		super.init(subject);
         CardexUser user = (CardexUser) subject.getUser();
-        // Valeurs par défaut
+        // Valeurs par dï¿½faut
         setEntite(String.valueOf(user.getEntite()));
         setSite(String.valueOf(user.getSite()));
 	}
@@ -50,7 +50,7 @@ public class AuditNouveauxIntervenantsAccesRapportForm_CDX_0122 extends Criteres
 	
 	public void setIntervenant(String intervenant) {
 		if(StringUtils.isEmpty(intervenant)){
-			//On prend tous les intervenants si aucune sélection n'est faite.
+			//On prend tous les intervenants si aucune sï¿½lection n'est faite.
 			this.intervenant = "%";
 		}else{
 			this.intervenant = intervenant;
@@ -65,7 +65,7 @@ public class AuditNouveauxIntervenantsAccesRapportForm_CDX_0122 extends Criteres
 		this.cascadeEGNTC.set(HierarchieEGNTC.ENTITE, entite);
 	}
 
-	//Paramètre pour filter le nombre d'accès
+	//Paramï¿½tre pour filter le nombre d'accï¿½s
 	public String getNombreAcces() {
 		return nombreAcces;
 	}
@@ -74,9 +74,5 @@ public class AuditNouveauxIntervenantsAccesRapportForm_CDX_0122 extends Criteres
 		this.nombreAcces = nombreAcces;
 	}
 
-	@Override
-	public GenererRapport getGenererRapport() {
-		return new AuditNouveauxIntervenantsAccesGenerateurRapport_CDX_0122();
-	}
 	
 }

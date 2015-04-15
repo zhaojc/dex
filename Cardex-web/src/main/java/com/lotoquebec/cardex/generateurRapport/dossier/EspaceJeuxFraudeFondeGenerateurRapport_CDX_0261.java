@@ -8,16 +8,16 @@ import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRResultSetDataSource;
 
 import com.lotoquebec.cardex.business.delegate.RapportBusinessDelegate;
+import com.lotoquebec.cardex.business.vo.rapport.CritereRapportVO;
 import com.lotoquebec.cardex.business.vo.rapport.EspaceJeuxFraudeFondeRapportVO_CDX_0261;
-import com.lotoquebec.cardex.business.vo.rapport.RapportVO;
-import com.lotoquebec.cardex.generateurRapport.GenererRapport;
+import com.lotoquebec.cardex.generateurRapport.CritereGenererRapport;
 import com.lotoquebec.cardex.generateurRapport.rapports.RapportsConfiguration;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
 import com.lotoquebec.cardexCommun.exception.BusinessException;
 import com.lotoquebec.cardexCommun.exception.BusinessResourceException;
 import com.lotoquebec.cardexCommun.securite.GestionnaireSecurite;
 
-public class EspaceJeuxFraudeFondeGenerateurRapport_CDX_0261 extends GenererRapport {
+public class EspaceJeuxFraudeFondeGenerateurRapport_CDX_0261 extends CritereGenererRapport {
 
 	@Override
 	public void validerSecurite(CardexAuthenticationSubject subject) {
@@ -25,12 +25,12 @@ public class EspaceJeuxFraudeFondeGenerateurRapport_CDX_0261 extends GenererRapp
 	}
 	
 	@Override
-	public RapportVO construireNouveauRapportVO() {
+	public CritereRapportVO construireNouveauRapportVO() {
 		return new EspaceJeuxFraudeFondeRapportVO_CDX_0261();
 	}
 
 	@Override
-	public JRDataSource construireDataSource(CardexAuthenticationSubject subject, RapportVO rapportVO, Connection connection) throws BusinessResourceException, BusinessException {
+	public JRDataSource construireDataSource(CardexAuthenticationSubject subject, CritereRapportVO rapportVO, Connection connection) throws BusinessResourceException, BusinessException {
 		EspaceJeuxFraudeFondeRapportVO_CDX_0261 espaceJeuxFraudeFondeRapportVO_CDX_0261 = (EspaceJeuxFraudeFondeRapportVO_CDX_0261) rapportVO;
 		RapportBusinessDelegate delegate = new RapportBusinessDelegate();
 		ResultSet resultSet = delegate.rapportEspaceJeuxFraudeFonde(espaceJeuxFraudeFondeRapportVO_CDX_0261,connection);

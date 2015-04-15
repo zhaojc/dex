@@ -1,6 +1,5 @@
 package com.lotoquebec.cardex.presentation.model.form.rapport.acces;
 
-import com.lotoquebec.cardex.generateurRapport.GenererRapport;
 import com.lotoquebec.cardex.generateurRapport.acces.AuditAccesEmployeGenerateurRapport_CDX_0124;
 import com.lotoquebec.cardex.presentation.model.form.lienCascade.HierarchieEGNTC;
 import com.lotoquebec.cardex.presentation.model.form.rapport.CriteresRapportForm;
@@ -10,6 +9,7 @@ import com.lotoquebec.cardexCommun.util.StringUtils;
 
 public class AuditAccesEmployeRapportForm_CDX_0124 extends CriteresRapportForm{
 
+	private static final long serialVersionUID = 8040957041009618361L;
 	private HierarchieEGNTC cascadeEGNTC = new HierarchieEGNTC();
 	private String site = "";
 	private String intervenant = "";
@@ -17,13 +17,13 @@ public class AuditAccesEmployeRapportForm_CDX_0124 extends CriteresRapportForm{
 	private String nombreAcces = "";
 	
 	public AuditAccesEmployeRapportForm_CDX_0124() {
-		super();
+		super(new AuditAccesEmployeGenerateurRapport_CDX_0124());
 	}
 
 	public void init(CardexAuthenticationSubject subject){
 		super.init(subject);
         CardexUser user = (CardexUser) subject.getUser();
-        // Valeurs par défaut
+        // Valeurs par dï¿½faut
         setEntite(String.valueOf(user.getEntite()));
         setSite(String.valueOf(user.getSite()));
 	}
@@ -50,7 +50,7 @@ public class AuditAccesEmployeRapportForm_CDX_0124 extends CriteresRapportForm{
 	
 	public void setIntervenant(String intervenant) {
 		if(StringUtils.isEmpty(intervenant)){
-			//On prend tous les intervenants si aucune sélection n'est faite.
+			//On prend tous les intervenants si aucune sï¿½lection n'est faite.
 			this.intervenant = "%";
 		}else{
 			this.intervenant = intervenant;
@@ -75,7 +75,7 @@ public class AuditAccesEmployeRapportForm_CDX_0124 extends CriteresRapportForm{
 		this.cascadeEGNTC.set(HierarchieEGNTC.ENTITE, entite);
 	}
 
-	//Paramètre pour filter le nombre d'accès
+	//Paramï¿½tre pour filter le nombre d'accï¿½s
 	public String getNombreAcces() {
 		return nombreAcces;
 	}
@@ -84,9 +84,4 @@ public class AuditAccesEmployeRapportForm_CDX_0124 extends CriteresRapportForm{
 		this.nombreAcces = nombreAcces;
 	}
 
-	@Override
-	public GenererRapport getGenererRapport() {
-		return new AuditAccesEmployeGenerateurRapport_CDX_0124();
-	}
-	
 }

@@ -3,7 +3,7 @@ package com.lotoquebec.cardex.presentation.rapport;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.lotoquebec.cardex.generateurRapport.GenererRapport;
+import com.lotoquebec.cardex.generateurRapport.CritereGenererRapport;
 import com.lotoquebec.cardex.generateurRapport.dossier.CumulatifDossierGenerateurRapport_CDX_0147;
 import com.lotoquebec.cardex.generateurRapport.dossier.CumulatifEspacejeuxDossierGenerateurRapport_CDX_0143;
 import com.lotoquebec.cardex.generateurRapport.dossier.HebdomadaireDossierGenerateurRapport_CDX_0146;
@@ -47,13 +47,13 @@ public class RapportAssociation {
         listeRapportsAdhoc.put(GlobalConstants.ChoixRapport.RESULTATS_RECHERCHE_URGENCE, "cardex.recherche.urgences.imprimer");
         listeRapportsAdhoc.put(GlobalConstants.ChoixRapport.RESULTATS_RECHERCHE_URGENCE_COMPLET, "cardex.recherche.urgences.imprimer");
 		
-		listeRapportsAdhoc.put(GlobalConstants.ChoixRapport.IMPRESSION_SUJET, "cardex.sujet.base.imprimer");
+		//listeRapportsAdhoc.put(GlobalConstants.ChoixRapport.IMPRESSION_SUJET, "cardex.sujet.base.imprimer");
 		listeRapportsAdhoc.put(GlobalConstants.ChoixRapport.IMPRESSION_SOCIETE, "cardex.societe.base.imprimer");				
 		//listeRapportsAdhoc.put(GlobalConstants.ChoixRapport.IMPRESSION_DOSSIER, "cardex.dossier.base.imprimer");
-		listeRapportsAdhoc.put(GlobalConstants.ChoixRapport.IMPRESSION_GALERIE, "cardex.sujet.base.imprimer");			
+		//listeRapportsAdhoc.put(GlobalConstants.ChoixRapport.IMPRESSION_GALERIE, "cardex.sujet.base.imprimer");			
 
 		listeRapportsAdhoc.put(RapportsConfiguration.AUDIT_CHANGEMENTS_DOSSIERS, "cardex.dossier.audit");			
-		listeRapportsAdhoc.put(RapportsConfiguration.AUDIT_CHANGEMENTS_SUJETS, "cardex.sujet.audit");			
+		listeRapportsAdhoc.put(RapportsConfiguration.AUDIT_CHANGEMENTS_SUJETS_CDX_0185, "cardex.sujet.audit");			
 		listeRapportsAdhoc.put(RapportsConfiguration.AUDIT_CHANGEMENTS_SOCIETES, "cardex.societe.audit");			
 		listeRapportsAdhoc.put(RapportsConfiguration.AUDIT_CHANGEMENTS_VEHICULES, "cardex.vehicule.audit");			
 		listeRapportsAdhoc.put(RapportsConfiguration.AUDIT_CHANGEMENTS_NARRATIONS, "cardex.narration.audit");			
@@ -67,7 +67,7 @@ public class RapportAssociation {
 		return listeRapportsAdhoc.get(key);
 	}
 	
-	public static GenererRapport obtenirGenererRapport(int choixRapport){
+	public static CritereGenererRapport obtenirGenererRapport(int choixRapport){
 
 		switch(choixRapport){
 			/*

@@ -3,7 +3,6 @@ package com.lotoquebec.cardex.servlet;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -16,54 +15,54 @@ import net.sf.jasperreports.engine.JRAbstractExporter;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.export.JExcelApiExporter;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
-import net.sf.jasperreports.engine.export.JRXlsExporterParameter;
 import net.sf.jasperreports.export.SimpleExporterInput;
 import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 
-import com.lotoquebec.cardex.business.vo.rapport.RapportVO;
-import com.lotoquebec.cardex.generateurRapport.GenererRapport;
 import com.lotoquebec.cardex.presentation.model.form.rapport.RapportForm;
 import com.lotoquebec.cardexCommun.GlobalConstants;
 import com.lotoquebec.cardexCommun.authentication.AuthenticationSubject;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
 import com.lotoquebec.cardexCommun.exception.BusinessException;
 import com.lotoquebec.cardexCommun.exception.BusinessResourceException;
-import com.lotoquebec.cardexCommun.exception.ValueObjectMapperException;
-import com.lotoquebec.cardexCommun.util.ValueObjectMapper;
+import com.lotoquebec.cardexCommun.integration.dao.OracleDAOUtils;
+import com.lotoquebec.cardexCommun.util.StringUtils;
 
 /**
- * Cette classe est utilis� pour lancer une classe en r�flexion.
- * La classe lanc� est la classe qui pr�pare le rapport jasper.
+ * Cette classe est utilisé pour lancer une classe en réflexion.
+ * La classe lancé est la classe qui prépare le rapport jasper.
  */
-public abstract class RapportAffichage extends HttpServlet {
+public class RapportAffichage extends HttpServlet {
 
 	private static final long serialVersionUID = -8083681278153808743L;
 
-	protected abstract RapportForm obtenirRapportForm(HttpServletRequest request);
 	//private static final Object MUTEX = new Object();
-	
-	
+
 	public void init(ServletConfig config) throws ServletException{
 		super.init(config);
 	}
 	
-    public  void doGet(HttpServletRequest request, HttpServletResponse  response, Locale locale)
-        throws IOException, ServletException {
-        CardexAuthenticationSubject subject = (CardexAuthenticationSubject) request.getSession().getAttribute(AuthenticationSubject.class.getName());
-        
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    	CardexAuthenticationSubject subject = (CardexAuthenticationSubject) request.getSession().getAttribute(AuthenticationSubject.class.getName());
+    	String langue = (String)request.getParameter("langue");
+    	Locale locale = subject.getLocale();
+    	
+        if (StringUtils.isNotEmpty(langue))
+        	locale = OracleDAOUtils.getLocale(Integer.valueOf(langue));
+    	
         ServletOutputStream servletOutputStream = response.getOutputStream();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
     	RapportForm rapportForm = obtenirRapportForm(request);
     	
         try {
+        	/*
             GenererRapport genererRapport = rapportForm.getGenererRapport();
-            RapportVO rapportVO = genererRapport.construireNouveauRapportVO();
-            ValueObjectMapper.convert(rapportForm, rapportVO);
+            RapportVO rapportVO = rapportForm.obtenirRapportVO();
             ResourceBundle bundle = ResourceBundle.getBundle("resources.application", locale);
             
 			JasperPrint print = genererRapport.executer(subject, rapportVO, bundle, locale);
+			*/
+			JasperPrint print = rapportForm.genererRapport(subject, request, locale);
 			
 			/*
 	        // On veut éviter toute concurrence lors de l'écriture de la réponse
@@ -78,7 +77,6 @@ public abstract class RapportAffichage extends HttpServlet {
 				} else {
 					response.setHeader("Pragma", "public"); 
 				}
-
 	        }			
 			*/
 			setContentType(response);
@@ -97,8 +95,6 @@ public abstract class RapportAffichage extends HttpServlet {
 			e.printStackTrace();
 		} catch (BusinessException e) {
 			e.printStackTrace();
-		} catch (ValueObjectMapperException e) {
-			e.printStackTrace();
 		} finally {
 			baos.flush();
 			baos.close();
@@ -107,6 +103,26 @@ public abstract class RapportAffichage extends HttpServlet {
 		}
 	}
 
+	protected RapportForm obtenirRapportForm(HttpServletRequest request){
+        String rapportFormStr = (String)request.getParameter("rapportForm");
+        
+        if (StringUtils.isNotEmpty(rapportFormStr)){
+        	return (RapportForm) request.getSession().getAttribute(rapportFormStr);
+        }
+        
+        if (StringUtils.isEmpty(rapportFormStr)){
+        	String classRapportForm = (String)request.getParameter("classRapportForm");
+        	
+        	if (StringUtils.isNotEmpty(classRapportForm)){
+	        	try {
+					return (RapportForm) Class.forName(classRapportForm).newInstance();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+        	}
+        }
+        throw new RuntimeException("Pas d'instance de rapport form");
+	}
 
 	protected void setContentType(HttpServletResponse response) {
 		response.setContentType(GlobalConstants.TypeSortieServlet.PDF);

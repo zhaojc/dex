@@ -27,7 +27,7 @@ import com.lotoquebec.cardex.business.vo.rapport.EntiteRapportVO;
 import com.lotoquebec.cardex.business.vo.rapport.EspaceJeuxAutoexclusionActifRapportVO_CDX_0260;
 import com.lotoquebec.cardex.business.vo.rapport.EspaceJeuxFraudeFondeRapportVO_CDX_0261;
 import com.lotoquebec.cardex.business.vo.rapport.EspaceJeuxTricherieFondeRapportVO_CDX_0262;
-import com.lotoquebec.cardex.business.vo.rapport.RapportVO;
+import com.lotoquebec.cardex.business.vo.rapport.CritereRapportVO;
 import com.lotoquebec.cardex.business.vo.rapport.ReperageAutoexclusionDossierRapportVO;
 import com.lotoquebec.cardex.business.vo.rapport.SeveriteRapportVO;
 import com.lotoquebec.cardex.business.vo.rapport.SiteIntervenantRapportVO;
@@ -177,7 +177,7 @@ public class RapportSessionFacade {
         }
     }
 
-    public ResultSet rapportProcedure(RapportVO rapportVO, String procedure,Connection connection) throws BusinessRuleException,
+    public ResultSet rapportProcedure(CritereRapportVO rapportVO, String procedure,Connection connection) throws BusinessRuleException,
     BusinessResourceException {
     	try {
     		return FabriqueCardexDAO.getInstance().getRapportDAO().rapportProcedure(rapportVO, procedure, connection);
@@ -195,7 +195,7 @@ public class RapportSessionFacade {
         }
     }
 
-    public Collection rapportEnqueteRetard(RapportVO rapportVO) throws BusinessRuleException,
+    public Collection rapportEnqueteRetard(CritereRapportVO rapportVO) throws BusinessRuleException,
     BusinessResourceException {
     	try {
     		return FabriqueCardexDAO.getInstance().getRapportDAO().rapportEnqueteRetard(rapportVO);
@@ -204,7 +204,7 @@ public class RapportSessionFacade {
     	}
     }
 
-    public Collection rapportEnqueteTraitementRetard(RapportVO rapportVO) throws BusinessRuleException,
+    public Collection rapportEnqueteTraitementRetard(CritereRapportVO rapportVO) throws BusinessRuleException,
     BusinessResourceException {
     	try {
     		return FabriqueCardexDAO.getInstance().getRapportDAO().rapportEnqueteTraitementRetard(rapportVO);
@@ -679,7 +679,7 @@ public class RapportSessionFacade {
      * @throws BusinessRuleException
      * @throws BusinessException
      */
-    public RapportDossier produireListeTypeCategorieEspacejeux(RapportVO rapportVO) throws BusinessRuleException, BusinessException {
+    public RapportDossier produireListeTypeCategorieEspacejeux(CritereRapportVO rapportVO) throws BusinessRuleException, BusinessException {
         try {
             return FabriqueCardexDAO.getInstance().getRapportDAO().produireListeTypeCategorieEspacejeux(rapportVO);
         } catch (DAOException dae) {

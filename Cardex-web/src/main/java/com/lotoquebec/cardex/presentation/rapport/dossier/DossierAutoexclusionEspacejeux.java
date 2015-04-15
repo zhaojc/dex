@@ -19,6 +19,7 @@ import org.apache.struts.util.MessageResources;
 import com.lotoquebec.cardex.business.Dossier;
 import com.lotoquebec.cardex.business.Sujet;
 import com.lotoquebec.cardex.business.delegate.DossierBusinessDelegate;
+import com.lotoquebec.cardex.business.vo.rapport.CritereRapportVO;
 import com.lotoquebec.cardex.business.vo.rapport.RapportVO;
 import com.lotoquebec.cardex.generateurRapport.rapports.RapportsConfiguration;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
@@ -40,23 +41,23 @@ public class DossierAutoexclusionEspacejeux extends DossierRapport {
 	protected Dossier produireRapport(CardexAuthenticationSubject subject,
 			Dossier dossier) throws BusinessException {
 		DossierBusinessDelegate delegate = new DossierBusinessDelegate();
-		//On va rechercher le dossier au complet au cas où plus d'un dossier serait affiché dans la session Cardex. Dans ce cas,
-		//l'impression se fait avec le dernier dossier ouvert et non avec le dossier affiché.
+		//On va rechercher le dossier au complet au cas oï¿½ plus d'un dossier serait affichï¿½ dans la session Cardex. Dans ce cas,
+		//l'impression se fait avec le dernier dossier ouvert et non avec le dossier affichï¿½.
 		return delegate.find(subject, dossier);
 	}
 
 	protected JRDataSource construireDataSource(CardexAuthenticationSubject subject, Dossier dossier, Locale langueImpression, MessageResources mResources) throws BusinessException {
 		List list = new ArrayList();
 		Map mapRapportDossier = new HashMap();
-		//On commence par construire le contenu des libellés, selon la langue demandée pour le contrat.
+		//On commence par construire le contenu des libellï¿½s, selon la langue demandï¿½e pour le contrat.
 		mapRapportDossier = construireListeLibelles(dossier, langueImpression, mResources);
-		//On ajout ensuite les champs qui seront imprimés sur le contrat
+		//On ajout ensuite les champs qui seront imprimï¿½s sur le contrat
 		list.addAll(construireListeDataSource(subject, dossier, langueImpression, mapRapportDossier));
 
 		return new JRMapCollectionDataSource(list);
 	}
 	
-	//Construction de la liste qui sera soumise au rapport. Les champs du map correspondent à ceux du rapport.
+	//Construction de la liste qui sera soumise au rapport. Les champs du map correspondent ï¿½ ceux du rapport.
 	private List construireListeDataSource(CardexAuthenticationSubject subject, Dossier dossier, Locale langueImpression, Map mapRapportDossier)
 	 			throws BusinessException{
 		List list = new ArrayList();
@@ -69,14 +70,14 @@ public class DossierAutoexclusionEspacejeux extends DossierRapport {
         mapRapportDossier.put("intervenantDescription", dossier.getIntervenantDescription());
 
 		DossierBusinessDelegate delegate = new DossierBusinessDelegate();
-		//On va chercher le sujet relié
+		//On va chercher le sujet reliï¿½
         Collection liensSujets;
         Iterator it;
 	        liensSujets = delegate.findLiensSujet(subject, dossier);
 	        it = liensSujets.iterator();
 	        if(it.hasNext()) {
 	            Sujet linkSujet = (Sujet) it.next();
-	            //On passe la clé et le site du sujet pour le sous-rapport
+	            //On passe la clï¿½ et le site du sujet pour le sous-rapport
 				mapRapportDossier.put("sujetCle", BigDecimal.valueOf(linkSujet.getCle()));
 				mapRapportDossier.put("sujetSite", BigDecimal.valueOf(linkSujet.getSite()));
 			}
@@ -89,7 +90,7 @@ public class DossierAutoexclusionEspacejeux extends DossierRapport {
 	private Map construireListeLibelles(Dossier dossier, Locale langueImpression, MessageResources mResources)
 		throws BusinessException{
 		List list = new ArrayList();
-		//On remplit d'abord les libellés
+		//On remplit d'abord les libellï¿½s
 		Map mapLibelles = new HashMap(); 
 		
 		mapLibelles.put("titre", mResources.getMessage(langueImpression, "titreAE"));
@@ -108,7 +109,7 @@ public class DossierAutoexclusionEspacejeux extends DossierRapport {
 		return mapLibelles;
 	}
 
-	public RapportVO construireNouveauRapportVO() {
+	public CritereRapportVO construireNouveauRapportVO() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -119,7 +120,7 @@ public class DossierAutoexclusionEspacejeux extends DossierRapport {
 	}
 	
 	@Override
-	protected JRDataSource construireDataSource(CardexAuthenticationSubject subject, RapportVO rapportVO,
+	protected JRDataSource construireDataSource(CardexAuthenticationSubject subject, CritereRapportVO rapportVO,
 			Connection connection) throws BusinessResourceException,
 			BusinessException {
 		// TODO Auto-generated method stub

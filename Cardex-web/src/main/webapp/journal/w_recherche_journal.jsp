@@ -62,34 +62,6 @@ function doAdd() {
 function doRegroupement() {
     windowOpenLocation("<%= request.getContextPath() + "/regroupement/search/default.do"%>");
 }
-//Impression des rapports
-function doPrint() {
-	   var rapport = document.forms(0).typeRapport.value;
-	   
-	   if (rapport == "")
-	   	return;	   
-	   
-	   var entite = document.forms(0).entite.value;
-	   var siteOrigine = document.forms(0).site.value;
-	   var dateDebut = document.forms(0).dateCreationDu.value;
-	   var dateFin = document.forms(0).dateCreationAu.value;	
-	   var intervenant = document.forms(0).intervenant.value;	
-	   var genre = document.forms(0).genre.value;	
-	   var nature = document.forms(0).nature.value;	
-	   var type = document.forms(0).type.value;	
-	   var categorie = document.forms(0).categorie.value;	
-	   var origine = document.forms(0).origine.value;	
-	   var endroit = document.forms(0).endroit.value;	
-	   var localisation = document.forms(0).localisation.value;	
-	   var descriptif = document.forms(0).descriptif.value;	
-	   var fonde = document.forms(0).fonde.value;	
-	   var secteur = document.forms(0).secteur.value;	
-	   var userCardex = '<bean:write name="<%= AuthenticationSubject.class.getName() %>" property="user.code" />';
-	   var url = "<%=request.getContextPath()%>/AffichagePDFJournal?RAPPORT=" + rapport + "&ENTITE=" + entite+ "&SITE=" + siteOrigine + "&GENRE=" + genre + "&NATURE=" + nature + "&TYPE=" + type + "&CATEGORIE=" + categorie + "&ENDROIT=" + endroit + "&ORIGINE=" + origine + "&LOCALISATION=" + localisation + "&DESCRIPTIF=" + descriptif + "&FONDE=" + fonde + "&SECTEUR=" + secteur + "&INTERVENANT=" + intervenant + "&UTILISATEUR=" + userCardex + "&DATE_DEBUT=" + dateDebut + "&DATE_FIN=" + dateFin;
-	   //alert(url);  
-	   //soumettre("<%= request.getContextPath() + "/journal/print.do"%>");
-	   window.open(url, 'rapport', 'left=0,top=0,width=' + document.body.clientWidth + ',height=' + document.body.clientHeight + ',menubar=no,toolbar=no,resizable=yes');
-}
 
 function doTraits(objet) {
 //-- Insertion de traits d'union dans les dates, s'il y a lieu.

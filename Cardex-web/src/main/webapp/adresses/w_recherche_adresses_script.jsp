@@ -55,7 +55,7 @@ function doSoumettreRechercheAdressesInvalides(){
 }
 
 function construireCriteresURL(){
-	var url = "<%=request.getContextPath()%>/RapportAffichagePDF?";
+	var url = "<%=request.getContextPath()%>/CritereRapportAffichagePDF?";
 	url += "choixRapport=<%=GlobalConstants.ChoixRapport.ADRESSE_INVALIDE%>";
 	url += construireParametre("<%=AdresseInvalide.ENTITE%>");
 	url += construireParametre("<%=AdresseInvalide.SITE_ORIGINE%>");

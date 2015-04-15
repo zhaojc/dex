@@ -1,7 +1,7 @@
 package com.lotoquebec.cardex.business.vo.rapport;
 
 
-public class ContratsAutoexclusionDossierRapportVO_CDX_0060 extends RapportVO{
+public class ContratsAutoexclusionDossierRapportVO_CDX_0060 extends CritereRapportVO{
 
 	private long categorie = 0;
 	private long site = 0;

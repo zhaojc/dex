@@ -1,6 +1,5 @@
 package com.lotoquebec.cardex.presentation.model.form.rapport.dossier;
 
-import com.lotoquebec.cardex.generateurRapport.GenererRapport;
 import com.lotoquebec.cardex.generateurRapport.dossier.SujetsSeverite4GenerateurRapport_CDX_0244;
 import com.lotoquebec.cardex.presentation.model.form.lienCascade.HierarchieEGNTC;
 import com.lotoquebec.cardex.presentation.model.form.lienCascade.HierarchieES;
@@ -12,28 +11,24 @@ import com.lotoquebec.cardexCommun.user.CardexUser;
 
 public class SujetsSeverite4Form_CDX_0244 extends CriteresRapportForm{
 	
+	private static final long serialVersionUID = -1409945763811130026L;
 	private String severite = "";
 	private HierarchieES hierarchieES = new HierarchieES();
 	private HierarchieEGNTC hierarchieEGNTC = new HierarchieEGNTC();
 		
 	public SujetsSeverite4Form_CDX_0244() {
-		super();
+		super(new SujetsSeverite4GenerateurRapport_CDX_0244());
 	}
 	 
 	public void init(CardexAuthenticationSubject subject){
 		super.init(subject);
         CardexUser user = (CardexUser) subject.getUser();
-        // Valeurs par défaut
+        // Valeurs par dï¿½faut
         setSeverite(String.valueOf(GlobalConstants.Severite.SEVERITE_4));
         setEntite("");
         setSite("");
 	}
 
-	@Override
-	public GenererRapport getGenererRapport() {
-		return new SujetsSeverite4GenerateurRapport_CDX_0244();
-	}
-	
 	public String getSeverite() {
 		return severite;
 	}

@@ -1,6 +1,5 @@
 package com.lotoquebec.cardex.presentation.model.form.rapport.journal;
 
-import com.lotoquebec.cardex.generateurRapport.GenererRapport;
 import com.lotoquebec.cardex.generateurRapport.journal.EnqueteurJournalGenerateurRapport_CDX_0053;
 import com.lotoquebec.cardex.presentation.model.form.lienCascade.HierarchieEGNTC;
 import com.lotoquebec.cardex.presentation.model.form.rapport.CriteresRapportForm;
@@ -10,12 +9,17 @@ import com.lotoquebec.cardexCommun.user.CardexUser;
 
 public class EnqueteurJournalRapportForm_CDX_0053 extends CriteresRapportForm{
 
+	private static final long serialVersionUID = -3436875799317995601L;
 	private HierarchieEGNTC hierarchieEGNTC = new HierarchieEGNTC();
 
+	public EnqueteurJournalRapportForm_CDX_0053(){
+		super( new EnqueteurJournalGenerateurRapport_CDX_0053() );
+	}
+	
 	public void init(CardexAuthenticationSubject subject){
 		super.init(subject);
         CardexUser user = (CardexUser) subject.getUser();
-        // Valeurs par défaut
+        // Valeurs par dï¿½faut
         setEntite(String.valueOf(GlobalConstants.Entite.LOTO_QUEBEC));
         setGenre(GlobalConstants.Genre.DOSSIERS_POL);
         setNature(String.valueOf(GlobalConstants.Nature.JOURNAL_ENQUETES));
@@ -45,8 +49,4 @@ public class EnqueteurJournalRapportForm_CDX_0053 extends CriteresRapportForm{
 		hierarchieEGNTC.setNature(nature);
 	}
 
-	@Override
-	public GenererRapport getGenererRapport(){
-		return new EnqueteurJournalGenerateurRapport_CDX_0053();
-	}
 }

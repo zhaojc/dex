@@ -1,6 +1,5 @@
 package com.lotoquebec.cardex.presentation.model.form.rapport.dossier;
 
-import com.lotoquebec.cardex.generateurRapport.GenererRapport;
 import com.lotoquebec.cardex.generateurRapport.dossier.ReconnaissancePlaqueGenerateurRapport_CDX_0075;
 import com.lotoquebec.cardex.presentation.model.form.lienCascade.HierarchieEGNTC;
 import com.lotoquebec.cardex.presentation.model.form.rapport.CriteresRapportForm;
@@ -11,17 +10,18 @@ import com.lotoquebec.cardexCommun.user.CardexUser;
 
 public class ReconnaissancePlaqueRapportForm_CDX_0075 extends CriteresRapportForm{
 
+	private static final long serialVersionUID = -8826350095803935072L;
 	private HierarchieEGNTC cascadeEGNTC = new HierarchieEGNTC();
 	private String site = "";
 	
 	public ReconnaissancePlaqueRapportForm_CDX_0075() {
-		super();
+		super(new ReconnaissancePlaqueGenerateurRapport_CDX_0075());
 	}
 
 	public void init(CardexAuthenticationSubject subject){
 		super.init(subject);
         CardexUser user = (CardexUser) subject.getUser();
-        // Valeurs par défaut
+        // Valeurs par dï¿½faut
         setEntite(String.valueOf(user.getEntite()));
         setSite(String.valueOf(user.getSite()));
         setGenre(String.valueOf(GlobalConstants.Genre.SUJETS_INTERET));
@@ -75,10 +75,5 @@ public class ReconnaissancePlaqueRapportForm_CDX_0075 extends CriteresRapportFor
     public void setCategorie(String categorie) {
     	cascadeEGNTC.set(HierarchieEGNTC.CATEGORIE, categorie);
     }
-	
-	@Override
-	public GenererRapport getGenererRapport() {
-		return new ReconnaissancePlaqueGenerateurRapport_CDX_0075();
-	}
 	
 }

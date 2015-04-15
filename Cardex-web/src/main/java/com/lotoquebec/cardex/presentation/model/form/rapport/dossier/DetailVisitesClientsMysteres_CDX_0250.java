@@ -1,6 +1,5 @@
 package com.lotoquebec.cardex.presentation.model.form.rapport.dossier;
 
-import com.lotoquebec.cardex.generateurRapport.GenererRapport;
 import com.lotoquebec.cardex.generateurRapport.rapports.sql.DetailVisitesClientsMysteresGenererRapportSQL_CDX_0250;
 import com.lotoquebec.cardex.presentation.model.form.lienCascade.HierarchieEGNTC;
 import com.lotoquebec.cardex.presentation.model.form.lienCascade.HierarchieES;
@@ -12,6 +11,7 @@ import com.lotoquebec.cardexCommun.user.CardexUser;
 
 public class DetailVisitesClientsMysteres_CDX_0250 extends CriteresRapportForm{
 	
+	private static final long serialVersionUID = 3769318836881715529L;
 	private HierarchieES hierarchieES = new HierarchieES();
 	private HierarchieEGNTC hierarchieEGNTC = new HierarchieEGNTC();
 	private String fonde = "";
@@ -20,21 +20,16 @@ public class DetailVisitesClientsMysteres_CDX_0250 extends CriteresRapportForm{
 	private String vague = "";
 		
 	public DetailVisitesClientsMysteres_CDX_0250() {
-		super();
+		super(new DetailVisitesClientsMysteresGenererRapportSQL_CDX_0250());
 	}
 	 
 	public void init(CardexAuthenticationSubject subject){
 		super.init(subject);
         CardexUser user = (CardexUser) subject.getUser();
-        // Valeurs par défaut
+        // Valeurs par dï¿½faut
         setEntite(GlobalConstants.Entite.LOTO_QUEBEC);
         setSite(GlobalConstants.Sites.CLIENTS_MYSTERES);
         setGenre(GlobalConstants.Genre.DOSSIERS_LQ);
-	}
-
-	@Override
-	public GenererRapport getGenererRapport() {
-		return new DetailVisitesClientsMysteresGenererRapportSQL_CDX_0250();
 	}
 	
 	public String getEntite() {

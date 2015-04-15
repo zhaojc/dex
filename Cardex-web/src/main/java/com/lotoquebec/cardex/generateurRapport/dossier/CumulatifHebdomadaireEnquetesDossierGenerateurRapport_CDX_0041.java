@@ -11,16 +11,17 @@ import net.sf.jasperreports.engine.JRResultSetDataSource;
 import net.sf.jasperreports.engine.util.JRLoader;
 
 import com.lotoquebec.cardex.business.delegate.RapportBusinessDelegate;
+import com.lotoquebec.cardex.business.vo.rapport.CritereRapportVO;
 import com.lotoquebec.cardex.business.vo.rapport.CumulatifHebdomadaireEnquetesDossierRapportVO_CDX_0041;
-import com.lotoquebec.cardex.business.vo.rapport.RapportVO;
-import com.lotoquebec.cardex.generateurRapport.GenererRapport;
+import com.lotoquebec.cardex.generateurRapport.CritereGenererRapport;
 import com.lotoquebec.cardex.generateurRapport.rapports.RapportsConfiguration;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
+import com.lotoquebec.cardexCommun.business.vo.VO;
 import com.lotoquebec.cardexCommun.exception.BusinessException;
 import com.lotoquebec.cardexCommun.exception.BusinessResourceException;
 import com.lotoquebec.cardexCommun.securite.GestionnaireSecurite;
 
-public class CumulatifHebdomadaireEnquetesDossierGenerateurRapport_CDX_0041 extends GenererRapport {
+public class CumulatifHebdomadaireEnquetesDossierGenerateurRapport_CDX_0041 extends CritereGenererRapport {
 
 	@Override
 	public void validerSecurite(CardexAuthenticationSubject subject) {
@@ -28,12 +29,12 @@ public class CumulatifHebdomadaireEnquetesDossierGenerateurRapport_CDX_0041 exte
 	}
 	
 	@Override
-	public RapportVO construireNouveauRapportVO() {
+	public CritereRapportVO construireNouveauRapportVO() {
 		return new CumulatifHebdomadaireEnquetesDossierRapportVO_CDX_0041();
 	}
 
 	@Override
-	public JRDataSource construireDataSource(CardexAuthenticationSubject subject, RapportVO rapportVO, Connection connection) throws BusinessResourceException, BusinessException {
+	public JRDataSource construireDataSource(CardexAuthenticationSubject subject, CritereRapportVO rapportVO, Connection connection) throws BusinessResourceException, BusinessException {
 		CumulatifHebdomadaireEnquetesDossierRapportVO_CDX_0041 rapportDossierVO =(CumulatifHebdomadaireEnquetesDossierRapportVO_CDX_0041) rapportVO;
 		RapportBusinessDelegate delegate = new RapportBusinessDelegate();
 		ResultSet resultSet = delegate.cumulatifHebdomadaireEnquetesDossier(rapportDossierVO,connection);
@@ -41,8 +42,8 @@ public class CumulatifHebdomadaireEnquetesDossierGenerateurRapport_CDX_0041 exte
 	}
 
 	@Override
-	protected Map construireParametres(CardexAuthenticationSubject subject, RapportVO rapportVO, Connection connection) throws JRException {
-		Map parameters = super.construireParametres(subject, rapportVO, connection);
+	protected Map construireParametres(CardexAuthenticationSubject subject, VO vo, Connection connection) throws JRException {
+		Map parameters = super.construireParametres(subject, vo, connection);
 		parameters.put("sous_rapport_cumul_hebdo_enquetes_fermees", JRLoader.loadObject(RapportsConfiguration.class.getResourceAsStream("sous_rapport_cumul_hebdo_enquetes_fermees.jasper")));
 		parameters.put("sous_rapport_cumul_hebdo_enquetes_actives", JRLoader.loadObject(RapportsConfiguration.class.getResourceAsStream("sous_rapport_cumul_hebdo_enquetes_actives.jasper")));
 		parameters.put("sous_rapport_cumul_hebdo_total_enquetes_fermees", JRLoader.loadObject(RapportsConfiguration.class.getResourceAsStream("sous_rapport_cumul_hebdo_total_enquetes_fermees.jasper")));

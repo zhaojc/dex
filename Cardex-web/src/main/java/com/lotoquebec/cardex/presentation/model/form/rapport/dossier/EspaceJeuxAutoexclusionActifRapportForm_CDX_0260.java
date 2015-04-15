@@ -1,32 +1,23 @@
 package com.lotoquebec.cardex.presentation.model.form.rapport.dossier;
 
-import com.lotoquebec.cardex.generateurRapport.GenererRapport;
 import com.lotoquebec.cardex.generateurRapport.dossier.EspaceJeuxAutoexclusionActifGenerateurRapport_CDX_0260;
-import com.lotoquebec.cardex.presentation.model.form.lienCascade.HierarchieEGNTC;
 import com.lotoquebec.cardex.presentation.model.form.rapport.CriteresRapportForm;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
-import com.lotoquebec.cardexCommun.user.CardexUser;
 
 
 public class EspaceJeuxAutoexclusionActifRapportForm_CDX_0260 extends CriteresRapportForm{
 
-	private HierarchieEGNTC cascadeEGNTC = new HierarchieEGNTC();
+	private static final long serialVersionUID = -5978497123034336780L;
 	private String site = "";
 	
 	public EspaceJeuxAutoexclusionActifRapportForm_CDX_0260() {
-		super();
+		super(new EspaceJeuxAutoexclusionActifGenerateurRapport_CDX_0260());
 	}
 
 	public void init(CardexAuthenticationSubject subject){
 		super.init(subject);
-        CardexUser user = (CardexUser) subject.getUser();
 	}
 	
-	@Override
-	public GenererRapport getGenererRapport() {
-		return new EspaceJeuxAutoexclusionActifGenerateurRapport_CDX_0260();
-	}
-
 	public String getSite() {
 		return site;
 	}

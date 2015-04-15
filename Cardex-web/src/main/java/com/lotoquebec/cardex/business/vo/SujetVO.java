@@ -11,21 +11,20 @@ import java.util.Set;
 import com.lotoquebec.cardex.business.Adresse;
 import com.lotoquebec.cardex.business.Sujet;
 import com.lotoquebec.cardexCommun.GlobalConstants;
+import com.lotoquebec.cardexCommun.business.vo.EntiteCardexVO;
 import com.lotoquebec.cardexCommun.business.vo.LiaisonEntiteVO;
 import com.lotoquebec.cardexCommun.text.TimestampFormat;
 
 /**
- * Permet de transiter les informations relatives à la consultation d'un sujet
- * de la couche présentation à la couche d'affaire.
+ * Permet de transiter les informations relatives ï¿½ la consultation d'un sujet
+ * de la couche prï¿½sentation ï¿½ la couche d'affaire.
  *
  * @author $Author: mlibersan $
  * @version $Revision: 1.21 $, $Date: 2002/04/15 14:03:08 $
  * @see com.lotoquebec.cardex.business.Sujet
  */
-public class SujetVO implements Sujet {
+public class SujetVO extends EntiteCardexVO implements Sujet  {
 
-	private long cle = 0;
-	private long site = 0;
 	private long entite = 0;
 	private String numeroFiche = GlobalConstants.NumeroFiche.DEFAULT;
 	private String nom = "";
@@ -64,18 +63,18 @@ public class SujetVO implements Sujet {
 	private List adresses = new ArrayList();
     private String audit = "";    
     //Mars 2011. Ajout de deux champs pour la lecture de l'audit.
-    //Les autres champs de l'audit sont identiques à ceux du dossier.
+    //Les autres champs de l'audit sont identiques ï¿½ ceux du dossier.
     private Timestamp dateChangement= null;
     private String changePar = "";
-    //Indique si la donnée vient de RDD
+    //Indique si la donnï¿½e vient de RDD
 	private boolean indicateurRdd = false;
-    //Mai 2013, date de fin d'enquête d'un sujet pour l'onglet Sujets d'une Société
+    //Mai 2013, date de fin d'enquï¿½te d'un sujet pour l'onglet Sujets d'une Sociï¿½tï¿½
     private Timestamp dateFinEnquete = null;
     private Set<LiaisonEntiteVO> liaisonEntites = new HashSet<LiaisonEntiteVO>();
     private long typeAge;
 	
 	/**
-	 * Constructeur de SujetVO par défaut.
+	 * Constructeur de SujetVO par dï¿½faut.
 	 */
 	public SujetVO() {}
 
@@ -137,9 +136,9 @@ public class SujetVO implements Sujet {
 	}
 
 	/**
-	 * Retourne le numéro de fiche.
+	 * Retourne le numï¿½ro de fiche.
 	 *
-	 * @return String Valeur du numéro de fiche en caractère.
+	 * @return String Valeur du numï¿½ro de fiche en caractï¿½re.
 	 */
 	public String getNumeroFiche() {
 		return this.numeroFiche;
@@ -148,7 +147,7 @@ public class SujetVO implements Sujet {
 	/**
 	 * Retourne le nom.
 	 *
-	 * @return String Valeur du nom en caractère.
+	 * @return String Valeur du nom en caractï¿½re.
 	 */
 	public String getNom() {
 		return this.nom;
@@ -157,7 +156,7 @@ public class SujetVO implements Sujet {
 	/**
 	 * Retourne le prenom.
 	 *
-	 * @return String Valeur du prenom en caractère.
+	 * @return String Valeur du prenom en caractï¿½re.
 	 */
 	public String getPrenom() {
 		return this.prenom;
@@ -166,7 +165,7 @@ public class SujetVO implements Sujet {
 	/**
 	 * Retourne l'alias.
 	 *
-	 * @return String Valeur de l'alias en caractère.
+	 * @return String Valeur de l'alias en caractï¿½re.
 	 */
 	public String getAlias() {
 		return this.alias;
@@ -182,9 +181,9 @@ public class SujetVO implements Sujet {
 	}
 
 	/**
-	 * Retourne l'âge.
+	 * Retourne l'ï¿½ge.
 	 *
-	 * @return String Valeur de l'âge en caractère.
+	 * @return String Valeur de l'ï¿½ge en caractï¿½re.
 	 */
 	public String getAge() {
 		
@@ -208,27 +207,27 @@ public class SujetVO implements Sujet {
 	}
 
 	/**
-	 * Retourne la première référence.
+	 * Retourne la premiï¿½re rï¿½fï¿½rence.
 	 *
-	 * @return String Valeur de la première référence en caractère.
+	 * @return String Valeur de la premiï¿½re rï¿½fï¿½rence en caractï¿½re.
 	 */
 	public String getReference1() {
 		return this.reference1;
 	}
 
 	/**
-	 * Retourne la deuxième référence.
+	 * Retourne la deuxiï¿½me rï¿½fï¿½rence.
 	 *
-	 * @return String Valeur de la deuxième référence en caractère.
+	 * @return String Valeur de la deuxiï¿½me rï¿½fï¿½rence en caractï¿½re.
 	 */
 	public String getReference2() {
 		return this.reference2;
 	}
 
 	/**
-	 * Retourne le numéro de client ou employé.
+	 * Retourne le numï¿½ro de client ou employï¿½.
 	 *
-	 * @return String Valeur du numéro de client ou employé en caractère.
+	 * @return String Valeur du numï¿½ro de client ou employï¿½ en caractï¿½re.
 	 */
 	public String getNumeroClientEmploye() {
 		return this.numeroClientEmploye;
@@ -280,36 +279,36 @@ public class SujetVO implements Sujet {
 	}
 
 	/**
-	 * Retourne la sévérité.
+	 * Retourne la sï¿½vï¿½ritï¿½.
 	 *
-	 * @return long Valeur de la sévérité.
+	 * @return long Valeur de la sï¿½vï¿½ritï¿½.
 	 */
 	public long getSeverite() {
 		return this.severite;
 	}
 
 	/**
-	 * Retourne le numéro d'assurance sociale.
+	 * Retourne le numï¿½ro d'assurance sociale.
 	 *
-	 * @return String Valeur du numéro d'assurance sociale en caractère.
+	 * @return String Valeur du numï¿½ro d'assurance sociale en caractï¿½re.
 	 */
 	public String getNumeroAssuranceSociale() {
 		return this.numeroAssuranceSociale;
 	}
 
 	/**
-	 * Retourne le numéro de permis de conduire.
+	 * Retourne le numï¿½ro de permis de conduire.
 	 *
-	 * @return String Valeur du numéro de permis de conduire en caractère.
+	 * @return String Valeur du numï¿½ro de permis de conduire en caractï¿½re.
 	 */
 	public String getNumeroPermisConduire() {
 		return this.numeroPermisConduire;
 	}
 
 	/**
-	 * Retourne la confidentialité.
+	 * Retourne la confidentialitï¿½.
 	 *
-	 * @return long Valeur de la confidentialité.
+	 * @return long Valeur de la confidentialitï¿½.
 	 */
 	public long getConfidentialite() {
 		return this.confidentialite;
@@ -318,7 +317,7 @@ public class SujetVO implements Sujet {
 	/**
 	 * Retourne le passeport.
 	 *
-	 * @return String Valeur du passeport en caractère.
+	 * @return String Valeur du passeport en caractï¿½re.
 	 */
 	public String getPasseport() {
 		return this.passeport;
@@ -327,7 +326,7 @@ public class SujetVO implements Sujet {
 	/**
 	 * Retourne le mot de passe.
 	 *
-	 * @return String Valeur du mot de passe en caractère.
+	 * @return String Valeur du mot de passe en caractï¿½re.
 	 */
 	public String getMotPasse() {
 		return this.motPasse;
@@ -336,7 +335,7 @@ public class SujetVO implements Sujet {
 	/**
 	 * Retourne le mot de passe.
 	 *
-	 * @return String Valeur du mot de passe en caractère.
+	 * @return String Valeur du mot de passe en caractï¿½re.
 	 */
 	public String getConfirmationMotPasse() {
 		return this.confirmationMotPasse;
@@ -345,7 +344,7 @@ public class SujetVO implements Sujet {
 	/**
 	 * Retourne le lien.
 	 *
-	 * @return String Valeur numérique du lien.
+	 * @return String Valeur numï¿½rique du lien.
 	 */
 	public long getLien() {
 		return this.lien;
@@ -354,16 +353,16 @@ public class SujetVO implements Sujet {
 	/**
 	 * Retourne le lien du site.
 	 *
-	 * @return String Valeur numérique du lien du site.
+	 * @return String Valeur numï¿½rique du lien du site.
 	 */
 	public long getLienSite() {
 		return this.lienSite;
 	}
 
 	/**
-	 * Retourne le rôle.
+	 * Retourne le rï¿½le.
 	 *
-	 * @return String Valeur numérique du rôle.
+	 * @return String Valeur numï¿½rique du rï¿½le.
 	 */
 	public long getRole() {
 		return this.role;
@@ -372,23 +371,23 @@ public class SujetVO implements Sujet {
 	/**
 	 * Retourne le type de lien.
 	 *
-	 * @return String Valeur numérique du type de lien.
+	 * @return String Valeur numï¿½rique du type de lien.
 	 */
 	public long getTypeLien() {
 		return this.typeLien;
 	}
 
 	/**
-	 * Retourne le créateur du sujet.
+	 * Retourne le crï¿½ateur du sujet.
 	 *
-	 * @return String Code du créateur
+	 * @return String Code du crï¿½ateur
 	 */
 	public String getCreateur() {
 		return this.createur;
 	}
 
 	/**
-	 * Retourne la date de création.
+	 * Retourne la date de crï¿½ation.
 	 *
 	 * @return Timestamp Valeur de la date.
 	 */
@@ -397,9 +396,9 @@ public class SujetVO implements Sujet {
 	}
 
     /**
-     * Retourne le type d'âge.
+     * Retourne le type d'ï¿½ge.
      *
-     * @return la valeur numérique du type d'âge.
+     * @return la valeur numï¿½rique du type d'ï¿½ge.
      */
     public long getTypeAge() {
         return this.typeAge;
@@ -427,9 +426,9 @@ public class SujetVO implements Sujet {
 	}
 
 	/**
-	 * Affecte un numéro de fiche.
+	 * Affecte un numï¿½ro de fiche.
 	 *
-	 * @param numeroFiche Valeur du numéro de fiche en caractère.
+	 * @param numeroFiche Valeur du numï¿½ro de fiche en caractï¿½re.
 	 */
 	public void setNumeroFiche(String numeroFiche) {
 		this.numeroFiche = numeroFiche;
@@ -438,7 +437,7 @@ public class SujetVO implements Sujet {
 	/**
 	 * Affecte un nom.
 	 *
-	 * @param nom Valeur du nom en caractère.
+	 * @param nom Valeur du nom en caractï¿½re.
 	 */
 	public void setNom(String nom) {
 		this.nom = nom;
@@ -447,7 +446,7 @@ public class SujetVO implements Sujet {
 	/**
 	 * Affecte un prenom.
 	 *
-	 * @param prenom Valeur du prenom en caractère.
+	 * @param prenom Valeur du prenom en caractï¿½re.
 	 */
 	public void setPrenom(String prenom) {
 		this.prenom = prenom;
@@ -456,7 +455,7 @@ public class SujetVO implements Sujet {
 	/**
 	 * Affecte un alias.
 	 *
-	 * @param alias Valeur de l'alias en caractère.
+	 * @param alias Valeur de l'alias en caractï¿½re.
 	 */
 	public void setAlias(String alias) {
 		this.alias = alias;
@@ -472,36 +471,36 @@ public class SujetVO implements Sujet {
 	}
 
 	/**
-	 * Affecte un âge.
+	 * Affecte un ï¿½ge.
 	 *
-	 * @param age Valeur de l'âge en caractère.
+	 * @param age Valeur de l'ï¿½ge en caractï¿½re.
 	 */
 	public void setAge(String age) {
 		this.age = age;
 	}
 
 	/**
-	 * Affecte une première référence.
+	 * Affecte une premiï¿½re rï¿½fï¿½rence.
 	 *
-	 * @param reference1 Valeur de la première référence en caractère.
+	 * @param reference1 Valeur de la premiï¿½re rï¿½fï¿½rence en caractï¿½re.
 	 */
 	public void setReference1(String reference1) {
 		this.reference1 = reference1;
 	}
 
 	/**
-	 * Affecte une deuxième référence.
+	 * Affecte une deuxiï¿½me rï¿½fï¿½rence.
 	 *
-	 * @param reference1 Valeur de la deuxième référence en caractère.
+	 * @param reference1 Valeur de la deuxiï¿½me rï¿½fï¿½rence en caractï¿½re.
 	 */
 	public void setReference2(String reference2) {
 		this.reference2 = reference2;
 	}
 
 	/**
-	 * Affecte un numéro de client ou employé.
+	 * Affecte un numï¿½ro de client ou employï¿½.
 	 *
-	 * @param numeroClientEmploye Valeur du numéro de client ou employé en caractère.
+	 * @param numeroClientEmploye Valeur du numï¿½ro de client ou employï¿½ en caractï¿½re.
 	 */
 	public void setNumeroClientEmploye(String numeroClientEmploye) {
 		this.numeroClientEmploye = numeroClientEmploye;
@@ -553,36 +552,36 @@ public class SujetVO implements Sujet {
 	}
 
 	/**
-	 * Affecte une sévérité.
+	 * Affecte une sï¿½vï¿½ritï¿½.
 	 *
-	 * @param severite Valeur de la sévérité.
+	 * @param severite Valeur de la sï¿½vï¿½ritï¿½.
 	 */
 	public void setSeverite(long severite) {
 		this.severite = severite;
 	}
 
 	/**
-	 * Affecte un numéro d'assurance sociale.
+	 * Affecte un numï¿½ro d'assurance sociale.
 	 *
-	 * @param numeroAssuranceSociale Valeur du numéro d'assurance sociale en caractère.
+	 * @param numeroAssuranceSociale Valeur du numï¿½ro d'assurance sociale en caractï¿½re.
 	 */
 	public void setNumeroAssuranceSociale(String numeroAssuranceSociale) {
 		this.numeroAssuranceSociale = numeroAssuranceSociale;
 	}
 
 	/**
-	 * Affecte un numéro de permis de conduire.
+	 * Affecte un numï¿½ro de permis de conduire.
 	 *
-	 * @param numeroPermisConduire Valeur du numéro de permis de conduire en caractère.
+	 * @param numeroPermisConduire Valeur du numï¿½ro de permis de conduire en caractï¿½re.
 	 */
 	public void setNumeroPermisConduire(String numeroPermisConduire) {
 		this.numeroPermisConduire = numeroPermisConduire;
 	}
 
 	/**
-	 * Affecte une confidentialité.
+	 * Affecte une confidentialitï¿½.
 	 *
-	 * @param confidentialite Valeur de la confidentialité.
+	 * @param confidentialite Valeur de la confidentialitï¿½.
 	 */
 	public void setConfidentialite(long confidentialite) {
 		this.confidentialite = confidentialite;
@@ -591,7 +590,7 @@ public class SujetVO implements Sujet {
 	/**
 	 * Affecte un passeport.
 	 *
-	 * @param passeport Valeur du passeport en caractère.
+	 * @param passeport Valeur du passeport en caractï¿½re.
 	 */
 	public void setPasseport(String passeport) {
 		this.passeport = passeport;
@@ -600,7 +599,7 @@ public class SujetVO implements Sujet {
 	/**
 	 * Affecte un mot de passe.
 	 *
-	 * @param motPasse Valeur du mot de passe en caractère.
+	 * @param motPasse Valeur du mot de passe en caractï¿½re.
 	 */
 	public void setMotPasse(String motPasse) {
 		this.motPasse = motPasse;
@@ -609,7 +608,7 @@ public class SujetVO implements Sujet {
 	/**
 	 * Affecte un mot de passe.
 	 *
-	 * @param motPasse Valeur du mot de passe en caractère.
+	 * @param motPasse Valeur du mot de passe en caractï¿½re.
 	 */
 	public void setConfirmationMotPasse(String motPasse) {
 		this.confirmationMotPasse = motPasse;
@@ -618,7 +617,7 @@ public class SujetVO implements Sujet {
 	/**
 	 * Affecte le lien cle.
 	 *
-	 * @param lien Valeur numérique du lien cle.
+	 * @param lien Valeur numï¿½rique du lien cle.
 	 */
 	public void setLien(long lien) {
 		this.lien = lien;
@@ -627,16 +626,16 @@ public class SujetVO implements Sujet {
 	/**
 	 * Affecte le lien du site.
 	 *
-	 * @param lienSite Valeur numérique du lien du site.
+	 * @param lienSite Valeur numï¿½rique du lien du site.
 	 */
 	public void setLienSite(long lienSite) {
 		this.lienSite = lienSite;
 	}
 
 	/**
-	 * Affecte le rôle.
+	 * Affecte le rï¿½le.
 	 *
-	 * @param role Valeur numérique du rôle.
+	 * @param role Valeur numï¿½rique du rï¿½le.
 	 */
 	public void setRole(long role) {
 		this.role = role;
@@ -645,23 +644,23 @@ public class SujetVO implements Sujet {
 	/**
 	 * Affecte le type de lien.
 	 *
-	 * @param typeLien Valeur numérique du type de lien.
+	 * @param typeLien Valeur numï¿½rique du type de lien.
 	 */
 	public void setTypeLien(long typeLien) {
 		this.typeLien = typeLien;
 	}
 
 	/**
-	 * Affecte le créateur du sujet.
+	 * Affecte le crï¿½ateur du sujet.
 	 *
-	 * @param createur Code du créateur.
+	 * @param createur Code du crï¿½ateur.
 	 */
 	public void setCreateur(String createur) {
 		this.createur = createur;
 	}
 
 	/**
-	 * Affecte la date de création.
+	 * Affecte la date de crï¿½ation.
 	 *
 	 * @param dateCreation Valeur de la date.
 	 */
@@ -670,10 +669,10 @@ public class SujetVO implements Sujet {
 	}
 
 	/**
-	 * Retourne une chaîne de caractère reflétant la valeur de tout les
+	 * Retourne une chaï¿½ne de caractï¿½re reflï¿½tant la valeur de tout les
 	 * attributs du SujetVO.
 	 *
-	 * @return String Valeur de tout les attributs du SujetVO en caractère.
+	 * @return String Valeur de tout les attributs du SujetVO en caractï¿½re.
 	 */
 	public String toString() {
 		StringBuffer stringBuffer = new StringBuffer();
@@ -706,7 +705,7 @@ public class SujetVO implements Sujet {
 		stringBuffer.append("', lienSite = '" + lienSite);
 		stringBuffer.append("', role = '" + role);
 		stringBuffer.append("', createur = '" + createur);
-		stringBuffer.append("', date de création = '" + TimestampFormat.format(dateCreation));
+		stringBuffer.append("', date de crï¿½ation = '" + TimestampFormat.format(dateCreation));
 		stringBuffer.append("', typeLien = '" + typeLien + "']");
 		stringBuffer.append("', typeAge = '" + typeAge + "']");
 		return stringBuffer.toString();
@@ -749,7 +748,7 @@ public class SujetVO implements Sujet {
 
 
 	/**
-	 * @param numeroAssuranceMaladie numeroAssuranceMaladie à définir
+	 * @param numeroAssuranceMaladie numeroAssuranceMaladie ï¿½ dï¿½finir
 	 */
 	public void setNumeroAssuranceMaladie(String numeroAssuranceMaladie) {
 		this.numeroAssuranceMaladie = numeroAssuranceMaladie;
@@ -764,7 +763,7 @@ public class SujetVO implements Sujet {
 
 
 	/**
-	 * @param lienDateCreation lienDateCreation à définir
+	 * @param lienDateCreation lienDateCreation ï¿½ dï¿½finir
 	 */
 	public void setLienDateCreation(Timestamp lienDateCreation) {
 		this.lienDateCreation = lienDateCreation;
@@ -772,7 +771,7 @@ public class SujetVO implements Sujet {
 
 
 	/**
-	 * Ajoute une adresses associés.
+	 * Ajoute une adresses associï¿½s.
 	 */
 	public void addAdresse(Adresse adresse) {
 		this.adresses.add(adresse);
@@ -821,7 +820,7 @@ public class SujetVO implements Sujet {
 
 
 	/**
-	 * @param severiteAutres severiteAutres à définir
+	 * @param severiteAutres severiteAutres ï¿½ dï¿½finir
 	 */
 	public void setSeveriteAutres(long severiteAutres) {
 		this.severiteAutres = severiteAutres;
@@ -835,7 +834,7 @@ public class SujetVO implements Sujet {
 	}
 
 	/**
-	 * @param dateChangement dateChangement à définir
+	 * @param dateChangement dateChangement ï¿½ dï¿½finir
 	 */
 	public void setDateChangement(Timestamp dateChangement) {
 		this.dateChangement = dateChangement;
@@ -849,19 +848,19 @@ public class SujetVO implements Sujet {
 	}
 
 	/**
-	 * @param changePar changePar à définir
+	 * @param changePar changePar ï¿½ dï¿½finir
 	 */
 	public void setChangePar(String changePar) {
 		this.changePar = changePar;
 	}
 
-	/* Devrait être présent.
+	/* Devrait ï¿½tre prï¿½sent.
 	 * public void setAdresses(List adresses) {
 		this.adresses = adresses;
 	}*/
 
 	/**
-	 * Indique si la données provient de l'audit des changements
+	 * Indique si la donnï¿½es provient de l'audit des changements
 	 * @return
 	 */
 	public String getAudit(){
@@ -883,7 +882,7 @@ public class SujetVO implements Sujet {
 	}
 
 	/**
-	 * @param indicateurRdd indicateurRdd à définir
+	 * @param indicateurRdd indicateurRdd ï¿½ dï¿½finir
 	 */
 	public void setIndicateurRdd(boolean indicateurRdd) {
 		this.indicateurRdd = indicateurRdd;
@@ -897,7 +896,7 @@ public class SujetVO implements Sujet {
 	}
 
 	/**
-	 * @param dateFinEnquete dateFinEnquete à définir
+	 * @param dateFinEnquete dateFinEnquete ï¿½ dï¿½finir
 	 */
 	public void setDateFinEnquete(Timestamp dateFinEnquete) {
 		this.dateFinEnquete = dateFinEnquete;

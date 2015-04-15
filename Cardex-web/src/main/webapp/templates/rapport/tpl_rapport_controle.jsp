@@ -31,7 +31,7 @@
 <SCRIPT language="JavaScript" type="text/javascript">
 
 	function ouvrirRapport(){
-		var url = "<%=request.getContextPath()%>/RapportAffichagePDF?rapportForm=<%=form%>";
+		var url = "<%=request.getContextPath()%>/CritereRapportAffichagePDF?rapportForm=<%=form%>";
 		windowOpenLocation(url);
 	}
 	

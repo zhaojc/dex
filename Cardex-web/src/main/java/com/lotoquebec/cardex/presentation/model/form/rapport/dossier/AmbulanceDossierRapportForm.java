@@ -1,6 +1,6 @@
 package com.lotoquebec.cardex.presentation.model.form.rapport.dossier;
 
-import com.lotoquebec.cardex.generateurRapport.GenererRapport;
+import com.lotoquebec.cardex.generateurRapport.CritereGenererRapport;
 import com.lotoquebec.cardex.presentation.model.form.lienCascade.HierarchieES;
 import com.lotoquebec.cardex.presentation.model.form.rapport.CriteresRapportForm;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
@@ -13,21 +13,16 @@ public class AmbulanceDossierRapportForm extends CriteresRapportForm{
 	
 	
 	public AmbulanceDossierRapportForm() {
-		super();
+		super(null);
 	}
 	
 	@Override
 	public void init(CardexAuthenticationSubject subject){
 		super.init(subject);
         CardexUser user = (CardexUser) subject.getUser();
-        // Valeurs par défaut
+        // Valeurs par dï¿½faut
         setEntite(String.valueOf(user.getEntite()));
         setSite(String.valueOf(user.getSite()));
-	}
-	
-	@Override
-	public GenererRapport getGenererRapport() {
-		return null;
 	}
 
 	public String getEntite() {

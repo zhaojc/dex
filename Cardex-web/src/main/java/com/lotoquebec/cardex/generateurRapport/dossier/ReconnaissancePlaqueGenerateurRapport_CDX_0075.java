@@ -8,9 +8,9 @@ import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRResultSetDataSource;
 
 import com.lotoquebec.cardex.business.delegate.RapportBusinessDelegate;
+import com.lotoquebec.cardex.business.vo.rapport.CritereRapportVO;
 import com.lotoquebec.cardex.business.vo.rapport.StatistiqueDossierRapportVO;
-import com.lotoquebec.cardex.business.vo.rapport.RapportVO;
-import com.lotoquebec.cardex.generateurRapport.GenererRapport;
+import com.lotoquebec.cardex.generateurRapport.CritereGenererRapport;
 import com.lotoquebec.cardex.generateurRapport.rapports.RapportsConfiguration;
 import com.lotoquebec.cardexCommun.GlobalConstants;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
@@ -20,7 +20,7 @@ import com.lotoquebec.cardexCommun.integration.dao.cleListe.cleSQLListeCache.Tab
 import com.lotoquebec.cardexCommun.securite.GestionnaireSecurite;
 import com.lotoquebec.cardexCommun.util.ListeCache;
 
-public class ReconnaissancePlaqueGenerateurRapport_CDX_0075 extends GenererRapport {
+public class ReconnaissancePlaqueGenerateurRapport_CDX_0075 extends CritereGenererRapport {
 
 	@Override
 	public void validerSecurite(CardexAuthenticationSubject subject) {
@@ -28,12 +28,12 @@ public class ReconnaissancePlaqueGenerateurRapport_CDX_0075 extends GenererRappo
 	}
 	
 	@Override
-	public RapportVO construireNouveauRapportVO() {
+	public CritereRapportVO construireNouveauRapportVO() {
 		return new StatistiqueDossierRapportVO();
 	}
 
 	@Override
-	public JRDataSource construireDataSource(CardexAuthenticationSubject subject, RapportVO rapportVO, Connection connection) throws BusinessResourceException, BusinessException {
+	public JRDataSource construireDataSource(CardexAuthenticationSubject subject, CritereRapportVO rapportVO, Connection connection) throws BusinessResourceException, BusinessException {
 		StatistiqueDossierRapportVO reconnaissancePlaqueVO = (StatistiqueDossierRapportVO) rapportVO;
 		ListeCache cache = ListeCache.getInstance();
 		String siteDescription = cache.obtenirLabel(subject, reconnaissancePlaqueVO.getSite(), new TableValeurCleSQLListeCache(subject, GlobalConstants.TableValeur.SITE, GlobalConstants.Entite.MAISON_JEUX, GlobalConstants.ActionSecurite.SELECTION));

@@ -40,7 +40,7 @@ import com.lotoquebec.cardexCommun.exception.ValueObjectMapperException;
 import com.lotoquebec.cardexCommun.presentation.util.AbstractAction;
 
 /**
- * Cette classe g�re les �v�nements en rapport
+ * Cette classe gére les évènements en rapport
  * avec le cas d'utilisation gestion des dossiers.
  *
  * @author $Author: mlibersan $
@@ -57,73 +57,6 @@ public class AccesAction extends AbstractAction {
 	//Par d�faut, pour les acc�s, l'utilisateur ne change pas cette valeur.
 	private final int nombreDeResultats = 200;  
 
-
-    /**
-     * <p>
-     *
-     * @param mapping L' ActionMapping utils� pour s�lectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requ�te (optionnelle)
-     * @param request La requ�te HTTP trait�e
-     * @param response La r�ponse HTTP cr��e
-     * @param delegate Le business delegate offrant les services d'affaires
-     *
-     * @exception IOException si une erreur d'entr�e/sortieif an input/output survient
-     * @exception ServletException si une exception servlet survient
-     */
-    public ActionForward selectAccesDossier(CardexAuthenticationSubject subject,
-                              ActionMapping mapping, ActionForm form,
-                              HttpServletRequest request,
-                              HttpServletResponse response) throws IOException,
-                              ServletException {
-        log.debug("Affichage des acc�s");
-
-        ActionMessages errors = new ActionMessages();
-
-        try {
-            AccesBusinessDelegate delegate = new AccesBusinessDelegate();
-            DossierForm dossierHtmlForm = (DossierForm) form;
-            DossierVO dossier = new DossierVO();
-            ValueListIterator results;
-            // Conversion du composant d'�tat(ActionForm) en composant d'affaire(Value Object)
-            ValueObjectMapper.convertDossierHtmlForm(dossierHtmlForm, dossier,subject.getLocale());
-            log.debug(dossier.toString());
-            // Ex�cution de la recherche via le service d'affaire(BusinessDelegate)
-            results = delegate.selectAccesDossier(subject,dossier);
-            // Ajout des acc�s dans le composant d'�tat (ActionForm)
-            //int nombreDeResultats = (int)criteresRechercheDossier.getMaximumResultatsRecherche();
-            Collection list = results.getNextElements(nombreDeResultats);
-            Collection currentList = new ArrayList();
-            Iterator   it = list.iterator();
-            while (it.hasNext()) {
-                Acces acces = (Acces)it.next();
-                AccesForm accesForm = new AccesForm();
-                ValueObjectMapper.convertAcces(acces, accesForm,subject.getLocale());
-                currentList.add(accesForm);
-            }
-			request.getSession().setAttribute("listeAcces", GlobalConstants.RechercheList.ACCES);
-            long nbOfPages = (long)Math.ceil(((double)results.getSize())/((double)nombreDeResultats));
-            SearchUtils.storeSearchSessionObject(request,results,currentList,nbOfPages,
-                                     GlobalConstants.RechercheList.ACCES,
-                                     GlobalConstants.RechercheList.ACCES_CURRENT_LIST,
-                                     GlobalConstants.RechercheList.ACCES_CURRENT_PAGE,
-                                     GlobalConstants.RechercheList.ACCES_MAX_NUMBER_OF_PAGES,
-                                     GlobalConstants.RechercheList.ACCES_HAS_NEXT,
-                                     GlobalConstants.RechercheList.ACCES_HAS_PREVIOUS);
-
-          return mapping.findForward("success");
-        } catch (BusinessResourceException bre) {
-            handleBusinessResourceException(bre, errors, request);
-            return mapping.findForward("error");
-        } catch (IteratorException ie) {
-            handleIteratorException(ie, errors, request);
-            return mapping.findForward("error");
-        } catch (BusinessException be) {
-            handleBusinessException(be, errors, request);
-            return (new ActionForward(mapping.getInput()));
-        } catch (ValueObjectMapperException vome) {
-            return mapping.findForward("error");
-        }
-    }
 
     /**
      * <p>
@@ -399,73 +332,6 @@ public class AccesAction extends AbstractAction {
 
     /**
      * <p>
-     *
-     * @param mapping L' ActionMapping utils� pour s�lectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requ�te (optionnelle)
-     * @param request La requ�te HTTP trait�e
-     * @param response La r�ponse HTTP cr��e
-     * @param delegate Le business delegate offrant les services d'affaires
-     *
-     * @exception IOException si une erreur d'entr�e/sortieif an input/output survient
-     * @exception ServletException si une exception servlet survient
-     */
-    public ActionForward selectAccesSujet(CardexAuthenticationSubject subject,
-                              ActionMapping mapping, ActionForm form,
-                              HttpServletRequest request,
-                              HttpServletResponse response) throws IOException,
-                              ServletException {
-        log.debug("Affichage des acc�s");
-
-        ActionMessages errors = new ActionMessages();
-
-        try {
-            AccesBusinessDelegate delegate = new AccesBusinessDelegate();
-            SujetForm sujetHtmlForm = (SujetForm) form;
-            SujetVO sujet = new SujetVO();
-            ValueListIterator results;
-            // Conversion du composant d'�tat(ActionForm) en composant d'affaire(Value Object)
-            ValueObjectMapper.convertSujetHtmlForm(sujetHtmlForm, sujet,subject.getLocale());
-            log.debug(sujet.toString());
-            // Ex�cution de la recherche via le service d'affaire(BusinessDelegate)
-            results = delegate.selectAccesSujet(subject,sujet);
-            // Ajout des acc�s dans le composant d'�tat (ActionForm)
-            //int nombreDeResultats = (int)criteresRechercheDossier.getMaximumResultatsRecherche();
-            Collection list = results.getNextElements(nombreDeResultats);
-            Collection currentList = new ArrayList();
-            Iterator   it = list.iterator();
-            while (it.hasNext()) {
-                Acces acces = (Acces)it.next();
-                AccesForm accesForm = new AccesForm();
-                ValueObjectMapper.convertAcces(acces, accesForm,subject.getLocale());
-                currentList.add(accesForm);
-            }
-			request.getSession().setAttribute("listeAcces", GlobalConstants.RechercheList.ACCES);
-            long nbOfPages = (long)Math.ceil(((double)results.getSize())/((double)nombreDeResultats));
-            SearchUtils.storeSearchSessionObject(request,results,currentList,nbOfPages,
-                                     GlobalConstants.RechercheList.ACCES,
-                                     GlobalConstants.RechercheList.ACCES_CURRENT_LIST,
-                                     GlobalConstants.RechercheList.ACCES_CURRENT_PAGE,
-                                     GlobalConstants.RechercheList.ACCES_MAX_NUMBER_OF_PAGES,
-                                     GlobalConstants.RechercheList.ACCES_HAS_NEXT,
-                                     GlobalConstants.RechercheList.ACCES_HAS_PREVIOUS);
-
-          return mapping.findForward("success");
-        } catch (BusinessResourceException bre) {
-            handleBusinessResourceException(bre, errors, request);
-            return mapping.findForward("error");
-        } catch (IteratorException ie) {
-            handleIteratorException(ie, errors, request);
-            return mapping.findForward("error");
-        } catch (BusinessException be) {
-            handleBusinessException(be, errors, request);
-            return (new ActionForward(mapping.getInput()));
-        } catch (ValueObjectMapperException vome) {
-            return mapping.findForward("error");
-        }
-    }
-
-    /**
-     * <p>
      * Cet �v�nement surivient lorsque l'utilisateur clique sur l'�l�ment de navigation
      * first pour les listes d'acc�s.
      *
@@ -736,72 +602,6 @@ public class AccesAction extends AbstractAction {
         }
     }             
     
-    /**
-     * <p>
-     *
-     * @param mapping L' ActionMapping utils� pour s�lectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requ�te (optionnelle)
-     * @param request La requ�te HTTP trait�e
-     * @param response La r�ponse HTTP cr��e
-     * @param delegate Le business delegate offrant les services d'affaires
-     *
-     * @exception IOException si une erreur d'entr�e/sortieif an input/output survient
-     * @exception ServletException si une exception servlet survient
-     */
-    public ActionForward selectAccesSociete(CardexAuthenticationSubject subject,
-                              ActionMapping mapping, ActionForm form,
-                              HttpServletRequest request,
-                              HttpServletResponse response) throws IOException,
-                              ServletException {
-        log.debug("Affichage des acc�s des soci�t�s");
-
-        ActionMessages errors = new ActionMessages();
-
-        try {
-            AccesBusinessDelegate delegate = new AccesBusinessDelegate();
-            SocieteForm societeHtmlForm = (SocieteForm) form;
-            SocieteVO societe = new SocieteVO();
-            ValueListIterator results;
-            // Conversion du composant d'�tat(ActionForm) en composant d'affaire(Value Object)
-            ValueObjectMapper.convertSocieteHtmlForm(societeHtmlForm, societe,subject.getLocale());
-            log.debug(societe.toString());
-            // Ex�cution de la recherche via le service d'affaire(BusinessDelegate)
-            results = delegate.selectAccesSociete(subject,societe);
-            // Ajout des acc�s dans le composant d'�tat (ActionForm)
-            //int nombreDeResultats = (int)criteresRechercheDossier.getMaximumResultatsRecherche();
-            Collection list = results.getNextElements(nombreDeResultats);
-            Collection currentList = new ArrayList();
-            Iterator   it = list.iterator();
-            while (it.hasNext()) {
-                Acces acces = (Acces)it.next();
-                AccesForm accesForm = new AccesForm();
-                ValueObjectMapper.convertAcces(acces, accesForm,subject.getLocale());
-                currentList.add(accesForm);
-            }
-			request.getSession().setAttribute("listeAcces", GlobalConstants.RechercheList.ACCES);
-            long nbOfPages = (long)Math.ceil(((double)results.getSize())/((double)nombreDeResultats));
-            SearchUtils.storeSearchSessionObject(request,results,currentList,nbOfPages,
-                                     GlobalConstants.RechercheList.ACCES,
-                                     GlobalConstants.RechercheList.ACCES_CURRENT_LIST,
-                                     GlobalConstants.RechercheList.ACCES_CURRENT_PAGE,
-                                     GlobalConstants.RechercheList.ACCES_MAX_NUMBER_OF_PAGES,
-                                     GlobalConstants.RechercheList.ACCES_HAS_NEXT,
-                                     GlobalConstants.RechercheList.ACCES_HAS_PREVIOUS);
-            
-            return mapping.findForward("success");
-        } catch (BusinessResourceException bre) {
-            handleBusinessResourceException(bre, errors, request);
-            return mapping.findForward("error");
-        } catch (IteratorException ie) {
-            handleIteratorException(ie, errors, request);
-            return mapping.findForward("error");
-        } catch (BusinessException be) {
-            handleBusinessException(be, errors, request);
-            return (new ActionForward(mapping.getInput()));
-        } catch (ValueObjectMapperException vome) {
-            return mapping.findForward("error");
-        }
-    }
 
     /**
      * <p>
@@ -1074,72 +874,7 @@ public class AccesAction extends AbstractAction {
             return mapping.findForward("error");
         }
     }             
-    /**
-     * <p>
-     *
-     * @param mapping L' ActionMapping utils� pour s�lectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requ�te (optionnelle)
-     * @param request La requ�te HTTP trait�e
-     * @param response La r�ponse HTTP cr��e
-     * @param delegate Le business delegate offrant les services d'affaires
-     *
-     * @exception IOException si une erreur d'entr�e/sortieif an input/output survient
-     * @exception ServletException si une exception servlet survient
-     */
-    public ActionForward selectAccesVehicule(CardexAuthenticationSubject subject,
-                              ActionMapping mapping, ActionForm form,
-                              HttpServletRequest request,
-                              HttpServletResponse response) throws IOException,
-                              ServletException {
-        log.debug("Affichage des acc�s");
-
-        ActionMessages errors = new ActionMessages();
-
-        try {
-            AccesBusinessDelegate delegate = new AccesBusinessDelegate();
-            VehiculeForm vehiculeHtmlForm = (VehiculeForm) form;
-            VehiculeVO vehicule = new VehiculeVO();
-            ValueListIterator results;
-            // Conversion du composant d'�tat(ActionForm) en composant d'affaire(Value Object)
-            ValueObjectMapper.convertVehiculeHtmlForm(vehiculeHtmlForm, vehicule,subject.getLocale());
-            log.debug(vehicule.toString());
-            // Ex�cution de la recherche via le service d'affaire(BusinessDelegate)
-            results = delegate.selectAccesVehicule(subject,vehicule);
-            // Ajout des acc�s dans le composant d'�tat (ActionForm)
-            //int nombreDeResultats = (int)criteresRechercheDossier.getMaximumResultatsRecherche();
-            Collection list = results.getNextElements(nombreDeResultats);
-            Collection currentList = new ArrayList();
-            Iterator   it = list.iterator();
-            while (it.hasNext()) {
-                Acces acces = (Acces)it.next();
-                AccesForm accesForm = new AccesForm();
-                ValueObjectMapper.convertAcces(acces, accesForm,subject.getLocale());
-                currentList.add(accesForm);
-            }
-			request.getSession().setAttribute("listeAcces", GlobalConstants.RechercheList.ACCES);
-            long nbOfPages = (long)Math.ceil(((double)results.getSize())/((double)nombreDeResultats));
-            SearchUtils.storeSearchSessionObject(request,results,currentList,nbOfPages,
-                                     GlobalConstants.RechercheList.ACCES,
-                                     GlobalConstants.RechercheList.ACCES_CURRENT_LIST,
-                                     GlobalConstants.RechercheList.ACCES_CURRENT_PAGE,
-                                     GlobalConstants.RechercheList.ACCES_MAX_NUMBER_OF_PAGES,
-                                     GlobalConstants.RechercheList.ACCES_HAS_NEXT,
-                                     GlobalConstants.RechercheList.ACCES_HAS_PREVIOUS);
-
-          return mapping.findForward("success");
-        } catch (BusinessResourceException bre) {
-            handleBusinessResourceException(bre, errors, request);
-            return mapping.findForward("error");
-        } catch (IteratorException ie) {
-            handleIteratorException(ie, errors, request);
-            return mapping.findForward("error");
-        } catch (BusinessException be) {
-            handleBusinessException(be, errors, request);
-            return (new ActionForward(mapping.getInput()));
-        } catch (ValueObjectMapperException vome) {
-            return mapping.findForward("error");
-        }
-    }
+    
 
     /**
      * <p>

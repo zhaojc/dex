@@ -15,12 +15,13 @@ import net.sf.jasperreports.engine.data.JRMapCollectionDataSource;
 import com.lotoquebec.cardex.business.RapportDossier;
 import com.lotoquebec.cardex.business.delegate.RapportBusinessDelegate;
 import com.lotoquebec.cardex.business.vo.RapportDossierVO;
+import com.lotoquebec.cardex.business.vo.rapport.CritereRapportVO;
 import com.lotoquebec.cardex.business.vo.rapport.CumulatifDossierRapportVO;
-import com.lotoquebec.cardex.business.vo.rapport.RapportVO;
-import com.lotoquebec.cardex.generateurRapport.GenererRapport;
+import com.lotoquebec.cardex.generateurRapport.CritereGenererRapport;
 import com.lotoquebec.cardex.generateurRapport.rapports.RapportsConfiguration;
 import com.lotoquebec.cardexCommun.GlobalConstants;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
+import com.lotoquebec.cardexCommun.business.vo.VO;
 import com.lotoquebec.cardexCommun.exception.BusinessException;
 import com.lotoquebec.cardexCommun.exception.BusinessResourceException;
 import com.lotoquebec.cardexCommun.integration.dao.cleListe.cleSQLListeCache.TableValeurCleSQLListeCache;
@@ -29,13 +30,13 @@ import com.lotoquebec.cardexCommun.user.CardexUser;
 import com.lotoquebec.cardexCommun.util.ListeCache;
 import com.lotoquebec.cardexCommun.util.StringUtils;
 
-public class CumulatifEspacejeuxDossierGenerateurRapport_CDX_0143 extends GenererRapport {
+public class CumulatifEspacejeuxDossierGenerateurRapport_CDX_0143 extends CritereGenererRapport {
  
 	protected InputStream obtenirGabarit() {
 		return RapportsConfiguration.class.getResourceAsStream(RapportsConfiguration.RAPPORT_CUMULATIF_ESPACEJEUX);
 	}
 	
-	public RapportVO construireNouveauRapportVO() {
+	public CritereRapportVO construireNouveauRapportVO() {
 		return new CumulatifDossierRapportVO();
 	}
 
@@ -43,14 +44,14 @@ public class CumulatifEspacejeuxDossierGenerateurRapport_CDX_0143 extends Genere
 		GestionnaireSecurite.validerSecuriteURL(subject, "/rapport/dossiersHebdomadaireEspaceJeux");
 	}
 
-	//Construction de la liste qui sera soumise au rapport. Les champs du map correspondent à ceux du rapport.
-	//Les totaux et les pourcentages sont calculés directement dans le rapport.
+	//Construction de la liste qui sera soumise au rapport. Les champs du map correspondent ï¿½ ceux du rapport.
+	//Les totaux et les pourcentages sont calculï¿½s directement dans le rapport.
 	@Override
-	protected JRDataSource construireDataSource(CardexAuthenticationSubject subject, RapportVO rapportVO, Connection connection) throws BusinessResourceException, BusinessException {
+	protected JRDataSource construireDataSource(CardexAuthenticationSubject subject, CritereRapportVO rapportVO, Connection connection) throws BusinessResourceException, BusinessException {
 		RapportBusinessDelegate delegate = new RapportBusinessDelegate();
 		CumulatifDossierRapportVO cumulatifDossierRapportVO = (CumulatifDossierRapportVO) rapportVO;
-		//On commence d'abord par construire la liste des types et des catégories avec le total de dossiers.
-		RapportDossier rapportDossier = delegate.produireListeTypeCategorieEspacejeux(rapportVO);
+		//On commence d'abord par construire la liste des types et des catï¿½gories avec le total de dossiers.
+		RapportDossier rapportDossier = delegate.produireListeTypeCategorieEspacejeux((CritereRapportVO) rapportVO);
 		
 		List list = new ArrayList();
 		Iterator iter = rapportDossier.getListDossier().iterator();
@@ -61,11 +62,11 @@ public class CumulatifEspacejeuxDossierGenerateurRapport_CDX_0143 extends Genere
 			mapRapportDossier.put("Type", rapportDossierVO.getType());
 			mapRapportDossier.put("Categorie", rapportDossierVO.getCategorie());
 			mapRapportDossier.put("nombreDossier", rapportDossierVO.getNombreDossier());
-			//Pour chaque entrée, on calcule les autres valeurs qui seront reportées sur le rapport.
+			//Pour chaque entrï¿½e, on calcule les autres valeurs qui seront reportï¿½es sur le rapport.
 			mapRapportDossier.put("nombreFonde", delegate.produireFonde(rapportDossierVO, cumulatifDossierRapportVO, GlobalConstants.Fonde.OUI));
 			mapRapportDossier.put("nombreNonFonde", delegate.produireFonde(rapportDossierVO, cumulatifDossierRapportVO, GlobalConstants.Fonde.NON));
 			mapRapportDossier.put("nombreIndetermine", delegate.produireFonde(rapportDossierVO, cumulatifDossierRapportVO, GlobalConstants.Fonde.INDETERMINE));
-			//Le nombre de dossiers aux enquêtes n'est valable que pour le site Espacejeux.
+			//Le nombre de dossiers aux enquï¿½tes n'est valable que pour le site Espacejeux.
 			if(cumulatifDossierRapportVO.getSite() == Long.valueOf(GlobalConstants.SiteMaisonJeux.ESPACEJEUX)){
 				mapRapportDossier.put("nombreAuxEnquetes", delegate.produireAuxEnquetes(rapportDossierVO, cumulatifDossierRapportVO));
 			}
@@ -75,7 +76,8 @@ public class CumulatifEspacejeuxDossierGenerateurRapport_CDX_0143 extends Genere
 		return new JRMapCollectionDataSource(list);
 	}
 
-	protected Map construireParametres(CardexAuthenticationSubject subject, RapportVO rapportVO, Connection connection) throws JRException {
+	@Override
+	protected Map construireParametres(CardexAuthenticationSubject subject, VO rapportVO, Connection connection) throws JRException {
 		Map parameters = super.construireParametres(subject, rapportVO, connection);
 		CumulatifDossierRapportVO cumulatifDossierRapportVO = (CumulatifDossierRapportVO) rapportVO;
 		CardexUser cardexUser = (CardexUser) subject.getUser();

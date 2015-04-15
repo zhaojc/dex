@@ -19,30 +19,31 @@ import com.lotoquebec.cardex.business.Dossier;
 import com.lotoquebec.cardex.business.Sujet;
 import com.lotoquebec.cardex.business.delegate.DossierBusinessDelegate;
 import com.lotoquebec.cardex.business.vo.DossierVO;
+import com.lotoquebec.cardex.business.vo.rapport.CritereRapportVO;
 import com.lotoquebec.cardex.business.vo.rapport.EntiteRapportVO;
-import com.lotoquebec.cardex.business.vo.rapport.RapportVO;
-import com.lotoquebec.cardex.generateurRapport.GenererRapport;
+import com.lotoquebec.cardex.generateurRapport.CritereGenererRapport;
 import com.lotoquebec.cardex.generateurRapport.rapports.RapportsConfiguration;
 import com.lotoquebec.cardex.securite.GestionnaireSecuriteCardex;
 import com.lotoquebec.cardexCommun.GlobalConstants;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
+import com.lotoquebec.cardexCommun.business.vo.VO;
 import com.lotoquebec.cardexCommun.exception.BusinessException;
 import com.lotoquebec.cardexCommun.exception.BusinessResourceException;
 import com.lotoquebec.cardexCommun.integration.dao.cleListe.cleSQLListeCache.TableValeurCleSQLListeCache;
 import com.lotoquebec.cardexCommun.util.ListeCache;
 import com.lotoquebec.cardexCommun.util.StringUtils;
 
-public class AutoexclusionEspaceJeuxDossierGenerateurRapport_CDX_0221 extends GenererRapport {
+public class AutoexclusionEspaceJeuxDossierGenerateurRapport_CDX_0221 extends CritereGenererRapport {
  
 	protected InputStream obtenirGabarit() {
 		return RapportsConfiguration.class.getResourceAsStream(RapportsConfiguration.AUTOEXCLUSION_ESPACEJEUX);
 	}
 	
-	public RapportVO construireNouveauRapportVO() {
+	public CritereRapportVO construireNouveauRapportVO() {
 		return new EntiteRapportVO();
 	}
 	
-	//Construction de la liste qui sera soumise au rapport. Les champs du map correspondent à ceux du rapport.
+	//Construction de la liste qui sera soumise au rapport. Les champs du map correspondent ï¿½ ceux du rapport.
 	private List construireListeDataSource(CardexAuthenticationSubject subject, Dossier dossier, Map mapRapportDossier)
 	 			throws BusinessException{
 		List list = new ArrayList();
@@ -55,14 +56,14 @@ public class AutoexclusionEspaceJeuxDossierGenerateurRapport_CDX_0221 extends Ge
         mapRapportDossier.put("intervenantDescription", dossier.getIntervenantDescription());
 
 		DossierBusinessDelegate delegate = new DossierBusinessDelegate();
-		//On va chercher le sujet relié
+		//On va chercher le sujet reliï¿½
         Collection liensSujets;
         Iterator it;
 	        liensSujets = delegate.findLiensSujet(subject, dossier);
 	        it = liensSujets.iterator();
 	        if(it.hasNext()) {
 	            Sujet linkSujet = (Sujet) it.next();
-	            //On passe la clé et le site du sujet pour le sous-rapport
+	            //On passe la clï¿½ et le site du sujet pour le sous-rapport
 				mapRapportDossier.put("sujetCle", BigDecimal.valueOf(linkSujet.getCle()));
 				mapRapportDossier.put("sujetSite", BigDecimal.valueOf(linkSujet.getSite()));
 			}
@@ -75,7 +76,7 @@ public class AutoexclusionEspaceJeuxDossierGenerateurRapport_CDX_0221 extends Ge
 	private Map construireListeLibelles(Dossier dossier)
 		throws BusinessException{
 		List list = new ArrayList();
-		//On remplit d'abord les libellés
+		//On remplit d'abord les libellï¿½s
 		Map mapLibelles = new HashMap(); 
 		
 		mapLibelles.put("titre", bundle.getString("titreAE"));
@@ -95,8 +96,8 @@ public class AutoexclusionEspaceJeuxDossierGenerateurRapport_CDX_0221 extends Ge
 	}
 
 	@Override
-	protected Map construireParametres(CardexAuthenticationSubject subject, RapportVO rapportVO, Connection connection) throws JRException {
-		Map parameters = super.construireParametres(subject, rapportVO, connection);
+	protected Map construireParametres(CardexAuthenticationSubject subject, VO vo, Connection connection) throws JRException {
+		Map parameters = super.construireParametres(subject, vo, connection);
 		parameters.put("sous_rapport_sujet_autoexclusion", JRLoader.loadObject(RapportsConfiguration.class.getResourceAsStream(RapportsConfiguration.SOUS_RAPPORT_AUTOEXCLUSION_SUJET_FRANCAIS)));
 		parameters.put("sous_rapport_sujet_autoexclusion_anglais", JRLoader.loadObject(RapportsConfiguration.class.getResourceAsStream(RapportsConfiguration.SOUS_RAPPORT_AUTOEXCLUSION_SUJET_ANGALAIS)));
 		parameters.put("REPORT_CONNECTION", connection);
@@ -106,7 +107,7 @@ public class AutoexclusionEspaceJeuxDossierGenerateurRapport_CDX_0221 extends Ge
 	}
 	
 	@Override
-	protected JRDataSource construireDataSource(CardexAuthenticationSubject subject, RapportVO rapportVO, Connection connection) throws BusinessResourceException, BusinessException {
+	protected JRDataSource construireDataSource(CardexAuthenticationSubject subject, CritereRapportVO rapportVO, Connection connection) throws BusinessResourceException, BusinessException {
 		List list = new ArrayList();
 		EntiteRapportVO entiteRapportVO = (EntiteRapportVO) rapportVO;
 		DossierBusinessDelegate delegate = new DossierBusinessDelegate();
@@ -115,9 +116,9 @@ public class AutoexclusionEspaceJeuxDossierGenerateurRapport_CDX_0221 extends Ge
        	dossierVO.setSite(entiteRapportVO.getSite());
 		Dossier dossier = delegate.find(subject, dossierVO);
 		
-		//On commence par construire le contenu des libellés, selon la langue demandée pour le contrat.
+		//On commence par construire le contenu des libellï¿½s, selon la langue demandï¿½e pour le contrat.
 		Map mapRapportDossier = construireListeLibelles(dossier);
-		//On ajout ensuite les champs qui seront imprimés sur le contrat
+		//On ajout ensuite les champs qui seront imprimï¿½s sur le contrat
 		list.addAll(construireListeDataSource(subject, dossier, mapRapportDossier));
 	
 		return new JRMapCollectionDataSource(list);

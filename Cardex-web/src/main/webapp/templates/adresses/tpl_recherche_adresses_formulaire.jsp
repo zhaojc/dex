@@ -189,7 +189,7 @@
            </html:select>&nbsp;
           <cardex:button labelKey='cb_rechercher' soumettre='/adresses/soumettreRecherche.do' />&nbsp;&nbsp;&nbsp;
           <logic:equal name="adresseInvalideHidden" value="false">
-          	<cardex:button urlSecurite="/RapportAffichagePDF" labelKey='cb_rapport.adresse.invalide' onclick='doSoumettreRechercheAdressesInvalides();' />
+          	<cardex:button urlSecurite="/CritereRapportAffichagePDF" labelKey='cb_rapport.adresse.invalide' onclick='doSoumettreRechercheAdressesInvalides();' />
           </logic:equal>
           </TD>
           <TD align="right">

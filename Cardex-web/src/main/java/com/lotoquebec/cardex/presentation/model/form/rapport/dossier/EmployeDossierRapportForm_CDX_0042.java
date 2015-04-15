@@ -1,8 +1,6 @@
 package com.lotoquebec.cardex.presentation.model.form.rapport.dossier;
 
-import com.lotoquebec.cardex.generateurRapport.GenererRapport;
 import com.lotoquebec.cardex.generateurRapport.dossier.EmployeDossierGenerateurRapport_CDX_0042;
-import com.lotoquebec.cardex.generateurRapport.dossier.TempsConsacreGraphiqueStatistiqueDossierGenererRapportSQL_CDX_0145;
 import com.lotoquebec.cardex.presentation.model.form.lienCascade.HierarchieEGNTC;
 import com.lotoquebec.cardex.presentation.model.form.lienCascade.HierarchieES;
 import com.lotoquebec.cardex.presentation.model.form.rapport.CriteresRapportForm;
@@ -12,6 +10,7 @@ import com.lotoquebec.cardexCommun.user.CardexUser;
 
 public class EmployeDossierRapportForm_CDX_0042 extends CriteresRapportForm{
 	
+	private static final long serialVersionUID = 2866763657588558500L;
 	private HierarchieES hierarchieES = new HierarchieES();
 	private HierarchieEGNTC hierarchieEGNTC = new HierarchieEGNTC();
 	private String role = "";
@@ -19,19 +18,13 @@ public class EmployeDossierRapportForm_CDX_0042 extends CriteresRapportForm{
 	private String statut = "";
 
 	public EmployeDossierRapportForm_CDX_0042() {
-		super();
+		super(new EmployeDossierGenerateurRapport_CDX_0042());
 	}
-	 
-	@Override
-	public GenererRapport getGenererRapport() {
-		return new EmployeDossierGenerateurRapport_CDX_0042();
-	}
-
 	
 	public void init(CardexAuthenticationSubject subject){
 		super.init(subject);
         CardexUser user = (CardexUser) subject.getUser();
-        // Valeurs par défaut
+        // Valeurs par dï¿½faut
         setEntite(String.valueOf(user.getEntite()));
         setSite(String.valueOf(user.getSite()));
         setRole("0");

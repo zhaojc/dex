@@ -23,7 +23,7 @@ import com.lotoquebec.cardex.business.vo.rapport.EntiteRapportVO;
 import com.lotoquebec.cardex.business.vo.rapport.EspaceJeuxAutoexclusionActifRapportVO_CDX_0260;
 import com.lotoquebec.cardex.business.vo.rapport.EspaceJeuxFraudeFondeRapportVO_CDX_0261;
 import com.lotoquebec.cardex.business.vo.rapport.EspaceJeuxTricherieFondeRapportVO_CDX_0262;
-import com.lotoquebec.cardex.business.vo.rapport.RapportVO;
+import com.lotoquebec.cardex.business.vo.rapport.CritereRapportVO;
 import com.lotoquebec.cardex.business.vo.rapport.ReperageAutoexclusionDossierRapportVO;
 import com.lotoquebec.cardex.business.vo.rapport.SeveriteRapportVO;
 import com.lotoquebec.cardex.business.vo.rapport.SiteIntervenantRapportVO;
@@ -196,7 +196,7 @@ public class RapportBusinessDelegate extends BusinessDelegate {
      * @throws BusinessException si une r�gle d'affaire n'est pas respect�e
      * @throws BusinessResourceException si une erreur syst�me survient
      */
-    public ResultSet rapportProcedure(RapportVO rapportVO, String procedure,Connection connection) throws BusinessException,
+    public ResultSet rapportProcedure(CritereRapportVO rapportVO, String procedure,Connection connection) throws BusinessException,
                         BusinessResourceException {
         try {
             return rapportSessionFacade.rapportProcedure(rapportVO, procedure,connection);
@@ -236,7 +236,7 @@ public class RapportBusinessDelegate extends BusinessDelegate {
      * @throws BusinessException si une r�gle d'affaire n'est pas respect�e
      * @throws BusinessResourceException si une erreur syst�me survient
      */
-    public Collection rapportEnqueteRetard(RapportVO rapportVO) throws BusinessException,
+    public Collection rapportEnqueteRetard(CritereRapportVO rapportVO) throws BusinessException,
                         BusinessResourceException {
         try {
             return rapportSessionFacade.rapportEnqueteRetard(rapportVO);
@@ -256,7 +256,7 @@ public class RapportBusinessDelegate extends BusinessDelegate {
      * @throws BusinessException si une r�gle d'affaire n'est pas respect�e
      * @throws BusinessResourceException si une erreur syst�me survient
      */
-    public Collection rapportEnqueteTraitementRetard(RapportVO rapportVO) throws BusinessException,
+    public Collection rapportEnqueteTraitementRetard(CritereRapportVO rapportVO) throws BusinessException,
                         BusinessResourceException {
         try {
             return rapportSessionFacade.rapportEnqueteTraitementRetard(rapportVO);
@@ -774,7 +774,7 @@ public class RapportBusinessDelegate extends BusinessDelegate {
      * @throws BusinessException si une r�gle d'affaire n'est pas respect�e
      * @throws BusinessResourceException si une erreur syst�me survient
      */
-    public RapportDossier produireListeTypeCategorieEspacejeux(RapportVO rapportVO) throws BusinessException,
+    public RapportDossier produireListeTypeCategorieEspacejeux(CritereRapportVO rapportVO) throws BusinessException,
                                     BusinessResourceException {
         try {
             return rapportSessionFacade.produireListeTypeCategorieEspacejeux(rapportVO);

@@ -4,14 +4,14 @@ package com.lotoquebec.cardex.business.vo.rapport;
 /**
  * Utiliser par 
  * CDX_0020	Rapport journal sommaire
- * CDX_0021	Rapport journal détaillé
+ * CDX_0021	Rapport journal dï¿½taillï¿½
  * CDX_0022	Rapport journal par origines
  * CDX_0023	Rapport journal par descriptifs
  * 
  * @author levassc
  *
  */
-public class JournalRapportVO extends RapportVO{
+public class JournalRapportVO extends CritereRapportVO{
 
 	protected long entite = 0;
 	protected long site = 0;
@@ -143,7 +143,7 @@ public class JournalRapportVO extends RapportVO{
 	}
 
 	/**
-	 * @param numeroDossier numeroDossier à définir
+	 * @param numeroDossier numeroDossier ï¿½ dï¿½finir
 	 */
 	public void setNumeroDossier(String numeroDossier) {
 		this.numeroDossier = numeroDossier;
@@ -157,7 +157,7 @@ public class JournalRapportVO extends RapportVO{
 	}
 
 	/**
-	 * @param reference reference à définir
+	 * @param reference reference ï¿½ dï¿½finir
 	 */
 	public void setReference(String reference) {
 		this.reference = reference;

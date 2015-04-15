@@ -1,6 +1,5 @@
 package com.lotoquebec.cardex.presentation.model.form.rapport.dossier;
 
-import com.lotoquebec.cardex.generateurRapport.GenererRapport;
 import com.lotoquebec.cardex.generateurRapport.dossier.TableauEndroitsRegroupesGenerateurRapport_CDX_0280;
 import com.lotoquebec.cardex.presentation.model.form.lienCascade.HierarchieEGNTC;
 import com.lotoquebec.cardex.presentation.model.form.lienCascade.HierarchieES;
@@ -11,6 +10,7 @@ import com.lotoquebec.cardexCommun.user.CardexUser;
 
 public class TableauEndroitsRegroupesRapportForm_CDX_0280 extends CriteresRapportForm{
 
+	private static final long serialVersionUID = -4865635638210766678L;
 	private HierarchieES hierarchieES = new HierarchieES();
 	private HierarchieEGNTC hierarchieEGNTC = new HierarchieEGNTC();
 	private String regroupement = "";   
@@ -24,21 +24,16 @@ public class TableauEndroitsRegroupesRapportForm_CDX_0280 extends CriteresRappor
 	}
 
 	public TableauEndroitsRegroupesRapportForm_CDX_0280() {
-		super();
+		super(new TableauEndroitsRegroupesGenerateurRapport_CDX_0280());
 	}
 	
 	@Override
 	public void init(CardexAuthenticationSubject subject){
 		super.init(subject);
         CardexUser user = (CardexUser) subject.getUser();
-        // Valeurs par défaut
+        // Valeurs par dï¿½faut
         setEntite(String.valueOf(user.getEntite()));
         setSite(String.valueOf(user.getSite()));
-	}
-	
-	@Override
-	public GenererRapport getGenererRapport() {
-		return new TableauEndroitsRegroupesGenerateurRapport_CDX_0280();
 	}
 
 	public String getEntite() {

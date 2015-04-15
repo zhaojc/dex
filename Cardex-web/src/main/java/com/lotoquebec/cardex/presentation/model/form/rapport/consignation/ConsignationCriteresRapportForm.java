@@ -1,5 +1,6 @@
 package com.lotoquebec.cardex.presentation.model.form.rapport.consignation;
 
+import com.lotoquebec.cardex.generateurRapport.GenererRapport;
 import com.lotoquebec.cardex.presentation.model.form.lienCascade.HierarchieEGNTC;
 import com.lotoquebec.cardex.presentation.model.form.lienCascade.HierarchieES;
 import com.lotoquebec.cardex.presentation.model.form.rapport.CriteresRapportForm;
@@ -15,10 +16,14 @@ public abstract class ConsignationCriteresRapportForm extends CriteresRapportFor
 	private String typeCategorie = "";
 	private String intervenant = "";
 	
+	public ConsignationCriteresRapportForm(GenererRapport genererRapport) {
+		super(genererRapport);
+	}	
+	
 	public void init(CardexAuthenticationSubject subject){
 		super.init(subject);
         CardexUser user = (CardexUser) subject.getUser();
-        // Valeurs par défaut
+        // Valeurs par dï¿½faut
         setEntite(String.valueOf(user.getEntite()));
         setSite(String.valueOf(user.getSite()));
 	}

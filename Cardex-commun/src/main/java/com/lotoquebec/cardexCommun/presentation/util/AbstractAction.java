@@ -158,13 +158,13 @@ public abstract class AbstractAction extends Action {
         subject = (new AutentificationCardex()).obtenirSubjet(request);
         
         //On doit v�rifier si la connexion provient de la page de changement
-		//du mot de passe. Si c'est le cas, "subject" n'a pas encore �t�
-		//initialis�, ce qui provoque des erreurs.
+		//du mot de passe. Si c'est le cas, "subject" n'a pas encore été
+		//initialisé, ce qui provoque des erreurs.
         boolean isChangementMDP = "/changement".equals(mapping.getPath());
 
         if (isChangementMDP == false){
     		if (subject == null)
-            	throw new IllegalArgumentException("Le subject ne peut �tre null");
+            	throw new IllegalArgumentException("Le subject ne peut être null");
             else{
     			try{
     				GestionnaireSecurite.validerSecuriteURL((CardexAuthenticationSubject) subject, mapping.getPath());
@@ -182,7 +182,7 @@ public abstract class AbstractAction extends Action {
 	              instance = instance.substring(18,instance.length());
 	              request.getSession().setAttribute("instance",instance);
 	          }catch (DAOException se) {
-	            String message = "Incapacit� de charger les donn�e de r�f�rence ";
+	            String message = "Incapacité de charger les donnée de référence ";
 	            log.error(message,se);
 	            return mapping.findForward("error");
 	          } catch (SQLException e) {
@@ -198,13 +198,13 @@ public abstract class AbstractAction extends Action {
 		
 
           // Identification du nom de la m�thode vers laquelle redirige la requ�te
-          log.debug("Identification de la m�thode vers laquelle redirige la requ�te");
+          log.debug("Identification de la méthode vers laquelle redirige la requête");
           String methodName = mapping.getParameter();
 
           if (methodName == null) {
               String message =
-                  "La propri�t� 'parameter' de l'ActionMapping '"
-                  + mapping.getName() + "' n'est pas d�finie.";
+                  "La propriété 'parameter' de l'ActionMapping '"
+                  + mapping.getName() + "' n'est pas définie.";
 
               log.warn(message);
               return mapping.findForward("error");

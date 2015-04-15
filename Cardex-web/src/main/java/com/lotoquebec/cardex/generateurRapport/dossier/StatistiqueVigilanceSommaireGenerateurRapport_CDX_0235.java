@@ -10,19 +10,20 @@ import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRResultSetDataSource;
 
 import com.lotoquebec.cardex.business.delegate.RapportBusinessDelegate;
+import com.lotoquebec.cardex.business.vo.rapport.CritereRapportVO;
 import com.lotoquebec.cardex.business.vo.rapport.EntiteRapportVO;
-import com.lotoquebec.cardex.business.vo.rapport.RapportVO;
-import com.lotoquebec.cardex.generateurRapport.GenererRapport;
+import com.lotoquebec.cardex.generateurRapport.CritereGenererRapport;
 import com.lotoquebec.cardex.generateurRapport.rapports.RapportsConfiguration;
 import com.lotoquebec.cardexCommun.GlobalConstants;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
+import com.lotoquebec.cardexCommun.business.vo.VO;
 import com.lotoquebec.cardexCommun.exception.BusinessException;
 import com.lotoquebec.cardexCommun.exception.BusinessResourceException;
 import com.lotoquebec.cardexCommun.integration.dao.cleListe.cleSQLListeCache.TableValeurCleSQLListeCache;
 import com.lotoquebec.cardexCommun.securite.GestionnaireSecurite;
 import com.lotoquebec.cardexCommun.util.ListeCache;
 
-public class StatistiqueVigilanceSommaireGenerateurRapport_CDX_0235 extends GenererRapport {
+public class StatistiqueVigilanceSommaireGenerateurRapport_CDX_0235 extends CritereGenererRapport {
 
 	@Override
 	public void validerSecurite(CardexAuthenticationSubject subject) {
@@ -35,7 +36,7 @@ public class StatistiqueVigilanceSommaireGenerateurRapport_CDX_0235 extends Gene
 	}
 
 	@Override
-	public JRDataSource construireDataSource(CardexAuthenticationSubject subject, RapportVO rapportVO, Connection connection) throws BusinessResourceException, BusinessException {
+	public JRDataSource construireDataSource(CardexAuthenticationSubject subject, CritereRapportVO rapportVO, Connection connection) throws BusinessResourceException, BusinessException {
     	RapportBusinessDelegate delegate = new RapportBusinessDelegate();
     	EntiteRapportVO entiteRapportVO = (EntiteRapportVO) rapportVO;
        	ResultSet resultSet = delegate.rapportProcedureVigilance(entiteRapportVO, "CARDEX_RAPPORT.SP_RAP_VIGILANCE_SOMMAIRE",connection);
@@ -47,7 +48,8 @@ public class StatistiqueVigilanceSommaireGenerateurRapport_CDX_0235 extends Gene
 		return RapportsConfiguration.class.getResourceAsStream(RapportsConfiguration.RAPPORT_STATISTIQUE_VIGILANCE_SOMMAIRE);
 	}
 
-	protected Map construireParametres(CardexAuthenticationSubject subject, RapportVO rapportVO, Connection connection) throws JRException {
+	@Override
+	protected Map construireParametres(CardexAuthenticationSubject subject, VO rapportVO, Connection connection) throws JRException {
 		Map parameters = super.construireParametres(subject, rapportVO, connection);
 		EntiteRapportVO entiteRapportVO = (EntiteRapportVO) rapportVO;
 		ListeCache listeCache = ListeCache.getInstance();

@@ -1,7 +1,7 @@
 package com.lotoquebec.cardex.business.vo.rapport;
 
 
-public class ReperageAutoexclusionDossierRapportVO extends RapportVO{
+public class ReperageAutoexclusionDossierRapportVO extends CritereRapportVO{
 
 	private long site = 0;
 	

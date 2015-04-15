@@ -1,12 +1,14 @@
 package com.lotoquebec.cardex.presentation.model.form.rapport;
 
+import com.lotoquebec.cardex.generateurRapport.GenererRapport;
+
 public abstract class EntiteRapportForm extends CriteresRapportForm {
 
 	private String cle = "";
 	private String site = "";
-	
-	public EntiteRapportForm() {
-		super();
+
+	public EntiteRapportForm(GenererRapport genererRapport) {
+		super(genererRapport);
 	}
 
 	public String getCle() {

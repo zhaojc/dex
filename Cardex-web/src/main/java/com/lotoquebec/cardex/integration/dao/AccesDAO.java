@@ -5,112 +5,82 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import oracle.jdbc.OracleTypes;
 
 import com.lotoquebec.cardex.business.vo.AccesVO;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
-import com.lotoquebec.cardexCommun.business.ValueListHandler;
-import com.lotoquebec.cardexCommun.business.ValueListIterator;
+import com.lotoquebec.cardexCommun.business.EntiteCardex;
 import com.lotoquebec.cardexCommun.exception.DAOException;
-import com.lotoquebec.cardexCommun.exception.IteratorException;
 import com.lotoquebec.cardexCommun.integration.dao.DAOConnection;
 import com.lotoquebec.cardexCommun.integration.dao.OracleDAOUtils;
+import com.lotoquebec.cardexCommun.integration.dao.jdbc.PreparerCallableStatement;
+import com.lotoquebec.cardexCommun.integration.dao.jdbc.RowCallbackHandler;
+import com.lotoquebec.cardexCommun.integration.dao.jdbc.StoreProcTemplate;
 
 public class AccesDAO {
 
 	/**
-	 * Lecture des accès associés à un dossier.
-     * @author François Guérin
-     * @param cle  long : clé unique du dossier
+	 * Lecture des accï¿½s associï¿½s ï¿½ un dossier.
+     * @author Franï¿½ois Guï¿½rin
+     * @param cle  long : clï¿½ unique du dossier
      * @param site long : site
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
-     * @return ValueListIterator : Une liste de dossiers retournés par la
+     * @return ValueListIterator : Une liste de dossiers retournï¿½s par la
      * recherche.
 	 * @see AccesDAO#select(long, long)
 	 */
-	public ValueListIterator select(CardexAuthenticationSubject subject, long cle, long site, String origine) throws DAOException {
-        Connection connection =
-        	DAOConnection.getInstance().getConnection(subject);
-		CallableStatement callableStatement = null;
-		ResultSet resultSet = null;
-        ArrayList results = new ArrayList();
-        try {
-            callableStatement = connection.prepareCall(
-                    "begin CARDEX_SPECIAL.SP_L_AC_ACCES (?,?,?,?); end;");
-            callableStatement.setLong(1,cle);
-            callableStatement.setLong(2,site);
-            callableStatement.setString(3,origine);
-            callableStatement.registerOutParameter(4, OracleTypes.CURSOR);
-            callableStatement.execute();
-            resultSet = (ResultSet)callableStatement.getObject(4);
-            ValueListHandler  listIterator = new ValueListHandler();
-            //Traitement des données retournées
-            while (resultSet.next()){
+	public List<AccesVO> select(CardexAuthenticationSubject subject, final EntiteCardex entiteCardex, final String origine) throws DAOException {
+        StoreProcTemplate storeProcTemplate = new StoreProcTemplate(subject);
+        final List<AccesVO> results = new ArrayList<AccesVO>();
+		PreparerCallableStatement rch = new PreparerCallableStatement(){
+			/*
+			 * @see com.lotoquebec.cardex.integration.dao.jdbc.RowCallHandler#processRow(java.sql.CallableStatement)
+			 */
+    		public void preparer(CallableStatement callableStatement) throws SQLException {
+                callableStatement.setLong(1, entiteCardex.getCle());
+                callableStatement.setLong(2, entiteCardex.getSite());
+                callableStatement.setString(3, origine);
+                callableStatement.registerOutParameter(4, OracleTypes.CURSOR);
+			}
+    	};
+    	storeProcTemplate.prepareCall("CARDEX_SPECIAL.SP_L_AC_ACCES", 4, 4, rch);
+
+    	RowCallbackHandler rowCallbackHandler = new RowCallbackHandler(){
+			public void processRow(ResultSet rs) throws SQLException {
                 AccesVO acces = new AccesVO();
-                acces.setCle(resultSet.getLong("L_AC_CLE"));
-                acces.setSite(resultSet.getLong("L_SI_CLE"));
-                acces.setGenreOrigine(OracleDAOUtils.getString(resultSet,"C_GF_ORIGINE"));
-                acces.setCleOrigine(resultSet.getLong("L_ORI_CLE"));
-                acces.setSiteOrigine(resultSet.getLong("L_ORI_SITE"));
-                acces.setCleRef(resultSet.getLong("L_REF_CLE"));
-                acces.setCleRef2(resultSet.getLong("L_REF2_CLE"));
-                acces.setSiteRef(resultSet.getLong("L_REF_SITE"));
-                acces.setSiteRef2(resultSet.getLong("L_REF2_SITE"));
-                acces.setGenreRef(OracleDAOUtils.getString(resultSet,"C_GF_REFERENCE"));
-                acces.setGenreRef2(OracleDAOUtils.getString(resultSet,"C_GF_REF2"));
-                acces.setAction(OracleDAOUtils.getString(resultSet,"C_AC_ACTION"));
-                acces.setUtilisateur(OracleDAOUtils.getString(resultSet,"V_AC_NAME"));
-                acces.setDateAcces(resultSet.getTimestamp("D_AC_DATE_ACCES"));
+                acces.setCle(rs.getLong("L_AC_CLE"));
+                acces.setSite(rs.getLong("L_SI_CLE"));
+                acces.setGenreOrigine(OracleDAOUtils.getString(rs,"C_GF_ORIGINE"));
+                acces.setCleOrigine(rs.getLong("L_ORI_CLE"));
+                acces.setSiteOrigine(rs.getLong("L_ORI_SITE"));
+                acces.setCleRef(rs.getLong("L_REF_CLE"));
+                acces.setCleRef2(rs.getLong("L_REF2_CLE"));
+                acces.setSiteRef(rs.getLong("L_REF_SITE"));
+                acces.setSiteRef2(rs.getLong("L_REF2_SITE"));
+                acces.setGenreRef(OracleDAOUtils.getString(rs,"C_GF_REFERENCE"));
+                acces.setGenreRef2(OracleDAOUtils.getString(rs,"C_GF_REF2"));
+                acces.setAction(OracleDAOUtils.getString(rs,"C_AC_ACTION"));
+                acces.setUtilisateur(OracleDAOUtils.getString(rs,"V_AC_NAME"));
+                acces.setDateAcces(rs.getTimestamp("D_AC_DATE_ACCES"));
                 results.add(acces);
 			}
-            listIterator.setList(results);
-            return listIterator;
-        }
-        catch (SQLException se) {
-            throw new DAOException(se);
-        }
-        catch (IteratorException ie) {
-            throw new DAOException(ie);
-        }
-        finally {
-			if(resultSet != null) {
-				try {
-						resultSet.close();
-			    } catch (java.sql.SQLException e) {
-                    throw new DAOException(e);
-		        }
-	        }
-			if(callableStatement != null) {
-				try {
-						callableStatement.close();
-			    } catch (java.sql.SQLException e) {
-                    throw new DAOException(e);
-		        }
-			}
- 		    if (connection != null) {
-                try{
-			         if(!connection.getAutoCommit())
-			         {
-			            connection.rollback();
-			         }
- 		           	   connection.close();
-                } catch (SQLException e) {
-                    throw new DAOException(e);
-                }
- 		    }
-        } //finally
+    	};		
+    	storeProcTemplate.query( rowCallbackHandler);
+    	
+    	return results;
 	}
 
 	/**
-	 * Ajout dans la table des accès.
-     * @author François Guérin
-     * @throws DAOException lancée lorsqu'une SQLException est reçue lors d'une
-     * rupture de connexion avec la base de données, ou que la table demandée
-     * est non disponible, ou qu'un problème est survenu lors de l'exécution
+	 * Ajout dans la table des accï¿½s.
+     * @author Franï¿½ois Guï¿½rin
+     * @throws DAOException lancï¿½e lorsqu'une SQLException est reï¿½ue lors d'une
+     * rupture de connexion avec la base de donnï¿½es, ou que la table demandï¿½e
+     * est non disponible, ou qu'un problï¿½me est survenu lors de l'exï¿½cution
      * d'une "stored procedure".
 	 * @see AccesDAO#select(long, long)
 	 */

@@ -67,13 +67,8 @@ function doClose() {
 }
 
 function doPrintRapport() {
-//Impression du rapport d'activités quotidien
-	   var dateDebut = document.forms(0).dateCreationDebut.value;
-	   var dateFin = document.forms(0).dateCreationFin.value;
-	   var site = document.getElementsByName("site")[0].value;
-	   var userCardex = '<bean:write name="<%= AuthenticationSubject.class.getName() %>" property="user.code" />';
-	   var url = "<%=request.getContextPath()%>/AffichageRapportActivites?DATE_DEBUT=" + dateDebut + "&DATE_FIN=" + dateFin + "&UTILISATEUR=" + userCardex + "&SITE=" + site;
-	   window.open(url, 'rapport', 'left=0,top=0,width=' + document.body.clientWidth + ',height=' + document.body.clientHeight + ',menubar=no,toolbar=no,resizable=yes');
+	   var url = "<%=request.getContextPath()%>/CritereRapportAffichagePDF?rapportForm=<%=form%>";
+	   windowOpenLocation(url);
 }
 
 function doTraits(objet,nomProchainChamp) {

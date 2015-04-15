@@ -21,7 +21,7 @@ public class GlobalRAQRapportCDX_0070 extends RapportCDX_0070{
 
 	@Override
 	protected String obtenirTitre() {
-		return "Rapport d'activité quotidien";
+		return "Rapport d'activitÃ© quotidien";
 	}
 
 }

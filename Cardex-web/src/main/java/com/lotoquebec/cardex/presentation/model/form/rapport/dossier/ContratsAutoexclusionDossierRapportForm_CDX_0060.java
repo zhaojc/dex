@@ -1,6 +1,6 @@
 package com.lotoquebec.cardex.presentation.model.form.rapport.dossier;
 
-import com.lotoquebec.cardex.generateurRapport.GenererRapport;
+import com.lotoquebec.cardex.generateurRapport.CritereGenererRapport;
 import com.lotoquebec.cardex.generateurRapport.dossier.ContratsAutoexclusionDossierGenerateurRapport_CDX_0060;
 import com.lotoquebec.cardex.presentation.model.form.lienCascade.HierarchieEGNTC;
 import com.lotoquebec.cardex.presentation.model.form.rapport.CriteresRapportForm;
@@ -14,13 +14,13 @@ public class ContratsAutoexclusionDossierRapportForm_CDX_0060 extends CriteresRa
 	private String site = "";
 	
 	public ContratsAutoexclusionDossierRapportForm_CDX_0060() {
-		super();
+		super(new ContratsAutoexclusionDossierGenerateurRapport_CDX_0060());
 	}
 
 	public void init(CardexAuthenticationSubject subject){
 		super.init(subject);
         CardexUser user = (CardexUser) subject.getUser();
-        // Valeurs par défaut
+        // Valeurs par dï¿½faut
         setEntite(String.valueOf(user.getEntite()));
         setSite(String.valueOf(user.getSite()));
 	}
@@ -72,10 +72,6 @@ public class ContratsAutoexclusionDossierRapportForm_CDX_0060 extends CriteresRa
     public void setCategorie(String categorie) {
     	cascadeEGNTC.set(HierarchieEGNTC.CATEGORIE, categorie);
     }
-	
-	@Override
-	public GenererRapport getGenererRapport() {
-		return new ContratsAutoexclusionDossierGenerateurRapport_CDX_0060();
-	}
+
 	
 }

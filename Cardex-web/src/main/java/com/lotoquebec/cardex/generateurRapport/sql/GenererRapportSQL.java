@@ -3,23 +3,26 @@ package com.lotoquebec.cardex.generateurRapport.sql;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRResultSetDataSource;
+
+import com.lotoquebec.cardex.business.vo.rapport.CritereRapportVO;
 import com.lotoquebec.cardex.business.vo.rapport.RapportVO;
-import com.lotoquebec.cardex.generateurRapport.GenererRapport;
+import com.lotoquebec.cardex.generateurRapport.CritereGenererRapport;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
 import com.lotoquebec.cardexCommun.exception.BusinessException;
 import com.lotoquebec.cardexCommun.exception.BusinessResourceException;
 import com.lotoquebec.cardexCommun.integration.dao.jdbc.PreparerSQL;
 
-public abstract class GenererRapportSQL extends GenererRapport {
+public abstract class GenererRapportSQL extends CritereGenererRapport {
 
 	// Construire le contenu du rapport
 
 	protected abstract PreparerSQL construirePreparerSQL(RapportVO rapportVO);
 
 	protected JRDataSource construireDataSource(
-			CardexAuthenticationSubject subject, RapportVO rapportVO,
+			CardexAuthenticationSubject subject, CritereRapportVO rapportVO,
 			Connection connection) throws BusinessResourceException,
 			BusinessException {
 

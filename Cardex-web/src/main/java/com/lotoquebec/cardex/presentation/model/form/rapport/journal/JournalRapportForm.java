@@ -1,5 +1,6 @@
 package com.lotoquebec.cardex.presentation.model.form.rapport.journal;
 
+import com.lotoquebec.cardex.generateurRapport.GenererRapport;
 import com.lotoquebec.cardex.presentation.model.form.lienCascade.HierarchieEGNTC;
 import com.lotoquebec.cardex.presentation.model.form.lienCascade.HierarchieES;
 import com.lotoquebec.cardex.presentation.model.form.rapport.CriteresRapportForm;
@@ -20,11 +21,14 @@ public abstract class JournalRapportForm extends CriteresRapportForm{
     private String numeroDossier = "";
     private String reference = "";
 
+	public JournalRapportForm(GenererRapport genererRapport) {
+		super(genererRapport);
+	}
     
 	public void init(CardexAuthenticationSubject subject){
 		super.init(subject);
         CardexUser user = (CardexUser) subject.getUser();
-        // Valeurs par défaut
+        // Valeurs par dï¿½faut
         setEntite(String.valueOf(user.getEntite()));
         setSite(String.valueOf(user.getSite()));
 	}
@@ -142,7 +146,7 @@ public abstract class JournalRapportForm extends CriteresRapportForm{
 	}
 
 	/**
-	 * @param numeroDossier numeroDossier à définir
+	 * @param numeroDossier numeroDossier ï¿½ dï¿½finir
 	 */
 	public void setNumeroDossier(String numeroDossier) {
 		this.numeroDossier = numeroDossier;
@@ -156,7 +160,7 @@ public abstract class JournalRapportForm extends CriteresRapportForm{
 	}
 
 	/**
-	 * @param reference reference à définir
+	 * @param reference reference ï¿½ dï¿½finir
 	 */
 	public void setReference(String reference) {
 		this.reference = reference;

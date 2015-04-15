@@ -4,15 +4,15 @@ package com.lotoquebec.cardex.business.vo.rapport;
 /**
  * Utiliser par 
  * CDX_0150	Rapport sommaire sur les consignations
- * CDX_0151	Rapport détaillé sur les consignations
- * CDX_0152	Rapport par dénomination
- * CDX_0153	Rapport par numéro de série et dénomination
- * CDX_0154	Rapport par dénomination et numéro de série
+ * CDX_0151	Rapport dï¿½taillï¿½ sur les consignations
+ * CDX_0152	Rapport par dï¿½nomination
+ * CDX_0153	Rapport par numï¿½ro de sï¿½rie et dï¿½nomination
+ * CDX_0154	Rapport par dï¿½nomination et numï¿½ro de sï¿½rie
  * 
  * @author levassc
  *
  */
-public class ConsignationRapportVO extends RapportVO{
+public class ConsignationRapportVO extends CritereRapportVO{
 
 	protected long site = 0;
 	protected String intervenant = "";

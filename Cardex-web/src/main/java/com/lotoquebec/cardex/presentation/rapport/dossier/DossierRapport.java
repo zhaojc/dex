@@ -24,7 +24,7 @@ import java.sql.SQLException;
 import com.lotoQuebec.correcteurAdresse.util.StringUtils;
 import com.lotoquebec.cardex.business.Dossier;
 import com.lotoquebec.cardex.business.vo.DossierVO;
-import com.lotoquebec.cardex.generateurRapport.GenererRapport;
+import com.lotoquebec.cardex.generateurRapport.CritereGenererRapport;
 import com.lotoquebec.cardex.presentation.model.form.DossierForm;
 import com.lotoquebec.cardex.presentation.util.ValueObjectMapper;
 import com.lotoquebec.cardexCommun.GlobalConstants;
@@ -46,7 +46,7 @@ import com.lotoquebec.cardexCommun.util.ListeCache;
  * @Deprecated sera retirer dans la version 5.5 
  
  */
-public abstract class DossierRapport extends GenererRapport {
+public abstract class DossierRapport extends CritereGenererRapport {
 
 	protected CardexAuthenticationSubject subject = null;
 
@@ -73,7 +73,7 @@ public abstract class DossierRapport extends GenererRapport {
         try{
 			//Langue dans laquelle on doit imprimer le contrat d'autoexclusion
 			String langue = (String)request.getParameter("LANGUE");
-			//Dossier à rechercher
+			//Dossier ï¿½ rechercher
 			String cleDossier = (String)request.getParameter("cleDossier");
 			String cleSite = (String)request.getParameter("cleSite");
 	       	Dossier dossierVO = new DossierVO();

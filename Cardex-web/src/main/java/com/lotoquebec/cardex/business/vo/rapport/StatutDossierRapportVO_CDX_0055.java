@@ -1,7 +1,7 @@
 package com.lotoquebec.cardex.business.vo.rapport;
 
 
-public class StatutDossierRapportVO_CDX_0055 extends RapportVO{
+public class StatutDossierRapportVO_CDX_0055 extends CritereRapportVO{
 
 	private long nature = 0;
 

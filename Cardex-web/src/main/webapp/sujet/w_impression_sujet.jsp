@@ -49,13 +49,11 @@ function zoomOut(image) {
 }
 
 function doPrint() {
-	   var fiche = "GA";
-	   var cle = document.forms(0).cle.value;
-	   var site = document.forms(0).site.value;
-	   var url = "<%=request.getContextPath()%>/AffichagePDFFiches?FICHE=" + fiche + "&SITE=" + site + "&CLE=" + cle;
-	   var rapport = "<%=GlobalConstants.ChoixRapport.IMPRESSION_GALERIE%>";
-	   //alert(url);  
-	   window.open(url, 'rapport', 'left=0,top=0,width=' + document.body.clientWidth + ',height=' + document.body.clientHeight + ',menubar=no,toolbar=no,resizable=yes');
+   var cle = document.forms(0).cle.value;
+   var site = document.forms(0).site.value;
+
+   var url = "<%=request.getContextPath()+"/RapportAffichage?classRapportForm="+GlobalConstants.RapportForm.GALERIE_SUJET_RAPPORT_FORM_CDX_0004%>&cle="+cle+"&site="+site;
+   window.open(url, 'rapport', 'left=0,top=0,width=' + document.body.clientWidth + ',height=' + document.body.clientHeight + ',menubar=no,toolbar=no,resizable=yes');	   
 }
 
 function doClose() {
@@ -190,7 +188,7 @@ oncontextmenu="return false;" >
                  </TR>
 
                  <TR>
-                    <TD width="125" align="right" colspan="2"><b><bean:message key='caractéristiques_t'/></b></TD>
+                    <TD width="125" align="right" colspan="2"><b><bean:message key='caracteristiques_t'/></b></TD>
                     <TD width="175">&nbsp;</TD>
                  </TR>
                  <TR>

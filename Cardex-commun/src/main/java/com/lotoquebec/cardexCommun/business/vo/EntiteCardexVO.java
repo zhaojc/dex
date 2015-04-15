@@ -1,23 +1,34 @@
 package com.lotoquebec.cardexCommun.business.vo;
 
-import java.util.Set;
-
 import com.lotoquebec.cardexCommun.business.EntiteCardex;
 
 public class EntiteCardexVO implements EntiteCardex{
 
-    private long cle = 0;
-    private long site = 0;
+    protected long cle = 0;
+    protected long site = 0;
     
+	public EntiteCardexVO() {
+		super();
+	}
+	
+	public EntiteCardexVO(long cle, long site) {
+		super();
+		this.cle = cle;
+		this.site = site;
+	}
+	
 	public long getCle() {
 		return cle;
 	}
+	
 	public void setCle(long cle) {
 		this.cle = cle;
 	}
+	
 	public long getSite() {
 		return site;
 	}
+	
 	public void setSite(long site) {
 		this.site = site;
 	}

@@ -3,12 +3,12 @@ package com.lotoquebec.cardex.business.vo.rapport;
 
 /**
  * Utiliser par 
- * CDX_0042	Rapport employés liés à des dossiers
+ * CDX_0042	Rapport employï¿½s liï¿½s ï¿½ des dossiers
  * 
  * @author levassc
  *
  */
-public class EmployeDossierRapportVO_CDX_0042 extends RapportVO{
+public class EmployeDossierRapportVO_CDX_0042 extends CritereRapportVO{
 
 	private long entite = 0;
 	private long site = 0;
@@ -68,7 +68,7 @@ public class EmployeDossierRapportVO_CDX_0042 extends RapportVO{
 	}
 
 	/**
-	 * @param categorie categorie à définir
+	 * @param categorie categorie ï¿½ dï¿½finir
 	 */
 	public void setCategorie(long categorie) {
 		this.categorie = categorie;

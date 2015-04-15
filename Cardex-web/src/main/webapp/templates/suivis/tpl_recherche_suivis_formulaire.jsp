@@ -169,9 +169,9 @@ Création HTML.
       		<TR>
        			<td align="right" nowrap><b><bean:message key='i_tc_cle_t'/></b></td>
        			<td colspan="6">
-                     <myriap:select name='rechercheSuivi' property="activite" tabindex="14" size="1" style="HEIGHT: 20px; WIDTH: 200px" onchange="doValeursDefaut(this.value);" onkeypress="typeAhead(this, event);" onfocus="resetIncrementalSearch();" >
-      					<cardex:optionTag classe='<%= GlobalConstants.CleListe.TABLE_VALEUR_DISCRIMINANT_REQUIS %>'  valeurDiscriminant='<%=entite %>' valeurTableValeur='<%=GlobalConstants.TableValeur.TYPE_ACTIVITE %>' actionSecurite='<%=GlobalConstants.ActionSecurite.RECHERCHE%>'/>
-   					 </myriap:select>&nbsp;
+                   <myriap:select size='1' name='rechercheSuivi' property='activite' tabindex="14" style='HEIGHT: 20px; WIDTH: 200px' onchange='doValeursDefaut(this.value);' onkeypress="typeAhead(this, event);" onfocus="resetIncrementalSearch();" >
+                       <cardex:optionTag classe='<%= GlobalConstants.CleListe.TABLE_VALEUR_DISCRIMINANT_REQUIS %>'  valeurDiscriminant='<%=entite %>' valeurTableValeur='<%=GlobalConstants.TableValeur.TYPE_ACTIVITE %>' actionSecurite='<%=GlobalConstants.ActionSecurite.RECHERCHE%>'/>
+                   </myriap:select>
                 </td>
 			</TR>      		
       		<tr>

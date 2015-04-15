@@ -5,7 +5,6 @@ package com.lotoquebec.cardex.business.facade;
 import java.sql.SQLException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -23,27 +22,22 @@ import com.lotoquebec.cardex.business.exception.SujetBusinessRuleException;
 import com.lotoquebec.cardex.business.fabrique.dossier.RechercheSujetOptionAgeValidationFabrique;
 import com.lotoquebec.cardex.business.fabrique.dossier.SauvegardeSujetBusinessValidationFabrique;
 import com.lotoquebec.cardex.business.vo.CaracteristiquesVO;
-import com.lotoquebec.cardex.business.vo.CriteresRechercheSocieteVO;
-import com.lotoquebec.cardex.business.vo.CriteresRechercheSujetVO;
 import com.lotoquebec.cardex.business.vo.PhotoVO;
-import com.lotoquebec.cardex.business.vo.SocieteVO;
 import com.lotoquebec.cardex.business.vo.SujetVO;
 import com.lotoquebec.cardex.businessRules.BusinessRulesValidator;
 import com.lotoquebec.cardex.integration.dao.FabriqueCardexDAO;
 import com.lotoquebec.cardex.securite.GestionnaireSecuriteCardex;
-import com.lotoquebec.cardex.securite.IntervenantEstAssigne;
 import com.lotoquebec.cardexCommun.GlobalConstants;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
+import com.lotoquebec.cardexCommun.business.EntiteCardex;
 import com.lotoquebec.cardexCommun.exception.BusinessException;
 import com.lotoquebec.cardexCommun.exception.BusinessResourceException;
 import com.lotoquebec.cardexCommun.exception.BusinessRuleException;
 import com.lotoquebec.cardexCommun.exception.BusinessRuleExceptionHandle;
 import com.lotoquebec.cardexCommun.exception.DAOException;
-import com.lotoquebec.cardexCommun.securite.SecuritePredicate;
-import com.lotoquebec.cardexCommun.util.StringUtils;
 /**
- * Le SujetSessionFacade offre les services d'affaires, gère les intéractions
- * et les validations de règles d'affaires applicable aux sujets.
+ * Le SujetSessionFacade offre les services d'affaires, gï¿½re les intï¿½ractions
+ * et les validations de rï¿½gles d'affaires applicable aux sujets.
  *
  * @author $Author: mlibersan $
  * @version $Revision: 1.21 $, $Date: 2002/04/23 21:09:27 $
@@ -51,10 +45,10 @@ import com.lotoquebec.cardexCommun.util.StringUtils;
 public class SujetSessionFacade {
 	
     /**
-     * Création d'un sujet
+     * Crï¿½ation d'un sujet
      *
-     * @param subject Le sujet qui créé le sujet
-     * @param sujet Le sujet à créer
+     * @param subject Le sujet qui crï¿½ï¿½ le sujet
+     * @param sujet Le sujet ï¿½ crï¿½er
      * @throws BusinessRuleException
      * @throws BusinessException
      */
@@ -74,18 +68,18 @@ public class SujetSessionFacade {
     /**
      * Chargement d'un sujet particulier (sans audit).
      *
-     * Cette méthode sert également à sécuriser l'accès.
+     * Cette mï¿½thode sert ï¿½galement ï¿½ sï¿½curiser l'accï¿½s.
      *
      * @param subject Le sujet qui recherche un sujet
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return Le sujet recherché
+     * @return Le sujet recherchï¿½
      *
-     * @throws BusinessRuleException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessRuleException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public Sujet find(CardexAuthenticationSubject subject,
-                        Sujet criteria) throws BusinessRuleException,
+    		EntiteCardex criteria) throws BusinessRuleException,
                         BusinessResourceException {
         try {
         	Sujet sujet = FabriqueCardexDAO.getInstance().getSujetDAO().find(subject, criteria);
@@ -97,15 +91,15 @@ public class SujetSessionFacade {
     }
     
     /**
-     * Chargement d'un sujet particulier à partir de l'audit des changements.
+     * Chargement d'un sujet particulier ï¿½ partir de l'audit des changements.
      *
      * @param subject Le sujet qui recherche un sujet
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return Le sujet recherché
+     * @return Le sujet recherchï¿½
      *
-     * @throws BusinessRuleException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessRuleException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public Sujet findAudit(CardexAuthenticationSubject subject,
                         Sujet criteria) throws BusinessRuleException,
@@ -123,12 +117,12 @@ public class SujetSessionFacade {
      * Chargement d'un sujet particulier (avec audit).
      *
      * @param subject Le sujet qui recherche un sujet
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return Le sujet recherché
+     * @return Le sujet recherchï¿½
      *
-     * @throws BusinessRuleException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessRuleException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public Sujet findAcces(CardexAuthenticationSubject subject,
                         Sujet criteria) throws BusinessRuleException,
@@ -143,12 +137,12 @@ public class SujetSessionFacade {
     }    
 
     /**
-     * Recherche des sujets créés dans les dernières 48 heures
+     * Recherche des sujets crï¿½ï¿½s dans les derniï¿½res 48 heures
      *
      * @param subject Le sujet qui effectue la recherche
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return Les sujets recherchés
+     * @return Les sujets recherchï¿½s
      * @throws BusinessRuleException
      * @throws BusinessException
      */
@@ -167,13 +161,13 @@ public class SujetSessionFacade {
      * Recherche de l'audit des changements d'un sujet
      *
      * @param subject Le sujet qui effectue la recherche
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return Les sujets recherchés
+     * @return Les sujets recherchï¿½s
      * @throws BusinessRuleException
      * @throws BusinessException
      */
-    public List audit(CardexAuthenticationSubject subject,
+    public List<Sujet> audit(CardexAuthenticationSubject subject,
                                            Sujet criteria) throws BusinessRuleException, BusinessException {
         try {
             return FabriqueCardexDAO.getInstance().getSujetDAO().audit(subject, criteria);
@@ -186,9 +180,9 @@ public class SujetSessionFacade {
      * Recherche de sujets
      *
      * @param subject Le sujet qui effectue la recherche
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return Les sujets recherchés
+     * @return Les sujets recherchï¿½s
      * @throws BusinessRuleException
      * @throws BusinessException
      */
@@ -222,15 +216,15 @@ public class SujetSessionFacade {
 			}
 		} catch (DAOException e) {
 			e.printStackTrace();
-			throw new BusinessException("Problème avec checkNombreEnregistrementRechercheSujet");
+			throw new BusinessException("Problï¿½me avec checkNombreEnregistrementRechercheSujet");
 		}
 	}    
 
     /**
-     * Mise à jour d'un sujet
+     * Mise ï¿½ jour d'un sujet
      *
      * @param subject Le sujet qui modifie le sujet
-     * @param sujet Le sujet à modifier
+     * @param sujet Le sujet ï¿½ modifier
      * @throws BusinessRuleException
      * @throws BusinessException
      */
@@ -253,11 +247,11 @@ public class SujetSessionFacade {
      * Ajout d'un lien entre une narration et un sujet.
      *
      * @param subject Le sujet qui effectue le lien
-     * @param sujet Le sujet à lier
-     * @param narration La narration à lier
+     * @param sujet Le sujet ï¿½ lier
+     * @param narration La narration ï¿½ lier
      *
-     * @throws BusinessRuleException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessRuleException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public void addLienNarration(CardexAuthenticationSubject subject,
                              Sujet sujet,
@@ -278,11 +272,11 @@ public class SujetSessionFacade {
      * Ajout d'un lien entre un sujet et un dossier.
      *
      * @param subject Le sujet qui effectue le lien
-     * @param sujet Le sujet à lier
-     * @param dossier Le dossier à lier au sujet.
+     * @param sujet Le sujet ï¿½ lier
+     * @param dossier Le dossier ï¿½ lier au sujet.
      *
-     * @throws BusinessRuleException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessRuleException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public void addLienDossier(CardexAuthenticationSubject subject,
                            Sujet sujet,
@@ -305,8 +299,8 @@ public class SujetSessionFacade {
      * @param sujet Le sujet lier
      * @param photo La photo lier au sujet.
      *
-     * @throws BusinessRuleException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessRuleException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public void deleteLienPhoto(CardexAuthenticationSubject subject,
                            Sujet sujet,
@@ -324,11 +318,11 @@ public class SujetSessionFacade {
      * Destruction d'un lien entre un dossier et un sujet.
      *
      * @param subject Le sujet qui effectue le lien
-     * @param sujet Le sujet à lier
-     * @param dossier Le dossier à lier au sujet.
+     * @param sujet Le sujet ï¿½ lier
+     * @param dossier Le dossier ï¿½ lier au sujet.
      *
-     * @throws BusinessRuleException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessRuleException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public void deleteLienDossier(CardexAuthenticationSubject subject,
                            Sujet sujet,
@@ -348,11 +342,11 @@ public class SujetSessionFacade {
      * Recherche des liens entre deux sujets.
      *
      * @param subject Le sujet qui effectue le lien
-     * @param sujet Le sujet lié
-     * @return  Les sujets liés
+     * @param sujet Le sujet liï¿½
+     * @return  Les sujets liï¿½s
      *
-     * @throws BusinessRuleException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessRuleException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public Collection findLiensSociete(CardexAuthenticationSubject subject,
                            Sujet sujet) throws BusinessRuleException,
@@ -374,11 +368,11 @@ public class SujetSessionFacade {
      * Recherche des liens entre deux sujets.
      *
      * @param subject Le sujet qui effectue le lien
-     * @param sujet Le sujet lié
-     * @return  Les sujets liés
+     * @param sujet Le sujet liï¿½
+     * @return  Les sujets liï¿½s
      *
-     * @throws BusinessRuleException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessRuleException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public Collection findLiensSujet(CardexAuthenticationSubject subject,
                            Sujet sujet) throws BusinessRuleException,
@@ -398,14 +392,14 @@ public class SujetSessionFacade {
     }
 
     /**
-     * Recherche des liens véhicules.
+     * Recherche des liens vï¿½hicules.
      *
      * @param subject Le sujet qui effectue le lien
-     * @param sujet Le sujet lié
-     * @return  Les véhicules liés
+     * @param sujet Le sujet liï¿½
+     * @return  Les vï¿½hicules liï¿½s
      *
-     * @throws BusinessRuleException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessRuleException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public Collection findLiensVehicule(CardexAuthenticationSubject subject,
                            Sujet sujet) throws BusinessRuleException,
@@ -427,11 +421,11 @@ public class SujetSessionFacade {
      * Recherche des liens entre un sujet et ses adresses.
      *
      * @param subject Le sujet qui effectue le lien
-     * @param sujet Le sujet lié
-     * @return  Les adresse liés
+     * @param sujet Le sujet liï¿½
+     * @return  Les adresse liï¿½s
      *
-     * @throws BusinessRuleException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessRuleException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public Collection findLiensAdresse(CardexAuthenticationSubject subject,
                            Sujet sujet) throws BusinessRuleException,
@@ -453,11 +447,11 @@ public class SujetSessionFacade {
      * Recherche des liens historiques entre un sujet et ses adresses.
      *
      * @param subject Le sujet qui effectue le lien
-     * @param sujet Le sujet lié
-     * @return  Les adresse liés
+     * @param sujet Le sujet liï¿½
+     * @return  Les adresse liï¿½s
      *
-     * @throws BusinessRuleException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessRuleException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public Collection findLiensAdresseAudit(CardexAuthenticationSubject subject,
                            Sujet sujet) throws BusinessRuleException,
@@ -479,11 +473,11 @@ public class SujetSessionFacade {
      * Recherche des liens dossiers.
      *
      * @param subject Le sujet qui effectue le lien
-     * @param sujet Le sujet lié
-     * @return  Les dossiers liés
+     * @param sujet Le sujet liï¿½
+     * @return  Les dossiers liï¿½s
      *
-     * @throws BusinessRuleException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessRuleException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public Collection findLiensDossier(CardexAuthenticationSubject subject,
                            Sujet sujet) throws BusinessRuleException,
@@ -519,11 +513,11 @@ public class SujetSessionFacade {
      * Recherche des liens caracteristiques.
      *
      * @param subject Le sujet qui effectue le lien
-     * @param sujet Le sujet lié
-     * @return  Les caracteristiques liés
+     * @param sujet Le sujet liï¿½
+     * @return  Les caracteristiques liï¿½s
      *
-     * @throws BusinessRuleException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessRuleException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public Caracteristiques findLiensCaracteristique(CardexAuthenticationSubject subject,
                            Sujet sujet) throws BusinessRuleException,
@@ -543,21 +537,21 @@ public class SujetSessionFacade {
      * Recherche des liens photos.
      *
      * @param subject Le sujet qui effectue le lien
-     * @param sujet Le sujet lié
-     * @return  Les dossiers liés
+     * @param sujet Le sujet liï¿½
+     * @return  Les dossiers liï¿½s
      *
-     * @throws BusinessRuleException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessRuleException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
-    public Collection findLiensPhoto(CardexAuthenticationSubject subject,
+    public List<PhotoVO> findLiensPhoto(CardexAuthenticationSubject subject,
                            Sujet sujet) throws BusinessRuleException,
                            BusinessResourceException
     {
         try {
         	
         	if (GestionnaireSecuriteCardex.isRoleAdhoc(subject, GlobalConstants.SecuriteRoleAdhoc.SUJET_PHOTOS_ONGLET)){
-    			Collection collection = FabriqueCardexDAO.getInstance().getSujetDAO().findLiensPhoto(subject, sujet);
-    			return GestionnaireSecuriteCardex.validerEtFiltrerSecuriteRechercheIntervenantEstAssigne(subject, collection);
+        		List<PhotoVO> photoVOs = FabriqueCardexDAO.getInstance().getSujetDAO().findLiensPhoto(subject, sujet);
+    			return GestionnaireSecuriteCardex.validerEtFiltrerSecuriteRechercheIntervenantEstAssigne(subject, photoVOs);
         	}else
         		return new ArrayList();
         } catch (DAOException dae) {
@@ -569,11 +563,11 @@ public class SujetSessionFacade {
      * Recherche des liens photos historiques.
      *
      * @param subject Le sujet qui effectue le lien
-     * @param sujet Le sujet lié
-     * @return  Les dossiers liés
+     * @param sujet Le sujet liï¿½
+     * @return  Les dossiers liï¿½s
      *
-     * @throws BusinessRuleException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessRuleException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public Collection findLiensPhotoAudit(CardexAuthenticationSubject subject,
                            Sujet sujet) throws BusinessRuleException,
@@ -595,11 +589,11 @@ public class SujetSessionFacade {
      * Recherche des liens narrations.
      *
      * @param subject Le sujet qui effectue le lien
-     * @param sujet Le sujet lié
-     * @return  Les dossiers liés
+     * @param sujet Le sujet liï¿½
+     * @return  Les dossiers liï¿½s
      *
-     * @throws BusinessRuleException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessRuleException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public Collection findLiensNarration(CardexAuthenticationSubject subject,
                            Sujet sujet) throws BusinessRuleException,
@@ -618,13 +612,13 @@ public class SujetSessionFacade {
     }
 
     /**
-     * Mise à jour d'un lien entre une narration et un sujet.
+     * Mise ï¿½ jour d'un lien entre une narration et un sujet.
      *
      * @param subject Le sujet qui effectue le lien
-     * @param narration La narration à modifier
+     * @param narration La narration ï¿½ modifier
      *
-     * @throws BusinessRuleException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessRuleException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public void updateLienNarration(CardexAuthenticationSubject subject,
                              Narration narration) throws BusinessRuleException,
@@ -642,13 +636,13 @@ public class SujetSessionFacade {
     }
 
      /**
-     * Approbation d'une narration liée à un dossier.
+     * Approbation d'une narration liï¿½e ï¿½ un dossier.
      *
      * @param subject Le sujet qui effectue le lien
-     * @param narration La narration à approuver
+     * @param narration La narration ï¿½ approuver
      *
-     * @throws BusinessRuleException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessRuleException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public void approuveLienNarration(CardexAuthenticationSubject subject,
                              Narration narration) throws BusinessRuleException,
@@ -664,10 +658,10 @@ public class SujetSessionFacade {
     }
 
    /**
-     * Mise à jour d'un lien entre une adresse et un sujet.
+     * Mise ï¿½ jour d'un lien entre une adresse et un sujet.
      *
      * @param subject Le sujet qui effectue le lien
-     * @param adresse La adresse à modifier
+     * @param adresse La adresse ï¿½ modifier
 	 * @throws BusinessRuleException
 	 * @throws BusinessException
      */
@@ -686,14 +680,14 @@ public class SujetSessionFacade {
     }
 
     /**
-     * Ajout d'un lien entre une société et un sujet.
+     * Ajout d'un lien entre une sociï¿½tï¿½ et un sujet.
      *
      * @param subject Le sujet qui effectue le lien
-     * @param sujet Le sujet à lier
-     * @param societe La société à lier
+     * @param sujet Le sujet ï¿½ lier
+     * @param societe La sociï¿½tï¿½ ï¿½ lier
      *
-     * @throws BusinessRuleException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessRuleException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public void addLienSociete(CardexAuthenticationSubject subject,
                            Sujet sujet,
@@ -714,10 +708,10 @@ public class SujetSessionFacade {
      *
      * @param subject Le sujet qui effectue le lien
      * @param sujet Le sujet initial
-     * @param linkedSujet Le sujet à lier
+     * @param linkedSujet Le sujet ï¿½ lier
      *
-     * @throws BusinessRuleException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessRuleException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public void addLienSujet(CardexAuthenticationSubject subject,
                          Sujet sujet,
@@ -738,10 +732,10 @@ public class SujetSessionFacade {
      *
      * @param subject Le sujet qui effectue le lien
      * @param sujet Le sujet initial
-     * @param linkedSujet Le sujet à lier
+     * @param linkedSujet Le sujet ï¿½ lier
      *
-     * @throws BusinessRuleException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessRuleException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public void deleteLienSociete(CardexAuthenticationSubject subject,
                          Sujet sujet,
@@ -758,14 +752,14 @@ public class SujetSessionFacade {
     }
 
    /**
-     * Destruction d'un lien entre un sujet et un véhicule.
+     * Destruction d'un lien entre un sujet et un vï¿½hicule.
      *
      * @param subject Le sujet qui effectue le lien
      * @param sujet Le sujet initial
-     * @param vehicule Le véhicule lié
+     * @param vehicule Le vï¿½hicule liï¿½
      *
-     * @throws BusinessRuleException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessRuleException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public void deleteLienVehicule(CardexAuthenticationSubject subject,
                          Sujet sujet,
@@ -788,10 +782,10 @@ public class SujetSessionFacade {
      *
      * @param subject Le sujet qui effectue le lien
      * @param sujet Le sujet initial
-     * @param linkedSujet Le sujet à lier
+     * @param linkedSujet Le sujet ï¿½ lier
      *
-     * @throws BusinessRuleException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessRuleException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public void deleteLienSujet(CardexAuthenticationSubject subject,
                          Sujet sujet,
@@ -811,11 +805,11 @@ public class SujetSessionFacade {
      * Destruction d'un lien entre une adresse et un sujet .
      *
      * @param subject Le sujet qui effectue le lien
-     * @param sujet Le sujet à lier
-     * @param adresse L'adresse à lier
+     * @param sujet Le sujet ï¿½ lier
+     * @param adresse L'adresse ï¿½ lier
      *
-     * @throws BusinessRuleException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessRuleException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public void deleteLienAdresse(CardexAuthenticationSubject subject,
                          Sujet sujet,
@@ -832,12 +826,12 @@ public class SujetSessionFacade {
     }
     
     /**
-     * Suppression des sujets de confidentialité 8.
+     * Suppression des sujets de confidentialitï¿½ 8.
      *
      * @param subject Le sujet qui effectue le lien
      *
-     * @throws BusinessRuleException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessRuleException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public void delete(CardexAuthenticationSubject subject) 
     			throws BusinessRuleException, BusinessResourceException {
@@ -852,11 +846,11 @@ public class SujetSessionFacade {
      * Destruction d'un lien entre une narration et un sujet .
      *
      * @param subject Le sujet qui effectue le lien
-     * @param sujet Le sujet à lier
-     * @param narration L'narration à lier
+     * @param sujet Le sujet ï¿½ lier
+     * @param narration L'narration ï¿½ lier
      *
-     * @throws BusinessRuleException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessRuleException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public void deleteLienNarration(CardexAuthenticationSubject subject,
                          Sujet sujet,
@@ -876,8 +870,8 @@ public class SujetSessionFacade {
      * Ajout d'un lien entre une adresse et un sujet .
      *
      * @param subject Le sujet qui effectue le lien
-     * @param sujet Le sujet à lier
-     * @param adresse L'adresse à lier
+     * @param sujet Le sujet ï¿½ lier
+     * @param adresse L'adresse ï¿½ lier
      * @throws BusinessRuleException
      * @throws BusinessException
      */
@@ -897,14 +891,14 @@ public class SujetSessionFacade {
 
 
     /**
-     * Ajout d'un lien entre des caractéristiques et un sujet avec audit.
+     * Ajout d'un lien entre des caractï¿½ristiques et un sujet avec audit.
      *
      * @param subject Le sujet qui effectue le lien
-     * @param sujet Le sujet à lier
-     * @param inscription L'inscription à lier
+     * @param sujet Le sujet ï¿½ lier
+     * @param inscription L'inscription ï¿½ lier
      *
-     * @throws BusinessRuleException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessRuleException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public void updateLiensCaracteristique(CardexAuthenticationSubject subject,
                                Sujet sujet,
@@ -927,10 +921,10 @@ public class SujetSessionFacade {
      * Ajout d'un lien entre une photo et un sujet.
      *
      * @param subject Le sujet qui effectue le lien
-     * @param sujet Le sujet à lier
-     * @param photo La photo à lier
+     * @param sujet Le sujet ï¿½ lier
+     * @param photo La photo ï¿½ lier
      *
-     * @throws BusinessRuleException si une règle d'affaire n'est pas respectée
+     * @throws BusinessRuleException si une rï¿½gle d'affaire n'est pas respectï¿½e
      * @throws BusinessException 
      */
     public Photo addLienPhoto(CardexAuthenticationSubject subject,
@@ -948,14 +942,14 @@ public class SujetSessionFacade {
     }
 
     /**
-     * Ajout d'un lien entre un véhicule et un sujet.
+     * Ajout d'un lien entre un vï¿½hicule et un sujet.
      *
      * @param subject Le sujet qui effectue le lien
-     * @param sujet Le sujet à lier
-     * @param vehicule Le véhicule a lier
+     * @param sujet Le sujet ï¿½ lier
+     * @param vehicule Le vï¿½hicule a lier
      *
-     * @throws BusinessRuleException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessRuleException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public void addLienVehicule(CardexAuthenticationSubject subject,
                             Sujet sujet,
@@ -1002,7 +996,7 @@ public class SujetSessionFacade {
     		}
     	} catch (DAOException e) {
     		e.printStackTrace();
-    		throw new BusinessException("Problème avec checkNombreEnregistrementRechercheDossier");
+    		throw new BusinessException("Problï¿½me avec checkNombreEnregistrementRechercheDossier");
     	}
     } 
     
@@ -1030,16 +1024,16 @@ public class SujetSessionFacade {
     
     /*
      * Construit une BusinessResourceException si l'exception SQL n'est pas
-     * n'est pas reliée à une règle d'affaire contenu dans
-     * les règles d'intégrité de la base de données du cardex.
-     * Si l'erreur SQl est reliée à une règle d'affaire, cette méthode
+     * n'est pas reliï¿½e ï¿½ une rï¿½gle d'affaire contenu dans
+     * les rï¿½gles d'intï¿½gritï¿½ de la base de donnï¿½es du cardex.
+     * Si l'erreur SQl est reliï¿½e ï¿½ une rï¿½gle d'affaire, cette mï¿½thode
      * fait la mise en correspondance entre les codes
-     * d'erreur SQL reçus et les règles d'affaires applicable.
+     * d'erreur SQL reï¿½us et les rï¿½gles d'affaires applicable.
      *
      * @param daoe DAOException
      *
-     * @throw BusinessRuleException si l'exception est reliée à une règle d'affaire
-     * @throw BusinessResourceException si l'exception n'est pas reliée à une règle
+     * @throw BusinessRuleException si l'exception est reliï¿½e ï¿½ une rï¿½gle d'affaire
+     * @throw BusinessResourceException si l'exception n'est pas reliï¿½e ï¿½ une rï¿½gle
      *                                  d'affaire
      *
      */
@@ -1053,8 +1047,8 @@ public class SujetSessionFacade {
 
             //Le code d'erreur est extrait du message contenu dans l'exception
             //SQL puisque le driver JDBC Oracle ne donne pas toutes les exception
-            //ORACLE qui devrait être chaîné.  Normalement on devrait extraire le
-            //code d'erreur à partir de la méthode SQLException.getErrorCode().
+            //ORACLE qui devrait ï¿½tre chaï¿½nï¿½.  Normalement on devrait extraire le
+            //code d'erreur ï¿½ partir de la mï¿½thode SQLException.getErrorCode().
             if (sqlException.getMessage().indexOf("ORA-20001") != -1) {
                 bre.setBusinessRule(SujetBusinessRuleException.SUJET_RELIE_A_LUI_MEME);
                 throw bre;
@@ -1068,10 +1062,10 @@ public class SujetSessionFacade {
     }
 	
     /**
-     * Modification du rôle d'un lien à un sujet.
+     * Modification du rï¿½le d'un lien ï¿½ un sujet.
      *
      * @param subject Le sujet qui effectue le lien
-     * @param suivi La suivi à modifier
+     * @param suivi La suivi ï¿½ modifier
      * @throws BusinessRuleException
      * @throws BusinessException
      */
@@ -1087,10 +1081,10 @@ public class SujetSessionFacade {
     }
 
     /**
-     * Copie des données d'un sujet à une autre.
+     * Copie des donnï¿½es d'un sujet ï¿½ une autre.
      *
      * @param subject Le sujet qui effectue le lien
-     * @param suivi La suivi à modifier
+     * @param suivi La suivi ï¿½ modifier
      * @throws BusinessRuleException
      * @throws BusinessException
      */
@@ -1104,17 +1098,17 @@ public class SujetSessionFacade {
     }
     
     /**
-     * Chargement d'un sujet à partir de la recherche directe.
+     * Chargement d'un sujet ï¿½ partir de la recherche directe.
      *
-     * Cette méthode sert également à sécuriser l'accès.
+     * Cette mï¿½thode sert ï¿½galement ï¿½ sï¿½curiser l'accï¿½s.
      *
      * @param subject Le sujet qui recherche un sujet
-     * @param criteria Les critères de recherche
+     * @param criteria Les critï¿½res de recherche
      *
-     * @return Le sujet recherché
+     * @return Le sujet recherchï¿½
      *
-     * @throws BusinessRuleException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessRuleException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public Sujet rechercheDirecte(CardexAuthenticationSubject subject,
                         Sujet criteria) throws BusinessRuleException,
@@ -1129,10 +1123,10 @@ public class SujetSessionFacade {
     }
 
     /**
-     * Ajout d'une entrée dans la table des accès
+     * Ajout d'une entrï¿½e dans la table des accï¿½s
      *
-     * @throws BusinessRuleException si une règle d'affaire n'est pas respectée
-     * @throws BusinessResourceException si une erreur système survient
+     * @throws BusinessRuleException si une rï¿½gle d'affaire n'est pas respectï¿½e
+     * @throws BusinessResourceException si une erreur systï¿½me survient
      */
     public void ajoutAcces(CardexAuthenticationSubject subject,
                         Sujet criteria) throws BusinessRuleException,

@@ -1,7 +1,7 @@
 package com.lotoquebec.cardex.business.vo.rapport;
 
 
-public class AccesRapportVO extends RapportVO{
+public class AccesRapportVO extends CritereRapportVO{
 
 	private String intervenant = "";
 	private long site = 0;
@@ -44,7 +44,7 @@ public class AccesRapportVO extends RapportVO{
 	}
 
 	/**
-	 * @param nombreAcces nombreAcces à définir
+	 * @param nombreAcces nombreAcces ï¿½ dï¿½finir
 	 */
 	public void setNombreAcces(long nombreAcces) {
 		this.nombreAcces = nombreAcces;
@@ -58,7 +58,7 @@ public class AccesRapportVO extends RapportVO{
 	}
 
 	/**
-	 * @param genre genre à définir
+	 * @param genre genre ï¿½ dï¿½finir
 	 */
 	public void setGenre(String genre) {
 		this.genre = genre;
@@ -72,7 +72,7 @@ public class AccesRapportVO extends RapportVO{
 	}
 
 	/**
-	 * @param nature nature à définir
+	 * @param nature nature ï¿½ dï¿½finir
 	 */
 	public void setNature(String nature) {
 		this.nature = nature;

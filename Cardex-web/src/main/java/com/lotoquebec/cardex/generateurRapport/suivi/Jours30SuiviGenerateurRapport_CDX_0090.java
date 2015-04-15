@@ -11,16 +11,17 @@ import net.sf.jasperreports.engine.JRResultSetDataSource;
 import net.sf.jasperreports.engine.util.JRLoader;
 
 import com.lotoquebec.cardex.business.delegate.RapportBusinessDelegate;
-import com.lotoquebec.cardex.business.vo.rapport.RapportVO;
+import com.lotoquebec.cardex.business.vo.rapport.CritereRapportVO;
 import com.lotoquebec.cardex.business.vo.rapport.SiteIntervenantRapportVO;
-import com.lotoquebec.cardex.generateurRapport.GenererRapport;
+import com.lotoquebec.cardex.generateurRapport.CritereGenererRapport;
 import com.lotoquebec.cardex.generateurRapport.rapports.RapportsConfiguration;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
+import com.lotoquebec.cardexCommun.business.vo.VO;
 import com.lotoquebec.cardexCommun.exception.BusinessException;
 import com.lotoquebec.cardexCommun.exception.BusinessResourceException;
 import com.lotoquebec.cardexCommun.securite.GestionnaireSecurite;
 
-public class Jours30SuiviGenerateurRapport_CDX_0090 extends GenererRapport {
+public class Jours30SuiviGenerateurRapport_CDX_0090 extends CritereGenererRapport {
 
 	@Override
 	public void validerSecurite(CardexAuthenticationSubject subject) {
@@ -28,11 +29,12 @@ public class Jours30SuiviGenerateurRapport_CDX_0090 extends GenererRapport {
 	}
 	
 	@Override
-	public RapportVO construireNouveauRapportVO() {
+	public CritereRapportVO construireNouveauRapportVO() {
 		return new SiteIntervenantRapportVO();
 	}
 	
-	protected Map construireParametres(CardexAuthenticationSubject subject, RapportVO rapportVO, Connection connection) throws JRException {
+	@Override
+	protected Map construireParametres(CardexAuthenticationSubject subject, VO rapportVO, Connection connection) throws JRException {
 		Map parameters = super.construireParametres(subject, rapportVO, connection);
 		parameters.put("sous_rapport_suivis_plus_30_jours", JRLoader.loadObject(RapportsConfiguration.class.getResourceAsStream(RapportsConfiguration.SOUS_RAPPORT_SUIVIS_PLUS_30_JOURS)));
 		parameters.put("sous_rapport_suivis_plus_60_jours", JRLoader.loadObject(RapportsConfiguration.class.getResourceAsStream(RapportsConfiguration.SOUS_RAPPORT_SUIVIS_PLUS_60_JOURS)));
@@ -41,7 +43,7 @@ public class Jours30SuiviGenerateurRapport_CDX_0090 extends GenererRapport {
 	}
 
 	@Override
-	public JRDataSource construireDataSource(CardexAuthenticationSubject subject, RapportVO rapportVO, Connection connection) throws BusinessResourceException, BusinessException {
+	public JRDataSource construireDataSource(CardexAuthenticationSubject subject, CritereRapportVO rapportVO, Connection connection) throws BusinessResourceException, BusinessException {
 		RapportBusinessDelegate delegate = new RapportBusinessDelegate();
        	ResultSet resultSet = delegate.rapportSuivis((SiteIntervenantRapportVO) rapportVO, "CARDEX_RAPPORT.SP_RAP_SUIVI_30_JOURS",connection);
        	return new JRResultSetDataSource(resultSet);

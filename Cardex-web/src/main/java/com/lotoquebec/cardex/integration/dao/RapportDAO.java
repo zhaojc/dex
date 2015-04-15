@@ -43,7 +43,7 @@ import com.lotoquebec.cardex.business.vo.rapport.EntiteRapportVO;
 import com.lotoquebec.cardex.business.vo.rapport.EspaceJeuxAutoexclusionActifRapportVO_CDX_0260;
 import com.lotoquebec.cardex.business.vo.rapport.EspaceJeuxFraudeFondeRapportVO_CDX_0261;
 import com.lotoquebec.cardex.business.vo.rapport.EspaceJeuxTricherieFondeRapportVO_CDX_0262;
-import com.lotoquebec.cardex.business.vo.rapport.RapportVO;
+import com.lotoquebec.cardex.business.vo.rapport.CritereRapportVO;
 import com.lotoquebec.cardex.business.vo.rapport.RapportVOCDX_00070;
 import com.lotoquebec.cardex.business.vo.rapport.ReperageAutoexclusionDossierRapportVO;
 import com.lotoquebec.cardex.business.vo.rapport.ResponsableSocieteVO_CDX_0255;
@@ -112,7 +112,7 @@ public class RapportDAO {
      * recherche.
 	 * @see AccesDAO#select(long, long)
 	 */
-	public Collection rapportReperageAccesInterdit(CardexAuthenticationSubject subject, String procedure, RapportVO rapportVO, long site) throws DAOException {
+	public Collection rapportReperageAccesInterdit(CardexAuthenticationSubject subject, String procedure, CritereRapportVO rapportVO, long site) throws DAOException {
         Connection connection =
         	DAOConnection.getInstance().getConnection();
 		CallableStatement callableStatement = null;
@@ -211,7 +211,7 @@ public class RapportDAO {
      * recherche.
 	 * @see AccesDAO#select(long, long)
 	 */
-	public ResultSet procedureSite(String procedure, RapportVO rapportVO, long site, Connection connection) throws DAOException {
+	public ResultSet procedureSite(String procedure, CritereRapportVO rapportVO, long site, Connection connection) throws DAOException {
 		CallableStatement callableStatement = null;
 		ResultSet resultSet = null;
 		
@@ -893,7 +893,7 @@ public class RapportDAO {
 	 * @return
 	 * @throws DAOException
 	 */
-	public ResultSet rapportProcedure(RapportVO rapportVO, String procedure,Connection connection) throws DAOException {
+	public ResultSet rapportProcedure(CritereRapportVO rapportVO, String procedure,Connection connection) throws DAOException {
 		CallableStatement callableStatement = null;
 		ResultSet resultSet = null;
         try {
@@ -1127,7 +1127,7 @@ public class RapportDAO {
     }
 
     //Rapport cumulatif et hebdomadaire pour Espacejeux (CDX_0143 et CDX_0144)
-    public RapportDossier produireListeTypeCategorieEspacejeux(final RapportVO rapportVO) throws DAOException{
+    public RapportDossier produireListeTypeCategorieEspacejeux(final CritereRapportVO rapportVO) throws DAOException{
 		final List liste = new ArrayList();
 		StoreProcTemplate storeProcTemplate = new StoreProcTemplate();
     	RapportDossier rapportDossierRetour = new RapportDossierVO();
@@ -1575,7 +1575,7 @@ public class RapportDAO {
 	 * @return
 	 * @throws DAOException
 	 */
-	public List rapportEnqueteRetard(RapportVO rapportVO) throws DAOException {
+	public List rapportEnqueteRetard(CritereRapportVO rapportVO) throws DAOException {
 		Connection connection = DAOConnection.getInstance().getConnection();
 		CallableStatement callableStatement = null;
 		ResultSet resultSet = null;
@@ -1660,7 +1660,7 @@ public class RapportDAO {
 	 * @return
 	 * @throws DAOException
 	 */
-	public List rapportEnqueteTraitementRetard(RapportVO rapportVO) throws DAOException {
+	public List rapportEnqueteTraitementRetard(CritereRapportVO rapportVO) throws DAOException {
 		Connection connection = DAOConnection.getInstance().getConnection();
 		CallableStatement callableStatement = null;
 		ResultSet resultSet = null;

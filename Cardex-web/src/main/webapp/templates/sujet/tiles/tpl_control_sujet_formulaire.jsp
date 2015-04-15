@@ -32,7 +32,7 @@
          <TR>   
             <TD colspan="3" valign="middle">
  				<logic:equal name='sujet' property='new' value='false' >
-		 	         <cardex:button labelKey='cb_imprimer' securityConstraint='cardex.sujet.base.imprimer' style='width: 60px; text-align: center;' onclick='doPrint();' urlSecurite="/AffichagePDFFiches" />&nbsp;
+		 	         <cardex:button labelKey='cb_imprimer' securityConstraint='cardex.sujet.base.imprimer' style='width: 60px; text-align: center;' onclick='doPrint();' />&nbsp;
 			         <cardex:button labelKey='cb_exporter' style='width: 60px; text-align: center;' onclick='doExporter();' urlSecurite="/sujet/printFiche.do" />
 			    </logic:equal>
             </TD>

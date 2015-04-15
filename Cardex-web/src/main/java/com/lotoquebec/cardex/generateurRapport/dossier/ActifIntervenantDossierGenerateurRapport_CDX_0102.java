@@ -9,15 +9,15 @@ import net.sf.jasperreports.engine.JRResultSetDataSource;
 
 import com.lotoquebec.cardex.business.delegate.RapportBusinessDelegate;
 import com.lotoquebec.cardex.business.vo.rapport.ActifIntervenantDossierRapportVO_CDX_0102;
-import com.lotoquebec.cardex.business.vo.rapport.RapportVO;
-import com.lotoquebec.cardex.generateurRapport.GenererRapport;
+import com.lotoquebec.cardex.business.vo.rapport.CritereRapportVO;
+import com.lotoquebec.cardex.generateurRapport.CritereGenererRapport;
 import com.lotoquebec.cardex.generateurRapport.rapports.RapportsConfiguration;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
 import com.lotoquebec.cardexCommun.exception.BusinessException;
 import com.lotoquebec.cardexCommun.exception.BusinessResourceException;
 import com.lotoquebec.cardexCommun.securite.GestionnaireSecurite;
 
-public class ActifIntervenantDossierGenerateurRapport_CDX_0102 extends GenererRapport {
+public class ActifIntervenantDossierGenerateurRapport_CDX_0102 extends CritereGenererRapport {
 
 	@Override
 	public void validerSecurite(CardexAuthenticationSubject subject) {
@@ -25,12 +25,12 @@ public class ActifIntervenantDossierGenerateurRapport_CDX_0102 extends GenererRa
 	}
 	
 	@Override
-	public RapportVO construireNouveauRapportVO() {
+	public CritereRapportVO construireNouveauRapportVO() {
 		return new ActifIntervenantDossierRapportVO_CDX_0102();
 	}
 
 	@Override
-	public JRDataSource construireDataSource(CardexAuthenticationSubject subject, RapportVO rapportVO, Connection connection) throws BusinessResourceException, BusinessException {
+	public JRDataSource construireDataSource(CardexAuthenticationSubject subject, CritereRapportVO rapportVO, Connection connection) throws BusinessResourceException, BusinessException {
 		ActifIntervenantDossierRapportVO_CDX_0102 rapportDossierVO =(ActifIntervenantDossierRapportVO_CDX_0102) rapportVO;
 		RapportBusinessDelegate delegate = new RapportBusinessDelegate();
 		ResultSet resultSet = delegate.listesDossiersActifs(rapportDossierVO,connection);

@@ -12,11 +12,12 @@ import net.sf.jasperreports.engine.JRResultSetDataSource;
 
 import com.lotoquebec.cardex.business.delegate.RapportBusinessDelegate;
 import com.lotoquebec.cardex.business.vo.rapport.AccesRapportVO;
-import com.lotoquebec.cardex.business.vo.rapport.RapportVO;
-import com.lotoquebec.cardex.generateurRapport.GenererRapport;
+import com.lotoquebec.cardex.business.vo.rapport.CritereRapportVO;
+import com.lotoquebec.cardex.generateurRapport.CritereGenererRapport;
 import com.lotoquebec.cardex.generateurRapport.rapports.RapportsConfiguration;
 import com.lotoquebec.cardexCommun.GlobalConstants;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
+import com.lotoquebec.cardexCommun.business.vo.VO;
 import com.lotoquebec.cardexCommun.exception.BusinessException;
 import com.lotoquebec.cardexCommun.exception.BusinessResourceException;
 import com.lotoquebec.cardexCommun.integration.dao.cleListe.cleSQLListeCache.IntervenantCle;
@@ -26,7 +27,7 @@ import com.lotoquebec.cardexCommun.text.DateFormat;
 import com.lotoquebec.cardexCommun.util.ListeCache;
 import com.lotoquebec.cardexCommun.util.StringUtils;
 
-public class AuditAnalyseAccesDossiersGenerateurRapport_CDX_0072 extends GenererRapport {
+public class AuditAnalyseAccesDossiersGenerateurRapport_CDX_0072 extends CritereGenererRapport {
 
 	@Override
 	public void validerSecurite(CardexAuthenticationSubject subject) {
@@ -34,12 +35,12 @@ public class AuditAnalyseAccesDossiersGenerateurRapport_CDX_0072 extends Generer
 	}
 	
 	@Override
-	public RapportVO construireNouveauRapportVO() {
+	public CritereRapportVO construireNouveauRapportVO() {
 		return new AccesRapportVO();
 	}
 
 	@Override
-	public JRDataSource construireDataSource(CardexAuthenticationSubject subject, RapportVO rapportVO, Connection connection) throws BusinessResourceException, BusinessException {
+	public JRDataSource construireDataSource(CardexAuthenticationSubject subject, CritereRapportVO rapportVO, Connection connection) throws BusinessResourceException, BusinessException {
 		AccesRapportVO rapportDossierVO =(AccesRapportVO) rapportVO;
 		RapportBusinessDelegate delegate = new RapportBusinessDelegate();
 		ResultSet resultSet = delegate.auditAnalyseAccesDossiers(rapportDossierVO,connection);
@@ -52,7 +53,8 @@ public class AuditAnalyseAccesDossiersGenerateurRapport_CDX_0072 extends Generer
 		return RapportsConfiguration.class.getResourceAsStream(RapportsConfiguration.ANALYSE_ACCES);
 	}
 
-	protected Map construireParametres(CardexAuthenticationSubject subject, RapportVO rapportVO, Connection connection) throws JRException {
+	@Override
+	protected Map construireParametres(CardexAuthenticationSubject subject, VO rapportVO, Connection connection) throws JRException {
 		Map parameters = new HashMap();
 		AccesRapportVO rapportDossierVO =(AccesRapportVO) rapportVO;
         parameters.put("DATE_DEBUT",DateFormat.format(rapportDossierVO.getDateHeureDebutDu(), DateFormat.DATE_FORMAT_AVEC_HEURE));

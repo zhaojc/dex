@@ -26,7 +26,7 @@ import com.lotoquebec.cardex.business.CriteresRechercheDossier;
 import com.lotoquebec.cardex.business.Dossier;
 import com.lotoquebec.cardex.business.vo.CriteresRechercheDossierVO;
 import com.lotoquebec.cardex.business.vo.DossierVO;
-import com.lotoquebec.cardex.generateurRapport.GenererRapport;
+import com.lotoquebec.cardex.generateurRapport.CritereGenererRapport;
 import com.lotoquebec.cardex.presentation.model.form.CriteresRechercheDossierForm;
 import com.lotoquebec.cardex.presentation.model.form.DossierForm;
 import com.lotoquebec.cardex.presentation.util.ValueObjectMapper;
@@ -48,7 +48,7 @@ import com.lotoquebec.cardexCommun.util.ListeCache;
  * 2012-01-26
  * @Deprecated sera retirer dans la version 5.5
  */
-public abstract class RechercheDossierRapport extends GenererRapport {
+public abstract class RechercheDossierRapport extends CritereGenererRapport {
 
 	protected CardexAuthenticationSubject subject = null;
 

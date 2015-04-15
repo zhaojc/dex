@@ -18,12 +18,13 @@ import net.sf.jasperreports.engine.data.JRMapCollectionDataSource;
 import com.lotoquebec.cardex.business.RapportDossier;
 import com.lotoquebec.cardex.business.delegate.RapportBusinessDelegate;
 import com.lotoquebec.cardex.business.vo.RapportDossierVO;
+import com.lotoquebec.cardex.business.vo.rapport.CritereRapportVO;
 import com.lotoquebec.cardex.business.vo.rapport.CumulatifDossierRapportVO;
-import com.lotoquebec.cardex.business.vo.rapport.RapportVO;
-import com.lotoquebec.cardex.generateurRapport.GenererRapport;
+import com.lotoquebec.cardex.generateurRapport.CritereGenererRapport;
 import com.lotoquebec.cardex.generateurRapport.rapports.RapportsConfiguration;
 import com.lotoquebec.cardexCommun.GlobalConstants;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
+import com.lotoquebec.cardexCommun.business.vo.VO;
 import com.lotoquebec.cardexCommun.exception.BusinessException;
 import com.lotoquebec.cardexCommun.exception.BusinessResourceException;
 import com.lotoquebec.cardexCommun.integration.dao.cleListe.cleSQLListeCache.TableValeurCleSQLListeCache;
@@ -33,7 +34,7 @@ import com.lotoquebec.cardexCommun.user.CardexUser;
 import com.lotoquebec.cardexCommun.util.ListeCache;
 import com.lotoquebec.cardexCommun.util.StringUtils;
 
-public class HebdomadaireEspacejeuxDossierGenerateurRapport_CDX_0144 extends GenererRapport {
+public class HebdomadaireEspacejeuxDossierGenerateurRapport_CDX_0144 extends CritereGenererRapport {
  
 	protected InputStream obtenirGabarit() {
 		return RapportsConfiguration.class.getResourceAsStream(RapportsConfiguration.RAPPORT_HEBDOMADAIRE_ESPACEJEUX);
@@ -43,18 +44,18 @@ public class HebdomadaireEspacejeuxDossierGenerateurRapport_CDX_0144 extends Gen
 		GestionnaireSecurite.validerSecuriteURL(subject, "/rapport/dossiersCumulatifEspaceJeux");
 	}
 	
-	public RapportVO construireNouveauRapportVO() {
+	public CritereRapportVO construireNouveauRapportVO() {
 		return new CumulatifDossierRapportVO();
 	}
 
 	@Override
-	protected JRDataSource construireDataSource(CardexAuthenticationSubject subject, RapportVO rapportVO, Connection connection) throws BusinessResourceException, BusinessException {
+	protected JRDataSource construireDataSource(CardexAuthenticationSubject subject, CritereRapportVO rapportVO, Connection connection) throws BusinessResourceException, BusinessException {
 		RapportBusinessDelegate delegate = new RapportBusinessDelegate();
 		CumulatifDossierRapportVO cumulatifDossierRapportVO = (CumulatifDossierRapportVO) rapportVO;
-		//On conserve la date initiale pour la retourner en paramètre au rapport
+		//On conserve la date initiale pour la retourner en paramï¿½tre au rapport
 		Date dateDebut = cumulatifDossierRapportVO.getDateDebutDu();
-		//On commence d'abord par construire la liste des types et des catégories avec le total de dossiers.
-		RapportDossier rapportDossier = delegate.produireListeTypeCategorieEspacejeux(rapportVO);
+		//On commence d'abord par construire la liste des types et des catï¿½gories avec le total de dossiers.
+		RapportDossier rapportDossier = delegate.produireListeTypeCategorieEspacejeux((CritereRapportVO) rapportVO);
 		List list = new ArrayList();
 		Iterator iter = rapportDossier.getListDossier().iterator();
 		try{
@@ -64,7 +65,7 @@ public class HebdomadaireEspacejeuxDossierGenerateurRapport_CDX_0144 extends Gen
 			mapRapportDossier.put("Type", rapportDossierVO.getType());
 			mapRapportDossier.put("Categorie", rapportDossierVO.getCategorie());
 			mapRapportDossier.put("nombreDossier", rapportDossierVO.getNombreDossier());
-			//Pour chaque entrée, on calcule les valeurs cumulatives qui seront reportées sur le rapport à partir du début de l'année
+			//Pour chaque entrï¿½e, on calcule les valeurs cumulatives qui seront reportï¿½es sur le rapport ï¿½ partir du dï¿½but de l'annï¿½e
 		    SimpleDateFormat formater = null;
 		    formater = new SimpleDateFormat("yyyy");
 		    String date = formater.format(cumulatifDossierRapportVO.getDateDebutDu());
@@ -79,7 +80,8 @@ public class HebdomadaireEspacejeuxDossierGenerateurRapport_CDX_0144 extends Gen
 		return new JRMapCollectionDataSource(list);
 	}
 
-	protected Map construireParametres(CardexAuthenticationSubject subject, RapportVO rapportVO, Connection connection) throws JRException {
+	@Override
+	protected Map construireParametres(CardexAuthenticationSubject subject, VO rapportVO, Connection connection) throws JRException {
 		Map parameters = super.construireParametres(subject, rapportVO, connection);
 		CumulatifDossierRapportVO cumulatifDossierRapportVO = (CumulatifDossierRapportVO) rapportVO;
 		CardexUser cardexUser = (CardexUser) subject.getUser();

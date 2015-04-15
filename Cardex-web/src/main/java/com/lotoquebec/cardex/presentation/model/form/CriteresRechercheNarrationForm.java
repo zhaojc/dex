@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.apache.struts.validator.ValidatorForm;
-
+import com.lotoquebec.cardex.generateurRapport.dossier.RAQDossierGenerateurRapport_CDX_0070;
 import com.lotoquebec.cardex.presentation.model.CriteresRechercheNarrationHtmlForm;
 import com.lotoquebec.cardex.presentation.model.NarrationHtmlForm;
+import com.lotoquebec.cardex.presentation.model.form.rapport.RapportForm;
 import com.lotoquebec.cardexCommun.GlobalConstants;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
 import com.lotoquebec.cardexCommun.model.ListeResultat;
@@ -16,7 +16,7 @@ import com.lotoquebec.cardexCommun.user.CardexUser;
 import com.lotoquebec.cardexCommun.util.GererTacheUtilisateur;
 
 /**
- * Conserve les différentes valeurs relatives au formulatire de recherche d'une
+ * Conserve les diffï¿½rentes valeurs relatives au formulatire de recherche d'une
  * narration.
  *
  * @author $Author: mlibersan $
@@ -24,7 +24,7 @@ import com.lotoquebec.cardexCommun.util.GererTacheUtilisateur;
  * @see
  * com.lotoquebec.cardex.presentation.model.CriteresRechercheNarrationHtmlForm
  */
-public class CriteresRechercheNarrationForm extends ValidatorForm
+public class CriteresRechercheNarrationForm extends RapportForm
         implements CriteresRechercheNarrationHtmlForm, RechercheListeResultat {
 
     private String entite = "";
@@ -58,9 +58,11 @@ public class CriteresRechercheNarrationForm extends ValidatorForm
     private int sequence = 0;    
 
     /**
-     * Constructeur de CriteresRechercheNarrationForm par défaut.
+     * Constructeur de CriteresRechercheNarrationForm par dï¿½faut.
      */
-    public CriteresRechercheNarrationForm() {}
+    public CriteresRechercheNarrationForm() {
+    	super(new RAQDossierGenerateurRapport_CDX_0070());
+    }
 
 
     // Getters
@@ -69,7 +71,7 @@ public class CriteresRechercheNarrationForm extends ValidatorForm
     /**
      * Retourne l'approbation.
      *
-     * @return String Valeur de l'approbation en caractère.
+     * @return String Valeur de l'approbation en caractï¿½re.
      */
     public String getApprouve() {
         return this.approuve;
@@ -78,7 +80,7 @@ public class CriteresRechercheNarrationForm extends ValidatorForm
     /**
      * Retourne le secteur.
      *
-     * @return String Valeur du secteur en caractère.
+     * @return String Valeur du secteur en caractï¿½re.
      */
     public String getSecteur() {
         return this.secteur;
@@ -87,70 +89,70 @@ public class CriteresRechercheNarrationForm extends ValidatorForm
     /**
      * Retourne l'intervenant.
      *
-     * @return String Valeur de l'intervenant en caractère.
+     * @return String Valeur de l'intervenant en caractï¿½re.
      */
     public String getIntervenant() {
         return this.intervenant;
     }
 
     /**
-     * Retourne la date de création au début.
+     * Retourne la date de crï¿½ation au dï¿½but.
      *
-     * @return String Valeur de la date de création au début en caractère.
+     * @return String Valeur de la date de crï¿½ation au dï¿½but en caractï¿½re.
      */
     public String getDateCreationDebut() {
         return this.dateCreationDebut;
     }
 
     /**
-     * Retourne la date d'approbation au début.
+     * Retourne la date d'approbation au dï¿½but.
      *
-     * @return String Valeur de la date d'approbation au début en caractère.
+     * @return String Valeur de la date d'approbation au dï¿½but en caractï¿½re.
      */
     public String getDateApprobationDebut() {
         return this.dateApprobationDebut;
     }
 
     /**
-     * Retourne la date de création à la fin.
+     * Retourne la date de crï¿½ation ï¿½ la fin.
      *
-     * @return String Valeur de la date de création à la fin en caractère.
+     * @return String Valeur de la date de crï¿½ation ï¿½ la fin en caractï¿½re.
      */
     public String getDateCreationFin() {
         return this.dateCreationFin;
     }
 
     /**
-     * Retourne la date d'approbation à la fin.
+     * Retourne la date d'approbation ï¿½ la fin.
      *
-     * @return String Valeur de la date d'approbation à la fin en caractère.
+     * @return String Valeur de la date d'approbation ï¿½ la fin en caractï¿½re.
      */
     public String getDateApprobationFin() {
         return this.dateApprobationFin;
     }
 
     /**
-     * Retourne le premier mot clé.
+     * Retourne le premier mot clï¿½.
      *
-     * @return String Valeur du premier mot clé en caractère.
+     * @return String Valeur du premier mot clï¿½ en caractï¿½re.
      */
     public String getMotCle1() {
         return this.motCle1;
     }
 
     /**
-     * Retourne le deuxième mot clé.
+     * Retourne le deuxiï¿½me mot clï¿½.
      *
-     * @return String Valeur du deuxième mot clé en caractère.
+     * @return String Valeur du deuxiï¿½me mot clï¿½ en caractï¿½re.
      */
     public String getMotCle2() {
         return this.motCle2;
     }
 
     /**
-     * Retourne le troisième mot clé.
+     * Retourne le troisiï¿½me mot clï¿½.
      *
-     * @return String Valeur du troisième mot clé en caractère.
+     * @return String Valeur du troisiï¿½me mot clï¿½ en caractï¿½re.
      */
     public String getMotCle3() {
         return this.motCle3;
@@ -159,7 +161,7 @@ public class CriteresRechercheNarrationForm extends ValidatorForm
     /**
      * Retourne le lien.
      *
-     * @return String Valeur du lien en caractère.
+     * @return String Valeur du lien en caractï¿½re.
      */
     public String getLien() {
         return this.lien;
@@ -168,17 +170,17 @@ public class CriteresRechercheNarrationForm extends ValidatorForm
     /**
      * Retourne le lien du site.
      *
-     * @return String Valeur du lien du site en caractère.
+     * @return String Valeur du lien du site en caractï¿½re.
      */
     public String getLienSite() {
         return this.lienSite;
     }
 
     /**
-     * Retourne le critère d'approbation.
+     * Retourne le critï¿½re d'approbation.
      *
-     * @return String Valeur du critère d'approbation dans l'écran de recherche
-     * en caractère.
+     * @return String Valeur du critï¿½re d'approbation dans l'ï¿½cran de recherche
+     * en caractï¿½re.
      */
     public String getStatutApprobation() {
         return this.statutApprobation;
@@ -199,7 +201,7 @@ public class CriteresRechercheNarrationForm extends ValidatorForm
     /**
      * Affecte une approbation.
      *
-     * @param approuve Valeur de l'approbation en caractère.
+     * @param approuve Valeur de l'approbation en caractï¿½re.
      */
     public void setApprouve(String approuve) {
         this.approuve = approuve;
@@ -208,7 +210,7 @@ public class CriteresRechercheNarrationForm extends ValidatorForm
     /**
      * Affecte un secteur.
      *
-     * @param secteur Valeur du secteur en caractère.
+     * @param secteur Valeur du secteur en caractï¿½re.
      */
     public void setSecteur(String secteur) {
         this.secteur = secteur;
@@ -217,74 +219,74 @@ public class CriteresRechercheNarrationForm extends ValidatorForm
     /**
      * Affecte un intervenant.
      *
-     * @param intervenant Valeur de l'intervenant en caractère.
+     * @param intervenant Valeur de l'intervenant en caractï¿½re.
      */
     public void setIntervenant(String intervenant) {
         this.intervenant = intervenant;
     }
 
     /**
-     * Affecte une date de création au début.
+     * Affecte une date de crï¿½ation au dï¿½but.
      *
-     * @param dateCreationDebut Valeur de la date de création au début en
-     * caractère.
+     * @param dateCreationDebut Valeur de la date de crï¿½ation au dï¿½but en
+     * caractï¿½re.
      */
     public void setDateCreationDebut(String dateCreationDebut) {
         this.dateCreationDebut = dateCreationDebut;
     }
 
     /**
-     * Affecte une date d'approbation au début.
+     * Affecte une date d'approbation au dï¿½but.
      *
-     * @param dateApprobationDebut Valeur de la date d'approbation au début en
-     * caractère.
+     * @param dateApprobationDebut Valeur de la date d'approbation au dï¿½but en
+     * caractï¿½re.
      */
     public void setDateApprobationDebut(String dateApprobationDebut) {
         this.dateApprobationDebut = dateApprobationDebut;
     }
 
     /**
-     * Affecte une date de création à la fin.
+     * Affecte une date de crï¿½ation ï¿½ la fin.
      *
-     * @param dateCreationFin Valeur de la date de création à la fin en
-     * caractère.
+     * @param dateCreationFin Valeur de la date de crï¿½ation ï¿½ la fin en
+     * caractï¿½re.
      */
     public void setDateCreationFin(String dateCreationFin) {
         this.dateCreationFin = dateCreationFin;
     }
 
     /**
-     * Affecte une date d'approbation à la fin.
+     * Affecte une date d'approbation ï¿½ la fin.
      *
-     * @param dateApprobationFin Valeur de la date d'approbation à la fin en
-     * caractère.
+     * @param dateApprobationFin Valeur de la date d'approbation ï¿½ la fin en
+     * caractï¿½re.
      */
     public void setDateApprobationFin(String dateApprobationFin) {
         this.dateApprobationFin = dateApprobationFin;
     }
 
     /**
-     * Affecte un premier mot clé.
+     * Affecte un premier mot clï¿½.
      *
-     * @param motCle1 Valeur du premier mot clé en caractère.
+     * @param motCle1 Valeur du premier mot clï¿½ en caractï¿½re.
      */
     public void setMotCle1(String motCle1) {
         this.motCle1 = motCle1;
     }
 
     /**
-     * Affecte un deuxième mot clé.
+     * Affecte un deuxiï¿½me mot clï¿½.
      *
-     * @param motCle2 Valeur du deuxième mot clé en caractère.
+     * @param motCle2 Valeur du deuxiï¿½me mot clï¿½ en caractï¿½re.
      */
     public void setMotCle2(String motCle2) {
         this.motCle2 = motCle2;
     }
 
     /**
-     * Affecte un troisième mot clé.
+     * Affecte un troisiï¿½me mot clï¿½.
      *
-     * @param motCle3 Valeur du troisième mot clé en caractère.
+     * @param motCle3 Valeur du troisiï¿½me mot clï¿½ en caractï¿½re.
      */
     public void setMotCle3(String motCle3) {
         this.motCle3 = motCle3;
@@ -293,7 +295,7 @@ public class CriteresRechercheNarrationForm extends ValidatorForm
     /**
      * Affecte un lien.
      *
-     * @param lien Valeur du lien en caractère.
+     * @param lien Valeur du lien en caractï¿½re.
      */
     public void setLien(String lien) {
         this.lien = lien;
@@ -302,17 +304,17 @@ public class CriteresRechercheNarrationForm extends ValidatorForm
     /**
      * Affecte un lien du site.
      *
-     * @param lienSite Valeur du lien du site en caractère.
+     * @param lienSite Valeur du lien du site en caractï¿½re.
      */
     public void setLienSite(String lienSite) {
         this.lienSite = lienSite;
     }
 
     /**
-     * Affecte un critère d'approbation.
+     * Affecte un critï¿½re d'approbation.
      *
-     * @param statutApprobation Valeur du critère d'approbation dans l'écran de
-     * recherche en caractère.
+     * @param statutApprobation Valeur du critï¿½re d'approbation dans l'ï¿½cran de
+     * recherche en caractï¿½re.
      */
     public void setStatutApprobation(String statutApprobation) {
         this.statutApprobation = statutApprobation;
@@ -321,14 +323,14 @@ public class CriteresRechercheNarrationForm extends ValidatorForm
     /**
      * Ajoute une narration.
      *
-     * @param sujet Valeur de la narration à ajouter.
+     * @param sujet Valeur de la narration ï¿½ ajouter.
      */
     public void addNarration(NarrationHtmlForm narration) {
         this.narrations.add(narration);
     }
 
     /**
-     * Réinitialise toute les attributs à leur valeur par défaut.
+     * Rï¿½initialise toute les attributs ï¿½ leur valeur par dï¿½faut.
      *
      * @param mapping The mapping used to select this instance
      * @param request The servlet request we are processing
@@ -366,17 +368,17 @@ public class CriteresRechercheNarrationForm extends ValidatorForm
         genererNumeroSequence();
     }
 
-    // Après une requête il faut générer un nouveau numéro de séquence.
+    // Aprï¿½s une requï¿½te il faut gï¿½nï¿½rer un nouveau numï¿½ro de sï¿½quence.
     public void genererNumeroSequence(){
     	sequence = GererTacheUtilisateur.getInstanceOf().obtenirNumero();
     }
 
     /**
-     * Retourne une chaîne de caractère reflétant la valeur de tout les
+     * Retourne une chaï¿½ne de caractï¿½re reflï¿½tant la valeur de tout les
      * attributs du CriteresRechercheNarrationForm.
      *
      * @return String Valeur de tout les attributs du
-     * CriteresRechercheNarrationForm en caractère.
+     * CriteresRechercheNarrationForm en caractï¿½re.
      */
     public String toString() {
         StringBuffer stringBuffer = new StringBuffer();
@@ -569,7 +571,7 @@ public class CriteresRechercheNarrationForm extends ValidatorForm
 
 
 	/**
-	 * @param fonde fonde à définir
+	 * @param fonde fonde ï¿½ dï¿½finir
 	 */
 	public void setFonde(String fonde) {
 		this.fonde = fonde;

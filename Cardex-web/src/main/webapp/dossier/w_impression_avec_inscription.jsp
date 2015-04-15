@@ -451,7 +451,7 @@ oncontextmenu="return false;" >
 
                  <TR>
                     <TD width="27">&nbsp;</TD>
-                    <TD width="250"><b><bean:message  locale='<%=GlobalConstants.Impression.LOCALE_KEY%>' locale='<%=GlobalConstants.Impression.LOCALE_KEY%>' key='caractéristiques_t'/></b></TD>
+                    <TD width="250"><b><bean:message  locale='<%=GlobalConstants.Impression.LOCALE_KEY%>' locale='<%=GlobalConstants.Impression.LOCALE_KEY%>' key='caracteristiques_t'/></b></TD>
                  </TR>
               <logic:present name='<%=GlobalConstants.Impression.SUJET_KEY%>' >
                  <TR>

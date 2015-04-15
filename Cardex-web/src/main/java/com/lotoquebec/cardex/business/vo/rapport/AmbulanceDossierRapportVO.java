@@ -1,7 +1,7 @@
 package com.lotoquebec.cardex.business.vo.rapport;
 
 
-public class AmbulanceDossierRapportVO extends RapportVO{
+public class AmbulanceDossierRapportVO extends CritereRapportVO{
 
 	private long entite = 0;
 	private long site = 0;

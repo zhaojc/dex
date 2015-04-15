@@ -40,7 +40,7 @@ public abstract class RapportCDX_0070 extends RapportCardex{
 	
 	@Override
 	protected InputStream obtenirJasperReport() {
-		return RapportsConfiguration.class.getResourceAsStream(RapportsConfiguration.RAPPORT_ACTIVITES);
+		return RapportsConfiguration.class.getResourceAsStream(RapportsConfiguration.RAPPORT_ACTIVITES_CDX_0070);
 	}
 	
 	@Override

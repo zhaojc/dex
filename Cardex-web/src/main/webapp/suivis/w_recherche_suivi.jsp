@@ -88,28 +88,6 @@ function doPrint() {
 	   window.open(url, 'rapport', 'left=0,top=0,width=' + document.body.clientWidth + ',height=' + document.body.clientHeight + ',menubar=no,toolbar=no,resizable=yes');
 }
 
-function doPrintRapport() {
-//Impression d'un rapport personnalisé
-	if(document.forms(0).siteOrigine.value == ""){
-	//Le site est obligatoire.
-	   alert("<bean:message key='cardex_required_site'/>");
-	}else{
-	   var rapport = document.forms(0).choixRapport.value;
-	   
-	   if (rapport == "")
-	   	return;
-	   
-	   var siteOrigine =  document.forms(0).siteOrigine.value;;
-	   var dateDebut = document.forms(0).dateEmisDebut.value;
-	   var dateFin = document.forms(0).dateEmisFin.value;	
-	   var utilisateur = document.forms(0).intervenant.value;
-	   var url = "<%=request.getContextPath()%>/AffichagePDFSuivis?RAPPORT=" + rapport + "&SITE=" + siteOrigine + "&UTILISATEUR=" + utilisateur + "&DATE_DEBUT=" + dateDebut + "&DATE_FIN=" + dateFin;
-	   //alert(url);  
-	   //alert(rapport + " - " + url); 
-	   window.open(url, 'rapport', 'left=0,top=0,width=' + document.body.clientWidth + ',height=' + document.body.clientHeight + ',menubar=no,toolbar=no,resizable=yes');
-	}
-}
-
 function doTraits(objet,nomProchainChamp) {
 	//-- Insertion de traits d'union dans les dates, s'il y a lieu.
 	   dateSaisie = objet.value;

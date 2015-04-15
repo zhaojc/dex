@@ -1,6 +1,5 @@
 package com.lotoquebec.cardex.presentation.model.form.rapport.dossier;
 
-import com.lotoquebec.cardex.generateurRapport.GenererRapport;
 import com.lotoquebec.cardex.generateurRapport.dossier.CumulatifHebdomadaireEnquetesDossierGenerateurRapport_CDX_0041;
 import com.lotoquebec.cardex.presentation.model.form.rapport.CriteresRapportForm;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
@@ -9,17 +8,18 @@ import com.lotoquebec.cardexCommun.user.CardexUser;
 
 public class CumulatifHebdomadaireEnquetesDossierRapportForm_CDX_0041 extends CriteresRapportForm{
 
+	private static final long serialVersionUID = 8591565726759656696L;
 	private String entite = "";
 	private String site = "";
 	
 	public CumulatifHebdomadaireEnquetesDossierRapportForm_CDX_0041() {
-		super();
+		super(new CumulatifHebdomadaireEnquetesDossierGenerateurRapport_CDX_0041());
 	}
 
 	public void init(CardexAuthenticationSubject subject){
 		super.init(subject);
         CardexUser user = (CardexUser) subject.getUser();
-        // Valeurs par défaut
+        // Valeurs par dï¿½faut
         setEntite(String.valueOf(user.getEntite()));
         setSite(String.valueOf(user.getSite()));
 	}
@@ -40,9 +40,5 @@ public class CumulatifHebdomadaireEnquetesDossierRapportForm_CDX_0041 extends Cr
 		this.entite = entite;
 	}
 
-	@Override
-	public GenererRapport getGenererRapport() {
-		return new CumulatifHebdomadaireEnquetesDossierGenerateurRapport_CDX_0041();
-	}
 	
 }

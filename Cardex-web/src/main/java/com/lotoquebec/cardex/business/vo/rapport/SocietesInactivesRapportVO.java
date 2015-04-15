@@ -2,7 +2,7 @@ package com.lotoquebec.cardex.business.vo.rapport;
 
 import java.util.Date;
 
-public class SocietesInactivesRapportVO extends RapportVO{
+public class SocietesInactivesRapportVO extends CritereRapportVO{
     private String vague = "";
     private String societe = "";
     private Date dateInactivation = null;

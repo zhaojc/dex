@@ -7,7 +7,7 @@ import java.util.List;
 import com.lotoquebec.cardex.business.Dossier;
 import com.lotoquebec.cardex.business.vo.DossierVO;
 
-public class ClientMystereVO_CDX_0255 extends RapportVO implements Cloneable{
+public class ClientMystereVO_CDX_0255 extends CritereRapportVO implements Cloneable{
 
 	private long cle;
 	private long site;
@@ -94,7 +94,7 @@ public class ClientMystereVO_CDX_0255 extends RapportVO implements Cloneable{
 			if (sectionSocieteCDX0255VO.getEchantillonDossier().equals(echantillonDossier))
 				return sectionSocieteCDX0255VO;
 		}
-		// section non trouvée, création d'une section
+		// section non trouvï¿½e, crï¿½ation d'une section
 		SectionSocieteVO_CDX_0255 sectionSocieteCDX0255VO = new SectionSocieteVO_CDX_0255();
 		Dossier nouveauEchantillonDossier = new DossierVO(echantillonDossier.getCle(), echantillonDossier.getSite());
 		nouveauEchantillonDossier.setNumeroDossier(echantillonDossier.getNumeroDossier());

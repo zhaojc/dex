@@ -83,8 +83,9 @@ function doClose() {
 
 function doAuditAcces() {
 //Impression de l'audit des accès
-	   var rapport = "<%= RapportsConfiguration.AUDIT_ACCES_SOCIETES %>";
-	   var url = "<%=request.getContextPath()%>/AffichagePDFListes?RAPPORT=" + rapport; 
+	   var cle = document.forms(0).cle.value;
+	   var site = document.forms(0).site.value;
+	   var url = "<%=request.getContextPath()+"/RapportAffichage?classRapportForm="+GlobalConstants.RapportForm.SOCIETE_AUDIT_ACCES_RAPPORT_FORM_CDX_0212%>&cle="+cle+"&site="+site; 
 	   	   //alert(url);  
 	   window.open(url, 'rapport', 'left=0,top=0,width=' + document.body.clientWidth + ',height=' + document.body.clientHeight + ',menubar=no,toolbar=no,resizable=yes');
 }

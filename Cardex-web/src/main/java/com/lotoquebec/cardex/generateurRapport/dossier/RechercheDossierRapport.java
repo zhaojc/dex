@@ -18,7 +18,7 @@ import com.lotoquebec.cardex.business.CriteresRechercheDossier;
 import com.lotoquebec.cardex.business.RapportDossier;
 import com.lotoquebec.cardex.business.vo.CriteresRechercheDossierVO;
 import com.lotoquebec.cardex.business.vo.RapportDossierVO;
-import com.lotoquebec.cardex.generateurRapport.GenererRapport;
+import com.lotoquebec.cardex.generateurRapport.CritereGenererRapport;
 import com.lotoquebec.cardexCommun.GlobalConstants;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
 import com.lotoquebec.cardexCommun.exception.BusinessException;
@@ -34,7 +34,7 @@ import com.lotoquebec.cardexCommun.util.ValueObjectMapper;
  * @author guerinf
  * 2012-01-26
  */
-public abstract class RechercheDossierRapport extends GenererRapport {
+public abstract class RechercheDossierRapport extends CritereGenererRapport {
 
 	public final static String SITE = "siteOrigine";
 	public final static String TYPE = "type";
@@ -61,7 +61,7 @@ public abstract class RechercheDossierRapport extends GenererRapport {
             CardexUser user = (CardexUser)subject.getUser();
      		criteresRechercheDossier.setSiteOrigine(user.getSite());
      	}
-		//On s'assure qu'il y a des dates pour les rapports. Sinon, on prend la dernière semaine.
+		//On s'assure qu'il y a des dates pour les rapports. Sinon, on prend la derniï¿½re semaine.
         String DATE_FORMAT_NOW = "yyyy-MM-dd";
         Calendar dateDebutCal = Calendar.getInstance();
         Calendar dateFinCal = Calendar.getInstance();
@@ -102,7 +102,7 @@ public abstract class RechercheDossierRapport extends GenererRapport {
 		}
 		
 		Map parameters = new HashMap();
-		//On ajoute les paramètres qui seront affichés dans l'en-tête du rapport.
+		//On ajoute les paramï¿½tres qui seront affichï¿½s dans l'en-tï¿½te du rapport.
 		parameters.put("SiteOrigine", site);
 		parameters.put("DateDebut", ValueObjectMapper.obtenirPremiereString(parameterMap, DATE_DEBUT));
 		parameters.put("DateFin", ValueObjectMapper.obtenirPremiereString(parameterMap, DATE_FIN));
@@ -124,7 +124,7 @@ public abstract class RechercheDossierRapport extends GenererRapport {
 		}
 		
 		Map parameters = new HashMap();
-		//On ajoute les paramètres qui seront affichés dans l'en-tête du rapport.
+		//On ajoute les paramï¿½tres qui seront affichï¿½s dans l'en-tï¿½te du rapport.
 		parameters.put("SiteOrigine", site);
 		parameters.put("DateDebut", TimestampFormat.format(
 				criteresRechercheDossier.getDateDebutDu(), subject.getLocale(), false));

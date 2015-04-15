@@ -6,7 +6,7 @@ import java.sql.Timestamp;
 /**
  * @author guerinf
  */
-public class DelaiTraitementEnqueteRapportVO_CDX_0246 extends RapportVO{
+public class DelaiTraitementEnqueteRapportVO_CDX_0246 extends CritereRapportVO{
 
 	protected String site = "";
 	protected String nature = "";

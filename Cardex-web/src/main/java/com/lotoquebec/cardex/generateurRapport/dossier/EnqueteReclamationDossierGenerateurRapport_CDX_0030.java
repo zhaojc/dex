@@ -7,8 +7,6 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,15 +16,15 @@ import net.sf.jasperreports.engine.data.JRMapCollectionDataSource;
 
 import com.lotoquebec.cardex.business.delegate.RapportBusinessDelegate;
 import com.lotoquebec.cardex.business.vo.rapport.ActifIntervenantDossierRapportVO_CDX_0102;
-import com.lotoquebec.cardex.business.vo.rapport.RapportVO;
-import com.lotoquebec.cardex.generateurRapport.GenererRapport;
+import com.lotoquebec.cardex.business.vo.rapport.CritereRapportVO;
+import com.lotoquebec.cardex.generateurRapport.CritereGenererRapport;
 import com.lotoquebec.cardex.generateurRapport.rapports.RapportsConfiguration;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
 import com.lotoquebec.cardexCommun.exception.BusinessException;
 import com.lotoquebec.cardexCommun.exception.BusinessResourceException;
 import com.lotoquebec.cardexCommun.securite.GestionnaireSecurite;
 
-public class EnqueteReclamationDossierGenerateurRapport_CDX_0030 extends GenererRapport {
+public class EnqueteReclamationDossierGenerateurRapport_CDX_0030 extends CritereGenererRapport {
 
 	@Override
 	public void validerSecurite(CardexAuthenticationSubject subject) {
@@ -34,12 +32,12 @@ public class EnqueteReclamationDossierGenerateurRapport_CDX_0030 extends Generer
 	}
 	
 	@Override
-	public RapportVO construireNouveauRapportVO() {
+	public CritereRapportVO construireNouveauRapportVO() {
 		return new ActifIntervenantDossierRapportVO_CDX_0102();
 	}
 
 	@Override
-	public JRDataSource construireDataSource(CardexAuthenticationSubject subject, RapportVO rapportVO, Connection connection) throws BusinessResourceException, BusinessException {
+	public JRDataSource construireDataSource(CardexAuthenticationSubject subject, CritereRapportVO rapportVO, Connection connection) throws BusinessResourceException, BusinessException {
     	RapportBusinessDelegate delegate = new RapportBusinessDelegate();
     	List list = new ArrayList();
     	ResultSet resultSet = null;
@@ -50,7 +48,7 @@ public class EnqueteReclamationDossierGenerateurRapport_CDX_0030 extends Generer
    		 	//la date de d�part sera avril de l'ann�e pr�c�dente. Sinon, avril de l'ann�e en cours.
    		 	//On v�rifie d'abord si un crit�re de date a �t� saisi.
    		 	Calendar dateDebutCal = Calendar.getInstance();
-   		 	dateDebutCal.setTime(rapportVO.getDateDebutDu());
+   		 	dateDebutCal.setTime(((CritereRapportVO)rapportVO).getDateDebutDu());
    		 	int annee = dateDebutCal.get(Calendar.YEAR);
 
     		if(3 > dateDebutCal.get(Calendar.MONTH))

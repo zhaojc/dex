@@ -80,7 +80,7 @@ public class GestionnaireSecuriteCardex extends GestionnaireSecurite{
     }
     
     
-    public static Collection validerEtFiltrerSecuriteRechercheIntervenantEstAssigne(CardexAuthenticationSubject subject, Collection collection) {
+    public static <T extends Collection> T validerEtFiltrerSecuriteRechercheIntervenantEstAssigne(CardexAuthenticationSubject subject, T collection) {
     	return validerEtFiltrerSecurite(subject, collection, Arrays.asList((SecuritePredicate)new IntervenantEstAssigne()), GlobalConstants.ActionSecurite.RECHERCHE, GlobalConstants.ActionSecurite.SELECTION);
     }    
 
