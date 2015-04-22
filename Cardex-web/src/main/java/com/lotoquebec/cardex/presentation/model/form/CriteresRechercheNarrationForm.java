@@ -4,10 +4,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import com.lotoquebec.cardex.generateurRapport.dossier.RAQDossierGenerateurRapport_CDX_0070;
+import org.apache.struts.validator.ValidatorForm;
+
+import com.lotoquebec.cardex.generateurRapport.dossier.raq.GlobalRAQDossierGenerateurRapport_CDX_0070;
 import com.lotoquebec.cardex.presentation.model.CriteresRechercheNarrationHtmlForm;
 import com.lotoquebec.cardex.presentation.model.NarrationHtmlForm;
-import com.lotoquebec.cardex.presentation.model.form.rapport.RapportForm;
 import com.lotoquebec.cardexCommun.GlobalConstants;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
 import com.lotoquebec.cardexCommun.model.ListeResultat;
@@ -24,7 +25,7 @@ import com.lotoquebec.cardexCommun.util.GererTacheUtilisateur;
  * @see
  * com.lotoquebec.cardex.presentation.model.CriteresRechercheNarrationHtmlForm
  */
-public class CriteresRechercheNarrationForm extends RapportForm
+public class CriteresRechercheNarrationForm extends ValidatorForm
         implements CriteresRechercheNarrationHtmlForm, RechercheListeResultat {
 
 	private static final long serialVersionUID = 5339392028941779037L;
@@ -62,7 +63,6 @@ public class CriteresRechercheNarrationForm extends RapportForm
      * Constructeur de CriteresRechercheNarrationForm par d�faut.
      */
     public CriteresRechercheNarrationForm() {
-    	super(new RAQDossierGenerateurRapport_CDX_0070());
     }
 
 

@@ -27,7 +27,6 @@ public class InformationAcces {
 		
 		if (informationLogon == null){
 			informationLogon = new InformationAcces();
-			//log.getHandlers()[0].setFormatter( new SimpleFormatter() );
 			simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS z");
 		}
 		return informationLogon;

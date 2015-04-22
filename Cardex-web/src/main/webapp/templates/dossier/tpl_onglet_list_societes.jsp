@@ -56,7 +56,7 @@ function doSauvegardeLienSociete(index,lien,lienSite) {
 	if((role.value != "") && (role.value != "0")){ //On s'assure qu'il y a un rôle
 		post('<%= request.getContextPath() + "/dossier/link/update.do?lien="%>'+lien+'&lienSite='+lienSite+'&role='+role.value+'&cleDossier='+cleDossier+'&siteDossier='+siteDossier+'&<%=Globals.TOKEN_KEY+"="+token%>');
 	}else{
-		alert("<bean:message key='choix.role.update'/>");
+		message("<bean:message key='choix.role.update'/>");
 	}
 	//document.forms(0).action='<%= request.getContextPath() + "/dossier/link/update.do"%>';
 	//document.forms(0).submit();

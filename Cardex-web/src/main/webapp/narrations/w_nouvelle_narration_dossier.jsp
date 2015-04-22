@@ -109,11 +109,11 @@ function doRetour(){
 }
 
 function doApprobation() {
-  alert("Fonction non disponible pour le moment ...");
+  message("Fonction non disponible pour le moment ...");
 }
 
 function doModification() {
-  alert("Fonction non disponible pour le moment ...");
+  message("Fonction non disponible pour le moment ...");
 }
 
 function doClose() {
@@ -121,7 +121,7 @@ function doClose() {
 }
 
 function doPrint() {
-  alert("Fonction non disponible pour le moment ...");
+  message("Fonction non disponible pour le moment ...");
 }
 
 function lireGabarit(gabarit) {

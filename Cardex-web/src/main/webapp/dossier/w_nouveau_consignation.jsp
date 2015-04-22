@@ -60,7 +60,7 @@ function doOk() {
 // S'il s'agit d'un champ approuvable, la dénomination et la devise sont obligatoires.
   if(document.forms(0).approuvable.checked == true){
      if((document.forms(0).denomination.value == "") || (document.forms(0).devise.value == "")){
-         alert("<bean:message key='cardex_consignation_denomination'/>");
+         message("<bean:message key='cardex_consignation_denomination'/>");
      }else{
       unlockFields();
 	  soumettre('<%= request.getContextPath() + "/dossier/consignation/add.do"%>');
@@ -80,7 +80,7 @@ function doCancel() {
   if (document.forms(0).hasChanged == false ){
     window.location = '<%=request.getContextPath()%>/dossier/show.do?site=<bean:write name="consignation" property="lienSite"/>&cle=<bean:write name="consignation" property="lien"/>';
   }else{
-    var isYes = confirm("<bean:message key='pfc_closequery_savechanges'/>");
+    var isYes = confirmation("<bean:message key='pfc_closequery_savechanges'/>");
     if (isYes){
       doOk();
     }else{

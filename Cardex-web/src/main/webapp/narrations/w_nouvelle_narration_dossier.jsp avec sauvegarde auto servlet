@@ -1,13 +1,13 @@
 <%-- --------------------------------------------------------------------------
 Use case    : Ajout d'une narration.
-Description : Écran de saisie de nouvelles narrations.
+Description : ï¿½cran de saisie de nouvelles narrations.
 Author(s)   : $Author: mlibersan $, abruno-boucher
 Revision    : $Revision: 1.17 $, $Date: 2002/04/18 21:17:54 $
 
 History     : Voir ci-dessous.
 
 Revision: 1.0, Date: 2002/02/14 17:12:06, Author: abruno-boucher
-Première étape de la conversion initiale: sauvegarder le gabarit HTML en un
+Premiï¿½re ï¿½tape de la conversion initiale: sauvegarder le gabarit HTML en un
 format JSP.
 
 Revision: 1.1 , Date: 2002/02/14 17:18:14 , Author: pcaron
@@ -17,10 +17,10 @@ Revision: 1.4 , Date: 2002/02/21 23:02:15 , Author: abruno-boucher
 Localisation Assistant date.
 
 $Revision: 1.17 $, $Date: 2002/04/18 21:17:54 $, $Author: mlibersan $
-Mise à jour nouvel Assistant date-heure (incorporé dans la page).
+Mise ï¿½ jour nouvel Assistant date-heure (incorporï¿½ dans la page).
 
 $Revision: 1.17 $, $Date: 2002/04/18 21:17:54 $, $Author: mlibersan $
-Derniers commentaires à jour.
+Derniers commentaires ï¿½ jour.
 
 --------------------------------------------------------------------------- --%>
 
@@ -35,8 +35,8 @@ Derniers commentaires à jour.
 <%@ page import="java.util.Locale" %>
 <%@ page import="org.apache.struts.action.Action" %>
 <%
-   //-- L'appel suivant génère une des chaînes suivante de caractères:  fr, en, sp, de, it, ...
-   //-- et utilisé pour l'appel de fichiers localisés.  Gestion d'erreur en cas de timeout
+   //-- L'appel suivant gï¿½nï¿½re une des chaï¿½nes suivante de caractï¿½res:  fr, en, sp, de, it, ...
+   //-- et utilisï¿½ pour l'appel de fichiers localisï¿½s.  Gestion d'erreur en cas de timeout
    //-- de session.
    String var_lang = "fr";
    try{
@@ -68,8 +68,8 @@ function setForm() {
 }
 
 function remplace() {
-//On remplace l'espace blanc codifié par &nbsp; car le symbole & est interprété
-//comme un délimiteur de paramètre dans le servlet SauvegardeAuto.
+//On remplace l'espace blanc codifiï¿½ par &nbsp; car le symbole & est interprï¿½tï¿½
+//comme un dï¿½limiteur de paramï¿½tre dans le servlet SauvegardeAuto.
 	out = "&nbsp;"; // replace this
 	add = " "; // with this
 	temp = "" + document.forms(0).narrationAvecFormat.value
@@ -102,7 +102,7 @@ function remplace() {
 	}
 	document.forms(0).narrationAvecFormat.value = temp;
 	
-	out = "’"; // replace this
+	out = "ï¿½"; // replace this
 	add = "'"; // with this
 	temp = "" + document.forms(0).narrationAvecFormat.value
 
@@ -128,8 +128,8 @@ function remplace() {
 function doOk() {
   unlockFields();
   setForm();
-  //Il faut s'assurer que la page n'a pas déjà été sauvegardée automatiquement. Si c'est le
-  //cas, la clé contient une valeur. On procède alors à une mise à jour, plutôt qu'à une
+  //Il faut s'assurer que la page n'a pas dï¿½jï¿½ ï¿½tï¿½ sauvegardï¿½e automatiquement. Si c'est le
+  //cas, la clï¿½ contient une valeur. On procï¿½de alors ï¿½ une mise ï¿½ jour, plutï¿½t qu'ï¿½ une
   //insertion.
   if (document.forms(0).narrationSansFormat.value != "") {
      if(document.forms(0).cle.value == ""){
@@ -147,29 +147,29 @@ function doOk() {
 }
 
 function sauvegardeFichier(){
-//sauvegarde des narrations dans un fichier pour pouvoir les récupérer dans le servlet.
+//sauvegarde des narrations dans un fichier pour pouvoir les rï¿½cupï¿½rer dans le servlet.
   var objFSO = new ActiveXObject("Scripting.FileSystemObject");
   var fichier = "c:\\temp\\capture\\avec_format.txt"; 
-  //2 = pour écriture
+  //2 = pour ï¿½criture
   var objTextFileO = objFSO.OpenTextFile (fichier, 2, true);
   objTextFileO.write(document.forms(0).narrationAvecFormat.value);
   objTextFileO.close();
 
 }
 
-//-- Sauvegarde automatique de la nouvelle narration pour éviter les pertes dues à des
-//-- déconnexions. La sauvegarde a lieu à toutes les 5 minutes.
-//-- La fonction a été modifiée en février 2006. Un servlet s'occupe maintenant de la
-//-- sauvegarde ce qui évite une interruption dans le travail de l'utilisateur.
-//-- Avec l'ancienne fonction, la narration disparaissait avant d'être réaffichée dans une 
+//-- Sauvegarde automatique de la nouvelle narration pour ï¿½viter les pertes dues ï¿½ des
+//-- dï¿½connexions. La sauvegarde a lieu ï¿½ toutes les 5 minutes.
+//-- La fonction a ï¿½tï¿½ modifiï¿½e en fï¿½vrier 2006. Un servlet s'occupe maintenant de la
+//-- sauvegarde ce qui ï¿½vite une interruption dans le travail de l'utilisateur.
+//-- Avec l'ancienne fonction, la narration disparaissait avant d'ï¿½tre rï¿½affichï¿½e dans une 
 //-- nouvelle page, ce qui
-//-- obligeait l'utilisateur à se replacer dans son texte. Avec la nouvelle fonction, tout
-//-- se passe en arrière plan sans interruption.
-//-- Un signal prévenait l'utilisateur, mais a été enlevé car cela déplaçait le curseur.
+//-- obligeait l'utilisateur ï¿½ se replacer dans son texte. Avec la nouvelle fonction, tout
+//-- se passe en arriï¿½re plan sans interruption.
+//-- Un signal prï¿½venait l'utilisateur, mais a ï¿½tï¿½ enlevï¿½ car cela dï¿½plaï¿½ait le curseur.
 
-//-- Note du 12 février 2006 : cette approche ne semble pas fonctionner, car dès que le texte 
-//-- dépasse une certaine longueur, une erreur de "permission refusée" se produit. Cela a
-//-- sans doute à voir avec la longueur de la chaîne URL envoyée au serveur.
+//-- Note du 12 fï¿½vrier 2006 : cette approche ne semble pas fonctionner, car dï¿½s que le texte 
+//-- dï¿½passe une certaine longueur, une erreur de "permission refusï¿½e" se produit. Cela a
+//-- sans doute ï¿½ voir avec la longueur de la chaï¿½ne URL envoyï¿½e au serveur.
 function sauvegardeAuto() {
   //var wsh = new ActiveXObject('WScript.Shell');
   //var beep = 'c:\\winnt\\media\\chord.wav';
@@ -178,9 +178,9 @@ function sauvegardeAuto() {
   setForm();
   //On s'assure qu'une narration existe.
   if (document.forms(0).narrationAvecFormat.value != "") {
-      //remplace(); //Préparation de la chaîne formattée.
+      //remplace(); //Prï¿½paration de la chaï¿½ne formattï¿½e.
       //sauvegardeFichier();
-      //On construit la chaîne de paramètres avec les valeurs du formulaire
+      //On construit la chaï¿½ne de paramï¿½tres avec les valeurs du formulaire
       chaine = "CLE=" + document.forms(0).cle.value;
       chaine = chaine + "&SITE=" + document.forms(0).site.value;
       chaine = chaine + "&LIEN=" + document.forms(0).elements(0).value; //(dossier.cle)
@@ -218,8 +218,8 @@ function sauvegardeAuto() {
   //document.forms(0).narrationSansFormat.value = url;
       var req = initRequest(url);
       req.onreadystatechange = function() {
-      //On traite la réponse retournée pour les prochaines mises à jour.
-      //La clé et le site de la nouvelle narration sont récupérés.
+      //On traite la rï¿½ponse retournï¿½e pour les prochaines mises ï¿½ jour.
+      //La clï¿½ et le site de la nouvelle narration sont rï¿½cupï¿½rï¿½s.
             if (req.readyState == 4) {
                 //alert(req.status);
                 if (req.status == 200) {
@@ -244,7 +244,7 @@ function doCancel() {
   if (fenetreNarration.innerHTML == document.forms(0).narrationAvecFormat.value ){
       window.location = '<%=request.getContextPath()%>/dossier/show.do?site=<bean:write name="narration" property="dossier.site"/>&cle=<bean:write name="narration" property="dossier.cle"/>';
   }else{
-    var isYes = confirm("<bean:message key='pfc_closequery_savechanges'/>");
+    var isYes = confirmation("<bean:message key='pfc_closequery_savechanges'/>");
     if (isYes){
       doOk();
     }else{
@@ -270,8 +270,8 @@ function doPrint() {
 }
 
 function lireGabarit(gabarit) {
-//-- Chargement d'un gabarit de saisie de données
-//-- dans la fenêtre de narration
+//-- Chargement d'un gabarit de saisie de donnï¿½es
+//-- dans la fenï¿½tre de narration
 	if(gabarit != ""){
 	  var xmlhttp = new ActiveXObject("MSXML2.ServerXMLHTTP"); 
 	  serveur = "<%= request.getServerName() %>";
@@ -306,8 +306,8 @@ function atteindreFin() {
 }
 
 function toucheCTRL() {
-//-- On désactive toutes les commandes qui utilisent la touche CTRL
-//-- pour des raisons de sécurité, sauf le copier coller pour les narrations.
+//-- On dï¿½sactive toutes les commandes qui utilisent la touche CTRL
+//-- pour des raisons de sï¿½curitï¿½, sauf le copier coller pour les narrations.
   if (window.event.ctrlKey){
     if(window.event.keyCode != 67 && window.event.keyCode != 86 && window.event.keyCode != 88){
        //window.event.keyCode = 0;

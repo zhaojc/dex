@@ -51,7 +51,7 @@ function ajouterSuivi(){
    		if( '<%= sujetSite %>' == document.forms(0).site.value){
 			soumettre('<%= request.getContextPath() + "/dossier/suivi/create.do"%>');
 		}else{
-			alert("<bean:message key='cardex.erreur.site.suivi'/>");
+			message("<bean:message key='cardex.erreur.site.suivi'/>");
 		}
 	}else{
 		soumettre('<%= request.getContextPath() + "/dossier/suivi/create.do"%>');

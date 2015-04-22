@@ -53,7 +53,7 @@ public class CDX00_00004_MouvementPersonnel implements Flux{
 	}
 	
 	public void execute() throws Exception {
-		log.info("Entr�e flux CDX00_00004");
+		log.info("Entrée flux CDX00_00004");
 
 		init();
 		

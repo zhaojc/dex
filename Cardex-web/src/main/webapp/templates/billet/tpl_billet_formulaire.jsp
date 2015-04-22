@@ -29,9 +29,7 @@
 <SCRIPT language="JavaScript" type="text/javascript" src='<%= request.getContextPath() %>/scripts/date_time_picker_<%= var_lang %>.js'></SCRIPT>
 <SCRIPT language="JavaScript" type="text/javascript" src="<%= request.getContextPath() %>/scripts/twin_date_time_picker_<%= var_lang %>.js"></SCRIPT>
 <SCRIPT language="JavaScript" type="text/javascript">
-function afficher(valeur){
-alert(valeur);
-}
+
 function doDetaillantValidation(){
 //Saisie automatique du détaillant validation si le champ est vide. On copie le détaillant Provenance, s'il y en a un d'inscrit
 	if ((document.forms(0).numeroDetaillantValidation.value == null ||document.forms(0).numeroDetaillantValidation.value.length == 0) 
@@ -105,7 +103,7 @@ function validerChamps(){
 //On ne vérifie pas le numéro de contrôle à ce stade puisqu'il est obligatoire et que la validation se fera plus loin.
    if((document.forms(0).nom.value == "") || (document.forms(0).valeur.value == "") || (document.forms(0).montantLot.value == "") || (document.forms(0).typeLoterie.value == "")  || (document.forms(0).typeMise.value == "")){
       //alert("<bean:message key='identification.billet.vide' />");
-      if ( confirm("<bean:message key='identification.billet.vide' />")){
+      if ( confirmation("<bean:message key='identification.billet.vide' />")){
       	 soumettreForm();
       	 return true;
 	  }else{

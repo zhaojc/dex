@@ -30,7 +30,7 @@ function doCancel() {
     window.location = '<%=request.getContextPath() + contexteApplicatif.toString() + preContexteApplicatif.toString() %>/show.do?site=<bean:write name="narration" property="lienSite"/>&cle=<bean:write name="narration" property="lien"/>';
   }else{
     if(fenetreNarration.innerHTML != document.forms(0).narrationAvecFormat.value){
-       var isYes = confirm("<bean:message key='pfc_closequery_savechanges'/>");
+       var isYes = confirmation("<bean:message key='pfc_closequery_savechanges'/>");
        if (isYes){
          doOk();
        }else{

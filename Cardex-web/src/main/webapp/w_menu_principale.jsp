@@ -154,7 +154,7 @@ function background(){
 	function mainWindowClose(){
 		var message = "<bean:message key="message.quitter.cardex"/>";
 		
-		if (confirm(message)){
+		if (confirmation(message)){
 			windowClose();
 		}
 	}
@@ -173,7 +173,7 @@ function background(){
 	function entrerChoisirProfil(){
 		var message = "<bean:message key="message.changement.profil"/>";
 		
-		if (confirm(message)){
+		if (confirmation(message)){
 			fermetureNormale = false;	
 			windowHandlerClose();
 			soumettre("<%=request.getContextPath()%>/entrerChoisirProfil.do");
@@ -200,6 +200,7 @@ function background(){
 		windowOpenLocation('<%=request.getContextPath()%>/menu/rechercheVehicule.do?VEHICULE=' + immatriculation.value);
 	}
 
+	
 </SCRIPT>
 
 <SCRIPT FOR=window EVENT=onunload>

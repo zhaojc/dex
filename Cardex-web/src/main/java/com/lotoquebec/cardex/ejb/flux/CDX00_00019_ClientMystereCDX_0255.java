@@ -40,7 +40,6 @@ public class CDX00_00019_ClientMystereCDX_0255 implements Flux {
 		String nomRapport = obtenirNomRapportCDX_0255();
 		log.info("Choix nom rapport : '"+nomRapport+"'");
 		
-        
         JasperPrint print = FabriqueFacade.getRapportSessionFacade().clientMystereRapportCDX_0255(subject);
         (new ExcelImpressionRapport()).impression(nomRapport, print);
 	}

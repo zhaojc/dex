@@ -57,7 +57,7 @@ Commentaires à jour.
 <SCRIPT language="JavaScript" type="text/javascript">
 
 function doConfirmLinkSuppression() {
-  return confirm('<bean:message key="cardex_suppression" />');
+  return confirmation('<bean:message key="cardex_suppression" />');
 }
 
 function doSoumettreRafraichir() {
@@ -114,7 +114,7 @@ function doPrint() {
 function doConfidentialite8(){
 //Avertissement à l'utilisateur pour ajouter des précisions
   if (document.forms(0).confidentialite.value == "<%= GlobalConstants.Confidentialite.HUIT %>" ) {
-  	 alert("Ne pas oublier d'inscrire la raison (erreur ou doublon) de la mise en confidentialité 8 dans Raison d'être (effacer le contenu du champ si une inscription y apparait et la remplacer par la raison).");
+  	 message("Ne pas oublier d'inscrire la raison (erreur ou doublon) de la mise en confidentialité 8 dans Raison d'être (effacer le contenu du champ si une inscription y apparait et la remplacer par la raison).");
   }
 }
 

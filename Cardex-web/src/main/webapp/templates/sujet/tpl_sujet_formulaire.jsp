@@ -127,7 +127,7 @@ function formatDateNaissance(date){
 function doCopier() {
 //Fonction temporaire pour permettre la copie des données d'une société à l'autre, dans le but d'éliminer les doublons de sociétés.
    if(document.forms(0).sujetDestinataire.value != ""){
-      if ( confirm('Voulez-vous vraiment copier les données du sujet ' + document.forms(0).numeroFiche.value + " au sujet " + document.forms(0).sujetDestinataire.value + "?") ){
+      if ( confirmation('Voulez-vous vraiment copier les données du sujet ' + document.forms(0).numeroFiche.value + " au sujet " + document.forms(0).sujetDestinataire.value + "?") ){
       	soumettre("<%= request.getContextPath()%>/sujet/copier.do?cle=" + document.forms(0).cle.value + "&site=" + document.forms(0).site.value + "&sujetDestinataire=" + document.forms(0).sujetDestinataire.value);
       }
    }

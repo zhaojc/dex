@@ -48,7 +48,7 @@ function doOk() {
   //On affiche un message d'avertissement si le dossier ne contient pas
   //d'endroit ou de localisation.
     if((document.forms(0).endroit.value == "") || (document.forms(0).localisation.value == "")){
-      if ( confirm('<bean:message key="cardex_endroit_localisation" />') ){
+      if ( confirmation('<bean:message key="cardex_endroit_localisation" />') ){
 		unlockFields();
 	    soumettre('<%= request.getContextPath() + "/journal/save.do"%>');
 	  }else{

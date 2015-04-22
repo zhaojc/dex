@@ -63,7 +63,7 @@ function doAdd() {
     if((roleSujet.value != "") && (roleSujet.value != "0")){ //On s'assure qu'il y a un rôle
 		post('<%= request.getContextPath() + "/sujet/new.do?role="%>'+roleSujet.value);
 	}else{
-		alert("<bean:message key='choix.role'/>");
+		message("<bean:message key='choix.role'/>");
 	}
 }
 
@@ -72,7 +72,7 @@ function doSearch() {
 }
 
 function doSelectVille() {
-  alert("Fonction non disponible pour le moment ...");
+  message("Fonction non disponible pour le moment ...");
 }
 
 function doClose() {

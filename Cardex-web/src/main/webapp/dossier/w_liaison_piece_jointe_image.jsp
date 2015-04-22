@@ -61,7 +61,7 @@ function soumettreDocument(){
 	var file = oas.getFile( document.getElementsByName("sourceFile")[0].value );
 
 	if (file.size > 10000000)
-		alert("<bean:message key='erreur_fichier_document' />");
+		message("<bean:message key='erreur_fichier_document' />");
 	else
 		soumettre('<%=request.getContextPath()%>/dossier/pieceJointe/upload.do');
 }

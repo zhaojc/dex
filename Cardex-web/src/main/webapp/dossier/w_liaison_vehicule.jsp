@@ -64,7 +64,7 @@ function doSearch() {
 }
 
 function doSelectVille() {
-  alert("Fonction non disponible pour le moment ...");
+  message("Fonction non disponible pour le moment ...");
 }
 
 function doClose() {

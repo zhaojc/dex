@@ -27,9 +27,6 @@
 <jsp:include page='/scripts/autoCompleter.jsp' flush="true"/>
 
 <SCRIPT language="JavaScript" type="text/javascript">
-function afficher(valeur){
-alert(valeur);
-}
 
 function doOk() {
   	  unlockFields();

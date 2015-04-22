@@ -955,9 +955,6 @@ public class RapportBusinessDelegate extends BusinessDelegate {
         }
     }
 
-    public JasperPrint siteRAQCDX_0070(CardexAuthenticationSubject subject, Date debutDate, Date finDate, Long site) throws BusinessResourceException{
-		return rapportSessionFacade.siteRAQCDX_0070(subject, debutDate, finDate, site);
-    }
     
 }
 

@@ -68,7 +68,7 @@ function parseMessageUtilisateur(xml){
 function afficherMessagePopUp(listeAlerte1){
 	
 	for (var loop = 0; loop < listeAlerte1.length; loop++) {
-		alert(listeAlerte1[loop]);
+		message(listeAlerte1[loop]);
 	}
 }
 

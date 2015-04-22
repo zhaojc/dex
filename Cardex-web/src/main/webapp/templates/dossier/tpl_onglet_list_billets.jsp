@@ -33,7 +33,7 @@
 <SCRIPT language="JavaScript" type="text/javascript">
 function doDatePaiement() {
    if(document.forms(0).paiement.value != ""){
-      if ( confirm("<bean:message key='inscrire.date.paiement' />") ){
+      if ( confirmation("<bean:message key='inscrire.date.paiement' />") ){
       	soumettre("<%= request.getContextPath()%>/dossier/inscrire/datePaiement.do?cle=" + document.forms(0).cle.value + "&site=" + document.forms(0).site.value + "&datePaiement=" + document.forms(0).paiement.value);
       }
    }

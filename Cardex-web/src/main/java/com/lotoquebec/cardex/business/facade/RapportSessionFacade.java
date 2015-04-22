@@ -4,20 +4,15 @@ package com.lotoquebec.cardex.business.facade;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.Collection;
-import java.util.Date;
 
+import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperPrint;
 
 import com.lotoquebec.cardex.business.RapportDossier;
-import com.lotoquebec.cardex.business.facade.rapport.ClientMystereCDX_0255RapportCardex;
-import com.lotoquebec.cardex.business.facade.rapport.ClientMystereCDX_0257RapportCardex;
-import com.lotoquebec.cardex.business.facade.rapport.GlobalRAQRapportCDX_0070;
-import com.lotoquebec.cardex.business.facade.rapport.NatureRAQRapportCDX_0070;
-import com.lotoquebec.cardex.business.facade.rapport.SansNatureRAQRapportCDX_0070;
-import com.lotoquebec.cardex.business.facade.rapport.SiteRAQRapportCDX_0070;
 import com.lotoquebec.cardex.business.vo.rapport.AccesRapportVO;
 import com.lotoquebec.cardex.business.vo.rapport.ActifIntervenantDossierRapportVO_CDX_0102;
 import com.lotoquebec.cardex.business.vo.rapport.ContratsAutoexclusionDossierRapportVO_CDX_0060;
+import com.lotoquebec.cardex.business.vo.rapport.CritereRapportVO;
 import com.lotoquebec.cardex.business.vo.rapport.CumulatifDossierRapportVO;
 import com.lotoquebec.cardex.business.vo.rapport.CumulatifHebdomadaireEnquetesDossierRapportVO_CDX_0041;
 import com.lotoquebec.cardex.business.vo.rapport.DelaiTraitementEnqueteRapportVO_CDX_0246;
@@ -27,13 +22,18 @@ import com.lotoquebec.cardex.business.vo.rapport.EntiteRapportVO;
 import com.lotoquebec.cardex.business.vo.rapport.EspaceJeuxAutoexclusionActifRapportVO_CDX_0260;
 import com.lotoquebec.cardex.business.vo.rapport.EspaceJeuxFraudeFondeRapportVO_CDX_0261;
 import com.lotoquebec.cardex.business.vo.rapport.EspaceJeuxTricherieFondeRapportVO_CDX_0262;
-import com.lotoquebec.cardex.business.vo.rapport.CritereRapportVO;
 import com.lotoquebec.cardex.business.vo.rapport.ReperageAutoexclusionDossierRapportVO;
 import com.lotoquebec.cardex.business.vo.rapport.SeveriteRapportVO;
 import com.lotoquebec.cardex.business.vo.rapport.SiteIntervenantRapportVO;
 import com.lotoquebec.cardex.business.vo.rapport.SocietesInactivesRapportVO;
 import com.lotoquebec.cardex.business.vo.rapport.StatistiqueDossierRapportVO;
 import com.lotoquebec.cardex.business.vo.rapport.StatutDossierRapportVO_CDX_0055;
+import com.lotoquebec.cardex.generateurRapport.clientMystere.ClientMystereGenerateurRapport_CDX_0255;
+import com.lotoquebec.cardex.generateurRapport.clientMystere.ClientMystereGenerateurRapport_CDX_0257;
+import com.lotoquebec.cardex.generateurRapport.dossier.raq.GlobalRAQDossierGenerateurRapport_CDX_0070;
+import com.lotoquebec.cardex.generateurRapport.dossier.raq.NatureRAQDossierGenerateurRapport_CDX_0070;
+import com.lotoquebec.cardex.generateurRapport.dossier.raq.SansNatureRAQDossierGenerateurRapport_CDX_0070;
+import com.lotoquebec.cardex.generateurRapport.entite.ActiviteQuotidienneRapportVO;
 import com.lotoquebec.cardex.integration.dao.FabriqueCardexDAO;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
 import com.lotoquebec.cardexCommun.exception.BusinessException;
@@ -867,32 +867,56 @@ public class RapportSessionFacade {
         }
     }
 
-    public JasperPrint globalRAQCDX_0070(CardexAuthenticationSubject subject, Date debutDate, Date finDate) throws BusinessResourceException{
-		return (new GlobalRAQRapportCDX_0070(subject, debutDate, finDate)).executer();
+    public JasperPrint globalRAQCDX_0070(CardexAuthenticationSubject subject, ActiviteQuotidienneRapportVO activiteQuotidienneRapportVO) throws BusinessException{
+		try {
+			return (new GlobalRAQDossierGenerateurRapport_CDX_0070()).executer(subject, activiteQuotidienneRapportVO, null, null);
+		} catch (JRException e) {
+			throw new BusinessResourceException(e);
+		}
     }
     
-    public JasperPrint siteRAQCDX_0070(CardexAuthenticationSubject subject, Date debutDate, Date finDate, Long site) throws BusinessResourceException{
-		return (new SiteRAQRapportCDX_0070(subject, debutDate, finDate, site)).executer();
+    public JasperPrint natureRAQRapportCDX_0070(CardexAuthenticationSubject subject, ActiviteQuotidienneRapportVO activiteQuotidienneRapportVO) throws BusinessException{
+		try {    	
+	    	return (new NatureRAQDossierGenerateurRapport_CDX_0070()).executer(subject, activiteQuotidienneRapportVO, null, null);
+		} catch (JRException e) {
+			throw new BusinessResourceException(e);
+		}
     }
     
-    public JasperPrint natureRAQRapportCDX_0070(CardexAuthenticationSubject subject, Date debutDate, Date finDate, long nature) throws BusinessResourceException{
-		return (new NatureRAQRapportCDX_0070(subject, debutDate, finDate, nature)).executer();
-    }
-    
-    public JasperPrint sansNatureRAQRapportCDX_0070(CardexAuthenticationSubject subject, Date debutDate, Date finDate, long nature) throws BusinessResourceException{
-		return (new SansNatureRAQRapportCDX_0070(subject, debutDate, finDate, nature)).executer();
+    public JasperPrint sansNatureRAQRapportCDX_0070(CardexAuthenticationSubject subject, ActiviteQuotidienneRapportVO activiteQuotidienneRapportVO) throws BusinessException{
+		try {    	
+	    	return (new SansNatureRAQDossierGenerateurRapport_CDX_0070()).executer(subject, activiteQuotidienneRapportVO, null, null);
+		} catch (JRException e) {
+			throw new BusinessResourceException(e);
+		}
     }
     
     public JasperPrint clientMystereRapportCDX_0255(CardexAuthenticationSubject subject) throws BusinessResourceException{
-		return (new ClientMystereCDX_0255RapportCardex(subject)).executer();
+		try {
+			return (new ClientMystereGenerateurRapport_CDX_0255()).executer(subject, null, null, null);
+		} catch (BusinessException e) {
+			e.printStackTrace();
+			throw new BusinessResourceException(e);
+		} catch (JRException e) {
+			e.printStackTrace();
+			throw new BusinessResourceException(e);
+		}
     }
  
     public JasperPrint[] clientMystereRapportCDX_0257(CardexAuthenticationSubject subject) throws BusinessResourceException{
     	JasperPrint[] prints = new JasperPrint[5];
-    	ClientMystereCDX_0257RapportCardex clientMystereCDX_0257RapportCardex = (new ClientMystereCDX_0257RapportCardex(subject));
     	
-    	for (int i = 0; i < 5; i++)
-    		prints[i] = clientMystereCDX_0257RapportCardex.executer(i);
+    	
+		try {
+			for (int i = 0; i < 5; i++)
+				prints[i] = new ClientMystereGenerateurRapport_CDX_0257(i).executer(subject, null, null, null);
+		} catch (BusinessException e) {
+			e.printStackTrace();
+			throw new BusinessResourceException(e);
+		} catch (JRException e) {
+			e.printStackTrace();
+			throw new BusinessResourceException(e);
+		}
 
     	return prints;
     }

@@ -1,6 +1,7 @@
-package com.lotoquebec.cardex.business.facade.rapport;
+package com.lotoquebec.cardex.generateurRapport.clientMystere;
 
 import java.io.InputStream;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -8,41 +9,62 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardex.business.Dossier;
 import com.lotoquebec.cardex.business.vo.rapport.ClientMystereVO_CDX_0255;
+import com.lotoquebec.cardex.business.vo.rapport.CritereRapportVO;
 import com.lotoquebec.cardex.business.vo.rapport.RapportClientMystereVO_CDX_0255;
 import com.lotoquebec.cardex.business.vo.rapport.SectionSocieteVO_CDX_0255;
+import com.lotoquebec.cardex.generateurRapport.GenererRapport;
 import com.lotoquebec.cardex.generateurRapport.rapports.RapportsConfiguration;
 import com.lotoquebec.cardex.integration.dao.FabriqueCardexDAO;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
+import com.lotoquebec.cardexCommun.business.vo.VO;
+import com.lotoquebec.cardexCommun.exception.BusinessException;
+import com.lotoquebec.cardexCommun.exception.BusinessResourceException;
 import com.lotoquebec.cardexCommun.exception.DAOException;
+import com.lotoquebec.cardexCommun.securite.GestionnaireSecurite;
 import com.lotoquebec.cardexCommun.util.DateUtils;
 import com.lotoquebec.cardexCommun.util.StringUtils;
 
-public class ClientMystereCDX_0255RapportCardex extends RapportCardex{
+public class ClientMystereGenerateurRapport_CDX_0255 extends GenererRapport {
 
-	private final static Logger log = LoggerFactory.getLogger(ClientMystereCDX_0255RapportCardex.class);
+	private final static Logger log = LoggerFactory.getLogger(ClientMystereGenerateurRapport_CDX_0255.class);
 	protected Map<ClientMystereVO_CDX_0255, ClientMystereVO_CDX_0255> societeClientMystereMap = new HashMap<ClientMystereVO_CDX_0255, ClientMystereVO_CDX_0255>();
 	private Set<Dossier> echantillonDossierClientMystereActif;
+
 	
-	public ClientMystereCDX_0255RapportCardex(CardexAuthenticationSubject subject) {
-		super(subject);
-	}
-
 	@Override
-	protected Collection construireDonneeRapport(CardexAuthenticationSubject subject) throws DAOException {
-        chargerSocieteMystere();
-        return convertir( societeClientMystereMap.values() );
+	public void validerSecurite(CardexAuthenticationSubject subject) {
+		GestionnaireSecurite.validerSecuriteURL(subject, "/rapport/clientsMysteresFichierMaitre");
 	}
-
-	protected void chargerSocieteMystere() throws DAOException {
-		chargerDossierEchantillonActif();
-        chargerSocieteClientMystere();
-        chargerSocieteResponsableSujet();
-        chargerSocieteResponsableSociete();
+	
+	@Override
+	public CritereRapportVO construireNouveauRapportVO() {
+		return null;
+	}
+	
+	@Override
+	public JRDataSource construireDataSource(CardexAuthenticationSubject subject, VO vo, Connection connection) throws BusinessResourceException, BusinessException {
+		chargerSocieteMystere(subject);
+		return new JRBeanCollectionDataSource(convertir( societeClientMystereMap.values() ));
+	}
+	
+	protected void chargerSocieteMystere(CardexAuthenticationSubject subject) {
+		try {
+			chargerDossierEchantillonActif(subject);
+	        chargerSocieteClientMystere(subject);
+	        chargerSocieteResponsableSujet(subject);
+	        chargerSocieteResponsableSociete(subject);
+		} catch (DAOException e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
 	}
 	
 	protected Collection convertir(Collection<ClientMystereVO_CDX_0255> clientMystereVOs){
@@ -158,34 +180,30 @@ public class ClientMystereCDX_0255RapportCardex extends RapportCardex{
 		
 	}
 
-    private void chargerSocieteResponsableSujet () throws DAOException {
+    private void chargerSocieteResponsableSujet (CardexAuthenticationSubject subject) throws DAOException {
         log.info("chargerSocieteResponsableSujet");
         FabriqueCardexDAO.getInstance().getRapportDAO().assignerSujetResponsableSociete(subject, societeClientMystereMap);
     }
     
-    private void chargerSocieteResponsableSociete () throws DAOException {
+    private void chargerSocieteResponsableSociete (CardexAuthenticationSubject subject) throws DAOException {
         log.info("chargerSocieteResponsableSociete");
         FabriqueCardexDAO.getInstance().getRapportDAO().assignerSocieteResponsableSociete(subject, societeClientMystereMap);
     }   
     
-    private void chargerDossierEchantillonActif() throws DAOException {
+    private void chargerDossierEchantillonActif(CardexAuthenticationSubject subject) throws DAOException {
     	log.info("chargerDossierEchantillonActif");
     	echantillonDossierClientMystereActif = FabriqueCardexDAO.getInstance().getDossierDAO().echantillonDossierClientMystereActif(subject);
     }   
     
-    private void chargerSocieteClientMystere() throws DAOException  {
+    private void chargerSocieteClientMystere(CardexAuthenticationSubject subject) throws DAOException  {
     	log.info("chargerSocieteClientMystere");
     	societeClientMystereMap = FabriqueCardexDAO.getInstance().getRapportDAO().societeAvecEtSansDossierClientMystereCDX_0255(subject,echantillonDossierClientMystereActif);
-    }
+    }	
+
+	@Override
+	protected InputStream obtenirGabarit() {
+		return RapportsConfiguration.class.getResourceAsStream(RapportsConfiguration.RAPPORT_FICHIER_MAITRE_CDX_0255);
+	}
+
 	
-	@Override
-	protected Map construireParametres() {
-		return new HashMap();
-	}
-
-	@Override
-	protected InputStream obtenirJasperReport() {
-		return RapportsConfiguration.class.getResourceAsStream(RapportsConfiguration.RAPPORT_FICHIER_MAITRE);
-	}
-
 }

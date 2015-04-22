@@ -1227,6 +1227,8 @@ public final class GlobalConstants {
     	public final static String SUJET_RAPPORT_FORM_CDX_0002 = "com.lotoquebec.cardex.presentation.model.form.rapport.sujet.SujetRapportForm_CDX_0002";
     	public final static String GALERIE_SUJET_RAPPORT_FORM_CDX_0004 = "com.lotoquebec.cardex.presentation.model.form.rapport.sujet.GalerieSujetRapportForm_CDX_0004";
     	
+    	public final static String ACTIVITE_QUOTIDIENNE_FORM_CDX_0070 = "com.lotoquebec.cardex.presentation.model.form.rapport.dossier.ActiviteQuotidienneRapportForm_CDX_0070";
+    	
     	public final static String SUJET_AUDIT_ACCES_RAPPORT_FORM_CDX_0211 = "com.lotoquebec.cardex.presentation.model.form.rapport.acces.SujetAuditAccesRapportForm_CDX_0211";
     	public static final String SUJET_AUDIT_CHANGEMENTS_SUJETS_CDX_0185 = "com.lotoquebec.cardex.presentation.model.form.rapport.acces.SujetAuditChangementRapportForm_CDX_0185";
     	
@@ -1383,9 +1385,6 @@ public final class GlobalConstants {
     }
 
     public static class Configuration{
-    	public static final String SERVICES_CACHE = "services.cache.cardex";
-    	public static final String SERVICES_VIDER_CACHE_LISTE = "servicesVIDERCacheListe";
-    	public static final String SERVICES_CACHE_NUMERO_SEQUENCE_DOSSIER = "servicesNumeroSequenceDossier";
     	public static final String APPLICATION = "app.name";
     	
     	public static final String DATASOURCE = "app.datasource";
@@ -1620,6 +1619,10 @@ public final class GlobalConstants {
 
     }
     
+    public static class Logger{
+    	public static final String DIFFERER = "DIFFERE";
+    	public static final String SECURITE = "SECURITE";
+    }
     
 }
 

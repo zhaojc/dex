@@ -8,7 +8,7 @@
 
 <SCRIPT type="text/javascript">
 function doLogout(){
-	if (confirm("Voulez-vous quitter l'application Cardex?")){
+	if (confirmation("Voulez-vous quitter l'application Cardex?")){
 		windowClose();
 	}
 }

@@ -19,17 +19,35 @@
    </encoder>
  </appender>
  
- <appender name="SECURITE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-      <file>${app.log.dir}/${app.name}.securite.log</file>
+ <appender name="DIFFERER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+      <file>${app.log.dir}/${app.name}.differer.log</file>
       <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-                  <fileNamePattern>${app.name}.securite.%d{yyyy-MM-dd}.log</fileNamePattern>
-                  <maxHistory>30</maxHistory>
-           </rollingPolicy>
+	      <fileNamePattern>${app.name}.differer.%d{yyyy-MM-dd}.log</fileNamePattern>
+	      <maxHistory>30</maxHistory>
+      </rollingPolicy>
       <encoder>
           <pattern>%d{HH:mm:ss.SSS} %-4relative [%thread] %-5level %logger{35} - %msg %n</pattern>
       </encoder>
   </appender>
 
+ <appender name="SECURITE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+      <file>${app.log.dir}/${app.name}.securite.log</file>
+      <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+	      <fileNamePattern>${app.name}.securite.%d{yyyy-MM-dd}.log</fileNamePattern>
+	      <maxHistory>30</maxHistory>
+      </rollingPolicy>
+      <encoder>
+          <pattern>%msg %n</pattern>
+      </encoder>
+  </appender>
+ 
+	<logger name="com.lotoquebec.cardexCommun.log.InformationAcces" level="INFO" additivity="false">
+		<appender-ref ref="SECURITE" />
+	</logger>
+
+ 	<logger name="com.lotoquebec.cardex.ejb.flux" level="INFO" additivity="false">
+		<appender-ref ref="DIFFERER" />
+	</logger>
  
   <root level="INFO">
     <appender-ref ref="${app.log.appender}" />

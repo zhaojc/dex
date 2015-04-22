@@ -172,7 +172,7 @@
 	}
 
     function doSubmit() {
-    alert("<%=PostBackURL%>%>");
+    message("<%=PostBackURL%>%>");
         document.authForm.method="post";
         document.authForm.action="<%=PostBackURL%>%>";
         document.authForm.submit();

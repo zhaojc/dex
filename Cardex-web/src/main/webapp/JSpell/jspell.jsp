@@ -71,7 +71,7 @@ function jspellcheck() {
 function spellCheckClosing() {
 	// place code here that will execute when the spell check is complete
 
-	// e.g., alert("Spell Check Complete");
+	// e.g., message("Spell Check Complete");
 
 	// NOTE: this code will NOT be called if the client is using a Macintosh 
 	// and Internet Explorer due to a bug in Mac IE. Also, this code will not

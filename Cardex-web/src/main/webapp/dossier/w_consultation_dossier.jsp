@@ -66,12 +66,12 @@ response.setDateHeader ("Expires", 0); //prevents caching at the proxy server
 var societes = "0";
 
 function doConfirmLinkSuppression() {
-  return confirm('<bean:message key="cardex_suppression" />');
+  return confirmation('<bean:message key="cardex_suppression" />');
 }
 
 function doConfirmLinkSuppressionPost(postHref) {
 
-	if ( confirm('<bean:message key="cardex_suppression" />') ){
+	if ( confirmation('<bean:message key="cardex_suppression" />') ){
 		post( postHref );
 		return true;
 	}else{
@@ -109,7 +109,7 @@ function doRechercheSigle() {
                 if (req.status == 200) {
 			        sigle = req.responseXML.firstChild.text;
 			        if(sigle != "" && sigle != document.forms(0).numeroDossier.value){
-						if ( !confirm('<bean:message key="cardex.dossier.site.applicable" />' + " (" + sigle + "/" + document.forms(0).numeroDossier.value + ")." )){
+						if ( !confirmation('<bean:message key="cardex.dossier.site.applicable" />' + " (" + sigle + "/" + document.forms(0).numeroDossier.value + ")." )){
 							return false;
 						}
 			        } 
@@ -125,7 +125,7 @@ function doOk() {
   //S'il s'agit d'un dossier Accident/maladie, on affiche un message si le champ Référence 3 est vide et si une société n'a pas été liée.
    if(document.forms(0).type.value == "<%= GlobalConstants.Type.ACCIDENT_MALADIE %>"){
 		if((document.forms(0).reference3.value == "") || (societes == "0")){
-			if (!confirm("<bean:message key='cardex_ambulance' />") ){
+			if (!confirmation("<bean:message key='cardex_ambulance' />") ){
 				return false;
 			}
 		}
@@ -133,7 +133,7 @@ function doOk() {
   //Si le statut est changé à Inactif, on affiche un message s'il n'y a aucune date de fin.
    if(document.forms(0).statut.value == "<%= GlobalConstants.Statut.DOSSIER_INACTIF %>"){
 		if(document.forms(0).dateFin.value == ""){
-			if (!confirm("<bean:message key='cardex_date_fin_inactif' />") ){
+			if (!confirmation("<bean:message key='cardex_date_fin_inactif' />") ){
 				return false;
 			}
 		}
@@ -141,7 +141,7 @@ function doOk() {
 
    if(document.forms(0).nature.value == "<%= GlobalConstants.Genre.INVESTIGATION %>"){
 		if(document.forms(0).statut.value == "<%= GlobalConstants.Statut.DOSSIER_ACTIF %>" && document.forms(0).dateFin.value == ""){
-			if (!confirm("<bean:message key='cardex_date_fin_inactif' />") ){
+			if (!confirmation("<bean:message key='cardex_date_fin_inactif' />") ){
 				return false;
 			}
 		}
@@ -150,11 +150,11 @@ function doOk() {
   //On affiche un message d'avertissement si le dossier ne contient pas
   //d'endroit ou de localisation.
    if((document.forms(0).endroit.value == "") || (document.forms(0).localisation.value == "")){
-      if ( confirm('<bean:message key="cardex_endroit_localisation" />') ){
+      if ( confirmation('<bean:message key="cardex_endroit_localisation" />') ){
 		  //On vérifie si le mot de passe a été changé. Si oui, on prévient l'utilisateur.
 		  if(document.forms(0).motPasse.value != document.forms(0).motPasseCourant.value){
 		  //alert( document.forms(0).motPasse.value + " != " + document.forms(0).motPasseCourant.value);
-			if ( confirm('<bean:message key="cardex_mot_de_passe_different" />') ){
+			if ( confirmation('<bean:message key="cardex_mot_de_passe_different" />') ){
 				unlockFields();
 				detruireOnglet();
 				soumettre('<%= request.getContextPath() + "/dossier/update.do"%>');
@@ -174,7 +174,7 @@ function doOk() {
 		  //On vérifie si le mot de passe a été changé. Si oui, on prévient l'utilisateur.
 		  if(document.forms(0).motPasse.value != document.forms(0).motPasseCourant.value){
 		  //alert( document.forms(0).motPasse.value + " != " + document.forms(0).motPasseCourant.value);
-			if ( confirm('<bean:message key="cardex_mot_de_passe_different" />') ){
+			if ( confirmation('<bean:message key="cardex_mot_de_passe_different" />') ){
 				unlockFields();
 				detruireOnglet();
 				soumettre('<%= request.getContextPath() + "/dossier/update.do"%>');
@@ -472,7 +472,7 @@ function doClickDateFin(){
 function doConfidentialite8(){
 //Avertissement à l'utilisateur pour ajouter des précisions
   if (document.forms(0).confidentialite.value == "<%= GlobalConstants.Confidentialite.HUIT %>" ) {
-  	 alert("Ne pas oublier d'inscrire la raison (erreur ou doublon) de la mise en confidentialité 8 dans le Numéro de dossier (effacer le contenu du champ si une inscription y apparait et la remplacer par la raison).");
+  	 message("Ne pas oublier d'inscrire la raison (erreur ou doublon) de la mise en confidentialité 8 dans le Numéro de dossier (effacer le contenu du champ si une inscription y apparait et la remplacer par la raison).");
   }
 }
 

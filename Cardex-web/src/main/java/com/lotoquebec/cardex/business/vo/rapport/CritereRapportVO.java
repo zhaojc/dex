@@ -4,12 +4,20 @@ import java.util.Date;
 
 public class CritereRapportVO implements RapportVO{
 
-	private Date dateDebutDu = null;
-	private Date dateDebutAu = null;
+	protected Date dateDebutDu = null;
+	protected Date dateDebutAu = null;
 
     private Date dateHeureDebutDu = null;
     private Date dateHeureDebutAu = null;
 	
+    public CritereRapportVO() {}
+    
+	public CritereRapportVO(Date dateDebutDu, Date dateDebutAu) {
+		super();
+		this.dateDebutDu = dateDebutDu;
+		this.dateDebutAu = dateDebutAu;
+	}
+
 	public Date getDateDebutDu() {
 		return dateDebutDu;
 	}

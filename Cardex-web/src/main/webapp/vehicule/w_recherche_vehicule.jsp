@@ -57,7 +57,7 @@ function doDelete() {
     var msg1 = "<bean:message key='epuration'/>";
     var msg2 = "<bean:message key='epuration2'/>";
     var msg3 = "<bean:message key='epuration3'/>";
-    var isYes = confirm(msg1 + "\n" + msg2 + "\n" + msg3);
+    var isYes = confirmation(msg1 + "\n" + msg2 + "\n" + msg3);
     if (isYes){
         soumettre('<%= request.getContextPath() + "/vehicule/delete.do"%>');
     }

@@ -16,17 +16,14 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Date;
-import java.util.Map;
 
 import com.lotoquebec.cardex.business.Site;
 import com.lotoquebec.cardex.integration.dao.FabriqueCardexDAO;
 import com.lotoquebec.cardex.integration.dao.SiteDAO;
-import com.lotoquebec.cardexCommun.GlobalConstants;
 import com.lotoquebec.cardexCommun.exception.DAOException;
 import com.lotoquebec.cardexCommun.integration.dao.jdbc.EnregistrementPresent;
 import com.lotoquebec.cardexCommun.integration.dao.jdbc.JDBCTemplate;
 import com.lotoquebec.cardexCommun.util.DateUtils;
-import com.lotoquebec.cardexCommun.util.DistributedMapUtil;
 
 /**
  * @author levassc
@@ -50,44 +47,40 @@ public class GenererNumeroSequenceDossier {
 	}
 
 	public String obtenirNumeroSequenceCardex(long cleSite, Connection connection) throws DAOException{
-		Map siteSequenceMap = DistributedMapUtil.getInstance().obtenirCache(GlobalConstants.Configuration.SERVICES_CACHE_NUMERO_SEQUENCE_DOSSIER);
 		
-		synchronized (siteSequenceMap){
-			try {
-				connection.setAutoCommit(false);
-				Site siteSequence = obtenirNumeroSequenceSite(Long.valueOf( cleSite ), connection);
+		try {
+			connection.setAutoCommit(false);
+			Site siteSequence = obtenirNumeroSequenceSite(Long.valueOf( cleSite ), connection);
+			siteSequence.incrementerSequence();
+			
+			// Vérification en double parce qu'il existe certains cas rares
+			// qui produise des numéros en double.
+			if (isNumeroDejaCreer(siteSequence.constuireNumeroCardex(), connection)){
+				System.err.println("Problème de numéro de dossier déjà utilisé :"+siteSequence.constuireNumeroCardex());
+				siteSequence = obtenirNumeroSequenceSite(Long.valueOf( cleSite ), connection);
 				siteSequence.incrementerSequence();
 				
-				// V�rification en double parce qu'il existe certains cas rares
-				// qui produise des num�ros en double.
-				if (isNumeroDejaCreer(siteSequence.constuireNumeroCardex(), connection)){
-					System.err.println("Probl�me de num�ro de dossier d�j� utilis� :"+siteSequence.constuireNumeroCardex());
+				while(isNumeroDejaCreer(siteSequence.constuireNumeroCardex(), connection)){
+					System.err.println("Problème de numéro de dossier déjà utilisé (itération) :"+siteSequence.constuireNumeroCardex());
 					siteSequence = obtenirNumeroSequenceSite(Long.valueOf( cleSite ), connection);
 					siteSequence.incrementerSequence();
-					
-					while(isNumeroDejaCreer(siteSequence.constuireNumeroCardex(), connection)){
-						System.err.println("Probl�me de num�ro de dossier d�j� utilis� (it�ration) :"+siteSequence.constuireNumeroCardex());
-						siteSequence = obtenirNumeroSequenceSite(Long.valueOf( cleSite ), connection);
-						siteSequence.incrementerSequence();
-					}
 				}
-				// fin de v�rification
-				
-				siteDAO.enregistrerSequence(siteSequence, connection);
-				
-				//connection.commit();
-				connection.setAutoCommit(true);
+			}
+			// fin de vérification
+			
+			siteDAO.enregistrerSequence(siteSequence, connection);
+			
+			connection.setAutoCommit(true);
 
-				return siteSequence.constuireNumeroCardex();
-			} catch (Exception e) {
-				try {
-					connection.rollback();
-				} catch (SQLException e1) {
-					throw new DAOException(e1);
-				}
-				throw new DAOException(e);
-			}		
-		}
+			return siteSequence.constuireNumeroCardex();
+		} catch (Exception e) {
+			try {
+				connection.rollback();
+			} catch (SQLException e1) {
+				throw new DAOException(e1);
+			}
+			throw new DAOException(e);
+		}		
 	}
 	
 	private boolean isNumeroDejaCreer(String numeroCardex, Connection connection){

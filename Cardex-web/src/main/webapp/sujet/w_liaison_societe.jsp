@@ -46,7 +46,7 @@ function doAdd() {
     if((roleSociete.value != "") && (roleSociete.value != "0")){ //On s'assure qu'il y a un rôle
 		post('<%= request.getContextPath() + "/societe/create.do?role="%>'+roleSociete.value);
 	}else{
-		alert("<bean:message key='choix.role'/>");
+		message("<bean:message key='choix.role'/>");
 	}
 }
 
@@ -55,7 +55,7 @@ function doSearch() {
 }
 
 function doSelectVille() {
-  alert("Fonction non disponible pour le moment ...");
+  message("Fonction non disponible pour le moment ...");
 }
 
 function doClose() {
