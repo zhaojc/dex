@@ -104,7 +104,7 @@ function doCancel() {
 	    vbMsg("<bean:message key='pfc_closequery_savechanges'/>","Confirmation");
     }else{
 	 if (document.forms(0).tempsConsacre.value == "") {
-	       var isYes = confirm("<bean:message key='pfc_closequery_savechanges'/>");
+	       var isYes = confirmation("<bean:message key='pfc_closequery_savechanges'/>");
 	       if (isYes){
 		 		doOk();
 	       }else{
@@ -138,7 +138,7 @@ function doClose() {
 }
 
 function doPrint() {
-  //-- alert("Fonction non disponible pour le moment ...");
+  //-- message("Fonction non disponible pour le moment ...");
   windowOpenLocation('<%= request.getContextPath() %>/narrations/w_impression_narration_frameset.jsp');
 }
 

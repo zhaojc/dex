@@ -94,7 +94,7 @@ function parseMessages(responseXML) {
            document.forms(0).approuvable.value = "yes";
            var statutApprouve = entree.getElementsByTagName("approuve")[0];
            if((statutApprouve == null) || (statutApprouve.childNodes[0].nodeValue != "yes")){
-              alert("<bean:message key='avertissement_t'/>");
+              message("<bean:message key='avertissement_t'/>");
               avertissement.style.visibility = "visible";
               document.forms(0).approuve.checked = false;
               document.forms(0).approuve.value = "no"
@@ -465,7 +465,7 @@ function parseMessages(responseXML) {
 //Affichage du message de validation, s'il y a lieu
 message = "<%= request.getSession().getAttribute("message") %>";
 if (message != "") {
-	alert(message);
+	message(message);
 }
 </SCRIPT>
 

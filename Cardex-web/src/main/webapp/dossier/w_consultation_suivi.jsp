@@ -65,7 +65,7 @@ function doCancel() {
   if (document.forms(0).hasChanged == false ){
     window.location = '<%=request.getContextPath()%>/dossier/show.do?site=<bean:write name="suivi" property="lienSite"/>&cle=<bean:write name="suivi" property="lien"/>';
   }else{
-    var isYes = confirm("<bean:message key='pfc_closequery_savechanges'/>");
+    var isYes = confirmation("<bean:message key='pfc_closequery_savechanges'/>");
     if (isYes){
       doOk();
     }else{

@@ -1,7 +1,6 @@
 package com.lotoquebec.cardex.ejb.flux;
 
 import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.HashMap;
@@ -11,12 +10,14 @@ import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRResultSetDataSource;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.lotoquebec.cardex.generateurRapport.rapports.RapportsConfiguration;
 import com.lotoquebec.cardex.integration.dao.FabriqueCardexDAO;
+import com.lotoquebec.cardex.util.RapportUtils;
 import com.lotoquebec.cardexCommun.GlobalConstants;
 import com.lotoquebec.cardexCommun.authentication.AutentificationCardex;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
@@ -81,7 +82,7 @@ public class CDX00_00018_LaissezPasser implements Flux{
 		
 		try {
 			Map parameters = new HashMap();
-			InputStream gabarit = RapportsConfiguration.class.getResourceAsStream(RapportsConfiguration.RAPPORT_LAISSEZ_PASSER_SUJETS);
+			JasperReport gabarit = RapportUtils.compiler(RapportsConfiguration.RAPPORT_LAISSEZ_PASSER_SUJETS);
 
 			// Utilisation d'un resultSet comme source de donn�es
 		
@@ -109,7 +110,7 @@ public class CDX00_00018_LaissezPasser implements Flux{
 		
 		try {
 			Map parameters = new HashMap();
-			InputStream gabarit = RapportsConfiguration.class.getResourceAsStream(RapportsConfiguration.RAPPORT_LAISSEZ_PASSER_SOCIETES);
+			JasperReport gabarit = RapportUtils.compiler(RapportsConfiguration.RAPPORT_LAISSEZ_PASSER_SOCIETES);
 
 			// Utilisation d'un resultSet comme source de donn�es
 		

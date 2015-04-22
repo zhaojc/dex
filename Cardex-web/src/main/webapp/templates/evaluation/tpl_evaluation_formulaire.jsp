@@ -56,7 +56,7 @@
 	}
 
 	function doVerificationSauvegarde() {
-		alert("N'oubliez pas de sauvegarder régulièrement votre évaluation.");			
+		message("N'oubliez pas de sauvegarder régulièrement votre évaluation.");			
 		setTimeout("doVerificationSauvegarde()",delai);
 	}
   

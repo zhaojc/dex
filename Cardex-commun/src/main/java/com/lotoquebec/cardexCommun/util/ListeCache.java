@@ -52,7 +52,6 @@ public class ListeCache {
 			CACHE = new HashMap<Object, Map>();
 			tableValeurSansRoleEtActive = new HashSet<TableValeurCleSQLListeCache>();
 		}
-		ViderCacheUtil.getInstance().validerSiVider();
 		
 		return listeCache;
 	}
@@ -417,64 +416,9 @@ public class ListeCache {
 		tableValeurSansRoleEtActive.clear();
 	}
 	
-	public synchronized void viderTableValeur(String...valeursTableValeur){
-		ViderCacheUtil.getInstance().assignerViderCaches();
-		/*Map<Object, Map> CACHE = DistributedMapUtil.getInstance().obtenirCache(GlobalConstants.Configuration.SERVICES_CACHE_LISTE_CACHE);
-		Set<TableValeurCleSQLListeCache> tableValeurSansRoleEtActive = DistributedMapUtil.getInstance().obtenirCacheSet(GlobalConstants.Configuration.SERVICES_CACHE_TABLE_VALEUR_SANS_ROLE_ET_ACTIVE);;
-		Iterator<Entry<Object, Map>> iter = CACHE.entrySet().iterator();
-		Class parametre = null;
-		
-		while (iter.hasNext()) {
-			Map.Entry<Object, Map> mapEntry = (Map.Entry<Object, Map>) iter.next();
-			String oValeurTableValeur = getValeurTableValeur(mapEntry.getKey());
-
-			for (String valeurTableValeur:valeursTableValeur){
-				
-				if (valeurTableValeur.equals( oValeurTableValeur )){
-					iter.remove();
-					break;
-				}
-			}
-		}
-		Iterator<TableValeurCleSQLListeCache> iterTV = tableValeurSansRoleEtActive.iterator();
-		
-		while (iterTV.hasNext()) {
-			Object oTableValeurCleSQLListeCache = iterTV.next();
-			String oValeurTableValeur = getValeurTableValeur(oTableValeurCleSQLListeCache);
-			
-			for (String valeurTableValeur:valeursTableValeur){
-				
-				if (valeurTableValeur.equals( oValeurTableValeur )){
-					iterTV.remove();
-					break;
-				}
-			}
-		}
-		assignerDistributedCache(CACHE, tableValeurSansRoleEtActive);*/
-	}	
-	
-	/*private String getValeurTableValeur(Object o){
-		try {
-			Method methodGet = o.getClass().getMethod("getValeurTableValeur");
-			return (String) methodGet.invoke(o);
-
-		} catch (SecurityException e) {
-		} catch (NoSuchMethodException e) {
-		} catch (IllegalArgumentException e) {
-		} catch (IllegalAccessException e) {
-		} catch (InvocationTargetException e) {
-		}
-		return "";
-	}*/
-	
-	/**
-	 * Vider une liste de classe donn�es
-	 * @param classes
-	 */
 	public synchronized void vider(Class<? extends CleListe>...classes){
-		ViderCacheUtil.getInstance().assignerViderCaches();
-		/*Map<Object, Map> CACHE = DistributedMapUtil.getInstance().obtenirCache(GlobalConstants.Configuration.SERVICES_CACHE_LISTE_CACHE);
-		Set<TableValeurCleSQLListeCache> tableValeurSansRoleEtActive = DistributedMapUtil.getInstance().obtenirCacheSet(GlobalConstants.Configuration.SERVICES_CACHE_TABLE_VALEUR_SANS_ROLE_ET_ACTIVE);;
+		vider();
+		/*
 		Iterator<Map.Entry<Object, Map>> iter = CACHE.entrySet().iterator();
 		
 		while (iter.hasNext()) {
@@ -503,10 +447,7 @@ public class ListeCache {
 					}
 				}
 			}
-		}
-		assignerDistributedCache(CACHE, tableValeurSansRoleEtActive);*/
+		}*/
 	}
-
-
 	
 }

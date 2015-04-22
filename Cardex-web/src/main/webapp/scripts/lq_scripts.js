@@ -39,15 +39,15 @@ function generateTwinDateTime(element1Name, element2Name, element1Value){
 
 
 /**************************************************************/
-//-- Positionnement du calendrier par rapport à un évènement click
+//-- Positionnement du calendrier par rapport ï¿½ un ï¿½vï¿½nement click
 //-- de la souris.
 var xPos = 0;
 var yPos = 0;
 
 function setXY(someX, someY){
-  //-- Affichage à gauche du click de souris
-  //-- Valeurs par défaut pouvant être ajustées
-  //-- sur l'appel de la méthode
+  //-- Affichage ï¿½ gauche du click de souris
+  //-- Valeurs par dï¿½faut pouvant ï¿½tre ajustï¿½es
+  //-- sur l'appel de la mï¿½thode
   xPos = someX - 170;
   yPos = someY - 15;
 }
@@ -67,17 +67,17 @@ function drawCalendar(strHTML){
 
 
 /**************************************************************/
-//-- Fermeture du calendrier sur l'évènement onmouseout.
+//-- Fermeture du calendrier sur l'ï¿½vï¿½nement onmouseout.
 var divToHide = false;
 var timeoutDelay = 100;
 
 function hideCalendar(){
-  //-- Programmation d'un court délai avant la fermeture du calendrier,
+  //-- Programmation d'un court dï¿½lai avant la fermeture du calendrier,
   //-- en millisecondes
   divToHide = setTimeout("doHideAfterWait()",timeoutDelay);
 }
 
-//-- Exécution de la fermeture
+//-- Exï¿½cution de la fermeture
 function doHideAfterWait(){
   if (divToHide){
     document.all['CALENDAR_DIV'].style.visibility = "hidden";
@@ -92,7 +92,7 @@ function doHideAfterWait(){
 /**************************************************************/
 //-- Fonction calculant le nombre de mois entre 2 dates valides.
 //-- Retourne un nombre de mois si les dates sont valides,
-//-- une chaîne de caractère vide si non-valides.
+//-- une chaï¿½ne de caractï¿½re vide si non-valides.
 function monthsUntil(startDate, endDate){
   var stringStartDate = startDate.substr(0,10);
   var stringEndDate = endDate.substr(0,10);
@@ -108,7 +108,7 @@ function monthsUntil(startDate, endDate){
 
   if (!(isValidFormat)){ return ""; }
 
-  //-- Récupération des valeurs de date selon le format
+  //-- Rï¿½cupï¿½ration des valeurs de date selon le format
   //-- YYYY-MM-DD ou MM/DD/YYYY
   if (stringStartDate.indexOf("/") != -1){
     aYear = stringStartDate.substr(6,4);
@@ -119,7 +119,7 @@ function monthsUntil(startDate, endDate){
   }
   monthsStart = (aYear * 12) + (aMonth -1);
 
-  //-- Récupération des valeurs de date selon le format
+  //-- Rï¿½cupï¿½ration des valeurs de date selon le format
   //-- YYYY-MM-DD ou MM/DD/YYYY
   if (stringStartDate.indexOf("/") != -1){
     aYear = stringEndDate.substr(6,4);
@@ -134,9 +134,9 @@ function monthsUntil(startDate, endDate){
 }
 
 /**************************************************************/
-//-- Fonction calculant le nombre d'années entre aujourd'hui et une autre date.
-//-- Retourne un nombre d'année si la date est valide,
-//-- une chaîne de caractère vide si non-valide.
+//-- Fonction calculant le nombre d'annï¿½es entre aujourd'hui et une autre date.
+//-- Retourne un nombre d'annï¿½e si la date est valide,
+//-- une chaï¿½ne de caractï¿½re vide si non-valide.
 function computeAge(birthDate){
   var totalYears = 0;
   var stringDate = birthDate.substr(0,10);
@@ -152,7 +152,7 @@ function computeAge(birthDate){
 
  var aDayValue = 1000 * 60 * 60 * 24;                      //ms, sc, mm, hh
  var aYearValue = (365.25 * aDayValue);
-  //-- Récupération des valeurs de date selon le format
+  //-- Rï¿½cupï¿½ration des valeurs de date selon le format
   //-- YYYY-MM-DD ou MM/DD/YYYY
   if (stringDate.indexOf("/") != -1){
     var thisYear = stringDate.substr(6,4);
@@ -172,7 +172,7 @@ function computeAge(birthDate){
 }
 
 /**************************************************************/
-//-- Vérification du format de la date (YYYY-MM-DD ou MM/DD/YYYY)
+//-- Vï¿½rification du format de la date (YYYY-MM-DD ou MM/DD/YYYY)
 function validateDateFormat(longYearFormat){
   var datePattern;
 
@@ -181,14 +181,14 @@ function validateDateFormat(longYearFormat){
   }
 
   if (longYearFormat.indexOf("-") != -1){
-    //Masque de saisie, Doit être au format "yyyy-mm-dd"
+    //Masque de saisie, Doit ï¿½tre au format "yyyy-mm-dd"
   	datePattern = /^(\d+)\-(\d+)\-(\d+)$/;
   	if ((datePattern.test(longYearFormat) != true) || (longYearFormat.length < 10)){
   	  //alert("Date de format invalide : "+ longYearFormat);
   	  return false;
   	}
   }else if (longYearFormat.indexOf("/") != -1){
-      //Masque de saisie, Doit être au format "mm/dd/yyyy"
+      //Masque de saisie, Doit ï¿½tre au format "mm/dd/yyyy"
     	datePattern = /^(\d+)\/(\d+)\/(\d+)$/;
     	if ((datePattern.test(longYearFormat) != true) || (longYearFormat.length < 10)){
     	  //alert("Invalid Date Format : "+ longYearFormat);
@@ -251,7 +251,7 @@ function toggleDivisionVisibility(tabName){
     var divName = "DATA_" + tabName.substring(5,tabName.length);
     var tempDivName;
 
-    //-- Navigateur par défaut: IE 5.0 ou 5.5
+    //-- Navigateur par dï¿½faut: IE 5.0 ou 5.5
     isIE5 = false;
     isIE5_5up = false;
 
@@ -275,10 +275,10 @@ function toggleDivisionVisibility(tabName){
       if ( s.indexOf("#TAB_") != -1) {
     	  document.styleSheets[0].rules[i].style.color = "#000000";
     	  if ( s.indexOf(tabName) != -1) {
-        	// SÉLECTION
+        	// Sï¿½LECTION
         	//document.styleSheets[0].rules[i].style.backgroundColor = "#447db8";
           //document.styleSheets[0].rules[i].style.color = "#ffffff"
-          //-- Préparation de la visibilité de la division
+          //-- Prï¿½paration de la visibilitï¿½ de la division
           if (isIE5_5up){
             document.all[divName].style.top = 0;
             document.all[divName].style.left = 0;
@@ -304,7 +304,7 @@ function toggleDivisionVisibility(tabName){
   }
 
 /**************************************************************/
-//-- Fonction pour déterminer le chemin d'accès des gabarits
+//-- Fonction pour dï¿½terminer le chemin d'accï¿½s des gabarits
 function getChemin(serveur, port,contexte){
   chemin = "";
   
@@ -336,10 +336,10 @@ return chemin;
 }
 
 /**************************************************************/
-//-- Remplacement des apostrophes pour éviter l'affichage &#8217;
-//-- Cette conversion se produit lors de la copie de Word à Cardex.
+//-- Remplacement des apostrophes pour ï¿½viter l'affichage &#8217;
+//-- Cette conversion se produit lors de la copie de Word ï¿½ Cardex.
 function remplaceApostrophes(narration){
-	out = "’"; // replace this
+	out = "ï¿½"; // replace this
 	add = "'"; // with this
 	temp = "" + narration;
 
@@ -352,10 +352,10 @@ function remplaceApostrophes(narration){
 }
 
 //-------------------------------------------------
-//Cette fonction permet de retrouver une entrée dans une liste déroulante
+//Cette fonction permet de retrouver une entrï¿½e dans une liste dï¿½roulante
 //en frappant plusieurs lettres successives. Elle est surtout utile pour les 
-//longues listes, comme les villes. Sans cette fonction, chaque lettre frappée
-//déroule la liste à la première occurence de la lettre.
+//longues listes, comme les villes. Sans cette fonction, chaque lettre frappï¿½e
+//dï¿½roule la liste ï¿½ la premiï¿½re occurence de la lettre.
 
 //variable pour garder la construction de la string
 
@@ -363,7 +363,7 @@ var incrementalString = "";
 
 //**************************************************
 
-//fonction pour réinitialiser la recherche de string
+//fonction pour rï¿½initialiser la recherche de string
 
 //**************************************************
 
@@ -381,7 +381,7 @@ function resetIncrementalSearchTimeOut(i) {
 
 //**************************************************************************************
 
-//fonction qui permet de faire une recherche incrémental (type ahead) dans une drop-down
+//fonction qui permet de faire une recherche incrï¿½mental (type ahead) dans une drop-down
 
 //**************************************************************************************
 var insertionCaractereListeAutomatique = false;
@@ -409,7 +409,7 @@ function typeAhead(selectBox, event) {
 } //typeAhead()
 
 //-------------------------------------------------
-//------ cette méthode est utilisé par les processus AJAX -------
+//------ cette mï¿½thode est utilisï¿½ par les processus AJAX -------
 // Retourne l'active X de AJAX
 function initRequest(url) {
     if (window.XMLHttpRequest) {
@@ -421,7 +421,7 @@ function initRequest(url) {
 }
 
 //-------------------------------------------------
-//------ méthode utilisé par le tag EnteteListeTriable -------
+//------ mï¿½thode utilisï¿½ par le tag EnteteListeTriable -------
 function trierSoumettre(actionSoumettre, nomTable, sortBy, sortDescendant) {
 	document.getElementById( "nomTable" ).value = nomTable;
 	document.getElementById( "trierPart" ).value = sortBy;
@@ -511,7 +511,7 @@ function cursorDefault(){
 	document.body.style.cursor = "default";
 }
 
-// Ajouter un evenement à un object html
+// Ajouter un evenement ï¿½ un object html
 function addEvent(obj, evType, fn){
 	
 	if (obj.addEventListener){
@@ -545,7 +545,7 @@ function IsNumeric(strString){
    return blnResult;
 }
 
-//valider une valeur monétaire
+//valider une valeur monï¿½taire
 function validerArgent(input){
    var strValidChars = "-1234567890,.";
    var strChar = "";
@@ -583,7 +583,7 @@ function validerArgent(input){
 			   virgulePresente = true;
 		   
 		   if(strString.charAt(i) == "."){
-        	  strValide = strValide + ","; //On remplace un point par une virgule décimale.
+        	  strValide = strValide + ","; //On remplace un point par une virgule dï¿½cimale.
         	  virgulePresente = true;
           }else{
         	  strValide = strValide + strChar;
@@ -638,8 +638,8 @@ function changerChamp(o, nomProchainChamp) {
 		prochainChamp.focus();
 	}
 }
-//On filtre les actions du clavier qui ne sont pas des caractères.
-//Sinon, on ne peut pas utiliser les flèches de curseur par exemple.
+//On filtre les actions du clavier qui ne sont pas des caractï¿½res.
+//Sinon, on ne peut pas utiliser les flï¿½ches de curseur par exemple.
 function contientElement(filtre, cle) {
     var trouve = false;
     var index = 0;
@@ -664,7 +664,7 @@ function disableButton(id){
 }
 
 /*
- * Construire les paramètres le la requête post
+ * Construire les paramï¿½tres le la requï¿½te post
  */
 function construireParametre(parametre){
 	var valeur = document.getElementsByName(parametre)[0].value;
@@ -685,7 +685,7 @@ function construireParametreRadio(parametre){
 
 function isNavigationDateTag(keyCode){
    return keyCode == 35 || keyCode == 36  // home fin
-   || keyCode == 37 || keyCode == 39; // flèche arrière flèche avant
+   || keyCode == 37 || keyCode == 39; // flï¿½che arriï¿½re flï¿½che avant
 }
 
 function isNumericTag(keyCode){
@@ -695,7 +695,7 @@ function isNumericTag(keyCode){
 	   || keyCode == 9 //TAB
 	   || keyCode == 46 // DEL
 	   || keyCode == 35 || keyCode == 36  // home fin
-	   || keyCode == 37 || keyCode == 39; // flèche arrière flèche avant
+	   || keyCode == 37 || keyCode == 39; // flï¿½che arriï¿½re flï¿½che avant
 }
 
 function isAlphabetiqueTag(keyCode){
@@ -704,7 +704,7 @@ function isAlphabetiqueTag(keyCode){
 	   || keyCode == 9 //TAB
 	   || keyCode == 46 // DEL
 	   || keyCode == 35 || keyCode == 36  // home fin
-	   || keyCode == 37 || keyCode == 39; // flèche arrière flèche avant
+	   || keyCode == 37 || keyCode == 39; // flï¿½che arriï¿½re flï¿½che avant
 }
 
 function isArgentTag(keyCode){
@@ -714,11 +714,11 @@ function isArgentTag(keyCode){
 	   || keyCode == 9 //TAB
 	   || keyCode == 46 // DEL
 	   || keyCode == 35 || keyCode == 36  // home fin
-	   || keyCode == 37 || keyCode == 39  // flèche arrière flèche avant
-	   || keyCode == 109 //Signe moins, pour entrer des nombres négatifs
+	   || keyCode == 37 || keyCode == 39  // flï¿½che arriï¿½re flï¿½che avant
+	   || keyCode == 109 //Signe moins, pour entrer des nombres nï¿½gatifs
 	   || keyCode == 188 // virgule
-	   || keyCode == 110 || keyCode == 190;  // point (sera transformé en virgule décimale à la sortie du champ)
-	   //On accepte le point en raison des utilisateurs trop habitués à saisir un point ou qui utilisent le pavé numérique.
+	   || keyCode == 110 || keyCode == 190;  // point (sera transformï¿½ en virgule dï¿½cimale ï¿½ la sortie du champ)
+	   //On accepte le point en raison des utilisateurs trop habituï¿½s ï¿½ saisir un point ou qui utilisent le pavï¿½ numï¿½rique.
 }
 
 var isShift=false;
@@ -739,7 +739,7 @@ function isNumericDateTag(keyCode){
    || keyCode == 9 //TAB
    || keyCode == 46 // DEL
    || keyCode == 35 || keyCode == 36  // home fin
-   || keyCode == 37 || keyCode == 39 // flèche arrière flèche avant
+   || keyCode == 37 || keyCode == 39 // flï¿½che arriï¿½re flï¿½che avant
    || keyCode == 109 || keyCode == 111; // '-' '/'
 }
 
@@ -753,7 +753,7 @@ function isNumericDateHeureTag(keyCode){
 	   //|| keyCode == 16 // Shift
 	   || keyCode == 186 // :
 	   || keyCode == 35 || keyCode == 36  // home fin
-	   || keyCode == 37 || keyCode == 39 // flèche arrière flèche avant
+	   || keyCode == 37 || keyCode == 39 // flï¿½che arriï¿½re flï¿½che avant
 	   || keyCode == 109 || keyCode == 111; // '-' '/'
 	}
 
@@ -796,4 +796,16 @@ function soumettreControleNavigation(actionSoumettre, nomTable, numeroPageSelect
 	document.getElementById( "nomTable" ).value = nomTable;
 	document.getElementById( nomTable+".numeroPageCourante" ).value = numeroPageSelectionne;
 	soumettre(actionSoumettre);
+}
+
+function confirmation(texte){
+	var msg=document.createElement('span');
+	msg.innerHTML=texte;
+	return confirm(msg.innerHTML);
+}
+
+function message(texte){
+	var msg=document.createElement('span');
+	msg.innerHTML=texte;
+	alert(msg.innerHTML);
 }

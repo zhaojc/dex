@@ -74,11 +74,11 @@ function doOk() {
 }
 
 function doCancel() {
-//-- alert(fenetreNarration.innerHTML);
+//-- message(fenetreNarration.innerHTML);
   if (fenetreNarration.innerHTML == document.forms(0).narrationAvecFormat.value ){
     window.location = '<%=request.getContextPath()%>/vehicule/show.do?site=<bean:write name="narration" property="vehicule.site"/>&cle=<bean:write name="narration" property="vehicule.cle"/>';
   }else{
-    var isYes = confirm("<bean:message key='pfc_closequery_savechanges'/>");
+    var isYes = confirmation("<bean:message key='pfc_closequery_savechanges'/>");
     if (isYes){
       doOk();
     }else{
@@ -88,11 +88,11 @@ function doCancel() {
 }
 
 function doApprobation() {
-  alert("Fonction non disponible pour le moment ...");
+  message("Fonction non disponible pour le moment ...");
 }
 
 function doModification() {
-  alert("Fonction non disponible pour le moment ...");
+  message("Fonction non disponible pour le moment ...");
 }
 
 function doClose() {
@@ -100,7 +100,7 @@ function doClose() {
 }
 
 function doPrint() {
-  alert("Fonction non disponible pour le moment ...");
+  message("Fonction non disponible pour le moment ...");
 }
 
 function lireGabarit(gabarit) {

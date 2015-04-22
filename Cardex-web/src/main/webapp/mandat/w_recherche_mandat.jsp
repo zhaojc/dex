@@ -64,7 +64,7 @@ function doListeActions(mandat) {
 }
 
 function doConfirmLinkSuppression() {
-  return confirm('<bean:message key="cardex_suppression" />');
+  return confirmation('<bean:message key="cardex_suppression" />');
 }
 
 function doTraits(objet) {

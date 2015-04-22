@@ -149,7 +149,7 @@ import com.lotoquebec.cardexCommun.user.CardexPrivilege;
 import com.lotoquebec.cardexCommun.user.CardexUser;
 import com.lotoquebec.cardexCommun.util.ListeCache;
 import com.lotoquebec.cardexCommun.util.StringUtils;
-import com.lotoquebec.cardexCommun.util.ViderCacheUtil;
+import com.lotoquebec.cardexCommun.util.ViderCacheUtils;
 import com.lq.std.conf.impl.AppConfig;
 
 /**
@@ -941,9 +941,9 @@ public class DossierAction extends AbstractAction {
 			CardexUser utilisateur = (CardexUser)subject.getUser();
     		ListeCache cache = ListeCache.getInstance();
 			String siteDescription = cache.obtenirLabel(subject, String.valueOf(utilisateur.getSite()), new TableValeurCleSQLListeCache(subject, GlobalConstants.TableValeur.SITE, utilisateur.getEntite(), GlobalConstants.ActionSecurite.SELECTION));
-    		String nomRapport = chemin+"Dossiers ? ?purer "+ siteDescription + " (" + dateRapport+").pdf";
+    		String nomRapport = chemin+"Dossiers à épurer "+ siteDescription + " (" + dateRapport+").pdf";
     		InputStream gabarit = getClass().getClassLoader().getResourceAsStream(RapportsConfiguration.RAPPORT_EPURATION_DOSSIERS);
-			log.debug("Sauvegarder dossiers ? ?purer");
+			log.debug("Sauvegarder dossiers à épurer");
 
 			long site = utilisateur.getSite();
 			resultSet = rapportDelegate.rapportEpuration(site, connection, "CARDEX_RAPPORT.SP_RAP_DO_EPURATION");
@@ -955,12 +955,11 @@ public class DossierAction extends AbstractAction {
 			parameters.put("UTILISATEUR", utilisateur.getCode());
 			JasperPrint print = JasperFillManager.fillReport(gabarit, parameters, resultSetDataSource);
 			// Sauvegarde dans un fichier
-			log.debug("?puration des dossiers (Sauvegarde dans un fichier)");
+			log.debug("Épuration des dossiers (Sauvegarde dans un fichier)");
 			(new PDFImpressionRapport()).impression(nomRapport, print);
 			//On proc?de ensuite ? l'?puration
-        	DossierBusinessDelegate dossierDelegate =
-                new DossierBusinessDelegate();
-            dossierDelegate.delete(subject);
+        	DossierBusinessDelegate dossierDelegate = new DossierBusinessDelegate();
+            //dossierDelegate.delete(subject);
             //Apr?s la suppression, on vide la liste des r?sultats.
             CriteresRechercheDossierForm criteresRechercheDossierHtmlForm = new CriteresRechercheDossierForm();
             criteresRechercheDossierHtmlForm.init(subject);
@@ -4488,7 +4487,8 @@ log.debug("Date du jour : " + currentDate);
                                  HttpServletRequest request,
                                  HttpServletResponse response){
         log.debug("Rafra?chissement des informations en m?moire cache");
-        ViderCacheUtil.getInstance().assignerViderCaches();
+        //ViderCacheUtils.getInstance().assignerViderCaches();
+        (new ViderCacheUtils()).assignerViderCaches();
         SujetInteretGalerieCache.vider(); // vider la liste de sujet d'int?r?t actif/inactif
 
         return mapping.findForward("success");

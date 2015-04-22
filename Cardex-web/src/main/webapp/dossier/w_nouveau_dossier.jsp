@@ -63,7 +63,7 @@ function doOk() {
   //S'il s'agit d'un dossier Accident/maladie, on affiche un message si le champ Référence 3 est vide et si une société n'a pas été liée.
    if(document.forms(0).type.value == "<%= GlobalConstants.Type.ACCIDENT_MALADIE %>"){
 		if((document.forms(0).reference3.value == "")){
-			if (!confirm("<bean:message key='cardex_ambulance' />") ){
+			if (!confirmation("<bean:message key='cardex_ambulance' />") ){
 				return false;
 			}
 		}
@@ -71,7 +71,7 @@ function doOk() {
   //On affiche un message d'avertissement si le dossier ne contient pas
   //d'endroit ou de localisation.
     if((document.forms(0).endroit.value == "") || (document.forms(0).localisation.value == "")){
-      if ( confirm('<bean:message key="cardex_endroit_localisation" />') ){
+      if ( confirmation('<bean:message key="cardex_endroit_localisation" />') ){
 		unlockFields();
 	    soumettre('<%= request.getContextPath() + "/dossier/save.do"%>');
 	  }else{
@@ -88,11 +88,11 @@ function doClose() {
 }
 
 function doPrint() {
-  alert("Fonction non disponible pour le moment ...");
+  message("Fonction non disponible pour le moment ...");
 }
 
 function doAudit() {
-  alert("Fonction non disponible pour le moment ...");
+  message("Fonction non disponible pour le moment ...");
 }
 
 function initRequest(url) {

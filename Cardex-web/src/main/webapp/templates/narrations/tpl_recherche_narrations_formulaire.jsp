@@ -316,7 +316,7 @@ Mise à jour nouvel Assistant date-heure (incorporé dans la page).
               <cardex:button labelKey='cb_rechercher' soumettre="/narration/search.do" />
             </TD>
             <TD width="310" ALIGN="left">
-              <cardex:button urlSecurite="/AffichageRapportActivites" labelKey='bouton.rapport.activites.quotidien' style='width: 150px; text-align: center;' onclick='doPrintRapport();' />
+              <cardex:button securityConstraint="cardex.rapport.activite.quotidienne" labelKey='bouton.rapport.activites.quotidien' style='width: 150px; text-align: center;' onclick='doPrintRapport();' />
               &nbsp;&nbsp;
               <cardex:button labelKey='cb_clear' style='width: 120px; text-align: center;' soumettre="/narration/search/reset/default.do" />
             </TD>

@@ -341,7 +341,7 @@ function r3(string,text,by) {
 }
 function confirmReplacement() {
 	if(confirmAfterReplace) {
-		return confirm("You are replacing: '"+er[p2-1].s4+
+		return confirmation("You are replacing: '"+er[p2-1].s4+
 			"' with a word that is not from the suggestions.\n"+
 			"Your replacement HAS NOT been validated.  If you choose to\n"+
 			"continue and you are not sure of the proper spelling of your\n"+
@@ -465,7 +465,7 @@ function learnword() {
 		// open.
 
 		if(confirmAfterLearn){
-			if(confirm("You are adding '"+er[p2-1].s4+"' to your personal dictionary! Choose Ok to continue or Cancel to abort.")) {
+			if(confirmation("You are adding '"+er[p2-1].s4+"' to your personal dictionary! Choose Ok to continue or Cancel to abort.")) {
 				i12();
 			}
 		} else {

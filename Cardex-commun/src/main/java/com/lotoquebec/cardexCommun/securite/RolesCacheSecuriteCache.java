@@ -12,7 +12,6 @@ import com.lotoquebec.cardexCommun.exception.DAOException;
 import com.lotoquebec.cardexCommun.integration.dao.SecuriteDAO;
 import com.lotoquebec.cardexCommun.util.ApplicationUtil;
 import com.lotoquebec.cardexCommun.util.StringUtils;
-import com.lotoquebec.cardexCommun.util.ViderCacheUtil;
 import com.lq.std.conf.impl.AppConfig;
 
 public class RolesCacheSecuriteCache {
@@ -31,8 +30,6 @@ public class RolesCacheSecuriteCache {
 	}
 	
 	public synchronized static RolesCacheSecuriteCache getInstance(){
-		
-		ViderCacheUtil.getInstance().validerSiVider();
 		
 		if (rolesCache == null){
 			rolesCache = new RolesCacheSecuriteCache();
@@ -87,7 +84,7 @@ public class RolesCacheSecuriteCache {
 			}
 		} catch (DAOException e) {
 			e.printStackTrace();
-			throw new RuntimeException("Probl�me a charger les r�les caches");
+			throw new RuntimeException("Problème a charger les rôles caches");
 		}
 	}
 	

@@ -70,7 +70,8 @@ function doOk() {
 	//s'il s'agit d'une autoeclusion.
   if(document.forms(0).categorie.value == "<%= GlobalConstants.Categorie.AUTOEXCLUSION %>"){	
     if(valeurRadioCheck("aideimmediate")==""){
-       alert("<bean:message key='cardex_aide_immediate'/>");
+        var msg = "<bean:message key='cardex_aide_immediate'/>";
+       	message(msg);
     }else{
    	    unlockFields();
         performSelectAll();
@@ -87,7 +88,7 @@ function doOk() {
 	now = now.getYear()+"-"+mois+"-"+now.getDate();
 	//alert(now + " - " + document.forms(0).dateDebut.value);
 	if(document.forms(0).dateDebut.value > now){
-          alert("<bean:message key='cardex_required_date_deb'/>");
+          message("<bean:message key='cardex_required_date_deb'/>");
 	}else{
 		unlockFields();
 	    performSelectAll();

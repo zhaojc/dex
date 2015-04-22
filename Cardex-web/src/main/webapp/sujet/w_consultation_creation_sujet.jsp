@@ -60,7 +60,7 @@ Derniers commentaires à jour.
 
 function doConfirmLinkSuppression() {
 	unlockFields(); 
-	return confirm('<bean:message key="cardex_suppression" />');
+	return confirmation('<bean:message key="cardex_suppression" />');
 }
 
 function doSoumettreRafraichirConsultation() {

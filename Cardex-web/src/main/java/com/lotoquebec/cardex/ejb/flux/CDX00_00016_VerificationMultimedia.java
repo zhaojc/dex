@@ -18,6 +18,7 @@ import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRMapCollectionDataSource;
 
 import org.slf4j.Logger;
@@ -41,6 +42,7 @@ import com.lotoquebec.cardex.business.vo.SujetVO;
 import com.lotoquebec.cardex.business.vo.VehiculeVO;
 import com.lotoquebec.cardex.generateurRapport.rapports.RapportsConfiguration;
 import com.lotoquebec.cardex.integration.dao.FabriqueCardexDAO;
+import com.lotoquebec.cardex.util.RapportUtils;
 import com.lotoquebec.cardexCommun.GlobalConstants;
 import com.lotoquebec.cardexCommun.authentication.AutentificationCardex;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
@@ -104,7 +106,7 @@ public class CDX00_00016_VerificationMultimedia implements Flux{
 		List liste = new ArrayList();
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		String dateRapport = dateFormat.format(new Date());
-		InputStream gabarit = RapportsConfiguration.class.getResourceAsStream(RapportsConfiguration.VERIFICATION_ELEMENTS_MULTIMEDIA);
+		JasperReport gabarit = RapportUtils.compiler(RapportsConfiguration.VERIFICATION_ELEMENTS_MULTIMEDIA);
 		try{
 			log.info("produireRapportVerificationMultimedia");
 			ResultSet resultSet = FabriqueCardexDAO.getInstance().getRapportDAO().rapportVerificationMultimedia(connection);

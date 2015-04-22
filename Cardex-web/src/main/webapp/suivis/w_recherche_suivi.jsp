@@ -62,7 +62,7 @@ Création HTML.
   //-- L'évènement onUnload est appelé lors d'un submit, d'un refresh
   //-- ou la fermeture de la fenêtre du navigateur.  Valide seulement pour I.E.
 
-  //-- alert("L'évènement unload a été appelé.");
+  //-- message("L'évènement unload a été appelé.");
   //-- Si l'assistant date est encore ouvert, le fermer.;
   if (vWinCal) { vWinCal.close(); }
 </SCRIPT>

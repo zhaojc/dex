@@ -65,7 +65,7 @@ function doClose() {
 }
 
 function doPrint() {
-  alert("Fonction non disponible pour le moment ...");
+  message("Fonction non disponible pour le moment ...");
 }
 
 function initRequest() {
@@ -97,7 +97,7 @@ function doVerificationNumeroFiche() {
 			        var numeroFiche = req.responseXML.firstChild.text;
 			        
 			        if (numeroFiche != "" && numeroFiche != null){
-			        	alert("Ce sujet existe déjà avec le(s) numéro(s) de fiche : "+numeroFiche+".");
+			        	message("Ce sujet existe déjà avec le(s) numéro(s) de fiche : "+numeroFiche+".");
 			        }
                 }
             }

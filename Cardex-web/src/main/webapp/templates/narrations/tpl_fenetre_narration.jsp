@@ -66,7 +66,7 @@ function dictionnaire(){
 	  	oGestionnaireAntidote.LanceOutil("IEFrame", "DictionnaireParDefaut");
 	  }
 	}catch(err){
-		alert("Le logiciel Antidote n'est pas installé sur votre poste.");
+		message("Le logiciel Antidote n'est pas install&eacute; sur votre poste.");
 	}
 }
 
@@ -77,7 +77,7 @@ function grammaire(){
 		  oGestionnaireAntidote.LanceOutil("IEFrame", "GuideParDefaut");
 	  }
 	}catch(err){
-		alert("Le logiciel Antidote n'est pas installé sur votre poste.");
+		message("Le logiciel Antidote n'est pas install&eacute; sur votre poste.");
 	}
 }
 
@@ -89,7 +89,7 @@ function correcteur(){
 		  oGestionnaireAntidote.LanceOutil("IEFrame", "Correcteur");
 	  }
 	}catch(err){
-		alert("Le logiciel Antidote n'est pas installé sur votre poste.");
+		message("Le logiciel Antidote n'est pas install&eacute; sur votre poste.");
 	}
 }
 

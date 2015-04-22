@@ -64,7 +64,7 @@ function validation(){
 	  doSearch();
 	  return 0;
    }else{
-	  alert("La date de naissance est invalide");
+	  message("La date de naissance est invalide");
    }
 }
 

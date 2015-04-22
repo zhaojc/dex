@@ -48,7 +48,7 @@ Commentaires à jour.
 function doCopier() {
 //Fonction temporaire pour permettre la copie des données d'une société à l'autre, dans le but d'éliminer les doublons de sociétés.
    if(document.forms(0).detaillant.value != ""){
-      if ( confirm('Voulez-vous vraiment copier les données de la société ' + document.forms(0).numeroFiche.value + " à la société " + document.forms(0).detaillant.value + "?") ){
+      if ( confirmation('Voulez-vous vraiment copier les données de la société ' + document.forms(0).numeroFiche.value + " à la société " + document.forms(0).detaillant.value + "?") ){
       	soumettre("<%= request.getContextPath()%>/societe/copier.do?cle=" + document.forms(0).cle.value + "&site=" + document.forms(0).site.value + "&detaillant=" + document.forms(0).detaillant.value);
       }
    }

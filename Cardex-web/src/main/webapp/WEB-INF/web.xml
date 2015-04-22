@@ -376,31 +376,6 @@
     </init-param>
   </servlet>
   <servlet>
-    <description>
-		Impression du rapport activites quotidien</description>
-    <display-name>
-		AffichageRapportActivites</display-name>
-    <servlet-name>AffichageRapportActivites</servlet-name>
-    <servlet-class>
-		com.lotoquebec.cardex.servlet.AffichageRapportActivites</servlet-class>
-    <init-param>
-      <param-name>DATE_DEBUT</param-name>
-      <param-value></param-value>
-    </init-param>
-    <init-param>
-      <param-name>DATE_FIN</param-name>
-      <param-value></param-value>
-    </init-param>
-    <init-param>
-      <param-name>DESTINATION</param-name>
-      <param-value></param-value>
-    </init-param>
-    <init-param>
-      <param-name>UTILISATEUR</param-name>
-      <param-value></param-value>
-    </init-param>
-  </servlet>
-  <servlet>
     <description>Servlet permettant d'afficher un rapport PDF</description>
     <display-name>RapportAffichage</display-name>
     <servlet-name>RapportAffichage</servlet-name>
@@ -566,10 +541,6 @@
   <servlet-mapping>
     <servlet-name>AffichagePDFListes</servlet-name>
     <url-pattern>/AffichagePDFListes</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-    <servlet-name>AffichageRapportActivites</servlet-name>
-    <url-pattern>/AffichageRapportActivites</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>RapportAffichage</servlet-name>

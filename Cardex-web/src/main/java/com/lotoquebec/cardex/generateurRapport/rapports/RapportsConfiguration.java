@@ -57,7 +57,7 @@ public class RapportsConfiguration {
 
 	public static Map<String, String> listeRapportsAdhoc = new HashMap<String, String>();
 
-	// Rapports d'�puration
+	// Rapports d'épuration
 	public final static String RAPPORT_EPURATION_DOSSIERS = REPERTOIRE_RAPPORT+"CDX_0006_epuration_dossiers.jrxml";
 	public final static String RAPPORT_EPURATION_SUJETS = REPERTOIRE_RAPPORT+"CDX_0007_epuration_sujets.jrxml";
 	public final static String RAPPORT_EPURATION_SOCIETES = REPERTOIRE_RAPPORT+"CDX_0008_epuration_societes.jrxml";
@@ -167,9 +167,9 @@ public class RapportsConfiguration {
 	public static final String RAPPORT_DETAILLANTS_FAUTIFS = REPERTOIRE_RAPPORT+"CDX_0252_detaillants_en_infraction_clients_mysteres.jrxml";
 	public static final String RAPPORT_VISITES_REGION = REPERTOIRE_RAPPORT+"CDX_0253_visites_par_region_administrative.jrxml";
 	public static final String RAPPORT_VISITES_CENTRE = REPERTOIRE_RAPPORT+"CDX_0254_visites_par_centre_regional.jrxml";
-	public static final String RAPPORT_FICHIER_MAITRE = REPERTOIRE_RAPPORT+"CDX_0255_clients_mysteres_fichier_maitre.jrxml";
+	public static final String RAPPORT_FICHIER_MAITRE_CDX_0255 = REPERTOIRE_RAPPORT+"CDX_0255_clients_mysteres_fichier_maitre.jrxml";
     public static final String RAPPORT_SOCIETES_INACTIVES = REPERTOIRE_RAPPORT+"CDX_0256_clients_mysteres_detaillants_inactifs.jrxml";
-    public static final String RAPPORT_DETAILLANTS_INFRACTION = REPERTOIRE_RAPPORT+"CDX_0257_detaillants_en_infraction.jrxml";
+    public static final String RAPPORT_DETAILLANTS_INFRACTION_CDX_0257 = REPERTOIRE_RAPPORT+"CDX_0257_detaillants_en_infraction.jrxml";
 
     //Rapports sur les accès
     public static final String AUDIT_SOMMAIRE_ACCES = REPERTOIRE_RAPPORT+"CDX_0120_audit_sommaire_acces.jrxml";

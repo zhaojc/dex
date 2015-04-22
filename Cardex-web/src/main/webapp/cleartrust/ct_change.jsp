@@ -30,16 +30,16 @@ if (document.readyState=="complete"){
 function verifier() {
 //Validations des informations saisies.
     if(document.forms(0).code.value == ""){
-       alert("Le code est obligatoire.");
+       message("Le code est obligatoire.");
     }else{
 	    if(document.forms(0).ancienMotPasse.value == ""){
-	       alert("L'ancien mot de passe est obligatoire.");
+	       message("L'ancien mot de passe est obligatoire.");
 	    }else{
 			if(document.forms(0).nouveauMotPasse.value != document.forms(0).confirmation.value){
-			   alert("Le mot de passe et la confirmation doivent être identiques.");
+			   message("Le mot de passe et la confirmation doivent être identiques.");
 			}else{
 				if(document.forms(0).nouveauMotPasse.value.length < 8){
-				   alert("Le mot de passe doit contenir au moins huit caractères.");
+				   message("Le mot de passe doit contenir au moins huit caractères.");
 				}else{
 				//Le mot de passe doit contenir au moins 1 caractère numérique
 					nombre = "1234567890"

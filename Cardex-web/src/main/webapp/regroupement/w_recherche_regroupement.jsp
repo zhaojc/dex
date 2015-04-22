@@ -54,7 +54,7 @@ function doPrint() {
 	var choixRapport = document.getElementsByName("choixRapport")[0];
 
     if ((isPlusUnAn()) && (choixRapport.value != '<%= ConstantRegroupement.MATRICE_REGROUPEMENTS %>')){
-    	if (confirm("Votre requête pourrait prendre plusieurs minutes pour s'exécuter.\rDésirez-vous poursuivre l'exécution?")){
+    	if (confirmation("Votre requête pourrait prendre plusieurs minutes pour s'exécuter.\rDésirez-vous poursuivre l'exécution?")){
     		soumettre("<%= request.getContextPath() + "/regroupement/search/valider.do"%>");
     	}
     }else{
