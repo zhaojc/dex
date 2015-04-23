@@ -47,6 +47,7 @@ public class MenuAction extends Action {
     private Logger      log =
         LoggerFactory.getLogger((this.getClass()));
 
+
     /**
      * Traite la requ�te HTTP sp�cifi�, et cr�e la r�ponse HTTP correspondante
      * (ou redirige le controle vers un autre composant web).
@@ -68,7 +69,7 @@ public class MenuAction extends Action {
                                  HttpServletResponse response) throws IOException,
                                  ServletException {
         AuthenticationSubject subject = null;
-
+        
         // Le profil utilisateur est extrait de la base de donn�es cardex
         // et la locale est initialis�e
         log.debug("Authentification de l'utilisateur");
@@ -79,7 +80,8 @@ public class MenuAction extends Action {
         	
                 String userName = null;
         		String token = "";
-        		//La premi�re �tape consiste � d�terminer l'environnement, production ou d�veloppement
+
+                //La premi�re �tape consiste � d�terminer l'environnement, production ou d�veloppement
         		//On lit d'abord le poste de travail d'o� provient la requ�te.
 				/*InetAddress ia = java.net.InetAddress.getLocalHost();
 				String host = ia.getHostName();
@@ -144,6 +146,8 @@ public class MenuAction extends Action {
 					
 	                subject = AuthenticationServiceFactory.authenticate(createAuthenticationSubject(userName,"",token));					
 		        }*/
+        		
+
         		subject = AuthenticationServiceFactory.authenticate(createAuthenticationSubject("AMAITRE", ""));
         		
 			    if (subject == null){
@@ -275,8 +279,6 @@ public class MenuAction extends Action {
                        new ActionMessage("cardex_erreur_registre",be));
             saveErrors(request, errors);
     }
-
- 
 
 
 }

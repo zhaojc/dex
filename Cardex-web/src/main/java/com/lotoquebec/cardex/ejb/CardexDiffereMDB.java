@@ -19,7 +19,7 @@ import com.lotoquebec.iris.infrastructure.services.messaging.MessageAsync;
 		name = "CardexDiffereMDB",
 		activationConfig = {
 				@ActivationConfigProperty(propertyName="destinationType", propertyValue="javax.jms.Queue"),
-				@ActivationConfigProperty(propertyName="destination", propertyValue="java:/lq/iris/gf/jms/que/messageasync"),				
+				@ActivationConfigProperty(propertyName="destination", propertyValue="java:/lq/crp/cdx/jms/que/differe"),				
 				@ActivationConfigProperty(propertyName="acknowledgeMode", propertyValue="Auto-acknowledge"),
 				@ActivationConfigProperty(propertyName="useJndi", propertyValue = "true")
 		})

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jboss-web>
   <context-root>${app.context.root}</context-root>
+  <security-domain>java:/jaas/spnego-cardex</security-domain>
+  <security-domain>java:/jaas/amrealm</security-domain>
   <!--
   <disable-audit>true</disable-audit>
   <security-domain>${app.security.domain}</security-domain>

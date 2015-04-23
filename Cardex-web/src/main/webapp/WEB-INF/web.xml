@@ -656,26 +656,53 @@
       <taglib-location>/WEB-INF/datetime.tld</taglib-location>
     </taglib>
   </jsp-config>
+  
+  <!-- SECURITY CONSTRAINT CARDEX interne -->
   <security-constraint>
-    <web-resource-collection>
-      <web-resource-name>Cardex Security</web-resource-name>
-      <description>Security Constraint for resources of Cardex application</description>
-      <url-pattern>/*</url-pattern>
-      <http-method>GET</http-method>
-      <http-method>POST</http-method>
-      <http-method>PUT</http-method>
-      <http-method>DELETE</http-method>
-      <http-method>HEAD</http-method>
-      <http-method>OPTIONS</http-method>
-      <http-method>TRACE</http-method>
-    </web-resource-collection>
-    <user-data-constraint>
-      <description>SSL not required</description>
-      <transport-guarantee>NONE</transport-guarantee>
-    </user-data-constraint>
+		<display-name>spnego-cardex</display-name>
+		<web-resource-collection>
+			<web-resource-name>application</web-resource-name>
+			<url-pattern>/*</url-pattern>
+			<http-method>GET</http-method>
+			<http-method>POST</http-method>
+			<http-method>PUT</http-method>
+			<http-method>DELETE</http-method>
+			<http-method>HEAD</http-method>
+			<http-method>OPTIONS</http-method>
+			<http-method>TRACE</http-method>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>G_JBOSS_CARDEX_INTERNE_BASE</role-name>
+		</auth-constraint>
   </security-constraint>
+
+  <!-- SECURITY CONSTRAINT CARDEX externe -->
+  <security-constraint>
+		<display-name>amrealm</display-name>
+		<web-resource-collection>
+			<web-resource-name>application</web-resource-name>
+			<url-pattern>/*</url-pattern>
+			<http-method>GET</http-method>
+			<http-method>POST</http-method>
+			<http-method>PUT</http-method>
+			<http-method>DELETE</http-method>
+			<http-method>HEAD</http-method>
+			<http-method>OPTIONS</http-method>
+			<http-method>TRACE</http-method>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>G_JBOSS_CARDEX_EXTERNE_BASE</role-name>
+		</auth-constraint>
+  </security-constraint>
+  <security-role>
+	 	<role-name>G_JBOSS_CARDEX_INTERNE_BASE</role-name>
+  </security-role>
+  <security-role>
+	 	<role-name>G_JBOSS_CARDEX_EXTERNE_BASE</role-name>
+  </security-role>
+
   <session-config>
-    <session-timeout>6</session-timeout>
+	<session-timeout>6</session-timeout>
   </session-config>
   <login-config>
     <auth-method>BASIC</auth-method>
