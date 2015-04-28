@@ -2,7 +2,6 @@ package com.lotoquebec.cardex.presentation.model.form.rapport.dossier;
 
 import java.text.ParseException;
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -41,8 +40,7 @@ public class ActiviteQuotidienneRapportForm_CDX_0070 extends RapportForm{
 			e.printStackTrace();
 		}
     	activiteQuotidienneRapportVO.setSite(LongUtils.valueOf(siteString));
-        ResourceBundle bundle = ResourceBundle.getBundle("resources.application", locale);
-		return genererRapport.executer(subject, activiteQuotidienneRapportVO, bundle, locale);
+		return genererRapport.executer(subject, activiteQuotidienneRapportVO, locale);
 	}
 
 	

@@ -111,7 +111,7 @@ public class AffichagePDFFiches extends HttpServlet {
                	parameters.put("SITE",site);
             }
         	//Impression du dossier de vigilance
-        	if (GlobalConstants.ChoixImpressionDossier.DOSSIER_VIGILANCE_SOMMAIRE.equals( rapport )){
+        	/*if (GlobalConstants.ChoixImpressionDossier.DOSSIER_VIGILANCE_SOMMAIRE.equals( rapport )){
         		GestionnaireSecurite.validerValeurAccessible(subject, new TableValeurCleSQLListeCache(subject, GlobalConstants.TableValeur.RAPPORT_DOSSIER, GlobalConstants.ActionSecurite.CONSULTER_DOSSIER), GlobalConstants.ChoixImpressionDossier.DOSSIER_VIGILANCE_SOMMAIRE);
                	choixRapport = "rapports/" + GlobalConstants.ChoixRapport.IMPRESSION_SOMMAIRE_DOSSIER_VIGILANCE;
                	procedure = "CARDEX_RAPPORT.SP_RAP_DO_VIGILANCE_SOMMAIRE";
@@ -125,7 +125,7 @@ public class AffichagePDFFiches extends HttpServlet {
                	procedure = "CARDEX_RAPPORT.SP_RAP_DO_VIGILANCE_DETAILLE";
                	parameters.put("CLE",cle);
                	parameters.put("SITE",site);
-            }
+            }*/
 
         	InputStream gabarit = getClass().getClassLoader().getResourceAsStream(choixRapport);
 			//Utilisation d'un resultSet comme source de donn�es

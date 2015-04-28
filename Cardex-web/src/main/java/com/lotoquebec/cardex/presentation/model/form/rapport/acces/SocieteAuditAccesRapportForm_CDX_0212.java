@@ -1,7 +1,6 @@
 package com.lotoquebec.cardex.presentation.model.form.rapport.acces;
 
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -31,8 +30,7 @@ public class SocieteAuditAccesRapportForm_CDX_0212 extends RapportForm{
 		String site = (String) request.getParameter("site");
 		Societe societe = new SocieteVO(Long.valueOf(cle),Long.valueOf(site));
 		societe = new SocieteBusinessDelegate().find(subject, societe);
-        ResourceBundle bundle = ResourceBundle.getBundle("resources.application", locale);
-		return genererRapport.executer(subject, societe, bundle, locale);
+		return genererRapport.executer(subject, societe, locale);
 	}
 
 	

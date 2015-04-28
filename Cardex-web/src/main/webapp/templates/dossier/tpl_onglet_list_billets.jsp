@@ -77,7 +77,7 @@ function doDatePaiement() {
             </logic:equal>
             <logic:equal name='dossier' property='afficherBoutonAjouterBillet' value='false' >
 				&nbsp;<b><bean:message key='date.paiement' /><bean:message key='2.points' /></b>
-				<input type='text' name='paiement' onkeyup="doTraitsDateTAG(this, event.keyCode, '');" onkeydown="return isNumericDateTag(event.keyCode);" onfocusout="formatDate(this);" onchange="" onblur="" onClick="" value='' tabindex='' size='9' maxlength='10' /><a href="javascript:openDate('document.forms(0).paiement', document.forms(0).paiement.value);" onmousedown="setXY(event.x+120, event.y+400);"> <img src='/cardex/images/cal.gif' border='0'/></a>&nbsp;
+				<input type='text' name='paiement' onkeyup="doTraitsDateTAG(this, event.keyCode, '');" onkeydown="return isNumericDateTag(event.keyCode);" onfocusout="formatDate(this);" onchange="" onblur="" onClick="" value='' tabindex='' size='9' maxlength='10' /><a href="javascript:openDate('document.forms(0).paiement', document.forms(0).paiement.value);" onmousedown="setXY(event.x+120, event.y+400);"> <img src='<%= request.getContextPath()%>/images/cal.gif' border='0'/></a>&nbsp;
 				<cardex:button urlSecurite="/dossier/inscrire/datePaiement.do" labelKey='cb_ok' style="width: 80px; text-align: center;" onclick='doDatePaiement();' />
             </logic:equal>
         </TD>

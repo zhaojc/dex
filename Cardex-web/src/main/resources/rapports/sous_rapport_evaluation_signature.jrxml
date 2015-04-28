@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sous_rapport_sujet_evaluation2" pageWidth="612" pageHeight="792" columnWidth="571" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+<!-- Created with Jaspersoft Studio version 6.0.3.final using JasperReports Library version 6.0.3  -->
+<!-- 2015-04-28T14:35:46 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sous_rapport_sujet_evaluation2" pageWidth="612" pageHeight="792" columnWidth="571" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="827fa4ed-603a-4a8d-90e8-f1e32dec0902">
 	<parameter name="EVALUATION_CLE" class="java.math.BigDecimal">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -7,6 +9,7 @@
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["C:\\Program Files\\JasperSoft\\iReport-nb-3.5.2\\RapportsCompilation\\"]]></defaultValueExpression>
 	</parameter>
+	<parameter name="SOUS_RAPPORT_EVALUATION_SIGNATURE_PROPOS" class="net.sf.jasperreports.engine.JasperReport"/>
 	<queryString>
 		<![CDATA[select e.d_date_debut_eval as "dateDebut", e.d_date_fin_eval as "dateFin", e.l_ev_no_client_bijou as "noClientBijou", 
 e.v_ev_faits_connus as "faitsConnus",
@@ -126,7 +129,7 @@ and e.l_si_cle = $P{EVALUATION_SITE}]]>
 	<detail>
 		<band height="379" splitType="Immediate">
 			<subreport runToBottom="false">
-				<reportElement x="7" y="13" width="564" height="18" isRemoveLineWhenBlank="true"/>
+				<reportElement x="7" y="13" width="564" height="18" isRemoveLineWhenBlank="true" uuid="2c78d13d-24d2-4bbf-88c0-bf20c2957a36"/>
 				<subreportParameter name="EVALUATION_SITE">
 					<subreportParameterExpression><![CDATA[$F{evaluationSite}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -134,111 +137,103 @@ and e.l_si_cle = $P{EVALUATION_SITE}]]>
 					<subreportParameterExpression><![CDATA[$F{evaluationCle}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "sous_rapport_evaluation_propos.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{SOUS_RAPPORT_EVALUATION_SIGNATURE_PROPOS}]]></subreportExpression>
 			</subreport>
 			<staticText>
-				<reportElement positionType="Float" x="7" y="104" width="177" height="15"/>
+				<reportElement positionType="Float" x="7" y="104" width="177" height="15" uuid="61f96a08-878f-4a00-8723-e2dd10d8a16f"/>
 				<textElement>
 					<font isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[Informations supplémentaires :]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="37" y="119" width="520" height="45"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="37" y="119" width="520" height="45" uuid="26998063-2181-40d2-8dca-11256c6aad44"/>
 				<textElement verticalAlignment="Top"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{commentaireAutre}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{commentaireAutre}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="38" y="55" width="529" height="45"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{commentairePropos}]]></textFieldExpression>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="38" y="55" width="529" height="45" uuid="9fecc870-904a-4775-9e83-c0091326c0e6"/>
+				<textFieldExpression><![CDATA[$F{commentairePropos}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement positionType="Float" x="6" y="170" width="178" height="16"/>
+				<reportElement positionType="Float" x="6" y="170" width="178" height="16" uuid="7474f1ec-50c2-455a-8004-a845eabac6c4"/>
 				<textElement>
 					<font isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[Signes non verbaux observés :]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="38" y="186" width="520" height="45"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="38" y="186" width="520" height="45" uuid="b1ddd026-7943-4e12-b165-6e2fafe6ba93"/>
 				<textElement verticalAlignment="Top"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{commentaireSigne}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{commentaireSigne}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement positionType="Float" x="1" y="250" width="571" height="1"/>
+				<reportElement positionType="Float" x="1" y="250" width="571" height="1" uuid="7ee5caae-872c-45ea-8f99-1e4e68996659"/>
 			</line>
 			<staticText>
-				<reportElement positionType="Float" x="8" y="232" width="114" height="15"/>
+				<reportElement positionType="Float" x="8" y="232" width="114" height="15" uuid="83596733-c5da-4f6c-88f1-784c2f2cdc33"/>
 				<textElement>
 					<font isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[Date d'évaluation :]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" x="8" y="252" width="114" height="15"/>
+				<reportElement positionType="Float" x="8" y="252" width="114" height="15" uuid="36481e06-da66-4ebd-ae1a-fffd73ac5c66"/>
 				<textElement>
 					<font isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[Intervenant :]]></text>
 			</staticText>
 			<textField pattern="yyyy-MM-dd" isBlankWhenNull="true">
-				<reportElement positionType="Float" x="131" y="233" width="100" height="15"/>
-				<textElement/>
-				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{dateEvaluation}]]></textFieldExpression>
+				<reportElement positionType="Float" x="131" y="233" width="100" height="15" uuid="684864c6-4f8c-4308-a0ba-25381fbce090"/>
+				<textFieldExpression><![CDATA[$F{dateEvaluation}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="131" y="252" width="437" height="15"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{createur}]]></textFieldExpression>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="131" y="252" width="437" height="15" uuid="cae3c170-b801-4c74-8989-67ffc7450e49"/>
+				<textFieldExpression><![CDATA[$F{createur}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement positionType="Float" x="8" y="267" width="114" height="15"/>
+				<reportElement positionType="Float" x="8" y="267" width="114" height="15" uuid="20d928b4-7fde-47df-9182-df366e77994c"/>
 				<textElement>
 					<font isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[Signataires :]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement positionType="Float" x="131" y="267" width="427" height="15" isRemoveLineWhenBlank="true">
+				<reportElement positionType="Float" x="131" y="267" width="427" height="15" isRemoveLineWhenBlank="true" uuid="759d56b5-efc7-4665-9355-7b082bd57998">
 					<printWhenExpression><![CDATA[new Boolean(!$F{nomSignataire1}.equals(""))]]></printWhenExpression>
 				</reportElement>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{signataire1}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{signataire1}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement positionType="Float" x="131" y="282" width="427" height="15" isRemoveLineWhenBlank="true">
+				<reportElement positionType="Float" x="131" y="282" width="427" height="15" isRemoveLineWhenBlank="true" uuid="01cd2728-a1ce-414a-9fe8-40218f4caca4">
 					<printWhenExpression><![CDATA[new Boolean(!$F{nomSignataire2}.equals(""))]]></printWhenExpression>
 				</reportElement>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{signataire2}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{signataire2}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement positionType="Float" x="131" y="297" width="427" height="15" isRemoveLineWhenBlank="true">
+				<reportElement positionType="Float" x="131" y="297" width="427" height="15" isRemoveLineWhenBlank="true" uuid="f4bf90ea-3043-4904-b395-9c063d282c8a">
 					<printWhenExpression><![CDATA[new Boolean(!$F{nomSignataire3}.equals(""))]]></printWhenExpression>
 				</reportElement>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{signataire3}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{signataire3}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement positionType="Float" x="131" y="312" width="427" height="15" isRemoveLineWhenBlank="true">
+				<reportElement positionType="Float" x="131" y="312" width="427" height="15" isRemoveLineWhenBlank="true" uuid="ece382c4-cdf2-4f51-81e8-8ecf15800599">
 					<printWhenExpression><![CDATA[new Boolean(!$F{nomSignataire4}.equals(""))]]></printWhenExpression>
 				</reportElement>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{signataire4}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{signataire4}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement positionType="Float" x="131" y="327" width="427" height="15" isRemoveLineWhenBlank="true">
+				<reportElement positionType="Float" x="131" y="327" width="427" height="15" isRemoveLineWhenBlank="true" uuid="df521f3e-219b-4210-8af8-0be4dae2e754">
 					<printWhenExpression><![CDATA[new Boolean(!$F{nomSignataire5}.equals(""))]]></printWhenExpression>
 				</reportElement>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{signataire5}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{signataire5}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement positionType="Float" x="1" y="345" width="571" height="1"/>
+				<reportElement positionType="Float" x="1" y="345" width="571" height="1" uuid="e4a93517-f74b-48d3-8368-55ddddf104f3"/>
 			</line>
 			<staticText>
-				<reportElement positionType="Float" x="7" y="41" width="115" height="14"/>
+				<reportElement positionType="Float" x="7" y="41" width="115" height="14" uuid="ff600a50-14ef-45e5-a6c3-4206dc738d20"/>
 				<textElement>
 					<font isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>

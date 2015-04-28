@@ -4,8 +4,6 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -20,14 +18,12 @@ import com.lotoquebec.cardex.business.delegate.RapportBusinessDelegate;
 import com.lotoquebec.cardex.business.delegate.SujetBusinessDelegate;
 import com.lotoquebec.cardex.business.vo.FichierMultimediaVO;
 import com.lotoquebec.cardex.business.vo.PhotoVO;
-import com.lotoquebec.cardex.business.vo.SujetVO;
 import com.lotoquebec.cardex.generateurRapport.GenererRapport;
 import com.lotoquebec.cardex.generateurRapport.rapports.RapportsConfiguration;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
 import com.lotoquebec.cardexCommun.business.vo.VO;
 import com.lotoquebec.cardexCommun.exception.BusinessException;
 import com.lotoquebec.cardexCommun.exception.BusinessResourceException;
-import com.lotoquebec.cardexCommun.exception.DAOException;
 import com.lotoquebec.cardexCommun.securite.GestionnaireSecurite;
 import com.lotoquebec.cardexCommun.user.CardexPrivilege;
 

@@ -84,10 +84,11 @@
 			<version>1.2</version>
 		</dependency>
 		<dependency>
-		    <artifactId>taglibs</artifactId>
-		    <groupId>datetime</groupId>
-		    <version>1.0.1</version>
-		</dependency>
+		  <groupId>taglibs</groupId>
+		  <artifactId>datetime</artifactId>
+		  <version>1.0.1</version>
+		  <classifier>lq</classifier>
+		</dependency>		
 		<dependency>
 			<groupId>net.sf.jasperreports</groupId>
 			<artifactId>jasperreports</artifactId>

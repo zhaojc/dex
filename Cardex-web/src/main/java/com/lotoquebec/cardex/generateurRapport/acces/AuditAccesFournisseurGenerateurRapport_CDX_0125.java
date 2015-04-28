@@ -45,7 +45,7 @@ public class AuditAccesFournisseurGenerateurRapport_CDX_0125 extends CritereGene
 
 	@Override
 	protected InputStream obtenirGabarit() {
-		return RapportsConfiguration.class.getResourceAsStream(RapportsConfiguration.AUDIT_ACCES_FOURNISSEUR);
+		return RapportsConfiguration.class.getResourceAsStream(RapportsConfiguration.AUDIT_ACCES_FOURNISSEUR_CDX_125);
 	}
 
 	@Override

@@ -156,12 +156,45 @@ public class RapportsConfiguration {
 	public static final String SOUS_RAPPORT_AUTOEXCLUSION_SUJET_FRANCAIS = REPERTOIRE_RAPPORT+"sous_rapport_sujet_autoexclusion.jrxml";
 	public static final String SOUS_RAPPORT_AUTOEXCLUSION_SUJET_ANGALAIS = REPERTOIRE_RAPPORT+"sous_rapport_sujet_autoexclusion_anglais.jrxml";
 	
-	//Rapports du comit� de vigilance
+	//Rapports du comité de vigilance
 	public static final String RAPPORT_STATISTIQUE_VIGILANCE_SOMMAIRE = REPERTOIRE_RAPPORT+"CDX_0235_rapport_statistique_vigilance_sommaire.jrxml";
 	public static final String RAPPORT_STATISTIQUE_VIGILANCE_DETAILLE = REPERTOIRE_RAPPORT+"CDX_0236_rapport_statistique_vigilance_detaille.jrxml";
 	public static final String RAPPORT_SUJETS_ANALYSES_VIGILANCE = REPERTOIRE_RAPPORT+"CDX_0237_clients_analyses_vigilance.jrxml";
 	
-	//Rapports clients myst�res
+	// Commun rapport vigilance
+	public static final String LQ_LOGO = REPERTOIRE_RAPPORT+"images/lq-logo.gif";
+	public static final String SOUS_RAPPORT_SUJET_PHOTO = REPERTOIRE_RAPPORT+"sujet_photo.jrxml";
+	public static final String SOUS_RAPPORT_SUJET_ADRESSE = REPERTOIRE_RAPPORT+"dossier_sujet_adresse.jrxml";
+	public static final String SOUS_RAPPORT_SUJET_CARACTERISTIQUE = REPERTOIRE_RAPPORT+"dossier_sujet_caracteristique.jrxml";
+	
+	// CDX_0232 Sommaire vigilance
+	public static final String SOMMAIRE_VIGILANCE_DOSSIER_0232 = REPERTOIRE_RAPPORT+"CDX_0232_rapport_vigilance_sommaire.jrxml";
+	public static final String SOUS_RAPPORT_NARRATION_CDX_0232 = REPERTOIRE_RAPPORT+"CDX_0232_sous_rapport_narrations.jrxml";
+	public static final String SOUS_RAPPORT_SUJET_CDX_0232 = REPERTOIRE_RAPPORT+"CDX_0232_sous_rapport_sujet.jrxml";
+		//public static final String SOUS_RAPPORT_SUJET_PHOTO = REPERTOIRE_RAPPORT+"sujet_photo.jrxml";
+		//public static final String SOUS_RAPPORT_SUJET_ADRESSE = REPERTOIRE_RAPPORT+"dossier_sujet_adresse.jrxml";
+		//public static final String SOUS_RAPPORT_SUJET_CARACTERISTIQUE = REPERTOIRE_RAPPORT+"dossier_sujet_caracteristique.jrxml";
+		public static final String SOUS_RAPPORT_SUJET_DOSSIER_CDX_0232 = REPERTOIRE_RAPPORT+"CDX_0232_sous_rapport_sujet_dossier.jrxml";
+	public static final String SOUS_RAPPORT_EVALUATION = REPERTOIRE_RAPPORT+"sous_rapport_evaluation.jrxml";
+		public static final String SOUS_RAPPORT_EVALUATION_MISE = REPERTOIRE_RAPPORT+"sous_rapport_evaluation_mise.jrxml";
+			public static final String SOUS_RAPPORT_EVALUATION_MISE_JEU = REPERTOIRE_RAPPORT+"sous_rapport_evaluation_mise_jeu.jrxml";
+			public static final String SOUS_RAPPORT_EVALUATION_MISE_VISITE = REPERTOIRE_RAPPORT+"sous_rapport_evaluation_mise_visite.jrxml";
+		public static final String SOUS_RAPPORT_EVALUATION_FAITS_CONNUS = REPERTOIRE_RAPPORT+"sous_rapport_evaluation_faits_connus.jrxml";
+		public static final String SOUS_RAPPORT_EVALUATION_ETAT = REPERTOIRE_RAPPORT+"sous_rapport_evaluation_etat.jrxml";
+		public static final String SOUS_RAPPORT_EVALUATION_SIGNATURE = REPERTOIRE_RAPPORT+"sous_rapport_evaluation_signature.jrxml";
+			public static final String SOUS_RAPPORT_EVALUATION_SIGNATURE_PROPOS = REPERTOIRE_RAPPORT+"sous_rapport_evaluation_signature_propos.jrxml";
+	
+	// CDX_0232 detail vigilance
+	public static final String DETAILLE_VIGILANCE_DOSSIER_CDX_0233 = REPERTOIRE_RAPPORT+"CDX_0233_rapport_vigilance_detaille.jrxml";
+	public static final String SOUS_RAPPORT_SUJET_CDX_0233 = REPERTOIRE_RAPPORT+"CDX_0233_sous_rapport_sujet.jrxml";
+		//public static final String SOUS_RAPPORT_SUJET_PHOTO = REPERTOIRE_RAPPORT+"sujet_photo.jrxml";
+		//public static final String SOUS_RAPPORT_SUJET_ADRESSE = REPERTOIRE_RAPPORT+"dossier_sujet_adresse.jrxml";
+		//public static final String SOUS_RAPPORT_SUJET_CARACTERISTIQUE = REPERTOIRE_RAPPORT+"dossier_sujet_caracteristique.jrxml";
+		public static final String SOUS_RAPPORT_SUJET_DOSSIER = REPERTOIRE_RAPPORT+"sujet_dossiers.jrxml";
+	public static final String SOUS_RAPPORT_DOSSIER_NARRATION = REPERTOIRE_RAPPORT+"dossier_narrations.jrxml";
+	
+	
+	//Rapports clients mystères
 	public static final String RAPPORT_DETAIL_VISITES = REPERTOIRE_RAPPORT+"CDX_0250_detail_visites_clients_mysteres.jrxml";
 	public static final String RAPPORT_DETAIL_VISITES_A_VENIR = REPERTOIRE_RAPPORT+"CDX_0251_detail_visites_a_venir_clients_mysteres.jrxml";
 	public static final String RAPPORT_DETAILLANTS_FAUTIFS = REPERTOIRE_RAPPORT+"CDX_0252_detaillants_en_infraction_clients_mysteres.jrxml";
@@ -176,9 +209,9 @@ public class RapportsConfiguration {
     public static final String AUDIT_DETAIL_ACCES = REPERTOIRE_RAPPORT+"CDX_0121_audit_detail_acces.jrxml";
     public static final String AUDIT_INTERVENANT_ACCES = REPERTOIRE_RAPPORT+"CDX_0122_audit_acces_intervenant.jrxml";
     public static final String AUDIT_DETAIL_INTERVENANT_ACCES = REPERTOIRE_RAPPORT+"CDX_0123_audit_detail_acces_intervenant.jrxml";
-    public static final String AUDIT_ACCES_EMPLOYE = REPERTOIRE_RAPPORT+"CDX_0124_audit_acces_sujets.jrxml";
-    public static final String AUDIT_ACCES_FOURNISSEUR = REPERTOIRE_RAPPORT+"CDX_0125_audit_acces_sujets_fournisseurs.jrxml";
-    public static final String AUDIT_ACCES_NARRATION = REPERTOIRE_RAPPORT+"CDX_0126_audit_acces_narrations.jrxml";
+    public static final String AUDIT_ACCES_EMPLOYE_CDX_124 = REPERTOIRE_RAPPORT+"CDX_0124_audit_acces_sujets.jrxml";
+    public static final String AUDIT_ACCES_FOURNISSEUR_CDX_125 = REPERTOIRE_RAPPORT+"CDX_0125_audit_acces_sujets_fournisseurs.jrxml";
+    public static final String AUDIT_ACCES_NARRATION_CDX_0126 = REPERTOIRE_RAPPORT+"CDX_0126_audit_acces_narrations.jrxml";
     public static final String ANALYSE_ACCES = REPERTOIRE_RAPPORT+"CDX_0072_rapport_analyse_acces.jrxml";
     
     //Audit

@@ -70,7 +70,7 @@ function doPrintRapport() {
    var dateDebut = document.forms(0).dateCreationDebut.value;
    var dateFin = document.forms(0).dateCreationFin.value;
    var site = document.getElementsByName("site")[0].value;
-   var url = "<%=request.getContextPath()+"/RapportAffichage?classRapportForm="+GlobalConstants.RapportForm.ACTIVITE_QUOTIDIENNE_FORM_CDX_0070%>&DATE_DEBUT=" + dateDebut + "&DATE_FIN=" + dateFin + "&SITE=" + site;
+   var url = "<%=request.getContextPath()+"/RapportAffichage?rapportFormClass="+GlobalConstants.RapportForm.ACTIVITE_QUOTIDIENNE_FORM_CDX_0070%>&DATE_DEBUT=" + dateDebut + "&DATE_FIN=" + dateFin + "&SITE=" + site;
    windowOpenLocation(url);
 }
 

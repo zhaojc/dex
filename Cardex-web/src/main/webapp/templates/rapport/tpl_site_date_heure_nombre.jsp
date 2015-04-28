@@ -7,8 +7,8 @@
 <%@ page import="com.lotoquebec.cardexCommun.GlobalConstants" %>
 
 <tiles:useAttribute name="form" id="form" scope="request" classname="String"/>
-<SCRIPT language="JavaScript" type="text/javascript" src="/cardex/scripts/date_time_picker_fr.js"></SCRIPT>
-<SCRIPT language="JavaScript" type="text/javascript" src="/cardex/scripts/twin_date_time_picker_fr.js"></SCRIPT>
+<SCRIPT language="JavaScript" type="text/javascript" src="/<%= request.getContextPath()%>/scripts/date_time_picker_fr.js"></SCRIPT>
+<SCRIPT language="JavaScript" type="text/javascript" src="<%= request.getContextPath()%>/scripts/twin_date_time_picker_fr.js"></SCRIPT>
 
 <SCRIPT language="JavaScript" type="text/javascript">
 

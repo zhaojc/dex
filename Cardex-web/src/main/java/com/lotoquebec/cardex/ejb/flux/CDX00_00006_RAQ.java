@@ -134,7 +134,7 @@ public class CDX00_00006_RAQ implements Flux{
 		
 		log.info("Envoie du courriel");
 		String objectMessage = CourrielAction.constuireObjectMessageAvecDate(subject, GlobalConstants.TypesIntervention.RAQ);
-		CourrielAction.envoyerCourrielEtFichierDestinataire(subject, connection, objectMessage, "Rapport global d'activit� quotidien", GlobalConstants.TypesIntervention.RAQ, "A", nomRapport);
+		CourrielAction.envoyerCourrielEtFichierDestinataire(subject, connection, objectMessage, "Rapport global d'activité quotidien", GlobalConstants.TypesIntervention.RAQ, "A", nomRapport);
 	}
 	
 	private void envoyerRAQLQDossierLQEvenementDCSI(CardexAuthenticationSubject subject, Connection connection) throws NumberFormatException, DAOException, FileNotFoundException, JRException, SQLException, BusinessException {

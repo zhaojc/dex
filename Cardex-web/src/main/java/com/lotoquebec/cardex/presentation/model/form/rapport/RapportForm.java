@@ -2,7 +2,6 @@ package com.lotoquebec.cardex.presentation.model.form.rapport;
 
 import java.io.Serializable;
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -32,8 +31,7 @@ public abstract class RapportForm extends ValidatorForm implements Serializable{
 	
 	public JasperPrint genererRapport(CardexAuthenticationSubject subject, HttpServletRequest request, Locale locale) throws BusinessException, JRException{
         RapportVO rapportVO = obtenirRapportVO();
-        ResourceBundle bundle = ResourceBundle.getBundle("resources.application", locale);
-		return genererRapport.executer(subject, rapportVO, bundle, locale);
+		return genererRapport.executer(subject, rapportVO, locale);
 	}
 	
 	public boolean isLancerRapport() {

@@ -68,10 +68,10 @@ public abstract class GenererRapport {
 	 * @param ParameterMap
 	 * @return
 	 */
-	public JasperPrint executer(CardexAuthenticationSubject subject, VO vo, ResourceBundle bundle, Locale locale) throws BusinessException, JRException{
+	public JasperPrint executer(CardexAuthenticationSubject subject, VO vo, Locale locale) throws BusinessException, JRException{
 		Connection connection = null;
 		this.locale = locale;
-		this.bundle = bundle;
+		this.bundle = ResourceBundle.getBundle("resources.application", locale);
 		
 		try {
 			connection = DAOConnection.getInstance().getConnection();

@@ -48,7 +48,7 @@ public class AuditAccesEmployeGenerateurRapport_CDX_0124 extends CritereGenererR
 
 	@Override
 	protected InputStream obtenirGabarit() {
-		return RapportsConfiguration.class.getResourceAsStream(RapportsConfiguration.AUDIT_ACCES_EMPLOYE);
+		return RapportsConfiguration.class.getResourceAsStream(RapportsConfiguration.AUDIT_ACCES_EMPLOYE_CDX_124);
 	}
 
 	@Override

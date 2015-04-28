@@ -935,8 +935,6 @@ public final class GlobalConstants {
     	public static final String IMPRESSION_SUIVI = "CDX_0097_impression_suivi.jrxml";
     	public static final String RESULTATS_RECHERCHE_DOSSIERS_AVEC_SUJETS = "CDX_0224_impression_dossiers_avec_sujets.jrxml";
     	public static final String RESULTATS_RECHERCHE_DOSSIERS_SANS_SUJETS = "CDX_0225_impression_dossiers_sans_sujets.jrxml";
-    	public static final String IMPRESSION_DETAILLE_DOSSIER_VIGILANCE = "CDX_0233_rapport_vigilance_detaille.jrxml";
-    	public static final String IMPRESSION_SOMMAIRE_DOSSIER_VIGILANCE = "CDX_0232_rapport_vigilance_sommaire.jrxml";
     	public static final String RAPPORT_ACCES_SUJETS = "CDX_0124_audit_acces_sujets.jrxml";
     	public static final String RAPPORT_ACCES_SUJETS_FOURNISSEURS = "CDX_0125_audit_acces_sujets_fournisseurs.jrxml";
     	public static final String RAPPORT_ACCES_NARRATIONS = "CDX_0126_audit_acces_narrations.jrxml";
@@ -1223,6 +1221,7 @@ public final class GlobalConstants {
     }
     
     public static class RapportForm{
+    	//
     	
     	public final static String SUJET_RAPPORT_FORM_CDX_0002 = "com.lotoquebec.cardex.presentation.model.form.rapport.sujet.SujetRapportForm_CDX_0002";
     	public final static String GALERIE_SUJET_RAPPORT_FORM_CDX_0004 = "com.lotoquebec.cardex.presentation.model.form.rapport.sujet.GalerieSujetRapportForm_CDX_0004";
@@ -1233,6 +1232,8 @@ public final class GlobalConstants {
     	public static final String SUJET_AUDIT_CHANGEMENTS_SUJETS_CDX_0185 = "com.lotoquebec.cardex.presentation.model.form.rapport.acces.SujetAuditChangementRapportForm_CDX_0185";
     	
     	public final static String SOCIETE_AUDIT_ACCES_RAPPORT_FORM_CDX_0212 = "com.lotoquebec.cardex.presentation.model.form.rapport.acces.SocieteAuditAccesRapportForm_CDX_0212";
+    	
+    	public final static String ENTITE_CARDEX_RAPPORT_FORM = "com.lotoquebec.cardex.presentation.model.form.rapport.EntiteCardexRapportForm";
     }
     
     /**
@@ -1622,6 +1623,18 @@ public final class GlobalConstants {
     public static class Logger{
     	public static final String DIFFERER = "DIFFERE";
     	public static final String SECURITE = "SECURITE";
+    }
+
+    public static class GenerateurRapport{
+    	
+    	public static class Dossier{
+    		
+    		public static class Vigilance{
+		    	public static final String SOMMAIRE_CDX_0232 = "com.lotoquebec.cardex.generateurRapport.dossier.vigilance.SommaireVigilanceDossierGenerateurRapport_CDX_0232";
+		    	public static final String DETAILLE_CDX_0233 = "com.lotoquebec.cardex.generateurRapport.dossier.vigilance.DetailleVigilanceDossierGenerateurRapport_CDX_0233";
+    		}
+    	}
+    	
     }
     
 }
