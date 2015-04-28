@@ -869,7 +869,7 @@ public class RapportSessionFacade {
 
     public JasperPrint globalRAQCDX_0070(CardexAuthenticationSubject subject, ActiviteQuotidienneRapportVO activiteQuotidienneRapportVO) throws BusinessException{
 		try {
-			return (new GlobalRAQDossierGenerateurRapport_CDX_0070()).executer(subject, activiteQuotidienneRapportVO, null, null);
+			return (new GlobalRAQDossierGenerateurRapport_CDX_0070()).executer(subject, activiteQuotidienneRapportVO, null);
 		} catch (JRException e) {
 			throw new BusinessResourceException(e);
 		}
@@ -877,7 +877,7 @@ public class RapportSessionFacade {
     
     public JasperPrint natureRAQRapportCDX_0070(CardexAuthenticationSubject subject, ActiviteQuotidienneRapportVO activiteQuotidienneRapportVO) throws BusinessException{
 		try {    	
-	    	return (new NatureRAQDossierGenerateurRapport_CDX_0070()).executer(subject, activiteQuotidienneRapportVO, null, null);
+	    	return (new NatureRAQDossierGenerateurRapport_CDX_0070()).executer(subject, activiteQuotidienneRapportVO, null);
 		} catch (JRException e) {
 			throw new BusinessResourceException(e);
 		}
@@ -885,7 +885,7 @@ public class RapportSessionFacade {
     
     public JasperPrint sansNatureRAQRapportCDX_0070(CardexAuthenticationSubject subject, ActiviteQuotidienneRapportVO activiteQuotidienneRapportVO) throws BusinessException{
 		try {    	
-	    	return (new SansNatureRAQDossierGenerateurRapport_CDX_0070()).executer(subject, activiteQuotidienneRapportVO, null, null);
+	    	return (new SansNatureRAQDossierGenerateurRapport_CDX_0070()).executer(subject, activiteQuotidienneRapportVO, null);
 		} catch (JRException e) {
 			throw new BusinessResourceException(e);
 		}
@@ -893,7 +893,7 @@ public class RapportSessionFacade {
     
     public JasperPrint clientMystereRapportCDX_0255(CardexAuthenticationSubject subject) throws BusinessResourceException{
 		try {
-			return (new ClientMystereGenerateurRapport_CDX_0255()).executer(subject, null, null, null);
+			return (new ClientMystereGenerateurRapport_CDX_0255()).executer(subject, null, null);
 		} catch (BusinessException e) {
 			e.printStackTrace();
 			throw new BusinessResourceException(e);
@@ -909,7 +909,7 @@ public class RapportSessionFacade {
     	
 		try {
 			for (int i = 0; i < 5; i++)
-				prints[i] = new ClientMystereGenerateurRapport_CDX_0257(i).executer(subject, null, null, null);
+				prints[i] = new ClientMystereGenerateurRapport_CDX_0257(i).executer(subject, null, null);
 		} catch (BusinessException e) {
 			e.printStackTrace();
 			throw new BusinessResourceException(e);

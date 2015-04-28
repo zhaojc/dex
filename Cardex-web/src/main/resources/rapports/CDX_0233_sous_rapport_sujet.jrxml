@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sous_rapport_dossier_sujet_evaluation" pageWidth="612" pageHeight="792" columnWidth="535" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+<!-- Created with Jaspersoft Studio version 6.0.3.final using JasperReports Library version 6.0.3  -->
+<!-- 2015-04-28T16:56:22 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sous_rapport_dossier_sujet_evaluation" pageWidth="612" pageHeight="792" columnWidth="535" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="2dd1b73a-ac05-4f70-a1c0-4191767bff10">
 	<parameter name="DOSSIER_CLE" class="java.math.BigDecimal">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -11,6 +13,14 @@
 	</parameter>
 	<parameter name="CONFIDENTIALITE" class="java.lang.String"/>
 	<parameter name="UTILISATEUR" class="java.lang.String"/>
+	<parameter name="SOUS_RAPPORT_SUJET_ADRESSE" class="net.sf.jasperreports.engine.JasperReport"/>
+	<parameter name="SOUS_RAPPORT_SUJET_PHOTO" class="net.sf.jasperreports.engine.JasperReport">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="SOUS_RAPPORT_SUJET_CARACTERISTIQUE" class="net.sf.jasperreports.engine.JasperReport"/>
+	<parameter name="SOUS_RAPPORT_SUJET_DOSSIER" class="net.sf.jasperreports.engine.JasperReport">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
 	<queryString>
 		<![CDATA[SELECT sujet.v_su_reference_3 noFiche,
        sexe.v_tr_description sexe,
@@ -85,10 +95,10 @@
 	<title>
 		<band height="21">
 			<line>
-				<reportElement x="0" y="20" width="555" height="1"/>
+				<reportElement x="0" y="20" width="555" height="1" uuid="2ece2ab3-08b9-4d21-80ae-142af7550588"/>
 			</line>
 			<staticText>
-				<reportElement x="8" y="0" width="547" height="20"/>
+				<reportElement x="8" y="0" width="547" height="20" uuid="182b072f-8e23-40fd-8d4e-7bec3b771693"/>
 				<textElement verticalAlignment="Middle">
 					<font size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
@@ -99,82 +109,82 @@
 	<detail>
 		<band height="358" splitType="Stretch">
 			<staticText>
-				<reportElement x="29" y="0" width="110" height="20"/>
+				<reportElement x="29" y="0" width="110" height="20" uuid="0dc6c837-e221-4663-b33a-13db6850df78"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[No fiche : ]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="140" y="0" width="168" height="20"/>
+				<reportElement x="140" y="0" width="168" height="20" uuid="cf3a4020-9500-416d-9835-a790a531e170"/>
 				<box leftPadding="2"/>
 				<textElement verticalAlignment="Middle">
 					<font size="10"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{NOFICHE}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{NOFICHE}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="1" y="20" width="139" height="20"/>
+				<reportElement x="1" y="20" width="139" height="20" uuid="f0aa5e8a-4a3a-40c4-930d-61546828774a"/>
 				<textElement textAlignment="Right">
 					<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[Nom : ]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="141" y="20" width="168" height="20"/>
+				<reportElement x="141" y="20" width="168" height="20" uuid="0b014a81-c64e-4b14-a071-97b467c202ae"/>
 				<box leftPadding="2"/>
 				<textElement>
 					<font size="10"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{NOM}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{NOM}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="1" y="40" width="139" height="20"/>
+				<reportElement x="1" y="40" width="139" height="20" uuid="324e4783-5076-4a7d-ab3f-dfefb3a3698c"/>
 				<textElement textAlignment="Right">
 					<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[Prénom : ]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="141" y="40" width="168" height="20"/>
+				<reportElement x="141" y="40" width="168" height="20" uuid="e3e2fb34-979f-4239-a990-09832e8191ca"/>
 				<box leftPadding="2"/>
 				<textElement>
 					<font size="10"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{PRENOM}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{PRENOM}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="1" y="60" width="139" height="20"/>
+				<reportElement x="1" y="60" width="139" height="20" uuid="10e025aa-17bd-4f99-8a73-8d1827ffb2bb"/>
 				<textElement textAlignment="Right">
 					<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[Ethnie : ]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="141" y="60" width="168" height="20"/>
+				<reportElement x="141" y="60" width="168" height="20" uuid="db1b09fd-2b38-4a65-aaa2-d0e39306f113"/>
 				<box leftPadding="2"/>
 				<textElement>
 					<font size="10"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{ETHNIE}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{ETHNIE}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="1" y="80" width="139" height="20"/>
+				<reportElement x="1" y="80" width="139" height="20" uuid="148e3e24-cfe1-4b57-99cf-d781c1aa0f49"/>
 				<textElement textAlignment="Right">
 					<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[Langue : ]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="141" y="80" width="168" height="20"/>
+				<reportElement x="141" y="80" width="168" height="20" uuid="c2817933-9794-435f-a61b-2471e3a08162"/>
 				<box leftPadding="2"/>
 				<textElement>
 					<font size="10"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{LANGUE}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{LANGUE}]]></textFieldExpression>
 			</textField>
 			<subreport runToBottom="false">
-				<reportElement x="8" y="190" width="278" height="110"/>
+				<reportElement x="8" y="190" width="278" height="110" uuid="b41711df-07f9-4f4c-9ce2-46c1615ec87a"/>
 				<subreportParameter name="CONFIDENTIALITE">
 					<subreportParameterExpression><![CDATA[$P{CONFIDENTIALITE}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -188,16 +198,16 @@
 					<subreportParameterExpression><![CDATA[$F{SUJET_CLE}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "dossier_sujet_adresse.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{SOUS_RAPPORT_SUJET_ADRESSE}]]></subreportExpression>
 			</subreport>
 			<line>
-				<reportElement positionType="Float" x="7" y="303" width="555" height="1"/>
+				<reportElement positionType="Float" x="7" y="303" width="555" height="1" uuid="4c3cf905-25a9-44c9-b3f8-c9469604656f"/>
 			</line>
 			<line>
-				<reportElement x="7" y="189" width="555" height="1"/>
+				<reportElement x="7" y="189" width="555" height="1" uuid="f6530fdd-a4ad-440a-aa0f-f8ef03628781"/>
 			</line>
 			<subreport runToBottom="false">
-				<reportElement x="319" y="6" width="233" height="140"/>
+				<reportElement x="319" y="6" width="233" height="140" uuid="ec648415-515e-4df5-b3d4-7f6ec7fc8bd6"/>
 				<subreportParameter name="CONFIDENTIALITE">
 					<subreportParameterExpression><![CDATA[$P{CONFIDENTIALITE}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -211,10 +221,10 @@
 					<subreportParameterExpression><![CDATA[$F{SUJET_CLE}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "sujet_photo.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{SOUS_RAPPORT_SUJET_PHOTO}]]></subreportExpression>
 			</subreport>
 			<subreport runToBottom="false">
-				<reportElement x="296" y="192" width="265" height="99"/>
+				<reportElement x="296" y="192" width="265" height="99" uuid="b0e45d35-4502-4b6e-94fb-e8673260f911"/>
 				<subreportParameter name="CONFIDENTIALITE">
 					<subreportParameterExpression><![CDATA[$P{CONFIDENTIALITE}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -228,10 +238,10 @@
 					<subreportParameterExpression><![CDATA[$F{SUJET_CLE}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "dossier_sujet_caracteristique.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{SOUS_RAPPORT_SUJET_CARACTERISTIQUE}]]></subreportExpression>
 			</subreport>
 			<subreport runToBottom="false">
-				<reportElement positionType="Float" x="2" y="332" width="555" height="10"/>
+				<reportElement positionType="Float" x="2" y="332" width="555" height="10" uuid="6ab7f3c1-9d36-4187-a5fa-12ebfcd70732"/>
 				<subreportParameter name="CONFIDENTIALITE">
 					<subreportParameterExpression><![CDATA[$P{CONFIDENTIALITE}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -245,69 +255,69 @@
 					<subreportParameterExpression><![CDATA[$F{SUJET_CLE}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "sujet_dossiers.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{SOUS_RAPPORT_SUJET_DOSSIER}]]></subreportExpression>
 			</subreport>
 			<break>
-				<reportElement x="0" y="318" width="100" height="1"/>
+				<reportElement x="0" y="318" width="100" height="1" uuid="b62e5235-c2b3-45e2-bdee-ff222d68dcef"/>
 			</break>
 			<textField isBlankWhenNull="true">
-				<reportElement x="142" y="160" width="132" height="20"/>
+				<reportElement x="142" y="160" width="132" height="20" uuid="79039b35-697b-4be4-9b48-b0d2b14b371c"/>
 				<box leftPadding="2"/>
 				<textElement>
 					<font size="10"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{ROLE}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{ROLE}]]></textFieldExpression>
 			</textField>
 			<textField pattern="yyyy-MM-dd" isBlankWhenNull="true">
-				<reportElement x="142" y="120" width="132" height="20"/>
+				<reportElement x="142" y="120" width="132" height="20" uuid="a6724e66-eb81-4188-b1ca-96bd8d6cc312"/>
 				<box leftPadding="2"/>
 				<textElement>
 					<font size="10"/>
 				</textElement>
-				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{DATENAISSANCE}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{DATENAISSANCE}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="2" y="120" width="139" height="20"/>
+				<reportElement x="2" y="120" width="139" height="20" uuid="6561c8dc-af44-4d83-8cce-ece1d55bd6e3"/>
 				<textElement textAlignment="Right">
 					<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[Date de naissance : ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="2" y="160" width="139" height="20"/>
+				<reportElement x="2" y="160" width="139" height="20" uuid="d4d58ffb-bb71-41b4-b869-2fdf10c43362"/>
 				<textElement textAlignment="Right">
 					<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[Rôle : ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="2" y="140" width="139" height="20"/>
+				<reportElement x="2" y="140" width="139" height="20" uuid="4c4858f3-2c44-4499-9ec4-a6cb39935894"/>
 				<textElement textAlignment="Right">
 					<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[Âge : ]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="142" y="140" width="132" height="20"/>
+				<reportElement x="142" y="140" width="132" height="20" uuid="2f5b37f6-6c96-4ed5-ba1d-7f8340cfe7f7"/>
 				<box leftPadding="2"/>
 				<textElement>
 					<font size="10"/>
 				</textElement>
-				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{AGE}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{AGE}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="31" y="100" width="110" height="20"/>
+				<reportElement x="31" y="100" width="110" height="20" uuid="a8222fa9-c7b4-42d2-8713-d5468f03153b"/>
 				<textElement textAlignment="Right">
 					<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[Sexe : ]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="142" y="100" width="132" height="20"/>
+				<reportElement x="142" y="100" width="132" height="20" uuid="4efe9891-1b80-481f-b316-9572f2c2a9fd"/>
 				<textElement>
 					<font size="10"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{SEXE}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{SEXE}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

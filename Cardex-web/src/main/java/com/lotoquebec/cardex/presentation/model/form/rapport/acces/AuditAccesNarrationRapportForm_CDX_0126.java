@@ -24,7 +24,7 @@ public class AuditAccesNarrationRapportForm_CDX_0126 extends CriteresRapportForm
 	public void init(CardexAuthenticationSubject subject){
 		super.init(subject);
         CardexUser user = (CardexUser) subject.getUser();
-        // Valeurs par d�faut
+        // Valeurs par défaut
         setEntite(String.valueOf(user.getEntite()));
         setSite(String.valueOf(user.getSite()));
 	}

@@ -31,8 +31,7 @@ public class SujetAuditAccesRapportForm_CDX_0211 extends RapportForm{
 		String site = (String) request.getParameter("site");
 		Sujet sujet = new SujetVO(Long.valueOf(cle),Long.valueOf(site));
 		sujet = new SujetBusinessDelegate().find(subject, sujet);
-        ResourceBundle bundle = ResourceBundle.getBundle("resources.application", locale);
-		return genererRapport.executer(subject, sujet, bundle, locale);
+		return genererRapport.executer(subject, sujet, locale);
 	}
 
 	

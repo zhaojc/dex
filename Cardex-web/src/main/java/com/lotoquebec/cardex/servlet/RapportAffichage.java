@@ -21,6 +21,7 @@ import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 
 import com.lotoquebec.cardex.presentation.model.form.rapport.RapportForm;
 import com.lotoquebec.cardexCommun.GlobalConstants;
+import com.lotoquebec.cardexCommun.GlobalConstants.GenerateurRapport;
 import com.lotoquebec.cardexCommun.authentication.AuthenticationSubject;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
 import com.lotoquebec.cardexCommun.exception.BusinessException;
@@ -102,7 +103,7 @@ public class RapportAffichage extends HttpServlet {
 	        servletOutputStream.close();
 		}
 	}
-
+	
 	protected RapportForm obtenirRapportForm(HttpServletRequest request){
         String rapportFormStr = (String)request.getParameter("rapportForm");
         
@@ -111,11 +112,11 @@ public class RapportAffichage extends HttpServlet {
         }
         
         if (StringUtils.isEmpty(rapportFormStr)){
-        	String classRapportForm = (String)request.getParameter("classRapportForm");
+        	String rapportFormClass = (String)request.getParameter("rapportFormClass");
         	
-        	if (StringUtils.isNotEmpty(classRapportForm)){
+        	if (StringUtils.isNotEmpty(rapportFormClass)){
 	        	try {
-					return (RapportForm) Class.forName(classRapportForm).newInstance();
+					return (RapportForm) Class.forName(rapportFormClass).newInstance();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

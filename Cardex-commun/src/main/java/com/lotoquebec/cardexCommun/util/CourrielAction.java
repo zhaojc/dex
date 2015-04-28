@@ -137,7 +137,7 @@ public class CourrielAction{
 
 	           MimeBodyPart mimeBodyPartTexte = new MimeBodyPart();
 	           //mimeBodyPartTexte.setText(texte);
-	           mimeBodyPartTexte.setContent(texte, "text/html");
+	           mimeBodyPartTexte.setContent(texte, "text/html; charset=utf-8");
 	           
 	           MimeBodyPart bodyPartFichier = new MimeBodyPart();
 	           Multipart multipart = new MimeMultipart();

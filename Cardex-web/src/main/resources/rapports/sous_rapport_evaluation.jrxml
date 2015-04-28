@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sous_rapport_sujet_evaluation" pageWidth="612" pageHeight="792" columnWidth="571" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" whenResourceMissingType="Empty">
+<!-- Created with Jaspersoft Studio version 6.0.3.final using JasperReports Library version 6.0.3  -->
+<!-- 2015-04-28T14:42:31 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sous_rapport_sujet_evaluation" pageWidth="612" pageHeight="792" columnWidth="571" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" whenResourceMissingType="Empty" uuid="f468fa46-1557-4798-9c05-a50b55055892">
 	<parameter name="DOSSIER_CLE" class="java.math.BigDecimal">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -7,6 +9,13 @@
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["C:\\Program Files\\JasperSoft\\iReport-nb-3.5.2\\RapportsCompilation\\"]]></defaultValueExpression>
 	</parameter>
+	<parameter name="SOUS_RAPPORT_EVALUATION_MISE" class="net.sf.jasperreports.engine.JasperReport"/>
+	<parameter name="SOUS_RAPPORT_EVALUATION_FAITS_CONNUS" class="net.sf.jasperreports.engine.JasperReport"/>
+	<parameter name="SOUS_RAPPORT_EVALUATION_ETAT" class="net.sf.jasperreports.engine.JasperReport"/>
+	<parameter name="SOUS_RAPPORT_EVALUATION_SIGNATURE" class="net.sf.jasperreports.engine.JasperReport"/>
+	<parameter name="SOUS_RAPPORT_EVALUATION_MISE_JEU" class="net.sf.jasperreports.engine.JasperReport"/>
+	<parameter name="SOUS_RAPPORT_EVALUATION_MISE_VISITE" class="net.sf.jasperreports.engine.JasperReport"/>
+	<parameter name="SOUS_RAPPORT_EVALUATION_SIGNATURE_PROPOS" class="net.sf.jasperreports.engine.JasperReport"/>
 	<queryString>
 		<![CDATA[select e.d_date_debut_eval as "dateDebut", e.d_date_fin_eval as "dateFin", e.l_ev_no_client_bijou as "noClientBijou", 
 e.v_ev_faits_connus as "faitsConnus",
@@ -113,47 +122,46 @@ and e.l_ev_ref_site = $P{DOSSIER_SITE}]]>
 	<detail>
 		<band height="589">
 			<textField pattern="yyyy-MM-dd" isBlankWhenNull="true">
-				<reportElement x="134" y="43" width="72" height="14" isRemoveLineWhenBlank="true" backcolor="#FFFFFF"/>
+				<reportElement x="134" y="43" width="72" height="14" isRemoveLineWhenBlank="true" backcolor="#FFFFFF" uuid="ca4adc0c-b65d-455a-8cd4-0cae115bba49"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="10"/>
 				</textElement>
-				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{dateDebut}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{dateDebut}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="11" y="43" width="67" height="14"/>
+				<reportElement x="11" y="43" width="67" height="14" uuid="e57c7c46-d373-49ec-8ad3-f591af2f2e38"/>
 				<textElement>
 					<font isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[Période du :]]></text>
 			</staticText>
 			<textField pattern="yyyy-MM-dd" isBlankWhenNull="true">
-				<reportElement x="243" y="43" width="72" height="14" isRemoveLineWhenBlank="true" backcolor="#FFFFFF"/>
+				<reportElement x="243" y="43" width="72" height="14" isRemoveLineWhenBlank="true" backcolor="#FFFFFF" uuid="2668ef98-6fd0-403e-a7c8-8f85789b5093"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="10"/>
 				</textElement>
-				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{dateFin}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{dateFin}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="212" y="43" width="27" height="14"/>
+				<reportElement x="212" y="43" width="27" height="14" uuid="af79bb7b-ca91-417f-a477-c55b71215c63"/>
 				<textElement textAlignment="Right">
 					<font isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[Au :]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="11" y="58" width="119" height="14"/>
+				<reportElement x="11" y="58" width="119" height="14" uuid="550795c4-15f5-477c-b904-a56a1d1eb6db"/>
 				<textElement>
 					<font isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[Numéro de client Bijou :]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="134" y="58" width="181" height="14"/>
-				<textElement/>
-				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{noClientBijou}]]></textFieldExpression>
+				<reportElement x="134" y="58" width="181" height="14" uuid="19988762-eb4f-4be2-8528-16a52fd76f13"/>
+				<textFieldExpression><![CDATA[$F{noClientBijou}]]></textFieldExpression>
 			</textField>
 			<subreport runToBottom="false">
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="4" y="79" width="573" height="20" isRemoveLineWhenBlank="true"/>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="4" y="79" width="573" height="20" isRemoveLineWhenBlank="true" uuid="19666b93-2eb1-4a03-bc96-dffca13f17c5"/>
 				<subreportParameter name="SUBREPORT_DIR">
 					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -163,76 +171,78 @@ and e.l_ev_ref_site = $P{DOSSIER_SITE}]]>
 				<subreportParameter name="EVALUATION_CLE">
 					<subreportParameterExpression><![CDATA[$F{evaluationCle}]]></subreportParameterExpression>
 				</subreportParameter>
+				<subreportParameter name="SOUS_RAPPORT_EVALUATION_MISE_JEU">
+					<subreportParameterExpression><![CDATA[$P{SOUS_RAPPORT_EVALUATION_MISE_JEU}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SOUS_RAPPORT_EVALUATION_MISE_VISITE">
+					<subreportParameterExpression><![CDATA[$P{SOUS_RAPPORT_EVALUATION_MISE_VISITE}]]></subreportParameterExpression>
+				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "sous_rapport_evaluation_mise.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{SOUS_RAPPORT_EVALUATION_MISE}]]></subreportExpression>
 			</subreport>
 			<staticText>
-				<reportElement x="8" y="118" width="114" height="14" isRemoveLineWhenBlank="true"/>
+				<reportElement x="8" y="118" width="114" height="14" isRemoveLineWhenBlank="true" uuid="46c2e205-02a1-4821-a77c-e632f60aed5c"/>
 				<textElement>
 					<font isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[Faits connus :]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" x="130" y="174" width="437" height="39" isRemoveLineWhenBlank="true"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{faitsConnus}]]></textFieldExpression>
+				<reportElement stretchType="RelativeToBandHeight" x="130" y="174" width="437" height="39" isRemoveLineWhenBlank="true" uuid="749d9438-62ad-49d5-ae57-fd39b46fd186"/>
+				<textFieldExpression><![CDATA[$F{faitsConnus}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="18" y="221" width="114" height="17" isRemoveLineWhenBlank="true"/>
+				<reportElement x="18" y="221" width="114" height="17" isRemoveLineWhenBlank="true" uuid="dcc6f9ce-5c11-43dd-9a9a-1832dad5c693"/>
 				<textElement>
 					<font isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[Proximité du casino :]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" x="69" y="239" width="511" height="28"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{proximite}]]></textFieldExpression>
+				<reportElement stretchType="RelativeToBandHeight" x="69" y="239" width="511" height="28" uuid="9cd59468-29bb-4c5c-9c02-9797916fc3ca"/>
+				<textFieldExpression><![CDATA[$F{proximite}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="18" y="269" width="114" height="17"/>
+				<reportElement x="18" y="269" width="114" height="17" uuid="8b2559c8-ba0c-406d-8eb9-0627adc649d1"/>
 				<textElement>
 					<font isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[Gradation des mises :]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" x="67" y="286" width="511" height="32"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{gradation}]]></textFieldExpression>
+				<reportElement stretchType="RelativeToBandHeight" x="67" y="286" width="511" height="32" uuid="0419fd31-6603-4de8-8d99-20fc83f2004a"/>
+				<textFieldExpression><![CDATA[$F{gradation}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="14" y="318" width="168" height="17"/>
+				<reportElement x="14" y="318" width="168" height="17" uuid="72122043-979a-4a2e-9dbc-d861fb64da7d"/>
 				<textElement>
 					<font isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[Fréquence des transactions :]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" x="64" y="336" width="510" height="33"/>
+				<reportElement stretchType="RelativeToBandHeight" x="64" y="336" width="510" height="33" uuid="6016f10d-835d-448f-891c-512f387da2eb"/>
 				<textElement verticalAlignment="Top"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{transaction}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{transaction}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="7" y="216" width="571" height="1" isRemoveLineWhenBlank="true"/>
+				<reportElement x="7" y="216" width="571" height="1" isRemoveLineWhenBlank="true" uuid="bfff44c8-a9c8-4554-978a-530496b081d3"/>
 			</line>
 			<line>
-				<reportElement x="13" y="370" width="571" height="1"/>
+				<reportElement x="13" y="370" width="571" height="1" uuid="dc9dd88b-c36f-4e0c-a600-5113e91fee6a"/>
 			</line>
 			<line>
-				<reportElement positionType="Float" x="0" y="74" width="571" height="1"/>
+				<reportElement positionType="Float" x="0" y="74" width="571" height="1" uuid="315510cc-a2f0-4718-baec-5c2ca101f5fa"/>
 			</line>
 			<line>
-				<reportElement x="11" y="509" width="571" height="1"/>
+				<reportElement x="11" y="509" width="571" height="1" uuid="2afe652c-c815-4870-900d-a6df729182ec"/>
 			</line>
 			<textField isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" x="136" y="442" width="439" height="45"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{commentaireEtat}]]></textFieldExpression>
+				<reportElement stretchType="RelativeToBandHeight" x="136" y="442" width="439" height="45" uuid="a9ad39db-9756-4d41-9ae9-420841e14543"/>
+				<textFieldExpression><![CDATA[$F{commentaireEtat}]]></textFieldExpression>
 			</textField>
 			<subreport runToBottom="false">
-				<reportElement x="14" y="386" width="571" height="43"/>
+				<reportElement x="14" y="386" width="571" height="43" uuid="7189b537-33e4-4a5d-bef6-c04ad30bb294"/>
 				<subreportParameter name="EVALUATION_SITE">
 					<subreportParameterExpression><![CDATA[$F{evaluationSite}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -240,17 +250,17 @@ and e.l_ev_ref_site = $P{DOSSIER_SITE}]]>
 					<subreportParameterExpression><![CDATA[$F{evaluationCle}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "sous_rapport_evaluation_etat.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{SOUS_RAPPORT_EVALUATION_ETAT}]]></subreportExpression>
 			</subreport>
 			<staticText>
-				<reportElement x="15" y="442" width="115" height="14"/>
+				<reportElement x="15" y="442" width="115" height="14" uuid="2086bca1-49a0-424b-b806-5baca33fcc4e"/>
 				<textElement>
 					<font isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[Commentaire :]]></text>
 			</staticText>
 			<subreport runToBottom="false">
-				<reportElement stretchType="RelativeToBandHeight" x="130" y="118" width="436" height="52" isRemoveLineWhenBlank="true"/>
+				<reportElement stretchType="RelativeToBandHeight" x="130" y="118" width="436" height="52" isRemoveLineWhenBlank="true" uuid="a7ccf68a-9eff-4f35-90f5-f0bef85bf8d2"/>
 				<subreportParameter name="EVALUATION_SITE">
 					<subreportParameterExpression><![CDATA[$F{evaluationSite}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -258,10 +268,10 @@ and e.l_ev_ref_site = $P{DOSSIER_SITE}]]>
 					<subreportParameterExpression><![CDATA[$F{evaluationCle}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "sous_rapport_evaluation_faits_connus.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{SOUS_RAPPORT_EVALUATION_FAITS_CONNUS}]]></subreportExpression>
 			</subreport>
 			<subreport runToBottom="false">
-				<reportElement stretchType="RelativeToBandHeight" x="9" y="529" width="555" height="31" isRemoveLineWhenBlank="true"/>
+				<reportElement stretchType="RelativeToBandHeight" x="9" y="529" width="555" height="31" isRemoveLineWhenBlank="true" uuid="2fecc473-67fb-4a27-aaaf-ffd2106baf39"/>
 				<subreportParameter name="SUBREPORT_DIR">
 					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -271,24 +281,27 @@ and e.l_ev_ref_site = $P{DOSSIER_SITE}]]>
 				<subreportParameter name="EVALUATION_CLE">
 					<subreportParameterExpression><![CDATA[$F{evaluationCle}]]></subreportParameterExpression>
 				</subreportParameter>
+				<subreportParameter name="SOUS_RAPPORT_EVALUATION_SIGNATURE_PROPOS">
+					<subreportParameterExpression><![CDATA[$P{SOUS_RAPPORT_EVALUATION_SIGNATURE_PROPOS}]]></subreportParameterExpression>
+				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "sous_rapport_sujet_evaluation2.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{SOUS_RAPPORT_EVALUATION_SIGNATURE}]]></subreportExpression>
 			</subreport>
 			<staticText>
-				<reportElement x="8" y="10" width="288" height="20" backcolor="#FFFFFF"/>
+				<reportElement x="8" y="10" width="288" height="20" backcolor="#FFFFFF" uuid="8ae69b7f-411b-4c42-a035-5a31a415ef4c"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="14" isBold="true" isItalic="true" isUnderline="false" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[Vigilance - Évaluation]]></text>
 			</staticText>
 			<line>
-				<reportElement x="3" y="31" width="571" height="1"/>
+				<reportElement x="3" y="31" width="571" height="1" uuid="d168fa87-8601-4a09-9457-cf2ab4ffb45b"/>
 			</line>
 			<break>
-				<reportElement x="0" y="110" width="612" height="1"/>
+				<reportElement x="0" y="110" width="612" height="1" uuid="9e273428-1dc8-4b1f-8bbb-1bd684012300"/>
 			</break>
 			<break>
-				<reportElement x="0" y="514" width="612" height="1"/>
+				<reportElement x="0" y="514" width="612" height="1" uuid="e1bd6115-f187-472c-a8ff-b4afea86b7c4"/>
 			</break>
 		</band>
 	</detail>

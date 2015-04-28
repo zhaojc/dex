@@ -227,32 +227,29 @@ function doPrint() {
 	   var site = document.forms(0).site.value;
 	   if(rapport == "<%= GlobalConstants.ChoixImpressionDossier.DOSSIER %>"){
 	     	url = '<%= request.getContextPath() + "/dossier/choose/print.do"%>';
-    		window.open(url, 'rapport', 'left=0,top=0,width=' + document.body.clientWidth + ',height=' + document.body.clientHeight + ',menubar=no,toolbar=no,resizable=yes');
     	}
 	   if(rapport == "<%= GlobalConstants.ChoixImpressionDossier.DOSSIER_HISTORIQUE %>"){
 	     	url = '<%= request.getContextPath() + "/dossier/choose/print/audit.do"%>';
-    		window.open(url, 'rapport', 'left=0,top=0,width=' + document.body.clientWidth + ',height=' + document.body.clientHeight + ',menubar=no,toolbar=no,resizable=yes');
     	}
 	   if(rapport == "<%= GlobalConstants.ChoixImpressionDossier.DOSSIER_PIECES_JOINTES %>"){
 	     	url = '<%= request.getContextPath() + "/dossier/choose/printAvecPhotoDansPiecesJointes.do"%>';
-    		window.open(url, 'rapport', 'left=0,top=0,width=' + document.body.clientWidth + ',height=' + document.body.clientHeight + ',menubar=no,toolbar=no,resizable=yes');
     	}
 	   if(rapport == "<%= GlobalConstants.ChoixImpressionDossier.DOSSIER_PIECES_JOINTES_HISTORIQUE %>"){
 	     	url = '<%= request.getContextPath() + "/dossier/choose/printAvecPhotoDansPiecesJointes/audit.do"%>';
-    		window.open(url, 'rapport', 'left=0,top=0,width=' + document.body.clientWidth + ',height=' + document.body.clientHeight + ',menubar=no,toolbar=no,resizable=yes');
     	}
 	   if(rapport == "<%= GlobalConstants.ChoixImpressionDossier.DOSSIER_UNIFORMISE %>"){
 	     	url = '<%= request.getContextPath() + "/dossier/rapport.do"%>';
-    		window.open(url, 'rapport', 'left=0,top=0,width=' + document.body.clientWidth + ',height=' + document.body.clientHeight + ',menubar=no,toolbar=no,resizable=yes');
     	}
 	   if(rapport == "<%= GlobalConstants.ChoixImpressionDossier.DOSSIER_UNIFORMISE_HISTORIQUE %>"){
 	     	url = '<%= request.getContextPath() + "/dossier/rapport/audit.do"%>';
-    		window.open(url, 'rapport', 'left=0,top=0,width=' + document.body.clientWidth + ',height=' + document.body.clientHeight + ',menubar=no,toolbar=no,resizable=yes');
     	}
-	   if((rapport == "<%= GlobalConstants.ChoixImpressionDossier.DOSSIER_VIGILANCE_SOMMAIRE %>") || (rapport == "<%= GlobalConstants.ChoixImpressionDossier.DOSSIER_VIGILANCE_DETAILLE %>")){
-		   url = "<%=request.getContextPath()%>/AffichagePDFFiches?FICHE=" + fiche + "&SITE=" + site + "&CLE=" + cle + "&RAPPORT=" + rapport;
-		   window.open(url, 'rapport', 'left=0,top=0,width=' + document.body.clientWidth + ',height=' + document.body.clientHeight + ',menubar=no,toolbar=no,resizable=yes');
+	   if(rapport == "<%= GlobalConstants.ChoixImpressionDossier.DOSSIER_VIGILANCE_DETAILLE %>"){
+		   url = "<%=request.getContextPath()+"/RapportAffichage?rapportFormClass="+GlobalConstants.RapportForm.ENTITE_CARDEX_RAPPORT_FORM+"&genererRapporClass="+GlobalConstants.GenerateurRapport.Dossier.Vigilance.DETAILLE_CDX_0233%>&cle="+cle+"&site="+site;
+		}
+	   if(rapport == "<%= GlobalConstants.ChoixImpressionDossier.DOSSIER_VIGILANCE_SOMMAIRE %>"){
+		   url = "<%=request.getContextPath()+"/RapportAffichage?rapportFormClass="+GlobalConstants.RapportForm.ENTITE_CARDEX_RAPPORT_FORM+"&genererRapporClass="+GlobalConstants.GenerateurRapport.Dossier.Vigilance.SOMMAIRE_CDX_0232%>&cle="+cle+"&site="+site;
     	}
+	   windowOpenLocation(url);
    }
 }
 
