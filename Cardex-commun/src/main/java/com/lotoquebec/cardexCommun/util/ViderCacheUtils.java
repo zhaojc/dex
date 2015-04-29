@@ -1,6 +1,7 @@
 package com.lotoquebec.cardexCommun.util;
 
 import javax.annotation.Resource;
+import javax.inject.Named;
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
 import javax.jms.Destination;
@@ -16,7 +17,7 @@ import org.slf4j.LoggerFactory;
 import com.lotoquebec.cardexCommun.integration.dao.cleListe.CleListe;
 import com.lotoquebec.cardexCommun.securite.RolesCacheSecuriteCache;
 
-
+@Named
 public class ViderCacheUtils {
 
 	private final static Logger log = LoggerFactory.getLogger(ViderCacheUtils.class);
@@ -31,14 +32,13 @@ public class ViderCacheUtils {
 	public ViderCacheUtils() {
 		super();
 	}
-	
+	/*
 	public static ViderCacheUtils getInstance() {
 		
-		/*if (viderCacheUtils == null)
+		if (viderCacheUtils == null)
 			viderCacheUtils = new ViderCacheUtils();
-		return viderCacheUtils;*/
-		return new ViderCacheUtils();
-	}
+		return viderCacheUtils;
+	}*/
 
 	public void assignerViderCaches() {
 		log.warn("Assigner vider la cache");

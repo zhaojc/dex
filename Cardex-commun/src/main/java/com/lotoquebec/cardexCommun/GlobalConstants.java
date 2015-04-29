@@ -933,8 +933,6 @@ public final class GlobalConstants {
     	public static final String RESULTATS_RECHERCHE_CONSIGNATIONS = "CDX_0155_resultats_recherche_consignations.jrxml";
     	public static final String IMPRESSION_INSCRIPTION = "CDX_0200_impression_inscription.jrxml";
     	public static final String IMPRESSION_SUIVI = "CDX_0097_impression_suivi.jrxml";
-    	public static final String RESULTATS_RECHERCHE_DOSSIERS_AVEC_SUJETS = "CDX_0224_impression_dossiers_avec_sujets.jrxml";
-    	public static final String RESULTATS_RECHERCHE_DOSSIERS_SANS_SUJETS = "CDX_0225_impression_dossiers_sans_sujets.jrxml";
     	public static final String RAPPORT_ACCES_SUJETS = "CDX_0124_audit_acces_sujets.jrxml";
     	public static final String RAPPORT_ACCES_SUJETS_FOURNISSEURS = "CDX_0125_audit_acces_sujets_fournisseurs.jrxml";
     	public static final String RAPPORT_ACCES_NARRATIONS = "CDX_0126_audit_acces_narrations.jrxml";

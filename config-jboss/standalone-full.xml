@@ -135,7 +135,7 @@
         <subsystem xmlns="urn:jboss:domain:cmp:1.1"/>
         <subsystem xmlns="urn:jboss:domain:datasources:1.1">
             <datasources>
-                <datasource jndi-name="java:jboss/datasources/cardex_admin" pool-name="CardexDS" enabled="true" use-java-context="true">
+                <datasource jndi-name="java:/lq/crp/cdx/jdbc/xa/cardex_admin" pool-name="CardexDS" enabled="true" use-java-context="true">
                     <connection-url>jdbc:oracle:thin:@lora508d.le500.loto-quebec.com:1528:ox01ta40</connection-url>
                     <driver>oracle</driver>
                     <security>
@@ -143,20 +143,12 @@
                         <password>cdxapp</password>
                     </security>
                 </datasource>
-                <datasource jndi-name="java:jboss/datasources/remphor" pool-name="RemphorDS" enabled="true" use-java-context="true">
+                <datasource jndi-name="java:/lq/crp/cdx/jdbc/xa/remphor" pool-name="RemphorDS" enabled="true" use-java-context="true">
                     <connection-url>jdbc:oracle:thin:@lora508d.le500.loto-quebec.com:1548:ox50ec12</connection-url>
                     <driver>oracle</driver>
                     <security>
                         <user-name>LK_CARDEX_CMPTR</user-name>
                         <password>francois</password>
-                    </security>
-                </datasource>
-                <datasource jndi-name="java:jboss/datasources/ExampleDS" pool-name="ExampleDS" enabled="true" use-java-context="true">
-                    <connection-url>jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE</connection-url>
-                    <driver>h2</driver>
-                    <security>
-                        <user-name>sa</user-name>
-                        <password>sa</password>
                     </security>
                 </datasource>
                 <drivers>
