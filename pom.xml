@@ -8,13 +8,13 @@
 	</parent>
 	<packaging>pom</packaging>
 	<!-- 0. Mettre le nom de votre application -->
-	<artifactId>Cardex</artifactId>
+	<artifactId>cardex</artifactId>
 	<!-- 1. Mettre le groupid de votre application -->
 	<groupId>com.lq.cardex</groupId>
 	<!-- 2. Remplacer si necessaire mais ne pas enlever -SNAPSHOT -->
 	<version>0.0.1-SNAPSHOT</version>
 	<!-- 3.Remplacer par le nom court de votre application -->
-	<name>Cardex</name>
+	<name>cardex</name>
 	<!-- 4. Remplacer par un descriptif court de votre application -->
 	<description>Système de suivi de dossiers pour le personnel de la sécurité de Loto-Québec et de ses filiales. Ce système gère les autoexclusions des joueurs et les enquêtes de sécurité pour tout le personnel de la société.</description>
 	<organization>
@@ -25,14 +25,14 @@
 		<!--6. Utiliser le fragment <developer/> pour ajouter tous les developpeurs 
 			du projet -->
 		<developer>
-			<id>elimane</id>
-			<name>Elimane GUEYE</name>
-			<email>elimane.gueye@gmail.com</email>
-			<organization>Elimane GUEYE</organization>
-			<organizationUrl>http://www.google.com</organizationUrl>
+			<id>levassc</id>
+			<name>Charles Levasseur</name>
+			<email>charles.levasseur@loto-quebec.com</email>
+			<organization>Loto-Queberc</organization>
+			<organizationUrl>http://www.lotoquebec.com</organizationUrl>
 			<timezone>-5</timezone>
 			<roles>
-				<role>Architecte en herbe</role>
+				<role>Analyste developpeur</role>
 			</roles>
 		</developer>
 	</developers>

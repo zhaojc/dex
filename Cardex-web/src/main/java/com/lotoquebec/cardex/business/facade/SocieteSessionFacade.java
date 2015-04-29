@@ -63,7 +63,8 @@ public class SocieteSessionFacade {
             BusinessRulesValidator.getInstance().checkBusinessRules(subject, info);
             GestionnaireSecuriteCardex.validerSecuriteEntreeUtilisateur(subject, info, GlobalConstants.ActionSecurite.AJOUT);
             Societe societe = FabriqueCardexDAO.getInstance().getSocieteDAO().insert(subject, info);
-            ViderCacheUtils.getInstance().assignerViderCaches();
+            //ViderCacheUtils.getInstance().assignerViderCaches();
+            new ViderCacheUtils().assignerViderCaches();
             return societe;
         } catch (DAOException dae) {
             handleDAOException(dae);return null;

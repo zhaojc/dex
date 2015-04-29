@@ -192,7 +192,16 @@ public class RapportsConfiguration {
 		//public static final String SOUS_RAPPORT_SUJET_CARACTERISTIQUE = REPERTOIRE_RAPPORT+"dossier_sujet_caracteristique.jrxml";
 		public static final String SOUS_RAPPORT_SUJET_DOSSIER = REPERTOIRE_RAPPORT+"sujet_dossiers.jrxml";
 	public static final String SOUS_RAPPORT_DOSSIER_NARRATION = REPERTOIRE_RAPPORT+"dossier_narrations.jrxml";
-	
+
+	// Impression dossier
+	public static final String RESULTATS_RECHERCHE_DOSSIERS_AVEC_SUJETS_CDX_0224 = "CDX_0224_impression_dossiers_avec_sujets.jrxml";
+		//public static final String SOUS_RAPPORT_DOSSIER_CATEGORIE = REPERTOIRE_RAPPORT+"dossier_categorie.jrxml"; 
+		public static final String SOUS_RAPPORT_DOSSIER_SUJET = REPERTOIRE_RAPPORT+"dossier_sujet.jrxml";
+		public static final String SOUS_RAPPORT_DOSSIER_SOCIETE = REPERTOIRE_RAPPORT+"dossier_societe.jrxml";
+		public static final String SOUS_RAPPORT_PIECES_JOINTES = REPERTOIRE_RAPPORT+"sous_rapport_pieces_jointes.jrxml"; //dossier_pieces_jointes.jasper
+		//public static final String SOUS_RAPPORT_DOSSIER_NARRATION = REPERTOIRE_RAPPORT+"dossier_narrations.jrxml";
+	public static final String RESULTATS_RECHERCHE_DOSSIERS_SANS_SUJETS_CDX_0225 = "CDX_0225_impression_dossiers_sans_sujets.jrxml";
+
 	
 	//Rapports clients mystères
 	public static final String RAPPORT_DETAIL_VISITES = REPERTOIRE_RAPPORT+"CDX_0250_detail_visites_clients_mysteres.jrxml";
