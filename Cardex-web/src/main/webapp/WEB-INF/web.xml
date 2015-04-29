@@ -647,24 +647,6 @@
 		</auth-constraint>
   </security-constraint>
 
-  <!-- SECURITY CONSTRAINT CARDEX externe -->
-  <security-constraint>
-		<display-name>amrealm</display-name>
-		<web-resource-collection>
-			<web-resource-name>application</web-resource-name>
-			<url-pattern>/*</url-pattern>
-			<http-method>GET</http-method>
-			<http-method>POST</http-method>
-			<http-method>PUT</http-method>
-			<http-method>DELETE</http-method>
-			<http-method>HEAD</http-method>
-			<http-method>OPTIONS</http-method>
-			<http-method>TRACE</http-method>
-		</web-resource-collection>
-		<auth-constraint>
-			<role-name>G_JBOSS_CARDEX_EXTERNE_BASE</role-name>
-		</auth-constraint>
-  </security-constraint>
   <security-role>
 	 	<role-name>G_JBOSS_CARDEX_INTERNE_BASE</role-name>
   </security-role>

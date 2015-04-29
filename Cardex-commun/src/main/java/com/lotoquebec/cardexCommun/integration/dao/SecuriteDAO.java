@@ -260,4 +260,43 @@ public class SecuriteDAO {
 		
 		return setRoles;
 	}
+	
+	/**
+	 * Obtenir le code parent de l'utilisateur authentifié par KERBEROS.
+	 * 
+	 * PROCEDURE SP_L_RECHERCHE_CODE_PARENT(
+	 * 		rc1 OUT DTS_RECHERCHE_CODE_PARENT);
+	 * @return
+	 * @throws DAOException
+	 */
+	public String rechercheCodeCardex(final String codeAuthentifie) throws DAOException{
+		final List<IntervenantVO> codeMaitre = new ArrayList<IntervenantVO>();
+		log.debug("obtenirCodeParent");
+		StoreProcTemplate storeProcTemplate = new StoreProcTemplate();
+		
+		PreparerCallableStatement rch = new PreparerCallableStatement(){
+
+    		public void preparer(CallableStatement callableStatement) throws SQLException {
+    	        callableStatement.setString(1, codeAuthentifie);
+    			callableStatement.registerOutParameter(2, OracleTypes.CURSOR);
+			}
+    	};		
+		
+		storeProcTemplate.prepareCall("CARDEX_SPECIAL.SP_L_RECHERCHE_CODE_PARENT", 2, 2, rch);
+				
+    	RowCallbackHandler rcbh = new RowCallbackHandler(){
+			public void processRow(ResultSet rs) throws SQLException {
+				IntervenantVO intervenant = new IntervenantVO();
+				intervenant.setCodeParent(rs.getString("v_in_name_parent"));
+				codeMaitre.add(intervenant);
+			}
+    	};		
+		
+		storeProcTemplate.query(rcbh, true);
+		if(!codeMaitre.isEmpty()){
+			return codeMaitre.get(0).getCodeParent();
+		}else{
+			return "";
+		}
+	}	
 }

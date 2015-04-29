@@ -1,6 +1,7 @@
 package com.lotoquebec.cardex.presentation.controller;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
@@ -28,6 +29,7 @@ import com.lotoquebec.cardexCommun.authentication.AuthenticationServiceFactory;
 import com.lotoquebec.cardexCommun.authentication.AuthenticationSubject;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
 import com.lotoquebec.cardexCommun.authentication.ModifiableAuthenticationSubject;
+import com.lotoquebec.cardexCommun.authentication.SimplePrincipal;
 import com.lotoquebec.cardexCommun.business.vo.IntervenantVO;
 import com.lotoquebec.cardexCommun.exception.AuthenticationException;
 import com.lotoquebec.cardexCommun.exception.BusinessResourceException;
@@ -38,6 +40,7 @@ import com.lotoquebec.cardexCommun.integration.dao.DAOConnection;
 import com.lotoquebec.cardexCommun.integration.dao.FabriqueDAO;
 import com.lotoquebec.cardexCommun.integration.dao.SecuriteDAO;
 import com.lotoquebec.cardexCommun.user.CardexUser;
+import com.lotoquebec.cardexCommun.util.StringUtils;
 
 public class MenuAction extends Action {
 
@@ -49,18 +52,18 @@ public class MenuAction extends Action {
 
 
     /**
-     * Traite la requ�te HTTP sp�cifi�, et cr�e la r�ponse HTTP correspondante
+     * Traite la requête HTTP spécifié, et crée la réponse HTTP correspondante
      * (ou redirige le controle vers un autre composant web).
-     * Retourne une instance <code>ActionForward</code> qui d�crit ou et comment
-     * le contr�le doit �tre aiguill�, ou <code>null</code> si la r�ponse � d�ja �t�
-     * compl�t�e.
+     * Retourne une instance <code>ActionForward</code> qui décrit ou et comment
+     * le contrôle doit être aiguillé, ou <code>null</code> si la réponse à déjà été
+     * complétée.
      *
-     * @param mapping L' ActionMapping utils� pour s�lectionner cette instance
-     * @param actionForm L'ActionForm bean pour cette requ�te (optionnelle)
-     * @param request La requ�te HTTP trait�e
-     * @param response La r�ponse HTTP cr��e
+     * @param mapping L' ActionMapping utilsé pour sélectionner cette instance
+     * @param actionForm L'ActionForm bean pour cette requête (optionnelle)
+     * @param request La requête HTTP traitée
+     * @param response La réponse HTTP créée
      *
-     * @exception IOException si une erreur d'entr�e/sortieif an input/output survient
+     * @exception IOException si une erreur d'entrée/sortie if an input/output survient
      * @exception ServletException si une exception servlet survient
      */
     public ActionForward execute(ActionMapping mapping,
@@ -70,8 +73,8 @@ public class MenuAction extends Action {
                                  ServletException {
         AuthenticationSubject subject = null;
         
-        // Le profil utilisateur est extrait de la base de donn�es cardex
-        // et la locale est initialis�e
+        // Le profil utilisateur est extrait de la base de données Cardex
+        // et la locale est initialisée
         log.debug("Authentification de l'utilisateur");
         
         try {
@@ -79,90 +82,41 @@ public class MenuAction extends Action {
         		assignerMessageResourcesSession(request);
         	
                 String userName = null;
-        		String token = "";
 
-                //La premi�re �tape consiste � d�terminer l'environnement, production ou d�veloppement
-        		//On lit d'abord le poste de travail d'o� provient la requ�te.
-				/*InetAddress ia = java.net.InetAddress.getLocalHost();
+        		//La première étape consiste à déterminer l'environnement, production ou développement
+        		//On lit d'abord le poste de travail d'où provient la requête.
+				InetAddress ia = java.net.InetAddress.getLocalHost();
 				String host = ia.getHostName();
-				log.debug("Host identifi� : " + ia.getHostName());
-				
-				if(host.equals("Z500W19696") || host.equals("Z500W20037") || host.equals("Z500W19935")){ //Poste de d�veloppement
-	                log.debug("Environnement de d�veloppement");
-					//Dans ce cas, on cr�e un jeton pour le contr�le de la s�curit� avec ClearTrust.
-					//token = SecurityManager.getInstance().getToken();
-					//userName = "GUERINF"; //On initalise le code d'utilisateur pour aller chercher
-										  //les valeurs dans la base de donn�es.
-				}else{ //Production.
-					//Dans ce cas, un jeton a automatiquement �t� cr�� apr�s l'authentification r�ussie
-					//par ClearTrust. Ce jeton est plac� dans la liste des "cookies" et identifi�
-					//par CTSESSION. 
-	                Cookie[] cookies = request.getCookies();
-	                log.debug("Environnement de production");
-				    if (cookies != null) {
-				        for (int i=0; i < cookies.length; i++) { 
-				            Cookie cookie = cookies[i];
-				            log.debug("Cookie : " + cookie.getName() + " - Valeur : " + cookie.getValue());
-				            if (cookie.getName().equals("CTSESSION")) {
-				            	token = cookie.getValue();
-				            	//On d�code ensuite le jeton, pour �liminer les caract�res
-				            	//de contr�le et obtenir un jeton valide, reconnaissable par ClearTrust.
-			                    token = java.net.URLDecoder.decode(token, "UTF-8");
-			                    log.debug("Jeton : " + token);
-				            }
-				        }
-				    }
+				log.debug("Host identifié : " + ia.getHostName());
+        		
+				if(request.getRemoteUser()==null ) {
+					//Si c'est le cas, on ne peut pas aller plus loin.
+                    String message = "Aucune variable n'a été trouvée. Authentification impossible...";
+                    log.error(message);
+                    return mapping.findForward("authentication");
+				}else{
+					userName = rechercheCodeCardex(request.getRemoteUser());
 				}
-				//� ce stade, un jeton doit obligatoirement avoir �t� trouv�, sinon on annule le
-				//chargement de l'application. 
-				//--> N.B.: un jeton est utilis� � la place du code d'utilisateur pour toutes les
-				//v�rifications par ClearTrust de mani�re � pr�venir toute usurpation du code d'utilisateur 
-				//de mani�re mal intentionn�e avec des outils sp�cifiques. En utilisant plut�t le jeton,
-				//prot�g� par le mode SSL, il est impossible d'acc�der aux donn�es par l'application
-				//de mani�re illicite. <--//
-			    if(token == null || token.equals("")){
-			    	
-	                if (request.getHeader("ct-remote-user") != null ) {
-	                    userName = request.getHeader("ct-remote-user");
-	                    log.debug("Utilisation de la variable CT_REMOTE_USER pour s'authentifier au cardex : " + userName);
-	                  }else if (request.getRemoteUser() != null ) {
-	                    userName = request.getRemoteUser();
-	                    log.debug("Utilisation de la variable REMOTE_USER pour s'authentifier au cardex : " + userName);
-	                  }else if (request.getUserPrincipal() != null){
-	                    userName = request.getUserPrincipal().getName();
-	                    log.debug("Utilisation de la variable USER_PRINCIPAL pour s'authentifier au cardex : " + userName);
-	                  }else {
-	                    String message = "Aucune variable n'a �t� trouv�e. Authentification impossible...";
-	                    log.error(message);
-	                    return mapping.findForward("authentication");
-	                }			    	
-			    	
-			    	log.debug("Aucun token userName:"+userName);
-			    	subject = AuthenticationServiceFactory.authenticate(createAuthenticationSubject(userName, ""));
-			    }else{
-					//Une fois assur� d'un jeton valide, il faut �galement un code autoris�. 
-					//On recherche le code � partir du jeton valide.
-					//userName = SecurityManager.getInstance().getValeurs(token);
-					
-	                subject = AuthenticationServiceFactory.authenticate(createAuthenticationSubject(userName,"",token));					
-		        }*/
-        		
 
-        		subject = AuthenticationServiceFactory.authenticate(createAuthenticationSubject("AMAITRE", ""));
-        		
+				//On vérifie si un code a été retourné par Cardex :
+				if(StringUtils.isEmpty(userName)){
+                    String message = "Aucun code parent n'a été trouvé dans Cardex avec le code d'authentification : " + request.getRemoteUser();
+                    log.error(message);
+                    return mapping.findForward("erreurCodeParent");
+				}
+				subject = AuthenticationServiceFactory.authenticate(createAuthenticationSubject(userName, ""));
+				
 			    if (subject == null){
-			    	log.error("Aucun usager Cardex userName:"+userName+" token:"+token);
-			    	throw new AssertionError("Aucun usager Cardex userName:"+userName+" token:"+token);
+			    	log.error("Aucun utilisteur Cardex avec le code : "+userName);
+			    	throw new AssertionError("Aucun usager Cardex userName:"+userName);
 			    }
-			    
-                log.debug("Est-ce que l'utilisateur '"+userName+"' est  authentifi�: " + subject.isAuthenticated());
+				
+                log.debug("Est-ce que l'utilisateur '"+userName+"' est  authentifié: " + subject.isAuthenticated());
                 
                 if ( subject.isAuthenticated() ) {
                         // On �tablit de la session de l'application
                         establishSession(subject, request);
                         List<IntervenantVO> listeIntervenant = obtenirProfil(subject);
-                        
-                        //ajouterRoles(subject, listeIntervenant.get(0));
                         
                         if (listeIntervenant.size() > 1){
                         	ProfilsForm profilForm = new ProfilsForm();
@@ -178,15 +132,16 @@ public class MenuAction extends Action {
 
                         	 }else {
                         		CardexUser cardexUser = (CardexUser)subject.getUser();
-                        		throw new SecurityException("Aucun profil n'a �t� trouv� pour l'utilisateur "+cardexUser.getCode());
+                        		throw new SecurityException("Aucun profil n'a pas été trouvé pour l'utilisateur "+cardexUser.getCode());
                         	 }
         		} else {
         			// couldn't get authenticated...
         			// prepare error
-        			String message = "L'utilisateur n'est pas authentifi� ...";
+        			String message = "L'utilisateur n'est pas authentifié ...";
         			log.error(message);
         			return mapping.findForward("authentication");
         		}
+                
         } catch ( AuthenticationException ae ) {
         		ae.printStackTrace();
                 String message = "Le serveur d'authentification est hors service ...";
@@ -194,7 +149,7 @@ public class MenuAction extends Action {
                 return mapping.findForward("authentication");
                 // something happend, let's handle it...
         } catch (DAOException e) {
-            String message = "Probl�me pour charger le role "+((CardexUser)subject.getUser()).getCode();
+            String message = "Problème pour charger le role "+((CardexUser)subject.getUser()).getCode();
             log.error(message,e);
 			return mapping.findForward("error");
 		} catch (ValueObjectMapperException e) {
@@ -211,6 +166,20 @@ public class MenuAction extends Action {
         return mapping.findForward("menu");
     }
 
+    //Cette procédure sert à trouver l'appariement entre le code authentifé par KERBEROS et le code de profil unique
+    //dans Cardex. La raison est qu'on peut trouver des codes identiques dans deux domaines séparés, mais dans
+    //Cardex les codes doivent être uniques. La table aut_authentification sert à relier un code KERBEROS et son domaine
+    //à son code Cardex.    
+    private String rechercheCodeCardex(String codeAuthentifie) {
+    	SecuriteDAO securiteDAO = new SecuriteDAO();
+    	try {
+			return securiteDAO.rechercheCodeCardex(codeAuthentifie.toUpperCase());
+		} catch (DAOException e) {
+			e.printStackTrace();
+			throw new SecurityException("Problème lors de la recherche du code Cardex");
+		}
+	}
+
     private List<IntervenantVO> obtenirProfil(AuthenticationSubject subject) {
     	SecuriteDAO securiteDAO = new SecuriteDAO();
     	CardexUser cardexUser = (CardexUser) subject.getUser();
@@ -218,7 +187,7 @@ public class MenuAction extends Action {
 			return securiteDAO.obtenirListeProfils(cardexUser.getCode());
 		} catch (DAOException e) {
 			e.printStackTrace();
-			throw new SecurityException("Probl�me lors du chargement des profils");
+			throw new SecurityException("Problème lors du chargement des profils");
 		}
 	}
 

@@ -15,7 +15,6 @@ function doLogout(){
 
 function doChoisir(code) {
 	document.forms(0).choixProfil.value = code;
-	//alert(document.forms(0).choixProfil.value + " - " );
 	document.forms(0).action='<%= request.getContextPath() + "/choisirProfil.do"%>';
 	document.forms(0).submit();
 }
@@ -29,11 +28,28 @@ setTimeout("doFermer();", 1800000); // 1000 = 1 sec / 60000 = 1 minutes / 900000
 </SCRIPT>
 
 <html:hidden name='profils' property="choixProfil" />
+
+<table width="600" cellpadding="5" cellspacing="0" border="1" class="tableOutline" align = "center"
+style="filter:progid:DXImageTransform.Microsoft.Gradient(endColorstr='#EEECE0', startColorstr='#FFFFFF', gradientType='0');">
+	<TR>
+		<TH colspan=1 align="center" height=55><B><I><U><FONT SIZE="+2" FACE="Helvetica" COLOR="#375392">Système Cardex</FONT></U></I></B>
+	  	</TH>
+	</TR>
+   	<TR>
+      	<TD>
+	      	<i><b><FONT FACE="Helvetica" COLOR="#000000">En accédant au Cardex, vous vous engagez à assurer l'intégrité et à respecter le caractère hautement confidentiel 
+	      	de la documentation, des informations et des données obtenues dans le cadre de sa consultation. En vertu du préjudice que 
+	      	constitue l'utilisation et/ou la divulgation non autorisées des documents, des informations et des données contenus au Cardex 
+	      	pour Loto-Québec, la Société pourrait prendre tout recours jugé approprié envers l'utilisateur fautif.
+	      	</FONT></b></i>
+	  	</TD>
+   	</TR>      
+</table>
+<td></td>
 <table width="1210" border="0" cellpadding="0" cellspacing="10" class="tableOutline" 
 style="filter:progid:DXImageTransform.Microsoft.Gradient(endColorstr='#ACC8CC', startColorstr='#FFFFFF', gradientType='1');">
      <tr>
 	  <td align="center">
-
 		<table>
 			<tr>
 			  <td align="center">
