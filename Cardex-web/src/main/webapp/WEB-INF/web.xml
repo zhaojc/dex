@@ -630,7 +630,7 @@
   
   <!-- SECURITY CONSTRAINT CARDEX interne -->
   <security-constraint>
-		<display-name>spnego-cardex</display-name>
+		<display-name>${app.security.domain}</display-name>
 		<web-resource-collection>
 			<web-resource-name>application</web-resource-name>
 			<url-pattern>/*</url-pattern>
