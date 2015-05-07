@@ -27,8 +27,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.sf.jasperreports.engine.JRAbstractExporter;
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JRExporter;
-import net.sf.jasperreports.engine.JRExporterParameter;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -37,7 +35,6 @@ import net.sf.jasperreports.engine.data.JRMapCollectionDataSource;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
 import net.sf.jasperreports.export.SimpleExporterInput;
 import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
-import net.sf.jasperreports.j2ee.servlets.ImageServlet;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.struts.action.ActionErrors;
@@ -45,16 +42,11 @@ import org.apache.struts.action.ActionErrors;
 import com.lotoquebec.cardex.business.Acces;
 import com.lotoquebec.cardex.business.ConsignationActionPSU;
 import com.lotoquebec.cardex.business.Photo;
-import com.lotoquebec.cardex.business.delegate.AccesBusinessDelegate;
 import com.lotoquebec.cardex.business.delegate.PSUMandatBusinessDelegate;
 import com.lotoquebec.cardex.business.delegate.PhotoBusinessDelegate;
 import com.lotoquebec.cardex.business.vo.CriteresRechercheDossierVO;
-import com.lotoquebec.cardex.business.vo.DossierVO;
 import com.lotoquebec.cardex.business.vo.FichierMultimediaVO;
 import com.lotoquebec.cardex.business.vo.PhotoVO;
-import com.lotoquebec.cardex.business.vo.SocieteVO;
-import com.lotoquebec.cardex.business.vo.SujetVO;
-import com.lotoquebec.cardex.business.vo.VehiculeVO;
 import com.lotoquebec.cardex.generateurRapport.rapports.RapportsConfiguration;
 import com.lotoquebec.cardex.presentation.model.form.AccesForm;
 import com.lotoquebec.cardex.presentation.model.form.ConsignationActionPSUForm;
@@ -376,6 +368,7 @@ public class AffichagePDFListes extends HttpServlet {
     			parameters.put("DATE_CREATION", vehiculeForm.getDateCreation());
      			//liste = remplirResultatAccesVehicule(subject, vehiculeForm);
         	}
+        	/*
         	if (GlobalConstants.ChoixImpressionListe.IMPRIMER_DOSSIERS_AVEC_SUJETS.equals( choixRapport )){
         		//Impression de tous les dossiers retourn�s par la recherche avec les sujets li�s.
      		    CriteresRechercheDossierForm criteresRechercheDossierForm = (CriteresRechercheDossierForm) request.getSession().getAttribute("rechercheDossier");
@@ -391,7 +384,7 @@ public class AffichagePDFListes extends HttpServlet {
      			Iterator iter = listeResultat.getResultatComplet().iterator();
     		    liste = remplirResultatDossiers(iter);
     		    parameters.put("SUBREPORT_DIR",context.getRealPath("/rapports/"));
-        	}
+        	}*/
         	parameters.put("REPORT_CONNECTION",connection);
       		JRDataSource dataSource = new JRMapCollectionDataSource(liste);
     		

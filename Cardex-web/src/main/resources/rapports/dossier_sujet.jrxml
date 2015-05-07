@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="dossier_sujet" pageWidth="555" pageHeight="802" columnWidth="535" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+<!-- Created with Jaspersoft Studio version 6.0.3.final using JasperReports Library version 6.0.3  -->
+<!-- 2015-05-01T09:26:11 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="dossier_sujet" pageWidth="555" pageHeight="802" columnWidth="535" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="2a296ca9-80e5-4aaa-a22b-aa87a9638112">
 	<parameter name="DOSSIER_CLE" class="java.math.BigDecimal">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="DOSSIER_SITE" class="java.math.BigDecimal">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["C:\\Program Files\\JasperSoft\\iReport-nb-3.5.2\\RapportsCompilation\\"]]></defaultValueExpression>
-	</parameter>
+	<parameter name="SOUS_RAPPORT_SUJET_ADRESSE" class="net.sf.jasperreports.engine.JasperReport"/>
+	<parameter name="SOUS_RAPPORT_SUJET_CARACTERISTIQUE" class="net.sf.jasperreports.engine.JasperReport"/>
 	<queryString>
 		<![CDATA[SELECT sujet.v_su_reference_3 noFiche,
        sexe.v_tr_description sexe,
@@ -81,10 +82,10 @@
 	<title>
 		<band height="21">
 			<line>
-				<reportElement x="0" y="20" width="555" height="1"/>
+				<reportElement x="0" y="20" width="555" height="1" uuid="b52b5992-cc4e-4343-ad9d-7ec8c98b8823"/>
 			</line>
 			<staticText>
-				<reportElement x="8" y="0" width="547" height="20"/>
+				<reportElement x="8" y="0" width="547" height="20" uuid="256fc2eb-7b17-423b-9710-e5a2bc8dcaac"/>
 				<textElement verticalAlignment="Middle">
 					<font size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
@@ -95,148 +96,148 @@
 	<detail>
 		<band height="207" splitType="Stretch">
 			<staticText>
-				<reportElement x="29" y="0" width="110" height="20"/>
+				<reportElement x="29" y="0" width="110" height="20" uuid="6710f98d-0ef0-4a68-9f5d-373cb353d866"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[No fiche : ]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="140" y="0" width="138" height="20"/>
+				<reportElement x="140" y="0" width="138" height="20" uuid="705468c4-a2e9-434e-aaf7-332a389de0c5"/>
 				<box leftPadding="2"/>
 				<textElement verticalAlignment="Middle">
 					<font size="10"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{NOFICHE}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{NOFICHE}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="29" y="20" width="110" height="20"/>
+				<reportElement x="29" y="20" width="110" height="20" uuid="d3888682-0893-4642-b028-6b1f3d9895f7"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[Sexe : ]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="140" y="20" width="138" height="20"/>
+				<reportElement x="140" y="20" width="138" height="20" uuid="3dd7db47-6a4c-4ce9-91e9-bec38426ae75"/>
 				<textElement verticalAlignment="Middle">
 					<font size="10"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{SEXE}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{SEXE}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="8" y="40" width="131" height="20"/>
+				<reportElement x="8" y="40" width="131" height="20" uuid="1cd9d37f-ebe5-425c-99ad-d76153970271"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[Date de naissance : ]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="140" y="40" width="138" height="20"/>
+				<reportElement x="140" y="40" width="138" height="20" uuid="a37a1f23-5a0a-4ceb-9153-362ec1131cb9"/>
 				<box leftPadding="2"/>
 				<textElement verticalAlignment="Middle">
 					<font size="10"/>
 				</textElement>
-				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{DATENAISSANCE}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{DATENAISSANCE}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="281" y="0" width="75" height="20"/>
+				<reportElement x="281" y="0" width="75" height="20" uuid="fada1cd4-4fd7-4f81-bead-a9160955ea77"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[Nom : ]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="358" y="0" width="187" height="20"/>
+				<reportElement x="358" y="0" width="187" height="20" uuid="6c127c39-12ad-46a5-af52-7c1bd55be3c2"/>
 				<box leftPadding="2"/>
 				<textElement verticalAlignment="Middle">
 					<font size="10"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{NOM}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{NOM}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="281" y="20" width="75" height="20"/>
+				<reportElement x="281" y="20" width="75" height="20" uuid="b499a1a2-240f-40fb-9d6a-d50a73ef7ccb"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[Prénom : ]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="358" y="20" width="187" height="20"/>
+				<reportElement x="358" y="20" width="187" height="20" uuid="40db0942-c16f-470d-b340-9db79d7497dc"/>
 				<box leftPadding="2"/>
 				<textElement verticalAlignment="Middle">
 					<font size="10"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{PRENOM}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{PRENOM}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="281" y="40" width="75" height="20"/>
+				<reportElement x="281" y="40" width="75" height="20" uuid="c7168d4e-db52-49d4-975f-9edc7ccfcdfd"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[Ethnie : ]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="358" y="40" width="187" height="20"/>
+				<reportElement x="358" y="40" width="187" height="20" uuid="54d4e93e-a456-439b-8938-01f411623c26"/>
 				<box leftPadding="2"/>
 				<textElement verticalAlignment="Middle">
 					<font size="10"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{ETHNIE}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{ETHNIE}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="281" y="60" width="74" height="20"/>
+				<reportElement x="281" y="60" width="74" height="20" uuid="0fb9cad3-7d38-4b52-88b0-6e15b3520f07"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[Âge : ]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="356" y="60" width="168" height="20"/>
+				<reportElement x="356" y="60" width="168" height="20" uuid="f4f0f8bf-4b3c-47eb-968f-66faf3eb8d4a"/>
 				<box leftPadding="2"/>
 				<textElement verticalAlignment="Middle">
 					<font size="10"/>
 				</textElement>
-				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{AGE}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{AGE}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="8" y="80" width="131" height="20"/>
+				<reportElement x="8" y="80" width="131" height="20" uuid="d0e361cb-61a1-43e6-bad3-88dcfbd25ad1"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[Rôle : ]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="140" y="80" width="384" height="20"/>
+				<reportElement x="140" y="80" width="384" height="20" uuid="2120fe3f-05c1-4c20-b47f-dab569c11265"/>
 				<box leftPadding="2"/>
 				<textElement verticalAlignment="Middle">
 					<font size="10"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{ROLE}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{ROLE}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="8" y="60" width="131" height="20"/>
+				<reportElement x="8" y="60" width="131" height="20" uuid="960d2ab7-34ab-4b79-a2ec-7805df9beec6"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[Langue : ]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="140" y="60" width="138" height="20"/>
+				<reportElement x="140" y="60" width="138" height="20" uuid="3824250f-cb78-414c-b79f-12960c2b1eb7"/>
 				<box leftPadding="2"/>
 				<textElement verticalAlignment="Middle">
 					<font size="10"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{LANGUE}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{LANGUE}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="0" y="0" width="29" height="20"/>
+				<reportElement x="0" y="0" width="29" height="20" uuid="23da0c87-eae3-4e7a-851f-faa75c3366e1"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$V{REPORT_COUNT} + "."]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT} + "."]]></textFieldExpression>
 			</textField>
 			<subreport>
-				<reportElement x="0" y="104" width="278" height="100"/>
+				<reportElement x="0" y="104" width="278" height="100" uuid="de91eabf-c95f-4f35-acb4-014ac7a3d58d"/>
 				<subreportParameter name="SUJET_SITE">
 					<subreportParameterExpression><![CDATA[$F{SUJET_SITE}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -244,19 +245,19 @@
 					<subreportParameterExpression><![CDATA[$F{SUJET_CLE}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "dossier_sujet_adresse.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{SOUS_RAPPORT_SUJET_ADRESSE}]]></subreportExpression>
 			</subreport>
 			<line>
-				<reportElement positionType="Float" x="0" y="204" width="555" height="1"/>
+				<reportElement positionType="Float" x="0" y="204" width="555" height="1" uuid="fe3057f3-aa9d-4e3c-a45e-e66020e5d438"/>
 			</line>
 			<line>
-				<reportElement stretchType="RelativeToTallestObject" x="278" y="104" width="1" height="100"/>
+				<reportElement stretchType="RelativeToTallestObject" x="278" y="104" width="1" height="100" uuid="63dde233-4fd8-4bd6-94d3-6c8f8e5e613b"/>
 			</line>
 			<line>
-				<reportElement x="0" y="104" width="555" height="1"/>
+				<reportElement x="0" y="104" width="555" height="1" uuid="b218754b-95f8-4790-9a30-ba2a63fc9921"/>
 			</line>
 			<subreport>
-				<reportElement x="290" y="105" width="265" height="99"/>
+				<reportElement x="290" y="105" width="265" height="99" uuid="7058a7a6-77ad-4099-8e9c-d33ab2f3674c"/>
 				<subreportParameter name="SUJET_SITE">
 					<subreportParameterExpression><![CDATA[$F{SUJET_SITE}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -264,7 +265,7 @@
 					<subreportParameterExpression><![CDATA[$F{SUJET_CLE}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "dossier_sujet_caracteristique.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{SOUS_RAPPORT_SUJET_CARACTERISTIQUE}]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>

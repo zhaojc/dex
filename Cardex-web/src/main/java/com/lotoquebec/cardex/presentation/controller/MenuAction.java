@@ -73,6 +73,10 @@ public class MenuAction extends Action {
         // et la locale est initialis�e
         log.debug("Authentification de l'utilisateur");
         
+        System.out.println("-------------------------------------"+request.getRemoteUser());
+        System.err.println("-------------------------------------"+request.getRemoteUser());
+        log.error("-------------------------------------"+request.getRemoteUser());
+        
         try {
         		saveToken(request);
         		assignerMessageResourcesSession(request);

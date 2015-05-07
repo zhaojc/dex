@@ -1,7 +1,6 @@
 package com.lotoquebec.cardex.util;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -62,4 +61,20 @@ public class RapportUtils {
 		return JasperCompileManager.compileReport(RapportsConfiguration.class.getResourceAsStream(nomGabarit));	
 	}
 	
+    public static String concateneFleche(String valeur, String precedentValeur) {
+    	
+    	if(StringUtils.isEmpty(valeur) || StringUtils.isEmpty(precedentValeur))
+    		valeur = "";
+    	
+    	if(StringUtils.isDifferent(valeur, precedentValeur))
+    		return "&#151;&#62; " + valeur;
+    	else{
+    		if (StringUtils.isNotEmpty(valeur))
+    			return "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + valeur;
+    		else
+    			return "";
+    	}
+    }
+
+    
 }

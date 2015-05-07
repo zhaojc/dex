@@ -124,6 +124,9 @@
             <logger category="jacorb.config">
                 <level name="ERROR"/>
             </logger>
+            <logger category="org.apache.activemq">
+                <level name="WARN"/>
+			</logger>
             <root-logger>
                 <level name="INFO"/>
                 <handlers>

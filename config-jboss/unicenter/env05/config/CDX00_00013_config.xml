@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+        <numeroFlux>CDX00_00013</numeroFlux>
+        <brokerURL>failover:(tcp://10.8.37.87:61616,tcp://10.8.37.88:61616)</brokerURL>
+        <queue>queue://crp.cdx.que.differe.box01</queue>
+        <queueStatut>queue://crp.cdx.que.statut.box01</queueStatut>
+        <delaiMaximum>3000000</delaiMaximum>
+</configuration>

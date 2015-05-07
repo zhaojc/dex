@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MEICORPO VERSION="" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <JETON/>
+        <INITIATEUR>6cajlinux</INITIATEUR>
+        <IDTRANS/>
+        <ESTAMPILLE/>
+        <IDEMETTEUR>6CAJCDX</IDEMETTEUR>
+        <ENVEMETTEUR>box01</ENVEMETTEUR>
+        <ENVRECEPTEUR>box01</ENVRECEPTEUR>
+        <NOMFLUX>CDX00_00012</NOMFLUX>
+        <TYPEFLUX>DIFFERE</TYPEFLUX>
+        <VERSIONFLUX>1.0</VERSIONFLUX>
+        <TYPEDATELOGIQUE/>
+        <CHAMPLIBRE/>
+        <CONTENU/>
+        <TYPESERVICE/>
+        <STATUT/>
+</MEICORPO>

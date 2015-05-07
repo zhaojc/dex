@@ -1231,6 +1231,9 @@ public final class GlobalConstants {
     	
     	public final static String SOCIETE_AUDIT_ACCES_RAPPORT_FORM_CDX_0212 = "com.lotoquebec.cardex.presentation.model.form.rapport.acces.SocieteAuditAccesRapportForm_CDX_0212";
     	
+    	public final static String RESULTAT_RECHERCHE_AVEC_SUJET_DOSSIER_RAPPORT_FORM_CDX_0224 = "com.lotoquebec.cardex.presentation.model.form.rapport.dossier.ResultatRechercheAvecSujetDossierRapportForm_CDX_0224";
+    	public final static String RESULTAT_RECHERCHE_SANS_SUJET_DOSSIER_RAPPORT_FORM_CDX_0225 = "com.lotoquebec.cardex.presentation.model.form.rapport.dossier.ResultatRechercheSansSujetDossierRapportForm_CDX_0225";
+    	
     	public final static String ENTITE_CARDEX_RAPPORT_FORM = "com.lotoquebec.cardex.presentation.model.form.rapport.EntiteCardexRapportForm";
     }
     

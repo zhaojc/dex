@@ -8,6 +8,7 @@
 <%@ taglib uri='/WEB-INF/struts-tiles.tld'  prefix='tiles' %>
 <%@ page import="com.lotoquebec.cardexCommun.authentication.AuthenticationSubject" %>
 <%@ page import="com.lotoquebec.cardexCommun.GlobalConstants" %>
+<%@ page import="com.lotoquebec.cardex.generateurRapport.rapports.RapportsConfiguration" %>
 
 <SCRIPT LANGUAGE="JavaScript">
 function doAuditChangement() {

@@ -110,15 +110,16 @@ function doPrint() {
 	var rapport = document.forms(0).choixRapport.value;
     //alert(url); 
     if(rapport != ""){
-	    var tableValeurRapport = "<%=GlobalConstants.TableValeur.RAPPORT_LISTE_RECHERCHE_DOSSIER%>";
-	    var genre = document.forms(0).genre.value;
-	    var siteOrigine = document.forms(0).siteOrigine.value;
-	    var dateDebut = document.forms(0).dateDebutDu.value;
-	    var dateFin = document.forms(0).dateDebutAu.value;	
-	
-		var url = "<%=request.getContextPath()%>/AffichagePDFListes?RAPPORT=" + rapport; 
-	   	window.open(url, 'rapport', 'left=0,top=0,width=' + document.body.clientWidth + ',height=' + document.body.clientHeight + ',menubar=no,toolbar=no,resizable=yes');
-
+		var url;
+		
+    	if(rapport == "<%= GlobalConstants.ChoixImpressionListe.IMPRIMER_DOSSIERS_AVEC_SUJETS %>"){
+    		url = "<%=request.getContextPath()+"/RapportAffichage?rapportFormClass="+GlobalConstants.RapportForm.RESULTAT_RECHERCHE_AVEC_SUJET_DOSSIER_RAPPORT_FORM_CDX_0224%>";        	
+    	}
+    	if(rapport == "<%= GlobalConstants.ChoixImpressionListe.IMPRIMER_DOSSIERS_SANS_SUJETS %>"){
+    		url = "<%=request.getContextPath()+"/RapportAffichage?rapportFormClass="+GlobalConstants.RapportForm.RESULTAT_RECHERCHE_SANS_SUJET_DOSSIER_RAPPORT_FORM_CDX_0225%>";        	
+    	}    	
+    	windowOpenLocation(url);
+    	
 		//Pour empêcher le rapport de s'exécuter au rafraîchissement de la page, on met une valeur nulle dans la liste des rapports.
 	    document.forms(0).choixRapport.value = "";
 	}

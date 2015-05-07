@@ -1,5 +1,7 @@
 package com.lotoquebec.cardex.generateurRapport.entite;
 
+import java.sql.Timestamp;
+
 import com.lotoquebec.cardex.business.Sujet;
 import com.lotoquebec.cardexCommun.GlobalConstants;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
@@ -27,7 +29,7 @@ public class SujetRapportVO extends RapportVO<Sujet> {
 	private String severiteCasinoDescription;
 	private String confidentialiteDescription;
 	private String ethnieDescription;
-
+	private String dateNaissance;
 	
 	public SujetRapportVO(Sujet sujet) {
 		super();
@@ -46,6 +48,7 @@ public class SujetRapportVO extends RapportVO<Sujet> {
     	sexeDescription = cache.obtenirLabel(subject, entite.getSexe(), new SexeCleListeCache(subject));
 		typeAgeDescription = cache.obtenirLabel(subject, entite.getTypeAge(), new TypeAgeCleListeCache(subject));
 		statutDescription = cache.obtenirLabel(subject, entite.getStatut(), new StatutCleListeCache(subject, GlobalConstants.ListeCache.Statut.SUJET));
+		dateNaissance = DateFormat.format(entite.getDateNaissance());
 	}
 
 	public long getCle(){
@@ -82,7 +85,7 @@ public class SujetRapportVO extends RapportVO<Sujet> {
 	}
 
 	public String getDateNaissance() {
-		return DateFormat.format(entite.getDateNaissance());
+		return dateNaissance;
 	}
 
 	public String getNumeroAssuranceSociale() {
@@ -140,6 +143,108 @@ public class SujetRapportVO extends RapportVO<Sujet> {
 	public String getEthnieDescription() {
 		return ethnieDescription;
 	}
-	
 
+	public String getNumeroAssuranceMaladie() {
+		return entite.getNumeroAssuranceMaladie();
+	}
+
+	public void setSeveriteDescriptionAutres(String severiteDescriptionAutres) {
+		this.severiteDescriptionAutres = severiteDescriptionAutres;
+	}
+
+	public void setSexeDescription(String sexeDescription) {
+		this.sexeDescription = sexeDescription;
+	}
+
+	public void setLangueDescription(String langueDescription) {
+		this.langueDescription = langueDescription;
+	}
+
+	public void setStatutDescription(String statutDescription) {
+		this.statutDescription = statutDescription;
+	}
+
+	public void setTypeAgeDescription(String typeAgeDescription) {
+		this.typeAgeDescription = typeAgeDescription;
+	}
+
+	public void setRaceDescription(String raceDescription) {
+		this.raceDescription = raceDescription;
+	}
+
+	public void setSeveriteDescription(String severiteDescription) {
+		this.severiteDescription = severiteDescription;
+	}
+
+	public void setSeveriteCasinoDescription(String severiteCasinoDescription) {
+		this.severiteCasinoDescription = severiteCasinoDescription;
+	}
+
+	public void setConfidentialiteDescription(String confidentialiteDescription) {
+		this.confidentialiteDescription = confidentialiteDescription;
+	}
+
+	public void setEthnieDescription(String ethnieDescription) {
+		this.ethnieDescription = ethnieDescription;
+	}
+
+	public long getSite() {
+		return entite.getSite();
+	}
+
+	// Setters
+	
+	
+	public void setNom(String nom) {
+		this.entite.setNom(nom);
+	}
+
+	public void setPrenom(String prenom) {
+		this.entite.setPrenom(prenom);
+	}
+
+	public void setAlias(String alias) {
+		this.entite.setAlias(alias);
+	}
+
+	public void setDateNaissance(Timestamp dateNaissance) {
+		this.entite.setDateNaissance(dateNaissance);
+	}
+
+	public void setReference1(String reference1) {
+		this.entite.setReference1(reference1);
+	}
+
+	public void setReference2(String reference2) {
+		this.entite.setReference2(reference2);
+	}
+
+	public void setNumeroClientEmploye(String numeroClientEmploye) {
+		this.entite.setNumeroClientEmploye(numeroClientEmploye);
+	}
+
+	public void setNumeroAssuranceSociale(String numeroAssuranceSociale) {
+		this.entite.setNumeroAssuranceSociale(numeroAssuranceSociale);
+	}
+
+	public void setNumeroPermisConduire(String numeroPermisConduire) {
+		this.entite.setNumeroPermisConduire(numeroPermisConduire);
+	}
+
+	public void setPasseport(String passeport) {
+		this.entite.setPasseport(passeport);
+	}
+
+	public void setNumeroAssuranceMaladie(String numeroAssuranceMaladie) {
+		this.entite.setNumeroAssuranceMaladie(numeroAssuranceMaladie);
+	}
+
+	public void setNumeroFiche(String numeroFiche) {
+		this.entite.setNumeroFiche(numeroFiche);
+	}
+
+	public void setDateNaissance(String dateNaissance) {
+		this.dateNaissance = dateNaissance;
+	}
+	
 }

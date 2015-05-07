@@ -124,7 +124,7 @@ public class SuiviDossierGenerateurRapport_CDX_0223 extends CritereGenererRappor
 		parameters.put("sous_rapport_sujet_suivis", JRLoader.loadObject(RapportsConfiguration.class.getResourceAsStream(RapportsConfiguration.SOUS_RAPPORT_SUJET_SUIVIS)));
 		parameters.put("sous_rapport_sujet_suivis_anglais", JRLoader.loadObject(RapportsConfiguration.class.getResourceAsStream(RapportsConfiguration.SOUS_RAPPORT_SUJET_SUIVIS_ANGLAIS)));
 		parameters.put("dossier_suivis", JRLoader.loadObject(RapportsConfiguration.class.getResourceAsStream(RapportsConfiguration.SOUS_RAPPORT_DOSSIER_SUIVIS)));
-		parameters.put("dossier_categorie", JRLoader.loadObject(RapportsConfiguration.class.getResourceAsStream(RapportsConfiguration.SOUS_RAPPORT_DOSSIER_CATEGORIE)));
+		parameters.put("dossier_categorie", JRLoader.loadObject(RapportsConfiguration.class.getResourceAsStream(RapportsConfiguration.SOUS_RAPPORT_CATEGORIE)));
 		parameters.put("REPORT_CONNECTION", connection);
 		parameters.put("langue", locale.toString());
 		

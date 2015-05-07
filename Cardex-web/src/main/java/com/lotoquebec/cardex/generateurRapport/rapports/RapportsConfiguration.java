@@ -5,6 +5,7 @@ import java.util.Map;
 
 public class RapportsConfiguration {
 
+	//net.sf.jasperreports.engine.JasperReport
 	public final static String REPERTOIRE_RAPPORT = "/rapports/";
 	
 	// Regroupement
@@ -17,7 +18,7 @@ public class RapportsConfiguration {
 	public final static String RAPPORT_MATRICE_REGROUPEMENTS = REPERTOIRE_RAPPORT+"CDX_0160_matrice_regroupements.jrxml";
 	public final static String RAPPORT_GLOBAL_REGROUPEMENTS_CASINO = REPERTOIRE_RAPPORT+"CDX_0089_RapportGlobalRegroupementsCasino.jrxml";
 	
-	// RETIR�
+	// RETIRÉ
 	public final static String RAPPORT_REGROUPEMENTS_INTERVENANT_CATEGORIE = REPERTOIRE_RAPPORT+"CDX_0084_RapportRegroupementsIntervenantCategorie.jrxml";
 	public final static String RAPPORT_REGROUPEMENTS_SECTEUR_CATEGORIE = REPERTOIRE_RAPPORT+"CDX_0082_RapportRegroupementsSecteurCategorie.jrxml";
 	public final static String RAPPORT_REGROUPEMENTS_SECTEUR_INTERVENANT = REPERTOIRE_RAPPORT+"CDX_0083_RapportRegroupementsSecteurIntervenant.jrxml";
@@ -108,7 +109,7 @@ public class RapportsConfiguration {
 	public static final String SOUS_RAPPORT_SUJET_SUIVIS = REPERTOIRE_RAPPORT+"sous_rapport_sujet_suivis.jrxml";
 	public static final String SOUS_RAPPORT_SUJET_SUIVIS_ANGLAIS = REPERTOIRE_RAPPORT+"sous_rapport_sujet_suivis_anglais.jrxml";
 	public static final String SOUS_RAPPORT_DOSSIER_SUIVIS = REPERTOIRE_RAPPORT+"dossier_suivis.jrxml";
-	public static final String SOUS_RAPPORT_DOSSIER_CATEGORIE = REPERTOIRE_RAPPORT+"dossier_categorie.jrxml";
+	public static final String SOUS_RAPPORT_CATEGORIE = REPERTOIRE_RAPPORT+"dossier_categorie.jrxml";
 	
 	// Journal
 	public static final String JOURNAL_SOMMAIRE = REPERTOIRE_RAPPORT+"CDX_0020_rapport_journal_sommaire.jrxml";
@@ -186,21 +187,25 @@ public class RapportsConfiguration {
 	
 	// CDX_0232 detail vigilance
 	public static final String DETAILLE_VIGILANCE_DOSSIER_CDX_0233 = REPERTOIRE_RAPPORT+"CDX_0233_rapport_vigilance_detaille.jrxml";
-	public static final String SOUS_RAPPORT_SUJET_CDX_0233 = REPERTOIRE_RAPPORT+"CDX_0233_sous_rapport_sujet.jrxml";
-		//public static final String SOUS_RAPPORT_SUJET_PHOTO = REPERTOIRE_RAPPORT+"sujet_photo.jrxml";
-		//public static final String SOUS_RAPPORT_SUJET_ADRESSE = REPERTOIRE_RAPPORT+"dossier_sujet_adresse.jrxml";
-		//public static final String SOUS_RAPPORT_SUJET_CARACTERISTIQUE = REPERTOIRE_RAPPORT+"dossier_sujet_caracteristique.jrxml";
-		public static final String SOUS_RAPPORT_SUJET_DOSSIER = REPERTOIRE_RAPPORT+"sujet_dossiers.jrxml";
-	public static final String SOUS_RAPPORT_DOSSIER_NARRATION = REPERTOIRE_RAPPORT+"dossier_narrations.jrxml";
+		public static final String SOUS_RAPPORT_SUJET_CDX_0233 = REPERTOIRE_RAPPORT+"CDX_0233_sous_rapport_sujet.jrxml";
+			//public static final String SOUS_RAPPORT_SUJET_PHOTO = REPERTOIRE_RAPPORT+"sujet_photo.jrxml";
+			//public static final String SOUS_RAPPORT_SUJET_ADRESSE = REPERTOIRE_RAPPORT+"dossier_sujet_adresse.jrxml";
+			//public static final String SOUS_RAPPORT_SUJET_CARACTERISTIQUE = REPERTOIRE_RAPPORT+"dossier_sujet_caracteristique.jrxml";
+			public static final String SOUS_RAPPORT_SUJET_DOSSIER = REPERTOIRE_RAPPORT+"sujet_dossiers.jrxml";
+		public static final String SOUS_RAPPORT_DOSSIER_NARRATION = REPERTOIRE_RAPPORT+"dossier_narrations.jrxml";
 
-	// Impression dossier
-	public static final String RESULTATS_RECHERCHE_DOSSIERS_AVEC_SUJETS_CDX_0224 = "CDX_0224_impression_dossiers_avec_sujets.jrxml";
+	// CDX_0224 Résultats recherche avec sujet
+	public static final String RESULTATS_RECHERCHE_DOSSIERS_AVEC_SUJETS_CDX_0224 = REPERTOIRE_RAPPORT+"CDX_0224_impression_dossiers_avec_sujets.jrxml";
 		//public static final String SOUS_RAPPORT_DOSSIER_CATEGORIE = REPERTOIRE_RAPPORT+"dossier_categorie.jrxml"; 
-		public static final String SOUS_RAPPORT_DOSSIER_SUJET = REPERTOIRE_RAPPORT+"dossier_sujet.jrxml";
-		public static final String SOUS_RAPPORT_DOSSIER_SOCIETE = REPERTOIRE_RAPPORT+"dossier_societe.jrxml";
+		public static final String SOUS_RAPPORT_SUJET = REPERTOIRE_RAPPORT+"dossier_sujet.jrxml";
+			//public static final String SOUS_RAPPORT_SUJET_ADRESSE = REPERTOIRE_RAPPORT+"dossier_sujet_adresse.jrxml";
+			//public static final String SOUS_RAPPORT_SUJET_CARACTERISTIQUE = REPERTOIRE_RAPPORT+"dossier_sujet_caracteristique.jrxml";
+		public static final String SOUS_RAPPORT_SOCIETE = REPERTOIRE_RAPPORT+"dossier_societe.jrxml";
 		public static final String SOUS_RAPPORT_PIECES_JOINTES = REPERTOIRE_RAPPORT+"sous_rapport_pieces_jointes.jrxml"; //dossier_pieces_jointes.jasper
-		//public static final String SOUS_RAPPORT_DOSSIER_NARRATION = REPERTOIRE_RAPPORT+"dossier_narrations.jrxml";
-	public static final String RESULTATS_RECHERCHE_DOSSIERS_SANS_SUJETS_CDX_0225 = "CDX_0225_impression_dossiers_sans_sujets.jrxml";
+		//public static final String SOUS_RAPPORT_NARRATION = REPERTOIRE_RAPPORT+"dossier_narrations.jrxml";
+		
+	// CDX_0225 Résultats recherche sans sujet
+	public static final String RESULTATS_RECHERCHE_DOSSIERS_SANS_SUJETS_CDX_0225 = REPERTOIRE_RAPPORT+"CDX_0225_impression_dossiers_sans_sujets.jrxml";
 
 	
 	//Rapports clients mystères
@@ -238,8 +243,8 @@ public class RapportsConfiguration {
 	public static final String AUDIT_CHANGEMENTS_NARRATIONS = REPERTOIRE_RAPPORT+"CDX_0181_audit_changements_narrations.jrxml";
 	public static final String AUDIT_CHANGEMENTS_SOCIETES = REPERTOIRE_RAPPORT+"CDX_0184_audit_changements_societes.jrxml";
 	public static final String AUDIT_CHANGEMENTS_SUJETS_CDX_0185 = REPERTOIRE_RAPPORT+"CDX_0185_audit_changements_sujets.jrxml";
-	public static final String AVANT_CHANGEMENT_AUDIT_CHANGEMENTS_SUJETS = REPERTOIRE_RAPPORT+"CDX_0185_sous-rapport_audit_sujets.jrxml";
-	public static final String CREATEUR_AUDIT_CHANGEMENTS_SUJETS = REPERTOIRE_RAPPORT+"sous-rapport_audit_createur.jrxml";
+		public static final String SOUS_RAPPORT_AVANT_CHANGEMENT_AUDIT_CHANGEMENTS_SUJETS_CDX_0185 = REPERTOIRE_RAPPORT+"CDX_0185_sous-rapport_audit_sujets.jrxml";
+		public static final String SOUS_RAPPORT_CREATEUR_AUDIT_CHANGEMENT = REPERTOIRE_RAPPORT+"sous-rapport_audit_createur.jrxml";
 	
 	public static final String AUDIT_CHANGEMENTS_SUIVIS = REPERTOIRE_RAPPORT+"CDX_0186_audit_changements_suivis.jrxml";
 	public static final String AUDIT_CHANGEMENTS_VEHICULES = REPERTOIRE_RAPPORT+"CDX_0187_audit_changements_vehicules.jrxml";
