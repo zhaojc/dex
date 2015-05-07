@@ -11,6 +11,7 @@ import net.sf.jasperreports.engine.JasperReport;
 
 import com.lotoquebec.cardex.generateurRapport.rapports.RapportsConfiguration;
 import com.lotoquebec.cardexCommun.text.DateFormat;
+import com.lotoquebec.cardexCommun.util.StringHelper;
 import com.lotoquebec.cardexCommun.util.StringUtils;
 
 public class RapportUtils {
@@ -66,7 +67,7 @@ public class RapportUtils {
     	if(StringUtils.isEmpty(valeur) || StringUtils.isEmpty(precedentValeur))
     		valeur = "";
     	
-    	if(StringUtils.isDifferent(valeur, precedentValeur))
+    	if(StringUtils.isDifferent(StringHelper.retirer(valeur, "&#151;&#62; ", "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"), StringHelper.retirer(precedentValeur, "&#151;&#62; ", "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;")))
     		return "&#151;&#62; " + valeur;
     	else{
     		if (StringUtils.isNotEmpty(valeur))
@@ -76,5 +77,4 @@ public class RapportUtils {
     	}
     }
 
-    
 }

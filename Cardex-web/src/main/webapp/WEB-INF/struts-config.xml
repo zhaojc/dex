@@ -171,7 +171,7 @@
 
   <!-- ========== Global Forward Definitions ============================== -->
   <global-forwards type="org.apache.struts.action.ActionForward">
-    <forward name="menu" path="/index.jsp" />
+    <forward name="menu" path="/w_menu_principale.jsp" />
     <forward name="session" path="/session.jsp" />
     <forward name="authentication" path="/authentication.jsp" />
     <forward name="error" path="/error_page.jsp" />

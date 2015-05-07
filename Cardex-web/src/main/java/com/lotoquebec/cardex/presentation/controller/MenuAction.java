@@ -72,10 +72,11 @@ public class MenuAction extends Action {
         // Le profil utilisateur est extrait de la base de donn�es cardex
         // et la locale est initialis�e
         log.debug("Authentification de l'utilisateur");
-        
+        /*
         System.out.println("-------------------------------------"+request.getRemoteUser());
         System.err.println("-------------------------------------"+request.getRemoteUser());
         log.error("-------------------------------------"+request.getRemoteUser());
+        log.info("-------------------------------------"+request.getRemoteUser());*/
         
         try {
         		saveToken(request);
@@ -155,7 +156,7 @@ public class MenuAction extends Action {
 			    	throw new AssertionError("Aucun usager Cardex userName:"+userName+" token:"+token);
 			    }
 			    
-                log.debug("Est-ce que l'utilisateur '"+userName+"' est  authentifi�: " + subject.isAuthenticated());
+                log.debug("Est-ce que l'utilisateur '"+userName+"' est  authentifié: " + subject.isAuthenticated());
                 
                 if ( subject.isAuthenticated() ) {
                         // On �tablit de la session de l'application

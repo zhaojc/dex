@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 public class StringHelper {
 
 	public static final String CARACTERES_CONTROLE = "&*();\"";
-	private static String[] formerExpressionReguliaire = {"[aA]","[bB]","[cC]","[dD]","[eEéÉèÈêÊëË]","[fF]","[gG]","[hH]","[iIîÎìÌ]","[jJ]","[kK]","[lL]","[mM]","[nN]","[oOôÔöÖôÔòÒ]","[pP]","[qQ]","[rR]","[sS]","[tT]","[uUûÛùÙ]","[vV]","[wW]","[xX]","[yY]","[zZ]"};
+	private static String[] formerExpressionReguliaire = {"[aA]","[bB]","[cC]","[dD]","[eEï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½]","[fF]","[gG]","[hH]","[iIï¿½ï¿½ï¿½ï¿½]","[jJ]","[kK]","[lL]","[mM]","[nN]","[oOï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½]","[pP]","[qQ]","[rR]","[sS]","[tT]","[uUï¿½ï¿½ï¿½ï¿½]","[vV]","[wW]","[xX]","[yY]","[zZ]"};
 	private static String carteBlancheExpressionReguliaire = "[a-zA-Z]*";
 
 	
@@ -21,9 +21,9 @@ public class StringHelper {
 		return removeCaractere(text, CARACTERES_CONTROLE);
 	}
 
-	//On traite ensuite la chaîne de caractère afin de retirer des caractères de contrôle
-	//utilisés dans la syntaxe SQL.  Cette opération a pour but de contrer d'éventuelles
-	//requêtes illicites ou tentatives d'intrusion désignées sous le terme "SQL Injection".
+	//On traite ensuite la chaï¿½ne de caractï¿½re afin de retirer des caractï¿½res de contrï¿½le
+	//utilisï¿½s dans la syntaxe SQL.  Cette opï¿½ration a pour but de contrer d'ï¿½ventuelles
+	//requï¿½tes illicites ou tentatives d'intrusion dï¿½signï¿½es sous le terme "SQL Injection".
 	public static String removeCaractere(String text, String toRemove){
         StringBuffer buffer = new StringBuffer();
         
@@ -97,7 +97,7 @@ public class StringHelper {
 					break;
 				}
 			}
-			// nous n'avons pas trouvé cette expression
+			// nous n'avons pas trouvï¿½ cette expression
 			if (trouve == false){
 				expressionRegulaire.append("[");
 				expressionRegulaire.append(charExpression);
@@ -148,4 +148,12 @@ public class StringHelper {
     	return 0;
     }
     
+    
+	public static String retirer(String text, String...aRetirers) {
+
+		for (String aRetirer:aRetirers){
+			text = text.replaceAll(aRetirer, "");
+		}
+		return text;
+	}
 }

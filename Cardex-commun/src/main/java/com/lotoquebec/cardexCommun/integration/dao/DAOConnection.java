@@ -19,6 +19,7 @@ import com.lotoquebec.cardexCommun.exception.DAOException;
 import com.lotoquebec.cardexCommun.user.CardexPrivilege;
 import com.lotoquebec.cardexCommun.user.CardexUser;
 import com.lotoquebec.cardexCommun.util.CodeLangue;
+import com.lotoquebec.cardexCommun.util.StringUtils;
 import com.lq.std.conf.impl.AppConfig;
 
 public class DAOConnection {
@@ -75,8 +76,13 @@ public class DAOConnection {
 
         try {
           if (DATA_SOURCE == null){
-			Context ctx = new InitialContext();
-            DATA_SOURCE = (DataSource)ctx.lookup(AppConfig.INSTANCE.get(GlobalConstants.Configuration.DATASOURCE));
+        	  
+        	  if (StringUtils.isEmpty(AppConfig.INSTANCE.get(GlobalConstants.Configuration.DATASOURCE)))
+        		  throw new RuntimeException("Aucune DataSource");
+        	  else{
+				Context ctx = new InitialContext();
+				DATA_SOURCE = (DataSource)ctx.lookup(AppConfig.INSTANCE.get(GlobalConstants.Configuration.DATASOURCE));
+        	  }
           }
           return DATA_SOURCE.getConnection();
         } catch (SQLException se) {

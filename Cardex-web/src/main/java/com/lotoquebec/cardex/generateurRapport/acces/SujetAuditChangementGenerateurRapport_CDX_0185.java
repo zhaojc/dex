@@ -88,40 +88,40 @@ public class SujetAuditChangementGenerateurRapport_CDX_0185 extends GenererRappo
 		//Cela �vite de traiter les donn�es champ par champ. Il faut cependant que les noms de champ utilis�s dans
 		//le rapport soient identiques au "describe" des champs de la fonction.
 	    //On met l'enregistrement courant dans precedent pour amorcer la comparaison des changements.
-		SujetRapportVO precedent = new SujetRapportVO(courant);
-		precedent.assignerValeurDeListe(subject);
-		precedent.setNumeroAssuranceSociale("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;********"); //On camoufle l'information du NAS
-		//rapportVOs.add(precedent);
-		//precedent = courant;
+		SujetRapportVO courantSujetRapportVO = new SujetRapportVO(courant);
+		courantSujetRapportVO.assignerValeurDeListe(subject);
+		rapportVOs.add(courantSujetRapportVO);
 		
-		for(Sujet sujet:sujets){
+		for(int i=1;i<sujets.size();i++){
+			Sujet sujet = sujets.get(i);
+			SujetRapportVO precedentSujetRapportVO = rapportVOs.get(i-1);
 			SujetRapportVO sujetRapportVO = new SujetRapportVO(sujet);
 			sujetRapportVO.assignerValeurDeListe(subject);
 			sujetRapportVO.setNumeroAssuranceSociale("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;********"); //On camoufle l'information du NAS
-			sujetRapportVO.setSeveriteDescriptionAutres(RapportUtils.concateneFleche(sujetRapportVO.getSeveriteDescriptionAutres(), precedent.getSeveriteDescriptionAutres()));
-			sujetRapportVO.setSexeDescription(RapportUtils.concateneFleche(sujetRapportVO.getSexeDescription(), precedent.getSexeDescription()));
-			sujetRapportVO.setLangueDescription(RapportUtils.concateneFleche(sujetRapportVO.getLangueDescription(), precedent.getLangueDescription()));
-			sujetRapportVO.setNom(RapportUtils.concateneFleche(sujetRapportVO.getNom(), precedent.getNom()));
-			sujetRapportVO.setPrenom(RapportUtils.concateneFleche(sujetRapportVO.getPrenom(), precedent.getPrenom()));
-		    sujetRapportVO.setAlias(RapportUtils.concateneFleche(sujetRapportVO.getAlias().toString(), precedent.getAlias().toString()));
-		    sujetRapportVO.setStatutDescription(RapportUtils.concateneFleche(sujetRapportVO.getStatutDescription(), precedent.getStatutDescription()));
-		    sujetRapportVO.setDateNaissance(RapportUtils.concateneFleche(sujetRapportVO.getDateNaissance(), precedent.getDateNaissance()));
-		    sujetRapportVO.setNumeroPermisConduire(RapportUtils.concateneFleche(sujetRapportVO.getNumeroPermisConduire(), precedent.getNumeroPermisConduire()));
-		    sujetRapportVO.setReference1(RapportUtils.concateneFleche(sujetRapportVO.getReference1(), precedent.getReference1()));
-		    sujetRapportVO.setReference2(RapportUtils.concateneFleche(sujetRapportVO.getReference2(), precedent.getReference2()));
-		    sujetRapportVO.setNumeroFiche(RapportUtils.concateneFleche(sujetRapportVO.getNumeroFiche(), precedent.getNumeroFiche()));
-		    sujetRapportVO.setTypeAgeDescription(RapportUtils.concateneFleche(sujetRapportVO.getTypeAgeDescription(), precedent.getTypeAgeDescription()));
-		    sujetRapportVO.setRaceDescription(RapportUtils.concateneFleche(sujetRapportVO.getRaceDescription(), precedent.getRaceDescription()));
-		    sujetRapportVO.setPasseport(RapportUtils.concateneFleche(sujetRapportVO.getPasseport(), precedent.getPasseport()));
-		    sujetRapportVO.setNumeroAssuranceMaladie(RapportUtils.concateneFleche(sujetRapportVO.getNumeroAssuranceMaladie(), precedent.getNumeroAssuranceMaladie()));
-		    sujetRapportVO.setSeveriteDescription(RapportUtils.concateneFleche(sujetRapportVO.getSeveriteDescription(), precedent.getSeveriteDescription()));
-		    sujetRapportVO.setSeveriteCasinoDescription(RapportUtils.concateneFleche(sujetRapportVO.getSeveriteCasinoDescription(), precedent.getSeveriteCasinoDescription()));
-		    sujetRapportVO.setConfidentialiteDescription(RapportUtils.concateneFleche(sujetRapportVO.getConfidentialiteDescription(), precedent.getConfidentialiteDescription()));
-		    sujetRapportVO.setNumeroClientEmploye(RapportUtils.concateneFleche(sujetRapportVO.getNumeroClientEmploye(), precedent.getNumeroClientEmploye()));
-		    sujetRapportVO.setEthnieDescription(RapportUtils.concateneFleche(sujetRapportVO.getEthnieDescription(), precedent.getEthnieDescription()));
+			sujetRapportVO.setSeveriteDescriptionAutres(RapportUtils.concateneFleche(sujetRapportVO.getSeveriteDescriptionAutres(), precedentSujetRapportVO.getSeveriteDescriptionAutres()));
+			sujetRapportVO.setSexeDescription(RapportUtils.concateneFleche(sujetRapportVO.getSexeDescription(), precedentSujetRapportVO.getSexeDescription()));
+			sujetRapportVO.setLangueDescription(RapportUtils.concateneFleche(sujetRapportVO.getLangueDescription(), precedentSujetRapportVO.getLangueDescription()));
+			sujetRapportVO.setNom(RapportUtils.concateneFleche(sujetRapportVO.getNom(), precedentSujetRapportVO.getNom()));
+			sujetRapportVO.setPrenom(RapportUtils.concateneFleche(sujetRapportVO.getPrenom(), precedentSujetRapportVO.getPrenom()));
+		    sujetRapportVO.setAlias(RapportUtils.concateneFleche(sujetRapportVO.getAlias().toString(), precedentSujetRapportVO.getAlias().toString()));
+		    sujetRapportVO.setStatutDescription(RapportUtils.concateneFleche(sujetRapportVO.getStatutDescription(), precedentSujetRapportVO.getStatutDescription()));
+		    sujetRapportVO.setDateNaissance(RapportUtils.concateneFleche(sujetRapportVO.getDateNaissance(), precedentSujetRapportVO.getDateNaissance()));
+		    sujetRapportVO.setNumeroPermisConduire(RapportUtils.concateneFleche(sujetRapportVO.getNumeroPermisConduire(), precedentSujetRapportVO.getNumeroPermisConduire()));
+		    sujetRapportVO.setReference1(RapportUtils.concateneFleche(sujetRapportVO.getReference1(), precedentSujetRapportVO.getReference1()));
+		    sujetRapportVO.setReference2(RapportUtils.concateneFleche(sujetRapportVO.getReference2(), precedentSujetRapportVO.getReference2()));
+		    sujetRapportVO.setNumeroFiche(RapportUtils.concateneFleche(sujetRapportVO.getNumeroFiche(), precedentSujetRapportVO.getNumeroFiche()));
+		    sujetRapportVO.setTypeAgeDescription(RapportUtils.concateneFleche(sujetRapportVO.getTypeAgeDescription(), precedentSujetRapportVO.getTypeAgeDescription()));
+		    sujetRapportVO.setRaceDescription(RapportUtils.concateneFleche(sujetRapportVO.getRaceDescription(), precedentSujetRapportVO.getRaceDescription()));
+		    sujetRapportVO.setPasseport(RapportUtils.concateneFleche(sujetRapportVO.getPasseport(), precedentSujetRapportVO.getPasseport()));
+		    sujetRapportVO.setNumeroAssuranceMaladie(RapportUtils.concateneFleche(sujetRapportVO.getNumeroAssuranceMaladie(), precedentSujetRapportVO.getNumeroAssuranceMaladie()));
+		    sujetRapportVO.setSeveriteDescription(RapportUtils.concateneFleche(sujetRapportVO.getSeveriteDescription(), precedentSujetRapportVO.getSeveriteDescription()));
+		    sujetRapportVO.setSeveriteCasinoDescription(RapportUtils.concateneFleche(sujetRapportVO.getSeveriteCasinoDescription(), precedentSujetRapportVO.getSeveriteCasinoDescription()));
+		    sujetRapportVO.setConfidentialiteDescription(RapportUtils.concateneFleche(sujetRapportVO.getConfidentialiteDescription(), precedentSujetRapportVO.getConfidentialiteDescription()));
+		    sujetRapportVO.setNumeroClientEmploye(RapportUtils.concateneFleche(sujetRapportVO.getNumeroClientEmploye(), precedentSujetRapportVO.getNumeroClientEmploye()));
+		    sujetRapportVO.setEthnieDescription(RapportUtils.concateneFleche(sujetRapportVO.getEthnieDescription(), precedentSujetRapportVO.getEthnieDescription()));
 			rapportVOs.add(sujetRapportVO);
-		    precedent = sujetRapportVO;            
 		}
+		rapportVOs.remove(0);
 		return rapportVOs;
 	 }
 		  

@@ -3,6 +3,9 @@
   <description>${app.name} Web Application</description>
   <display-name>${app.name} Web Application</display-name>
   <distributable />
+  	<!-- listener>
+		<listener-class>com.lq.std.conf.impl.AppConfigListener</listener-class>
+	</listener-->
   <context-param>
     <param-name>javax.faces.PROJECT_STAGE</param-name>
     <param-value>${app.javax.faces.PROJECT_STAGE}</param-value>
