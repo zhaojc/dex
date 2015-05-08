@@ -56,9 +56,9 @@ public class SocieteAvecDossierClientMystereRowCallbackHandler extends SocieteCl
 		Timestamp debutDossierDate = rs.getTimestamp("DEBUT_DATE_DOSSIER");
 		sectionSocieteCDX0255VO.assignerDernierDossier(debutDossierDate);
 		/*
-		 *  RA0012	Client mystère CDX_0255. Une ligne du rapporté possède 
-		 *  l'attribut "Annulation" à "oui" si la société possède un dossier 
-		 *  de catégorie "Retrait processus" pour cette vague
+		 *  RA0012	Client mystÃ¨re CDX_0255. Une ligne du rapportÃ© possÃ¨de 
+		 *  l'attribut "Annulation" Ã  "oui" si la sociÃ©tÃ© possÃ¨de un dossier 
+		 *  de catÃ©gorie "Retrait processus" pour cette vague
 		 */
 		if (GlobalConstants.CategorieClientMystere.RETRAIT_PROCESSUS == categorie){
 			sectionSocieteCDX0255VO.setAnnulation(true);
@@ -67,10 +67,10 @@ public class SocieteAvecDossierClientMystereRowCallbackHandler extends SocieteCl
 		}
 		
 		/*
-		 * RA0013	Client mystère CDX_0255. Une nouvelle ligne commence pour 
-		 * cette société RDD si un dossier de catégorie "Gestion détaillant" est 
-		 * lié à cette société pour cette vague.  Cela signifie un changement de 
-		 * propriétaire de la société.
+		 * RA0013	Client mystÃ¨re CDX_0255. Une nouvelle ligne commence pour 
+		 * cette sociÃ©tÃ© RDD si un dossier de catÃ©gorie "Gestion dÃ©taillant" est 
+		 * liÃ© Ã  cette sociÃ©tÃ© pour cette vague.  Cela signifie un changement de 
+		 * propriÃ©taire de la sociÃ©tÃ©.
 		 */
 		if (GlobalConstants.CategorieClientMystere.GESTION_DETAILLANT == categorie){
 			sectionSocieteCDX0255VO.ajouterAutreCommentaire(extraireNarration(rs));
@@ -90,7 +90,7 @@ public class SocieteAvecDossierClientMystereRowCallbackHandler extends SocieteCl
 	}
 	
 	/*
-	 * RA0010	Client mystère CDX_0255. Visite carté si la société possède un dossier de visite conforme (1-2-3-4-5) pour cette vague.
+	 * RA0010	Client mystÃ¨re CDX_0255. Visite cartÃ© si la sociÃ©tÃ© possÃ¨de un dossier de visite conforme (1-2-3-4-5) pour cette vague.
 	 */
 	private boolean isCarte(long categorie){
 		return GlobalConstants.CategorieClientMystere.CONFORME_VISITE_1 == categorie 
@@ -101,10 +101,10 @@ public class SocieteAvecDossierClientMystereRowCallbackHandler extends SocieteCl
 	}
 	
 	/*
-	 * RA0011	Client mystère CDX_0255. Une visite est confirmée si le dossier 
-	 * d'échantillon n'est pas actif (RA0008) et la date d'envoie de l'avis et 
-	 * la date de réception de l'avis ne sont pas vide et si la date de suspension 
-	 * est passée.
+	 * RA0011	Client mystÃ¨re CDX_0255. Une visite est confirmÃ©e si le dossier 
+	 * d'Ã©chantillon n'est pas actif (RA0008) et la date d'envoie de l'avis et 
+	 * la date de rÃ©ception de l'avis ne sont pas vide et si la date de suspension 
+	 * est passÃ©e.
 	 */
 	private boolean isConfirme(VisiteVO_CDX_0255 visiteCDX0255VO, Dossier echantillonDossier){
 		return echantillonDossierClientMystereActif.contains(echantillonDossier) == false 

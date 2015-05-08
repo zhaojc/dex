@@ -30,8 +30,8 @@ import com.lotoquebec.cardexCommun.user.CardexUser;
 public class SecuriteAdHoc {
 
 	/**
-	 * Il faut s'assurer qu'il était possible de modifier l'enregistrement avant de le modifier.
-	 * Ici on regarde, indirectement, que l'utilisateur est dans le même site que le dossier qu'il modifie.
+	 * Il faut s'assurer qu'il Ã©tait possible de modifier l'enregistrement avant de le modifier.
+	 * Ici on regarde, indirectement, que l'utilisateur est dans le mÃªme site que le dossier qu'il modifie.
 	 * @param subject
 	 * @param dossierSource
 	 */
@@ -39,7 +39,7 @@ public class SecuriteAdHoc {
 		
 		if (modifiable.isModifiable() == false){
 			String message = "modification du "+modifiable.toString();
-			GestionnaireSecurite.genererErreurSecurite(subject, "Aucun rôle", message);
+			GestionnaireSecurite.genererErreurSecurite(subject, "Aucun rÃ´le", message);
 		}
 	}
 	
@@ -49,14 +49,14 @@ public class SecuriteAdHoc {
 			
 			if (narrationSource.getNarrationAvecFormat().equals(narrationDestination.getNarrationAvecFormat()) == false){
 				String message = "modification du "+narrationSource.toString();
-				GestionnaireSecurite.genererErreurSecurite(subject, "Aucun rôle", message);
+				GestionnaireSecurite.genererErreurSecurite(subject, "Aucun rÃ´le", message);
 			}
 		}
 	}	
 	
 	/**
-     * On valide si l'usager a le droit à l'onglet de l'entité qu'il consulte
-     * Ensuite, on va consulter cette entité pour être sur qu'il a le droit de la consulter. 
+     * On valide si l'usager a le droit Ã  l'onglet de l'entitÃ© qu'il consulte
+     * Ensuite, on va consulter cette entitÃ© pour Ãªtre sur qu'il a le droit de la consulter. 
 	 * @param subject
 	 * @param fichierMultimediaVO
 	 * @throws BusinessRuleException 
@@ -64,7 +64,7 @@ public class SecuriteAdHoc {
 	 */
 	public static void validerSecuriteConsulterPhoto(CardexAuthenticationSubject subject, FichierMultimediaVO fichierMultimediaVO) throws BusinessRuleException, BusinessException{
 		//GestionnaireSecurite.validerEtFiltrerSecuriteConsulter(subject, fichierMultimediaVO);
-		String message = "le fichier numéro "+fichierMultimediaVO.getCle()+"-"+fichierMultimediaVO.getSite();
+		String message = "le fichier numÃ©ro "+fichierMultimediaVO.getCle()+"-"+fichierMultimediaVO.getSite();
 		
 		if (GlobalConstants.GenreFichier.SOCIETE.equals(fichierMultimediaVO.getGenre())){
 			
@@ -84,7 +84,7 @@ public class SecuriteAdHoc {
 			
 		} else if (GlobalConstants.GenreFichier.DOSSIER.equals(fichierMultimediaVO.getGenre())){
 			
-			// Onglet pièces jointes
+			// Onglet piÃ¨ces jointes
 			if (GlobalConstants.TypeMutliMedia.AUTRE.equals(fichierMultimediaVO.getStringTypeMultimedia())
 			|| GlobalConstants.TypeMutliMedia.DOCUMENT_ANNEXE.equals(fichierMultimediaVO.getStringTypeMultimedia())
 			|| GlobalConstants.TypeMutliMedia.FICHIER.equals(fichierMultimediaVO.getStringTypeMultimedia())
@@ -114,21 +114,21 @@ public class SecuriteAdHoc {
 	
 	public static void validerSecuriteConsultationDossierPartage(CardexAuthenticationSubject subject, Dossier dossier) throws DAOException{
 		CardexUser user = (CardexUser)subject.getUser();
-		//On vérifie s'il s'agit d'un dossier partagé.
+		//On vÃ©rifie s'il s'agit d'un dossier partagÃ©.
     	Partage partage = FabriqueCardexDAO.getInstance().getPartageDAO().findPartage(subject, dossier);
-    	//Si le dossier est partagé, on vérifie si l'utilisateur y a droit.
+    	//Si le dossier est partagÃ©, on vÃ©rifie si l'utilisateur y a droit.
     	if(!partage.getIntervenantsChoisis().isEmpty()){
             Collection intervenantsChoisis = partage.getIntervenantsChoisis();
-            //S'il s'agit d'un partage restreint, l'utilisateur doit absolument faire partie de la liste des intervenants autorisés.
-            //Sinon, il s'agit d'un partage ouvert. Dans ce cas, on donne accès, sans égard aux autres contrainte de sécurité, 
-            //si l'utilisateur a été en mesure de cliquer sur le dossier.
+            //S'il s'agit d'un partage restreint, l'utilisateur doit absolument faire partie de la liste des intervenants autorisÃ©s.
+            //Sinon, il s'agit d'un partage ouvert. Dans ce cas, on donne accÃ¨s, sans Ã©gard aux autres contrainte de sÃ©curitÃ©, 
+            //si l'utilisateur a Ã©tÃ© en mesure de cliquer sur le dossier.
             if(partage.getGenrePartage().equals(GlobalConstants.GenrePartage.RESTREINT)){
             	if(intervenantsChoisis.contains(user.getCode()) == false)
-            		//Si l'utilisateur n'est pas dans la liste de partage, on lui bloque l'accès. Dans le cas contraire, le dossier passe.
+            		//Si l'utilisateur n'est pas dans la liste de partage, on lui bloque l'accÃ¨s. Dans le cas contraire, le dossier passe.
             		GestionnaireSecuriteCardex.genererErreurSecurite(subject, "", dossier.getNumeroCardex() + "!");
             }
     	}else{
-    		//Le dossier n'est pas partagé; on effectue la vérification normale de l'accès.
+    		//Le dossier n'est pas partagÃ©; on effectue la vÃ©rification normale de l'accÃ¨s.
     		GestionnaireSecuriteCardex.validerEtFiltrerSecuriteConsulterDossierIntervenantEstAssigne(subject, dossier);
     	}
 	}

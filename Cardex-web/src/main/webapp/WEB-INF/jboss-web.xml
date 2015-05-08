@@ -2,13 +2,8 @@
 <jboss-web>
   <context-root>${app.context.root}</context-root>
   <security-domain>${app.security.domain}</security-domain>
-  <!--
-  <disable-audit>true</disable-audit>
-  <security-domain>${app.security.domain}</security-domain>
-  <valve>
-    <class-name>org.jboss.security.negotiation.NegotiationAuthenticator</class-name>
-  </valve>
-  <jacc-star-role-allow>true</jacc-star-role-allow>
-  -->
-     <!-- use-jboss-authorization>true</use-jboss-authorization-->
+  <!-- valve>
+       <class-name>org.jboss.security.negotiation.NegotiationAuthenticator</class-name>
+  </valve-->  
 </jboss-web>
+

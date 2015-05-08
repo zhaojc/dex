@@ -4,8 +4,8 @@ import java.sql.Timestamp;
 import java.util.Collection;
 
 /**
- * Définit les signatures de méthodes nécessaire à l'obtention des valeurs
- * relatives à une adresse.
+ * DÃ©finit les signatures de mÃ©thodes nÃ©cessaire Ã  l'obtention des valeurs
+ * relatives Ã  une adresse.
  *
  * @author $Author: pcaron $
  * @version $Revision: 1.7 $, $Date: 2002/02/28 17:28:10 $
@@ -32,7 +32,7 @@ public interface Intervenant {
     /**
      * Affecte une collection de groupes.
      *
-     * @param groupesChoisis Valeur de la liste de chaîne de caractère
+     * @param groupesChoisis Valeur de la liste de chaÃ®ne de caractÃ¨re
      * des groupes.
      */
     public void addGroupesChoisis(String groupe);
@@ -40,7 +40,7 @@ public interface Intervenant {
     /**
      * Retourne une collection de groupes.
      *
-     * @return String [] Valeur de la liste de chaîne de caractère de
+     * @return String [] Valeur de la liste de chaÃ®ne de caractÃ¨re de
      * groupes.
      */
     public Collection getGroupesChoisis();
@@ -48,21 +48,21 @@ public interface Intervenant {
     /**
      * Retourne la cle.
      *
-     * @return long Valeur de la cle en caractère.
+     * @return long Valeur de la cle en caractÃ¨re.
      */
     public long getCle();
 
     /**
      * Retourne le site.
      *
-     * @return long Valeur du site en caractère.
+     * @return long Valeur du site en caractÃ¨re.
      */
     public long getSite();
 
     /**
      * Retourne le nom.
      *
-     * @return String Valeur du nom en caractère.
+     * @return String Valeur du nom en caractÃ¨re.
      */
     public String getNom();
 
@@ -73,16 +73,16 @@ public interface Intervenant {
     public String getNomComplet();
     
     /**
-     * Retourne le prénom
+     * Retourne le prÃ©nom
      *
-     * @return String Valeur du prénom en caractère.
+     * @return String Valeur du prÃ©nom en caractÃ¨re.
      */
     public String getPrenom();
 
     /**
      * Retourne le code de l'intervenant
      *
-     * @return String Valeur du code en caractère.
+     * @return String Valeur du code en caractÃ¨re.
      */
     public String getCode();
 
@@ -90,7 +90,7 @@ public interface Intervenant {
     /**
      * Retourne la langue d'utilisation.
      *
-     * @return long Valeur de la langue en caractère.
+     * @return long Valeur de la langue en caractÃ¨re.
      */
     public long getLangue();
 
@@ -98,28 +98,28 @@ public interface Intervenant {
     /**
      * Retourne le statut (actif ou inactif).
      *
-     * @return long Valeur du statut en caractère.
+     * @return long Valeur du statut en caractÃ¨re.
      */
     public long getStatut();
 
     /**
-     * Retourne la date de création.
+     * Retourne la date de crÃ©ation.
      *
-     * @return Timestamp Valeur de la date de création en caractère.
+     * @return Timestamp Valeur de la date de crÃ©ation en caractÃ¨re.
      */
     public Timestamp getDateCreation();
 
     /**
-     * Retourne le créateur de la fiche de l'intervenant.
+     * Retourne le crÃ©ateur de la fiche de l'intervenant.
      *
-     * @return String Valeur du code du créateur en caractère.
+     * @return String Valeur du code du crÃ©ateur en caractÃ¨re.
      */
     public String getCreateur();
     
     /**
      * Retourne le code du modificateur d'une fiche Intervenant
      *
-     * @return String Valeur du code en caractère.
+     * @return String Valeur du code en caractÃ¨re.
      */
 
     public String getModificateur();
@@ -127,37 +127,37 @@ public interface Intervenant {
     /**
      * Retourne la date de modification.
      *
-     * @return Timestamp Valeur de la date de modification en caractère.
+     * @return Timestamp Valeur de la date de modification en caractÃ¨re.
      */
 
     public Timestamp getDateModification();
 
     /**
-     * Retourne le mot de passe initial assigné à l'utilisateur.
+     * Retourne le mot de passe initial assignÃ© Ã  l'utilisateur.
      *
-     * @return String Valeur du mot de passe en caractère.
+     * @return String Valeur du mot de passe en caractÃ¨re.
      */
 
     public String getMotPasse();
 
     /**
-     * Retourne le niveau de confidentialité.
+     * Retourne le niveau de confidentialitÃ©.
      *
-     * @return long Valeur de la confidentialité.
+     * @return long Valeur de la confidentialitÃ©.
      */
     public long getConfidentialite();
 
     /**
-     * Retourne le niveau hiérarchique de l'intervenant.
+     * Retourne le niveau hiÃ©rarchique de l'intervenant.
      *
      * @return long Valeur de la hierarchie.
      */
     public long getHierarchie();
 
     /**
-     * Retourne le numéro de l'intervenant
+     * Retourne le numÃ©ro de l'intervenant
      *
-     * @return String Valeur du numéro
+     * @return String Valeur du numÃ©ro
      */
     public String getNumero();
 
@@ -169,7 +169,7 @@ public interface Intervenant {
     public String getCommentaire();
 
     /**
-     * Retourne l'adresse électronique de l'intervenant.
+     * Retourne l'adresse Ã©lectronique de l'intervenant.
      *
      * @return String Valeur du courriel
      */
@@ -183,14 +183,14 @@ public interface Intervenant {
     public String getDN();
     
     /**
-     * Retourne l'entité de l'intervenant.
+     * Retourne l'entitÃ© de l'intervenant.
      *
-     * @return long Valeur du l'entité
+     * @return long Valeur du l'entitÃ©
      */
     public long getEntite();
 
     /**
-     * Retourne le groupe de sécurité auquel appartient l'intervenant.
+     * Retourne le groupe de sÃ©curitÃ© auquel appartient l'intervenant.
      *
      * @return String Valeur du groupe
      */
@@ -211,16 +211,16 @@ public interface Intervenant {
     public String getStatutDescription();
 
     /**
-     * Retourne la description du niveau d'autorité de l'intervenant.
+     * Retourne la description du niveau d'autoritÃ© de l'intervenant.
      *
-     * @return String Valeur de l'autorité
+     * @return String Valeur de l'autoritÃ©
      */
     public String getAutoriteDescription();
 
     /**
-     * Retourne la description de la confidentialité de l'intervenant.
+     * Retourne la description de la confidentialitÃ© de l'intervenant.
      *
-     * @return String Valeur de confidentialité
+     * @return String Valeur de confidentialitÃ©
      */
     public String getConfidentialiteDescription();
 
@@ -246,138 +246,138 @@ public interface Intervenant {
     /**
      * Affecte une cle.
      *
-     * @param cle Valeur de la cle en caractère.
+     * @param cle Valeur de la cle en caractÃ¨re.
      */
     public void setCle(long cle);
 
     /**
      * Affecte un site.
      *
-     * @param site Valeur du site en caractère.
+     * @param site Valeur du site en caractÃ¨re.
      */
     public void setSite(long site);
 
     /**
      * Affecte le nom.
      *
-     * @param nom Valeur du nom en caractère.
+     * @param nom Valeur du nom en caractÃ¨re.
      */
     public void setNom(String nom);
 
     /**
-     * Affecte le prénom
+     * Affecte le prÃ©nom
      *
-     * @param prenom Valeur du prénom en caractère.
+     * @param prenom Valeur du prÃ©nom en caractÃ¨re.
      */
     public void setPrenom(String prenom);
 
     /**
      * Affecte un code d'intervenant.
      *
-     * @param code Valeur du code en caractère.
+     * @param code Valeur du code en caractÃ¨re.
      */
     public void setCode(String code);
 
     /**
-     * Affecte le numéro
+     * Affecte le numÃ©ro
      *
-     * @param numero Valeur du numero en caractère.
+     * @param numero Valeur du numero en caractÃ¨re.
      */
     public void setNumero(String numero);
 
    /**
-     * Affecte la confidentialité.
+     * Affecte la confidentialitÃ©.
      *
-     * @param confidentialite Valeur numérique de la confidentialité.
+     * @param confidentialite Valeur numÃ©rique de la confidentialitÃ©.
      */
     public void setConfidentialite(long confidentialite);
 
     /**
      * Affecte la hierarchie.
      *
-     * @param hierarchie Valeur numérique de la hierarchie.
+     * @param hierarchie Valeur numÃ©rique de la hierarchie.
      */
     public void setHierarchie(long hierarchie);
 
     /**
      * Affecte un statut.
      *
-     * @param statut Valeur du statut en caractère.
+     * @param statut Valeur du statut en caractÃ¨re.
      */
     public void setStatut(long statut);
 
     /**
      * Affecte la langue.
      *
-     * @param langue Valeur de la langue en caractère.
+     * @param langue Valeur de la langue en caractÃ¨re.
      */
     public void setLangue(long langue);
 
     /**
      * Affecte un commentaire.
      *
-     * @param commentaire Valeur du commentaire en caractère.
+     * @param commentaire Valeur du commentaire en caractÃ¨re.
      */
     public void setCommentaire(String commentaire);
 
     /**
      * Affecte un modificateur.
      *
-     * @param modificateur Valeur du modificateur en caractère.
+     * @param modificateur Valeur du modificateur en caractÃ¨re.
      */
     public void setModificateur(String modificateur);
 
     /**
      * Affecte un mot de passe.
      *
-     * @param motPasse Valeur du mot de passe en caractère.
+     * @param motPasse Valeur du mot de passe en caractÃ¨re.
      */
     public void setMotPasse(String motPasse);
 
     /**
-     * Affecte une date de création.
+     * Affecte une date de crÃ©ation.
      *
-     * @param dateCreation Valeur de la date de création en caractère.
+     * @param dateCreation Valeur de la date de crÃ©ation en caractÃ¨re.
      */
     public void setDateCreation(Timestamp dateCreation);
 
     /**
      * Affecte une date de modification.
      *
-     * @param dateModification Valeur de la date de modification en caractère.
+     * @param dateModification Valeur de la date de modification en caractÃ¨re.
      */
     public void setDateModification(Timestamp dateModification);
 
     /**
-     * Affecte le créateur.
+     * Affecte le crÃ©ateur.
      *
-     * @param createur Valeur du créateur en caractère.
+     * @param createur Valeur du crÃ©ateur en caractÃ¨re.
      */
     public void setCreateur(String createur);
 
     /**
      * Affecte l'adresse de courriel.
      *
-     * @param courriel Valeur du courriel du site en caractère.
+     * @param courriel Valeur du courriel du site en caractÃ¨re.
      */
     public void setCourriel(String courriel);
 
     /**
      * Affecte le DN
      *
-     * @param dn Valeur du courriel du site en caractère.
+     * @param dn Valeur du courriel du site en caractÃ¨re.
      */
     public void setDN(String dn);
 
     /**
-     * Affecte l'entité de l'intervenant.
+     * Affecte l'entitÃ© de l'intervenant.
      *
-     * @return long Valeur du l'entité
+     * @return long Valeur du l'entitÃ©
      */
     public void setEntite(long entite);
 
     /**
-     * Affecte le groupe de sécurité auquel appartient l'intervenant.
+     * Affecte le groupe de sÃ©curitÃ© auquel appartient l'intervenant.
      *
      * @return String Valeur du groupe
      */
@@ -390,7 +390,7 @@ public interface Intervenant {
 
 
 	/**
-	 * @param codeParent codeParent à définir
+	 * @param codeParent codeParent Ã  dÃ©finir
 	 */
 	public void setCodeParent(String codeParent);
 
@@ -407,7 +407,7 @@ public interface Intervenant {
 
 
 	/**
-	 * @param secteur secteur à définir
+	 * @param secteur secteur Ã  dÃ©finir
 	 */
 	public void setSecteur(long secteur);
 
@@ -419,7 +419,7 @@ public interface Intervenant {
     public void setSecteurDescription(String secteurDescription);
 
 	/**
-	 * @param sousSecteur sous-secteur à définir
+	 * @param sousSecteur sous-secteur Ã  dÃ©finir
 	 */
 	public void setSousSecteur(long sousSecteur);
 
@@ -438,14 +438,14 @@ public interface Intervenant {
     public void setStatutDescription(String statutDescription);
 
     /**
-     * Affecte l'autorité de l'intervenant.
+     * Affecte l'autoritÃ© de l'intervenant.
      *
      * @return String Valeur autorite
      */
     public void setAutoriteDescription(String autoriteDescription);
 
     /**
-     * Affecte la confidentialité de l'intervenant.
+     * Affecte la confidentialitÃ© de l'intervenant.
      *
      * @return String Valeur confidentialite
      */
@@ -472,14 +472,14 @@ public interface Intervenant {
     /**
      * Retourne le groupe et l'intervenant.
      *
-     * @return String Valeur numérique du type.
+     * @return String Valeur numÃ©rique du type.
      */
     public String getGroupesIntervenants();
 
     /**
      * Affecte un groupe et un intervenant
      *
-     * @param groupe Valeur numérique du groupe.
+     * @param groupe Valeur numÃ©rique du groupe.
      */
     public void setGroupesIntervenants(String groupe);
 

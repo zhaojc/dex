@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>com.lq.pom</groupId>
 		<artifactId>lqparent-git</artifactId>
-		<version>1.0.0</version>
+		<version>1.0.2</version>
 	</parent>
 	<packaging>pom</packaging>
 	<!-- 0. Mettre le nom de votre application -->
@@ -35,6 +35,17 @@
 				<role>Analyste developpeur</role>
 			</roles>
 		</developer>
+		<developer>
+			<id>mazzucr</id>
+			<name>Rodolfo Mazzuca</name>
+			<email>rodolfo.mazzuca@loto-quebec.com</email>
+			<organization>Loto-Quebec</organization>
+			<organizationUrl>http://www.lotoquebec.com</organizationUrl>
+			<timezone>-5</timezone>
+			<roles>
+				<role>Developpeur</role>
+			</roles>
+		</developer>
 	</developers>
 	<inceptionYear>2014</inceptionYear>
 
@@ -56,6 +67,7 @@
 		<project.implementation.version>${project.version}</project.implementation.version>
 		<project.implementation.vendor>${project.team}</project.implementation.vendor>
 
+		<openam.listener.version>1.0.3</openam.listener.version>
 		<junit.version>4.8.2</junit.version>
 		<logback.version>1.0.13</logback.version>
 		<logback.logstash.version>2.3</logback.logstash.version>
@@ -64,7 +76,7 @@
 		<jcl-over-slf4j.version>1.7.2-redhat-1</jcl-over-slf4j.version>
 		<seam.version>3.1.0.Final</seam.version>
 		<jpamodelgen.version>1.1.1.Final</jpamodelgen.version>
-		<stdconf.version>1.0.5</stdconf.version>
+		<stdconf.version>1.0.7</stdconf.version>
 		<picketlink-idm-core.version>1.5.0.Alpha02</picketlink-idm-core.version>
 		<ocpsoft-pretty-time.version>1.0.6</ocpsoft-pretty-time.version>
 		<prettyfaces-jsf2.version>3.2.0</prettyfaces-jsf2.version>
@@ -211,6 +223,7 @@
 	<profiles>
 		<!-- genere le repertoire home de l'application dans target et le copie 
 			a l'emplacement ${app.home.target} -->
+			<!-- 
 		<profile>
 			<id>postedev</id>
 			<properties>
@@ -250,7 +263,7 @@
 					</plugin>
 				</plugins>
 			</build>
-		</profile>
+		</profile> -->
 		<!-- genere un repertoire et une archive zip dans target contenant le repertoire 
 			home de l'application + les unites de deploiement (ear,war) -->
 		<profile>
@@ -269,6 +282,6 @@
   	<module>ValidationAdresse</module>
   	<module>Cardex-commun</module>
     <module>Cardex-web</module>
-    <module>Cardex-dist</module>
+    <!-- module>Cardex-dist</module-->
   </modules>
 </project>

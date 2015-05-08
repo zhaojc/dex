@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>com.lq.cardex</groupId>
 		<relativePath>../pom.xml</relativePath>
-		<artifactId>Cardex</artifactId>
+		<artifactId>cardex</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>Cardex-commun</artifactId>

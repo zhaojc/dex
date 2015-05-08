@@ -38,7 +38,7 @@ public abstract class CleHardListe extends CleListe {
 	}
 	
 	/*
-	 * Une liste Hard est unique par classe.  Donc, nous vérifions le type de classe et c'est tout.
+	 * Une liste Hard est unique par classe.  Donc, nous vÃ©rifions le type de classe et c'est tout.
 	 * (non-Javadoc)
 	 * @see com.lotoquebec.cardexCommun.integration.dao.cleListe.CleListe#equals(java.lang.Object)
 	 */

@@ -51,7 +51,7 @@ public class EvaluationVO implements Evaluation {
 
 
 	/**
-	 * @param cle cle à définir
+	 * @param cle cle Ã  dÃ©finir
 	 */
 	public void setCle(long cle) {
 		this.cle = cle;
@@ -67,7 +67,7 @@ public class EvaluationVO implements Evaluation {
 
 
 	/**
-	 * @param site site à définir
+	 * @param site site Ã  dÃ©finir
 	 */
 	public void setSite(long site) {
 		this.site = site;
@@ -83,7 +83,7 @@ public class EvaluationVO implements Evaluation {
 
 
 	/**
-	 * @param lien lien à définir
+	 * @param lien lien Ã  dÃ©finir
 	 */
 	public void setLien(long lien) {
 		this.lien = lien;
@@ -99,7 +99,7 @@ public class EvaluationVO implements Evaluation {
 
 
 	/**
-	 * @param lienSite lienSite à définir
+	 * @param lienSite lienSite Ã  dÃ©finir
 	 */
 	public void setLienSite(long lienSite) {
 		this.lienSite = lienSite;
@@ -115,7 +115,7 @@ public class EvaluationVO implements Evaluation {
 
 
 	/**
-	 * @param dateDebutEval dateDebutEval à définir
+	 * @param dateDebutEval dateDebutEval Ã  dÃ©finir
 	 */
 	public void setDateDebutEval(Timestamp dateDebutEval) {
 		this.dateDebutEval = dateDebutEval;
@@ -131,7 +131,7 @@ public class EvaluationVO implements Evaluation {
 
 
 	/**
-	 * @param dateFinEval dateFinEval à définir
+	 * @param dateFinEval dateFinEval Ã  dÃ©finir
 	 */
 	public void setDateFinEval(Timestamp dateFinEval) {
 		this.dateFinEval = dateFinEval;
@@ -147,7 +147,7 @@ public class EvaluationVO implements Evaluation {
 
 
 	/**
-	 * @param numeroClientBijou numeroClientBijou à définir
+	 * @param numeroClientBijou numeroClientBijou Ã  dÃ©finir
 	 */
 	public void setNumeroClientBijou(long numeroClientBijou) {
 		this.numeroClientBijou = numeroClientBijou;
@@ -162,7 +162,7 @@ public class EvaluationVO implements Evaluation {
 
 
 	/**
-	 * @param faitsConnus faitsConnus à définir
+	 * @param faitsConnus faitsConnus Ã  dÃ©finir
 	 */
 	public void setFaitsConnus(String faitsConnus) {
 		this.faitsConnus = faitsConnus;
@@ -178,7 +178,7 @@ public class EvaluationVO implements Evaluation {
 
 
 	/**
-	 * @param createur createur à définir
+	 * @param createur createur Ã  dÃ©finir
 	 */
 	public void setCreateur(String createur) {
 		this.createur = createur;
@@ -194,7 +194,7 @@ public class EvaluationVO implements Evaluation {
 
 
 	/**
-	 * @param dateCreation dateCreation à définir
+	 * @param dateCreation dateCreation Ã  dÃ©finir
 	 */
 	public void setDateCreation(Timestamp dateCreation) {
 		this.dateCreation = dateCreation;
@@ -210,7 +210,7 @@ public class EvaluationVO implements Evaluation {
 
 
 	/**
-	 * @param proximite proximite à définir
+	 * @param proximite proximite Ã  dÃ©finir
 	 */
 	public void setProximite(String proximite) {
 		this.proximite = proximite;
@@ -226,7 +226,7 @@ public class EvaluationVO implements Evaluation {
 
 
 	/**
-	 * @param gradation gradation à définir
+	 * @param gradation gradation Ã  dÃ©finir
 	 */
 	public void setGradation(String gradation) {
 		this.gradation = gradation;
@@ -242,7 +242,7 @@ public class EvaluationVO implements Evaluation {
 
 
 	/**
-	 * @param transaction transaction à définir
+	 * @param transaction transaction Ã  dÃ©finir
 	 */
 	public void setTransaction(String transaction) {
 		this.transaction = transaction;
@@ -258,7 +258,7 @@ public class EvaluationVO implements Evaluation {
 
 
 	/**
-	 * @param commentairePropos commentairePropos à définir
+	 * @param commentairePropos commentairePropos Ã  dÃ©finir
 	 */
 	public void setCommentairePropos(String commentairePropos) {
 		this.commentairePropos = commentairePropos;
@@ -274,7 +274,7 @@ public class EvaluationVO implements Evaluation {
 
 
 	/**
-	 * @param commentaireEtat commentaireEtat à définir
+	 * @param commentaireEtat commentaireEtat Ã  dÃ©finir
 	 */
 	public void setCommentaireEtat(String commentaireEtat) {
 		this.commentaireEtat = commentaireEtat;
@@ -290,7 +290,7 @@ public class EvaluationVO implements Evaluation {
 
 
 	/**
-	 * @param commentaireAutre commentaireAutre à définir
+	 * @param commentaireAutre commentaireAutre Ã  dÃ©finir
 	 */
 	public void setCommentaireAutre(String commentaireAutre) {
 		this.commentaireAutre = commentaireAutre;
@@ -306,7 +306,7 @@ public class EvaluationVO implements Evaluation {
 
 
 	/**
-	 * @param commentaireSigne commentaireSigne à définir
+	 * @param commentaireSigne commentaireSigne Ã  dÃ©finir
 	 */
 	public void setCommentaireSigne(String commentaireSigne) {
 		this.commentaireSigne = commentaireSigne;
@@ -322,7 +322,7 @@ public class EvaluationVO implements Evaluation {
 
 
 	/**
-	 * @param signataire1 signataire1 à définir
+	 * @param signataire1 signataire1 Ã  dÃ©finir
 	 */
 	public void setSignataire1(String signataire1) {
 		this.signataire1 = signataire1;
@@ -338,7 +338,7 @@ public class EvaluationVO implements Evaluation {
 
 
 	/**
-	 * @param signataire2 signataire2 à définir
+	 * @param signataire2 signataire2 Ã  dÃ©finir
 	 */
 	public void setSignataire2(String signataire2) {
 		this.signataire2 = signataire2;
@@ -354,7 +354,7 @@ public class EvaluationVO implements Evaluation {
 
 
 	/**
-	 * @param signataire3 signataire3 à définir
+	 * @param signataire3 signataire3 Ã  dÃ©finir
 	 */
 	public void setSignataire3(String signataire3) {
 		this.signataire3 = signataire3;
@@ -370,7 +370,7 @@ public class EvaluationVO implements Evaluation {
 
 
 	/**
-	 * @param signataire4 signataire4 à définir
+	 * @param signataire4 signataire4 Ã  dÃ©finir
 	 */
 	public void setSignataire4(String signataire4) {
 		this.signataire4 = signataire4;
@@ -386,7 +386,7 @@ public class EvaluationVO implements Evaluation {
 
 
 	/**
-	 * @param signataire5 signataire5 à définir
+	 * @param signataire5 signataire5 Ã  dÃ©finir
 	 */
 	public void setSignataire5(String signataire5) {
 		this.signataire5 = signataire5;
@@ -402,7 +402,7 @@ public class EvaluationVO implements Evaluation {
 
 
 	/**
-	 * @param dateEvaluation dateEvaluation à définir
+	 * @param dateEvaluation dateEvaluation Ã  dÃ©finir
 	 */
 	public void setDateEvaluation(Timestamp dateEvaluation) {
 		this.dateEvaluation = dateEvaluation;
@@ -418,7 +418,7 @@ public class EvaluationVO implements Evaluation {
 
 
 	/**
-	 * @param modificateur modificateur à définir
+	 * @param modificateur modificateur Ã  dÃ©finir
 	 */
 	public void setModificateur(String modificateur) {
 		this.modificateur = modificateur;
@@ -434,7 +434,7 @@ public class EvaluationVO implements Evaluation {
 
 
 	/**
-	 * @param dateModification dateModification à définir
+	 * @param dateModification dateModification Ã  dÃ©finir
 	 */
 	public void setDateModification(Timestamp dateModification) {
 		this.dateModification = dateModification;
@@ -463,7 +463,7 @@ public class EvaluationVO implements Evaluation {
 	/**
 	 * Conserve certaines valeurs de dossier.
 	 *
-	 * @param dossier Dossier retourné par une recherche de consignations.
+	 * @param dossier Dossier retournÃ© par une recherche de consignations.
 	 */
 	public void setDossier(Dossier dossier){
 		this.dossier = dossier;
@@ -488,18 +488,18 @@ public class EvaluationVO implements Evaluation {
     }
     
     /**
-     * Retourne les états d'esprit.
+     * Retourne les Ã©tats d'esprit.
      *
-     * @return Collection Valeur des états.
+     * @return Collection Valeur des Ã©tats.
      */
     public Collection getEtats() {
         return this.etats;
     }
 
     /**
-     * Ajoute un état d'esprit.
+     * Ajoute un Ã©tat d'esprit.
      *
-     * @param jeu Valeur de l'état.
+     * @param jeu Valeur de l'Ã©tat.
      */
     public void addEtat(String etat) {
       this.etats.add(etat);

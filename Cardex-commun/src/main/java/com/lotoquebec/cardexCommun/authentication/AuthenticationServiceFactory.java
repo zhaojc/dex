@@ -36,7 +36,7 @@ public class AuthenticationServiceFactory {
             try {
               subject = FabriqueDAO.getInstance().getIntervenantDAO().find(userName);
               subject.setAuthenticated(true);
-			  //On remet le token lu dans MenuAction dans le "subject" retourn� par "find"
+			  //On remet le token lu dans MenuAction dans le "subject" retourné par "find"
 			  subject.setToken(token);
             } catch (DAOException dae) {
                 throw new AuthenticationException(dae);

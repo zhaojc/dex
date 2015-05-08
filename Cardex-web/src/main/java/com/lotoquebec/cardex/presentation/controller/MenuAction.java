@@ -2,6 +2,7 @@ package com.lotoquebec.cardex.presentation.controller;
 
 import java.io.IOException;
 import java.net.InetAddress;
+import java.security.Principal;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
@@ -29,7 +30,6 @@ import com.lotoquebec.cardexCommun.authentication.AuthenticationServiceFactory;
 import com.lotoquebec.cardexCommun.authentication.AuthenticationSubject;
 import com.lotoquebec.cardexCommun.authentication.CardexAuthenticationSubject;
 import com.lotoquebec.cardexCommun.authentication.ModifiableAuthenticationSubject;
-import com.lotoquebec.cardexCommun.authentication.SimplePrincipal;
 import com.lotoquebec.cardexCommun.business.vo.IntervenantVO;
 import com.lotoquebec.cardexCommun.exception.AuthenticationException;
 import com.lotoquebec.cardexCommun.exception.BusinessResourceException;
@@ -80,15 +80,18 @@ public class MenuAction extends Action {
         try {
         		saveToken(request);
         		assignerMessageResourcesSession(request);
-        	
                 String userName = null;
+                InetAddress ia = java.net.InetAddress.getLocalHost();
+                String host = ia.getHostName();
+                
+                System.out.println("----------------getLocalHost: "+ia.getHostName());
+                System.out.println("----------------getRemoteUser: "+request.getRemoteUser());
+                
+                Principal pr = request.getUserPrincipal ();
 
-        		//La première étape consiste à déterminer l'environnement, production ou développement
-        		//On lit d'abord le poste de travail d'où provient la requête.
-				InetAddress ia = java.net.InetAddress.getLocalHost();
-				String host = ia.getHostName();
-				log.debug("Host identifié : " + ia.getHostName());
-        		
+                if (pr != null)
+                	System.out.println("----------------pr.getName: "+pr.getName());
+                
 				if(request.getRemoteUser()==null ) {
 					//Si c'est le cas, on ne peut pas aller plus loin.
                     String message = "Aucune variable n'a été trouvée. Authentification impossible...";
@@ -111,7 +114,7 @@ public class MenuAction extends Action {
 			    	throw new AssertionError("Aucun usager Cardex userName:"+userName);
 			    }
 				
-                log.debug("Est-ce que l'utilisateur '"+userName+"' est  authentifié: " + subject.isAuthenticated());
+                //log.debug("Est-ce que l'utilisateur '"+userName+"' est  authentifié: " + subject.isAuthenticated());
                 
                 if ( subject.isAuthenticated() ) {
                         // On �tablit de la session de l'application

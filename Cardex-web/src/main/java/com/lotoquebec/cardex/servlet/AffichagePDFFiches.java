@@ -48,8 +48,8 @@ import com.lotoquebec.cardexCommun.securite.GestionnaireSecurite;
 import com.lotoquebec.cardexCommun.user.CardexPrivilege;
 
 /**
- * Ce servlet sert � afficher les rapports Jasper en format PDF � l'�cran.
- * Il sert pour l'impression des fiches Sujet, Soci�t� et Dossier.
+ * Ce servlet sert à afficher les rapports Jasper en format PDF à l'écran.
+ * Il sert pour l'impression des fiches Sujet, Société et Dossier.
  * Le code repose sur le concept AJAX (Asynchronous JavaScript and XML) et sur les librairies Jasper.
  * @date : novembre 2008
  */
@@ -128,7 +128,7 @@ public class AffichagePDFFiches extends HttpServlet {
             }*/
 
         	InputStream gabarit = getClass().getClassLoader().getResourceAsStream(choixRapport);
-			//Utilisation d'un resultSet comme source de donn�es
+			//Utilisation d'un resultSet comme source de données
 	         resultSet = delegate.rapportImpressionFiche(Long.parseLong(cle), Long.parseLong(site), procedure,connection);
 	         JRResultSetDataSource resultSetDataSource = new JRResultSetDataSource(resultSet);
 	         ServletContext context = request.getSession().getServletContext();  
@@ -141,7 +141,7 @@ public class AffichagePDFFiches extends HttpServlet {
 	         parameters.put("CONFIDENTIALITE", Long.toString(privilege.getNiveauConfidentialite()));
 	         JasperPrint print = JasperFillManager.fillReport(gabarit, parameters, resultSetDataSource);
 	         
-		    //Affichage � l'�cran
+		    //Affichage à l'écran
 	         response.setContentType("application/pdf");
 	         request.getSession().setAttribute(ImageServlet.DEFAULT_JASPER_PRINT_SESSION_ATTRIBUTE, print);	         
 	         JRExporter exporter = new JRPdfExporter();

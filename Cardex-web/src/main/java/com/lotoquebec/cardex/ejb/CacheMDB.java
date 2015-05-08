@@ -17,10 +17,10 @@ import com.lotoquebec.cardexCommun.util.ViderCacheUtils;
 			@ActivationConfigProperty(propertyName="destinationType", propertyValue="javax.jms.Topic"),
 			@ActivationConfigProperty(propertyName="destination", propertyValue="java:/lq/crp/cdx/jms/top/cache"),				
 			@ActivationConfigProperty(propertyName="acknowledgeMode", propertyValue="Auto-acknowledge"),
-			@ActivationConfigProperty(propertyName="useJndi", propertyValue = "true"),
+			@ActivationConfigProperty(propertyName="useJndi", propertyValue = "true")/*,
 		    @ActivationConfigProperty(propertyName="subscriptionDurability", propertyValue = "Durable"),
 		    @ActivationConfigProperty(propertyName="clientId", propertyValue = "CacheMDBId"), 
-		    @ActivationConfigProperty(propertyName="subscriptionName", propertyValue = "CacheMDBSub")				
+		    @ActivationConfigProperty(propertyName="subscriptionName", propertyValue = "CacheMDBSub")		*/		
 	})
 @TransactionManagement(TransactionManagementType.BEAN)
 public class CacheMDB implements MessageListener {
